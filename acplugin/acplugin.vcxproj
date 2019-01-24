@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>AC_DEBUG;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -109,8 +109,10 @@
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="PluginForm.cpp" />
+    <ClCompile Include="vthook.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="utils.h" />
     <ClInclude Include="plugin.h" />
     <ClInclude Include="ac_gen.h" />
     <ClInclude Include="ac_sdk.h" />

@@ -20,7 +20,7 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	log_reset();
 	log_printf(L"acpInit module=%p plugin=%p", _g_module, plugin);
 
-	#if defined(_DEBUG)
+	#if defined(AC_DEBUG)
 	AC_WAIT_DEBUGGER;
 	#endif
 
@@ -31,24 +31,18 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 AC_EXPORT bool AC_API acpShutdown()
 {
 	log_printf(L"acpShutdown");
-	if (s_app) {
-		delete s_app;
-		s_app = nullptr;
-	}
+	safe_delete(s_app);
 	return true;
 }
 
 AC_EXPORT bool AC_API acpUpdate(ACCarState* car, float deltaT)
 {
-	if (s_app) {
-		s_app->acpUpdate(deltaT);
-	}
-	return true;
+	return (s_app ? s_app->acpUpdate(car, deltaT) : true);
 }
 
 AC_EXPORT bool AC_API acpOnGui(ACPluginContext* context)
 {
-	return true;
+	return (s_app ? s_app->acpOnGui(context) : true);
 }
 
 AC_EXPORT bool AC_API acpGetControls(ICarControlsProvider** controls)

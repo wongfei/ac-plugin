@@ -1,9 +1,7 @@
 #include "PluginForm.h"
-#include "vthook.h"
 
 PluginForm::PluginForm(ACPlugin* plugin)
 {
-	static_assert(offsetof(PluginForm, _formBytes) == 0, "epic fail!");
 	auto pthis = this;
 
 	log_printf(L"+PluginForm %p", this);
@@ -16,44 +14,51 @@ PluginForm::PluginForm(ACPlugin* plugin)
 	std::wstring text;
 	bool canBeScaled = false;
 
-	_form = (ksgui_Form*)_formBytes;
-	_form->ctor(&name, _game->gui, canBeScaled);
+	_form = new_udt<ksgui_Form>(&name, _game->gui, canBeScaled);
 	_form->formTitle->setText(title);
 	_form->devApp = false;
-	_form->setSize(300, 200);
+	_form->setSize(500, 200);
 	_form->setAutoHideMode(true);
-	//_form->drawBorder = 0;
-	//_form->backColor.w = 0;
-	vtablehook_hook(this, method_ptr(&PluginForm::onMouseDown_vf10), 10);
 
-	name.assign(L"stat_label");
-	_statLabel = new_udt<ksgui_Label>(&name, _game->gui);
-	_statLabel->setPosition(10, 50);
-	_statLabel->font.reset(new_udt<Font>(eFontType::eFontProportional, 20.0f, false, false));
-	_statLabel->foreColor.ctor(1, 0, 0, 1);
-	_form->addControl(_statLabel);
+	// hook methods
+	set_udt_tag(_form, this);
+	hook_onMouseDown_vf10(_form);
+	//hook_onTitleClicked_vf21(_form);
 
-	name.assign(L"btn");
-	text.assign(L"press me!");
-	_button = new_udt<ksgui_ActiveButton>(&name, _game->gui);
-	_button->setPosition(10, 100);
-	_button->setSize(80, 30);
-	_button->setText(text);
-	_form->addControl(_button);
+	name.assign(L"stat");
+	_lbStat = new_udt<ksgui_Label>(&name, _game->gui);
+	_lbStat->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
+	_lbStat->setPosition(10, 40);
+	_lbStat->foreColor.ctor(1, 0, 0, 1);
+	_form->addControl(_lbStat);
 
-	auto btnHandler = [pthis](const ksgui_OnControlClicked&) { pthis->console_printf(L"btn click"); };
-	_button->evClicked.handlers.push_back(std::pair<void*, std::function<void (const ksgui_OnControlClicked&)> >(this, btnHandler));
+	name.assign(L"dump");
+	text.assign(L"dump");
+	_btnDump = new_udt<ksgui_ActiveButton>(&name, _game->gui);
+	_btnDump->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
+	_btnDump->setPosition(10, 100);
+	_btnDump->setSize(80, 25);
+	_btnDump->setText(text);
+	_btnDump->drawBorder = true;
+	_btnDump->borderColor.ctor(1, 0, 0, 1);
+	_btnDump->drawBackground = false;
+	_btnDump->unselectedColor.ctor(0, 0, 0, 0);
+	_btnDump->selectedColor.ctor(0, 0, 0, 0);
+	_btnDump->rollOnColor.ctor(1, 0, 0, 0.3f);
+	_btnDump->inactiveColor.ctor(0, 0, 0, 0);
+	auto btnHandler = [pthis](const ksgui_OnControlClicked&) { 
+		pthis->dumpState();
+	};
+	_btnDump->evClicked.addHandler(_btnDump, btnHandler);
+	_form->addControl(_btnDump);
 
 	loadConfig();
-
-	if (canBeScaled) {
-		_form->scaleByMult_impl();
-	}
+	_form->scaleByMult_impl();
 
 	plugin->sim->gameScreen->addControl(_form, false);
 	plugin->sim->game->gui->taskbar->addForm(_form);
 
-	console_printf(L"PLUGIN \"%s\" initialized", AC_PLUGIN_NAME);
+	writeConsole(strf(L"PLUGIN \"%s\" initialized", AC_PLUGIN_NAME));
 }
 
 PluginForm::~PluginForm()
@@ -69,22 +74,66 @@ PluginForm::~PluginForm()
 	return;
 }
 
-void PluginForm::acpUpdate(float deltaT)
+bool PluginForm::acpUpdate(ACCarState* carState, float deltaT)
 {
 	_runTime += deltaT;
-	wchar_t buf[64];
-	swprintf(buf, _countof(buf)-1, L"runTime=%.3f; cars=%d", _runTime, (int)_sim->getCarsCount());
-	std::wstring text(buf);
-	_statLabel->setText(text);
+
+	auto car = _plugin->car;
+	auto& acc = car->accG;
+	auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
+	auto maxPower = car->drivetrain.acEngine.maxPowerW;
+	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic;
+	auto powerRatio = maxPowerDyn * 0.001f / car->mass;
+	
+	auto text(strf(L"%.1fkg ; %.1fNm ; %.2fkW ; %.2fkW(d) ; %.2fkW/kg(d)", 
+		car->mass, maxTorq, maxPower * 0.001f, maxPowerDyn * 0.001f, powerRatio));
+
+	_lbStat->setText(text);
+
+	return true;
+}
+
+bool PluginForm::acpOnGui(ACPluginContext* context)
+{
+	return true;
+}
+
+void PluginForm::dumpState()
+{
+	writeConsole(L"dump state");
+
+	log_printf(L"# simulated cars #");
+	for (auto av : _sim->cars) {
+		// av->physics is null in multiplayer
+		if (!av || !av->physics) continue;
+
+		auto car = av->physics;
+		auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
+		auto maxPower = car->drivetrain.acEngine.maxPowerW;
+		auto powerRatio = maxPower * 0.001f / car->mass;
+
+		log_printf(L"%s ; %s ; %.1fkg ; %.1fNm ; %.2fkW ; %.2fkW/kg", 
+			av->unixName.c_str(), av->guiName.c_str(), 
+			car->mass, maxTorq, maxPower * 0.001f, powerRatio
+		);
+	}
 }
 
 //
 // OVERRIDES
 //
 
-bool PluginForm::onMouseDown_vf10(OnMouseDownEvent & message)
+bool PluginForm::onMouseDown_vf10(OnMouseDownEvent& ev)
 {
-	return _form->onMouseDown_impl(message);
+	//writeConsole(L"onMouseDown_vf10");
+	bool res = _form->onMouseDown_impl(ev);
+	return res;
+}
+
+void PluginForm::onTitleClicked_vf21(ksgui_OnControlClicked& ev)
+{
+	//writeConsole(L"onTitleClicked_vf21");
+	_form->onTitleClicked_impl(ev);
 }
 
 //
@@ -144,19 +193,10 @@ std::wstring PluginForm::getConfigPath()
 	return path;
 }
 
-void PluginForm::console_printf(const wchar_t* format, ...)
+void PluginForm::writeConsole(const std::wstring& text)
 {
-	wchar_t buf[1024] = {0};
-	va_list args;
-	va_start(args, format);
-	const int count = _vsnwprintf_s(buf, _countof(buf) - 1, _TRUNCATE, format, args);
-	va_end(args);
-
-	if (count > 0)
-	{
-		std::wstring msg(buf);
-		_sim->console->operator<<(&msg);
-		msg.assign(L"\n");
-		_sim->console->operator<<(&msg);
-	}
+	std::wstring msg(text);
+	_sim->console->operator<<(&msg);
+	std::wstring nl(L"\n");
+	_sim->console->operator<<(&nl);
 }

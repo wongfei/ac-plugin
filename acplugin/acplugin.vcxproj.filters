@@ -15,6 +15,9 @@
     <ClCompile Include="PluginForm.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="vthook.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="plugin.h">
@@ -30,6 +33,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="vthook.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

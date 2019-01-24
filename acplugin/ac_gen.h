@@ -1,29 +1,5 @@
 // ### AUTO-GENERATED ###
 
-enum class SessionType {
-	Undefined = 0x0,
-	Pratice = 0x1,
-	Qualify = 0x2,
-	Race = 0x3,
-	Hotlap = 0x4,
-	TimeAttack = 0x5,
-	Drift = 0x6,
-	Drag = 0x7,
-};
-
-enum class MouseButton {
-	Unknown = 0xFF,
-	Left = 0x0,
-	Middle = 0x1,
-	Right = 0x2,
-};
-
-enum class JumpStartPenaltyMode {
-	eLockOnGridMode = 0x0,
-	eTeleportToPitMode = 0x1,
-	eDriveThroughMode = 0x2,
-};
-
 enum class eReplayStatus {
 	eReplayPlay = 0x0,
 	eReplayPause = 0x1,
@@ -71,6 +47,30 @@ enum class DriverActions {
 	eMGUHMode = 0x1B,
 };
 
+enum class SessionType {
+	Undefined = 0x0,
+	Pratice = 0x1,
+	Qualify = 0x2,
+	Race = 0x3,
+	Hotlap = 0x4,
+	TimeAttack = 0x5,
+	Drift = 0x6,
+	Drag = 0x7,
+};
+
+enum class JumpStartPenaltyMode {
+	eLockOnGridMode = 0x0,
+	eTeleportToPitMode = 0x1,
+	eDriveThroughMode = 0x2,
+};
+
+enum class GearChangeRequest {
+	eNoGearRequest = 0x0,
+	eChangeUp = 0x1,
+	eChangeDown = 0x2,
+	eChangeToGear = 0x3,
+};
+
 enum class DifferentialType {
 	LSD = 0x0,
 	Spool = 0x1,
@@ -82,11 +82,11 @@ enum class eTimeLineCheckResponse {
 	ePositiveSide = 0x2,
 };
 
-enum class GearChangeRequest {
-	eNoGearRequest = 0x0,
-	eChangeUp = 0x1,
-	eChangeDown = 0x2,
-	eChangeToGear = 0x3,
+enum class VoteType {
+	eVoteNextSession = 0x0,
+	eVoteRestartSession = 0x1,
+	eVoteKickUser = 0x2,
+	eVoteUnkonw = 0x3,
 };
 
 enum class PenaltyDescription {
@@ -95,6 +95,23 @@ enum class PenaltyDescription {
 	eCantPitPenalty = 0x2,
 	eMandatoryPit = 0x3,
 	eCut = 0x4,
+};
+
+enum class MouseButton {
+	Unknown = 0xFF,
+	Left = 0x0,
+	Middle = 0x1,
+	Right = 0x2,
+};
+
+enum class PenaltyType {
+	eNothing = 0x0,
+	eSecsOnResult5 = 0x1,
+	eSecsOnResult10 = 0x2,
+	eSecsOnResult20 = 0x3,
+	eSecsOnResult30 = 0x4,
+	eDriveThrough = 0x5,
+	eStopAndGo = 0x6,
 };
 
 enum class TelemetryUnits {
@@ -120,14 +137,9 @@ enum class TelemetryUnits {
 	eUnitRPM = 0x13,
 };
 
-enum class PenaltyType {
-	eNothing = 0x0,
-	eSecsOnResult5 = 0x1,
-	eSecsOnResult10 = 0x2,
-	eSecsOnResult20 = 0x3,
-	eSecsOnResult30 = 0x4,
-	eDriveThrough = 0x5,
-	eStopAndGo = 0x6,
+enum class DRWWingConnectionMode {
+	UseEffect = 0x0,
+	UseAngle = 0x1,
 };
 
 enum class eRenderTargetFormat {
@@ -140,11 +152,6 @@ enum class eRenderTargetFormat {
 	eR16F = 0x6,
 	eR16G16B16A16_MS = 0x7,
 	eR8G8B8A8_MS = 0x8,
-};
-
-enum class DRWWingConnectionMode {
-	UseEffect = 0x0,
-	UseAngle = 0x1,
 };
 
 enum class FlagEventType {
@@ -351,28 +358,29 @@ enum class SuspensionType {
 	Multilink = 0x3,
 };
 
-struct SVar;
-class Car;
-class CarAvatar;
-class ksgui_Spinner;
 class RenderWindow;
+class ksgui_Spinner;
+class Car;
 struct TyreThermalPatch;
-class ESCMenu;
 class ksgui_Control;
 class ksgui_CheckBox;
 class ksgui_ScrollBar;
 class ksgui_Slider;
+class CarAvatar;
+struct SVar;
+class ESCMenu;
 struct HWND__;
 struct HINSTANCE__;
-class GraphicsManager;
-class ICarControlsProvider;
 class ksgui_ListBox;
 struct ksgui_ListBoxRowData;
 class Wing;
+class ICarControlsProvider;
+class GraphicsManager;
 class Game;
 class GameObject;
 class Shader;
 class RaceManager;
+class NetCarStateProvider;
 class IRigidBody;
 class Task;
 class Suspension;
@@ -388,8 +396,14 @@ class Font;
 class ConsoleCommand;
 class IVarCallback;
 class PhysicsEngine;
+class IRayTrackCollisionProvider;
+class ACClient;
+class PhysicsAvatar;
 class Material;
 struct CarPhysicsState;
+class Node;
+struct CompileContext;
+struct RenderContext;
 class ksgui_GUI;
 class GLRenderer;
 class Turbo;
@@ -400,19 +414,17 @@ class ksgui_Label;
 class ksgui_ActiveButton;
 struct Tyre;
 class ksgui_MovingBar;
-class ksgui_PopOver;
 class ksgui_Form;
 class ksgui_TaskBarIcon;
+class ksgui_PopOver;
 class IndexBuffer;
 struct MeshVertex;
 class ksgui_ListBoxRow;
 class ITyreModel;
 struct SurfaceDef;
-class IRayTrackCollisionProvider;
 class IRayCaster;
 struct RayCastResult;
 class ksgui_Taskbar;
-class Node;
 class AudioEngine;
 class RenderTarget;
 class Camera;
@@ -437,9 +449,7 @@ class ACCameraManager;
 class NodeDirtCamera;
 class SystemMessage;
 class SystemNotification;
-class PhysicsAvatar;
 class ScreenCapturer;
-class ACClient;
 class Texture;
 class Console;
 class TimeLimitedTest;
@@ -458,8 +468,9 @@ class PvsProcessor;
 class GPUProfiler;
 class CubeMap;
 class CBuffer;
-struct RenderContext;
 class IVertexBuffer;
+class ACClientVotingManager;
+class WrongWayIndicator;
 class DriverModel;
 struct SetupManager;
 class NodeBoundingSphere;
@@ -467,7 +478,6 @@ class IEventTrigger;
 class CarAudioFMOD;
 class SkidMarkBuffer;
 class ISuspensionAvatar;
-class NetCarStateProvider;
 class CarLodManager;
 class ConstrainedObjectsManager;
 struct BackfireParams;
@@ -478,125 +488,47 @@ struct TyreThermalState;
 struct AIState;
 class Mesh;
 
-//UDT: struct TyreSlipOutput @len=8
-	//_Data: this+0x0, Member, Type: float, normalizedForce
-	//_Data: this+0x4, Member, Type: float, slip
+//UDT: struct ACClient::ClientEndSession @len=12
+	//_Data: this+0x0, Member, Type: bool, isConnectionFinished
+	//_Data: this+0x4, Member, Type: float, sendToPitsTimer
+	//_Data: this+0x8, Member, Type: float, shutdownTimer
+	//_Func: public void ClientEndSession(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct TyreSlipOutput {
+struct ACClient_ClientEndSession {
 public:
-	float normalizedForce;
-	float slip;
-	inline TyreSlipOutput()  { }
+	bool isConnectionFinished;
+	float sendToPitsTimer;
+	float shutdownTimer;
+	inline ACClient_ClientEndSession()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(TyreSlipOutput)==8),"bad size");
-		static_assert((offsetof(TyreSlipOutput,normalizedForce)==0x0),"bad off");
-		static_assert((offsetof(TyreSlipOutput,slip)==0x4),"bad off");
+		static_assert((sizeof(ACClient_ClientEndSession)==12),"bad size");
+		static_assert((offsetof(ACClient_ClientEndSession,isConnectionFinished)==0x0),"bad off");
+		static_assert((offsetof(ACClient_ClientEndSession,sendToPitsTimer)==0x4),"bad off");
+		static_assert((offsetof(ACClient_ClientEndSession,shutdownTimer)==0x8),"bad off");
 	};
 };
 
-//UDT: struct DownshiftProtection @len=12
-	//_Data: this+0x0, Member, Type: bool, isActive
-	//_Data: this+0x1, Member, Type: bool, isDebug
-	//_Data: this+0x4, Member, Type: int, overrev
-	//_Data: this+0x8, Member, Type: bool, lockN
-	//_Func: public void DownshiftProtection(); @loc=optimized @len=0 @rva=0
+//UDT: struct OnSectorSplitEvent @len=16
+	//_Data: this+0x0, Member, Type: unsigned int, carIndex
+	//_Data: this+0x4, Member, Type: unsigned int, sectorIndex
+	//_Data: this+0x8, Member, Type: unsigned int, sectorTime
+	//_Data: this+0xC, Member, Type: unsigned int, cuts
 //UDT;
 
-struct DownshiftProtection {
+struct OnSectorSplitEvent {
 public:
-	bool isActive;
-	bool isDebug;
-	int overrev;
-	bool lockN;
-	inline DownshiftProtection()  { }
+	unsigned int carIndex;
+	unsigned int sectorIndex;
+	unsigned int sectorTime;
+	unsigned int cuts;
+	inline OnSectorSplitEvent()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(DownshiftProtection)==12),"bad size");
-		static_assert((offsetof(DownshiftProtection,isActive)==0x0),"bad off");
-		static_assert((offsetof(DownshiftProtection,isDebug)==0x1),"bad off");
-		static_assert((offsetof(DownshiftProtection,overrev)==0x4),"bad off");
-		static_assert((offsetof(DownshiftProtection,lockN)==0x8),"bad off");
-	};
-};
-
-//UDT: struct TyreExternalInputs @len=16
-	//_Data: this+0x0, Member, Type: bool, isActive
-	//_Data: this+0x4, Member, Type: float, load
-	//_Data: this+0x8, Member, Type: float, slipAngle
-	//_Data: this+0xC, Member, Type: float, slipRatio
-	//_Func: public void TyreExternalInputs(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct TyreExternalInputs {
-public:
-	bool isActive;
-	float load;
-	float slipAngle;
-	float slipRatio;
-	inline TyreExternalInputs()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreExternalInputs)==16),"bad size");
-		static_assert((offsetof(TyreExternalInputs,isActive)==0x0),"bad off");
-		static_assert((offsetof(TyreExternalInputs,load)==0x4),"bad off");
-		static_assert((offsetof(TyreExternalInputs,slipAngle)==0x8),"bad off");
-		static_assert((offsetof(TyreExternalInputs,slipRatio)==0xC),"bad off");
-	};
-};
-
-//UDT: struct TurboDef @len=28
-	//_Func: public void TurboDef(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, maxBoost
-	//_Data: this+0x4, Member, Type: float, lagUP
-	//_Data: this+0x8, Member, Type: float, lagDN
-	//_Data: this+0xC, Member, Type: float, rpmRef
-	//_Data: this+0x10, Member, Type: float, gamma
-	//_Data: this+0x14, Member, Type: float, wastegate
-	//_Data: this+0x18, Member, Type: bool, isAdjustable
-//UDT;
-
-struct TurboDef {
-public:
-	float maxBoost;
-	float lagUP;
-	float lagDN;
-	float rpmRef;
-	float gamma;
-	float wastegate;
-	bool isAdjustable;
-	inline TurboDef()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TurboDef)==28),"bad size");
-		static_assert((offsetof(TurboDef,maxBoost)==0x0),"bad off");
-		static_assert((offsetof(TurboDef,lagUP)==0x4),"bad off");
-		static_assert((offsetof(TurboDef,lagDN)==0x8),"bad off");
-		static_assert((offsetof(TurboDef,rpmRef)==0xC),"bad off");
-		static_assert((offsetof(TurboDef,gamma)==0x10),"bad off");
-		static_assert((offsetof(TurboDef,wastegate)==0x14),"bad off");
-		static_assert((offsetof(TurboDef,isAdjustable)==0x18),"bad off");
-	};
-};
-
-//UDT: struct PitStopTime @len=16
-	//_Data: this+0x0, Member, Type: float, total
-	//_Data: this+0x4, Member, Type: float, tyres
-	//_Data: this+0x8, Member, Type: float, repair
-	//_Data: this+0xC, Member, Type: float, fuel
-	//_Func: public void PitStopTime(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct PitStopTime {
-public:
-	float total;
-	float tyres;
-	float repair;
-	float fuel;
-	inline PitStopTime()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(PitStopTime)==16),"bad size");
-		static_assert((offsetof(PitStopTime,total)==0x0),"bad off");
-		static_assert((offsetof(PitStopTime,tyres)==0x4),"bad off");
-		static_assert((offsetof(PitStopTime,repair)==0x8),"bad off");
-		static_assert((offsetof(PitStopTime,fuel)==0xC),"bad off");
+		static_assert((sizeof(OnSectorSplitEvent)==16),"bad size");
+		static_assert((offsetof(OnSectorSplitEvent,carIndex)==0x0),"bad off");
+		static_assert((offsetof(OnSectorSplitEvent,sectorIndex)==0x4),"bad off");
+		static_assert((offsetof(OnSectorSplitEvent,sectorTime)==0x8),"bad off");
+		static_assert((offsetof(OnSectorSplitEvent,cuts)==0xC),"bad off");
 	};
 };
 
@@ -633,165 +565,168 @@ public:
 	};
 };
 
-//UDT: struct SteerMzLowSpeedReduction @len=8
-	//_Data: this+0x0, Member, Type: float, speedKMH
-	//_Data: this+0x4, Member, Type: float, minValue
-	//_Func: public void SteerMzLowSpeedReduction(); @loc=optimized @len=0 @rva=0
+//UDT: struct CoastSettings @len=8
+	//_Data: this+0x0, Member, Type: float, coast1
+	//_Data: this+0x4, Member, Type: float, coast2
 //UDT;
 
-struct SteerMzLowSpeedReduction {
+struct CoastSettings {
 public:
-	float speedKMH;
-	float minValue;
-	inline SteerMzLowSpeedReduction()  { }
+	float coast1;
+	float coast2;
+	inline CoastSettings()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(SteerMzLowSpeedReduction)==8),"bad size");
-		static_assert((offsetof(SteerMzLowSpeedReduction,speedKMH)==0x0),"bad off");
-		static_assert((offsetof(SteerMzLowSpeedReduction,minValue)==0x4),"bad off");
+		static_assert((sizeof(CoastSettings)==8),"bad size");
+		static_assert((offsetof(CoastSettings,coast1)==0x0),"bad off");
+		static_assert((offsetof(CoastSettings,coast2)==0x4),"bad off");
 	};
 };
 
-//UDT: struct SCarStateAero @len=12
-	//_Func: public void SCarStateAero(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, CD
-	//_Data: this+0x4, Member, Type: float, CL_Front
-	//_Data: this+0x8, Member, Type: float, CL_Rear
+//UDT: struct AWD2Data @len=24
+	//_Data: this+0x0, Member, Type: double, ramp
+	//_Data: this+0x8, Member, Type: double, maxTorque
+	//_Data: this+0x10, Member, Type: float, currentLockTorque
+	//_Func: public void AWD2Data(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct SCarStateAero {
+struct AWD2Data {
 public:
-	float CD;
-	float CL_Front;
-	float CL_Rear;
-	inline SCarStateAero()  { }
+	double ramp;
+	double maxTorque;
+	float currentLockTorque;
+	inline AWD2Data()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(SCarStateAero)==12),"bad size");
-		static_assert((offsetof(SCarStateAero,CD)==0x0),"bad off");
-		static_assert((offsetof(SCarStateAero,CL_Front)==0x4),"bad off");
-		static_assert((offsetof(SCarStateAero,CL_Rear)==0x8),"bad off");
+		static_assert((sizeof(AWD2Data)==24),"bad size");
+		static_assert((offsetof(AWD2Data,ramp)==0x0),"bad off");
+		static_assert((offsetof(AWD2Data,maxTorque)==0x8),"bad off");
+		static_assert((offsetof(AWD2Data,currentLockTorque)==0x10),"bad off");
 	};
 };
 
-//UDT: struct PerformanceSplit @len=16
-	//_Data: this+0x0, Member, Type: double, t
-	//_Data: this+0x8, Member, Type: float, speedMS
-	//_Func: public void PerformanceSplit(); @loc=optimized @len=0 @rva=0
+//UDT: struct PitStopTime @len=16
+	//_Data: this+0x0, Member, Type: float, total
+	//_Data: this+0x4, Member, Type: float, tyres
+	//_Data: this+0x8, Member, Type: float, repair
+	//_Data: this+0xC, Member, Type: float, fuel
+	//_Func: public void PitStopTime(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct PerformanceSplit {
+struct PitStopTime {
 public:
-	double t;
-	float speedMS;
-	inline PerformanceSplit()  { }
+	float total;
+	float tyres;
+	float repair;
+	float fuel;
+	inline PitStopTime()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(PerformanceSplit)==16),"bad size");
-		static_assert((offsetof(PerformanceSplit,t)==0x0),"bad off");
-		static_assert((offsetof(PerformanceSplit,speedMS)==0x8),"bad off");
+		static_assert((sizeof(PitStopTime)==16),"bad size");
+		static_assert((offsetof(PitStopTime,total)==0x0),"bad off");
+		static_assert((offsetof(PitStopTime,tyres)==0x4),"bad off");
+		static_assert((offsetof(PitStopTime,repair)==0x8),"bad off");
+		static_assert((offsetof(PitStopTime,fuel)==0xC),"bad off");
 	};
 };
 
-//UDT: struct CommandItem @len=4
-	//_Func: public void CommandItem(int akey); @loc=static @len=6 @rva=953184
-	//_Func: public void CommandItem(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: int, key
+//UDT: struct SurfaceDef @len=200
+	//_Func: public void SurfaceDef(SurfaceDef &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SurfaceDef(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: wchar_t[0x40], wavString
+	//_Data: this+0x80, Member, Type: float, wavPitchSpeed
+	//_Data: this+0x88, Member, Type: void *, userPointer
+	//_Data: this+0x90, Member, Type: float, gripMod
+	//_Data: this+0x94, Member, Type: int, sectorID
+	//_Data: this+0x98, Member, Type: float, dirtAdditiveK
+	//_Data: this+0x9C, Member, Type: unsigned int, collisionCategory
+	//_Data: this+0xA0, Member, Type: bool, isValidTrack
+	//_Data: this+0xA4, Member, Type: float, blackFlagTime
+	//_Data: this+0xA8, Member, Type: float, sinHeight
+	//_Data: this+0xAC, Member, Type: float, sinLength
+	//_Data: this+0xB0, Member, Type: bool, isPitlane
+	//_Data: this+0xB4, Member, Type: float, damping
+	//_Data: this+0xB8, Member, Type: float, granularity
+	//_Data: this+0xBC, Member, Type: float, vibrationGain
+	//_Data: this+0xC0, Member, Type: float, vibrationLength
 //UDT;
 
-struct CommandItem {
+struct SurfaceDef {
 public:
-	int key;
-	inline CommandItem()  { }
-	inline void ctor(int akey) { typedef void (*_fpt)(CommandItem *pthis, int); _fpt _f=(_fpt)_drva(953184); _f(this, akey); }
+	wchar_t wavString[0x40];
+	float wavPitchSpeed;
+	void * userPointer;
+	float gripMod;
+	int sectorID;
+	float dirtAdditiveK;
+	unsigned int collisionCategory;
+	bool isValidTrack;
+	float blackFlagTime;
+	float sinHeight;
+	float sinLength;
+	bool isPitlane;
+	float damping;
+	float granularity;
+	float vibrationGain;
+	float vibrationLength;
+	inline SurfaceDef()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(CommandItem)==4),"bad size");
-		static_assert((offsetof(CommandItem,key)==0x0),"bad off");
+		static_assert((sizeof(SurfaceDef)==200),"bad size");
+		static_assert((offsetof(SurfaceDef,wavString)==0x0),"bad off");
+		static_assert((offsetof(SurfaceDef,wavPitchSpeed)==0x80),"bad off");
+		static_assert((offsetof(SurfaceDef,userPointer)==0x88),"bad off");
+		static_assert((offsetof(SurfaceDef,gripMod)==0x90),"bad off");
+		static_assert((offsetof(SurfaceDef,sectorID)==0x94),"bad off");
+		static_assert((offsetof(SurfaceDef,dirtAdditiveK)==0x98),"bad off");
+		static_assert((offsetof(SurfaceDef,collisionCategory)==0x9C),"bad off");
+		static_assert((offsetof(SurfaceDef,isValidTrack)==0xA0),"bad off");
+		static_assert((offsetof(SurfaceDef,blackFlagTime)==0xA4),"bad off");
+		static_assert((offsetof(SurfaceDef,sinHeight)==0xA8),"bad off");
+		static_assert((offsetof(SurfaceDef,sinLength)==0xAC),"bad off");
+		static_assert((offsetof(SurfaceDef,isPitlane)==0xB0),"bad off");
+		static_assert((offsetof(SurfaceDef,damping)==0xB4),"bad off");
+		static_assert((offsetof(SurfaceDef,granularity)==0xB8),"bad off");
+		static_assert((offsetof(SurfaceDef,vibrationGain)==0xBC),"bad off");
+		static_assert((offsetof(SurfaceDef,vibrationLength)==0xC0),"bad off");
 	};
 };
 
-//UDT: struct SACEngineInput @len=16
-	//_Data: this+0x0, Member, Type: float, gasInput
-	//_Data: this+0x4, Member, Type: float, carSpeed
-	//_Data: this+0x8, Member, Type: float, altitude
-	//_Data: this+0xC, Member, Type: float, rpm
-	//_Func: public void SACEngineInput(); @loc=optimized @len=0 @rva=0
+//UDT: struct PitStopTimings @len=20
+	//_Data: this+0x0, Member, Type: float, tyreChangeTimeSec
+	//_Data: this+0x4, Member, Type: float, fuelChangeTimeSec
+	//_Data: this+0x8, Member, Type: float, bodyRepairTimeSec
+	//_Data: this+0xC, Member, Type: float, engineRepairTimeSec
+	//_Data: this+0x10, Member, Type: float, suspRepairTimeSec
+	//_Func: public void PitStopTimings(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct SACEngineInput {
+struct PitStopTimings {
 public:
-	float gasInput;
-	float carSpeed;
-	float altitude;
-	float rpm;
-	inline SACEngineInput()  { }
+	float tyreChangeTimeSec;
+	float fuelChangeTimeSec;
+	float bodyRepairTimeSec;
+	float engineRepairTimeSec;
+	float suspRepairTimeSec;
+	inline PitStopTimings()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(SACEngineInput)==16),"bad size");
-		static_assert((offsetof(SACEngineInput,gasInput)==0x0),"bad off");
-		static_assert((offsetof(SACEngineInput,carSpeed)==0x4),"bad off");
-		static_assert((offsetof(SACEngineInput,altitude)==0x8),"bad off");
-		static_assert((offsetof(SACEngineInput,rpm)==0xC),"bad off");
+		static_assert((sizeof(PitStopTimings)==20),"bad size");
+		static_assert((offsetof(PitStopTimings,tyreChangeTimeSec)==0x0),"bad off");
+		static_assert((offsetof(PitStopTimings,fuelChangeTimeSec)==0x4),"bad off");
+		static_assert((offsetof(PitStopTimings,bodyRepairTimeSec)==0x8),"bad off");
+		static_assert((offsetof(PitStopTimings,engineRepairTimeSec)==0xC),"bad off");
+		static_assert((offsetof(PitStopTimings,suspRepairTimeSec)==0x10),"bad off");
 	};
 };
 
-//UDT: struct OnWindowResize @len=8
-	//_Data: this+0x0, Member, Type: int, width
-	//_Data: this+0x4, Member, Type: int, height
+//UDT: struct SplineLocationData @len=4
+	//_Func: public void SplineLocationData(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, currentIndex
 //UDT;
 
-struct OnWindowResize {
+struct SplineLocationData {
 public:
-	int width;
-	int height;
-	inline OnWindowResize()  { }
+	int currentIndex;
+	inline SplineLocationData()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(OnWindowResize)==8),"bad size");
-		static_assert((offsetof(OnWindowResize,width)==0x0),"bad off");
-		static_assert((offsetof(OnWindowResize,height)==0x4),"bad off");
-	};
-};
-
-//UDT: struct TyreModelInput @len=48
-	//_Data: this+0x0, Member, Type: float, load
-	//_Data: this+0x4, Member, Type: float, slipAngleRAD
-	//_Data: this+0x8, Member, Type: float, slipRatio
-	//_Data: this+0xC, Member, Type: float, camberRAD
-	//_Data: this+0x10, Member, Type: float, speed
-	//_Data: this+0x14, Member, Type: float, u
-	//_Data: this+0x18, Member, Type: int, tyreIndex
-	//_Data: this+0x1C, Member, Type: float, cpLength
-	//_Data: this+0x20, Member, Type: float, grain
-	//_Data: this+0x24, Member, Type: float, blister
-	//_Data: this+0x28, Member, Type: float, pressureRatio
-	//_Data: this+0x2C, Member, Type: bool, useSimpleModel
-//UDT;
-
-struct TyreModelInput {
-public:
-	float load;
-	float slipAngleRAD;
-	float slipRatio;
-	float camberRAD;
-	float speed;
-	float u;
-	int tyreIndex;
-	float cpLength;
-	float grain;
-	float blister;
-	float pressureRatio;
-	bool useSimpleModel;
-	inline TyreModelInput()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreModelInput)==48),"bad size");
-		static_assert((offsetof(TyreModelInput,load)==0x0),"bad off");
-		static_assert((offsetof(TyreModelInput,slipAngleRAD)==0x4),"bad off");
-		static_assert((offsetof(TyreModelInput,slipRatio)==0x8),"bad off");
-		static_assert((offsetof(TyreModelInput,camberRAD)==0xC),"bad off");
-		static_assert((offsetof(TyreModelInput,speed)==0x10),"bad off");
-		static_assert((offsetof(TyreModelInput,u)==0x14),"bad off");
-		static_assert((offsetof(TyreModelInput,tyreIndex)==0x18),"bad off");
-		static_assert((offsetof(TyreModelInput,cpLength)==0x1C),"bad off");
-		static_assert((offsetof(TyreModelInput,grain)==0x20),"bad off");
-		static_assert((offsetof(TyreModelInput,blister)==0x24),"bad off");
-		static_assert((offsetof(TyreModelInput,pressureRatio)==0x28),"bad off");
-		static_assert((offsetof(TyreModelInput,useSimpleModel)==0x2C),"bad off");
+		static_assert((sizeof(SplineLocationData)==4),"bad size");
+		static_assert((offsetof(SplineLocationData,currentIndex)==0x0),"bad off");
 	};
 };
 
@@ -893,6 +828,41 @@ public:
 		static_assert((offsetof(ACCarState,damageZoneLevel)==0x12C),"bad off");
 		static_assert((offsetof(ACCarState,limiterRPM)==0x140),"bad off");
 		static_assert((offsetof(ACCarState,speedMS)==0x144),"bad off");
+	};
+};
+
+//UDT: struct ClientQOSData @len=24
+	//_Data: this+0x0, Member, Type: bool, usingMegapackets
+	//_Data: this+0x4, Member, Type: int, counter
+	//_Data: this+0x8, Member, Type: double, startTime
+	//_Data: this+0x10, Member, Type: int, lastQOS
+	//_Func: public void ClientQOSData(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ClientQOSData {
+public:
+	bool usingMegapackets;
+	int counter;
+	double startTime;
+	int lastQOS;
+	inline ClientQOSData()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ClientQOSData)==24),"bad size");
+		static_assert((offsetof(ClientQOSData,usingMegapackets)==0x0),"bad off");
+		static_assert((offsetof(ClientQOSData,counter)==0x4),"bad off");
+		static_assert((offsetof(ClientQOSData,startTime)==0x8),"bad off");
+		static_assert((offsetof(ClientQOSData,lastQOS)==0x10),"bad off");
+	};
+};
+
+//UDT: struct ACPluginContext @len=1
+//UDT;
+
+struct ACPluginContext {
+public:
+	inline ACPluginContext()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ACPluginContext)==1),"bad size");
 	};
 };
 
@@ -1043,20 +1013,75 @@ public:
 	};
 };
 
-//UDT: struct CoastSettings @len=8
-	//_Data: this+0x0, Member, Type: float, coast1
-	//_Data: this+0x4, Member, Type: float, coast2
+//UDT: struct TyreThermalState @len=192
+	//_Data: this+0x0, Member, Type: float[0x3][0xC], temps
+	//_Data: this+0x90, Member, Type: float, coreTemp
+	//_Data: this+0x94, Member, Type: float, thermalInput
+	//_Data: this+0x98, Member, Type: float, dynamicPressure
+	//_Data: this+0x9C, Member, Type: float, staticPressure
+	//_Data: this+0xA0, Member, Type: float[0x3], lastSetIMO
+	//_Data: this+0xAC, Member, Type: float, cpTemperature
+	//_Data: this+0xB0, Member, Type: float, lastGrain
+	//_Data: this+0xB4, Member, Type: float, lastBlister
+	//_Data: this+0xB8, Member, Type: float, mult
+	//_Data: this+0xBC, Member, Type: bool, isHot
+	//_Func: public void TyreThermalState(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct CoastSettings {
+struct TyreThermalState {
 public:
-	float coast1;
-	float coast2;
-	inline CoastSettings()  { }
+	float temps[0x3][0xC];
+	float coreTemp;
+	float thermalInput;
+	float dynamicPressure;
+	float staticPressure;
+	float lastSetIMO[0x3];
+	float cpTemperature;
+	float lastGrain;
+	float lastBlister;
+	float mult;
+	bool isHot;
+	inline TyreThermalState()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(CoastSettings)==8),"bad size");
-		static_assert((offsetof(CoastSettings,coast1)==0x0),"bad off");
-		static_assert((offsetof(CoastSettings,coast2)==0x4),"bad off");
+		static_assert((sizeof(TyreThermalState)==192),"bad size");
+		static_assert((offsetof(TyreThermalState,temps)==0x0),"bad off");
+		static_assert((offsetof(TyreThermalState,coreTemp)==0x90),"bad off");
+		static_assert((offsetof(TyreThermalState,thermalInput)==0x94),"bad off");
+		static_assert((offsetof(TyreThermalState,dynamicPressure)==0x98),"bad off");
+		static_assert((offsetof(TyreThermalState,staticPressure)==0x9C),"bad off");
+		static_assert((offsetof(TyreThermalState,lastSetIMO)==0xA0),"bad off");
+		static_assert((offsetof(TyreThermalState,cpTemperature)==0xAC),"bad off");
+		static_assert((offsetof(TyreThermalState,lastGrain)==0xB0),"bad off");
+		static_assert((offsetof(TyreThermalState,lastBlister)==0xB4),"bad off");
+		static_assert((offsetof(TyreThermalState,mult)==0xB8),"bad off");
+		static_assert((offsetof(TyreThermalState,isHot)==0xBC),"bad off");
+	};
+};
+
+//UDT: struct TyrePatchData @len=20
+	//_Func: public void TyrePatchData(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, surfaceTransfer
+	//_Data: this+0x4, Member, Type: float, patchTransfer
+	//_Data: this+0x8, Member, Type: float, patchCoreTransfer
+	//_Data: this+0xC, Member, Type: float, internalCoreTransfer
+	//_Data: this+0x10, Member, Type: float, coolFactorGain
+//UDT;
+
+struct TyrePatchData {
+public:
+	float surfaceTransfer;
+	float patchTransfer;
+	float patchCoreTransfer;
+	float internalCoreTransfer;
+	float coolFactorGain;
+	inline TyrePatchData()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyrePatchData)==20),"bad size");
+		static_assert((offsetof(TyrePatchData,surfaceTransfer)==0x0),"bad off");
+		static_assert((offsetof(TyrePatchData,patchTransfer)==0x4),"bad off");
+		static_assert((offsetof(TyrePatchData,patchCoreTransfer)==0x8),"bad off");
+		static_assert((offsetof(TyrePatchData,internalCoreTransfer)==0xC),"bad off");
+		static_assert((offsetof(TyrePatchData,coolFactorGain)==0x10),"bad off");
 	};
 };
 
@@ -1180,264 +1205,6 @@ public:
 	};
 };
 
-//UDT: struct ACPluginContext @len=1
-//UDT;
-
-struct ACPluginContext {
-public:
-	inline ACPluginContext()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(ACPluginContext)==1),"bad size");
-	};
-};
-
-//UDT: struct HDRLevels @len=8
-	//_Func: public void HDRLevels(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, minExposure
-	//_Data: this+0x4, Member, Type: float, maxExposure
-//UDT;
-
-struct HDRLevels {
-public:
-	float minExposure;
-	float maxExposure;
-	inline HDRLevels()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(HDRLevels)==8),"bad size");
-		static_assert((offsetof(HDRLevels,minExposure)==0x0),"bad off");
-		static_assert((offsetof(HDRLevels,maxExposure)==0x4),"bad off");
-	};
-};
-
-//UDT: class SignalGenerator @len=16 @vfcount=3
-	//_VTable: 
-	//_Func: public void SignalGenerator(SignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SignalGenerator(); @loc=static @len=22 @rva=2282048
-	//_Func: public void ~SignalGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2282080
-	//_Data: this+0x8, Member, Type: float, freqScale
-	//_Func: public void step(float dt); @intro @virtual vtpo=0 vfid=1 @loc=static @len=21 @rva=2282240
-	//_Func: public float getValue(); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
-	//_Data: this+0xC, Member, Type: int, value
-	//_Func: public SignalGenerator & operator=(SignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class SignalGenerator {
-public:
-	float freqScale;
-	int value;
-	inline SignalGenerator()  { }
-	inline void ctor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282048); _f(this); }
-	virtual ~SignalGenerator();
-	inline void dtor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282080); _f(this); }
-	virtual void step_vf1(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SignalGenerator *pthis, float); _fpt _f=(_fpt)_drva(2282240); return _f(this, dt); }
-	inline void step(float dt) { return step_vf1(dt); }
-	virtual float getValue_vf2() = 0;
-	inline float getValue() { return getValue_vf2(); }
-	inline void _guard_obj() {
-		static_assert((sizeof(SignalGenerator)==16),"bad size");
-		static_assert((offsetof(SignalGenerator,freqScale)==0x8),"bad off");
-		static_assert((offsetof(SignalGenerator,value)==0xC),"bad off");
-	};
-};
-
-//UDT: struct AWD2Data @len=24
-	//_Data: this+0x0, Member, Type: double, ramp
-	//_Data: this+0x8, Member, Type: double, maxTorque
-	//_Data: this+0x10, Member, Type: float, currentLockTorque
-	//_Func: public void AWD2Data(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct AWD2Data {
-public:
-	double ramp;
-	double maxTorque;
-	float currentLockTorque;
-	inline AWD2Data()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(AWD2Data)==24),"bad size");
-		static_assert((offsetof(AWD2Data,ramp)==0x0),"bad off");
-		static_assert((offsetof(AWD2Data,maxTorque)==0x8),"bad off");
-		static_assert((offsetof(AWD2Data,currentLockTorque)==0x10),"bad off");
-	};
-};
-
-//UDT: struct GameStats @len=40
-	//_Func: public void GameStats(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: double, cpuTime
-	//_Data: this+0x8, Member, Type: double, updateTime
-	//_Data: this+0x10, Member, Type: double, renderHUDTime
-	//_Data: this+0x18, Member, Type: double, renderTime
-	//_Data: this+0x20, Member, Type: double, renderAudioTime
-//UDT;
-
-struct GameStats {
-public:
-	double cpuTime;
-	double updateTime;
-	double renderHUDTime;
-	double renderTime;
-	double renderAudioTime;
-	inline GameStats()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(GameStats)==40),"bad size");
-		static_assert((offsetof(GameStats,cpuTime)==0x0),"bad off");
-		static_assert((offsetof(GameStats,updateTime)==0x8),"bad off");
-		static_assert((offsetof(GameStats,renderHUDTime)==0x10),"bad off");
-		static_assert((offsetof(GameStats,renderTime)==0x18),"bad off");
-		static_assert((offsetof(GameStats,renderAudioTime)==0x20),"bad off");
-	};
-};
-
-//UDT: struct EngineStatus @len=24
-	//_Data: this+0x0, Member, Type: double, outTorque
-	//_Data: this+0x8, Member, Type: double, externalCoastTorque
-	//_Data: this+0x10, Member, Type: float, turboBoost
-	//_Data: this+0x14, Member, Type: bool, isLimiterOn
-	//_Func: public void EngineStatus(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct EngineStatus {
-public:
-	double outTorque;
-	double externalCoastTorque;
-	float turboBoost;
-	bool isLimiterOn;
-	inline EngineStatus()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(EngineStatus)==24),"bad size");
-		static_assert((offsetof(EngineStatus,outTorque)==0x0),"bad off");
-		static_assert((offsetof(EngineStatus,externalCoastTorque)==0x8),"bad off");
-		static_assert((offsetof(EngineStatus,turboBoost)==0x10),"bad off");
-		static_assert((offsetof(EngineStatus,isLimiterOn)==0x14),"bad off");
-	};
-};
-
-//UDT: struct TyreModelOutput @len=28
-	//_Data: this+0x0, Member, Type: float, Fy
-	//_Data: this+0x4, Member, Type: float, Fx
-	//_Data: this+0x8, Member, Type: float, Mz
-	//_Data: this+0xC, Member, Type: float, trail
-	//_Data: this+0x10, Member, Type: float, ndSlip
-	//_Data: this+0x14, Member, Type: float, Dy
-	//_Data: this+0x18, Member, Type: float, Dx
-//UDT;
-
-struct TyreModelOutput {
-public:
-	float Fy;
-	float Fx;
-	float Mz;
-	float trail;
-	float ndSlip;
-	float Dy;
-	float Dx;
-	inline TyreModelOutput()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreModelOutput)==28),"bad size");
-		static_assert((offsetof(TyreModelOutput,Fy)==0x0),"bad off");
-		static_assert((offsetof(TyreModelOutput,Fx)==0x4),"bad off");
-		static_assert((offsetof(TyreModelOutput,Mz)==0x8),"bad off");
-		static_assert((offsetof(TyreModelOutput,trail)==0xC),"bad off");
-		static_assert((offsetof(TyreModelOutput,ndSlip)==0x10),"bad off");
-		static_assert((offsetof(TyreModelOutput,Dy)==0x14),"bad off");
-		static_assert((offsetof(TyreModelOutput,Dx)==0x18),"bad off");
-	};
-};
-
-//UDT: struct PitStopTimings @len=20
-	//_Data: this+0x0, Member, Type: float, tyreChangeTimeSec
-	//_Data: this+0x4, Member, Type: float, fuelChangeTimeSec
-	//_Data: this+0x8, Member, Type: float, bodyRepairTimeSec
-	//_Data: this+0xC, Member, Type: float, engineRepairTimeSec
-	//_Data: this+0x10, Member, Type: float, suspRepairTimeSec
-	//_Func: public void PitStopTimings(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct PitStopTimings {
-public:
-	float tyreChangeTimeSec;
-	float fuelChangeTimeSec;
-	float bodyRepairTimeSec;
-	float engineRepairTimeSec;
-	float suspRepairTimeSec;
-	inline PitStopTimings()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(PitStopTimings)==20),"bad size");
-		static_assert((offsetof(PitStopTimings,tyreChangeTimeSec)==0x0),"bad off");
-		static_assert((offsetof(PitStopTimings,fuelChangeTimeSec)==0x4),"bad off");
-		static_assert((offsetof(PitStopTimings,bodyRepairTimeSec)==0x8),"bad off");
-		static_assert((offsetof(PitStopTimings,engineRepairTimeSec)==0xC),"bad off");
-		static_assert((offsetof(PitStopTimings,suspRepairTimeSec)==0x10),"bad off");
-	};
-};
-
-//UDT: struct HeaveSpringStatus @len=4
-	//_Func: public void HeaveSpringStatus(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, travel
-//UDT;
-
-struct HeaveSpringStatus {
-public:
-	float travel;
-	inline HeaveSpringStatus()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(HeaveSpringStatus)==4),"bad size");
-		static_assert((offsetof(HeaveSpringStatus,travel)==0x0),"bad off");
-	};
-};
-
-//UDT: class vec2f @len=8
-	//_Data: this+0x0, Member, Type: float, x
-	//_Data: this+0x4, Member, Type: float, y
-	//_Func: public void vec2f(float ix, float iy); @loc=static @len=13 @rva=216944
-	//_Func: public void vec2f(); @loc=optimized @len=0 @rva=0
-	//_Func: public float length(); @loc=optimized @len=0 @rva=0
-	//_Func: public void normalize(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class vec2f {
-public:
-	float x;
-	float y;
-	inline vec2f()  { }
-	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
-	inline void _guard_obj() {
-		static_assert((sizeof(vec2f)==8),"bad size");
-		static_assert((offsetof(vec2f,x)==0x0),"bad off");
-		static_assert((offsetof(vec2f,y)==0x4),"bad off");
-	};
-};
-
-//UDT: struct TyrePatchData @len=20
-	//_Func: public void TyrePatchData(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, surfaceTransfer
-	//_Data: this+0x4, Member, Type: float, patchTransfer
-	//_Data: this+0x8, Member, Type: float, patchCoreTransfer
-	//_Data: this+0xC, Member, Type: float, internalCoreTransfer
-	//_Data: this+0x10, Member, Type: float, coolFactorGain
-//UDT;
-
-struct TyrePatchData {
-public:
-	float surfaceTransfer;
-	float patchTransfer;
-	float patchCoreTransfer;
-	float internalCoreTransfer;
-	float coolFactorGain;
-	inline TyrePatchData()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyrePatchData)==20),"bad size");
-		static_assert((offsetof(TyrePatchData,surfaceTransfer)==0x0),"bad off");
-		static_assert((offsetof(TyrePatchData,patchTransfer)==0x4),"bad off");
-		static_assert((offsetof(TyrePatchData,patchCoreTransfer)==0x8),"bad off");
-		static_assert((offsetof(TyrePatchData,internalCoreTransfer)==0xC),"bad off");
-		static_assert((offsetof(TyrePatchData,coolFactorGain)==0x10),"bad off");
-	};
-};
-
 //UDT: struct ksgui::GUI::FormData @len=16
 	//_Data: this+0x0, Member, Type: float, x
 	//_Data: this+0x4, Member, Type: float, y
@@ -1462,128 +1229,6 @@ public:
 		static_assert((offsetof(ksgui_GUI_FormData,visible)==0x8),"bad off");
 		static_assert((offsetof(ksgui_GUI_FormData,blocked)==0x9),"bad off");
 		static_assert((offsetof(ksgui_GUI_FormData,scale)==0xC),"bad off");
-	};
-};
-
-//UDT: struct TyreThermalState @len=192
-	//_Data: this+0x0, Member, Type: float[0x3][0xC], temps
-	//_Data: this+0x90, Member, Type: float, coreTemp
-	//_Data: this+0x94, Member, Type: float, thermalInput
-	//_Data: this+0x98, Member, Type: float, dynamicPressure
-	//_Data: this+0x9C, Member, Type: float, staticPressure
-	//_Data: this+0xA0, Member, Type: float[0x3], lastSetIMO
-	//_Data: this+0xAC, Member, Type: float, cpTemperature
-	//_Data: this+0xB0, Member, Type: float, lastGrain
-	//_Data: this+0xB4, Member, Type: float, lastBlister
-	//_Data: this+0xB8, Member, Type: float, mult
-	//_Data: this+0xBC, Member, Type: bool, isHot
-	//_Func: public void TyreThermalState(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct TyreThermalState {
-public:
-	float temps[0x3][0xC];
-	float coreTemp;
-	float thermalInput;
-	float dynamicPressure;
-	float staticPressure;
-	float lastSetIMO[0x3];
-	float cpTemperature;
-	float lastGrain;
-	float lastBlister;
-	float mult;
-	bool isHot;
-	inline TyreThermalState()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreThermalState)==192),"bad size");
-		static_assert((offsetof(TyreThermalState,temps)==0x0),"bad off");
-		static_assert((offsetof(TyreThermalState,coreTemp)==0x90),"bad off");
-		static_assert((offsetof(TyreThermalState,thermalInput)==0x94),"bad off");
-		static_assert((offsetof(TyreThermalState,dynamicPressure)==0x98),"bad off");
-		static_assert((offsetof(TyreThermalState,staticPressure)==0x9C),"bad off");
-		static_assert((offsetof(TyreThermalState,lastSetIMO)==0xA0),"bad off");
-		static_assert((offsetof(TyreThermalState,cpTemperature)==0xAC),"bad off");
-		static_assert((offsetof(TyreThermalState,lastGrain)==0xB0),"bad off");
-		static_assert((offsetof(TyreThermalState,lastBlister)==0xB4),"bad off");
-		static_assert((offsetof(TyreThermalState,mult)==0xB8),"bad off");
-		static_assert((offsetof(TyreThermalState,isHot)==0xBC),"bad off");
-	};
-};
-
-//UDT: class ITorqueGenerator @len=8 @vfcount=2
-	//_VTable: 
-	//_Func: public void ~ITorqueGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2549840
-	//_Func: public float getOutputTorque(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void ITorqueGenerator(ITorqueGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ITorqueGenerator(); @loc=optimized @len=0 @rva=0
-	//_Func: public ITorqueGenerator & operator=(ITorqueGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ITorqueGenerator {
-public:
-	inline ITorqueGenerator()  { }
-	virtual ~ITorqueGenerator();
-	inline void dtor() { typedef void (*_fpt)(ITorqueGenerator *pthis); _fpt _f=(_fpt)_drva(2549840); _f(this); }
-	virtual float getOutputTorque_vf1() = 0;
-	inline float getOutputTorque() { return getOutputTorque_vf1(); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ITorqueGenerator)==8),"bad size");
-	};
-};
-
-//UDT: struct WingOverrideDef @len=8
-	//_Data: this+0x0, Member, Type: float, overrideAngle
-	//_Data: this+0x4, Member, Type: bool, isActive
-	//_Func: public void WingOverrideDef(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct WingOverrideDef {
-public:
-	float overrideAngle;
-	bool isActive;
-	inline WingOverrideDef()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(WingOverrideDef)==8),"bad size");
-		static_assert((offsetof(WingOverrideDef,overrideAngle)==0x0),"bad off");
-		static_assert((offsetof(WingOverrideDef,isActive)==0x4),"bad off");
-	};
-};
-
-//UDT: class Damper @len=24
-	//_Func: public void Damper(); @loc=static @len=45 @rva=2830928
-	//_Func: public void ~Damper(); @loc=static @len=3 @rva=96368
-	//_Data: this+0x0, Member, Type: float, reboundSlow
-	//_Data: this+0x4, Member, Type: float, reboundFast
-	//_Data: this+0x8, Member, Type: float, bumpSlow
-	//_Data: this+0xC, Member, Type: float, bumpFast
-	//_Data: this+0x10, Member, Type: float, fastThresholdBump
-	//_Data: this+0x14, Member, Type: float, fastThresholdRebound
-	//_Func: public float getForce(float v); @loc=static @len=119 @rva=2830976
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Damper {
-public:
-	float reboundSlow;
-	float reboundFast;
-	float bumpSlow;
-	float bumpFast;
-	float fastThresholdBump;
-	float fastThresholdRebound;
-	inline Damper()  { }
-	inline void ctor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(2830928); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Damper)==24),"bad size");
-		static_assert((offsetof(Damper,reboundSlow)==0x0),"bad off");
-		static_assert((offsetof(Damper,reboundFast)==0x4),"bad off");
-		static_assert((offsetof(Damper,bumpSlow)==0x8),"bad off");
-		static_assert((offsetof(Damper,bumpFast)==0xC),"bad off");
-		static_assert((offsetof(Damper,fastThresholdBump)==0x10),"bad off");
-		static_assert((offsetof(Damper,fastThresholdRebound)==0x14),"bad off");
 	};
 };
 
@@ -1653,26 +1298,54 @@ public:
 	};
 };
 
-//UDT: class ICoastGenerator @len=8 @vfcount=2
-	//_VTable: 
-	//_Func: public void ~ICoastGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2693184
-	//_Func: public float getCoastTorque(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void ICoastGenerator(ICoastGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ICoastGenerator(); @loc=optimized @len=0 @rva=0
-	//_Func: public ICoastGenerator & operator=(ICoastGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT: struct GameStats @len=40
+	//_Func: public void GameStats(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: double, cpuTime
+	//_Data: this+0x8, Member, Type: double, updateTime
+	//_Data: this+0x10, Member, Type: double, renderHUDTime
+	//_Data: this+0x18, Member, Type: double, renderTime
+	//_Data: this+0x20, Member, Type: double, renderAudioTime
 //UDT;
 
-class ICoastGenerator {
+struct GameStats {
 public:
-	inline ICoastGenerator()  { }
-	virtual ~ICoastGenerator();
-	inline void dtor() { typedef void (*_fpt)(ICoastGenerator *pthis); _fpt _f=(_fpt)_drva(2693184); _f(this); }
-	virtual float getCoastTorque_vf1() = 0;
-	inline float getCoastTorque() { return getCoastTorque_vf1(); }
+	double cpuTime;
+	double updateTime;
+	double renderHUDTime;
+	double renderTime;
+	double renderAudioTime;
+	inline GameStats()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(ICoastGenerator)==8),"bad size");
+		static_assert((sizeof(GameStats)==40),"bad size");
+		static_assert((offsetof(GameStats,cpuTime)==0x0),"bad off");
+		static_assert((offsetof(GameStats,updateTime)==0x8),"bad off");
+		static_assert((offsetof(GameStats,renderHUDTime)==0x10),"bad off");
+		static_assert((offsetof(GameStats,renderTime)==0x18),"bad off");
+		static_assert((offsetof(GameStats,renderAudioTime)==0x20),"bad off");
+	};
+};
+
+//UDT: struct WreckerProtection @len=16
+	//_Data: this+0x0, Member, Type: float, maxContactsPerKM
+	//_Data: this+0x4, Member, Type: int, warningCount
+	//_Data: this+0x8, Member, Type: int, contacts
+	//_Data: this+0xC, Member, Type: bool, blackListRequested
+	//_Func: public void WreckerProtection(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct WreckerProtection {
+public:
+	float maxContactsPerKM;
+	int warningCount;
+	int contacts;
+	bool blackListRequested;
+	inline WreckerProtection()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(WreckerProtection)==16),"bad size");
+		static_assert((offsetof(WreckerProtection,maxContactsPerKM)==0x0),"bad off");
+		static_assert((offsetof(WreckerProtection,warningCount)==0x4),"bad off");
+		static_assert((offsetof(WreckerProtection,contacts)==0x8),"bad off");
+		static_assert((offsetof(WreckerProtection,blackListRequested)==0xC),"bad off");
 	};
 };
 
@@ -1709,82 +1382,79 @@ public:
 	};
 };
 
-//UDT: struct SurfaceDef @len=200
-	//_Func: public void SurfaceDef(SurfaceDef &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SurfaceDef(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: wchar_t[0x40], wavString
-	//_Data: this+0x80, Member, Type: float, wavPitchSpeed
-	//_Data: this+0x88, Member, Type: void *, userPointer
-	//_Data: this+0x90, Member, Type: float, gripMod
-	//_Data: this+0x94, Member, Type: int, sectorID
-	//_Data: this+0x98, Member, Type: float, dirtAdditiveK
-	//_Data: this+0x9C, Member, Type: unsigned int, collisionCategory
-	//_Data: this+0xA0, Member, Type: bool, isValidTrack
-	//_Data: this+0xA4, Member, Type: float, blackFlagTime
-	//_Data: this+0xA8, Member, Type: float, sinHeight
-	//_Data: this+0xAC, Member, Type: float, sinLength
-	//_Data: this+0xB0, Member, Type: bool, isPitlane
-	//_Data: this+0xB4, Member, Type: float, damping
-	//_Data: this+0xB8, Member, Type: float, granularity
-	//_Data: this+0xBC, Member, Type: float, vibrationGain
-	//_Data: this+0xC0, Member, Type: float, vibrationLength
+//UDT: struct DamageReportDef @len=32
+	//_Func: public void DamageReportDef(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: double, lastSendTime
+	//_Data: this+0x8, Member, Type: float[0x5], damageZoneLevel
 //UDT;
 
-struct SurfaceDef {
+struct DamageReportDef {
 public:
-	wchar_t wavString[0x40];
-	float wavPitchSpeed;
-	void * userPointer;
-	float gripMod;
-	int sectorID;
-	float dirtAdditiveK;
-	unsigned int collisionCategory;
-	bool isValidTrack;
-	float blackFlagTime;
-	float sinHeight;
-	float sinLength;
-	bool isPitlane;
-	float damping;
-	float granularity;
-	float vibrationGain;
-	float vibrationLength;
-	inline SurfaceDef()  { }
+	double lastSendTime;
+	float damageZoneLevel[0x5];
+	inline DamageReportDef()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(SurfaceDef)==200),"bad size");
-		static_assert((offsetof(SurfaceDef,wavString)==0x0),"bad off");
-		static_assert((offsetof(SurfaceDef,wavPitchSpeed)==0x80),"bad off");
-		static_assert((offsetof(SurfaceDef,userPointer)==0x88),"bad off");
-		static_assert((offsetof(SurfaceDef,gripMod)==0x90),"bad off");
-		static_assert((offsetof(SurfaceDef,sectorID)==0x94),"bad off");
-		static_assert((offsetof(SurfaceDef,dirtAdditiveK)==0x98),"bad off");
-		static_assert((offsetof(SurfaceDef,collisionCategory)==0x9C),"bad off");
-		static_assert((offsetof(SurfaceDef,isValidTrack)==0xA0),"bad off");
-		static_assert((offsetof(SurfaceDef,blackFlagTime)==0xA4),"bad off");
-		static_assert((offsetof(SurfaceDef,sinHeight)==0xA8),"bad off");
-		static_assert((offsetof(SurfaceDef,sinLength)==0xAC),"bad off");
-		static_assert((offsetof(SurfaceDef,isPitlane)==0xB0),"bad off");
-		static_assert((offsetof(SurfaceDef,damping)==0xB4),"bad off");
-		static_assert((offsetof(SurfaceDef,granularity)==0xB8),"bad off");
-		static_assert((offsetof(SurfaceDef,vibrationGain)==0xBC),"bad off");
-		static_assert((offsetof(SurfaceDef,vibrationLength)==0xC0),"bad off");
+		static_assert((sizeof(DamageReportDef)==32),"bad size");
+		static_assert((offsetof(DamageReportDef,lastSendTime)==0x0),"bad off");
+		static_assert((offsetof(DamageReportDef,damageZoneLevel)==0x8),"bad off");
 	};
 };
 
-//UDT: struct ERSStatus @len=8
-	//_Data: this+0x0, Member, Type: float, kineticRecovery
-	//_Data: this+0x4, Member, Type: float, heatRecovery
-	//_Func: public void ERSStatus(); @loc=optimized @len=0 @rva=0
+//UDT: struct TyreExternalInputs @len=16
+	//_Data: this+0x0, Member, Type: bool, isActive
+	//_Data: this+0x4, Member, Type: float, load
+	//_Data: this+0x8, Member, Type: float, slipAngle
+	//_Data: this+0xC, Member, Type: float, slipRatio
+	//_Func: public void TyreExternalInputs(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct ERSStatus {
+struct TyreExternalInputs {
 public:
-	float kineticRecovery;
-	float heatRecovery;
-	inline ERSStatus()  { }
+	bool isActive;
+	float load;
+	float slipAngle;
+	float slipRatio;
+	inline TyreExternalInputs()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(ERSStatus)==8),"bad size");
-		static_assert((offsetof(ERSStatus,kineticRecovery)==0x0),"bad off");
-		static_assert((offsetof(ERSStatus,heatRecovery)==0x4),"bad off");
+		static_assert((sizeof(TyreExternalInputs)==16),"bad size");
+		static_assert((offsetof(TyreExternalInputs,isActive)==0x0),"bad off");
+		static_assert((offsetof(TyreExternalInputs,load)==0x4),"bad off");
+		static_assert((offsetof(TyreExternalInputs,slipAngle)==0x8),"bad off");
+		static_assert((offsetof(TyreExternalInputs,slipRatio)==0xC),"bad off");
+	};
+};
+
+//UDT: class SignalGenerator @len=16 @vfcount=3
+	//_VTable: 
+	//_Func: public void SignalGenerator(SignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SignalGenerator(); @loc=static @len=22 @rva=2282048
+	//_Func: public void ~SignalGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2282080
+	//_Data: this+0x8, Member, Type: float, freqScale
+	//_Func: public void step(float dt); @intro @virtual vtpo=0 vfid=1 @loc=static @len=21 @rva=2282240
+	//_Func: public float getValue(); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
+	//_Data: this+0xC, Member, Type: int, value
+	//_Func: public SignalGenerator & operator=(SignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class SignalGenerator {
+public:
+	float freqScale;
+	int value;
+	inline SignalGenerator()  { }
+	inline void ctor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282048); _f(this); }
+	virtual ~SignalGenerator();
+	inline void dtor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282080); _f(this); }
+	virtual void step_vf1(float dt);
+	inline void step_impl(float dt) { typedef void (*_fpt)(SignalGenerator *pthis, float); _fpt _f=(_fpt)_drva(2282240); return _f(this, dt); }
+	inline void step(float dt) { return step_vf1(dt); }
+	virtual float getValue_vf2() = 0;
+	inline float getValue() { return getValue_vf2(); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SignalGenerator)==16),"bad size");
+		static_assert((offsetof(SignalGenerator,freqScale)==0x8),"bad off");
+		static_assert((offsetof(SignalGenerator,value)==0xC),"bad off");
 	};
 };
 
@@ -1803,163 +1473,73 @@ public:
 	};
 };
 
-//UDT: struct ERSCockpitControls @len=3
-	//_Data: this+0x0, Member, Type: bool, recovery
-	//_Data: this+0x1, Member, Type: bool, mguHMode
-	//_Data: this+0x2, Member, Type: bool, deliveryProfile
-	//_Func: public void ERSCockpitControls(); @loc=optimized @len=0 @rva=0
+//UDT: struct TyreModelInput @len=48
+	//_Data: this+0x0, Member, Type: float, load
+	//_Data: this+0x4, Member, Type: float, slipAngleRAD
+	//_Data: this+0x8, Member, Type: float, slipRatio
+	//_Data: this+0xC, Member, Type: float, camberRAD
+	//_Data: this+0x10, Member, Type: float, speed
+	//_Data: this+0x14, Member, Type: float, u
+	//_Data: this+0x18, Member, Type: int, tyreIndex
+	//_Data: this+0x1C, Member, Type: float, cpLength
+	//_Data: this+0x20, Member, Type: float, grain
+	//_Data: this+0x24, Member, Type: float, blister
+	//_Data: this+0x28, Member, Type: float, pressureRatio
+	//_Data: this+0x2C, Member, Type: bool, useSimpleModel
 //UDT;
 
-struct ERSCockpitControls {
+struct TyreModelInput {
 public:
-	bool recovery;
-	bool mguHMode;
-	bool deliveryProfile;
-	inline ERSCockpitControls()  { }
+	float load;
+	float slipAngleRAD;
+	float slipRatio;
+	float camberRAD;
+	float speed;
+	float u;
+	int tyreIndex;
+	float cpLength;
+	float grain;
+	float blister;
+	float pressureRatio;
+	bool useSimpleModel;
+	inline TyreModelInput()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(ERSCockpitControls)==3),"bad size");
-		static_assert((offsetof(ERSCockpitControls,recovery)==0x0),"bad off");
-		static_assert((offsetof(ERSCockpitControls,mguHMode)==0x1),"bad off");
-		static_assert((offsetof(ERSCockpitControls,deliveryProfile)==0x2),"bad off");
+		static_assert((sizeof(TyreModelInput)==48),"bad size");
+		static_assert((offsetof(TyreModelInput,load)==0x0),"bad off");
+		static_assert((offsetof(TyreModelInput,slipAngleRAD)==0x4),"bad off");
+		static_assert((offsetof(TyreModelInput,slipRatio)==0x8),"bad off");
+		static_assert((offsetof(TyreModelInput,camberRAD)==0xC),"bad off");
+		static_assert((offsetof(TyreModelInput,speed)==0x10),"bad off");
+		static_assert((offsetof(TyreModelInput,u)==0x14),"bad off");
+		static_assert((offsetof(TyreModelInput,tyreIndex)==0x18),"bad off");
+		static_assert((offsetof(TyreModelInput,cpLength)==0x1C),"bad off");
+		static_assert((offsetof(TyreModelInput,grain)==0x20),"bad off");
+		static_assert((offsetof(TyreModelInput,blister)==0x24),"bad off");
+		static_assert((offsetof(TyreModelInput,pressureRatio)==0x28),"bad off");
+		static_assert((offsetof(TyreModelInput,useSimpleModel)==0x2C),"bad off");
 	};
 };
 
-//UDT: class GameTime @len=56 @vfcount=1
+//UDT: class ITorqueGenerator @len=8 @vfcount=2
 	//_VTable: 
-	//_Func: public void GameTime(GameTime &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void GameTime(); @loc=static @len=62 @rva=4506064
-	//_Func: public void ~GameTime(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=4506128
-	//_Data: this+0x8, Member, Type: double, now
-	//_Data: this+0x10, Member, Type: float, deltaT
-	//_Data: this+0x14, Member, Type: float, smoothDeltaT
-	//_Data: this+0x18, Member, Type: float, fps
-	//_Data: this+0x1C, Member, Type: bool, useStabilizer
-	//_Data: this+0x20, Member, Type: double, cappedFPS
-	//_Data: this+0x28, Member, Type: double, startTime
-	//_Func: public void update(); @loc=static @len=341 @rva=4506192
-	//_Func: public bool isUsingHRT(); @loc=optimized @len=0 @rva=0
-	//_Func: protected void initTimer(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x30, Member, Type: bool, m_isUsingHRT
-	//_Func: public GameTime & operator=(GameTime &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~ITorqueGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2549840
+	//_Func: public float getOutputTorque(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void ITorqueGenerator(ITorqueGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ITorqueGenerator(); @loc=optimized @len=0 @rva=0
+	//_Func: public ITorqueGenerator & operator=(ITorqueGenerator &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
 //UDT;
 
-class GameTime {
+class ITorqueGenerator {
 public:
-	double now;
-	float deltaT;
-	float smoothDeltaT;
-	float fps;
-	bool useStabilizer;
-	double cappedFPS;
-	double startTime;
-	bool m_isUsingHRT;
-	inline GameTime()  { }
-	inline void ctor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506064); _f(this); }
-	virtual ~GameTime();
-	inline void dtor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506128); _f(this); }
-	inline void update() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506192); return _f(this); }
+	inline ITorqueGenerator()  { }
+	virtual ~ITorqueGenerator();
+	inline void dtor() { typedef void (*_fpt)(ITorqueGenerator *pthis); _fpt _f=(_fpt)_drva(2549840); _f(this); }
+	virtual float getOutputTorque_vf1() = 0;
+	inline float getOutputTorque() { return getOutputTorque_vf1(); }
 	inline void _guard_obj() {
-		static_assert((sizeof(GameTime)==56),"bad size");
-		static_assert((offsetof(GameTime,now)==0x8),"bad off");
-		static_assert((offsetof(GameTime,deltaT)==0x10),"bad off");
-		static_assert((offsetof(GameTime,smoothDeltaT)==0x14),"bad off");
-		static_assert((offsetof(GameTime,fps)==0x18),"bad off");
-		static_assert((offsetof(GameTime,useStabilizer)==0x1C),"bad off");
-		static_assert((offsetof(GameTime,cappedFPS)==0x20),"bad off");
-		static_assert((offsetof(GameTime,startTime)==0x28),"bad off");
-		static_assert((offsetof(GameTime,m_isUsingHRT)==0x30),"bad off");
-	};
-};
-
-//UDT: struct CoreCPUTimes @len=24
-	//_Data: this+0x0, Member, Type: double, solverTime
-	//_Data: this+0x8, Member, Type: double, collisionTime
-	//_Data: this+0x10, Member, Type: int, contactPoints
-	//_Data: this+0x14, Member, Type: int, narrowPhaseTests
-	//_Func: public void CoreCPUTimes(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct CoreCPUTimes {
-public:
-	double solverTime;
-	double collisionTime;
-	int contactPoints;
-	int narrowPhaseTests;
-	inline CoreCPUTimes()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(CoreCPUTimes)==24),"bad size");
-		static_assert((offsetof(CoreCPUTimes,solverTime)==0x0),"bad off");
-		static_assert((offsetof(CoreCPUTimes,collisionTime)==0x8),"bad off");
-		static_assert((offsetof(CoreCPUTimes,contactPoints)==0x10),"bad off");
-		static_assert((offsetof(CoreCPUTimes,narrowPhaseTests)==0x14),"bad off");
-	};
-};
-
-//UDT: class Trigger @len=12
-	//_Func: public void Trigger(); @loc=static @len=13 @rva=2339728
-	//_Func: public void ~Trigger(); @loc=static @len=3 @rva=96368
-	//_Func: public bool hasSwitchedState(bool  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public bool ignoreSubsequentTrue(bool value); @loc=static @len=32 @rva=2339744
-	//_Func: public bool keepSteady(float dt, bool value); @loc=static @len=60 @rva=2339776
-	//_Func: public bool turnOn(bool  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public bool turnOff(bool  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void setAccumulatorLimit(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: bool, state
-	//_Data: this+0x1, Member, Type: bool, lastState
-	//_Data: this+0x4, Member, Type: float, accumulator
-	//_Data: this+0x8, Member, Type: float, accumulatorLimit
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Trigger {
-public:
-	bool state;
-	bool lastState;
-	float accumulator;
-	float accumulatorLimit;
-	inline Trigger()  { }
-	inline void ctor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(2339728); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline bool ignoreSubsequentTrue(bool value) { typedef bool (*_fpt)(Trigger *pthis, bool); _fpt _f=(_fpt)_drva(2339744); return _f(this, value); }
-	inline bool keepSteady(float dt, bool value) { typedef bool (*_fpt)(Trigger *pthis, float, bool); _fpt _f=(_fpt)_drva(2339776); return _f(this, dt, value); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Trigger)==12),"bad size");
-		static_assert((offsetof(Trigger,state)==0x0),"bad off");
-		static_assert((offsetof(Trigger,lastState)==0x1),"bad off");
-		static_assert((offsetof(Trigger,accumulator)==0x4),"bad off");
-		static_assert((offsetof(Trigger,accumulatorLimit)==0x8),"bad off");
-	};
-};
-
-//UDT: struct TyreSlipInput @len=24
-	//_Func: public void TyreSlipInput(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, slip
-	//_Data: this+0x4, Member, Type: float, friction
-	//_Data: this+0x8, Member, Type: float, load
-	//_Data: this+0xC, Member, Type: float, normalizedSlipX
-	//_Data: this+0x10, Member, Type: float, normalizedSlipY
-	//_Data: this+0x14, Member, Type: float, D
-//UDT;
-
-struct TyreSlipInput {
-public:
-	float slip;
-	float friction;
-	float load;
-	float normalizedSlipX;
-	float normalizedSlipY;
-	float D;
-	inline TyreSlipInput()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreSlipInput)==24),"bad size");
-		static_assert((offsetof(TyreSlipInput,slip)==0x0),"bad off");
-		static_assert((offsetof(TyreSlipInput,friction)==0x4),"bad off");
-		static_assert((offsetof(TyreSlipInput,load)==0x8),"bad off");
-		static_assert((offsetof(TyreSlipInput,normalizedSlipX)==0xC),"bad off");
-		static_assert((offsetof(TyreSlipInput,normalizedSlipY)==0x10),"bad off");
-		static_assert((offsetof(TyreSlipInput,D)==0x14),"bad off");
+		static_assert((sizeof(ITorqueGenerator)==8),"bad size");
 	};
 };
 
@@ -2023,59 +1603,673 @@ public:
 	};
 };
 
-//UDT: class Speed @len=4
-	//_Func: private void Speed(float v); @loc=static @len=8 @rva=2333072
-	//_Func: public void Speed(); @loc=static @len=10 @rva=2333024
-	//_Func: public void ~Speed(); @loc=static @len=3 @rva=96368
-	//_Func: public Speed fromMS(float ms); @pure @loc=static @len=8 @rva=2333072
-	//_Func: public Speed fromKMH(float ms); @pure @loc=static @len=16 @rva=2333040
-	//_Func: public Speed fromMPH(float ms); @pure @loc=static @len=16 @rva=2333056
-	//_Data: static, [0155A5AE][0003:000475AE], Static Member, Type: bool, useMPH
-	//_Func: public float ms(); @loc=optimized @len=0 @rva=0
-	//_Func: public float kmh(); @loc=static @len=13 @rva=364368
-	//_Func: public float mph(); @loc=optimized @len=0 @rva=0
-	//_Func: public float toSystemDefault(); @loc=optimized @len=0 @rva=0
-	//_Func: public Speed operator-(Speed &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public Speed operator+(Speed &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public Speed operator*(float v2); @loc=static @len=41 @rva=2502224
-	//_Func: public Speed operator/(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, value
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT: struct ERSCockpitControls @len=3
+	//_Data: this+0x0, Member, Type: bool, recovery
+	//_Data: this+0x1, Member, Type: bool, mguHMode
+	//_Data: this+0x2, Member, Type: bool, deliveryProfile
+	//_Func: public void ERSCockpitControls(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-class Speed {
+struct ERSCockpitControls {
 public:
-	float value;
-	inline Speed()  { }
-	inline void ctor(float v) { typedef void (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2333072); _f(this, v); }
-	inline void ctor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(2333024); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float kmh() { typedef float (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(364368); return _f(this); }
-	inline Speed operator*(float v2) { typedef Speed (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2502224); return _f(this, v2); }
+	bool recovery;
+	bool mguHMode;
+	bool deliveryProfile;
+	inline ERSCockpitControls()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(Speed)==4),"bad size");
-		static_assert((offsetof(Speed,value)==0x0),"bad off");
+		static_assert((sizeof(ERSCockpitControls)==3),"bad size");
+		static_assert((offsetof(ERSCockpitControls,recovery)==0x0),"bad off");
+		static_assert((offsetof(ERSCockpitControls,mguHMode)==0x1),"bad off");
+		static_assert((offsetof(ERSCockpitControls,deliveryProfile)==0x2),"bad off");
 	};
 };
 
-//UDT: struct GearElement @len=24
-	//_Data: this+0x0, Member, Type: double, velocity
-	//_Data: this+0x8, Member, Type: double, inertia
-	//_Data: this+0x10, Member, Type: double, oldVelocity
-	//_Func: public void GearElement(); @loc=optimized @len=0 @rva=0
+//UDT: struct ksgui::ksRect @len=16
+	//_Func: public void ksRect(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ksRect(float  _arg0, float  _arg1, float  _arg2, float  _arg3); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, left
+	//_Data: this+0x4, Member, Type: float, right
+	//_Data: this+0x8, Member, Type: float, top
+	//_Data: this+0xC, Member, Type: float, bottom
+	//_Func: public float getWidth(); @loc=static @len=10 @rva=694320
+	//_Func: public float getHeight(); @loc=static @len=11 @rva=220096
+	//_Func: public void scaleByMult(float  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct GearElement {
+struct ksgui_ksRect {
 public:
-	double velocity;
-	double inertia;
-	double oldVelocity;
-	inline GearElement()  { }
+	float left;
+	float right;
+	float top;
+	float bottom;
+	inline ksgui_ksRect()  { }
+	inline float getWidth() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(694320); return _f(this); }
+	inline float getHeight() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(220096); return _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(GearElement)==24),"bad size");
-		static_assert((offsetof(GearElement,velocity)==0x0),"bad off");
-		static_assert((offsetof(GearElement,inertia)==0x8),"bad off");
-		static_assert((offsetof(GearElement,oldVelocity)==0x10),"bad off");
+		static_assert((sizeof(ksgui_ksRect)==16),"bad size");
+		static_assert((offsetof(ksgui_ksRect,left)==0x0),"bad off");
+		static_assert((offsetof(ksgui_ksRect,right)==0x4),"bad off");
+		static_assert((offsetof(ksgui_ksRect,top)==0x8),"bad off");
+		static_assert((offsetof(ksgui_ksRect,bottom)==0xC),"bad off");
+	};
+};
+
+//UDT: struct RenderStats @len=20
+	//_Func: public void RenderStats(); @loc=optimized @len=0 @rva=0
+	//_Func: public void reset(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, dipCalls
+	//_Data: this+0x4, Member, Type: int, sceneDipCalls
+	//_Data: this+0x8, Member, Type: int, triangles
+	//_Data: this+0xC, Member, Type: int, sceneTriangles
+	//_Data: this+0x10, Member, Type: bool, isInMainRenderPass
+//UDT;
+
+struct RenderStats {
+public:
+	int dipCalls;
+	int sceneDipCalls;
+	int triangles;
+	int sceneTriangles;
+	bool isInMainRenderPass;
+	inline RenderStats()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(RenderStats)==20),"bad size");
+		static_assert((offsetof(RenderStats,dipCalls)==0x0),"bad off");
+		static_assert((offsetof(RenderStats,sceneDipCalls)==0x4),"bad off");
+		static_assert((offsetof(RenderStats,triangles)==0x8),"bad off");
+		static_assert((offsetof(RenderStats,sceneTriangles)==0xC),"bad off");
+		static_assert((offsetof(RenderStats,isInMainRenderPass)==0x10),"bad off");
+	};
+};
+
+//UDT: struct SCarStateAero @len=12
+	//_Func: public void SCarStateAero(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, CD
+	//_Data: this+0x4, Member, Type: float, CL_Front
+	//_Data: this+0x8, Member, Type: float, CL_Rear
+//UDT;
+
+struct SCarStateAero {
+public:
+	float CD;
+	float CL_Front;
+	float CL_Rear;
+	inline SCarStateAero()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SCarStateAero)==12),"bad size");
+		static_assert((offsetof(SCarStateAero,CD)==0x0),"bad off");
+		static_assert((offsetof(SCarStateAero,CL_Front)==0x4),"bad off");
+		static_assert((offsetof(SCarStateAero,CL_Rear)==0x8),"bad off");
+	};
+};
+
+//UDT: struct HeaveSpringStatus @len=4
+	//_Func: public void HeaveSpringStatus(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, travel
+//UDT;
+
+struct HeaveSpringStatus {
+public:
+	float travel;
+	inline HeaveSpringStatus()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(HeaveSpringStatus)==4),"bad size");
+		static_assert((offsetof(HeaveSpringStatus,travel)==0x0),"bad off");
+	};
+};
+
+//UDT: struct RendererFlags @len=8
+	//_Func: public void RendererFlags(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, maxFrameLatency
+	//_Data: this+0x4, Member, Type: float, mipLodBias
+//UDT;
+
+struct RendererFlags {
+public:
+	int maxFrameLatency;
+	float mipLodBias;
+	inline RendererFlags()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(RendererFlags)==8),"bad size");
+		static_assert((offsetof(RendererFlags,maxFrameLatency)==0x0),"bad off");
+		static_assert((offsetof(RendererFlags,mipLodBias)==0x4),"bad off");
+	};
+};
+
+//UDT: struct DRSWingSetting @len=8
+	//_Data: this+0x0, Member, Type: int, index
+	//_Data: this+0x4, Member, Type: float, angle
+//UDT;
+
+struct DRSWingSetting {
+public:
+	int index;
+	float angle;
+	inline DRSWingSetting()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(DRSWingSetting)==8),"bad size");
+		static_assert((offsetof(DRSWingSetting,index)==0x0),"bad off");
+		static_assert((offsetof(DRSWingSetting,angle)==0x4),"bad off");
+	};
+};
+
+//UDT: struct TyreSlipInput @len=24
+	//_Func: public void TyreSlipInput(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, slip
+	//_Data: this+0x4, Member, Type: float, friction
+	//_Data: this+0x8, Member, Type: float, load
+	//_Data: this+0xC, Member, Type: float, normalizedSlipX
+	//_Data: this+0x10, Member, Type: float, normalizedSlipY
+	//_Data: this+0x14, Member, Type: float, D
+//UDT;
+
+struct TyreSlipInput {
+public:
+	float slip;
+	float friction;
+	float load;
+	float normalizedSlipX;
+	float normalizedSlipY;
+	float D;
+	inline TyreSlipInput()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyreSlipInput)==24),"bad size");
+		static_assert((offsetof(TyreSlipInput,slip)==0x0),"bad off");
+		static_assert((offsetof(TyreSlipInput,friction)==0x4),"bad off");
+		static_assert((offsetof(TyreSlipInput,load)==0x8),"bad off");
+		static_assert((offsetof(TyreSlipInput,normalizedSlipX)==0xC),"bad off");
+		static_assert((offsetof(TyreSlipInput,normalizedSlipY)==0x10),"bad off");
+		static_assert((offsetof(TyreSlipInput,D)==0x14),"bad off");
+	};
+};
+
+//UDT: class ICoastGenerator @len=8 @vfcount=2
+	//_VTable: 
+	//_Func: public void ~ICoastGenerator(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2693184
+	//_Func: public float getCoastTorque(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void ICoastGenerator(ICoastGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ICoastGenerator(); @loc=optimized @len=0 @rva=0
+	//_Func: public ICoastGenerator & operator=(ICoastGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ICoastGenerator {
+public:
+	inline ICoastGenerator()  { }
+	virtual ~ICoastGenerator();
+	inline void dtor() { typedef void (*_fpt)(ICoastGenerator *pthis); _fpt _f=(_fpt)_drva(2693184); _f(this); }
+	virtual float getCoastTorque_vf1() = 0;
+	inline float getCoastTorque() { return getCoastTorque_vf1(); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ICoastGenerator)==8),"bad size");
+	};
+};
+
+//UDT: struct SamplerStates @len=56
+	//_Data: this+0x0, Member, Type: void *, samplerAniso
+	//_Data: this+0x8, Member, Type: void *, samplerLinearShadow
+	//_Data: this+0x10, Member, Type: void *, samplerShadow
+	//_Data: this+0x18, Member, Type: void *, samplerPoint
+	//_Data: this+0x20, Member, Type: void *, samplerPointClamp
+	//_Data: this+0x28, Member, Type: void *, samplerLinearSimple
+	//_Data: this+0x30, Member, Type: void *, samplerLinearClamp
+//UDT;
+
+struct SamplerStates {
+public:
+	void * samplerAniso;
+	void * samplerLinearShadow;
+	void * samplerShadow;
+	void * samplerPoint;
+	void * samplerPointClamp;
+	void * samplerLinearSimple;
+	void * samplerLinearClamp;
+	inline SamplerStates()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SamplerStates)==56),"bad size");
+		static_assert((offsetof(SamplerStates,samplerAniso)==0x0),"bad off");
+		static_assert((offsetof(SamplerStates,samplerLinearShadow)==0x8),"bad off");
+		static_assert((offsetof(SamplerStates,samplerShadow)==0x10),"bad off");
+		static_assert((offsetof(SamplerStates,samplerPoint)==0x18),"bad off");
+		static_assert((offsetof(SamplerStates,samplerPointClamp)==0x20),"bad off");
+		static_assert((offsetof(SamplerStates,samplerLinearSimple)==0x28),"bad off");
+		static_assert((offsetof(SamplerStates,samplerLinearClamp)==0x30),"bad off");
+	};
+};
+
+//UDT: struct SteerMzLowSpeedReduction @len=8
+	//_Data: this+0x0, Member, Type: float, speedKMH
+	//_Data: this+0x4, Member, Type: float, minValue
+	//_Func: public void SteerMzLowSpeedReduction(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SteerMzLowSpeedReduction {
+public:
+	float speedKMH;
+	float minValue;
+	inline SteerMzLowSpeedReduction()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SteerMzLowSpeedReduction)==8),"bad size");
+		static_assert((offsetof(SteerMzLowSpeedReduction,speedKMH)==0x0),"bad off");
+		static_assert((offsetof(SteerMzLowSpeedReduction,minValue)==0x4),"bad off");
+	};
+};
+
+//UDT: struct NetCarStateProvider::LagDebug @len=24
+	//_Data: this+0x0, Member, Type: double, rcvTime
+	//_Data: this+0x8, Member, Type: double, physicsTime
+	//_Data: this+0x10, Member, Type: bool, wasLagging
+	//_Func: public void LagDebug(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct NetCarStateProvider_LagDebug {
+public:
+	double rcvTime;
+	double physicsTime;
+	bool wasLagging;
+	inline NetCarStateProvider_LagDebug()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarStateProvider_LagDebug)==24),"bad size");
+		static_assert((offsetof(NetCarStateProvider_LagDebug,rcvTime)==0x0),"bad off");
+		static_assert((offsetof(NetCarStateProvider_LagDebug,physicsTime)==0x8),"bad off");
+		static_assert((offsetof(NetCarStateProvider_LagDebug,wasLagging)==0x10),"bad off");
+	};
+};
+
+//UDT: struct TyreSlipOutput @len=8
+	//_Data: this+0x0, Member, Type: float, normalizedForce
+	//_Data: this+0x4, Member, Type: float, slip
+//UDT;
+
+struct TyreSlipOutput {
+public:
+	float normalizedForce;
+	float slip;
+	inline TyreSlipOutput()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyreSlipOutput)==8),"bad size");
+		static_assert((offsetof(TyreSlipOutput,normalizedForce)==0x0),"bad off");
+		static_assert((offsetof(TyreSlipOutput,slip)==0x4),"bad off");
+	};
+};
+
+//UDT: class GameTime @len=56 @vfcount=1
+	//_VTable: 
+	//_Func: public void GameTime(GameTime &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void GameTime(); @loc=static @len=62 @rva=4506064
+	//_Func: public void ~GameTime(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=4506128
+	//_Data: this+0x8, Member, Type: double, now
+	//_Data: this+0x10, Member, Type: float, deltaT
+	//_Data: this+0x14, Member, Type: float, smoothDeltaT
+	//_Data: this+0x18, Member, Type: float, fps
+	//_Data: this+0x1C, Member, Type: bool, useStabilizer
+	//_Data: this+0x20, Member, Type: double, cappedFPS
+	//_Data: this+0x28, Member, Type: double, startTime
+	//_Func: public void update(); @loc=static @len=341 @rva=4506192
+	//_Func: public bool isUsingHRT(); @loc=optimized @len=0 @rva=0
+	//_Func: protected void initTimer(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x30, Member, Type: bool, m_isUsingHRT
+	//_Func: public GameTime & operator=(GameTime &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class GameTime {
+public:
+	double now;
+	float deltaT;
+	float smoothDeltaT;
+	float fps;
+	bool useStabilizer;
+	double cappedFPS;
+	double startTime;
+	bool m_isUsingHRT;
+	inline GameTime()  { }
+	inline void ctor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506064); _f(this); }
+	virtual ~GameTime();
+	inline void dtor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506128); _f(this); }
+	inline void update() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506192); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(GameTime)==56),"bad size");
+		static_assert((offsetof(GameTime,now)==0x8),"bad off");
+		static_assert((offsetof(GameTime,deltaT)==0x10),"bad off");
+		static_assert((offsetof(GameTime,smoothDeltaT)==0x14),"bad off");
+		static_assert((offsetof(GameTime,fps)==0x18),"bad off");
+		static_assert((offsetof(GameTime,useStabilizer)==0x1C),"bad off");
+		static_assert((offsetof(GameTime,cappedFPS)==0x20),"bad off");
+		static_assert((offsetof(GameTime,startTime)==0x28),"bad off");
+		static_assert((offsetof(GameTime,m_isUsingHRT)==0x30),"bad off");
+	};
+};
+
+//UDT: struct AccelerationProfile @len=8
+	//_Data: this+0x0, Member, Type: float, zero
+	//_Data: this+0x4, Member, Type: float, maxTyres
+//UDT;
+
+struct AccelerationProfile {
+public:
+	float zero;
+	float maxTyres;
+	inline AccelerationProfile()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(AccelerationProfile)==8),"bad size");
+		static_assert((offsetof(AccelerationProfile,zero)==0x0),"bad off");
+		static_assert((offsetof(AccelerationProfile,maxTyres)==0x4),"bad off");
+	};
+};
+
+//UDT: struct WheelValues @len=16
+	//_Data: this+0x0, Member, Type: float, lf
+	//_Data: this+0x4, Member, Type: float, rf
+	//_Data: this+0x8, Member, Type: float, lr
+	//_Data: this+0xC, Member, Type: float, rr
+	//_Func: public void WheelValues(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct WheelValues {
+public:
+	float lf;
+	float rf;
+	float lr;
+	float rr;
+	inline WheelValues()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(WheelValues)==16),"bad size");
+		static_assert((offsetof(WheelValues,lf)==0x0),"bad off");
+		static_assert((offsetof(WheelValues,rf)==0x4),"bad off");
+		static_assert((offsetof(WheelValues,lr)==0x8),"bad off");
+		static_assert((offsetof(WheelValues,rr)==0xC),"bad off");
+	};
+};
+
+//UDT: struct KPI @len=8
+	//_Data: this+0x0, Member, Type: float, angleRAD
+	//_Data: this+0x4, Member, Type: float, scrubRadius
+	//_Func: public void KPI(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct KPI {
+public:
+	float angleRAD;
+	float scrubRadius;
+	inline KPI()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(KPI)==8),"bad size");
+		static_assert((offsetof(KPI,angleRAD)==0x0),"bad off");
+		static_assert((offsetof(KPI,scrubRadius)==0x4),"bad off");
+	};
+};
+
+//UDT: struct SplineLocatorData @len=40
+	//_Data: this+0x0, Member, Type: float, npos
+	//_Data: this+0x4, Member, Type: unsigned int, currentIndex
+	//_Data: this+0x8, Member, Type: float, lateralOffset
+	//_Data: this+0xC, Member, Type: float, splineLength
+	//_Data: this+0x10, Member, Type: float[0x2], sides
+	//_Data: this+0x18, Member, Type: float[0x2], sidesFromIL
+	//_Data: this+0x20, Member, Type: float, sideVelocity
+	//_Data: this+0x24, Member, Type: bool, isOutsideTrackLimits
+	//_Func: public void SplineLocatorData(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SplineLocatorData {
+public:
+	float npos;
+	unsigned int currentIndex;
+	float lateralOffset;
+	float splineLength;
+	float sides[0x2];
+	float sidesFromIL[0x2];
+	float sideVelocity;
+	bool isOutsideTrackLimits;
+	inline SplineLocatorData()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SplineLocatorData)==40),"bad size");
+		static_assert((offsetof(SplineLocatorData,npos)==0x0),"bad off");
+		static_assert((offsetof(SplineLocatorData,currentIndex)==0x4),"bad off");
+		static_assert((offsetof(SplineLocatorData,lateralOffset)==0x8),"bad off");
+		static_assert((offsetof(SplineLocatorData,splineLength)==0xC),"bad off");
+		static_assert((offsetof(SplineLocatorData,sides)==0x10),"bad off");
+		static_assert((offsetof(SplineLocatorData,sidesFromIL)==0x18),"bad off");
+		static_assert((offsetof(SplineLocatorData,sideVelocity)==0x20),"bad off");
+		static_assert((offsetof(SplineLocatorData,isOutsideTrackLimits)==0x24),"bad off");
+	};
+};
+
+//UDT: struct EngineStatus @len=24
+	//_Data: this+0x0, Member, Type: double, outTorque
+	//_Data: this+0x8, Member, Type: double, externalCoastTorque
+	//_Data: this+0x10, Member, Type: float, turboBoost
+	//_Data: this+0x14, Member, Type: bool, isLimiterOn
+	//_Func: public void EngineStatus(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct EngineStatus {
+public:
+	double outTorque;
+	double externalCoastTorque;
+	float turboBoost;
+	bool isLimiterOn;
+	inline EngineStatus()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(EngineStatus)==24),"bad size");
+		static_assert((offsetof(EngineStatus,outTorque)==0x0),"bad off");
+		static_assert((offsetof(EngineStatus,externalCoastTorque)==0x8),"bad off");
+		static_assert((offsetof(EngineStatus,turboBoost)==0x10),"bad off");
+		static_assert((offsetof(EngineStatus,isLimiterOn)==0x14),"bad off");
+	};
+};
+
+//UDT: struct OnWindowResize @len=8
+	//_Data: this+0x0, Member, Type: int, width
+	//_Data: this+0x4, Member, Type: int, height
+//UDT;
+
+struct OnWindowResize {
+public:
+	int width;
+	int height;
+	inline OnWindowResize()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnWindowResize)==8),"bad size");
+		static_assert((offsetof(OnWindowResize,width)==0x0),"bad off");
+		static_assert((offsetof(OnWindowResize,height)==0x4),"bad off");
+	};
+};
+
+//UDT: struct PerformancePair @len=8
+	//_Func: public void PerformancePair(unsigned int  _arg0, float  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: unsigned int, t
+	//_Data: this+0x4, Member, Type: float, speedMS
+//UDT;
+
+struct PerformancePair {
+public:
+	unsigned int t;
+	float speedMS;
+	inline PerformancePair()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(PerformancePair)==8),"bad size");
+		static_assert((offsetof(PerformancePair,t)==0x0),"bad off");
+		static_assert((offsetof(PerformancePair,speedMS)==0x4),"bad off");
+	};
+};
+
+//UDT: class Damper @len=24
+	//_Func: public void Damper(); @loc=static @len=45 @rva=2830928
+	//_Func: public void ~Damper(); @loc=static @len=3 @rva=96368
+	//_Data: this+0x0, Member, Type: float, reboundSlow
+	//_Data: this+0x4, Member, Type: float, reboundFast
+	//_Data: this+0x8, Member, Type: float, bumpSlow
+	//_Data: this+0xC, Member, Type: float, bumpFast
+	//_Data: this+0x10, Member, Type: float, fastThresholdBump
+	//_Data: this+0x14, Member, Type: float, fastThresholdRebound
+	//_Func: public float getForce(float v); @loc=static @len=119 @rva=2830976
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Damper {
+public:
+	float reboundSlow;
+	float reboundFast;
+	float bumpSlow;
+	float bumpFast;
+	float fastThresholdBump;
+	float fastThresholdRebound;
+	inline Damper()  { }
+	inline void ctor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(2830928); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Damper)==24),"bad size");
+		static_assert((offsetof(Damper,reboundSlow)==0x0),"bad off");
+		static_assert((offsetof(Damper,reboundFast)==0x4),"bad off");
+		static_assert((offsetof(Damper,bumpSlow)==0x8),"bad off");
+		static_assert((offsetof(Damper,bumpFast)==0xC),"bad off");
+		static_assert((offsetof(Damper,fastThresholdBump)==0x10),"bad off");
+		static_assert((offsetof(Damper,fastThresholdRebound)==0x14),"bad off");
+	};
+};
+
+//UDT: struct ServerDrivingAssists @len=12
+	//_Data: this+0x0, Member, Type: int, tc
+	//_Data: this+0x4, Member, Type: int, abs
+	//_Data: this+0x8, Member, Type: bool, stability
+	//_Data: this+0x9, Member, Type: bool, autoClutch
+	//_Func: public void ServerDrivingAssists(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ServerDrivingAssists {
+public:
+	int tc;
+	int abs;
+	bool stability;
+	bool autoClutch;
+	inline ServerDrivingAssists()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ServerDrivingAssists)==12),"bad size");
+		static_assert((offsetof(ServerDrivingAssists,tc)==0x0),"bad off");
+		static_assert((offsetof(ServerDrivingAssists,abs)==0x4),"bad off");
+		static_assert((offsetof(ServerDrivingAssists,stability)==0x8),"bad off");
+		static_assert((offsetof(ServerDrivingAssists,autoClutch)==0x9),"bad off");
+	};
+};
+
+//UDT: struct NetCarQoS @len=8
+	//_Data: this+0x0, Member, Type: int, goodPackets
+	//_Data: this+0x4, Member, Type: int, badPackets
+	//_Func: public void NetCarQoS(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct NetCarQoS {
+public:
+	int goodPackets;
+	int badPackets;
+	inline NetCarQoS()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarQoS)==8),"bad size");
+		static_assert((offsetof(NetCarQoS,goodPackets)==0x0),"bad off");
+		static_assert((offsetof(NetCarQoS,badPackets)==0x4),"bad off");
+	};
+};
+
+//UDT: struct NetCarPushToPass @len=20
+	//_Data: this+0x0, Member, Type: bool, enabled
+	//_Data: this+0x1, Member, Type: bool, active
+	//_Data: this+0x4, Member, Type: float, coolDownS
+	//_Data: this+0x8, Member, Type: float, timeS
+	//_Data: this+0xC, Member, Type: float, timeAccum
+	//_Data: this+0x10, Member, Type: int, activations
+	//_Func: public void NetCarPushToPass(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct NetCarPushToPass {
+public:
+	bool enabled;
+	bool active;
+	float coolDownS;
+	float timeS;
+	float timeAccum;
+	int activations;
+	inline NetCarPushToPass()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarPushToPass)==20),"bad size");
+		static_assert((offsetof(NetCarPushToPass,enabled)==0x0),"bad off");
+		static_assert((offsetof(NetCarPushToPass,active)==0x1),"bad off");
+		static_assert((offsetof(NetCarPushToPass,coolDownS)==0x4),"bad off");
+		static_assert((offsetof(NetCarPushToPass,timeS)==0x8),"bad off");
+		static_assert((offsetof(NetCarPushToPass,timeAccum)==0xC),"bad off");
+		static_assert((offsetof(NetCarPushToPass,activations)==0x10),"bad off");
+	};
+};
+
+//UDT: struct SplineIndexBound @len=8
+	//_Func: public void SplineIndexBound(unsigned int  _arg0, unsigned int  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: unsigned int, minIndex
+	//_Data: this+0x4, Member, Type: unsigned int, maxIndex
+//UDT;
+
+struct SplineIndexBound {
+public:
+	unsigned int minIndex;
+	unsigned int maxIndex;
+	inline SplineIndexBound()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SplineIndexBound)==8),"bad size");
+		static_assert((offsetof(SplineIndexBound,minIndex)==0x0),"bad off");
+		static_assert((offsetof(SplineIndexBound,maxIndex)==0x4),"bad off");
+	};
+};
+
+//UDT: struct TyreModelOutput @len=28
+	//_Data: this+0x0, Member, Type: float, Fy
+	//_Data: this+0x4, Member, Type: float, Fx
+	//_Data: this+0x8, Member, Type: float, Mz
+	//_Data: this+0xC, Member, Type: float, trail
+	//_Data: this+0x10, Member, Type: float, ndSlip
+	//_Data: this+0x14, Member, Type: float, Dy
+	//_Data: this+0x18, Member, Type: float, Dx
+//UDT;
+
+struct TyreModelOutput {
+public:
+	float Fy;
+	float Fx;
+	float Mz;
+	float trail;
+	float ndSlip;
+	float Dy;
+	float Dx;
+	inline TyreModelOutput()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyreModelOutput)==28),"bad size");
+		static_assert((offsetof(TyreModelOutput,Fy)==0x0),"bad off");
+		static_assert((offsetof(TyreModelOutput,Fx)==0x4),"bad off");
+		static_assert((offsetof(TyreModelOutput,Mz)==0x8),"bad off");
+		static_assert((offsetof(TyreModelOutput,trail)==0xC),"bad off");
+		static_assert((offsetof(TyreModelOutput,ndSlip)==0x10),"bad off");
+		static_assert((offsetof(TyreModelOutput,Dy)==0x14),"bad off");
+		static_assert((offsetof(TyreModelOutput,Dx)==0x18),"bad off");
+	};
+};
+
+//UDT: struct ERSStatus @len=8
+	//_Data: this+0x0, Member, Type: float, kineticRecovery
+	//_Data: this+0x4, Member, Type: float, heatRecovery
+	//_Func: public void ERSStatus(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ERSStatus {
+public:
+	float kineticRecovery;
+	float heatRecovery;
+	inline ERSStatus()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ERSStatus)==8),"bad size");
+		static_assert((offsetof(ERSStatus,kineticRecovery)==0x0),"bad off");
+		static_assert((offsetof(ERSStatus,heatRecovery)==0x4),"bad off");
 	};
 };
 
@@ -2177,424 +2371,362 @@ public:
 	};
 };
 
-//UDT: struct SplineIndexBound @len=8
-	//_Func: public void SplineIndexBound(unsigned int  _arg0, unsigned int  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: unsigned int, minIndex
-	//_Data: this+0x4, Member, Type: unsigned int, maxIndex
-//UDT;
-
-struct SplineIndexBound {
-public:
-	unsigned int minIndex;
-	unsigned int maxIndex;
-	inline SplineIndexBound()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(SplineIndexBound)==8),"bad size");
-		static_assert((offsetof(SplineIndexBound,minIndex)==0x0),"bad off");
-		static_assert((offsetof(SplineIndexBound,maxIndex)==0x4),"bad off");
-	};
-};
-
-//UDT: struct PerformancePair @len=8
-	//_Func: public void PerformancePair(unsigned int  _arg0, float  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: unsigned int, t
-	//_Data: this+0x4, Member, Type: float, speedMS
-//UDT;
-
-struct PerformancePair {
-public:
-	unsigned int t;
-	float speedMS;
-	inline PerformancePair()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(PerformancePair)==8),"bad size");
-		static_assert((offsetof(PerformancePair,t)==0x0),"bad off");
-		static_assert((offsetof(PerformancePair,speedMS)==0x4),"bad off");
-	};
-};
-
-//UDT: struct SplineLocatorData @len=40
-	//_Data: this+0x0, Member, Type: float, npos
-	//_Data: this+0x4, Member, Type: unsigned int, currentIndex
-	//_Data: this+0x8, Member, Type: float, lateralOffset
-	//_Data: this+0xC, Member, Type: float, splineLength
-	//_Data: this+0x10, Member, Type: float[0x2], sides
-	//_Data: this+0x18, Member, Type: float[0x2], sidesFromIL
-	//_Data: this+0x20, Member, Type: float, sideVelocity
-	//_Data: this+0x24, Member, Type: bool, isOutsideTrackLimits
-	//_Func: public void SplineLocatorData(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct SplineLocatorData {
-public:
-	float npos;
-	unsigned int currentIndex;
-	float lateralOffset;
-	float splineLength;
-	float sides[0x2];
-	float sidesFromIL[0x2];
-	float sideVelocity;
-	bool isOutsideTrackLimits;
-	inline SplineLocatorData()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(SplineLocatorData)==40),"bad size");
-		static_assert((offsetof(SplineLocatorData,npos)==0x0),"bad off");
-		static_assert((offsetof(SplineLocatorData,currentIndex)==0x4),"bad off");
-		static_assert((offsetof(SplineLocatorData,lateralOffset)==0x8),"bad off");
-		static_assert((offsetof(SplineLocatorData,splineLength)==0xC),"bad off");
-		static_assert((offsetof(SplineLocatorData,sides)==0x10),"bad off");
-		static_assert((offsetof(SplineLocatorData,sidesFromIL)==0x18),"bad off");
-		static_assert((offsetof(SplineLocatorData,sideVelocity)==0x20),"bad off");
-		static_assert((offsetof(SplineLocatorData,isOutsideTrackLimits)==0x24),"bad off");
-	};
-};
-
-//UDT: struct KPI @len=8
-	//_Data: this+0x0, Member, Type: float, angleRAD
-	//_Data: this+0x4, Member, Type: float, scrubRadius
-	//_Func: public void KPI(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct KPI {
-public:
-	float angleRAD;
-	float scrubRadius;
-	inline KPI()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(KPI)==8),"bad size");
-		static_assert((offsetof(KPI,angleRAD)==0x0),"bad off");
-		static_assert((offsetof(KPI,scrubRadius)==0x4),"bad off");
-	};
-};
-
-//UDT: struct WheelValues @len=16
-	//_Data: this+0x0, Member, Type: float, lf
-	//_Data: this+0x4, Member, Type: float, rf
-	//_Data: this+0x8, Member, Type: float, lr
-	//_Data: this+0xC, Member, Type: float, rr
-	//_Func: public void WheelValues(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct WheelValues {
-public:
-	float lf;
-	float rf;
-	float lr;
-	float rr;
-	inline WheelValues()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(WheelValues)==16),"bad size");
-		static_assert((offsetof(WheelValues,lf)==0x0),"bad off");
-		static_assert((offsetof(WheelValues,rf)==0x4),"bad off");
-		static_assert((offsetof(WheelValues,lr)==0x8),"bad off");
-		static_assert((offsetof(WheelValues,rr)==0xC),"bad off");
-	};
-};
-
-//UDT: struct AccelerationProfile @len=8
-	//_Data: this+0x0, Member, Type: float, zero
-	//_Data: this+0x4, Member, Type: float, maxTyres
-//UDT;
-
-struct AccelerationProfile {
-public:
-	float zero;
-	float maxTyres;
-	inline AccelerationProfile()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(AccelerationProfile)==8),"bad size");
-		static_assert((offsetof(AccelerationProfile,zero)==0x0),"bad off");
-		static_assert((offsetof(AccelerationProfile,maxTyres)==0x4),"bad off");
-	};
-};
-
-//UDT: struct OnSectorSplitEvent @len=16
-	//_Data: this+0x0, Member, Type: unsigned int, carIndex
-	//_Data: this+0x4, Member, Type: unsigned int, sectorIndex
-	//_Data: this+0x8, Member, Type: unsigned int, sectorTime
-	//_Data: this+0xC, Member, Type: unsigned int, cuts
-//UDT;
-
-struct OnSectorSplitEvent {
-public:
-	unsigned int carIndex;
-	unsigned int sectorIndex;
-	unsigned int sectorTime;
-	unsigned int cuts;
-	inline OnSectorSplitEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnSectorSplitEvent)==16),"bad size");
-		static_assert((offsetof(OnSectorSplitEvent,carIndex)==0x0),"bad off");
-		static_assert((offsetof(OnSectorSplitEvent,sectorIndex)==0x4),"bad off");
-		static_assert((offsetof(OnSectorSplitEvent,sectorTime)==0x8),"bad off");
-		static_assert((offsetof(OnSectorSplitEvent,cuts)==0xC),"bad off");
-	};
-};
-
-//UDT: struct SamplerStates @len=56
-	//_Data: this+0x0, Member, Type: void *, samplerAniso
-	//_Data: this+0x8, Member, Type: void *, samplerLinearShadow
-	//_Data: this+0x10, Member, Type: void *, samplerShadow
-	//_Data: this+0x18, Member, Type: void *, samplerPoint
-	//_Data: this+0x20, Member, Type: void *, samplerPointClamp
-	//_Data: this+0x28, Member, Type: void *, samplerLinearSimple
-	//_Data: this+0x30, Member, Type: void *, samplerLinearClamp
-//UDT;
-
-struct SamplerStates {
-public:
-	void * samplerAniso;
-	void * samplerLinearShadow;
-	void * samplerShadow;
-	void * samplerPoint;
-	void * samplerPointClamp;
-	void * samplerLinearSimple;
-	void * samplerLinearClamp;
-	inline SamplerStates()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(SamplerStates)==56),"bad size");
-		static_assert((offsetof(SamplerStates,samplerAniso)==0x0),"bad off");
-		static_assert((offsetof(SamplerStates,samplerLinearShadow)==0x8),"bad off");
-		static_assert((offsetof(SamplerStates,samplerShadow)==0x10),"bad off");
-		static_assert((offsetof(SamplerStates,samplerPoint)==0x18),"bad off");
-		static_assert((offsetof(SamplerStates,samplerPointClamp)==0x20),"bad off");
-		static_assert((offsetof(SamplerStates,samplerLinearSimple)==0x28),"bad off");
-		static_assert((offsetof(SamplerStates,samplerLinearClamp)==0x30),"bad off");
-	};
-};
-
-//UDT: struct RendererFlags @len=8
-	//_Func: public void RendererFlags(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: int, maxFrameLatency
-	//_Data: this+0x4, Member, Type: float, mipLodBias
-//UDT;
-
-struct RendererFlags {
-public:
-	int maxFrameLatency;
-	float mipLodBias;
-	inline RendererFlags()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(RendererFlags)==8),"bad size");
-		static_assert((offsetof(RendererFlags,maxFrameLatency)==0x0),"bad off");
-		static_assert((offsetof(RendererFlags,mipLodBias)==0x4),"bad off");
-	};
-};
-
-//UDT: struct RenderStats @len=20
-	//_Func: public void RenderStats(); @loc=optimized @len=0 @rva=0
-	//_Func: public void reset(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: int, dipCalls
-	//_Data: this+0x4, Member, Type: int, sceneDipCalls
-	//_Data: this+0x8, Member, Type: int, triangles
-	//_Data: this+0xC, Member, Type: int, sceneTriangles
-	//_Data: this+0x10, Member, Type: bool, isInMainRenderPass
-//UDT;
-
-struct RenderStats {
-public:
-	int dipCalls;
-	int sceneDipCalls;
-	int triangles;
-	int sceneTriangles;
-	bool isInMainRenderPass;
-	inline RenderStats()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(RenderStats)==20),"bad size");
-		static_assert((offsetof(RenderStats,dipCalls)==0x0),"bad off");
-		static_assert((offsetof(RenderStats,sceneDipCalls)==0x4),"bad off");
-		static_assert((offsetof(RenderStats,triangles)==0x8),"bad off");
-		static_assert((offsetof(RenderStats,sceneTriangles)==0xC),"bad off");
-		static_assert((offsetof(RenderStats,isInMainRenderPass)==0x10),"bad off");
-	};
-};
-
-//UDT: struct ksgui::ksRect @len=16
-	//_Func: public void ksRect(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ksRect(float  _arg0, float  _arg1, float  _arg2, float  _arg3); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, left
-	//_Data: this+0x4, Member, Type: float, right
-	//_Data: this+0x8, Member, Type: float, top
-	//_Data: this+0xC, Member, Type: float, bottom
-	//_Func: public float getWidth(); @loc=static @len=10 @rva=694320
-	//_Func: public float getHeight(); @loc=static @len=11 @rva=220096
-	//_Func: public void scaleByMult(float  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct ksgui_ksRect {
-public:
-	float left;
-	float right;
-	float top;
-	float bottom;
-	inline ksgui_ksRect()  { }
-	inline float getWidth() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(694320); return _f(this); }
-	inline float getHeight() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(220096); return _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_ksRect)==16),"bad size");
-		static_assert((offsetof(ksgui_ksRect,left)==0x0),"bad off");
-		static_assert((offsetof(ksgui_ksRect,right)==0x4),"bad off");
-		static_assert((offsetof(ksgui_ksRect,top)==0x8),"bad off");
-		static_assert((offsetof(ksgui_ksRect,bottom)==0xC),"bad off");
-	};
-};
-
-//UDT: struct SessionInfo @len=32
-	//_Func: public void SessionInfo(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: enum SessionType, type
-	//_Data: this+0x8, Member, Type: double, startTimeMS
-	//_Data: this+0x10, Member, Type: double, timeSecs
-	//_Data: this+0x18, Member, Type: int, laps
-	//_Data: this+0x1C, Member, Type: int, index
-//UDT;
-
-struct SessionInfo {
-public:
-	SessionType type;
-	double startTimeMS;
-	double timeSecs;
-	int laps;
-	int index;
-	inline SessionInfo()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(SessionInfo)==32),"bad size");
-		static_assert((offsetof(SessionInfo,type)==0x0),"bad off");
-		static_assert((offsetof(SessionInfo,startTimeMS)==0x8),"bad off");
-		static_assert((offsetof(SessionInfo,timeSecs)==0x10),"bad off");
-		static_assert((offsetof(SessionInfo,laps)==0x18),"bad off");
-		static_assert((offsetof(SessionInfo,index)==0x1C),"bad off");
-	};
-};
-
-//UDT: class IVarCallback @len=8 @vfcount=1
-	//_VTable: 
-	//_Func: public void onSetVar(SVar *  _arg0, float  _arg1); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Func: public void IVarCallback(IVarCallback &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void IVarCallback(); @loc=optimized @len=0 @rva=0
-	//_Func: public IVarCallback & operator=(IVarCallback &  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class IVarCallback {
-public:
-	inline IVarCallback()  { }
-	virtual void onSetVar_vf0(SVar *  _arg0, float  _arg1) = 0;
-	inline void onSetVar(SVar *  _arg0, float  _arg1) { return onSetVar_vf0( _arg0,  _arg1); }
-	inline void _guard_obj() {
-		static_assert((sizeof(IVarCallback)==8),"bad size");
-	};
-};
-
-//UDT: struct MouseEvent @len=12
-	//_Func: public void MouseEvent(int  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: int, x
-	//_Data: this+0x4, Member, Type: int, y
-	//_Data: this+0x8, Member, Type: enum MouseButton, button
-//UDT;
-
-struct MouseEvent {
-public:
-	int x;
-	int y;
-	MouseButton button;
-	inline MouseEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(MouseEvent)==12),"bad size");
-		static_assert((offsetof(MouseEvent,x)==0x0),"bad off");
-		static_assert((offsetof(MouseEvent,y)==0x4),"bad off");
-		static_assert((offsetof(MouseEvent,button)==0x8),"bad off");
-	};
-};
-
-//UDT: class vec3f @len=12
-	//_Data: this+0x0, Member, Type: float, x
-	//_Data: this+0x4, Member, Type: float, y
-	//_Data: this+0x8, Member, Type: float, z
-	//_Func: public void vec3f(double *  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void vec3f(float *  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void vec3f(float ix, float iy, float iz); @loc=static @len=18 @rva=147424
-	//_Func: public void vec3f(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void vec3f(); @loc=optimized @len=0 @rva=0
-	//_Func: public void normalize(); @loc=static @len=136 @rva=147456
-	//_Func: public bool isZero(); @loc=optimized @len=0 @rva=0
-	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > toString(); @loc=static @len=322 @rva=340976
-	//_Func: public float length(); @loc=optimized @len=0 @rva=0
-	//_Func: public float lengthSquared(); @loc=optimized @len=0 @rva=0
-	//_Func: public bool isFinite(); @loc=static @len=105 @rva=418800
-	//_Func: public vec3f negate(); @loc=optimized @len=0 @rva=0
-	//_Func: public void operator+=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void operator-=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void operator*=(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void operator/=(float m); @loc=static @len=47 @rva=908800
-	//_Func: public void print(char * name); @loc=static @len=61 @rva=918176
-//UDT;
-
-class vec3f {
-public:
-	float x;
-	float y;
-	float z;
-	inline vec3f()  { }
-	inline void ctor(float ix, float iy, float iz) { typedef void (*_fpt)(vec3f *pthis, float, float, float); _fpt _f=(_fpt)_drva(147424); _f(this, ix, iy, iz); }
-	inline void normalize() { typedef void (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(147456); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > toString() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(340976); return _f(this); }
-	inline bool isFinite() { typedef bool (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(418800); return _f(this); }
-	inline void operator/=(float m) { typedef void (*_fpt)(vec3f *pthis, float); _fpt _f=(_fpt)_drva(908800); return _f(this, m); }
-	inline void print(char * name) { typedef void (*_fpt)(vec3f *pthis, char *); _fpt _f=(_fpt)_drva(918176); return _f(this, name); }
-	inline void _guard_obj() {
-		static_assert((sizeof(vec3f)==12),"bad size");
-		static_assert((offsetof(vec3f,x)==0x0),"bad off");
-		static_assert((offsetof(vec3f,y)==0x4),"bad off");
-		static_assert((offsetof(vec3f,z)==0x8),"bad off");
-	};
-};
-
-//UDT: struct StabilityControl @len=24
-	//_Func: public void ~StabilityControl(); @loc=static @len=3 @rva=96368
-	//_Data: this+0x0, Member, Type: float, gain
-	//_Data: this+0x4, Member, Type: bool, useBeta
-	//_Func: public void init(Car * car); @loc=static @len=22 @rva=2882096
-	//_Func: public void step(float dt); @loc=static @len=511 @rva=2882128
-	//_Data: this+0x8, Member, Type: class Car *, car
-	//_Data: this+0x10, Member, Type: float, maxGain
-	//_Func: public void StabilityControl(); @loc=optimized @len=0 @rva=0
+//UDT: class Speed @len=4
+	//_Func: private void Speed(float v); @loc=static @len=8 @rva=2333072
+	//_Func: public void Speed(); @loc=static @len=10 @rva=2333024
+	//_Func: public void ~Speed(); @loc=static @len=3 @rva=96368
+	//_Func: public Speed fromMS(float ms); @pure @loc=static @len=8 @rva=2333072
+	//_Func: public Speed fromKMH(float ms); @pure @loc=static @len=16 @rva=2333040
+	//_Func: public Speed fromMPH(float ms); @pure @loc=static @len=16 @rva=2333056
+	//_Data: static, [0155A5AE][0003:000475AE], Static Member, Type: bool, useMPH
+	//_Func: public float ms(); @loc=optimized @len=0 @rva=0
+	//_Func: public float kmh(); @loc=static @len=13 @rva=364368
+	//_Func: public float mph(); @loc=optimized @len=0 @rva=0
+	//_Func: public float toSystemDefault(); @loc=optimized @len=0 @rva=0
+	//_Func: public Speed operator-(Speed &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public Speed operator+(Speed &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public Speed operator*(float v2); @loc=static @len=41 @rva=2502224
+	//_Func: public Speed operator/(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, value
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct StabilityControl {
+class Speed {
 public:
-	float gain;
-	bool useBeta;
-	Car * car;
-	float maxGain;
-	inline StabilityControl()  { }
-	inline void dtor() { typedef void (*_fpt)(StabilityControl *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(StabilityControl *pthis, Car *); _fpt _f=(_fpt)_drva(2882096); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(StabilityControl *pthis, float); _fpt _f=(_fpt)_drva(2882128); return _f(this, dt); }
+	float value;
+	inline Speed()  { }
+	inline void ctor(float v) { typedef void (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2333072); _f(this, v); }
+	inline void ctor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(2333024); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline float kmh() { typedef float (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(364368); return _f(this); }
+	inline Speed operator*(float v2) { typedef Speed (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2502224); return _f(this, v2); }
 	inline void _guard_obj() {
-		static_assert((sizeof(StabilityControl)==24),"bad size");
-		static_assert((offsetof(StabilityControl,gain)==0x0),"bad off");
-		static_assert((offsetof(StabilityControl,useBeta)==0x4),"bad off");
-		static_assert((offsetof(StabilityControl,car)==0x8),"bad off");
-		static_assert((offsetof(StabilityControl,maxGain)==0x10),"bad off");
+		static_assert((sizeof(Speed)==4),"bad size");
+		static_assert((offsetof(Speed,value)==0x0),"bad off");
 	};
 };
 
-//UDT: struct PenaltyRules @len=8
-	//_Data: this+0x0, Member, Type: enum JumpStartPenaltyMode, jumpStartPenaltyMode
-	//_Data: this+0x4, Member, Type: short, basePitPenaltyLaps
-	//_Func: public bool isFirstGearLocked(); @loc=optimized @len=0 @rva=0
-	//_Func: public void PenaltyRules(); @loc=optimized @len=0 @rva=0
+//UDT: struct GearElement @len=24
+	//_Data: this+0x0, Member, Type: double, velocity
+	//_Data: this+0x8, Member, Type: double, inertia
+	//_Data: this+0x10, Member, Type: double, oldVelocity
+	//_Func: public void GearElement(); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct PenaltyRules {
+struct GearElement {
 public:
-	JumpStartPenaltyMode jumpStartPenaltyMode;
-	short basePitPenaltyLaps;
-	inline PenaltyRules()  { }
+	double velocity;
+	double inertia;
+	double oldVelocity;
+	inline GearElement()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(PenaltyRules)==8),"bad size");
-		static_assert((offsetof(PenaltyRules,jumpStartPenaltyMode)==0x0),"bad off");
-		static_assert((offsetof(PenaltyRules,basePitPenaltyLaps)==0x4),"bad off");
+		static_assert((sizeof(GearElement)==24),"bad size");
+		static_assert((offsetof(GearElement,velocity)==0x0),"bad off");
+		static_assert((offsetof(GearElement,inertia)==0x8),"bad off");
+		static_assert((offsetof(GearElement,oldVelocity)==0x10),"bad off");
+	};
+};
+
+//UDT: struct DownshiftProtection @len=12
+	//_Data: this+0x0, Member, Type: bool, isActive
+	//_Data: this+0x1, Member, Type: bool, isDebug
+	//_Data: this+0x4, Member, Type: int, overrev
+	//_Data: this+0x8, Member, Type: bool, lockN
+	//_Func: public void DownshiftProtection(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct DownshiftProtection {
+public:
+	bool isActive;
+	bool isDebug;
+	int overrev;
+	bool lockN;
+	inline DownshiftProtection()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(DownshiftProtection)==12),"bad size");
+		static_assert((offsetof(DownshiftProtection,isActive)==0x0),"bad off");
+		static_assert((offsetof(DownshiftProtection,isDebug)==0x1),"bad off");
+		static_assert((offsetof(DownshiftProtection,overrev)==0x4),"bad off");
+		static_assert((offsetof(DownshiftProtection,lockN)==0x8),"bad off");
+	};
+};
+
+//UDT: class vec2f @len=8
+	//_Data: this+0x0, Member, Type: float, x
+	//_Data: this+0x4, Member, Type: float, y
+	//_Func: public void vec2f(float ix, float iy); @loc=static @len=13 @rva=216944
+	//_Func: public void vec2f(); @loc=optimized @len=0 @rva=0
+	//_Func: public float length(); @loc=optimized @len=0 @rva=0
+	//_Func: public void normalize(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class vec2f {
+public:
+	float x;
+	float y;
+	inline vec2f()  { }
+	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
+	inline void _guard_obj() {
+		static_assert((sizeof(vec2f)==8),"bad size");
+		static_assert((offsetof(vec2f,x)==0x0),"bad off");
+		static_assert((offsetof(vec2f,y)==0x4),"bad off");
+	};
+};
+
+//UDT: struct WingOverrideDef @len=8
+	//_Data: this+0x0, Member, Type: float, overrideAngle
+	//_Data: this+0x4, Member, Type: bool, isActive
+	//_Func: public void WingOverrideDef(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct WingOverrideDef {
+public:
+	float overrideAngle;
+	bool isActive;
+	inline WingOverrideDef()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(WingOverrideDef)==8),"bad size");
+		static_assert((offsetof(WingOverrideDef,overrideAngle)==0x0),"bad off");
+		static_assert((offsetof(WingOverrideDef,isActive)==0x4),"bad off");
+	};
+};
+
+//UDT: struct ClientRules @len=4
+	//_Data: this+0x0, Member, Type: float, maxMetersWrongWay
+	//_Func: public void ClientRules(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ClientRules {
+public:
+	float maxMetersWrongWay;
+	inline ClientRules()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ClientRules)==4),"bad size");
+		static_assert((offsetof(ClientRules,maxMetersWrongWay)==0x0),"bad off");
+	};
+};
+
+//UDT: struct TurboDef @len=28
+	//_Func: public void TurboDef(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, maxBoost
+	//_Data: this+0x4, Member, Type: float, lagUP
+	//_Data: this+0x8, Member, Type: float, lagDN
+	//_Data: this+0xC, Member, Type: float, rpmRef
+	//_Data: this+0x10, Member, Type: float, gamma
+	//_Data: this+0x14, Member, Type: float, wastegate
+	//_Data: this+0x18, Member, Type: bool, isAdjustable
+//UDT;
+
+struct TurboDef {
+public:
+	float maxBoost;
+	float lagUP;
+	float lagDN;
+	float rpmRef;
+	float gamma;
+	float wastegate;
+	bool isAdjustable;
+	inline TurboDef()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TurboDef)==28),"bad size");
+		static_assert((offsetof(TurboDef,maxBoost)==0x0),"bad off");
+		static_assert((offsetof(TurboDef,lagUP)==0x4),"bad off");
+		static_assert((offsetof(TurboDef,lagDN)==0x8),"bad off");
+		static_assert((offsetof(TurboDef,rpmRef)==0xC),"bad off");
+		static_assert((offsetof(TurboDef,gamma)==0x10),"bad off");
+		static_assert((offsetof(TurboDef,wastegate)==0x14),"bad off");
+		static_assert((offsetof(TurboDef,isAdjustable)==0x18),"bad off");
+	};
+};
+
+//UDT: struct SACEngineInput @len=16
+	//_Data: this+0x0, Member, Type: float, gasInput
+	//_Data: this+0x4, Member, Type: float, carSpeed
+	//_Data: this+0x8, Member, Type: float, altitude
+	//_Data: this+0xC, Member, Type: float, rpm
+	//_Func: public void SACEngineInput(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SACEngineInput {
+public:
+	float gasInput;
+	float carSpeed;
+	float altitude;
+	float rpm;
+	inline SACEngineInput()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SACEngineInput)==16),"bad size");
+		static_assert((offsetof(SACEngineInput,gasInput)==0x0),"bad off");
+		static_assert((offsetof(SACEngineInput,carSpeed)==0x4),"bad off");
+		static_assert((offsetof(SACEngineInput,altitude)==0x8),"bad off");
+		static_assert((offsetof(SACEngineInput,rpm)==0xC),"bad off");
+	};
+};
+
+//UDT: class Trigger @len=12
+	//_Func: public void Trigger(); @loc=static @len=13 @rva=2339728
+	//_Func: public void ~Trigger(); @loc=static @len=3 @rva=96368
+	//_Func: public bool hasSwitchedState(bool  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public bool ignoreSubsequentTrue(bool value); @loc=static @len=32 @rva=2339744
+	//_Func: public bool keepSteady(float dt, bool value); @loc=static @len=60 @rva=2339776
+	//_Func: public bool turnOn(bool  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public bool turnOff(bool  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void setAccumulatorLimit(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: bool, state
+	//_Data: this+0x1, Member, Type: bool, lastState
+	//_Data: this+0x4, Member, Type: float, accumulator
+	//_Data: this+0x8, Member, Type: float, accumulatorLimit
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Trigger {
+public:
+	bool state;
+	bool lastState;
+	float accumulator;
+	float accumulatorLimit;
+	inline Trigger()  { }
+	inline void ctor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(2339728); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline bool ignoreSubsequentTrue(bool value) { typedef bool (*_fpt)(Trigger *pthis, bool); _fpt _f=(_fpt)_drva(2339744); return _f(this, value); }
+	inline bool keepSteady(float dt, bool value) { typedef bool (*_fpt)(Trigger *pthis, float, bool); _fpt _f=(_fpt)_drva(2339776); return _f(this, dt, value); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Trigger)==12),"bad size");
+		static_assert((offsetof(Trigger,state)==0x0),"bad off");
+		static_assert((offsetof(Trigger,lastState)==0x1),"bad off");
+		static_assert((offsetof(Trigger,accumulator)==0x4),"bad off");
+		static_assert((offsetof(Trigger,accumulatorLimit)==0x8),"bad off");
+	};
+};
+
+//UDT: struct PerformanceSplit @len=16
+	//_Data: this+0x0, Member, Type: double, t
+	//_Data: this+0x8, Member, Type: float, speedMS
+	//_Func: public void PerformanceSplit(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct PerformanceSplit {
+public:
+	double t;
+	float speedMS;
+	inline PerformanceSplit()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(PerformanceSplit)==16),"bad size");
+		static_assert((offsetof(PerformanceSplit,t)==0x0),"bad off");
+		static_assert((offsetof(PerformanceSplit,speedMS)==0x8),"bad off");
+	};
+};
+
+//UDT: struct CommandItem @len=4
+	//_Func: public void CommandItem(int akey); @loc=static @len=6 @rva=953184
+	//_Func: public void CommandItem(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, key
+//UDT;
+
+struct CommandItem {
+public:
+	int key;
+	inline CommandItem()  { }
+	inline void ctor(int akey) { typedef void (*_fpt)(CommandItem *pthis, int); _fpt _f=(_fpt)_drva(953184); _f(this, akey); }
+	inline void _guard_obj() {
+		static_assert((sizeof(CommandItem)==4),"bad size");
+		static_assert((offsetof(CommandItem,key)==0x0),"bad off");
+	};
+};
+
+//UDT: struct CoreCPUTimes @len=24
+	//_Data: this+0x0, Member, Type: double, solverTime
+	//_Data: this+0x8, Member, Type: double, collisionTime
+	//_Data: this+0x10, Member, Type: int, contactPoints
+	//_Data: this+0x14, Member, Type: int, narrowPhaseTests
+	//_Func: public void CoreCPUTimes(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct CoreCPUTimes {
+public:
+	double solverTime;
+	double collisionTime;
+	int contactPoints;
+	int narrowPhaseTests;
+	inline CoreCPUTimes()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(CoreCPUTimes)==24),"bad size");
+		static_assert((offsetof(CoreCPUTimes,solverTime)==0x0),"bad off");
+		static_assert((offsetof(CoreCPUTimes,collisionTime)==0x8),"bad off");
+		static_assert((offsetof(CoreCPUTimes,contactPoints)==0x10),"bad off");
+		static_assert((offsetof(CoreCPUTimes,narrowPhaseTests)==0x14),"bad off");
+	};
+};
+
+//UDT: struct HDRLevels @len=8
+	//_Func: public void HDRLevels(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, minExposure
+	//_Data: this+0x4, Member, Type: float, maxExposure
+//UDT;
+
+struct HDRLevels {
+public:
+	float minExposure;
+	float maxExposure;
+	inline HDRLevels()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(HDRLevels)==8),"bad size");
+		static_assert((offsetof(HDRLevels,minExposure)==0x0),"bad off");
+		static_assert((offsetof(HDRLevels,maxExposure)==0x4),"bad off");
+	};
+};
+
+//UDT: struct OnReplayStatusChanged @len=12
+	//_Func: public void OnReplayStatusChanged(eReplayStatus  _arg0, float  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: enum eReplayStatus, status
+	//_Data: this+0x4, Member, Type: float, timeMult
+	//_Data: this+0x8, Member, Type: float, slowMotionLevel
+//UDT;
+
+struct OnReplayStatusChanged {
+public:
+	eReplayStatus status;
+	float timeMult;
+	float slowMotionLevel;
+	inline OnReplayStatusChanged()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnReplayStatusChanged)==12),"bad size");
+		static_assert((offsetof(OnReplayStatusChanged,status)==0x0),"bad off");
+		static_assert((offsetof(OnReplayStatusChanged,timeMult)==0x4),"bad off");
+		static_assert((offsetof(OnReplayStatusChanged,slowMotionLevel)==0x8),"bad off");
+	};
+};
+
+//UDT: struct OnWindowClosedEvent @len=8
+	//_Func: public void OnWindowClosedEvent(RenderWindow *  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class RenderWindow *, renderWindow
+//UDT;
+
+struct OnWindowClosedEvent {
+public:
+	RenderWindow * renderWindow;
+	inline OnWindowClosedEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnWindowClosedEvent)==8),"bad size");
+		static_assert((offsetof(OnWindowClosedEvent,renderWindow)==0x0),"bad off");
+	};
+};
+
+//UDT: struct DriverActionsState @len=4
+	//_Data: this+0x0, Member, Type: int, state
+	//_Func: public void reset(); @loc=optimized @len=0 @rva=0
+	//_Func: public void setState(DriverActions  _arg0, bool  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public bool getState(DriverActions  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void DriverActionsState(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct DriverActionsState {
+public:
+	int state;
+	inline DriverActionsState()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(DriverActionsState)==4),"bad size");
+		static_assert((offsetof(DriverActionsState,state)==0x0),"bad off");
 	};
 };
 
@@ -2640,189 +2772,6 @@ public:
 	};
 };
 
-//UDT: struct SGearRatio @len=40
-	//_Func: public void SGearRatio(SGearRatio &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SGearRatio(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio); @loc=static @len=173 @rva=2514800
-	//_Data: this+0x0, Member, Type: double, ratio
-	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Func: public void ~SGearRatio(); @loc=static @len=49 @rva=2180672
-	//_Func: public SGearRatio & operator=(SGearRatio &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct SGearRatio {
-public:
-	double ratio;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	inline SGearRatio()  { }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio) { typedef void (*_fpt)(SGearRatio *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); _fpt _f=(_fpt)_drva(2514800); _f(this, iname, iratio); }
-	inline void dtor() { typedef void (*_fpt)(SGearRatio *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(SGearRatio)==40),"bad size");
-		static_assert((offsetof(SGearRatio,ratio)==0x0),"bad off");
-		static_assert((offsetof(SGearRatio,name)==0x8),"bad off");
-	};
-};
-
-//UDT: struct TrackData @len=72
-	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x20, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, configuration
-	//_Data: this+0x40, Member, Type: int, gridPlaces
-	//_Func: public void TrackData(TrackData &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void TrackData(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~TrackData(); @loc=static @len=88 @rva=776352
-	//_Func: public TrackData & operator=(TrackData &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct TrackData {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > configuration;
-	int gridPlaces;
-	inline TrackData()  { }
-	inline void dtor() { typedef void (*_fpt)(TrackData *pthis); _fpt _f=(_fpt)_drva(776352); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(TrackData)==72),"bad size");
-		static_assert((offsetof(TrackData,name)==0x0),"bad off");
-		static_assert((offsetof(TrackData,configuration)==0x20),"bad off");
-		static_assert((offsetof(TrackData,gridPlaces)==0x40),"bad off");
-	};
-};
-
-//UDT: struct OnNewCarLoadedEvent @len=8
-	//_Data: this+0x0, Member, Type: class CarAvatar *, car
-//UDT;
-
-struct OnNewCarLoadedEvent {
-public:
-	CarAvatar * car;
-	inline OnNewCarLoadedEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnNewCarLoadedEvent)==8),"bad size");
-		static_assert((offsetof(OnNewCarLoadedEvent,car)==0x0),"bad off");
-	};
-};
-
-//UDT: struct OnReplayStatusChanged @len=12
-	//_Func: public void OnReplayStatusChanged(eReplayStatus  _arg0, float  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: enum eReplayStatus, status
-	//_Data: this+0x4, Member, Type: float, timeMult
-	//_Data: this+0x8, Member, Type: float, slowMotionLevel
-//UDT;
-
-struct OnReplayStatusChanged {
-public:
-	eReplayStatus status;
-	float timeMult;
-	float slowMotionLevel;
-	inline OnReplayStatusChanged()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnReplayStatusChanged)==12),"bad size");
-		static_assert((offsetof(OnReplayStatusChanged,status)==0x0),"bad off");
-		static_assert((offsetof(OnReplayStatusChanged,timeMult)==0x4),"bad off");
-		static_assert((offsetof(OnReplayStatusChanged,slowMotionLevel)==0x8),"bad off");
-	};
-};
-
-//UDT: struct AutoShifter @len=40
-	//_Func: public void ~AutoShifter(); @loc=static @len=3 @rva=96368
-	//_Data: this+0x0, Member, Type: bool, isActive
-	//_Data: this+0x4, Member, Type: int, changeUpRpm
-	//_Data: this+0x8, Member, Type: int, changeDnRpm
-	//_Data: this+0xC, Member, Type: float, slipThreshold
-	//_Func: public void init(Car * car); @loc=static @len=44 @rva=2859040
-	//_Func: public void step(float dt); @loc=static @len=843 @rva=2861040
-	//_Data: this+0x10, Member, Type: class Car *, car
-	//_Data: this+0x18, Member, Type: bool, butGearUp
-	//_Data: this+0x19, Member, Type: bool, butGearDn
-	//_Data: this+0x1C, Member, Type: float, gasCutoff
-	//_Data: this+0x20, Member, Type: float, gasCutoffTime
-	//_Func: private void loadINI(); @loc=static @len=1946 @rva=2859088
-	//_Func: public void AutoShifter(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct AutoShifter {
-public:
-	bool isActive;
-	int changeUpRpm;
-	int changeDnRpm;
-	float slipThreshold;
-	Car * car;
-	bool butGearUp;
-	bool butGearDn;
-	float gasCutoff;
-	float gasCutoffTime;
-	inline AutoShifter()  { }
-	inline void dtor() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(AutoShifter *pthis, Car *); _fpt _f=(_fpt)_drva(2859040); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(AutoShifter *pthis, float); _fpt _f=(_fpt)_drva(2861040); return _f(this, dt); }
-	inline void loadINI() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(2859088); return _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(AutoShifter)==40),"bad size");
-		static_assert((offsetof(AutoShifter,isActive)==0x0),"bad off");
-		static_assert((offsetof(AutoShifter,changeUpRpm)==0x4),"bad off");
-		static_assert((offsetof(AutoShifter,changeDnRpm)==0x8),"bad off");
-		static_assert((offsetof(AutoShifter,slipThreshold)==0xC),"bad off");
-		static_assert((offsetof(AutoShifter,car)==0x10),"bad off");
-		static_assert((offsetof(AutoShifter,butGearUp)==0x18),"bad off");
-		static_assert((offsetof(AutoShifter,butGearDn)==0x19),"bad off");
-		static_assert((offsetof(AutoShifter,gasCutoff)==0x1C),"bad off");
-		static_assert((offsetof(AutoShifter,gasCutoffTime)==0x20),"bad off");
-	};
-};
-
-//UDT: struct DriverInfo @len=128
-	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x20, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, team
-	//_Data: this+0x40, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, nationality
-	//_Data: this+0x60, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, nationCode
-	//_Func: public void DriverInfo(DriverInfo & __that); @loc=static @len=192 @rva=242096
-	//_Func: public void DriverInfo(); @loc=static @len=69 @rva=242288
-	//_Func: public void ~DriverInfo(); @loc=static @len=152 @rva=246464
-	//_Func: public DriverInfo & operator=(DriverInfo & __that); @loc=static @len=122 @rva=848192
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct DriverInfo {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationality;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
-	inline DriverInfo()  { }
-	inline void ctor(DriverInfo & __that) { typedef void (*_fpt)(DriverInfo *pthis, DriverInfo &); _fpt _f=(_fpt)_drva(242096); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(242288); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(246464); _f(this); }
-	inline DriverInfo & operator=(DriverInfo & __that) { typedef DriverInfo & (*_fpt)(DriverInfo *pthis, DriverInfo &); _fpt _f=(_fpt)_drva(848192); return _f(this, __that); }
-	inline void _guard_obj() {
-		static_assert((sizeof(DriverInfo)==128),"bad size");
-		static_assert((offsetof(DriverInfo,name)==0x0),"bad off");
-		static_assert((offsetof(DriverInfo,team)==0x20),"bad off");
-		static_assert((offsetof(DriverInfo,nationality)==0x40),"bad off");
-		static_assert((offsetof(DriverInfo,nationCode)==0x60),"bad off");
-	};
-};
-
-//UDT: struct DriverActionsState @len=4
-	//_Data: this+0x0, Member, Type: int, state
-	//_Func: public void reset(); @loc=optimized @len=0 @rva=0
-	//_Func: public void setState(DriverActions  _arg0, bool  _arg1); @loc=optimized @len=0 @rva=0
-	//_Func: public bool getState(DriverActions  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void DriverActionsState(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct DriverActionsState {
-public:
-	int state;
-	inline DriverActionsState()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(DriverActionsState)==4),"bad size");
-		static_assert((offsetof(DriverActionsState,state)==0x0),"bad off");
-	};
-};
-
 //UDT: struct ksgui::OnSpinnerValueChanged @len=16
 	//_Data: this+0x0, Member, Type: class ksgui::Spinner *, spinner
 	//_Data: this+0x8, Member, Type: int, value
@@ -2837,6 +2786,160 @@ public:
 		static_assert((sizeof(ksgui_OnSpinnerValueChanged)==16),"bad size");
 		static_assert((offsetof(ksgui_OnSpinnerValueChanged,spinner)==0x0),"bad off");
 		static_assert((offsetof(ksgui_OnSpinnerValueChanged,value)==0x8),"bad off");
+	};
+};
+
+//UDT: class Task @len=40
+	//_Func: public void Task(Task &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Task(); @loc=optimized @len=0 @rva=0
+	//_Func: public void Task(std::function<void __cdecl(void)>  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void run(); @loc=optimized @len=0 @rva=0
+	//_Func: public void spinWait(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: volatile bool, isDone
+	//_Data: this+0x8, Member, Type: class std::function<void __cdecl(void)>, function
+	//_Func: public void ~Task(); @loc=static @len=74 @rva=175552
+	//_Func: public Task & operator=(Task &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Task {
+public:
+	bool isDone;
+	std::function<void __cdecl(void)> function;
+	inline Task()  { }
+	inline void dtor() { typedef void (*_fpt)(Task *pthis); _fpt _f=(_fpt)_drva(175552); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Task)==40),"bad size");
+		static_assert((offsetof(Task,isDone)==0x0),"bad off");
+		static_assert((offsetof(Task,function)==0x8),"bad off");
+	};
+};
+
+//UDT: struct ClientHandshakeResult @len=144
+	//_Data: this+0x0, Member, Type: bool, success
+	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, model
+	//_Data: this+0x28, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, skin
+	//_Data: this+0x48, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, track
+	//_Data: this+0x68, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, track_config
+	//_Data: this+0x88, Member, Type: float, sunAngle
+	//_Data: this+0x8C, Member, Type: unsigned char, sessionID
+	//_Func: public void ClientHandshakeResult(ClientHandshakeResult & __that); @loc=static @len=229 @rva=241536
+	//_Func: public void ClientHandshakeResult(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~ClientHandshakeResult(); @loc=static @len=160 @rva=245968
+	//_Func: public ClientHandshakeResult & operator=(ClientHandshakeResult &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ClientHandshakeResult {
+public:
+	bool success;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > model;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > skin;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > track;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > track_config;
+	float sunAngle;
+	unsigned char sessionID;
+	inline ClientHandshakeResult()  { }
+	inline void ctor(ClientHandshakeResult & __that) { typedef void (*_fpt)(ClientHandshakeResult *pthis, ClientHandshakeResult &); _fpt _f=(_fpt)_drva(241536); _f(this, __that); }
+	inline void dtor() { typedef void (*_fpt)(ClientHandshakeResult *pthis); _fpt _f=(_fpt)_drva(245968); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ClientHandshakeResult)==144),"bad size");
+		static_assert((offsetof(ClientHandshakeResult,success)==0x0),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,model)==0x8),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,skin)==0x28),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,track)==0x48),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,track_config)==0x68),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,sunAngle)==0x88),"bad off");
+		static_assert((offsetof(ClientHandshakeResult,sessionID)==0x8C),"bad off");
+	};
+};
+
+//UDT: struct SessionInfo @len=32
+	//_Func: public void SessionInfo(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: enum SessionType, type
+	//_Data: this+0x8, Member, Type: double, startTimeMS
+	//_Data: this+0x10, Member, Type: double, timeSecs
+	//_Data: this+0x18, Member, Type: int, laps
+	//_Data: this+0x1C, Member, Type: int, index
+//UDT;
+
+struct SessionInfo {
+public:
+	SessionType type;
+	double startTimeMS;
+	double timeSecs;
+	int laps;
+	int index;
+	inline SessionInfo()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(SessionInfo)==32),"bad size");
+		static_assert((offsetof(SessionInfo,type)==0x0),"bad off");
+		static_assert((offsetof(SessionInfo,startTimeMS)==0x8),"bad off");
+		static_assert((offsetof(SessionInfo,timeSecs)==0x10),"bad off");
+		static_assert((offsetof(SessionInfo,laps)==0x18),"bad off");
+		static_assert((offsetof(SessionInfo,index)==0x1C),"bad off");
+	};
+};
+
+//UDT: struct PenaltyRules @len=8
+	//_Data: this+0x0, Member, Type: enum JumpStartPenaltyMode, jumpStartPenaltyMode
+	//_Data: this+0x4, Member, Type: short, basePitPenaltyLaps
+	//_Func: public bool isFirstGearLocked(); @loc=optimized @len=0 @rva=0
+	//_Func: public void PenaltyRules(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct PenaltyRules {
+public:
+	JumpStartPenaltyMode jumpStartPenaltyMode;
+	short basePitPenaltyLaps;
+	inline PenaltyRules()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(PenaltyRules)==8),"bad size");
+		static_assert((offsetof(PenaltyRules,jumpStartPenaltyMode)==0x0),"bad off");
+		static_assert((offsetof(PenaltyRules,basePitPenaltyLaps)==0x4),"bad off");
+	};
+};
+
+//UDT: class vec3f @len=12
+	//_Data: this+0x0, Member, Type: float, x
+	//_Data: this+0x4, Member, Type: float, y
+	//_Data: this+0x8, Member, Type: float, z
+	//_Func: public void vec3f(double *  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void vec3f(float *  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void vec3f(float ix, float iy, float iz); @loc=static @len=18 @rva=147424
+	//_Func: public void vec3f(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void vec3f(); @loc=optimized @len=0 @rva=0
+	//_Func: public void normalize(); @loc=static @len=136 @rva=147456
+	//_Func: public bool isZero(); @loc=optimized @len=0 @rva=0
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > toString(); @loc=static @len=322 @rva=340976
+	//_Func: public float length(); @loc=optimized @len=0 @rva=0
+	//_Func: public float lengthSquared(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool isFinite(); @loc=static @len=105 @rva=418800
+	//_Func: public vec3f negate(); @loc=optimized @len=0 @rva=0
+	//_Func: public void operator+=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void operator-=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void operator*=(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void operator/=(float m); @loc=static @len=47 @rva=908800
+	//_Func: public void print(char * name); @loc=static @len=61 @rva=918176
+//UDT;
+
+class vec3f {
+public:
+	float x;
+	float y;
+	float z;
+	inline vec3f()  { }
+	inline void ctor(float ix, float iy, float iz) { typedef void (*_fpt)(vec3f *pthis, float, float, float); _fpt _f=(_fpt)_drva(147424); _f(this, ix, iy, iz); }
+	inline void normalize() { typedef void (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(147456); return _f(this); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > toString() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(340976); return _f(this); }
+	inline bool isFinite() { typedef bool (*_fpt)(vec3f *pthis); _fpt _f=(_fpt)_drva(418800); return _f(this); }
+	inline void operator/=(float m) { typedef void (*_fpt)(vec3f *pthis, float); _fpt _f=(_fpt)_drva(908800); return _f(this, m); }
+	inline void print(char * name) { typedef void (*_fpt)(vec3f *pthis, char *); _fpt _f=(_fpt)_drva(918176); return _f(this, name); }
+	inline void _guard_obj() {
+		static_assert((sizeof(vec3f)==12),"bad size");
+		static_assert((offsetof(vec3f,x)==0x0),"bad off");
+		static_assert((offsetof(vec3f,y)==0x4),"bad off");
+		static_assert((offsetof(vec3f,z)==0x8),"bad off");
 	};
 };
 
@@ -2907,6 +3010,223 @@ public:
 	};
 };
 
+//UDT: struct StabilityControl @len=24
+	//_Func: public void ~StabilityControl(); @loc=static @len=3 @rva=96368
+	//_Data: this+0x0, Member, Type: float, gain
+	//_Data: this+0x4, Member, Type: bool, useBeta
+	//_Func: public void init(Car * car); @loc=static @len=22 @rva=2882096
+	//_Func: public void step(float dt); @loc=static @len=511 @rva=2882128
+	//_Data: this+0x8, Member, Type: class Car *, car
+	//_Data: this+0x10, Member, Type: float, maxGain
+	//_Func: public void StabilityControl(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct StabilityControl {
+public:
+	float gain;
+	bool useBeta;
+	Car * car;
+	float maxGain;
+	inline StabilityControl()  { }
+	inline void dtor() { typedef void (*_fpt)(StabilityControl *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void init(Car * car) { typedef void (*_fpt)(StabilityControl *pthis, Car *); _fpt _f=(_fpt)_drva(2882096); return _f(this, car); }
+	inline void step(float dt) { typedef void (*_fpt)(StabilityControl *pthis, float); _fpt _f=(_fpt)_drva(2882128); return _f(this, dt); }
+	inline void _guard_obj() {
+		static_assert((sizeof(StabilityControl)==24),"bad size");
+		static_assert((offsetof(StabilityControl,gain)==0x0),"bad off");
+		static_assert((offsetof(StabilityControl,useBeta)==0x4),"bad off");
+		static_assert((offsetof(StabilityControl,car)==0x8),"bad off");
+		static_assert((offsetof(StabilityControl,maxGain)==0x10),"bad off");
+	};
+};
+
+//UDT: struct sockaddr_in @len=16
+	//_Data: this+0x0, Member, Type: unsigned short, sin_family
+	//_Data: this+0x2, Member, Type: unsigned short, sin_port
+	//_Data: this+0x4, Member, Type: struct in_addr, sin_addr
+	//_Data: this+0x8, Member, Type: char[0x8], sin_zero
+//UDT;
+
+struct sockaddr_in {
+public:
+	unsigned short sin_family;
+	unsigned short sin_port;
+	in_addr sin_addr;
+	char sin_zero[0x8];
+	inline sockaddr_in()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(sockaddr_in)==16),"bad size");
+		static_assert((offsetof(sockaddr_in,sin_family)==0x0),"bad off");
+		static_assert((offsetof(sockaddr_in,sin_port)==0x2),"bad off");
+		static_assert((offsetof(sockaddr_in,sin_addr)==0x4),"bad off");
+		static_assert((offsetof(sockaddr_in,sin_zero)==0x8),"bad off");
+	};
+};
+
+//UDT: struct DisconnectCountdown @len=40
+	//_Data: this+0x0, Member, Type: bool, isSignaled
+	//_Data: this+0x4, Member, Type: float, timeToDisconnection
+	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, message
+	//_Func: public void DisconnectCountdown(DisconnectCountdown &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void DisconnectCountdown(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~DisconnectCountdown(); @loc=static @len=49 @rva=2180672
+	//_Func: public DisconnectCountdown & operator=(DisconnectCountdown &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct DisconnectCountdown {
+public:
+	bool isSignaled;
+	float timeToDisconnection;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > message;
+	inline DisconnectCountdown()  { }
+	inline void dtor() { typedef void (*_fpt)(DisconnectCountdown *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(DisconnectCountdown)==40),"bad size");
+		static_assert((offsetof(DisconnectCountdown,isSignaled)==0x0),"bad off");
+		static_assert((offsetof(DisconnectCountdown,timeToDisconnection)==0x4),"bad off");
+		static_assert((offsetof(DisconnectCountdown,message)==0x8),"bad off");
+	};
+};
+
+//UDT: struct SGearRatio @len=40
+	//_Func: public void SGearRatio(SGearRatio &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SGearRatio(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio); @loc=static @len=173 @rva=2514800
+	//_Data: this+0x0, Member, Type: double, ratio
+	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Func: public void ~SGearRatio(); @loc=static @len=49 @rva=2180672
+	//_Func: public SGearRatio & operator=(SGearRatio &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SGearRatio {
+public:
+	double ratio;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	inline SGearRatio()  { }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio) { typedef void (*_fpt)(SGearRatio *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); _fpt _f=(_fpt)_drva(2514800); _f(this, iname, iratio); }
+	inline void dtor() { typedef void (*_fpt)(SGearRatio *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SGearRatio)==40),"bad size");
+		static_assert((offsetof(SGearRatio,ratio)==0x0),"bad off");
+		static_assert((offsetof(SGearRatio,name)==0x8),"bad off");
+	};
+};
+
+//UDT: struct OnStepCompleteEvent @len=16
+	//_Data: this+0x0, Member, Type: class Car *, car
+	//_Data: this+0x8, Member, Type: double, physicsTime
+//UDT;
+
+struct OnStepCompleteEvent {
+public:
+	Car * car;
+	double physicsTime;
+	inline OnStepCompleteEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnStepCompleteEvent)==16),"bad size");
+		static_assert((offsetof(OnStepCompleteEvent,car)==0x0),"bad off");
+		static_assert((offsetof(OnStepCompleteEvent,physicsTime)==0x8),"bad off");
+	};
+};
+
+//UDT: class TCPQueue @len=65540
+	//_Func: public void TCPQueue(); @loc=optimized @len=0 @rva=0
+	//_Func: public void push(unsigned char * data, unsigned int size); @loc=static @len=215 @rva=2482992
+	//_Func: public std::vector<unsigned char,std::allocator<unsigned char> > getPacket(); @loc=static @len=238 @rva=2482752
+	//_Data: this+0x0, Member, Type: unsigned char[0x10000], buffer
+	//_Data: this+0x10000, Member, Type: unsigned int, cursor
+//UDT;
+
+class TCPQueue {
+public:
+	unsigned char buffer[0x10000];
+	unsigned int cursor;
+	inline TCPQueue()  { }
+	inline void push(unsigned char * data, unsigned int size) { typedef void (*_fpt)(TCPQueue *pthis, unsigned char *, unsigned int); _fpt _f=(_fpt)_drva(2482992); return _f(this, data, size); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > getPacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPQueue *pthis); _fpt _f=(_fpt)_drva(2482752); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(TCPQueue)==65540),"bad size");
+		static_assert((offsetof(TCPQueue,buffer)==0x0),"bad off");
+		static_assert((offsetof(TCPQueue,cursor)==0x10000),"bad off");
+	};
+};
+
+//UDT: struct TyreThermalPatch @len=40
+	//_Func: public void TyreThermalPatch(TyreThermalPatch &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void TyreThermalPatch(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class std::vector<TyreThermalPatch *,std::allocator<TyreThermalPatch *> >, connections
+	//_Data: this+0x18, Member, Type: float, T
+	//_Data: this+0x1C, Member, Type: float, inputT
+	//_Data: this+0x20, Member, Type: int, elementIndex
+	//_Data: this+0x24, Member, Type: int, stripeIndex
+	//_Func: public void ~TyreThermalPatch(); @loc=optimized @len=0 @rva=0
+	//_Func: public TyreThermalPatch & operator=(TyreThermalPatch &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct TyreThermalPatch {
+public:
+	std::vector<TyreThermalPatch *,std::allocator<TyreThermalPatch *> > connections;
+	float T;
+	float inputT;
+	int elementIndex;
+	int stripeIndex;
+	inline TyreThermalPatch()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyreThermalPatch)==40),"bad size");
+		static_assert((offsetof(TyreThermalPatch,connections)==0x0),"bad off");
+		static_assert((offsetof(TyreThermalPatch,T)==0x18),"bad off");
+		static_assert((offsetof(TyreThermalPatch,inputT)==0x1C),"bad off");
+		static_assert((offsetof(TyreThermalPatch,elementIndex)==0x20),"bad off");
+		static_assert((offsetof(TyreThermalPatch,stripeIndex)==0x24),"bad off");
+	};
+};
+
+//UDT: struct GearRequestStatus @len=32
+	//_Func: public void GearRequestStatus(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool setRequest(GearChangeRequest  _arg0, double  _arg1, int  _arg2); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: enum GearChangeRequest, request
+	//_Data: this+0x8, Member, Type: double, timeAccumulator
+	//_Data: this+0x10, Member, Type: double, timeout
+	//_Data: this+0x18, Member, Type: int, requestedGear
+//UDT;
+
+struct GearRequestStatus {
+public:
+	GearChangeRequest request;
+	double timeAccumulator;
+	double timeout;
+	int requestedGear;
+	inline GearRequestStatus()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(GearRequestStatus)==32),"bad size");
+		static_assert((offsetof(GearRequestStatus,request)==0x0),"bad off");
+		static_assert((offsetof(GearRequestStatus,timeAccumulator)==0x8),"bad off");
+		static_assert((offsetof(GearRequestStatus,timeout)==0x10),"bad off");
+		static_assert((offsetof(GearRequestStatus,requestedGear)==0x18),"bad off");
+	};
+};
+
+//UDT: struct OnGearRequestEvent @len=8
+	//_Func: public void OnGearRequestEvent(GearChangeRequest  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: enum GearChangeRequest, request
+	//_Data: this+0x4, Member, Type: int, nextGear
+//UDT;
+
+struct OnGearRequestEvent {
+public:
+	GearChangeRequest request;
+	int nextGear;
+	inline OnGearRequestEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnGearRequestEvent)==8),"bad size");
+		static_assert((offsetof(OnGearRequestEvent,request)==0x0),"bad off");
+		static_assert((offsetof(OnGearRequestEvent,nextGear)==0x4),"bad off");
+	};
+};
+
 //UDT: struct DifferentialSetting @len=16
 	//_Data: this+0x0, Member, Type: float, power
 	//_Data: this+0x4, Member, Type: float, coast
@@ -2928,27 +3248,6 @@ public:
 		static_assert((offsetof(DifferentialSetting,coast)==0x4),"bad off");
 		static_assert((offsetof(DifferentialSetting,preload)==0x8),"bad off");
 		static_assert((offsetof(DifferentialSetting,type)==0xC),"bad off");
-	};
-};
-
-//UDT: struct OnWindowResizeEvent @len=16
-	//_Func: public void OnWindowResizeEvent(int  _arg0, int  _arg1, RenderWindow *  _arg2); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: int, width
-	//_Data: this+0x4, Member, Type: int, height
-	//_Data: this+0x8, Member, Type: class RenderWindow *, renderWindow
-//UDT;
-
-struct OnWindowResizeEvent {
-public:
-	int width;
-	int height;
-	RenderWindow * renderWindow;
-	inline OnWindowResizeEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnWindowResizeEvent)==16),"bad size");
-		static_assert((offsetof(OnWindowResizeEvent,width)==0x0),"bad off");
-		static_assert((offsetof(OnWindowResizeEvent,height)==0x4),"bad off");
-		static_assert((offsetof(OnWindowResizeEvent,renderWindow)==0x8),"bad off");
 	};
 };
 
@@ -3057,36 +3356,24 @@ public:
 	};
 };
 
-//UDT: struct OnWindowClosedEvent @len=8
-	//_Func: public void OnWindowClosedEvent(RenderWindow *  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class RenderWindow *, renderWindow
+//UDT: struct OnWindowResizeEvent @len=16
+	//_Func: public void OnWindowResizeEvent(int  _arg0, int  _arg1, RenderWindow *  _arg2); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, width
+	//_Data: this+0x4, Member, Type: int, height
+	//_Data: this+0x8, Member, Type: class RenderWindow *, renderWindow
 //UDT;
 
-struct OnWindowClosedEvent {
+struct OnWindowResizeEvent {
 public:
+	int width;
+	int height;
 	RenderWindow * renderWindow;
-	inline OnWindowClosedEvent()  { }
+	inline OnWindowResizeEvent()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(OnWindowClosedEvent)==8),"bad size");
-		static_assert((offsetof(OnWindowClosedEvent,renderWindow)==0x0),"bad off");
-	};
-};
-
-//UDT: struct OnGearRequestEvent @len=8
-	//_Func: public void OnGearRequestEvent(GearChangeRequest  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: enum GearChangeRequest, request
-	//_Data: this+0x4, Member, Type: int, nextGear
-//UDT;
-
-struct OnGearRequestEvent {
-public:
-	GearChangeRequest request;
-	int nextGear;
-	inline OnGearRequestEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnGearRequestEvent)==8),"bad size");
-		static_assert((offsetof(OnGearRequestEvent,request)==0x0),"bad off");
-		static_assert((offsetof(OnGearRequestEvent,nextGear)==0x4),"bad off");
+		static_assert((sizeof(OnWindowResizeEvent)==16),"bad size");
+		static_assert((offsetof(OnWindowResizeEvent,width)==0x0),"bad off");
+		static_assert((offsetof(OnWindowResizeEvent,height)==0x4),"bad off");
+		static_assert((offsetof(OnWindowResizeEvent,renderWindow)==0x8),"bad off");
 	};
 };
 
@@ -3125,6 +3412,71 @@ public:
 		static_assert((offsetof(LapInvalidator,currentTyresOut)==0x10),"bad off");
 		static_assert((offsetof(LapInvalidator,isInPenaltyZone)==0x14),"bad off");
 		static_assert((offsetof(LapInvalidator,lastBlackFlagTime)==0x18),"bad off");
+	};
+};
+
+//UDT: struct ServerInfo @len=72
+	//_Func: public void ServerInfo(ServerInfo &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ServerInfo(); @loc=static @len=127 @rva=243344
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, ip
+	//_Data: this+0x40, Member, Type: unsigned short, httpPort
+	//_Data: this+0x42, Member, Type: unsigned short, udpPort
+	//_Data: this+0x44, Member, Type: unsigned short, tcpPort
+	//_Func: public void ~ServerInfo(); @loc=static @len=88 @rva=776352
+	//_Func: public ServerInfo & operator=(ServerInfo &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ServerInfo {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > ip;
+	unsigned short httpPort;
+	unsigned short udpPort;
+	unsigned short tcpPort;
+	inline ServerInfo()  { }
+	inline void ctor() { typedef void (*_fpt)(ServerInfo *pthis); _fpt _f=(_fpt)_drva(243344); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(ServerInfo *pthis); _fpt _f=(_fpt)_drva(776352); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ServerInfo)==72),"bad size");
+		static_assert((offsetof(ServerInfo,name)==0x0),"bad off");
+		static_assert((offsetof(ServerInfo,ip)==0x20),"bad off");
+		static_assert((offsetof(ServerInfo,httpPort)==0x40),"bad off");
+		static_assert((offsetof(ServerInfo,udpPort)==0x42),"bad off");
+		static_assert((offsetof(ServerInfo,tcpPort)==0x44),"bad off");
+	};
+};
+
+//UDT: struct DriverInfo @len=128
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, team
+	//_Data: this+0x40, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, nationality
+	//_Data: this+0x60, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, nationCode
+	//_Func: public void DriverInfo(DriverInfo & __that); @loc=static @len=192 @rva=242096
+	//_Func: public void DriverInfo(); @loc=static @len=69 @rva=242288
+	//_Func: public void ~DriverInfo(); @loc=static @len=152 @rva=246464
+	//_Func: public DriverInfo & operator=(DriverInfo & __that); @loc=static @len=122 @rva=848192
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct DriverInfo {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationality;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
+	inline DriverInfo()  { }
+	inline void ctor(DriverInfo & __that) { typedef void (*_fpt)(DriverInfo *pthis, DriverInfo &); _fpt _f=(_fpt)_drva(242096); _f(this, __that); }
+	inline void ctor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(242288); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(246464); _f(this); }
+	inline DriverInfo & operator=(DriverInfo & __that) { typedef DriverInfo & (*_fpt)(DriverInfo *pthis, DriverInfo &); _fpt _f=(_fpt)_drva(848192); return _f(this, __that); }
+	inline void _guard_obj() {
+		static_assert((sizeof(DriverInfo)==128),"bad size");
+		static_assert((offsetof(DriverInfo,name)==0x0),"bad off");
+		static_assert((offsetof(DriverInfo,team)==0x20),"bad off");
+		static_assert((offsetof(DriverInfo,nationality)==0x40),"bad off");
+		static_assert((offsetof(DriverInfo,nationCode)==0x60),"bad off");
 	};
 };
 
@@ -3197,92 +3549,40 @@ public:
 	};
 };
 
-//UDT: struct GearRequestStatus @len=32
-	//_Func: public void GearRequestStatus(); @loc=optimized @len=0 @rva=0
-	//_Func: public bool setRequest(GearChangeRequest  _arg0, double  _arg1, int  _arg2); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: enum GearChangeRequest, request
-	//_Data: this+0x8, Member, Type: double, timeAccumulator
-	//_Data: this+0x10, Member, Type: double, timeout
-	//_Data: this+0x18, Member, Type: int, requestedGear
+//UDT: struct ReceivedVoteDef @len=28
+	//_Data: this+0x0, Member, Type: enum VoteType, voteType
+	//_Data: this+0x4, Member, Type: int, quorum
+	//_Data: this+0x8, Member, Type: int, votes
+	//_Data: this+0xC, Member, Type: int, timeLeftMS
+	//_Data: this+0x10, Member, Type: int, lastVoterSessionID
+	//_Data: this+0x14, Member, Type: int, lastVoterVote
+	//_Data: this+0x18, Member, Type: unsigned char, targetSessionID
+	//_Data: this+0x19, Member, Type: bool, isMe
+	//_Func: public void ReceivedVoteDef(); @loc=static @len=25 @rva=242528
 //UDT;
 
-struct GearRequestStatus {
+struct ReceivedVoteDef {
 public:
-	GearChangeRequest request;
-	double timeAccumulator;
-	double timeout;
-	int requestedGear;
-	inline GearRequestStatus()  { }
+	VoteType voteType;
+	int quorum;
+	int votes;
+	int timeLeftMS;
+	int lastVoterSessionID;
+	int lastVoterVote;
+	unsigned char targetSessionID;
+	bool isMe;
+	inline ReceivedVoteDef()  { }
+	inline void ctor() { typedef void (*_fpt)(ReceivedVoteDef *pthis); _fpt _f=(_fpt)_drva(242528); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(GearRequestStatus)==32),"bad size");
-		static_assert((offsetof(GearRequestStatus,request)==0x0),"bad off");
-		static_assert((offsetof(GearRequestStatus,timeAccumulator)==0x8),"bad off");
-		static_assert((offsetof(GearRequestStatus,timeout)==0x10),"bad off");
-		static_assert((offsetof(GearRequestStatus,requestedGear)==0x18),"bad off");
-	};
-};
-
-//UDT: struct OnLapCompletedEvent @len=56
-	//_Func: public void OnLapCompletedEvent(OnLapCompletedEvent &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void OnLapCompletedEvent(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: unsigned int, carIndex
-	//_Data: this+0x4, Member, Type: unsigned int, lapTime
-	//_Data: this+0x8, Member, Type: unsigned int, lapCount
-	//_Data: this+0x10, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, splits
-	//_Data: this+0x28, Member, Type: double, eventTime
-	//_Data: this+0x30, Member, Type: bool, isValid
-	//_Data: this+0x34, Member, Type: int, cuts
-	//_Func: public void ~OnLapCompletedEvent(); @loc=static @len=53 @rva=246720
-	//_Func: public OnLapCompletedEvent & operator=(OnLapCompletedEvent &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct OnLapCompletedEvent {
-public:
-	unsigned int carIndex;
-	unsigned int lapTime;
-	unsigned int lapCount;
-	std::vector<unsigned int,std::allocator<unsigned int> > splits;
-	double eventTime;
-	bool isValid;
-	int cuts;
-	inline OnLapCompletedEvent()  { }
-	inline void dtor() { typedef void (*_fpt)(OnLapCompletedEvent *pthis); _fpt _f=(_fpt)_drva(246720); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnLapCompletedEvent)==56),"bad size");
-		static_assert((offsetof(OnLapCompletedEvent,carIndex)==0x0),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,lapTime)==0x4),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,lapCount)==0x8),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,splits)==0x10),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,eventTime)==0x28),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,isValid)==0x30),"bad off");
-		static_assert((offsetof(OnLapCompletedEvent,cuts)==0x34),"bad off");
-	};
-};
-
-//UDT: class Task @len=40
-	//_Func: public void Task(Task &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void Task(); @loc=optimized @len=0 @rva=0
-	//_Func: public void Task(std::function<void __cdecl(void)>  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void run(); @loc=optimized @len=0 @rva=0
-	//_Func: public void spinWait(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: volatile bool, isDone
-	//_Data: this+0x8, Member, Type: class std::function<void __cdecl(void)>, function
-	//_Func: public void ~Task(); @loc=static @len=74 @rva=175552
-	//_Func: public Task & operator=(Task &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Task {
-public:
-	bool isDone;
-	std::function<void __cdecl(void)> function;
-	inline Task()  { }
-	inline void dtor() { typedef void (*_fpt)(Task *pthis); _fpt _f=(_fpt)_drva(175552); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Task)==40),"bad size");
-		static_assert((offsetof(Task,isDone)==0x0),"bad off");
-		static_assert((offsetof(Task,function)==0x8),"bad off");
+		static_assert((sizeof(ReceivedVoteDef)==28),"bad size");
+		static_assert((offsetof(ReceivedVoteDef,voteType)==0x0),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,quorum)==0x4),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,votes)==0x8),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,timeLeftMS)==0xC),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,lastVoterSessionID)==0x10),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,lastVoterVote)==0x14),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,targetSessionID)==0x18),"bad off");
+		static_assert((offsetof(ReceivedVoteDef,isMe)==0x19),"bad off");
 	};
 };
 
@@ -3347,51 +3647,112 @@ public:
 	};
 };
 
-//UDT: struct TyreThermalPatch @len=40
-	//_Func: public void TyreThermalPatch(TyreThermalPatch &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void TyreThermalPatch(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class std::vector<TyreThermalPatch *,std::allocator<TyreThermalPatch *> >, connections
-	//_Data: this+0x18, Member, Type: float, T
-	//_Data: this+0x1C, Member, Type: float, inputT
-	//_Data: this+0x20, Member, Type: int, elementIndex
-	//_Data: this+0x24, Member, Type: int, stripeIndex
-	//_Func: public void ~TyreThermalPatch(); @loc=optimized @len=0 @rva=0
-	//_Func: public TyreThermalPatch & operator=(TyreThermalPatch &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT: struct AutoShifter @len=40
+	//_Func: public void ~AutoShifter(); @loc=static @len=3 @rva=96368
+	//_Data: this+0x0, Member, Type: bool, isActive
+	//_Data: this+0x4, Member, Type: int, changeUpRpm
+	//_Data: this+0x8, Member, Type: int, changeDnRpm
+	//_Data: this+0xC, Member, Type: float, slipThreshold
+	//_Func: public void init(Car * car); @loc=static @len=44 @rva=2859040
+	//_Func: public void step(float dt); @loc=static @len=843 @rva=2861040
+	//_Data: this+0x10, Member, Type: class Car *, car
+	//_Data: this+0x18, Member, Type: bool, butGearUp
+	//_Data: this+0x19, Member, Type: bool, butGearDn
+	//_Data: this+0x1C, Member, Type: float, gasCutoff
+	//_Data: this+0x20, Member, Type: float, gasCutoffTime
+	//_Func: private void loadINI(); @loc=static @len=1946 @rva=2859088
+	//_Func: public void AutoShifter(); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct TyreThermalPatch {
+struct AutoShifter {
 public:
-	std::vector<TyreThermalPatch *,std::allocator<TyreThermalPatch *> > connections;
-	float T;
-	float inputT;
-	int elementIndex;
-	int stripeIndex;
-	inline TyreThermalPatch()  { }
+	bool isActive;
+	int changeUpRpm;
+	int changeDnRpm;
+	float slipThreshold;
+	Car * car;
+	bool butGearUp;
+	bool butGearDn;
+	float gasCutoff;
+	float gasCutoffTime;
+	inline AutoShifter()  { }
+	inline void dtor() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void init(Car * car) { typedef void (*_fpt)(AutoShifter *pthis, Car *); _fpt _f=(_fpt)_drva(2859040); return _f(this, car); }
+	inline void step(float dt) { typedef void (*_fpt)(AutoShifter *pthis, float); _fpt _f=(_fpt)_drva(2861040); return _f(this, dt); }
+	inline void loadINI() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(2859088); return _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(TyreThermalPatch)==40),"bad size");
-		static_assert((offsetof(TyreThermalPatch,connections)==0x0),"bad off");
-		static_assert((offsetof(TyreThermalPatch,T)==0x18),"bad off");
-		static_assert((offsetof(TyreThermalPatch,inputT)==0x1C),"bad off");
-		static_assert((offsetof(TyreThermalPatch,elementIndex)==0x20),"bad off");
-		static_assert((offsetof(TyreThermalPatch,stripeIndex)==0x24),"bad off");
+		static_assert((sizeof(AutoShifter)==40),"bad size");
+		static_assert((offsetof(AutoShifter,isActive)==0x0),"bad off");
+		static_assert((offsetof(AutoShifter,changeUpRpm)==0x4),"bad off");
+		static_assert((offsetof(AutoShifter,changeDnRpm)==0x8),"bad off");
+		static_assert((offsetof(AutoShifter,slipThreshold)==0xC),"bad off");
+		static_assert((offsetof(AutoShifter,car)==0x10),"bad off");
+		static_assert((offsetof(AutoShifter,butGearUp)==0x18),"bad off");
+		static_assert((offsetof(AutoShifter,butGearDn)==0x19),"bad off");
+		static_assert((offsetof(AutoShifter,gasCutoff)==0x1C),"bad off");
+		static_assert((offsetof(AutoShifter,gasCutoffTime)==0x20),"bad off");
 	};
 };
 
-//UDT: struct OnStepCompleteEvent @len=16
-	//_Data: this+0x0, Member, Type: class Car *, car
-	//_Data: this+0x8, Member, Type: double, physicsTime
+//UDT: struct OnLapCompletedEvent @len=56
+	//_Func: public void OnLapCompletedEvent(OnLapCompletedEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void OnLapCompletedEvent(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: unsigned int, carIndex
+	//_Data: this+0x4, Member, Type: unsigned int, lapTime
+	//_Data: this+0x8, Member, Type: unsigned int, lapCount
+	//_Data: this+0x10, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, splits
+	//_Data: this+0x28, Member, Type: double, eventTime
+	//_Data: this+0x30, Member, Type: bool, isValid
+	//_Data: this+0x34, Member, Type: int, cuts
+	//_Func: public void ~OnLapCompletedEvent(); @loc=static @len=53 @rva=246720
+	//_Func: public OnLapCompletedEvent & operator=(OnLapCompletedEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct OnStepCompleteEvent {
+struct OnLapCompletedEvent {
 public:
-	Car * car;
-	double physicsTime;
-	inline OnStepCompleteEvent()  { }
+	unsigned int carIndex;
+	unsigned int lapTime;
+	unsigned int lapCount;
+	std::vector<unsigned int,std::allocator<unsigned int> > splits;
+	double eventTime;
+	bool isValid;
+	int cuts;
+	inline OnLapCompletedEvent()  { }
+	inline void dtor() { typedef void (*_fpt)(OnLapCompletedEvent *pthis); _fpt _f=(_fpt)_drva(246720); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(OnStepCompleteEvent)==16),"bad size");
-		static_assert((offsetof(OnStepCompleteEvent,car)==0x0),"bad off");
-		static_assert((offsetof(OnStepCompleteEvent,physicsTime)==0x8),"bad off");
+		static_assert((sizeof(OnLapCompletedEvent)==56),"bad size");
+		static_assert((offsetof(OnLapCompletedEvent,carIndex)==0x0),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,lapTime)==0x4),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,lapCount)==0x8),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,splits)==0x10),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,eventTime)==0x28),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,isValid)==0x30),"bad off");
+		static_assert((offsetof(OnLapCompletedEvent,cuts)==0x34),"bad off");
+	};
+};
+
+//UDT: struct OnChatMessageEvent @len=40
+	//_Data: this+0x0, Member, Type: int, sessionID
+	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, message
+	//_Func: public void OnChatMessageEvent(OnChatMessageEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void OnChatMessageEvent(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~OnChatMessageEvent(); @loc=static @len=49 @rva=2180672
+	//_Func: public OnChatMessageEvent & operator=(OnChatMessageEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct OnChatMessageEvent {
+public:
+	int sessionID;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > message;
+	inline OnChatMessageEvent()  { }
+	inline void dtor() { typedef void (*_fpt)(OnChatMessageEvent *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnChatMessageEvent)==40),"bad size");
+		static_assert((offsetof(OnChatMessageEvent,sessionID)==0x0),"bad off");
+		static_assert((offsetof(OnChatMessageEvent,message)==0x8),"bad off");
 	};
 };
 
@@ -3442,27 +3803,6 @@ public:
 		static_assert((offsetof(OnTyreCompoundChanged,compoundIndex)==0x4),"bad off");
 		static_assert((offsetof(OnTyreCompoundChanged,compoundName)==0x8),"bad off");
 		static_assert((offsetof(OnTyreCompoundChanged,shortName)==0x28),"bad off");
-	};
-};
-
-//UDT: struct OnESCMenuTriggered @len=16
-	//_Func: public void OnESCMenuTriggered(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class ESCMenu *, menu
-	//_Data: this+0x8, Member, Type: bool, visible
-	//_Data: this+0x9, Member, Type: bool, startReplay
-//UDT;
-
-struct OnESCMenuTriggered {
-public:
-	ESCMenu * menu;
-	bool visible;
-	bool startReplay;
-	inline OnESCMenuTriggered()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnESCMenuTriggered)==16),"bad size");
-		static_assert((offsetof(OnESCMenuTriggered,menu)==0x0),"bad off");
-		static_assert((offsetof(OnESCMenuTriggered,visible)==0x8),"bad off");
-		static_assert((offsetof(OnESCMenuTriggered,startReplay)==0x9),"bad off");
 	};
 };
 
@@ -3557,46 +3897,103 @@ public:
 	};
 };
 
-//UDT: class SetupItem @len=136 @vfcount=1
-	//_VTable: 
-	//_Func: public void SetupItem(SetupItem & __that); @loc=static @len=224 @rva=2657424
-	//_Func: public void SetupItem(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult); @loc=static @len=303 @rva=2929008
-	//_Func: public void ~SetupItem(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=164 @rva=2929312
-	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x28, Member, Type: float &, connectedFloat
-	//_Data: this+0x30, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, units
-	//_Data: this+0x50, Member, Type: float, multiplier
-	//_Data: this+0x54, Member, Type: float, newValue
-	//_Data: this+0x58, Member, Type: bool, attached
-	//_Data: this+0x60, Member, Type: class std::function<void __cdecl(SetupItem *)>, onValueChanged
-	//_Data: this+0x80, Member, Type: float, labelMultiplier
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT: struct MouseEvent @len=12
+	//_Func: public void MouseEvent(int  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: int, x
+	//_Data: this+0x4, Member, Type: int, y
+	//_Data: this+0x8, Member, Type: enum MouseButton, button
 //UDT;
 
-class SetupItem {
+struct MouseEvent {
+public:
+	int x;
+	int y;
+	MouseButton button;
+	inline MouseEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(MouseEvent)==12),"bad size");
+		static_assert((offsetof(MouseEvent,x)==0x0),"bad off");
+		static_assert((offsetof(MouseEvent,y)==0x4),"bad off");
+		static_assert((offsetof(MouseEvent,button)==0x8),"bad off");
+	};
+};
+
+//UDT: struct TrackData @len=72
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, configuration
+	//_Data: this+0x40, Member, Type: int, gridPlaces
+	//_Func: public void TrackData(TrackData &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void TrackData(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~TrackData(); @loc=static @len=88 @rva=776352
+	//_Func: public TrackData & operator=(TrackData &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct TrackData {
 public:
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	float & connectedFloat;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > units;
-	float multiplier;
-	float newValue;
-	bool attached;
-	std::function<void __cdecl(SetupItem *)> onValueChanged;
-	float labelMultiplier;
-	inline SetupItem()  : connectedFloat(*((float*)NULL)) { }
-	inline void ctor(SetupItem & __that) { typedef void (*_fpt)(SetupItem *pthis, SetupItem &); _fpt _f=(_fpt)_drva(2657424); _f(this, __that); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (*_fpt)(SetupItem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); _fpt _f=(_fpt)_drva(2929008); _f(this, aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
-	virtual ~SetupItem();
-	inline void dtor() { typedef void (*_fpt)(SetupItem *pthis); _fpt _f=(_fpt)_drva(2929312); _f(this); }
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > configuration;
+	int gridPlaces;
+	inline TrackData()  { }
+	inline void dtor() { typedef void (*_fpt)(TrackData *pthis); _fpt _f=(_fpt)_drva(776352); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(SetupItem)==136),"bad size");
-		static_assert((offsetof(SetupItem,name)==0x8),"bad off");
-		static_assert((offsetof(SetupItem,units)==0x30),"bad off");
-		static_assert((offsetof(SetupItem,multiplier)==0x50),"bad off");
-		static_assert((offsetof(SetupItem,newValue)==0x54),"bad off");
-		static_assert((offsetof(SetupItem,attached)==0x58),"bad off");
-		static_assert((offsetof(SetupItem,onValueChanged)==0x60),"bad off");
-		static_assert((offsetof(SetupItem,labelMultiplier)==0x80),"bad off");
+		static_assert((sizeof(TrackData)==72),"bad size");
+		static_assert((offsetof(TrackData,name)==0x0),"bad off");
+		static_assert((offsetof(TrackData,configuration)==0x20),"bad off");
+		static_assert((offsetof(TrackData,gridPlaces)==0x40),"bad off");
+	};
+};
+
+//UDT: struct OnNewCarLoadedEvent @len=8
+	//_Data: this+0x0, Member, Type: class CarAvatar *, car
+//UDT;
+
+struct OnNewCarLoadedEvent {
+public:
+	CarAvatar * car;
+	inline OnNewCarLoadedEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnNewCarLoadedEvent)==8),"bad size");
+		static_assert((offsetof(OnNewCarLoadedEvent,car)==0x0),"bad off");
+	};
+};
+
+//UDT: class IVarCallback @len=8 @vfcount=1
+	//_VTable: 
+	//_Func: public void onSetVar(SVar *  _arg0, float  _arg1); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Func: public void IVarCallback(IVarCallback &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void IVarCallback(); @loc=optimized @len=0 @rva=0
+	//_Func: public IVarCallback & operator=(IVarCallback &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class IVarCallback {
+public:
+	inline IVarCallback()  { }
+	virtual void onSetVar_vf0(SVar *  _arg0, float  _arg1) = 0;
+	inline void onSetVar(SVar *  _arg0, float  _arg1) { return onSetVar_vf0( _arg0,  _arg1); }
+	inline void _guard_obj() {
+		static_assert((sizeof(IVarCallback)==8),"bad size");
+	};
+};
+
+//UDT: struct OnESCMenuTriggered @len=16
+	//_Func: public void OnESCMenuTriggered(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class ESCMenu *, menu
+	//_Data: this+0x8, Member, Type: bool, visible
+	//_Data: this+0x9, Member, Type: bool, startReplay
+//UDT;
+
+struct OnESCMenuTriggered {
+public:
+	ESCMenu * menu;
+	bool visible;
+	bool startReplay;
+	inline OnESCMenuTriggered()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnESCMenuTriggered)==16),"bad size");
+		static_assert((offsetof(OnESCMenuTriggered,menu)==0x0),"bad off");
+		static_assert((offsetof(OnESCMenuTriggered,visible)==0x8),"bad off");
+		static_assert((offsetof(OnESCMenuTriggered,startReplay)==0x9),"bad off");
 	};
 };
 
@@ -3642,6 +4039,160 @@ public:
 	};
 };
 
+//UDT: struct ksgui::OnListBoxItemClickedEvent @len=24
+	//_Data: this+0x0, Member, Type: class ksgui::ListBox *, listBox
+	//_Data: this+0x8, Member, Type: struct ksgui::ListBoxRowData *, row
+	//_Data: this+0x10, Member, Type: unsigned int, itemIndex
+//UDT;
+
+struct ksgui_OnListBoxItemClickedEvent {
+public:
+	ksgui_ListBox * listBox;
+	ksgui_ListBoxRowData * row;
+	unsigned int itemIndex;
+	inline ksgui_OnListBoxItemClickedEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_OnListBoxItemClickedEvent)==24),"bad size");
+		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,listBox)==0x0),"bad off");
+		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,row)==0x8),"bad off");
+		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,itemIndex)==0x10),"bad off");
+	};
+};
+
+//UDT: struct RemoteSessionResult @len=112
+	//_Func: public void RemoteSessionResult(RemoteSessionResult & __that); @loc=static @len=125 @rva=242752
+	//_Func: public void RemoteSessionResult(int carsCount); @loc=static @len=211 @rva=242880
+	//_Func: public void RemoteSessionResult(); @loc=static @len=127 @rva=243104
+	//_Data: this+0x0, Member, Type: class std::vector<int,std::allocator<int> >, positions
+	//_Data: this+0x18, Member, Type: class std::vector<int,std::allocator<int> >, times
+	//_Data: this+0x30, Member, Type: class std::vector<int,std::allocator<int> >, lapCounter
+	//_Data: this+0x48, Member, Type: class std::vector<bool,std::allocator<bool> >, hasFinished
+	//_Data: this+0x68, Member, Type: unsigned int, leaderLapCount
+	//_Func: public void ~RemoteSessionResult(); @loc=static @len=184 @rva=246784
+	//_Func: public RemoteSessionResult & operator=(RemoteSessionResult &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct RemoteSessionResult {
+public:
+	std::vector<int,std::allocator<int> > positions;
+	std::vector<int,std::allocator<int> > times;
+	std::vector<int,std::allocator<int> > lapCounter;
+	std::vector<bool,std::allocator<bool> > hasFinished;
+	unsigned int leaderLapCount;
+	inline RemoteSessionResult()  { }
+	inline void ctor(RemoteSessionResult & __that) { typedef void (*_fpt)(RemoteSessionResult *pthis, RemoteSessionResult &); _fpt _f=(_fpt)_drva(242752); _f(this, __that); }
+	inline void ctor(int carsCount) { typedef void (*_fpt)(RemoteSessionResult *pthis, int); _fpt _f=(_fpt)_drva(242880); _f(this, carsCount); }
+	inline void ctor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(243104); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(246784); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(RemoteSessionResult)==112),"bad size");
+		static_assert((offsetof(RemoteSessionResult,positions)==0x0),"bad off");
+		static_assert((offsetof(RemoteSessionResult,times)==0x18),"bad off");
+		static_assert((offsetof(RemoteSessionResult,lapCounter)==0x30),"bad off");
+		static_assert((offsetof(RemoteSessionResult,hasFinished)==0x48),"bad off");
+		static_assert((offsetof(RemoteSessionResult,leaderLapCount)==0x68),"bad off");
+	};
+};
+
+//UDT: struct OnPenaltyEvent @len=16
+	//_Func: public void OnPenaltyEvent(Car *  _arg0, PenaltyType  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class Car *, car
+	//_Data: this+0x8, Member, Type: enum PenaltyType, ptype
+//UDT;
+
+struct OnPenaltyEvent {
+public:
+	Car * car;
+	PenaltyType ptype;
+	inline OnPenaltyEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnPenaltyEvent)==16),"bad size");
+		static_assert((offsetof(OnPenaltyEvent,car)==0x0),"bad off");
+		static_assert((offsetof(OnPenaltyEvent,ptype)==0x8),"bad off");
+	};
+};
+
+//UDT: struct Lap @len=72
+	//_Func: public void Lap(Lap & __that); @loc=static @len=113 @rva=242400
+	//_Func: public void Lap(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Lap(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: unsigned int, time
+	//_Data: this+0x8, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, splits
+	//_Data: this+0x20, Member, Type: unsigned int, cuts
+	//_Data: this+0x24, Member, Type: bool, isValid
+	//_Data: this+0x28, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, compound
+	//_Func: public void ~Lap(); @loc=static @len=95 @rva=246624
+	//_Func: public Lap & operator=(Lap &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct Lap {
+public:
+	unsigned int time;
+	std::vector<unsigned int,std::allocator<unsigned int> > splits;
+	unsigned int cuts;
+	bool isValid;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > compound;
+	inline Lap()  { }
+	inline void ctor(Lap & __that) { typedef void (*_fpt)(Lap *pthis, Lap &); _fpt _f=(_fpt)_drva(242400); _f(this, __that); }
+	inline void dtor() { typedef void (*_fpt)(Lap *pthis); _fpt _f=(_fpt)_drva(246624); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Lap)==72),"bad size");
+		static_assert((offsetof(Lap,time)==0x0),"bad off");
+		static_assert((offsetof(Lap,splits)==0x8),"bad off");
+		static_assert((offsetof(Lap,cuts)==0x20),"bad off");
+		static_assert((offsetof(Lap,isValid)==0x24),"bad off");
+		static_assert((offsetof(Lap,compound)==0x28),"bad off");
+	};
+};
+
+//UDT: struct RemoteSession @len=64
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: enum SessionType, type
+	//_Data: this+0x24, Member, Type: int, index
+	//_Data: this+0x28, Member, Type: int, time
+	//_Data: this+0x2C, Member, Type: int, laps
+	//_Data: this+0x30, Member, Type: double, startTime
+	//_Data: this+0x38, Member, Type: bool, isSpectator
+	//_Data: this+0x39, Member, Type: bool, isTimedRace
+	//_Data: this+0x3A, Member, Type: bool, hasExtraLap
+	//_Func: public void RemoteSession(RemoteSession & __that); @loc=static @len=112 @rva=242560
+	//_Func: public void RemoteSession(); @loc=static @len=79 @rva=242672
+	//_Func: public void ~RemoteSession(); @loc=static @len=47 @rva=2334528
+	//_Func: public RemoteSession & operator=(RemoteSession &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct RemoteSession {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	SessionType type;
+	int index;
+	int time;
+	int laps;
+	double startTime;
+	bool isSpectator;
+	bool isTimedRace;
+	bool hasExtraLap;
+	inline RemoteSession()  { }
+	inline void ctor(RemoteSession & __that) { typedef void (*_fpt)(RemoteSession *pthis, RemoteSession &); _fpt _f=(_fpt)_drva(242560); _f(this, __that); }
+	inline void ctor() { typedef void (*_fpt)(RemoteSession *pthis); _fpt _f=(_fpt)_drva(242672); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(RemoteSession *pthis); _fpt _f=(_fpt)_drva(2334528); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(RemoteSession)==64),"bad size");
+		static_assert((offsetof(RemoteSession,name)==0x0),"bad off");
+		static_assert((offsetof(RemoteSession,type)==0x20),"bad off");
+		static_assert((offsetof(RemoteSession,index)==0x24),"bad off");
+		static_assert((offsetof(RemoteSession,time)==0x28),"bad off");
+		static_assert((offsetof(RemoteSession,laps)==0x2C),"bad off");
+		static_assert((offsetof(RemoteSession,startTime)==0x30),"bad off");
+		static_assert((offsetof(RemoteSession,isSpectator)==0x38),"bad off");
+		static_assert((offsetof(RemoteSession,isTimedRace)==0x39),"bad off");
+		static_assert((offsetof(RemoteSession,hasExtraLap)==0x3A),"bad off");
+	};
+};
+
 //UDT: struct TelemetryChannelData @len=32
 	//_Func: public void TelemetryChannelData(TelemetryChannelData &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void TelemetryChannelData(); @loc=optimized @len=0 @rva=0
@@ -3668,21 +4219,143 @@ public:
 	};
 };
 
-//UDT: struct OnPenaltyEvent @len=16
-	//_Func: public void OnPenaltyEvent(Car *  _arg0, PenaltyType  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class Car *, car
-	//_Data: this+0x8, Member, Type: enum PenaltyType, ptype
+//UDT: class SetupItem @len=136 @vfcount=1
+	//_VTable: 
+	//_Func: public void SetupItem(SetupItem & __that); @loc=static @len=224 @rva=2657424
+	//_Func: public void SetupItem(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult); @loc=static @len=303 @rva=2929008
+	//_Func: public void ~SetupItem(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=164 @rva=2929312
+	//_Data: this+0x8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x28, Member, Type: float &, connectedFloat
+	//_Data: this+0x30, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, units
+	//_Data: this+0x50, Member, Type: float, multiplier
+	//_Data: this+0x54, Member, Type: float, newValue
+	//_Data: this+0x58, Member, Type: bool, attached
+	//_Data: this+0x60, Member, Type: class std::function<void __cdecl(SetupItem *)>, onValueChanged
+	//_Data: this+0x80, Member, Type: float, labelMultiplier
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct OnPenaltyEvent {
+class SetupItem {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	float & connectedFloat;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > units;
+	float multiplier;
+	float newValue;
+	bool attached;
+	std::function<void __cdecl(SetupItem *)> onValueChanged;
+	float labelMultiplier;
+	inline SetupItem()  : connectedFloat(*((float*)NULL)) { }
+	inline void ctor(SetupItem & __that) { typedef void (*_fpt)(SetupItem *pthis, SetupItem &); _fpt _f=(_fpt)_drva(2657424); _f(this, __that); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (*_fpt)(SetupItem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); _fpt _f=(_fpt)_drva(2929008); _f(this, aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
+	virtual ~SetupItem();
+	inline void dtor() { typedef void (*_fpt)(SetupItem *pthis); _fpt _f=(_fpt)_drva(2929312); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SetupItem)==136),"bad size");
+		static_assert((offsetof(SetupItem,name)==0x8),"bad off");
+		static_assert((offsetof(SetupItem,units)==0x30),"bad off");
+		static_assert((offsetof(SetupItem,multiplier)==0x50),"bad off");
+		static_assert((offsetof(SetupItem,newValue)==0x54),"bad off");
+		static_assert((offsetof(SetupItem,attached)==0x58),"bad off");
+		static_assert((offsetof(SetupItem,onValueChanged)==0x60),"bad off");
+		static_assert((offsetof(SetupItem,labelMultiplier)==0x80),"bad off");
+	};
+};
+
+//UDT: class Session @len=112
+	//_Func: public void Session(Session & __that); @loc=static @len=190 @rva=704528
+	//_Func: public void Session(); @loc=static @len=145 @rva=610160
+	//_Data: this+0x0, Member, Type: enum SessionType, sessionType
+	//_Data: this+0x4, Member, Type: bool, isTimedRace
+	//_Data: this+0x5, Member, Type: bool, hasAdditionalLap
+	//_Data: this+0x8, Member, Type: int, laps
+	//_Data: this+0xC, Member, Type: float, durationMinutes
+	//_Data: this+0x10, Member, Type: float, overtime_ms
+	//_Data: this+0x18, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, spawSet
+	//_Data: this+0x38, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x58, Member, Type: double, startTime
+	//_Data: this+0x60, Member, Type: int, forcedPosition
+	//_Data: this+0x64, Member, Type: bool, isOver
+	//_Data: this+0x68, Member, Type: unsigned int, leaderCompletedLaps
+	//_Func: public void ~Session(); @loc=static @len=90 @rva=584992
+	//_Func: public Session & operator=(Session & __that); @loc=static @len=143 @rva=612480
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Session {
+public:
+	SessionType sessionType;
+	bool isTimedRace;
+	bool hasAdditionalLap;
+	int laps;
+	float durationMinutes;
+	float overtime_ms;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > spawSet;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	double startTime;
+	int forcedPosition;
+	bool isOver;
+	unsigned int leaderCompletedLaps;
+	inline Session()  { }
+	inline void ctor(Session & __that) { typedef void (*_fpt)(Session *pthis, Session &); _fpt _f=(_fpt)_drva(704528); _f(this, __that); }
+	inline void ctor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(610160); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
+	inline Session & operator=(Session & __that) { typedef Session & (*_fpt)(Session *pthis, Session &); _fpt _f=(_fpt)_drva(612480); return _f(this, __that); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Session)==112),"bad size");
+		static_assert((offsetof(Session,sessionType)==0x0),"bad off");
+		static_assert((offsetof(Session,isTimedRace)==0x4),"bad off");
+		static_assert((offsetof(Session,hasAdditionalLap)==0x5),"bad off");
+		static_assert((offsetof(Session,laps)==0x8),"bad off");
+		static_assert((offsetof(Session,durationMinutes)==0xC),"bad off");
+		static_assert((offsetof(Session,overtime_ms)==0x10),"bad off");
+		static_assert((offsetof(Session,spawSet)==0x18),"bad off");
+		static_assert((offsetof(Session,name)==0x38),"bad off");
+		static_assert((offsetof(Session,startTime)==0x58),"bad off");
+		static_assert((offsetof(Session,forcedPosition)==0x60),"bad off");
+		static_assert((offsetof(Session,isOver)==0x64),"bad off");
+		static_assert((offsetof(Session,leaderCompletedLaps)==0x68),"bad off");
+	};
+};
+
+//UDT: struct DRSWingConnection @len=24
+	//_Func: public void DRSWingConnection(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class Wing *, wing
+	//_Data: this+0x8, Member, Type: float, effect
+	//_Data: this+0xC, Member, Type: float, angle
+	//_Data: this+0x10, Member, Type: enum DRWWingConnectionMode, mode
+//UDT;
+
+struct DRSWingConnection {
+public:
+	Wing * wing;
+	float effect;
+	float angle;
+	DRWWingConnectionMode mode;
+	inline DRSWingConnection()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(DRSWingConnection)==24),"bad size");
+		static_assert((offsetof(DRSWingConnection,wing)==0x0),"bad off");
+		static_assert((offsetof(DRSWingConnection,effect)==0x8),"bad off");
+		static_assert((offsetof(DRSWingConnection,angle)==0xC),"bad off");
+		static_assert((offsetof(DRSWingConnection,mode)==0x10),"bad off");
+	};
+};
+
+//UDT: struct OnControlsProviderChanged @len=16
+	//_Data: this+0x0, Member, Type: class Car *, car
+	//_Data: this+0x8, Member, Type: class ICarControlsProvider *, newControlsProvider
+//UDT;
+
+struct OnControlsProviderChanged {
 public:
 	Car * car;
-	PenaltyType ptype;
-	inline OnPenaltyEvent()  { }
+	ICarControlsProvider * newControlsProvider;
+	inline OnControlsProviderChanged()  { }
 	inline void _guard_obj() {
-		static_assert((sizeof(OnPenaltyEvent)==16),"bad size");
-		static_assert((offsetof(OnPenaltyEvent,car)==0x0),"bad off");
-		static_assert((offsetof(OnPenaltyEvent,ptype)==0x8),"bad off");
+		static_assert((sizeof(OnControlsProviderChanged)==16),"bad size");
+		static_assert((offsetof(OnControlsProviderChanged,car)==0x0),"bad off");
+		static_assert((offsetof(OnControlsProviderChanged,newControlsProvider)==0x8),"bad off");
 	};
 };
 
@@ -3748,123 +4421,6 @@ public:
 	};
 };
 
-//UDT: class Session @len=112
-	//_Func: public void Session(Session & __that); @loc=static @len=190 @rva=704528
-	//_Func: public void Session(); @loc=static @len=145 @rva=610160
-	//_Data: this+0x0, Member, Type: enum SessionType, sessionType
-	//_Data: this+0x4, Member, Type: bool, isTimedRace
-	//_Data: this+0x5, Member, Type: bool, hasAdditionalLap
-	//_Data: this+0x8, Member, Type: int, laps
-	//_Data: this+0xC, Member, Type: float, durationMinutes
-	//_Data: this+0x10, Member, Type: float, overtime_ms
-	//_Data: this+0x18, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, spawSet
-	//_Data: this+0x38, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x58, Member, Type: double, startTime
-	//_Data: this+0x60, Member, Type: int, forcedPosition
-	//_Data: this+0x64, Member, Type: bool, isOver
-	//_Data: this+0x68, Member, Type: unsigned int, leaderCompletedLaps
-	//_Func: public void ~Session(); @loc=static @len=90 @rva=584992
-	//_Func: public Session & operator=(Session & __that); @loc=static @len=143 @rva=612480
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Session {
-public:
-	SessionType sessionType;
-	bool isTimedRace;
-	bool hasAdditionalLap;
-	int laps;
-	float durationMinutes;
-	float overtime_ms;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > spawSet;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	double startTime;
-	int forcedPosition;
-	bool isOver;
-	unsigned int leaderCompletedLaps;
-	inline Session()  { }
-	inline void ctor(Session & __that) { typedef void (*_fpt)(Session *pthis, Session &); _fpt _f=(_fpt)_drva(704528); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(610160); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
-	inline Session & operator=(Session & __that) { typedef Session & (*_fpt)(Session *pthis, Session &); _fpt _f=(_fpt)_drva(612480); return _f(this, __that); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Session)==112),"bad size");
-		static_assert((offsetof(Session,sessionType)==0x0),"bad off");
-		static_assert((offsetof(Session,isTimedRace)==0x4),"bad off");
-		static_assert((offsetof(Session,hasAdditionalLap)==0x5),"bad off");
-		static_assert((offsetof(Session,laps)==0x8),"bad off");
-		static_assert((offsetof(Session,durationMinutes)==0xC),"bad off");
-		static_assert((offsetof(Session,overtime_ms)==0x10),"bad off");
-		static_assert((offsetof(Session,spawSet)==0x18),"bad off");
-		static_assert((offsetof(Session,name)==0x38),"bad off");
-		static_assert((offsetof(Session,startTime)==0x58),"bad off");
-		static_assert((offsetof(Session,forcedPosition)==0x60),"bad off");
-		static_assert((offsetof(Session,isOver)==0x64),"bad off");
-		static_assert((offsetof(Session,leaderCompletedLaps)==0x68),"bad off");
-	};
-};
-
-//UDT: struct OnControlsProviderChanged @len=16
-	//_Data: this+0x0, Member, Type: class Car *, car
-	//_Data: this+0x8, Member, Type: class ICarControlsProvider *, newControlsProvider
-//UDT;
-
-struct OnControlsProviderChanged {
-public:
-	Car * car;
-	ICarControlsProvider * newControlsProvider;
-	inline OnControlsProviderChanged()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnControlsProviderChanged)==16),"bad size");
-		static_assert((offsetof(OnControlsProviderChanged,car)==0x0),"bad off");
-		static_assert((offsetof(OnControlsProviderChanged,newControlsProvider)==0x8),"bad off");
-	};
-};
-
-//UDT: struct ksgui::OnListBoxItemClickedEvent @len=24
-	//_Data: this+0x0, Member, Type: class ksgui::ListBox *, listBox
-	//_Data: this+0x8, Member, Type: struct ksgui::ListBoxRowData *, row
-	//_Data: this+0x10, Member, Type: unsigned int, itemIndex
-//UDT;
-
-struct ksgui_OnListBoxItemClickedEvent {
-public:
-	ksgui_ListBox * listBox;
-	ksgui_ListBoxRowData * row;
-	unsigned int itemIndex;
-	inline ksgui_OnListBoxItemClickedEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_OnListBoxItemClickedEvent)==24),"bad size");
-		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,listBox)==0x0),"bad off");
-		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,row)==0x8),"bad off");
-		static_assert((offsetof(ksgui_OnListBoxItemClickedEvent,itemIndex)==0x10),"bad off");
-	};
-};
-
-//UDT: struct DRSWingConnection @len=24
-	//_Func: public void DRSWingConnection(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class Wing *, wing
-	//_Data: this+0x8, Member, Type: float, effect
-	//_Data: this+0xC, Member, Type: float, angle
-	//_Data: this+0x10, Member, Type: enum DRWWingConnectionMode, mode
-//UDT;
-
-struct DRSWingConnection {
-public:
-	Wing * wing;
-	float effect;
-	float angle;
-	DRWWingConnectionMode mode;
-	inline DRSWingConnection()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(DRSWingConnection)==24),"bad size");
-		static_assert((offsetof(DRSWingConnection,wing)==0x0),"bad off");
-		static_assert((offsetof(DRSWingConnection,effect)==0x8),"bad off");
-		static_assert((offsetof(DRSWingConnection,angle)==0xC),"bad off");
-		static_assert((offsetof(DRSWingConnection,mode)==0x10),"bad off");
-	};
-};
-
 //UDT: class GameObject @len=88 @vfcount=6
 	//_VTable: 
 	//_Func: public void GameObject(GameObject &  _arg0); @loc=optimized @len=0 @rva=0
@@ -3926,6 +4482,26 @@ public:
 	};
 };
 
+//UDT: struct OnFlagEvent @len=16
+	//_Data: this+0x0, Member, Type: class Car *, car
+	//_Data: this+0x8, Member, Type: enum FlagEventType, type
+	//_Data: this+0xC, Member, Type: enum PenaltyDescription, description
+//UDT;
+
+struct OnFlagEvent {
+public:
+	Car * car;
+	FlagEventType type;
+	PenaltyDescription description;
+	inline OnFlagEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnFlagEvent)==16),"bad size");
+		static_assert((offsetof(OnFlagEvent,car)==0x0),"bad off");
+		static_assert((offsetof(OnFlagEvent,type)==0x8),"bad off");
+		static_assert((offsetof(OnFlagEvent,description)==0xC),"bad off");
+	};
+};
+
 //UDT: class OptionsManager @len=24 @vfcount=1
 	//_VTable: 
 	//_Func: public void OptionsManager(OptionsManager &  _arg0); @loc=optimized @len=0 @rva=0
@@ -3949,26 +4525,6 @@ public:
 	inline void _guard_obj() {
 		static_assert((sizeof(OptionsManager)==24),"bad size");
 		static_assert((offsetof(OptionsManager,options)==0x8),"bad off");
-	};
-};
-
-//UDT: struct OnFlagEvent @len=16
-	//_Data: this+0x0, Member, Type: class Car *, car
-	//_Data: this+0x8, Member, Type: enum FlagEventType, type
-	//_Data: this+0xC, Member, Type: enum PenaltyDescription, description
-//UDT;
-
-struct OnFlagEvent {
-public:
-	Car * car;
-	FlagEventType type;
-	PenaltyDescription description;
-	inline OnFlagEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnFlagEvent)==16),"bad size");
-		static_assert((offsetof(OnFlagEvent,car)==0x0),"bad off");
-		static_assert((offsetof(OnFlagEvent,type)==0x8),"bad off");
-		static_assert((offsetof(OnFlagEvent,description)==0xC),"bad off");
 	};
 };
 
@@ -4040,33 +4596,6 @@ public:
 	};
 };
 
-//UDT: struct SystemCBuffers @len=160
-	//_Data: this+0x0, Member, Type: class CBuffer, cbCamera
-	//_Data: this+0x28, Member, Type: class CBuffer, cbPerObject
-	//_Data: this+0x50, Member, Type: class CBuffer, cbLighting
-	//_Data: this+0x78, Member, Type: class CBuffer, cbShadowMap
-	//_Func: public void SystemCBuffers(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~SystemCBuffers(); @loc=static @len=65 @rva=2106176
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct SystemCBuffers {
-public:
-	CBuffer cbCamera;
-	CBuffer cbPerObject;
-	CBuffer cbLighting;
-	CBuffer cbShadowMap;
-	inline SystemCBuffers()  { }
-	inline void dtor() { typedef void (*_fpt)(SystemCBuffers *pthis); _fpt _f=(_fpt)_drva(2106176); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(SystemCBuffers)==160),"bad size");
-		static_assert((offsetof(SystemCBuffers,cbCamera)==0x0),"bad off");
-		static_assert((offsetof(SystemCBuffers,cbPerObject)==0x28),"bad off");
-		static_assert((offsetof(SystemCBuffers,cbLighting)==0x50),"bad off");
-		static_assert((offsetof(SystemCBuffers,cbShadowMap)==0x78),"bad off");
-	};
-};
-
 //UDT: struct PhysicsCPUTimes @len=40
 	//_Data: this+0x0, Member, Type: double, carStep
 	//_Data: this+0x8, Member, Type: struct CoreCPUTimes, coreCPUTimes
@@ -4085,103 +4614,6 @@ public:
 		static_assert((offsetof(PhysicsCPUTimes,carStep)==0x0),"bad off");
 		static_assert((offsetof(PhysicsCPUTimes,coreCPUTimes)==0x8),"bad off");
 		static_assert((offsetof(PhysicsCPUTimes,currentCPU)==0x20),"bad off");
-	};
-};
-
-//UDT: struct OnMouseMoveEvent @len=12
-	//_Base: struct MouseEvent @off=0 @len=12
-	//_Func: public void OnMouseMoveEvent(int  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct OnMouseMoveEvent : public MouseEvent {
-public:
-	inline OnMouseMoveEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnMouseMoveEvent)==12),"bad size");
-	};
-};
-
-//UDT: class SinSignalGenerator @len=16 @vfcount=3
-	//_Base: class SignalGenerator @off=0 @len=16
-	//_Func: public void SinSignalGenerator(SinSignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SinSignalGenerator(); @loc=static @len=33 @rva=2197680
-	//_Func: public void ~SinSignalGenerator(); @virtual vtpo=0 vfid=0 @loc=static @len=15 @rva=2197728
-	//_Func: public float getValue(); @virtual vtpo=0 vfid=2 @loc=static @len=81 @rva=2197808
-	//_Func: public SinSignalGenerator & operator=(SinSignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class SinSignalGenerator : public SignalGenerator {
-public:
-	inline SinSignalGenerator()  { }
-	inline void ctor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197680); _f(this); }
-	virtual ~SinSignalGenerator();
-	inline void dtor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197728); _f(this); }
-	virtual float getValue_vf2();
-	inline float getValue_impl() { typedef float (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197808); return _f(this); }
-	inline float getValue() { return getValue_vf2(); }
-	inline void _guard_obj() {
-		static_assert((sizeof(SinSignalGenerator)==16),"bad size");
-	};
-};
-
-//UDT: struct OnMouseWheelMovedEvent @len=16
-	//_Base: struct MouseEvent @off=0 @len=12
-	//_Func: public void OnMouseWheelMovedEvent(int  _arg0, int  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
-	//_Data: this+0xC, Member, Type: float, delta
-//UDT;
-
-struct OnMouseWheelMovedEvent : public MouseEvent {
-public:
-	float delta;
-	inline OnMouseWheelMovedEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnMouseWheelMovedEvent)==16),"bad size");
-		static_assert((offsetof(OnMouseWheelMovedEvent,delta)==0xC),"bad off");
-	};
-};
-
-//UDT: class ThermalObject @len=32 @vfcount=1
-	//_VTable: 
-	//_Func: public void ThermalObject(ThermalObject &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ThermalObject(); @loc=static @len=42 @rva=2829952
-	//_Func: public void ~ThermalObject(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2830000
-	//_Data: this+0x8, Member, Type: float, tmass
-	//_Data: this+0xC, Member, Type: float, coolSpeedK
-	//_Data: this+0x10, Member, Type: float, coolFactor
-	//_Data: this+0x14, Member, Type: float, heatFactor
-	//_Data: this+0x18, Member, Type: float, t
-	//_Func: public void step(float dt, float ambientTemp, Speed & speed); @loc=static @len=128 @rva=2830080
-	//_Func: public void addHeadSource(float heat); @loc=static @len=11 @rva=2830064
-	//_Data: this+0x1C, Member, Type: float, heatAccumulator
-	//_Func: public ThermalObject & operator=(ThermalObject &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ThermalObject {
-public:
-	float tmass;
-	float coolSpeedK;
-	float coolFactor;
-	float heatFactor;
-	float t;
-	float heatAccumulator;
-	inline ThermalObject()  { }
-	inline void ctor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2829952); _f(this); }
-	virtual ~ThermalObject();
-	inline void dtor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2830000); _f(this); }
-	inline void step(float dt, float ambientTemp, Speed & speed) { typedef void (*_fpt)(ThermalObject *pthis, float, float, Speed &); _fpt _f=(_fpt)_drva(2830080); return _f(this, dt, ambientTemp, speed); }
-	inline void addHeadSource(float heat) { typedef void (*_fpt)(ThermalObject *pthis, float); _fpt _f=(_fpt)_drva(2830064); return _f(this, heat); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ThermalObject)==32),"bad size");
-		static_assert((offsetof(ThermalObject,tmass)==0x8),"bad off");
-		static_assert((offsetof(ThermalObject,coolSpeedK)==0xC),"bad off");
-		static_assert((offsetof(ThermalObject,coolFactor)==0x10),"bad off");
-		static_assert((offsetof(ThermalObject,heatFactor)==0x14),"bad off");
-		static_assert((offsetof(ThermalObject,t)==0x18),"bad off");
-		static_assert((offsetof(ThermalObject,heatAccumulator)==0x1C),"bad off");
 	};
 };
 
@@ -4204,389 +4636,6 @@ public:
 		static_assert((sizeof(plane4f)==16),"bad size");
 		static_assert((offsetof(plane4f,normal)==0x0),"bad off");
 		static_assert((offsetof(plane4f,d)==0xC),"bad off");
-	};
-};
-
-//UDT: class ICollisionCallback @len=8 @vfcount=2
-	//_VTable: 
-	//_Func: public void ~ICollisionCallback(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2501856
-	//_Func: public void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void ICollisionCallback(ICollisionCallback &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ICollisionCallback(); @loc=optimized @len=0 @rva=0
-	//_Func: public ICollisionCallback & operator=(ICollisionCallback &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ICollisionCallback {
-public:
-	inline ICollisionCallback()  { }
-	virtual ~ICollisionCallback();
-	inline void dtor() { typedef void (*_fpt)(ICollisionCallback *pthis); _fpt _f=(_fpt)_drva(2501856); _f(this); }
-	virtual void onCollisionCallBack_vf1(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) = 0;
-	inline void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) { return onCollisionCallBack_vf1( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ICollisionCallback)==8),"bad size");
-	};
-};
-
-//UDT: struct PhysicsValueCache @len=4
-	//_Data: this+0x0, Member, Type: class Speed, speed
-	//_Func: public void PhysicsValueCache(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~PhysicsValueCache(); @loc=static @len=5 @rva=1183184
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct PhysicsValueCache {
-public:
-	Speed speed;
-	inline PhysicsValueCache()  { }
-	inline void dtor() { typedef void (*_fpt)(PhysicsValueCache *pthis); _fpt _f=(_fpt)_drva(1183184); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(PhysicsValueCache)==4),"bad size");
-		static_assert((offsetof(PhysicsValueCache,speed)==0x0),"bad off");
-	};
-};
-
-//UDT: class IKeyEventListener @len=8 @vfcount=2
-	//_VTable: 
-	//_Func: public void onKeyDown(OnKeyEvent &  _arg0); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Func: public void onKeyChar(unsigned int  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void IKeyEventListener(IKeyEventListener &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void IKeyEventListener(); @loc=optimized @len=0 @rva=0
-	//_Func: public IKeyEventListener & operator=(IKeyEventListener &  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class IKeyEventListener {
-public:
-	inline IKeyEventListener()  { }
-	virtual void onKeyDown_vf0(OnKeyEvent &  _arg0) = 0;
-	inline void onKeyDown(OnKeyEvent &  _arg0) { return onKeyDown_vf0( _arg0); }
-	virtual void onKeyChar_vf1(unsigned int  _arg0) = 0;
-	inline void onKeyChar(unsigned int  _arg0) { return onKeyChar_vf1( _arg0); }
-	inline void _guard_obj() {
-		static_assert((sizeof(IKeyEventListener)==8),"bad size");
-	};
-};
-
-//UDT: struct AIState @len=60
-	//_Func: public void AIState(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, currentSteerSignal
-	//_Data: this+0x4, Member, Type: class vec3f, steerTarget
-	//_Data: this+0x10, Member, Type: float, gasBrakeTarget
-	//_Data: this+0x14, Member, Type: bool, isActive
-	//_Data: this+0x18, Member, Type: float, targetSpeed
-	//_Data: this+0x1C, Member, Type: float, targetLateralOffset
-	//_Data: this+0x20, Member, Type: float, brakeTargetSpeed
-	//_Data: this+0x24, Member, Type: float, brakeTargetDist
-	//_Data: this+0x28, Member, Type: float, currentNormalizedSplinePosition
-	//_Data: this+0x2C, Member, Type: float, outsideOffset
-	//_Data: this+0x30, Member, Type: float, projDNRPM
-	//_Data: this+0x34, Member, Type: float, understeerFactor
-	//_Data: this+0x38, Member, Type: float, currentPush
-//UDT;
-
-struct AIState {
-public:
-	float currentSteerSignal;
-	vec3f steerTarget;
-	float gasBrakeTarget;
-	bool isActive;
-	float targetSpeed;
-	float targetLateralOffset;
-	float brakeTargetSpeed;
-	float brakeTargetDist;
-	float currentNormalizedSplinePosition;
-	float outsideOffset;
-	float projDNRPM;
-	float understeerFactor;
-	float currentPush;
-	inline AIState()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(AIState)==60),"bad size");
-		static_assert((offsetof(AIState,currentSteerSignal)==0x0),"bad off");
-		static_assert((offsetof(AIState,steerTarget)==0x4),"bad off");
-		static_assert((offsetof(AIState,gasBrakeTarget)==0x10),"bad off");
-		static_assert((offsetof(AIState,isActive)==0x14),"bad off");
-		static_assert((offsetof(AIState,targetSpeed)==0x18),"bad off");
-		static_assert((offsetof(AIState,targetLateralOffset)==0x1C),"bad off");
-		static_assert((offsetof(AIState,brakeTargetSpeed)==0x20),"bad off");
-		static_assert((offsetof(AIState,brakeTargetDist)==0x24),"bad off");
-		static_assert((offsetof(AIState,currentNormalizedSplinePosition)==0x28),"bad off");
-		static_assert((offsetof(AIState,outsideOffset)==0x2C),"bad off");
-		static_assert((offsetof(AIState,projDNRPM)==0x30),"bad off");
-		static_assert((offsetof(AIState,understeerFactor)==0x34),"bad off");
-		static_assert((offsetof(AIState,currentPush)==0x38),"bad off");
-	};
-};
-
-//UDT: struct OnNewSessionEvent @len=120
-	//_Data: this+0x0, Member, Type: class Session, newSession
-	//_Data: this+0x70, Member, Type: short, index
-	//_Func: public void OnNewSessionEvent(OnNewSessionEvent &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void OnNewSessionEvent(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~OnNewSessionEvent(); @loc=static @len=90 @rva=584992
-	//_Func: public OnNewSessionEvent & operator=(OnNewSessionEvent &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct OnNewSessionEvent {
-public:
-	Session newSession;
-	short index;
-	inline OnNewSessionEvent()  { }
-	inline void dtor() { typedef void (*_fpt)(OnNewSessionEvent *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnNewSessionEvent)==120),"bad size");
-		static_assert((offsetof(OnNewSessionEvent,newSession)==0x0),"bad off");
-		static_assert((offsetof(OnNewSessionEvent,index)==0x70),"bad off");
-	};
-};
-
-//UDT: struct CollisionEvent @len=44
-	//_Data: this+0x0, Member, Type: int, carIndex
-	//_Data: this+0x4, Member, Type: float, normalForce
-	//_Data: this+0x8, Member, Type: class vec3f, pos
-	//_Data: this+0x14, Member, Type: class vec3f, normal
-	//_Data: this+0x20, Member, Type: float, impactAngle
-	//_Data: this+0x24, Member, Type: float, relativeSpeed
-	//_Data: this+0x28, Member, Type: unsigned long, colliderCategory
-	//_Func: public void CollisionEvent(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct CollisionEvent {
-public:
-	int carIndex;
-	float normalForce;
-	vec3f pos;
-	vec3f normal;
-	float impactAngle;
-	float relativeSpeed;
-	unsigned long colliderCategory;
-	inline CollisionEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(CollisionEvent)==44),"bad size");
-		static_assert((offsetof(CollisionEvent,carIndex)==0x0),"bad off");
-		static_assert((offsetof(CollisionEvent,normalForce)==0x4),"bad off");
-		static_assert((offsetof(CollisionEvent,pos)==0x8),"bad off");
-		static_assert((offsetof(CollisionEvent,normal)==0x14),"bad off");
-		static_assert((offsetof(CollisionEvent,impactAngle)==0x20),"bad off");
-		static_assert((offsetof(CollisionEvent,relativeSpeed)==0x24),"bad off");
-		static_assert((offsetof(CollisionEvent,colliderCategory)==0x28),"bad off");
-	};
-};
-
-//UDT: struct WingState @len=68
-	//_Data: this+0x0, Member, Type: float, aoa
-	//_Data: this+0x4, Member, Type: float, cd
-	//_Data: this+0x8, Member, Type: float, cl
-	//_Data: this+0xC, Member, Type: float, angle
-	//_Data: this+0x10, Member, Type: float, inputAngle
-	//_Data: this+0x14, Member, Type: float, groundHeight
-	//_Data: this+0x18, Member, Type: float, frontShare
-	//_Data: this+0x1C, Member, Type: float, dragKG
-	//_Data: this+0x20, Member, Type: float, liftKG
-	//_Data: this+0x24, Member, Type: float, angleMult
-	//_Data: this+0x28, Member, Type: float, groundEffectLift
-	//_Data: this+0x2C, Member, Type: float, groundEffectDrag
-	//_Data: this+0x30, Member, Type: float, yawAngle
-	//_Data: this+0x34, Member, Type: bool, isVertical
-	//_Data: this+0x38, Member, Type: class vec3f, liftVector
-	//_Func: public void WingState(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct WingState {
-public:
-	float aoa;
-	float cd;
-	float cl;
-	float angle;
-	float inputAngle;
-	float groundHeight;
-	float frontShare;
-	float dragKG;
-	float liftKG;
-	float angleMult;
-	float groundEffectLift;
-	float groundEffectDrag;
-	float yawAngle;
-	bool isVertical;
-	vec3f liftVector;
-	inline WingState()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(WingState)==68),"bad size");
-		static_assert((offsetof(WingState,aoa)==0x0),"bad off");
-		static_assert((offsetof(WingState,cd)==0x4),"bad off");
-		static_assert((offsetof(WingState,cl)==0x8),"bad off");
-		static_assert((offsetof(WingState,angle)==0xC),"bad off");
-		static_assert((offsetof(WingState,inputAngle)==0x10),"bad off");
-		static_assert((offsetof(WingState,groundHeight)==0x14),"bad off");
-		static_assert((offsetof(WingState,frontShare)==0x18),"bad off");
-		static_assert((offsetof(WingState,dragKG)==0x1C),"bad off");
-		static_assert((offsetof(WingState,liftKG)==0x20),"bad off");
-		static_assert((offsetof(WingState,angleMult)==0x24),"bad off");
-		static_assert((offsetof(WingState,groundEffectLift)==0x28),"bad off");
-		static_assert((offsetof(WingState,groundEffectDrag)==0x2C),"bad off");
-		static_assert((offsetof(WingState,yawAngle)==0x30),"bad off");
-		static_assert((offsetof(WingState,isVertical)==0x34),"bad off");
-		static_assert((offsetof(WingState,liftVector)==0x38),"bad off");
-	};
-};
-
-//UDT: class Turbo @len=36
-	//_Func: public void Turbo(TurboDef & data); @loc=static @len=67 @rva=2811696
-	//_Func: public void ~Turbo(); @loc=static @len=3 @rva=96368
-	//_Func: public void step(float gas, float rpms, float dt); @loc=static @len=236 @rva=2811840
-	//_Func: public float getBoost(); @loc=static @len=11 @rva=2811776
-	//_Func: public void reset(); @loc=static @len=8 @rva=2811792
-	//_Func: public void setTurboBoostLevel(float value); @loc=static @len=18 @rva=2811808
-	//_Func: public float getTurboBoostLevel(); @loc=optimized @len=0 @rva=0
-	//_Func: public void setWastegate(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public float getWastegate(); @loc=static @len=6 @rva=2645504
-	//_Func: public float getMaxBoost(bool  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void setMaxBoost(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: float, userSetting
-	//_Data: this+0x4, Member, Type: float, rotation
-	//_Data: this+0x8, Member, Type: struct TurboDef, data
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Turbo {
-public:
-	float userSetting;
-	float rotation;
-	TurboDef data;
-	inline Turbo()  { }
-	inline void ctor(TurboDef & data) { typedef void (*_fpt)(Turbo *pthis, TurboDef &); _fpt _f=(_fpt)_drva(2811696); _f(this, data); }
-	inline void dtor() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void step(float gas, float rpms, float dt) { typedef void (*_fpt)(Turbo *pthis, float, float, float); _fpt _f=(_fpt)_drva(2811840); return _f(this, gas, rpms, dt); }
-	inline float getBoost() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811776); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811792); return _f(this); }
-	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Turbo *pthis, float); _fpt _f=(_fpt)_drva(2811808); return _f(this, value); }
-	inline float getWastegate() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2645504); return _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Turbo)==36),"bad size");
-		static_assert((offsetof(Turbo,userSetting)==0x0),"bad off");
-		static_assert((offsetof(Turbo,rotation)==0x4),"bad off");
-		static_assert((offsetof(Turbo,data)==0x8),"bad off");
-	};
-};
-
-//UDT: struct CarCollisionBounds @len=40
-	//_Data: this+0x0, Member, Type: class vec3f, min
-	//_Data: this+0xC, Member, Type: class vec3f, max
-	//_Data: this+0x18, Member, Type: float, length
-	//_Data: this+0x1C, Member, Type: float, width
-	//_Data: this+0x20, Member, Type: float, lengthFront
-	//_Data: this+0x24, Member, Type: float, lengthRear
-	//_Func: public void CarCollisionBounds(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct CarCollisionBounds {
-public:
-	vec3f min;
-	vec3f max;
-	float length;
-	float width;
-	float lengthFront;
-	float lengthRear;
-	inline CarCollisionBounds()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(CarCollisionBounds)==40),"bad size");
-		static_assert((offsetof(CarCollisionBounds,min)==0x0),"bad off");
-		static_assert((offsetof(CarCollisionBounds,max)==0xC),"bad off");
-		static_assert((offsetof(CarCollisionBounds,length)==0x18),"bad off");
-		static_assert((offsetof(CarCollisionBounds,width)==0x1C),"bad off");
-		static_assert((offsetof(CarCollisionBounds,lengthFront)==0x20),"bad off");
-		static_assert((offsetof(CarCollisionBounds,lengthRear)==0x24),"bad off");
-	};
-};
-
-//UDT: struct CarCollisionBox @len=32
-	//_Func: public void CarCollisionBox(vec3f &  _arg0, vec3f &  _arg1); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class vec3f, centre
-	//_Data: this+0xC, Member, Type: class vec3f, size
-	//_Data: this+0x18, Member, Type: unsigned __int64, id
-//UDT;
-
-struct CarCollisionBox {
-public:
-	vec3f centre;
-	vec3f size;
-	unsigned __int64 id;
-	inline CarCollisionBox()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(CarCollisionBox)==32),"bad size");
-		static_assert((offsetof(CarCollisionBox,centre)==0x0),"bad off");
-		static_assert((offsetof(CarCollisionBox,size)==0xC),"bad off");
-		static_assert((offsetof(CarCollisionBox,id)==0x18),"bad off");
-	};
-};
-
-//UDT: class Joypad @len=8 @vfcount=7
-	//_VTable: 
-	//_Func: public void acquire(); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Func: public vec2f getLeftStick(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public vec2f getRightStick(); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
-	//_Func: public float getLeftTrigger(); @intro @pure @virtual vtpo=0 vfid=3 @loc=optimized @len=0 @rva=0
-	//_Func: public float getRightTrigger(); @intro @pure @virtual vtpo=0 vfid=4 @loc=optimized @len=0 @rva=0
-	//_Func: public unsigned int getButtonMask(); @intro @pure @virtual vtpo=0 vfid=5 @loc=optimized @len=0 @rva=0
-	//_Func: public void setVibrations(float  _arg0, float  _arg1); @intro @pure @virtual vtpo=0 vfid=6 @loc=optimized @len=0 @rva=0
-	//_Func: public void Joypad(Joypad &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void Joypad(); @loc=optimized @len=0 @rva=0
-	//_Func: public Joypad & operator=(Joypad &  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Joypad {
-public:
-	inline Joypad()  { }
-	virtual void acquire_vf0() = 0;
-	inline void acquire() { return acquire_vf0(); }
-	virtual vec2f getLeftStick_vf1() = 0;
-	inline vec2f getLeftStick() { return getLeftStick_vf1(); }
-	virtual vec2f getRightStick_vf2() = 0;
-	inline vec2f getRightStick() { return getRightStick_vf2(); }
-	virtual float getLeftTrigger_vf3() = 0;
-	inline float getLeftTrigger() { return getLeftTrigger_vf3(); }
-	virtual float getRightTrigger_vf4() = 0;
-	inline float getRightTrigger() { return getRightTrigger_vf4(); }
-	virtual unsigned int getButtonMask_vf5() = 0;
-	inline unsigned int getButtonMask() { return getButtonMask_vf5(); }
-	virtual void setVibrations_vf6(float  _arg0, float  _arg1) = 0;
-	inline void setVibrations(float  _arg0, float  _arg1) { return setVibrations_vf6( _arg0,  _arg1); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Joypad)==8),"bad size");
-	};
-};
-
-//UDT: struct ModelBoundariesCoordinates @len=24
-	//_Data: this+0x0, Member, Type: float, front
-	//_Data: this+0x4, Member, Type: float, rear
-	//_Data: this+0x8, Member, Type: float, left
-	//_Data: this+0xC, Member, Type: float, right
-	//_Data: this+0x10, Member, Type: float, top
-	//_Data: this+0x14, Member, Type: float, bottom
-	//_Func: public void update(vec3f  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ModelBoundariesCoordinates(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct ModelBoundariesCoordinates {
-public:
-	float front;
-	float rear;
-	float left;
-	float right;
-	float top;
-	float bottom;
-	inline ModelBoundariesCoordinates()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(ModelBoundariesCoordinates)==24),"bad size");
-		static_assert((offsetof(ModelBoundariesCoordinates,front)==0x0),"bad off");
-		static_assert((offsetof(ModelBoundariesCoordinates,rear)==0x4),"bad off");
-		static_assert((offsetof(ModelBoundariesCoordinates,left)==0x8),"bad off");
-		static_assert((offsetof(ModelBoundariesCoordinates,right)==0xC),"bad off");
-		static_assert((offsetof(ModelBoundariesCoordinates,top)==0x10),"bad off");
-		static_assert((offsetof(ModelBoundariesCoordinates,bottom)==0x14),"bad off");
 	};
 };
 
@@ -4672,6 +4721,434 @@ public:
 	};
 };
 
+//UDT: class ICollisionCallback @len=8 @vfcount=2
+	//_VTable: 
+	//_Func: public void ~ICollisionCallback(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2501856
+	//_Func: public void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void ICollisionCallback(ICollisionCallback &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ICollisionCallback(); @loc=optimized @len=0 @rva=0
+	//_Func: public ICollisionCallback & operator=(ICollisionCallback &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ICollisionCallback {
+public:
+	inline ICollisionCallback()  { }
+	virtual ~ICollisionCallback();
+	inline void dtor() { typedef void (*_fpt)(ICollisionCallback *pthis); _fpt _f=(_fpt)_drva(2501856); _f(this); }
+	virtual void onCollisionCallBack_vf1(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) = 0;
+	inline void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) { return onCollisionCallBack_vf1( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ICollisionCallback)==8),"bad size");
+	};
+};
+
+//UDT: struct PhysicsValueCache @len=4
+	//_Data: this+0x0, Member, Type: class Speed, speed
+	//_Func: public void PhysicsValueCache(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~PhysicsValueCache(); @loc=static @len=5 @rva=1183184
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct PhysicsValueCache {
+public:
+	Speed speed;
+	inline PhysicsValueCache()  { }
+	inline void dtor() { typedef void (*_fpt)(PhysicsValueCache *pthis); _fpt _f=(_fpt)_drva(1183184); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(PhysicsValueCache)==4),"bad size");
+		static_assert((offsetof(PhysicsValueCache,speed)==0x0),"bad off");
+	};
+};
+
+//UDT: struct UDPMessage @len=32
+	//_Data: this+0x0, Member, Type: void *, data
+	//_Data: this+0x8, Member, Type: int, size
+	//_Data: this+0xC, Member, Type: struct sockaddr_in, srcAddress
+	//_Func: public void UDPMessage(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct UDPMessage {
+public:
+	void * data;
+	int size;
+	sockaddr_in srcAddress;
+	inline UDPMessage()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(UDPMessage)==32),"bad size");
+		static_assert((offsetof(UDPMessage,data)==0x0),"bad off");
+		static_assert((offsetof(UDPMessage,size)==0x8),"bad off");
+		static_assert((offsetof(UDPMessage,srcAddress)==0xC),"bad off");
+	};
+};
+
+//UDT: struct AIState @len=60
+	//_Func: public void AIState(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, currentSteerSignal
+	//_Data: this+0x4, Member, Type: class vec3f, steerTarget
+	//_Data: this+0x10, Member, Type: float, gasBrakeTarget
+	//_Data: this+0x14, Member, Type: bool, isActive
+	//_Data: this+0x18, Member, Type: float, targetSpeed
+	//_Data: this+0x1C, Member, Type: float, targetLateralOffset
+	//_Data: this+0x20, Member, Type: float, brakeTargetSpeed
+	//_Data: this+0x24, Member, Type: float, brakeTargetDist
+	//_Data: this+0x28, Member, Type: float, currentNormalizedSplinePosition
+	//_Data: this+0x2C, Member, Type: float, outsideOffset
+	//_Data: this+0x30, Member, Type: float, projDNRPM
+	//_Data: this+0x34, Member, Type: float, understeerFactor
+	//_Data: this+0x38, Member, Type: float, currentPush
+//UDT;
+
+struct AIState {
+public:
+	float currentSteerSignal;
+	vec3f steerTarget;
+	float gasBrakeTarget;
+	bool isActive;
+	float targetSpeed;
+	float targetLateralOffset;
+	float brakeTargetSpeed;
+	float brakeTargetDist;
+	float currentNormalizedSplinePosition;
+	float outsideOffset;
+	float projDNRPM;
+	float understeerFactor;
+	float currentPush;
+	inline AIState()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(AIState)==60),"bad size");
+		static_assert((offsetof(AIState,currentSteerSignal)==0x0),"bad off");
+		static_assert((offsetof(AIState,steerTarget)==0x4),"bad off");
+		static_assert((offsetof(AIState,gasBrakeTarget)==0x10),"bad off");
+		static_assert((offsetof(AIState,isActive)==0x14),"bad off");
+		static_assert((offsetof(AIState,targetSpeed)==0x18),"bad off");
+		static_assert((offsetof(AIState,targetLateralOffset)==0x1C),"bad off");
+		static_assert((offsetof(AIState,brakeTargetSpeed)==0x20),"bad off");
+		static_assert((offsetof(AIState,brakeTargetDist)==0x24),"bad off");
+		static_assert((offsetof(AIState,currentNormalizedSplinePosition)==0x28),"bad off");
+		static_assert((offsetof(AIState,outsideOffset)==0x2C),"bad off");
+		static_assert((offsetof(AIState,projDNRPM)==0x30),"bad off");
+		static_assert((offsetof(AIState,understeerFactor)==0x34),"bad off");
+		static_assert((offsetof(AIState,currentPush)==0x38),"bad off");
+	};
+};
+
+//UDT: class ThermalObject @len=32 @vfcount=1
+	//_VTable: 
+	//_Func: public void ThermalObject(ThermalObject &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ThermalObject(); @loc=static @len=42 @rva=2829952
+	//_Func: public void ~ThermalObject(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2830000
+	//_Data: this+0x8, Member, Type: float, tmass
+	//_Data: this+0xC, Member, Type: float, coolSpeedK
+	//_Data: this+0x10, Member, Type: float, coolFactor
+	//_Data: this+0x14, Member, Type: float, heatFactor
+	//_Data: this+0x18, Member, Type: float, t
+	//_Func: public void step(float dt, float ambientTemp, Speed & speed); @loc=static @len=128 @rva=2830080
+	//_Func: public void addHeadSource(float heat); @loc=static @len=11 @rva=2830064
+	//_Data: this+0x1C, Member, Type: float, heatAccumulator
+	//_Func: public ThermalObject & operator=(ThermalObject &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ThermalObject {
+public:
+	float tmass;
+	float coolSpeedK;
+	float coolFactor;
+	float heatFactor;
+	float t;
+	float heatAccumulator;
+	inline ThermalObject()  { }
+	inline void ctor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2829952); _f(this); }
+	virtual ~ThermalObject();
+	inline void dtor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2830000); _f(this); }
+	inline void step(float dt, float ambientTemp, Speed & speed) { typedef void (*_fpt)(ThermalObject *pthis, float, float, Speed &); _fpt _f=(_fpt)_drva(2830080); return _f(this, dt, ambientTemp, speed); }
+	inline void addHeadSource(float heat) { typedef void (*_fpt)(ThermalObject *pthis, float); _fpt _f=(_fpt)_drva(2830064); return _f(this, heat); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ThermalObject)==32),"bad size");
+		static_assert((offsetof(ThermalObject,tmass)==0x8),"bad off");
+		static_assert((offsetof(ThermalObject,coolSpeedK)==0xC),"bad off");
+		static_assert((offsetof(ThermalObject,coolFactor)==0x10),"bad off");
+		static_assert((offsetof(ThermalObject,heatFactor)==0x14),"bad off");
+		static_assert((offsetof(ThermalObject,t)==0x18),"bad off");
+		static_assert((offsetof(ThermalObject,heatAccumulator)==0x1C),"bad off");
+	};
+};
+
+//UDT: class SinSignalGenerator @len=16 @vfcount=3
+	//_Base: class SignalGenerator @off=0 @len=16
+	//_Func: public void SinSignalGenerator(SinSignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SinSignalGenerator(); @loc=static @len=33 @rva=2197680
+	//_Func: public void ~SinSignalGenerator(); @virtual vtpo=0 vfid=0 @loc=static @len=15 @rva=2197728
+	//_Func: public float getValue(); @virtual vtpo=0 vfid=2 @loc=static @len=81 @rva=2197808
+	//_Func: public SinSignalGenerator & operator=(SinSignalGenerator &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class SinSignalGenerator : public SignalGenerator {
+public:
+	inline SinSignalGenerator()  { }
+	inline void ctor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197680); _f(this); }
+	virtual ~SinSignalGenerator();
+	inline void dtor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197728); _f(this); }
+	virtual float getValue_vf2();
+	inline float getValue_impl() { typedef float (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197808); return _f(this); }
+	inline float getValue() { return getValue_vf2(); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SinSignalGenerator)==16),"bad size");
+	};
+};
+
+//UDT: class Turbo @len=36
+	//_Func: public void Turbo(TurboDef & data); @loc=static @len=67 @rva=2811696
+	//_Func: public void ~Turbo(); @loc=static @len=3 @rva=96368
+	//_Func: public void step(float gas, float rpms, float dt); @loc=static @len=236 @rva=2811840
+	//_Func: public float getBoost(); @loc=static @len=11 @rva=2811776
+	//_Func: public void reset(); @loc=static @len=8 @rva=2811792
+	//_Func: public void setTurboBoostLevel(float value); @loc=static @len=18 @rva=2811808
+	//_Func: public float getTurboBoostLevel(); @loc=optimized @len=0 @rva=0
+	//_Func: public void setWastegate(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public float getWastegate(); @loc=static @len=6 @rva=2645504
+	//_Func: public float getMaxBoost(bool  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void setMaxBoost(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: float, userSetting
+	//_Data: this+0x4, Member, Type: float, rotation
+	//_Data: this+0x8, Member, Type: struct TurboDef, data
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Turbo {
+public:
+	float userSetting;
+	float rotation;
+	TurboDef data;
+	inline Turbo()  { }
+	inline void ctor(TurboDef & data) { typedef void (*_fpt)(Turbo *pthis, TurboDef &); _fpt _f=(_fpt)_drva(2811696); _f(this, data); }
+	inline void dtor() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void step(float gas, float rpms, float dt) { typedef void (*_fpt)(Turbo *pthis, float, float, float); _fpt _f=(_fpt)_drva(2811840); return _f(this, gas, rpms, dt); }
+	inline float getBoost() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811776); return _f(this); }
+	inline void reset() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811792); return _f(this); }
+	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Turbo *pthis, float); _fpt _f=(_fpt)_drva(2811808); return _f(this, value); }
+	inline float getWastegate() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2645504); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Turbo)==36),"bad size");
+		static_assert((offsetof(Turbo,userSetting)==0x0),"bad off");
+		static_assert((offsetof(Turbo,rotation)==0x4),"bad off");
+		static_assert((offsetof(Turbo,data)==0x8),"bad off");
+	};
+};
+
+//UDT: struct CarCollisionBounds @len=40
+	//_Data: this+0x0, Member, Type: class vec3f, min
+	//_Data: this+0xC, Member, Type: class vec3f, max
+	//_Data: this+0x18, Member, Type: float, length
+	//_Data: this+0x1C, Member, Type: float, width
+	//_Data: this+0x20, Member, Type: float, lengthFront
+	//_Data: this+0x24, Member, Type: float, lengthRear
+	//_Func: public void CarCollisionBounds(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct CarCollisionBounds {
+public:
+	vec3f min;
+	vec3f max;
+	float length;
+	float width;
+	float lengthFront;
+	float lengthRear;
+	inline CarCollisionBounds()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(CarCollisionBounds)==40),"bad size");
+		static_assert((offsetof(CarCollisionBounds,min)==0x0),"bad off");
+		static_assert((offsetof(CarCollisionBounds,max)==0xC),"bad off");
+		static_assert((offsetof(CarCollisionBounds,length)==0x18),"bad off");
+		static_assert((offsetof(CarCollisionBounds,width)==0x1C),"bad off");
+		static_assert((offsetof(CarCollisionBounds,lengthFront)==0x20),"bad off");
+		static_assert((offsetof(CarCollisionBounds,lengthRear)==0x24),"bad off");
+	};
+};
+
+//UDT: struct WingState @len=68
+	//_Data: this+0x0, Member, Type: float, aoa
+	//_Data: this+0x4, Member, Type: float, cd
+	//_Data: this+0x8, Member, Type: float, cl
+	//_Data: this+0xC, Member, Type: float, angle
+	//_Data: this+0x10, Member, Type: float, inputAngle
+	//_Data: this+0x14, Member, Type: float, groundHeight
+	//_Data: this+0x18, Member, Type: float, frontShare
+	//_Data: this+0x1C, Member, Type: float, dragKG
+	//_Data: this+0x20, Member, Type: float, liftKG
+	//_Data: this+0x24, Member, Type: float, angleMult
+	//_Data: this+0x28, Member, Type: float, groundEffectLift
+	//_Data: this+0x2C, Member, Type: float, groundEffectDrag
+	//_Data: this+0x30, Member, Type: float, yawAngle
+	//_Data: this+0x34, Member, Type: bool, isVertical
+	//_Data: this+0x38, Member, Type: class vec3f, liftVector
+	//_Func: public void WingState(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct WingState {
+public:
+	float aoa;
+	float cd;
+	float cl;
+	float angle;
+	float inputAngle;
+	float groundHeight;
+	float frontShare;
+	float dragKG;
+	float liftKG;
+	float angleMult;
+	float groundEffectLift;
+	float groundEffectDrag;
+	float yawAngle;
+	bool isVertical;
+	vec3f liftVector;
+	inline WingState()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(WingState)==68),"bad size");
+		static_assert((offsetof(WingState,aoa)==0x0),"bad off");
+		static_assert((offsetof(WingState,cd)==0x4),"bad off");
+		static_assert((offsetof(WingState,cl)==0x8),"bad off");
+		static_assert((offsetof(WingState,angle)==0xC),"bad off");
+		static_assert((offsetof(WingState,inputAngle)==0x10),"bad off");
+		static_assert((offsetof(WingState,groundHeight)==0x14),"bad off");
+		static_assert((offsetof(WingState,frontShare)==0x18),"bad off");
+		static_assert((offsetof(WingState,dragKG)==0x1C),"bad off");
+		static_assert((offsetof(WingState,liftKG)==0x20),"bad off");
+		static_assert((offsetof(WingState,angleMult)==0x24),"bad off");
+		static_assert((offsetof(WingState,groundEffectLift)==0x28),"bad off");
+		static_assert((offsetof(WingState,groundEffectDrag)==0x2C),"bad off");
+		static_assert((offsetof(WingState,yawAngle)==0x30),"bad off");
+		static_assert((offsetof(WingState,isVertical)==0x34),"bad off");
+		static_assert((offsetof(WingState,liftVector)==0x38),"bad off");
+	};
+};
+
+//UDT: struct NetCarState @len=136
+	//_Func: public void NetCarState(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class vec3f, pos
+	//_Data: this+0xC, Member, Type: class vec3f, rotation
+	//_Data: this+0x18, Member, Type: class vec3f, velocity
+	//_Data: this+0x24, Member, Type: class vec3f, acceleration
+	//_Data: this+0x30, Member, Type: double, timeStamp
+	//_Data: this+0x38, Member, Type: double, rcvTime
+	//_Data: this+0x40, Member, Type: unsigned char, pakSequenceId
+	//_Data: this+0x44, Member, Type: float, targetHeight
+	//_Data: this+0x48, Member, Type: float[0x4], tyreAngularSpeed
+	//_Data: this+0x58, Member, Type: unsigned short, engineRPM
+	//_Data: this+0x5C, Member, Type: float, steerAngle
+	//_Data: this+0x60, Member, Type: float, wheelAngle
+	//_Data: this+0x64, Member, Type: int, gearIndex
+	//_Data: this+0x68, Member, Type: unsigned int, statusBytes
+	//_Data: this+0x6C, Member, Type: float, aoa
+	//_Data: this+0x70, Member, Type: class vec3f, aoaAxis
+	//_Data: this+0x7C, Member, Type: int, ping
+	//_Data: this+0x80, Member, Type: float, performanceDelta
+	//_Data: this+0x84, Member, Type: float, gas
+//UDT;
+
+struct NetCarState {
+public:
+	vec3f pos;
+	vec3f rotation;
+	vec3f velocity;
+	vec3f acceleration;
+	double timeStamp;
+	double rcvTime;
+	unsigned char pakSequenceId;
+	float targetHeight;
+	float tyreAngularSpeed[0x4];
+	unsigned short engineRPM;
+	float steerAngle;
+	float wheelAngle;
+	int gearIndex;
+	unsigned int statusBytes;
+	float aoa;
+	vec3f aoaAxis;
+	int ping;
+	float performanceDelta;
+	float gas;
+	inline NetCarState()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarState)==136),"bad size");
+		static_assert((offsetof(NetCarState,pos)==0x0),"bad off");
+		static_assert((offsetof(NetCarState,rotation)==0xC),"bad off");
+		static_assert((offsetof(NetCarState,velocity)==0x18),"bad off");
+		static_assert((offsetof(NetCarState,acceleration)==0x24),"bad off");
+		static_assert((offsetof(NetCarState,timeStamp)==0x30),"bad off");
+		static_assert((offsetof(NetCarState,rcvTime)==0x38),"bad off");
+		static_assert((offsetof(NetCarState,pakSequenceId)==0x40),"bad off");
+		static_assert((offsetof(NetCarState,targetHeight)==0x44),"bad off");
+		static_assert((offsetof(NetCarState,tyreAngularSpeed)==0x48),"bad off");
+		static_assert((offsetof(NetCarState,engineRPM)==0x58),"bad off");
+		static_assert((offsetof(NetCarState,steerAngle)==0x5C),"bad off");
+		static_assert((offsetof(NetCarState,wheelAngle)==0x60),"bad off");
+		static_assert((offsetof(NetCarState,gearIndex)==0x64),"bad off");
+		static_assert((offsetof(NetCarState,statusBytes)==0x68),"bad off");
+		static_assert((offsetof(NetCarState,aoa)==0x6C),"bad off");
+		static_assert((offsetof(NetCarState,aoaAxis)==0x70),"bad off");
+		static_assert((offsetof(NetCarState,ping)==0x7C),"bad off");
+		static_assert((offsetof(NetCarState,performanceDelta)==0x80),"bad off");
+		static_assert((offsetof(NetCarState,gas)==0x84),"bad off");
+	};
+};
+
+//UDT: struct CarCollisionBox @len=32
+	//_Func: public void CarCollisionBox(vec3f &  _arg0, vec3f &  _arg1); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class vec3f, centre
+	//_Data: this+0xC, Member, Type: class vec3f, size
+	//_Data: this+0x18, Member, Type: unsigned __int64, id
+//UDT;
+
+struct CarCollisionBox {
+public:
+	vec3f centre;
+	vec3f size;
+	unsigned __int64 id;
+	inline CarCollisionBox()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(CarCollisionBox)==32),"bad size");
+		static_assert((offsetof(CarCollisionBox,centre)==0x0),"bad off");
+		static_assert((offsetof(CarCollisionBox,size)==0xC),"bad off");
+		static_assert((offsetof(CarCollisionBox,id)==0x18),"bad off");
+	};
+};
+
+//UDT: struct ModelBoundariesCoordinates @len=24
+	//_Data: this+0x0, Member, Type: float, front
+	//_Data: this+0x4, Member, Type: float, rear
+	//_Data: this+0x8, Member, Type: float, left
+	//_Data: this+0xC, Member, Type: float, right
+	//_Data: this+0x10, Member, Type: float, top
+	//_Data: this+0x14, Member, Type: float, bottom
+	//_Func: public void update(vec3f  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ModelBoundariesCoordinates(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ModelBoundariesCoordinates {
+public:
+	float front;
+	float rear;
+	float left;
+	float right;
+	float top;
+	float bottom;
+	inline ModelBoundariesCoordinates()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ModelBoundariesCoordinates)==24),"bad size");
+		static_assert((offsetof(ModelBoundariesCoordinates,front)==0x0),"bad off");
+		static_assert((offsetof(ModelBoundariesCoordinates,rear)==0x4),"bad off");
+		static_assert((offsetof(ModelBoundariesCoordinates,left)==0x8),"bad off");
+		static_assert((offsetof(ModelBoundariesCoordinates,right)==0xC),"bad off");
+		static_assert((offsetof(ModelBoundariesCoordinates,top)==0x10),"bad off");
+		static_assert((offsetof(ModelBoundariesCoordinates,bottom)==0x14),"bad off");
+	};
+};
+
 //UDT: struct SplinePoint @len=20
 	//_Func: public void SplinePoint(vec3f &  _arg0, float  _arg1, int  _arg2); @loc=optimized @len=0 @rva=0
 	//_Data: this+0x0, Member, Type: class vec3f, point
@@ -4690,6 +5167,141 @@ public:
 		static_assert((offsetof(SplinePoint,point)==0x0),"bad off");
 		static_assert((offsetof(SplinePoint,pointLength)==0xC),"bad off");
 		static_assert((offsetof(SplinePoint,tag)==0x10),"bad off");
+	};
+};
+
+//UDT: class Joypad @len=8 @vfcount=7
+	//_VTable: 
+	//_Func: public void acquire(); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Func: public vec2f getLeftStick(); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public vec2f getRightStick(); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
+	//_Func: public float getLeftTrigger(); @intro @pure @virtual vtpo=0 vfid=3 @loc=optimized @len=0 @rva=0
+	//_Func: public float getRightTrigger(); @intro @pure @virtual vtpo=0 vfid=4 @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getButtonMask(); @intro @pure @virtual vtpo=0 vfid=5 @loc=optimized @len=0 @rva=0
+	//_Func: public void setVibrations(float  _arg0, float  _arg1); @intro @pure @virtual vtpo=0 vfid=6 @loc=optimized @len=0 @rva=0
+	//_Func: public void Joypad(Joypad &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Joypad(); @loc=optimized @len=0 @rva=0
+	//_Func: public Joypad & operator=(Joypad &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Joypad {
+public:
+	inline Joypad()  { }
+	virtual void acquire_vf0() = 0;
+	inline void acquire() { return acquire_vf0(); }
+	virtual vec2f getLeftStick_vf1() = 0;
+	inline vec2f getLeftStick() { return getLeftStick_vf1(); }
+	virtual vec2f getRightStick_vf2() = 0;
+	inline vec2f getRightStick() { return getRightStick_vf2(); }
+	virtual float getLeftTrigger_vf3() = 0;
+	inline float getLeftTrigger() { return getLeftTrigger_vf3(); }
+	virtual float getRightTrigger_vf4() = 0;
+	inline float getRightTrigger() { return getRightTrigger_vf4(); }
+	virtual unsigned int getButtonMask_vf5() = 0;
+	inline unsigned int getButtonMask() { return getButtonMask_vf5(); }
+	virtual void setVibrations_vf6(float  _arg0, float  _arg1) = 0;
+	inline void setVibrations(float  _arg0, float  _arg1) { return setVibrations_vf6( _arg0,  _arg1); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Joypad)==8),"bad size");
+	};
+};
+
+//UDT: struct ksgui::GraphReferenceAxis @len=20
+	//_Func: public void GraphReferenceAxis(vec3f & acolor, float arefValue, bool bisVertical); @loc=static @len=35 @rva=2987152
+	//_Data: this+0x0, Member, Type: class vec3f, color
+	//_Data: this+0xC, Member, Type: float, refValue
+	//_Data: this+0x10, Member, Type: bool, isVertical
+//UDT;
+
+struct ksgui_GraphReferenceAxis {
+public:
+	vec3f color;
+	float refValue;
+	bool isVertical;
+	inline ksgui_GraphReferenceAxis()  { }
+	inline void ctor(vec3f & acolor, float arefValue, bool bisVertical) { typedef void (*_fpt)(ksgui_GraphReferenceAxis *pthis, vec3f &, float, bool); _fpt _f=(_fpt)_drva(2987152); _f(this, acolor, arefValue, bisVertical); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_GraphReferenceAxis)==20),"bad size");
+		static_assert((offsetof(ksgui_GraphReferenceAxis,color)==0x0),"bad off");
+		static_assert((offsetof(ksgui_GraphReferenceAxis,refValue)==0xC),"bad off");
+		static_assert((offsetof(ksgui_GraphReferenceAxis,isVertical)==0x10),"bad off");
+	};
+};
+
+//UDT: struct SystemCBuffers @len=160
+	//_Data: this+0x0, Member, Type: class CBuffer, cbCamera
+	//_Data: this+0x28, Member, Type: class CBuffer, cbPerObject
+	//_Data: this+0x50, Member, Type: class CBuffer, cbLighting
+	//_Data: this+0x78, Member, Type: class CBuffer, cbShadowMap
+	//_Func: public void SystemCBuffers(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~SystemCBuffers(); @loc=static @len=65 @rva=2106176
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SystemCBuffers {
+public:
+	CBuffer cbCamera;
+	CBuffer cbPerObject;
+	CBuffer cbLighting;
+	CBuffer cbShadowMap;
+	inline SystemCBuffers()  { }
+	inline void dtor() { typedef void (*_fpt)(SystemCBuffers *pthis); _fpt _f=(_fpt)_drva(2106176); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SystemCBuffers)==160),"bad size");
+		static_assert((offsetof(SystemCBuffers,cbCamera)==0x0),"bad off");
+		static_assert((offsetof(SystemCBuffers,cbPerObject)==0x28),"bad off");
+		static_assert((offsetof(SystemCBuffers,cbLighting)==0x50),"bad off");
+		static_assert((offsetof(SystemCBuffers,cbShadowMap)==0x78),"bad off");
+	};
+};
+
+//UDT: struct OnMouseMoveEvent @len=12
+	//_Base: struct MouseEvent @off=0 @len=12
+	//_Func: public void OnMouseMoveEvent(int  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct OnMouseMoveEvent : public MouseEvent {
+public:
+	inline OnMouseMoveEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnMouseMoveEvent)==12),"bad size");
+	};
+};
+
+//UDT: struct OnMouseWheelMovedEvent @len=16
+	//_Base: struct MouseEvent @off=0 @len=12
+	//_Func: public void OnMouseWheelMovedEvent(int  _arg0, int  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
+	//_Data: this+0xC, Member, Type: float, delta
+//UDT;
+
+struct OnMouseWheelMovedEvent : public MouseEvent {
+public:
+	float delta;
+	inline OnMouseWheelMovedEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnMouseWheelMovedEvent)==16),"bad size");
+		static_assert((offsetof(OnMouseWheelMovedEvent,delta)==0xC),"bad off");
+	};
+};
+
+//UDT: class IKeyEventListener @len=8 @vfcount=2
+	//_VTable: 
+	//_Func: public void onKeyDown(OnKeyEvent &  _arg0); @intro @pure @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Func: public void onKeyChar(unsigned int  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void IKeyEventListener(IKeyEventListener &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void IKeyEventListener(); @loc=optimized @len=0 @rva=0
+	//_Func: public IKeyEventListener & operator=(IKeyEventListener &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class IKeyEventListener {
+public:
+	inline IKeyEventListener()  { }
+	virtual void onKeyDown_vf0(OnKeyEvent &  _arg0) = 0;
+	inline void onKeyDown(OnKeyEvent &  _arg0) { return onKeyDown_vf0( _arg0); }
+	virtual void onKeyChar_vf1(unsigned int  _arg0) = 0;
+	inline void onKeyChar(unsigned int  _arg0) { return onKeyChar_vf1( _arg0); }
+	inline void _guard_obj() {
+		static_assert((sizeof(IKeyEventListener)==8),"bad size");
 	};
 };
 
@@ -4725,49 +5337,169 @@ public:
 	};
 };
 
-//UDT: struct ksgui::GraphReferenceAxis @len=20
-	//_Func: public void GraphReferenceAxis(vec3f & acolor, float arefValue, bool bisVertical); @loc=static @len=35 @rva=2987152
-	//_Data: this+0x0, Member, Type: class vec3f, color
-	//_Data: this+0xC, Member, Type: float, refValue
-	//_Data: this+0x10, Member, Type: bool, isVertical
-//UDT;
-
-struct ksgui_GraphReferenceAxis {
-public:
-	vec3f color;
-	float refValue;
-	bool isVertical;
-	inline ksgui_GraphReferenceAxis()  { }
-	inline void ctor(vec3f & acolor, float arefValue, bool bisVertical) { typedef void (*_fpt)(ksgui_GraphReferenceAxis *pthis, vec3f &, float, bool); _fpt _f=(_fpt)_drva(2987152); _f(this, acolor, arefValue, bisVertical); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_GraphReferenceAxis)==20),"bad size");
-		static_assert((offsetof(ksgui_GraphReferenceAxis,color)==0x0),"bad off");
-		static_assert((offsetof(ksgui_GraphReferenceAxis,refValue)==0xC),"bad off");
-		static_assert((offsetof(ksgui_GraphReferenceAxis,isVertical)==0x10),"bad off");
-	};
-};
-
-//UDT: struct Wind @len=20
-	//_Data: this+0x0, Member, Type: class vec3f, vector
-	//_Data: this+0xC, Member, Type: class Speed, speed
-	//_Data: this+0x10, Member, Type: float, directionDeg
-	//_Func: public void Wind(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~Wind(); @loc=static @len=9 @rva=2502208
+//UDT: struct OnNewSessionEvent @len=120
+	//_Data: this+0x0, Member, Type: class Session, newSession
+	//_Data: this+0x70, Member, Type: short, index
+	//_Func: public void OnNewSessionEvent(OnNewSessionEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void OnNewSessionEvent(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~OnNewSessionEvent(); @loc=static @len=90 @rva=584992
+	//_Func: public OnNewSessionEvent & operator=(OnNewSessionEvent &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct Wind {
+struct OnNewSessionEvent {
 public:
-	vec3f vector;
-	Speed speed;
-	float directionDeg;
-	inline Wind()  { }
-	inline void dtor() { typedef void (*_fpt)(Wind *pthis); _fpt _f=(_fpt)_drva(2502208); _f(this); }
+	Session newSession;
+	short index;
+	inline OnNewSessionEvent()  { }
+	inline void dtor() { typedef void (*_fpt)(OnNewSessionEvent *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(Wind)==20),"bad size");
-		static_assert((offsetof(Wind,vector)==0x0),"bad off");
-		static_assert((offsetof(Wind,speed)==0xC),"bad off");
-		static_assert((offsetof(Wind,directionDeg)==0x10),"bad off");
+		static_assert((sizeof(OnNewSessionEvent)==120),"bad size");
+		static_assert((offsetof(OnNewSessionEvent,newSession)==0x0),"bad off");
+		static_assert((offsetof(OnNewSessionEvent,index)==0x70),"bad off");
+	};
+};
+
+//UDT: struct CollisionEvent @len=44
+	//_Data: this+0x0, Member, Type: int, carIndex
+	//_Data: this+0x4, Member, Type: float, normalForce
+	//_Data: this+0x8, Member, Type: class vec3f, pos
+	//_Data: this+0x14, Member, Type: class vec3f, normal
+	//_Data: this+0x20, Member, Type: float, impactAngle
+	//_Data: this+0x24, Member, Type: float, relativeSpeed
+	//_Data: this+0x28, Member, Type: unsigned long, colliderCategory
+	//_Func: public void CollisionEvent(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct CollisionEvent {
+public:
+	int carIndex;
+	float normalForce;
+	vec3f pos;
+	vec3f normal;
+	float impactAngle;
+	float relativeSpeed;
+	unsigned long colliderCategory;
+	inline CollisionEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(CollisionEvent)==44),"bad size");
+		static_assert((offsetof(CollisionEvent,carIndex)==0x0),"bad off");
+		static_assert((offsetof(CollisionEvent,normalForce)==0x4),"bad off");
+		static_assert((offsetof(CollisionEvent,pos)==0x8),"bad off");
+		static_assert((offsetof(CollisionEvent,normal)==0x14),"bad off");
+		static_assert((offsetof(CollisionEvent,impactAngle)==0x20),"bad off");
+		static_assert((offsetof(CollisionEvent,relativeSpeed)==0x24),"bad off");
+		static_assert((offsetof(CollisionEvent,colliderCategory)==0x28),"bad off");
+	};
+};
+
+//UDT: class IPAddress @len=16
+	//_Func: public void IPAddress(); @loc=static @len=13 @rva=508768
+	//_Func: public void IPAddress(IPAddress &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void IPAddress(sockaddr_in & addr); @loc=static @len=10 @rva=2479584
+	//_Func: public void IPAddress(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port); @loc=static @len=143 @rva=2479600
+	//_Func: public void ~IPAddress(); @loc=static @len=3 @rva=96368
+	//_Data: this+0x0, Member, Type: struct sockaddr_in, sokaddr
+	//_Func: public unsigned short getPort(); @loc=optimized @len=0 @rva=0
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getAddress(); @loc=optimized @len=0 @rva=0
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getAddressPort(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class IPAddress {
+public:
+	sockaddr_in sokaddr;
+	inline IPAddress()  { }
+	inline void ctor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(508768); _f(this); }
+	inline void ctor(sockaddr_in & addr) { typedef void (*_fpt)(IPAddress *pthis, sockaddr_in &); _fpt _f=(_fpt)_drva(2479584); _f(this, addr); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port) { typedef void (*_fpt)(IPAddress *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned short); _fpt _f=(_fpt)_drva(2479600); _f(this, addr, port); }
+	inline void dtor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(IPAddress)==16),"bad size");
+		static_assert((offsetof(IPAddress,sokaddr)==0x0),"bad off");
+	};
+};
+
+//UDT: struct ClientCollisionEvent @len=40
+	//_Data: this+0x0, Member, Type: class NetCarStateProvider *, netCar
+	//_Data: this+0x8, Member, Type: float, speed
+	//_Data: this+0xC, Member, Type: class vec3f, worldPos
+	//_Data: this+0x18, Member, Type: class vec3f, relPos
+	//_Func: public void ClientCollisionEvent(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ClientCollisionEvent {
+public:
+	NetCarStateProvider * netCar;
+	float speed;
+	vec3f worldPos;
+	vec3f relPos;
+	inline ClientCollisionEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ClientCollisionEvent)==40),"bad size");
+		static_assert((offsetof(ClientCollisionEvent,netCar)==0x0),"bad off");
+		static_assert((offsetof(ClientCollisionEvent,speed)==0x8),"bad off");
+		static_assert((offsetof(ClientCollisionEvent,worldPos)==0xC),"bad off");
+		static_assert((offsetof(ClientCollisionEvent,relPos)==0x18),"bad off");
+	};
+};
+
+//UDT: class ITyreModel @len=8 @vfcount=2
+	//_VTable: 
+	//_Func: public void ~ITyreModel(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=4503904
+	//_Func: public TyreModelOutput solve(TyreModelInput &  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void ITyreModel(ITyreModel &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ITyreModel(); @loc=optimized @len=0 @rva=0
+	//_Func: public ITyreModel & operator=(ITyreModel &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ITyreModel {
+public:
+	inline ITyreModel()  { }
+	virtual ~ITyreModel();
+	inline void dtor() { typedef void (*_fpt)(ITyreModel *pthis); _fpt _f=(_fpt)_drva(4503904); _f(this); }
+	virtual TyreModelOutput solve_vf1(TyreModelInput &  _arg0) = 0;
+	inline TyreModelOutput solve(TyreModelInput &  _arg0) { return solve_vf1( _arg0); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ITyreModel)==8),"bad size");
+	};
+};
+
+//UDT: struct OnMouseDownEvent @len=12
+	//_Base: struct MouseEvent @off=0 @len=12
+	//_Func: public void OnMouseDownEvent(int  _arg0, int  _arg1, MouseButton  _arg2); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct OnMouseDownEvent : public MouseEvent {
+public:
+	inline OnMouseDownEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnMouseDownEvent)==12),"bad size");
+	};
+};
+
+//UDT: struct RemoteSessionResume @len=176
+	//_Data: this+0x0, Member, Type: struct RemoteSession, session
+	//_Data: this+0x40, Member, Type: struct RemoteSessionResult, results
+	//_Func: public void RemoteSessionResume(RemoteSessionResume &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void RemoteSessionResume(); @loc=static @len=103 @rva=243232
+	//_Func: public void ~RemoteSessionResume(); @loc=optimized @len=0 @rva=0
+	//_Func: public RemoteSessionResume & operator=(RemoteSessionResume &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct RemoteSessionResume {
+public:
+	RemoteSession session;
+	RemoteSessionResult results;
+	inline RemoteSessionResume()  { }
+	inline void ctor() { typedef void (*_fpt)(RemoteSessionResume *pthis); _fpt _f=(_fpt)_drva(243232); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(RemoteSessionResume)==176),"bad size");
+		static_assert((offsetof(RemoteSessionResume,session)==0x0),"bad off");
+		static_assert((offsetof(RemoteSessionResume,results)==0x40),"bad off");
 	};
 };
 
@@ -4798,124 +5530,6 @@ public:
 	};
 };
 
-//UDT: struct OnMouseDownEvent @len=12
-	//_Base: struct MouseEvent @off=0 @len=12
-	//_Func: public void OnMouseDownEvent(int  _arg0, int  _arg1, MouseButton  _arg2); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct OnMouseDownEvent : public MouseEvent {
-public:
-	inline OnMouseDownEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnMouseDownEvent)==12),"bad size");
-	};
-};
-
-//UDT: class ITyreModel @len=8 @vfcount=2
-	//_VTable: 
-	//_Func: public void ~ITyreModel(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=4503904
-	//_Func: public TyreModelOutput solve(TyreModelInput &  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void ITyreModel(ITyreModel &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ITyreModel(); @loc=optimized @len=0 @rva=0
-	//_Func: public ITyreModel & operator=(ITyreModel &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ITyreModel {
-public:
-	inline ITyreModel()  { }
-	virtual ~ITyreModel();
-	inline void dtor() { typedef void (*_fpt)(ITyreModel *pthis); _fpt _f=(_fpt)_drva(4503904); _f(this); }
-	virtual TyreModelOutput solve_vf1(TyreModelInput &  _arg0) = 0;
-	inline TyreModelOutput solve(TyreModelInput &  _arg0) { return solve_vf1( _arg0); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ITyreModel)==8),"bad size");
-	};
-};
-
-//UDT: struct ACPhysicsEvent @len=72
-	//_Data: this+0x0, Member, Type: enum eACEventType, type
-	//_Data: this+0x4, Member, Type: float, param1
-	//_Data: this+0x8, Member, Type: float, param2
-	//_Data: this+0xC, Member, Type: float, param3
-	//_Data: this+0x10, Member, Type: float, param4
-	//_Data: this+0x14, Member, Type: class vec3f, vParam1
-	//_Data: this+0x20, Member, Type: class vec3f, vParam2
-	//_Data: this+0x30, Member, Type: void *, voidParam0
-	//_Data: this+0x38, Member, Type: void *, voidParam1
-	//_Data: this+0x40, Member, Type: unsigned long, ulParam0
-	//_Func: public void ACPhysicsEvent(); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct ACPhysicsEvent {
-public:
-	eACEventType type;
-	float param1;
-	float param2;
-	float param3;
-	float param4;
-	vec3f vParam1;
-	vec3f vParam2;
-	void * voidParam0;
-	void * voidParam1;
-	unsigned long ulParam0;
-	inline ACPhysicsEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(ACPhysicsEvent)==72),"bad size");
-		static_assert((offsetof(ACPhysicsEvent,type)==0x0),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,param1)==0x4),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,param2)==0x8),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,param3)==0xC),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,param4)==0x10),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,vParam1)==0x14),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,vParam2)==0x20),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,voidParam0)==0x30),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,voidParam1)==0x38),"bad off");
-		static_assert((offsetof(ACPhysicsEvent,ulParam0)==0x40),"bad off");
-	};
-};
-
-//UDT: struct OnMouseUpEvent @len=12
-	//_Base: struct MouseEvent @off=0 @len=12
-	//_Func: public void OnMouseUpEvent(int  _arg0, int  _arg1, MouseButton  _arg2); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct OnMouseUpEvent : public MouseEvent {
-public:
-	inline OnMouseUpEvent()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(OnMouseUpEvent)==12),"bad size");
-	};
-};
-
-//UDT: struct MeshVertex @len=44
-	//_Func: public void MeshVertex(MeshVertex &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void MeshVertex(vec3f &  _arg0, vec3f &  _arg1, vec2f &  _arg2); @loc=optimized @len=0 @rva=0
-	//_Func: public void MeshVertex(vec3f &  _arg0, vec3f &  _arg1); @loc=optimized @len=0 @rva=0
-	//_Func: public void MeshVertex(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class vec3f, pos
-	//_Data: this+0xC, Member, Type: class vec3f, normal
-	//_Data: this+0x18, Member, Type: class vec2f, texCoord
-	//_Data: this+0x20, Member, Type: class vec3f, tangent
-//UDT;
-
-struct MeshVertex {
-public:
-	vec3f pos;
-	vec3f normal;
-	vec2f texCoord;
-	vec3f tangent;
-	inline MeshVertex()  { }
-	inline void _guard_obj() {
-		static_assert((sizeof(MeshVertex)==44),"bad size");
-		static_assert((offsetof(MeshVertex,pos)==0x0),"bad off");
-		static_assert((offsetof(MeshVertex,normal)==0xC),"bad off");
-		static_assert((offsetof(MeshVertex,texCoord)==0x18),"bad off");
-		static_assert((offsetof(MeshVertex,tangent)==0x20),"bad off");
-	};
-};
-
 //UDT: class BrushTyreModel @len=28
 	//_Func: public void BrushTyreModel(); @loc=static @len=46 @rva=2929488
 	//_Func: public void ~BrushTyreModel(); @loc=static @len=3 @rva=96368
@@ -4938,6 +5552,30 @@ public:
 	inline void _guard_obj() {
 		static_assert((sizeof(BrushTyreModel)==28),"bad size");
 		static_assert((offsetof(BrushTyreModel,data)==0x0),"bad off");
+	};
+};
+
+//UDT: struct Wind @len=20
+	//_Data: this+0x0, Member, Type: class vec3f, vector
+	//_Data: this+0xC, Member, Type: class Speed, speed
+	//_Data: this+0x10, Member, Type: float, directionDeg
+	//_Func: public void Wind(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~Wind(); @loc=static @len=9 @rva=2502208
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct Wind {
+public:
+	vec3f vector;
+	Speed speed;
+	float directionDeg;
+	inline Wind()  { }
+	inline void dtor() { typedef void (*_fpt)(Wind *pthis); _fpt _f=(_fpt)_drva(2502208); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Wind)==20),"bad size");
+		static_assert((offsetof(Wind,vector)==0x0),"bad off");
+		static_assert((offsetof(Wind,speed)==0xC),"bad off");
+		static_assert((offsetof(Wind,directionDeg)==0x10),"bad off");
 	};
 };
 
@@ -4986,6 +5624,88 @@ public:
 	};
 };
 
+//UDT: struct ACPhysicsEvent @len=72
+	//_Data: this+0x0, Member, Type: enum eACEventType, type
+	//_Data: this+0x4, Member, Type: float, param1
+	//_Data: this+0x8, Member, Type: float, param2
+	//_Data: this+0xC, Member, Type: float, param3
+	//_Data: this+0x10, Member, Type: float, param4
+	//_Data: this+0x14, Member, Type: class vec3f, vParam1
+	//_Data: this+0x20, Member, Type: class vec3f, vParam2
+	//_Data: this+0x30, Member, Type: void *, voidParam0
+	//_Data: this+0x38, Member, Type: void *, voidParam1
+	//_Data: this+0x40, Member, Type: unsigned long, ulParam0
+	//_Func: public void ACPhysicsEvent(); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ACPhysicsEvent {
+public:
+	eACEventType type;
+	float param1;
+	float param2;
+	float param3;
+	float param4;
+	vec3f vParam1;
+	vec3f vParam2;
+	void * voidParam0;
+	void * voidParam1;
+	unsigned long ulParam0;
+	inline ACPhysicsEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(ACPhysicsEvent)==72),"bad size");
+		static_assert((offsetof(ACPhysicsEvent,type)==0x0),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,param1)==0x4),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,param2)==0x8),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,param3)==0xC),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,param4)==0x10),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,vParam1)==0x14),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,vParam2)==0x20),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,voidParam0)==0x30),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,voidParam1)==0x38),"bad off");
+		static_assert((offsetof(ACPhysicsEvent,ulParam0)==0x40),"bad off");
+	};
+};
+
+//UDT: struct MeshVertex @len=44
+	//_Func: public void MeshVertex(MeshVertex &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void MeshVertex(vec3f &  _arg0, vec3f &  _arg1, vec2f &  _arg2); @loc=optimized @len=0 @rva=0
+	//_Func: public void MeshVertex(vec3f &  _arg0, vec3f &  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public void MeshVertex(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class vec3f, pos
+	//_Data: this+0xC, Member, Type: class vec3f, normal
+	//_Data: this+0x18, Member, Type: class vec2f, texCoord
+	//_Data: this+0x20, Member, Type: class vec3f, tangent
+//UDT;
+
+struct MeshVertex {
+public:
+	vec3f pos;
+	vec3f normal;
+	vec2f texCoord;
+	vec3f tangent;
+	inline MeshVertex()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(MeshVertex)==44),"bad size");
+		static_assert((offsetof(MeshVertex,pos)==0x0),"bad off");
+		static_assert((offsetof(MeshVertex,normal)==0xC),"bad off");
+		static_assert((offsetof(MeshVertex,texCoord)==0x18),"bad off");
+		static_assert((offsetof(MeshVertex,tangent)==0x20),"bad off");
+	};
+};
+
+//UDT: struct OnMouseUpEvent @len=12
+	//_Base: struct MouseEvent @off=0 @len=12
+	//_Func: public void OnMouseUpEvent(int  _arg0, int  _arg1, MouseButton  _arg2); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct OnMouseUpEvent : public MouseEvent {
+public:
+	inline OnMouseUpEvent()  { }
+	inline void _guard_obj() {
+		static_assert((sizeof(OnMouseUpEvent)==12),"bad size");
+	};
+};
+
 //UDT: class Texture @len=40
 	//_Func: public void Texture(Texture &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void Texture(RenderTarget & rt); @loc=static @len=51 @rva=2088512
@@ -5026,30 +5746,6 @@ public:
 		static_assert((sizeof(Texture)==40),"bad size");
 		static_assert((offsetof(Texture,kid)==0x0),"bad off");
 		static_assert((offsetof(Texture,fileName)==0x8),"bad off");
-	};
-};
-
-//UDT: class CommandManager @len=16
-	//_Func: public void CommandManager(CommandManager &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void CommandManager(); @loc=static @len=8361 @rva=953200
-	//_Func: public void ~CommandManager(); @loc=static @len=41 @rva=2105504
-	//_Func: public int getCommand(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName); @loc=static @len=16 @rva=962064
-	//_Func: public bool isTriggered(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,CommandItem,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,CommandItem> > >, commands
-	//_Func: public CommandManager & operator=(CommandManager &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class CommandManager {
-public:
-	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,CommandItem,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,CommandItem> > > commands;
-	inline CommandManager()  { }
-	inline void ctor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(953200); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(2105504); _f(this); }
-	inline int getCommand(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName) { typedef int (*_fpt)(CommandManager *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(962064); return _f(this, commandName); }
-	inline void _guard_obj() {
-		static_assert((sizeof(CommandManager)==16),"bad size");
-		static_assert((offsetof(CommandManager,commands)==0x0),"bad off");
 	};
 };
 
@@ -5107,6 +5803,82 @@ public:
 		static_assert((offsetof(PerformanceMeter,lastRecordedDistance)==0x58),"bad off");
 		static_assert((offsetof(PerformanceMeter,currentDiff)==0x60),"bad off");
 		static_assert((offsetof(PerformanceMeter,currentSpeedDiffMS)==0x68),"bad off");
+	};
+};
+
+//UDT: class TelemetryChannel @len=88
+	//_Func: public void TelemetryChannel(TelemetryChannel & __that); @loc=static @len=148 @rva=2866288
+	//_Func: public void TelemetryChannel(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale); @loc=static @len=156 @rva=2866448
+	//_Data: this+0x0, Member, Type: class std::basic_string<char,std::char_traits<char>,std::allocator<char> >, name
+	//_Data: this+0x20, Member, Type: struct TelemetryChannelData, data
+	//_Data: this+0x40, Member, Type: float *, dataSource
+	//_Data: this+0x48, Member, Type: double, lastTickTime
+	//_Data: this+0x50, Member, Type: float, scale
+	//_Func: public void ~TelemetryChannel(); @loc=static @len=103 @rva=2549872
+	//_Func: public TelemetryChannel & operator=(TelemetryChannel &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class TelemetryChannel {
+public:
+	std::basic_string<char,std::char_traits<char>,std::allocator<char> > name;
+	TelemetryChannelData data;
+	float * dataSource;
+	double lastTickTime;
+	float scale;
+	inline TelemetryChannel()  { }
+	inline void ctor(TelemetryChannel & __that) { typedef void (*_fpt)(TelemetryChannel *pthis, TelemetryChannel &); _fpt _f=(_fpt)_drva(2866288); _f(this, __that); }
+	inline void ctor(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale) { typedef void (*_fpt)(TelemetryChannel *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > &, float *, TelemetryUnits, int, float); _fpt _f=(_fpt)_drva(2866448); _f(this, name, adataSource, units, frequency, scale); }
+	inline void dtor() { typedef void (*_fpt)(TelemetryChannel *pthis); _fpt _f=(_fpt)_drva(2549872); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(TelemetryChannel)==88),"bad size");
+		static_assert((offsetof(TelemetryChannel,name)==0x0),"bad off");
+		static_assert((offsetof(TelemetryChannel,data)==0x20),"bad off");
+		static_assert((offsetof(TelemetryChannel,dataSource)==0x40),"bad off");
+		static_assert((offsetof(TelemetryChannel,lastTickTime)==0x48),"bad off");
+		static_assert((offsetof(TelemetryChannel,scale)==0x50),"bad off");
+	};
+};
+
+//UDT: class ThreadPool @len=104 @vfcount=1
+	//_VTable: 
+	//_Func: public void ThreadPool(ThreadPool &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ThreadPool(int inumThreads, std::function<void __cdecl(int)> * initFun); @loc=static @len=740 @rva=2950304
+	//_Func: public void ~ThreadPool(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=323 @rva=2951328
+	//_Func: public void join(); @loc=optimized @len=0 @rva=0
+	//_Func: public void addTask(Task & task); @loc=static @len=131 @rva=2953008
+	//_Func: public unsigned int workersCount(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x8, Member, Type: int, numThreads
+	//_Data: this+0x10, Member, Type: class std::vector<std::thread,std::allocator<std::thread> >, workers
+	//_Data: this+0x28, Member, Type: bool, stop
+	//_Data: this+0x30, Member, Type: class std::deque<Task *,std::allocator<Task *> >, tasks
+	//_Data: this+0x58, Member, Type: class std::mutex, queue_mutex
+	//_Data: this+0x60, Member, Type: class std::condition_variable, condition
+	//_Func: public ThreadPool & operator=(ThreadPool &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ThreadPool {
+public:
+	int numThreads;
+	std::vector<std::thread,std::allocator<std::thread> > workers;
+	bool stop;
+	std::deque<Task *,std::allocator<Task *> > tasks;
+	std::mutex queue_mutex;
+	std::condition_variable condition;
+	inline ThreadPool()  { }
+	inline void ctor(int inumThreads, std::function<void __cdecl(int)> * initFun) { typedef void (*_fpt)(ThreadPool *pthis, int, std::function<void __cdecl(int)> *); _fpt _f=(_fpt)_drva(2950304); _f(this, inumThreads, initFun); }
+	virtual ~ThreadPool();
+	inline void dtor() { typedef void (*_fpt)(ThreadPool *pthis); _fpt _f=(_fpt)_drva(2951328); _f(this); }
+	inline void addTask(Task & task) { typedef void (*_fpt)(ThreadPool *pthis, Task &); _fpt _f=(_fpt)_drva(2953008); return _f(this, task); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ThreadPool)==104),"bad size");
+		static_assert((offsetof(ThreadPool,numThreads)==0x8),"bad off");
+		static_assert((offsetof(ThreadPool,workers)==0x10),"bad off");
+		static_assert((offsetof(ThreadPool,stop)==0x28),"bad off");
+		static_assert((offsetof(ThreadPool,tasks)==0x30),"bad off");
+		static_assert((offsetof(ThreadPool,queue_mutex)==0x58),"bad off");
+		static_assert((offsetof(ThreadPool,condition)==0x60),"bad off");
 	};
 };
 
@@ -5180,79 +5952,27 @@ public:
 	};
 };
 
-//UDT: class ThreadPool @len=104 @vfcount=1
-	//_VTable: 
-	//_Func: public void ThreadPool(ThreadPool &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ThreadPool(int inumThreads, std::function<void __cdecl(int)> * initFun); @loc=static @len=740 @rva=2950304
-	//_Func: public void ~ThreadPool(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=323 @rva=2951328
-	//_Func: public void join(); @loc=optimized @len=0 @rva=0
-	//_Func: public void addTask(Task & task); @loc=static @len=131 @rva=2953008
-	//_Func: public unsigned int workersCount(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x8, Member, Type: int, numThreads
-	//_Data: this+0x10, Member, Type: class std::vector<std::thread,std::allocator<std::thread> >, workers
-	//_Data: this+0x28, Member, Type: bool, stop
-	//_Data: this+0x30, Member, Type: class std::deque<Task *,std::allocator<Task *> >, tasks
-	//_Data: this+0x58, Member, Type: class std::mutex, queue_mutex
-	//_Data: this+0x60, Member, Type: class std::condition_variable, condition
-	//_Func: public ThreadPool & operator=(ThreadPool &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ThreadPool {
-public:
-	int numThreads;
-	std::vector<std::thread,std::allocator<std::thread> > workers;
-	bool stop;
-	std::deque<Task *,std::allocator<Task *> > tasks;
-	std::mutex queue_mutex;
-	std::condition_variable condition;
-	inline ThreadPool()  { }
-	inline void ctor(int inumThreads, std::function<void __cdecl(int)> * initFun) { typedef void (*_fpt)(ThreadPool *pthis, int, std::function<void __cdecl(int)> *); _fpt _f=(_fpt)_drva(2950304); _f(this, inumThreads, initFun); }
-	virtual ~ThreadPool();
-	inline void dtor() { typedef void (*_fpt)(ThreadPool *pthis); _fpt _f=(_fpt)_drva(2951328); _f(this); }
-	inline void addTask(Task & task) { typedef void (*_fpt)(ThreadPool *pthis, Task &); _fpt _f=(_fpt)_drva(2953008); return _f(this, task); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ThreadPool)==104),"bad size");
-		static_assert((offsetof(ThreadPool,numThreads)==0x8),"bad off");
-		static_assert((offsetof(ThreadPool,workers)==0x10),"bad off");
-		static_assert((offsetof(ThreadPool,stop)==0x28),"bad off");
-		static_assert((offsetof(ThreadPool,tasks)==0x30),"bad off");
-		static_assert((offsetof(ThreadPool,queue_mutex)==0x58),"bad off");
-		static_assert((offsetof(ThreadPool,condition)==0x60),"bad off");
-	};
-};
-
-//UDT: class TelemetryChannel @len=88
-	//_Func: public void TelemetryChannel(TelemetryChannel & __that); @loc=static @len=148 @rva=2866288
-	//_Func: public void TelemetryChannel(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale); @loc=static @len=156 @rva=2866448
-	//_Data: this+0x0, Member, Type: class std::basic_string<char,std::char_traits<char>,std::allocator<char> >, name
-	//_Data: this+0x20, Member, Type: struct TelemetryChannelData, data
-	//_Data: this+0x40, Member, Type: float *, dataSource
-	//_Data: this+0x48, Member, Type: double, lastTickTime
-	//_Data: this+0x50, Member, Type: float, scale
-	//_Func: public void ~TelemetryChannel(); @loc=static @len=103 @rva=2549872
-	//_Func: public TelemetryChannel & operator=(TelemetryChannel &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT: class CommandManager @len=16
+	//_Func: public void CommandManager(CommandManager &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void CommandManager(); @loc=static @len=8361 @rva=953200
+	//_Func: public void ~CommandManager(); @loc=static @len=41 @rva=2105504
+	//_Func: public int getCommand(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName); @loc=static @len=16 @rva=962064
+	//_Func: public bool isTriggered(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,CommandItem,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,CommandItem> > >, commands
+	//_Func: public CommandManager & operator=(CommandManager &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-class TelemetryChannel {
+class CommandManager {
 public:
-	std::basic_string<char,std::char_traits<char>,std::allocator<char> > name;
-	TelemetryChannelData data;
-	float * dataSource;
-	double lastTickTime;
-	float scale;
-	inline TelemetryChannel()  { }
-	inline void ctor(TelemetryChannel & __that) { typedef void (*_fpt)(TelemetryChannel *pthis, TelemetryChannel &); _fpt _f=(_fpt)_drva(2866288); _f(this, __that); }
-	inline void ctor(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale) { typedef void (*_fpt)(TelemetryChannel *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > &, float *, TelemetryUnits, int, float); _fpt _f=(_fpt)_drva(2866448); _f(this, name, adataSource, units, frequency, scale); }
-	inline void dtor() { typedef void (*_fpt)(TelemetryChannel *pthis); _fpt _f=(_fpt)_drva(2549872); _f(this); }
+	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,CommandItem,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,CommandItem> > > commands;
+	inline CommandManager()  { }
+	inline void ctor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(953200); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(2105504); _f(this); }
+	inline int getCommand(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName) { typedef int (*_fpt)(CommandManager *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(962064); return _f(this, commandName); }
 	inline void _guard_obj() {
-		static_assert((sizeof(TelemetryChannel)==88),"bad size");
-		static_assert((offsetof(TelemetryChannel,name)==0x0),"bad off");
-		static_assert((offsetof(TelemetryChannel,data)==0x20),"bad off");
-		static_assert((offsetof(TelemetryChannel,dataSource)==0x40),"bad off");
-		static_assert((offsetof(TelemetryChannel,lastTickTime)==0x48),"bad off");
-		static_assert((offsetof(TelemetryChannel,scale)==0x50),"bad off");
+		static_assert((sizeof(CommandManager)==16),"bad size");
+		static_assert((offsetof(CommandManager,commands)==0x0),"bad off");
 	};
 };
 
@@ -5614,39 +6334,6 @@ public:
 	};
 };
 
-//UDT: struct BrakeDisc @len=144
-	//_Data: this+0x0, Member, Type: float, t
-	//_Data: this+0x4, Member, Type: float, coolTransfer
-	//_Data: this+0x8, Member, Type: float, torqueK
-	//_Data: this+0xC, Member, Type: float, coolSpeedFactor
-	//_Data: this+0x10, Member, Type: class Curve, perfCurve
-	//_Func: public void BrakeDisc(BrakeDisc &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void BrakeDisc(); @loc=static @len=54 @rva=2538976
-	//_Func: public void ~BrakeDisc(); @loc=static @len=9 @rva=2547808
-	//_Func: public BrakeDisc & operator=(BrakeDisc &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct BrakeDisc {
-public:
-	float t;
-	float coolTransfer;
-	float torqueK;
-	float coolSpeedFactor;
-	Curve perfCurve;
-	inline BrakeDisc()  { }
-	inline void ctor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2538976); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(BrakeDisc)==144),"bad size");
-		static_assert((offsetof(BrakeDisc,t)==0x0),"bad off");
-		static_assert((offsetof(BrakeDisc,coolTransfer)==0x4),"bad off");
-		static_assert((offsetof(BrakeDisc,torqueK)==0x8),"bad off");
-		static_assert((offsetof(BrakeDisc,coolSpeedFactor)==0xC),"bad off");
-		static_assert((offsetof(BrakeDisc,perfCurve)==0x10),"bad off");
-	};
-};
-
 //UDT: struct DynamicTempData @len=144
 	//_Data: this+0x0, Member, Type: class Curve, temperatureCurve
 	//_Data: this+0x80, Member, Type: double, temperatureStartTime
@@ -5678,86 +6365,36 @@ public:
 	};
 };
 
-//UDT: struct ClutchSequence @len=136
-	//_Func: public void ClutchSequence(ClutchSequence &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ClutchSequence(Curve & c); @loc=static @len=154 @rva=2851616
-	//_Func: public void ClutchSequence(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x0, Member, Type: class Curve, clutchCurve
-	//_Data: this+0x80, Member, Type: float, currentTime
-	//_Data: this+0x84, Member, Type: bool, isDone
-	//_Func: public void ~ClutchSequence(); @loc=static @len=5 @rva=1258144
-	//_Func: public ClutchSequence & operator=(ClutchSequence & __that); @loc=static @len=132 @rva=2851840
+//UDT: struct BrakeDisc @len=144
+	//_Data: this+0x0, Member, Type: float, t
+	//_Data: this+0x4, Member, Type: float, coolTransfer
+	//_Data: this+0x8, Member, Type: float, torqueK
+	//_Data: this+0xC, Member, Type: float, coolSpeedFactor
+	//_Data: this+0x10, Member, Type: class Curve, perfCurve
+	//_Func: public void BrakeDisc(BrakeDisc &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void BrakeDisc(); @loc=static @len=54 @rva=2538976
+	//_Func: public void ~BrakeDisc(); @loc=static @len=9 @rva=2547808
+	//_Func: public BrakeDisc & operator=(BrakeDisc &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct ClutchSequence {
+struct BrakeDisc {
 public:
-	Curve clutchCurve;
-	float currentTime;
-	bool isDone;
-	inline ClutchSequence()  { }
-	inline void ctor(Curve & c) { typedef void (*_fpt)(ClutchSequence *pthis, Curve &); _fpt _f=(_fpt)_drva(2851616); _f(this, c); }
-	inline void dtor() { typedef void (*_fpt)(ClutchSequence *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
-	inline ClutchSequence & operator=(ClutchSequence & __that) { typedef ClutchSequence & (*_fpt)(ClutchSequence *pthis, ClutchSequence &); _fpt _f=(_fpt)_drva(2851840); return _f(this, __that); }
+	float t;
+	float coolTransfer;
+	float torqueK;
+	float coolSpeedFactor;
+	Curve perfCurve;
+	inline BrakeDisc()  { }
+	inline void ctor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2538976); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(ClutchSequence)==136),"bad size");
-		static_assert((offsetof(ClutchSequence,clutchCurve)==0x0),"bad off");
-		static_assert((offsetof(ClutchSequence,currentTime)==0x80),"bad off");
-		static_assert((offsetof(ClutchSequence,isDone)==0x84),"bad off");
-	};
-};
-
-//UDT: struct acEngineData @len=296
-	//_Func: public void acEngineData(acEngineData &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void acEngineData(); @loc=static @len=125 @rva=2643104
-	//_Data: this+0x0, Member, Type: class Curve, powerCurve
-	//_Data: this+0x80, Member, Type: class Curve, coastCurve
-	//_Data: this+0x100, Member, Type: float, coast2
-	//_Data: this+0x104, Member, Type: float, coast1
-	//_Data: this+0x108, Member, Type: float, coast0
-	//_Data: this+0x10C, Member, Type: bool, useCoastCurve
-	//_Data: this+0x110, Member, Type: int, minimum
-	//_Data: this+0x114, Member, Type: int, limiter
-	//_Data: this+0x118, Member, Type: int, limiterCycles
-	//_Data: this+0x11C, Member, Type: float, overlapFreq
-	//_Data: this+0x120, Member, Type: float, overlapGain
-	//_Data: this+0x124, Member, Type: float, overlapIdealRPM
-	//_Func: public void ~acEngineData(); @loc=static @len=45 @rva=2643504
-	//_Func: public acEngineData & operator=(acEngineData &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct acEngineData {
-public:
-	Curve powerCurve;
-	Curve coastCurve;
-	float coast2;
-	float coast1;
-	float coast0;
-	bool useCoastCurve;
-	int minimum;
-	int limiter;
-	int limiterCycles;
-	float overlapFreq;
-	float overlapGain;
-	float overlapIdealRPM;
-	inline acEngineData()  { }
-	inline void ctor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643104); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643504); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(acEngineData)==296),"bad size");
-		static_assert((offsetof(acEngineData,powerCurve)==0x0),"bad off");
-		static_assert((offsetof(acEngineData,coastCurve)==0x80),"bad off");
-		static_assert((offsetof(acEngineData,coast2)==0x100),"bad off");
-		static_assert((offsetof(acEngineData,coast1)==0x104),"bad off");
-		static_assert((offsetof(acEngineData,coast0)==0x108),"bad off");
-		static_assert((offsetof(acEngineData,useCoastCurve)==0x10C),"bad off");
-		static_assert((offsetof(acEngineData,minimum)==0x110),"bad off");
-		static_assert((offsetof(acEngineData,limiter)==0x114),"bad off");
-		static_assert((offsetof(acEngineData,limiterCycles)==0x118),"bad off");
-		static_assert((offsetof(acEngineData,overlapFreq)==0x11C),"bad off");
-		static_assert((offsetof(acEngineData,overlapGain)==0x120),"bad off");
-		static_assert((offsetof(acEngineData,overlapIdealRPM)==0x124),"bad off");
+		static_assert((sizeof(BrakeDisc)==144),"bad size");
+		static_assert((offsetof(BrakeDisc,t)==0x0),"bad off");
+		static_assert((offsetof(BrakeDisc,coolTransfer)==0x4),"bad off");
+		static_assert((offsetof(BrakeDisc,torqueK)==0x8),"bad off");
+		static_assert((offsetof(BrakeDisc,coolSpeedFactor)==0xC),"bad off");
+		static_assert((offsetof(BrakeDisc,perfCurve)==0x10),"bad off");
 	};
 };
 
@@ -5895,6 +6532,131 @@ public:
 	};
 };
 
+//UDT: struct ClutchSequence @len=136
+	//_Func: public void ClutchSequence(ClutchSequence &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ClutchSequence(Curve & c); @loc=static @len=154 @rva=2851616
+	//_Func: public void ClutchSequence(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: class Curve, clutchCurve
+	//_Data: this+0x80, Member, Type: float, currentTime
+	//_Data: this+0x84, Member, Type: bool, isDone
+	//_Func: public void ~ClutchSequence(); @loc=static @len=5 @rva=1258144
+	//_Func: public ClutchSequence & operator=(ClutchSequence & __that); @loc=static @len=132 @rva=2851840
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ClutchSequence {
+public:
+	Curve clutchCurve;
+	float currentTime;
+	bool isDone;
+	inline ClutchSequence()  { }
+	inline void ctor(Curve & c) { typedef void (*_fpt)(ClutchSequence *pthis, Curve &); _fpt _f=(_fpt)_drva(2851616); _f(this, c); }
+	inline void dtor() { typedef void (*_fpt)(ClutchSequence *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
+	inline ClutchSequence & operator=(ClutchSequence & __that) { typedef ClutchSequence & (*_fpt)(ClutchSequence *pthis, ClutchSequence &); _fpt _f=(_fpt)_drva(2851840); return _f(this, __that); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ClutchSequence)==136),"bad size");
+		static_assert((offsetof(ClutchSequence,clutchCurve)==0x0),"bad off");
+		static_assert((offsetof(ClutchSequence,currentTime)==0x80),"bad off");
+		static_assert((offsetof(ClutchSequence,isDone)==0x84),"bad off");
+	};
+};
+
+//UDT: struct acEngineData @len=296
+	//_Func: public void acEngineData(acEngineData &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void acEngineData(); @loc=static @len=125 @rva=2643104
+	//_Data: this+0x0, Member, Type: class Curve, powerCurve
+	//_Data: this+0x80, Member, Type: class Curve, coastCurve
+	//_Data: this+0x100, Member, Type: float, coast2
+	//_Data: this+0x104, Member, Type: float, coast1
+	//_Data: this+0x108, Member, Type: float, coast0
+	//_Data: this+0x10C, Member, Type: bool, useCoastCurve
+	//_Data: this+0x110, Member, Type: int, minimum
+	//_Data: this+0x114, Member, Type: int, limiter
+	//_Data: this+0x118, Member, Type: int, limiterCycles
+	//_Data: this+0x11C, Member, Type: float, overlapFreq
+	//_Data: this+0x120, Member, Type: float, overlapGain
+	//_Data: this+0x124, Member, Type: float, overlapIdealRPM
+	//_Func: public void ~acEngineData(); @loc=static @len=45 @rva=2643504
+	//_Func: public acEngineData & operator=(acEngineData &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct acEngineData {
+public:
+	Curve powerCurve;
+	Curve coastCurve;
+	float coast2;
+	float coast1;
+	float coast0;
+	bool useCoastCurve;
+	int minimum;
+	int limiter;
+	int limiterCycles;
+	float overlapFreq;
+	float overlapGain;
+	float overlapIdealRPM;
+	inline acEngineData()  { }
+	inline void ctor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643104); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643504); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(acEngineData)==296),"bad size");
+		static_assert((offsetof(acEngineData,powerCurve)==0x0),"bad off");
+		static_assert((offsetof(acEngineData,coastCurve)==0x80),"bad off");
+		static_assert((offsetof(acEngineData,coast2)==0x100),"bad off");
+		static_assert((offsetof(acEngineData,coast1)==0x104),"bad off");
+		static_assert((offsetof(acEngineData,coast0)==0x108),"bad off");
+		static_assert((offsetof(acEngineData,useCoastCurve)==0x10C),"bad off");
+		static_assert((offsetof(acEngineData,minimum)==0x110),"bad off");
+		static_assert((offsetof(acEngineData,limiter)==0x114),"bad off");
+		static_assert((offsetof(acEngineData,limiterCycles)==0x118),"bad off");
+		static_assert((offsetof(acEngineData,overlapFreq)==0x11C),"bad off");
+		static_assert((offsetof(acEngineData,overlapGain)==0x120),"bad off");
+		static_assert((offsetof(acEngineData,overlapIdealRPM)==0x124),"bad off");
+	};
+};
+
+//UDT: struct ksgui::ListBoxRowData @len=104
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: unsigned int, category
+	//_Data: this+0x24, Member, Type: class vec4f, backColor
+	//_Func: public void ListBoxRowData(ksgui_ListBoxRowData & __that); @loc=static @len=116 @rva=2395072
+	//_Func: public void ListBoxRowData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >  _arg0, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &  _arg1, unsigned int  _arg2); @loc=optimized @len=0 @rva=0
+	//_Func: public void ListBoxRowData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text); @loc=static @len=365 @rva=454352
+	//_Func: public void addData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >  _arg0, vec4f  _arg1, vec4f  _arg2); @loc=optimized @len=0 @rva=0
+	//_Func: public void setColumn(unsigned int  _arg0, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex); @loc=static @len=65 @rva=2398208
+	//_Func: public unsigned int columnCount(); @loc=optimized @len=0 @rva=0
+	//_Func: public void setColumnForeColor(unsigned int  _arg0, vec4f  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public vec4f getForeColor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x38, Member, Type: class std::vector<vec4f,std::allocator<vec4f> >, forecolors
+	//_Data: this+0x50, Member, Type: class std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > >, columns
+	//_Func: public void ~ListBoxRowData(); @loc=static @len=112 @rva=454992
+	//_Func: public ksgui_ListBoxRowData & operator=(ksgui_ListBoxRowData &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ksgui_ListBoxRowData {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	unsigned int category;
+	vec4f backColor;
+	std::vector<vec4f,std::allocator<vec4f> > forecolors;
+	std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > columns;
+	inline ksgui_ListBoxRowData()  { }
+	inline void ctor(ksgui_ListBoxRowData & __that) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, ksgui_ListBoxRowData &); _fpt _f=(_fpt)_drva(2395072); _f(this, __that); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(454352); _f(this, text); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_ListBoxRowData *pthis, unsigned int); _fpt _f=(_fpt)_drva(2398208); return _f(this, columnIndex); }
+	inline void dtor() { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis); _fpt _f=(_fpt)_drva(454992); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_ListBoxRowData)==104),"bad size");
+		static_assert((offsetof(ksgui_ListBoxRowData,name)==0x0),"bad off");
+		static_assert((offsetof(ksgui_ListBoxRowData,category)==0x20),"bad off");
+		static_assert((offsetof(ksgui_ListBoxRowData,backColor)==0x24),"bad off");
+		static_assert((offsetof(ksgui_ListBoxRowData,forecolors)==0x38),"bad off");
+		static_assert((offsetof(ksgui_ListBoxRowData,columns)==0x50),"bad off");
+	};
+};
+
 //UDT: class JoypadManager @len=8
 	//_Func: public void JoypadManager(JoypadManager &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void JoypadManager(); @loc=static @len=80 @rva=2375584
@@ -5940,79 +6702,6 @@ public:
 		static_assert((offsetof(DebugLine,p1)==0xC),"bad off");
 		static_assert((offsetof(DebugLine,color)==0x18),"bad off");
 		static_assert((offsetof(DebugLine,seconds)==0x28),"bad off");
-	};
-};
-
-//UDT: class Triangle @len=64 @vfcount=1
-	//_VTable: 
-	//_Func: public void Triangle(Triangle &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void Triangle(vec3f & p1, vec3f & p2, vec3f & p3); @loc=static @len=564 @rva=2144864
-	//_Func: public void Triangle(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~Triangle(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2145440
-	//_Data: this+0x8, Member, Type: class vec3f[0x3], points
-	//_Data: this+0x2C, Member, Type: class plane4f, plane
-	//_Func: public bool getRayIntersection(vec3f &  _arg0, vec3f &  _arg1, vec3f &  _arg2); @loc=optimized @len=0 @rva=0
-	//_Func: public float computeArea(); @loc=static @len=175 @rva=2145456
-	//_Func: public Triangle & operator=(Triangle &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class Triangle {
-public:
-	vec3f points[0x3];
-	plane4f plane;
-	inline Triangle()  { }
-	inline void ctor(vec3f & p1, vec3f & p2, vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, vec3f &, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
-	virtual ~Triangle();
-	inline void dtor() { typedef void (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145440); _f(this); }
-	inline float computeArea() { typedef float (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145456); return _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(Triangle)==64),"bad size");
-		static_assert((offsetof(Triangle,points)==0x8),"bad off");
-		static_assert((offsetof(Triangle,plane)==0x2C),"bad off");
-	};
-};
-
-//UDT: struct ksgui::ListBoxRowData @len=104
-	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x20, Member, Type: unsigned int, category
-	//_Data: this+0x24, Member, Type: class vec4f, backColor
-	//_Func: public void ListBoxRowData(ksgui_ListBoxRowData & __that); @loc=static @len=116 @rva=2395072
-	//_Func: public void ListBoxRowData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >  _arg0, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &  _arg1, unsigned int  _arg2); @loc=optimized @len=0 @rva=0
-	//_Func: public void ListBoxRowData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text); @loc=static @len=365 @rva=454352
-	//_Func: public void addData(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >  _arg0, vec4f  _arg1, vec4f  _arg2); @loc=optimized @len=0 @rva=0
-	//_Func: public void setColumn(unsigned int  _arg0, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg1); @loc=optimized @len=0 @rva=0
-	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex); @loc=static @len=65 @rva=2398208
-	//_Func: public unsigned int columnCount(); @loc=optimized @len=0 @rva=0
-	//_Func: public void setColumnForeColor(unsigned int  _arg0, vec4f  _arg1); @loc=optimized @len=0 @rva=0
-	//_Func: public vec4f getForeColor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x38, Member, Type: class std::vector<vec4f,std::allocator<vec4f> >, forecolors
-	//_Data: this+0x50, Member, Type: class std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > >, columns
-	//_Func: public void ~ListBoxRowData(); @loc=static @len=112 @rva=454992
-	//_Func: public ksgui_ListBoxRowData & operator=(ksgui_ListBoxRowData &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct ksgui_ListBoxRowData {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	unsigned int category;
-	vec4f backColor;
-	std::vector<vec4f,std::allocator<vec4f> > forecolors;
-	std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > columns;
-	inline ksgui_ListBoxRowData()  { }
-	inline void ctor(ksgui_ListBoxRowData & __that) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, ksgui_ListBoxRowData &); _fpt _f=(_fpt)_drva(2395072); _f(this, __that); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(454352); _f(this, text); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_ListBoxRowData *pthis, unsigned int); _fpt _f=(_fpt)_drva(2398208); return _f(this, columnIndex); }
-	inline void dtor() { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis); _fpt _f=(_fpt)_drva(454992); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_ListBoxRowData)==104),"bad size");
-		static_assert((offsetof(ksgui_ListBoxRowData,name)==0x0),"bad off");
-		static_assert((offsetof(ksgui_ListBoxRowData,category)==0x20),"bad off");
-		static_assert((offsetof(ksgui_ListBoxRowData,backColor)==0x24),"bad off");
-		static_assert((offsetof(ksgui_ListBoxRowData,forecolors)==0x38),"bad off");
-		static_assert((offsetof(ksgui_ListBoxRowData,columns)==0x50),"bad off");
 	};
 };
 
@@ -6125,6 +6814,137 @@ public:
 	};
 };
 
+//UDT: class Triangle @len=64 @vfcount=1
+	//_VTable: 
+	//_Func: public void Triangle(Triangle &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Triangle(vec3f & p1, vec3f & p2, vec3f & p3); @loc=static @len=564 @rva=2144864
+	//_Func: public void Triangle(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~Triangle(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=2145440
+	//_Data: this+0x8, Member, Type: class vec3f[0x3], points
+	//_Data: this+0x2C, Member, Type: class plane4f, plane
+	//_Func: public bool getRayIntersection(vec3f &  _arg0, vec3f &  _arg1, vec3f &  _arg2); @loc=optimized @len=0 @rva=0
+	//_Func: public float computeArea(); @loc=static @len=175 @rva=2145456
+	//_Func: public Triangle & operator=(Triangle &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Triangle {
+public:
+	vec3f points[0x3];
+	plane4f plane;
+	inline Triangle()  { }
+	inline void ctor(vec3f & p1, vec3f & p2, vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, vec3f &, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
+	virtual ~Triangle();
+	inline void dtor() { typedef void (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145440); _f(this); }
+	inline float computeArea() { typedef float (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145456); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Triangle)==64),"bad size");
+		static_assert((offsetof(Triangle,points)==0x8),"bad off");
+		static_assert((offsetof(Triangle,plane)==0x2C),"bad off");
+	};
+};
+
+//UDT: class BrushSlipProvider @len=56 @vfcount=1
+	//_VTable: 
+	//_Func: public void BrushSlipProvider(BrushSlipProvider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void BrushSlipProvider(float maxAngle, float xu, float flex); @loc=static @len=176 @rva=2830208
+	//_Func: public void BrushSlipProvider(); @loc=static @len=52 @rva=2830384
+	//_Func: public void ~BrushSlipProvider(); @loc=static @len=20 @rva=2830448
+	//_Data: this+0x8, Member, Type: class BrushTyreModel, brushModel
+	//_Data: this+0x24, Member, Type: float, asy
+	//_Data: this+0x28, Member, Type: int, version
+	//_Func: public TyreSlipOutput getSlipForce(TyreSlipInput & input, bool useasy); @intro @virtual vtpo=0 vfid=0 @loc=static @len=157 @rva=2830736
+	//_Func: public void setFromMaxSlipAngle(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public float getMaximum(); @loc=optimized @len=0 @rva=0
+	//_Func: public float getMaxSlip(); @loc=optimized @len=0 @rva=0
+	//_Func: public void calcMaximum(float load, float * maximum, float * max_slip); @loc=static @len=253 @rva=2830480
+	//_Func: public void recomputeMaximum(); @loc=static @len=21 @rva=2830896
+	//_Func: public void init(float  _arg0, float  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x2C, Member, Type: float, maximum
+	//_Data: this+0x30, Member, Type: float, maxSlip
+	//_Func: public BrushSlipProvider & operator=(BrushSlipProvider & __that); @loc=static @len=52 @rva=2610224
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class BrushSlipProvider {
+public:
+	BrushTyreModel brushModel;
+	float asy;
+	int version;
+	float maximum;
+	float maxSlip;
+	inline BrushSlipProvider()  { }
+	inline void ctor(float maxAngle, float xu, float flex) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float, float); _fpt _f=(_fpt)_drva(2830208); _f(this, maxAngle, xu, flex); }
+	inline void ctor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830384); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830448); _f(this); }
+	virtual TyreSlipOutput getSlipForce_vf0(TyreSlipInput & input, bool useasy);
+	inline TyreSlipOutput getSlipForce_impl(TyreSlipInput & input, bool useasy) { typedef TyreSlipOutput (*_fpt)(BrushSlipProvider *pthis, TyreSlipInput &, bool); _fpt _f=(_fpt)_drva(2830736); return _f(this, input, useasy); }
+	inline TyreSlipOutput getSlipForce(TyreSlipInput & input, bool useasy) { return getSlipForce_vf0(input, useasy); }
+	inline void calcMaximum(float load, float * maximum, float * max_slip) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float *, float *); _fpt _f=(_fpt)_drva(2830480); return _f(this, load, maximum, max_slip); }
+	inline void recomputeMaximum() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830896); return _f(this); }
+	inline BrushSlipProvider & operator=(BrushSlipProvider & __that) { typedef BrushSlipProvider & (*_fpt)(BrushSlipProvider *pthis, BrushSlipProvider &); _fpt _f=(_fpt)_drva(2610224); return _f(this, __that); }
+	inline void _guard_obj() {
+		static_assert((sizeof(BrushSlipProvider)==56),"bad size");
+		static_assert((offsetof(BrushSlipProvider,brushModel)==0x8),"bad off");
+		static_assert((offsetof(BrushSlipProvider,asy)==0x24),"bad off");
+		static_assert((offsetof(BrushSlipProvider,version)==0x28),"bad off");
+		static_assert((offsetof(BrushSlipProvider,maximum)==0x2C),"bad off");
+		static_assert((offsetof(BrushSlipProvider,maxSlip)==0x30),"bad off");
+	};
+};
+
+//UDT: class UDPSocket @len=56
+	//_Func: public void UDPSocket(UDPSocket &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void UDPSocket(unsigned short  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void UDPSocket(); @loc=static @len=64 @rva=2477984
+	//_Func: public void ~UDPSocket(); @loc=static @len=50 @rva=2478064
+	//_Func: public void bindToPort(unsigned short  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void setBlockingMode(bool imode); @loc=static @len=13 @rva=2479568
+	//_Func: public bool getBlockingMode(); @loc=optimized @len=0 @rva=0
+	//_Func: public void addListener(std::function<void __cdecl(UDPMessage const &)> * listener); @loc=static @len=125 @rva=2478736
+	//_Func: public int receive(std::function<void __cdecl(UDPMessage const &)>  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public int receive(int maxPackets); @loc=static @len=382 @rva=2479104
+	//_Func: public void send(void * data, int length, sockaddr_in target); @loc=static @len=76 @rva=2479488
+	//_Func: public unsigned short getPing(); @loc=optimized @len=0 @rva=0
+	//_Func: public double getLastPingTime(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x0, Member, Type: unsigned __int64, soc
+	//_Data: this+0x8, Member, Type: bool, isBlocking
+	//_Data: this+0x10, Member, Type: class std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > >, listeners
+	//_Data: this+0x28, Member, Type: unsigned short, ping
+	//_Data: this+0x2A, Member, Type: bool, shutdownFlag
+	//_Data: this+0x30, Member, Type: double, lastPingTime
+	//_Func: private void broadcastMessage(UDPMessage &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public UDPSocket & operator=(UDPSocket &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class UDPSocket {
+public:
+	unsigned __int64 soc;
+	bool isBlocking;
+	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
+	unsigned short ping;
+	bool shutdownFlag;
+	double lastPingTime;
+	inline UDPSocket()  { }
+	inline void ctor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2477984); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2478064); _f(this); }
+	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(UDPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2479568); return _f(this, imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(UDPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2478736); return _f(this, listener); }
+	inline int receive(int maxPackets) { typedef int (*_fpt)(UDPSocket *pthis, int); _fpt _f=(_fpt)_drva(2479104); return _f(this, maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(UDPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2479488); return _f(this, data, length, target); }
+	inline void _guard_obj() {
+		static_assert((sizeof(UDPSocket)==56),"bad size");
+		static_assert((offsetof(UDPSocket,soc)==0x0),"bad off");
+		static_assert((offsetof(UDPSocket,isBlocking)==0x8),"bad off");
+		static_assert((offsetof(UDPSocket,listeners)==0x10),"bad off");
+		static_assert((offsetof(UDPSocket,ping)==0x28),"bad off");
+		static_assert((offsetof(UDPSocket,shutdownFlag)==0x2A),"bad off");
+		static_assert((offsetof(UDPSocket,lastPingTime)==0x30),"bad off");
+	};
+};
+
 //UDT: struct WingData @len=592
 	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
 	//_Data: this+0x20, Member, Type: float, chord
@@ -6223,55 +7043,6 @@ public:
 	};
 };
 
-//UDT: class BrushSlipProvider @len=56 @vfcount=1
-	//_VTable: 
-	//_Func: public void BrushSlipProvider(BrushSlipProvider &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void BrushSlipProvider(float maxAngle, float xu, float flex); @loc=static @len=176 @rva=2830208
-	//_Func: public void BrushSlipProvider(); @loc=static @len=52 @rva=2830384
-	//_Func: public void ~BrushSlipProvider(); @loc=static @len=20 @rva=2830448
-	//_Data: this+0x8, Member, Type: class BrushTyreModel, brushModel
-	//_Data: this+0x24, Member, Type: float, asy
-	//_Data: this+0x28, Member, Type: int, version
-	//_Func: public TyreSlipOutput getSlipForce(TyreSlipInput & input, bool useasy); @intro @virtual vtpo=0 vfid=0 @loc=static @len=157 @rva=2830736
-	//_Func: public void setFromMaxSlipAngle(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public float getMaximum(); @loc=optimized @len=0 @rva=0
-	//_Func: public float getMaxSlip(); @loc=optimized @len=0 @rva=0
-	//_Func: public void calcMaximum(float load, float * maximum, float * max_slip); @loc=static @len=253 @rva=2830480
-	//_Func: public void recomputeMaximum(); @loc=static @len=21 @rva=2830896
-	//_Func: public void init(float  _arg0, float  _arg1, float  _arg2); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x2C, Member, Type: float, maximum
-	//_Data: this+0x30, Member, Type: float, maxSlip
-	//_Func: public BrushSlipProvider & operator=(BrushSlipProvider & __that); @loc=static @len=52 @rva=2610224
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-class BrushSlipProvider {
-public:
-	BrushTyreModel brushModel;
-	float asy;
-	int version;
-	float maximum;
-	float maxSlip;
-	inline BrushSlipProvider()  { }
-	inline void ctor(float maxAngle, float xu, float flex) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float, float); _fpt _f=(_fpt)_drva(2830208); _f(this, maxAngle, xu, flex); }
-	inline void ctor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830384); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830448); _f(this); }
-	virtual TyreSlipOutput getSlipForce_vf0(TyreSlipInput & input, bool useasy);
-	inline TyreSlipOutput getSlipForce_impl(TyreSlipInput & input, bool useasy) { typedef TyreSlipOutput (*_fpt)(BrushSlipProvider *pthis, TyreSlipInput &, bool); _fpt _f=(_fpt)_drva(2830736); return _f(this, input, useasy); }
-	inline TyreSlipOutput getSlipForce(TyreSlipInput & input, bool useasy) { return getSlipForce_vf0(input, useasy); }
-	inline void calcMaximum(float load, float * maximum, float * max_slip) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float *, float *); _fpt _f=(_fpt)_drva(2830480); return _f(this, load, maximum, max_slip); }
-	inline void recomputeMaximum() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830896); return _f(this); }
-	inline BrushSlipProvider & operator=(BrushSlipProvider & __that) { typedef BrushSlipProvider & (*_fpt)(BrushSlipProvider *pthis, BrushSlipProvider &); _fpt _f=(_fpt)_drva(2610224); return _f(this, __that); }
-	inline void _guard_obj() {
-		static_assert((sizeof(BrushSlipProvider)==56),"bad size");
-		static_assert((offsetof(BrushSlipProvider,brushModel)==0x8),"bad off");
-		static_assert((offsetof(BrushSlipProvider,asy)==0x24),"bad off");
-		static_assert((offsetof(BrushSlipProvider,version)==0x28),"bad off");
-		static_assert((offsetof(BrushSlipProvider,maximum)==0x2C),"bad off");
-		static_assert((offsetof(BrushSlipProvider,maxSlip)==0x30),"bad off");
-	};
-};
-
 //UDT: struct TractionControl @len=168
 	//_Func: public void ~TractionControl(); @loc=static @len=9 @rva=2685136
 	//_Data: this+0x0, Member, Type: bool, isPresent
@@ -6330,47 +7101,6 @@ public:
 	};
 };
 
-//UDT: struct AutoBlip @len=168
-	//_Func: public void ~AutoBlip(); @loc=static @len=9 @rva=2547808
-	//_Data: this+0x0, Member, Type: bool, isActive
-	//_Func: public void init(Car * acar); @loc=static @len=148 @rva=2857232
-	//_Func: public void step(float dt); @loc=static @len=304 @rva=2858736
-	//_Data: this+0x8, Member, Type: class Car *, car
-	//_Data: this+0x10, Member, Type: class Curve, blipProfile
-	//_Data: this+0x90, Member, Type: double, blipStartTime
-	//_Data: this+0x98, Member, Type: bool, isElectronic
-	//_Data: this+0xA0, Member, Type: double, blipPerformTime
-	//_Func: private void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel); @loc=static @len=1332 @rva=2857392
-	//_Func: public void AutoBlip(AutoBlip &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void AutoBlip(); @loc=optimized @len=0 @rva=0
-	//_Func: public AutoBlip & operator=(AutoBlip &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct AutoBlip {
-public:
-	bool isActive;
-	Car * car;
-	Curve blipProfile;
-	double blipStartTime;
-	bool isElectronic;
-	double blipPerformTime;
-	inline AutoBlip()  { }
-	inline void dtor() { typedef void (*_fpt)(AutoBlip *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(AutoBlip *pthis, Car *); _fpt _f=(_fpt)_drva(2857232); return _f(this, acar); }
-	inline void step(float dt) { typedef void (*_fpt)(AutoBlip *pthis, float); _fpt _f=(_fpt)_drva(2858736); return _f(this, dt); }
-	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (*_fpt)(AutoBlip *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2857392); return _f(this, carModel); }
-	inline void _guard_obj() {
-		static_assert((sizeof(AutoBlip)==168),"bad size");
-		static_assert((offsetof(AutoBlip,isActive)==0x0),"bad off");
-		static_assert((offsetof(AutoBlip,car)==0x8),"bad off");
-		static_assert((offsetof(AutoBlip,blipProfile)==0x10),"bad off");
-		static_assert((offsetof(AutoBlip,blipStartTime)==0x90),"bad off");
-		static_assert((offsetof(AutoBlip,isElectronic)==0x98),"bad off");
-		static_assert((offsetof(AutoBlip,blipPerformTime)==0xA0),"bad off");
-	};
-};
-
 //UDT: struct ABS @len=168
 	//_Func: public void ~ABS(); @loc=static @len=9 @rva=2681552
 	//_Data: this+0x0, Member, Type: bool, isPresent
@@ -6425,6 +7155,47 @@ public:
 		static_assert((offsetof(ABS,valueCurve)==0x20),"bad off");
 		static_assert((offsetof(ABS,currentMode)==0xA0),"bad off");
 		static_assert((offsetof(ABS,currentValue)==0xA4),"bad off");
+	};
+};
+
+//UDT: struct AutoBlip @len=168
+	//_Func: public void ~AutoBlip(); @loc=static @len=9 @rva=2547808
+	//_Data: this+0x0, Member, Type: bool, isActive
+	//_Func: public void init(Car * acar); @loc=static @len=148 @rva=2857232
+	//_Func: public void step(float dt); @loc=static @len=304 @rva=2858736
+	//_Data: this+0x8, Member, Type: class Car *, car
+	//_Data: this+0x10, Member, Type: class Curve, blipProfile
+	//_Data: this+0x90, Member, Type: double, blipStartTime
+	//_Data: this+0x98, Member, Type: bool, isElectronic
+	//_Data: this+0xA0, Member, Type: double, blipPerformTime
+	//_Func: private void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel); @loc=static @len=1332 @rva=2857392
+	//_Func: public void AutoBlip(AutoBlip &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void AutoBlip(); @loc=optimized @len=0 @rva=0
+	//_Func: public AutoBlip & operator=(AutoBlip &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct AutoBlip {
+public:
+	bool isActive;
+	Car * car;
+	Curve blipProfile;
+	double blipStartTime;
+	bool isElectronic;
+	double blipPerformTime;
+	inline AutoBlip()  { }
+	inline void dtor() { typedef void (*_fpt)(AutoBlip *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
+	inline void init(Car * acar) { typedef void (*_fpt)(AutoBlip *pthis, Car *); _fpt _f=(_fpt)_drva(2857232); return _f(this, acar); }
+	inline void step(float dt) { typedef void (*_fpt)(AutoBlip *pthis, float); _fpt _f=(_fpt)_drva(2858736); return _f(this, dt); }
+	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (*_fpt)(AutoBlip *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2857392); return _f(this, carModel); }
+	inline void _guard_obj() {
+		static_assert((sizeof(AutoBlip)==168),"bad size");
+		static_assert((offsetof(AutoBlip,isActive)==0x0),"bad off");
+		static_assert((offsetof(AutoBlip,car)==0x8),"bad off");
+		static_assert((offsetof(AutoBlip,blipProfile)==0x10),"bad off");
+		static_assert((offsetof(AutoBlip,blipStartTime)==0x90),"bad off");
+		static_assert((offsetof(AutoBlip,isElectronic)==0x98),"bad off");
+		static_assert((offsetof(AutoBlip,blipPerformTime)==0xA0),"bad off");
 	};
 };
 
@@ -6513,6 +7284,238 @@ public:
 		static_assert((offsetof(Font,kid)==0x10),"bad off");
 		static_assert((offsetof(Font,color)==0x18),"bad off");
 		static_assert((offsetof(Font,currentAlpha)==0x1C),"bad off");
+	};
+};
+
+//UDT: struct TyreThermalModel @len=224
+	//_Data: this+0x0, Member, Type: int, elements
+	//_Data: this+0x4, Member, Type: int, stripes
+	//_Data: this+0x8, Member, Type: class std::vector<TyreThermalPatch,std::allocator<TyreThermalPatch> >, patches
+	//_Data: this+0x20, Member, Type: double, phase
+	//_Data: this+0x28, Member, Type: struct TyrePatchData, patchData
+	//_Data: this+0x3C, Member, Type: float, coreTemp
+	//_Data: this+0x40, Member, Type: class Curve, performanceCurve
+	//_Data: this+0xC0, Member, Type: bool, isActive
+	//_Data: this+0xC4, Member, Type: float, thermalMultD
+	//_Data: this+0xC8, Member, Type: float, practicalTemp
+	//_Data: this+0xCC, Member, Type: float, camberSpreadK
+	//_Func: public void init(int a_elements, int a_stripes, Car * car); @loc=static @len=73 @rva=2810224
+	//_Func: public void step(float dt, float angularSpeed, float camberRAD); @loc=static @len=1006 @rva=2810688
+	//_Func: public void addThermalInput(float xpos, float pressureRel, float temp); @loc=static @len=621 @rva=2805904
+	//_Func: public int getCurrentElementIndex(); @loc=optimized @len=0 @rva=0
+	//_Func: public TyreThermalPatch & getPatchAt(int x, int y); @loc=static @len=393 @rva=2809776
+	//_Func: public float getCurrentCPTemp(float camber); @loc=static @len=464 @rva=2808800
+	//_Func: public float getCorrectedD(float d, float camberRAD); @loc=static @len=21 @rva=2808768
+	//_Func: public float getAvgSurfaceTemp(); @loc=static @len=39 @rva=2808720
+	//_Func: public void reset(); @loc=static @len=89 @rva=2810304
+	//_Func: public void getIMO(float * out); @loc=static @len=512 @rva=2809264
+	//_Func: public void setTemperature(float optimumTemp); @loc=static @len=33 @rva=2810640
+	//_Func: public float getPracticalTemp(float camberRAD); @loc=static @len=38 @rva=2810176
+	//_Func: public void addThermalCoreInput(float temp); @loc=static @len=17 @rva=2805872
+	//_Data: this+0xD0, Member, Type: class Car *, car
+	//_Data: this+0xD8, Member, Type: float, coreTInput
+	//_Func: private void buildTyre(); @loc=static @len=2190 @rva=2806528
+	//_Func: public void TyreThermalModel(TyreThermalModel &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void TyreThermalModel(); @loc=static @len=144 @rva=2547584
+	//_Func: public void ~TyreThermalModel(); @loc=static @len=46 @rva=2550256
+	//_Func: public TyreThermalModel & operator=(TyreThermalModel &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct TyreThermalModel {
+public:
+	int elements;
+	int stripes;
+	std::vector<TyreThermalPatch,std::allocator<TyreThermalPatch> > patches;
+	double phase;
+	TyrePatchData patchData;
+	float coreTemp;
+	Curve performanceCurve;
+	bool isActive;
+	float thermalMultD;
+	float practicalTemp;
+	float camberSpreadK;
+	Car * car;
+	float coreTInput;
+	inline TyreThermalModel()  { }
+	inline void init(int a_elements, int a_stripes, Car * car) { typedef void (*_fpt)(TyreThermalModel *pthis, int, int, Car *); _fpt _f=(_fpt)_drva(2810224); return _f(this, a_elements, a_stripes, car); }
+	inline void step(float dt, float angularSpeed, float camberRAD) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2810688); return _f(this, dt, angularSpeed, camberRAD); }
+	inline void addThermalInput(float xpos, float pressureRel, float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2805904); return _f(this, xpos, pressureRel, temp); }
+	inline TyreThermalPatch & getPatchAt(int x, int y) { typedef TyreThermalPatch & (*_fpt)(TyreThermalModel *pthis, int, int); _fpt _f=(_fpt)_drva(2809776); return _f(this, x, y); }
+	inline float getCurrentCPTemp(float camber) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2808800); return _f(this, camber); }
+	inline float getCorrectedD(float d, float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float, float); _fpt _f=(_fpt)_drva(2808768); return _f(this, d, camberRAD); }
+	inline float getAvgSurfaceTemp() { typedef float (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2808720); return _f(this); }
+	inline void reset() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2810304); return _f(this); }
+	inline void getIMO(float * out) { typedef void (*_fpt)(TyreThermalModel *pthis, float *); _fpt _f=(_fpt)_drva(2809264); return _f(this, out); }
+	inline void setTemperature(float optimumTemp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810640); return _f(this, optimumTemp); }
+	inline float getPracticalTemp(float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810176); return _f(this, camberRAD); }
+	inline void addThermalCoreInput(float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2805872); return _f(this, temp); }
+	inline void buildTyre() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2806528); return _f(this); }
+	inline void ctor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2547584); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2550256); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(TyreThermalModel)==224),"bad size");
+		static_assert((offsetof(TyreThermalModel,elements)==0x0),"bad off");
+		static_assert((offsetof(TyreThermalModel,stripes)==0x4),"bad off");
+		static_assert((offsetof(TyreThermalModel,patches)==0x8),"bad off");
+		static_assert((offsetof(TyreThermalModel,phase)==0x20),"bad off");
+		static_assert((offsetof(TyreThermalModel,patchData)==0x28),"bad off");
+		static_assert((offsetof(TyreThermalModel,coreTemp)==0x3C),"bad off");
+		static_assert((offsetof(TyreThermalModel,performanceCurve)==0x40),"bad off");
+		static_assert((offsetof(TyreThermalModel,isActive)==0xC0),"bad off");
+		static_assert((offsetof(TyreThermalModel,thermalMultD)==0xC4),"bad off");
+		static_assert((offsetof(TyreThermalModel,practicalTemp)==0xC8),"bad off");
+		static_assert((offsetof(TyreThermalModel,camberSpreadK)==0xCC),"bad off");
+		static_assert((offsetof(TyreThermalModel,car)==0xD0),"bad off");
+		static_assert((offsetof(TyreThermalModel,coreTInput)==0xD8),"bad off");
+	};
+};
+
+//UDT: class SCTM @len=488 @vfcount=2
+	//_Base: class ITyreModel @off=0 @len=8
+	//_Func: public void SCTM(SCTM &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SCTM(); @loc=static @len=159 @rva=4503744
+	//_Func: public void ~SCTM(); @virtual vtpo=0 vfid=0 @loc=static @len=84 @rva=4503920
+	//_Data: this+0x8, Member, Type: float, lsMultY
+	//_Data: this+0xC, Member, Type: float, lsExpY
+	//_Data: this+0x10, Member, Type: float, lsMultX
+	//_Data: this+0x14, Member, Type: float, lsExpX
+	//_Data: this+0x18, Member, Type: float, Fz0
+	//_Data: this+0x1C, Member, Type: float, maxSlip0
+	//_Data: this+0x20, Member, Type: float, maxSlip1
+	//_Data: this+0x24, Member, Type: float, asy
+	//_Data: this+0x28, Member, Type: float, falloffSpeed
+	//_Data: this+0x2C, Member, Type: float, speedSensitivity
+	//_Data: this+0x30, Member, Type: float, camberGain
+	//_Data: this+0x34, Member, Type: float, dcamber0
+	//_Data: this+0x38, Member, Type: float, dcamber1
+	//_Data: this+0x3C, Member, Type: float, cfXmult
+	//_Data: this+0x40, Member, Type: class Curve, dyLoadCurve
+	//_Data: this+0xC0, Member, Type: class Curve, dxLoadCurve
+	//_Data: this+0x140, Member, Type: float, pressureCfGain
+	//_Data: this+0x144, Member, Type: float, brakeDXMod
+	//_Data: this+0x148, Member, Type: class Curve, dCamberCurve
+	//_Data: this+0x1C8, Member, Type: bool, useSmoothDCamberCurve
+	//_Data: this+0x1CC, Member, Type: float, dCamberBlend
+	//_Data: this+0x1D0, Member, Type: float, combinedFactor
+	//_Data: this+0x1D4, Member, Type: float, dy0
+	//_Data: this+0x1D8, Member, Type: float, dx0
+	//_Data: this+0x1DC, Member, Type: float, pacE
+	//_Data: this+0x1E0, Member, Type: float, pacCf
+	//_Data: this+0x1E4, Member, Type: float, pacFlex
+	//_Func: public TyreModelOutput solve(TyreModelInput & in); @virtual vtpo=0 vfid=1 @loc=static @len=1444 @rva=4504608
+	//_Func: public float getStaticDY(float load); @loc=static @len=109 @rva=4504496
+	//_Func: public float getStaticDX(float load); @loc=static @len=115 @rva=4504368
+	//_Func: private float getPureFY(float D, float cf, float load, float slip); @loc=static @len=188 @rva=4504176
+	//_Func: private float getPureFX(float  _arg0, float  _arg1, float  _arg2, float  _arg3); @loc=optimized @len=0 @rva=0
+	//_Func: public SCTM & operator=(SCTM &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class SCTM : public ITyreModel {
+public:
+	float lsMultY;
+	float lsExpY;
+	float lsMultX;
+	float lsExpX;
+	float Fz0;
+	float maxSlip0;
+	float maxSlip1;
+	float asy;
+	float falloffSpeed;
+	float speedSensitivity;
+	float camberGain;
+	float dcamber0;
+	float dcamber1;
+	float cfXmult;
+	Curve dyLoadCurve;
+	Curve dxLoadCurve;
+	float pressureCfGain;
+	float brakeDXMod;
+	Curve dCamberCurve;
+	bool useSmoothDCamberCurve;
+	float dCamberBlend;
+	float combinedFactor;
+	float dy0;
+	float dx0;
+	float pacE;
+	float pacCf;
+	float pacFlex;
+	inline SCTM()  { }
+	inline void ctor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503744); _f(this); }
+	virtual ~SCTM();
+	inline void dtor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503920); _f(this); }
+	virtual TyreModelOutput solve_vf1(TyreModelInput & in);
+	inline TyreModelOutput solve_impl(TyreModelInput & in) { typedef TyreModelOutput (*_fpt)(SCTM *pthis, TyreModelInput &); _fpt _f=(_fpt)_drva(4504608); return _f(this, in); }
+	inline TyreModelOutput solve(TyreModelInput & in) { return solve_vf1(in); }
+	inline float getStaticDY(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504496); return _f(this, load); }
+	inline float getStaticDX(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504368); return _f(this, load); }
+	inline float getPureFY(float D, float cf, float load, float slip) { typedef float (*_fpt)(SCTM *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(4504176); return _f(this, D, cf, load, slip); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SCTM)==488),"bad size");
+		static_assert((offsetof(SCTM,lsMultY)==0x8),"bad off");
+		static_assert((offsetof(SCTM,lsExpY)==0xC),"bad off");
+		static_assert((offsetof(SCTM,lsMultX)==0x10),"bad off");
+		static_assert((offsetof(SCTM,lsExpX)==0x14),"bad off");
+		static_assert((offsetof(SCTM,Fz0)==0x18),"bad off");
+		static_assert((offsetof(SCTM,maxSlip0)==0x1C),"bad off");
+		static_assert((offsetof(SCTM,maxSlip1)==0x20),"bad off");
+		static_assert((offsetof(SCTM,asy)==0x24),"bad off");
+		static_assert((offsetof(SCTM,falloffSpeed)==0x28),"bad off");
+		static_assert((offsetof(SCTM,speedSensitivity)==0x2C),"bad off");
+		static_assert((offsetof(SCTM,camberGain)==0x30),"bad off");
+		static_assert((offsetof(SCTM,dcamber0)==0x34),"bad off");
+		static_assert((offsetof(SCTM,dcamber1)==0x38),"bad off");
+		static_assert((offsetof(SCTM,cfXmult)==0x3C),"bad off");
+		static_assert((offsetof(SCTM,dyLoadCurve)==0x40),"bad off");
+		static_assert((offsetof(SCTM,dxLoadCurve)==0xC0),"bad off");
+		static_assert((offsetof(SCTM,pressureCfGain)==0x140),"bad off");
+		static_assert((offsetof(SCTM,brakeDXMod)==0x144),"bad off");
+		static_assert((offsetof(SCTM,dCamberCurve)==0x148),"bad off");
+		static_assert((offsetof(SCTM,useSmoothDCamberCurve)==0x1C8),"bad off");
+		static_assert((offsetof(SCTM,dCamberBlend)==0x1CC),"bad off");
+		static_assert((offsetof(SCTM,combinedFactor)==0x1D0),"bad off");
+		static_assert((offsetof(SCTM,dy0)==0x1D4),"bad off");
+		static_assert((offsetof(SCTM,dx0)==0x1D8),"bad off");
+		static_assert((offsetof(SCTM,pacE)==0x1DC),"bad off");
+		static_assert((offsetof(SCTM,pacCf)==0x1E0),"bad off");
+		static_assert((offsetof(SCTM,pacFlex)==0x1E4),"bad off");
+	};
+};
+
+//UDT: class ResourceStore @len=32 @vfcount=1
+	//_VTable: 
+	//_Func: public void ResourceStore(ResourceStore &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ResourceStore(GraphicsManager * rm); @loc=static @len=77 @rva=2097040
+	//_Func: public void ~ResourceStore(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=192 @rva=2097120
+	//_Func: public Texture getTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting); @loc=static @len=378 @rva=2097360
+	//_Func: public Texture getTextureFromBuffer(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size); @loc=static @len=364 @rva=2097744
+	//_Func: public bool releaseTexture(Texture &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public bool removeTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void releaseAll(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool hasTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name); @loc=static @len=110 @rva=2098112
+	//_Data: this+0x8, Member, Type: class std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,Texture,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,Texture> > >, store
+	//_Data: this+0x18, Member, Type: class GraphicsManager *, graphics
+	//_Func: public ResourceStore & operator=(ResourceStore &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ResourceStore {
+public:
+	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,Texture,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,Texture> > > store;
+	GraphicsManager * graphics;
+	inline ResourceStore()  { }
+	inline void ctor(GraphicsManager * rm) { typedef void (*_fpt)(ResourceStore *pthis, GraphicsManager *); _fpt _f=(_fpt)_drva(2097040); _f(this, rm); }
+	virtual ~ResourceStore();
+	inline void dtor() { typedef void (*_fpt)(ResourceStore *pthis); _fpt _f=(_fpt)_drva(2097120); _f(this); }
+	inline Texture getTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting) { typedef Texture (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); _fpt _f=(_fpt)_drva(2097360); return _f(this, filename, onlyExisting); }
+	inline Texture getTextureFromBuffer(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size) { typedef Texture (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned char *, int); _fpt _f=(_fpt)_drva(2097744); return _f(this, name, buffer, size); }
+	inline bool hasTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef bool (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2098112); return _f(this, name); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ResourceStore)==32),"bad size");
+		static_assert((offsetof(ResourceStore,store)==0x8),"bad off");
+		static_assert((offsetof(ResourceStore,graphics)==0x18),"bad off");
 	};
 };
 
@@ -6648,238 +7651,6 @@ public:
 		static_assert((offsetof(Telemetry,avgSurfaceTemps)==0xDC),"bad off");
 		static_assert((offsetof(Telemetry,practicalTemps)==0xEC),"bad off");
 		static_assert((offsetof(Telemetry,splinePosition)==0xFC),"bad off");
-	};
-};
-
-//UDT: class ResourceStore @len=32 @vfcount=1
-	//_VTable: 
-	//_Func: public void ResourceStore(ResourceStore &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ResourceStore(GraphicsManager * rm); @loc=static @len=77 @rva=2097040
-	//_Func: public void ~ResourceStore(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=192 @rva=2097120
-	//_Func: public Texture getTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting); @loc=static @len=378 @rva=2097360
-	//_Func: public Texture getTextureFromBuffer(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size); @loc=static @len=364 @rva=2097744
-	//_Func: public bool releaseTexture(Texture &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public bool removeTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void releaseAll(); @loc=optimized @len=0 @rva=0
-	//_Func: public bool hasTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name); @loc=static @len=110 @rva=2098112
-	//_Data: this+0x8, Member, Type: class std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,Texture,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,Texture> > >, store
-	//_Data: this+0x18, Member, Type: class GraphicsManager *, graphics
-	//_Func: public ResourceStore & operator=(ResourceStore &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ResourceStore {
-public:
-	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,Texture,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,Texture> > > store;
-	GraphicsManager * graphics;
-	inline ResourceStore()  { }
-	inline void ctor(GraphicsManager * rm) { typedef void (*_fpt)(ResourceStore *pthis, GraphicsManager *); _fpt _f=(_fpt)_drva(2097040); _f(this, rm); }
-	virtual ~ResourceStore();
-	inline void dtor() { typedef void (*_fpt)(ResourceStore *pthis); _fpt _f=(_fpt)_drva(2097120); _f(this); }
-	inline Texture getTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting) { typedef Texture (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); _fpt _f=(_fpt)_drva(2097360); return _f(this, filename, onlyExisting); }
-	inline Texture getTextureFromBuffer(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size) { typedef Texture (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned char *, int); _fpt _f=(_fpt)_drva(2097744); return _f(this, name, buffer, size); }
-	inline bool hasTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef bool (*_fpt)(ResourceStore *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2098112); return _f(this, name); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ResourceStore)==32),"bad size");
-		static_assert((offsetof(ResourceStore,store)==0x8),"bad off");
-		static_assert((offsetof(ResourceStore,graphics)==0x18),"bad off");
-	};
-};
-
-//UDT: class SCTM @len=488 @vfcount=2
-	//_Base: class ITyreModel @off=0 @len=8
-	//_Func: public void SCTM(SCTM &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SCTM(); @loc=static @len=159 @rva=4503744
-	//_Func: public void ~SCTM(); @virtual vtpo=0 vfid=0 @loc=static @len=84 @rva=4503920
-	//_Data: this+0x8, Member, Type: float, lsMultY
-	//_Data: this+0xC, Member, Type: float, lsExpY
-	//_Data: this+0x10, Member, Type: float, lsMultX
-	//_Data: this+0x14, Member, Type: float, lsExpX
-	//_Data: this+0x18, Member, Type: float, Fz0
-	//_Data: this+0x1C, Member, Type: float, maxSlip0
-	//_Data: this+0x20, Member, Type: float, maxSlip1
-	//_Data: this+0x24, Member, Type: float, asy
-	//_Data: this+0x28, Member, Type: float, falloffSpeed
-	//_Data: this+0x2C, Member, Type: float, speedSensitivity
-	//_Data: this+0x30, Member, Type: float, camberGain
-	//_Data: this+0x34, Member, Type: float, dcamber0
-	//_Data: this+0x38, Member, Type: float, dcamber1
-	//_Data: this+0x3C, Member, Type: float, cfXmult
-	//_Data: this+0x40, Member, Type: class Curve, dyLoadCurve
-	//_Data: this+0xC0, Member, Type: class Curve, dxLoadCurve
-	//_Data: this+0x140, Member, Type: float, pressureCfGain
-	//_Data: this+0x144, Member, Type: float, brakeDXMod
-	//_Data: this+0x148, Member, Type: class Curve, dCamberCurve
-	//_Data: this+0x1C8, Member, Type: bool, useSmoothDCamberCurve
-	//_Data: this+0x1CC, Member, Type: float, dCamberBlend
-	//_Data: this+0x1D0, Member, Type: float, combinedFactor
-	//_Data: this+0x1D4, Member, Type: float, dy0
-	//_Data: this+0x1D8, Member, Type: float, dx0
-	//_Data: this+0x1DC, Member, Type: float, pacE
-	//_Data: this+0x1E0, Member, Type: float, pacCf
-	//_Data: this+0x1E4, Member, Type: float, pacFlex
-	//_Func: public TyreModelOutput solve(TyreModelInput & in); @virtual vtpo=0 vfid=1 @loc=static @len=1444 @rva=4504608
-	//_Func: public float getStaticDY(float load); @loc=static @len=109 @rva=4504496
-	//_Func: public float getStaticDX(float load); @loc=static @len=115 @rva=4504368
-	//_Func: private float getPureFY(float D, float cf, float load, float slip); @loc=static @len=188 @rva=4504176
-	//_Func: private float getPureFX(float  _arg0, float  _arg1, float  _arg2, float  _arg3); @loc=optimized @len=0 @rva=0
-	//_Func: public SCTM & operator=(SCTM &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class SCTM : public ITyreModel {
-public:
-	float lsMultY;
-	float lsExpY;
-	float lsMultX;
-	float lsExpX;
-	float Fz0;
-	float maxSlip0;
-	float maxSlip1;
-	float asy;
-	float falloffSpeed;
-	float speedSensitivity;
-	float camberGain;
-	float dcamber0;
-	float dcamber1;
-	float cfXmult;
-	Curve dyLoadCurve;
-	Curve dxLoadCurve;
-	float pressureCfGain;
-	float brakeDXMod;
-	Curve dCamberCurve;
-	bool useSmoothDCamberCurve;
-	float dCamberBlend;
-	float combinedFactor;
-	float dy0;
-	float dx0;
-	float pacE;
-	float pacCf;
-	float pacFlex;
-	inline SCTM()  { }
-	inline void ctor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503744); _f(this); }
-	virtual ~SCTM();
-	inline void dtor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503920); _f(this); }
-	virtual TyreModelOutput solve_vf1(TyreModelInput & in);
-	inline TyreModelOutput solve_impl(TyreModelInput & in) { typedef TyreModelOutput (*_fpt)(SCTM *pthis, TyreModelInput &); _fpt _f=(_fpt)_drva(4504608); return _f(this, in); }
-	inline TyreModelOutput solve(TyreModelInput & in) { return solve_vf1(in); }
-	inline float getStaticDY(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504496); return _f(this, load); }
-	inline float getStaticDX(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504368); return _f(this, load); }
-	inline float getPureFY(float D, float cf, float load, float slip) { typedef float (*_fpt)(SCTM *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(4504176); return _f(this, D, cf, load, slip); }
-	inline void _guard_obj() {
-		static_assert((sizeof(SCTM)==488),"bad size");
-		static_assert((offsetof(SCTM,lsMultY)==0x8),"bad off");
-		static_assert((offsetof(SCTM,lsExpY)==0xC),"bad off");
-		static_assert((offsetof(SCTM,lsMultX)==0x10),"bad off");
-		static_assert((offsetof(SCTM,lsExpX)==0x14),"bad off");
-		static_assert((offsetof(SCTM,Fz0)==0x18),"bad off");
-		static_assert((offsetof(SCTM,maxSlip0)==0x1C),"bad off");
-		static_assert((offsetof(SCTM,maxSlip1)==0x20),"bad off");
-		static_assert((offsetof(SCTM,asy)==0x24),"bad off");
-		static_assert((offsetof(SCTM,falloffSpeed)==0x28),"bad off");
-		static_assert((offsetof(SCTM,speedSensitivity)==0x2C),"bad off");
-		static_assert((offsetof(SCTM,camberGain)==0x30),"bad off");
-		static_assert((offsetof(SCTM,dcamber0)==0x34),"bad off");
-		static_assert((offsetof(SCTM,dcamber1)==0x38),"bad off");
-		static_assert((offsetof(SCTM,cfXmult)==0x3C),"bad off");
-		static_assert((offsetof(SCTM,dyLoadCurve)==0x40),"bad off");
-		static_assert((offsetof(SCTM,dxLoadCurve)==0xC0),"bad off");
-		static_assert((offsetof(SCTM,pressureCfGain)==0x140),"bad off");
-		static_assert((offsetof(SCTM,brakeDXMod)==0x144),"bad off");
-		static_assert((offsetof(SCTM,dCamberCurve)==0x148),"bad off");
-		static_assert((offsetof(SCTM,useSmoothDCamberCurve)==0x1C8),"bad off");
-		static_assert((offsetof(SCTM,dCamberBlend)==0x1CC),"bad off");
-		static_assert((offsetof(SCTM,combinedFactor)==0x1D0),"bad off");
-		static_assert((offsetof(SCTM,dy0)==0x1D4),"bad off");
-		static_assert((offsetof(SCTM,dx0)==0x1D8),"bad off");
-		static_assert((offsetof(SCTM,pacE)==0x1DC),"bad off");
-		static_assert((offsetof(SCTM,pacCf)==0x1E0),"bad off");
-		static_assert((offsetof(SCTM,pacFlex)==0x1E4),"bad off");
-	};
-};
-
-//UDT: struct TyreThermalModel @len=224
-	//_Data: this+0x0, Member, Type: int, elements
-	//_Data: this+0x4, Member, Type: int, stripes
-	//_Data: this+0x8, Member, Type: class std::vector<TyreThermalPatch,std::allocator<TyreThermalPatch> >, patches
-	//_Data: this+0x20, Member, Type: double, phase
-	//_Data: this+0x28, Member, Type: struct TyrePatchData, patchData
-	//_Data: this+0x3C, Member, Type: float, coreTemp
-	//_Data: this+0x40, Member, Type: class Curve, performanceCurve
-	//_Data: this+0xC0, Member, Type: bool, isActive
-	//_Data: this+0xC4, Member, Type: float, thermalMultD
-	//_Data: this+0xC8, Member, Type: float, practicalTemp
-	//_Data: this+0xCC, Member, Type: float, camberSpreadK
-	//_Func: public void init(int a_elements, int a_stripes, Car * car); @loc=static @len=73 @rva=2810224
-	//_Func: public void step(float dt, float angularSpeed, float camberRAD); @loc=static @len=1006 @rva=2810688
-	//_Func: public void addThermalInput(float xpos, float pressureRel, float temp); @loc=static @len=621 @rva=2805904
-	//_Func: public int getCurrentElementIndex(); @loc=optimized @len=0 @rva=0
-	//_Func: public TyreThermalPatch & getPatchAt(int x, int y); @loc=static @len=393 @rva=2809776
-	//_Func: public float getCurrentCPTemp(float camber); @loc=static @len=464 @rva=2808800
-	//_Func: public float getCorrectedD(float d, float camberRAD); @loc=static @len=21 @rva=2808768
-	//_Func: public float getAvgSurfaceTemp(); @loc=static @len=39 @rva=2808720
-	//_Func: public void reset(); @loc=static @len=89 @rva=2810304
-	//_Func: public void getIMO(float * out); @loc=static @len=512 @rva=2809264
-	//_Func: public void setTemperature(float optimumTemp); @loc=static @len=33 @rva=2810640
-	//_Func: public float getPracticalTemp(float camberRAD); @loc=static @len=38 @rva=2810176
-	//_Func: public void addThermalCoreInput(float temp); @loc=static @len=17 @rva=2805872
-	//_Data: this+0xD0, Member, Type: class Car *, car
-	//_Data: this+0xD8, Member, Type: float, coreTInput
-	//_Func: private void buildTyre(); @loc=static @len=2190 @rva=2806528
-	//_Func: public void TyreThermalModel(TyreThermalModel &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void TyreThermalModel(); @loc=static @len=144 @rva=2547584
-	//_Func: public void ~TyreThermalModel(); @loc=static @len=46 @rva=2550256
-	//_Func: public TyreThermalModel & operator=(TyreThermalModel &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct TyreThermalModel {
-public:
-	int elements;
-	int stripes;
-	std::vector<TyreThermalPatch,std::allocator<TyreThermalPatch> > patches;
-	double phase;
-	TyrePatchData patchData;
-	float coreTemp;
-	Curve performanceCurve;
-	bool isActive;
-	float thermalMultD;
-	float practicalTemp;
-	float camberSpreadK;
-	Car * car;
-	float coreTInput;
-	inline TyreThermalModel()  { }
-	inline void init(int a_elements, int a_stripes, Car * car) { typedef void (*_fpt)(TyreThermalModel *pthis, int, int, Car *); _fpt _f=(_fpt)_drva(2810224); return _f(this, a_elements, a_stripes, car); }
-	inline void step(float dt, float angularSpeed, float camberRAD) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2810688); return _f(this, dt, angularSpeed, camberRAD); }
-	inline void addThermalInput(float xpos, float pressureRel, float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2805904); return _f(this, xpos, pressureRel, temp); }
-	inline TyreThermalPatch & getPatchAt(int x, int y) { typedef TyreThermalPatch & (*_fpt)(TyreThermalModel *pthis, int, int); _fpt _f=(_fpt)_drva(2809776); return _f(this, x, y); }
-	inline float getCurrentCPTemp(float camber) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2808800); return _f(this, camber); }
-	inline float getCorrectedD(float d, float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float, float); _fpt _f=(_fpt)_drva(2808768); return _f(this, d, camberRAD); }
-	inline float getAvgSurfaceTemp() { typedef float (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2808720); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2810304); return _f(this); }
-	inline void getIMO(float * out) { typedef void (*_fpt)(TyreThermalModel *pthis, float *); _fpt _f=(_fpt)_drva(2809264); return _f(this, out); }
-	inline void setTemperature(float optimumTemp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810640); return _f(this, optimumTemp); }
-	inline float getPracticalTemp(float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810176); return _f(this, camberRAD); }
-	inline void addThermalCoreInput(float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2805872); return _f(this, temp); }
-	inline void buildTyre() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2806528); return _f(this); }
-	inline void ctor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2547584); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2550256); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(TyreThermalModel)==224),"bad size");
-		static_assert((offsetof(TyreThermalModel,elements)==0x0),"bad off");
-		static_assert((offsetof(TyreThermalModel,stripes)==0x4),"bad off");
-		static_assert((offsetof(TyreThermalModel,patches)==0x8),"bad off");
-		static_assert((offsetof(TyreThermalModel,phase)==0x20),"bad off");
-		static_assert((offsetof(TyreThermalModel,patchData)==0x28),"bad off");
-		static_assert((offsetof(TyreThermalModel,coreTemp)==0x3C),"bad off");
-		static_assert((offsetof(TyreThermalModel,performanceCurve)==0x40),"bad off");
-		static_assert((offsetof(TyreThermalModel,isActive)==0xC0),"bad off");
-		static_assert((offsetof(TyreThermalModel,thermalMultD)==0xC4),"bad off");
-		static_assert((offsetof(TyreThermalModel,practicalTemp)==0xC8),"bad off");
-		static_assert((offsetof(TyreThermalModel,camberSpreadK)==0xCC),"bad off");
-		static_assert((offsetof(TyreThermalModel,car)==0xD0),"bad off");
-		static_assert((offsetof(TyreThermalModel,coreTInput)==0xD8),"bad off");
 	};
 };
 
@@ -7093,6 +7864,72 @@ public:
 		static_assert((offsetof(INIReader,m_isEncrypted)==0x40),"bad off");
 		static_assert((offsetof(INIReader,verbose)==0x41),"bad off");
 		static_assert((offsetof(INIReader,code)==0x48),"bad off");
+	};
+};
+
+//UDT: class TCPSocket @len=65656
+	//_Func: public void TCPSocket(TCPSocket &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void TCPSocket(); @loc=static @len=98 @rva=2481840
+	//_Func: public void ~TCPSocket(); @loc=static @len=142 @rva=2482080
+	//_Data: this+0x0, Member, Type: class BufferedChannel<unsigned __int64>, chNewConnections
+	//_Func: public void setSocket(unsigned __int64  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public bool connect(IPAddress & target); @loc=static @len=147 @rva=2482592
+	//_Func: public void setBlockingMode(bool imode); @loc=static @len=14 @rva=2484144
+	//_Func: public bool getBlockingMode(); @loc=optimized @len=0 @rva=0
+	//_Func: public void addListener(std::function<void __cdecl(UDPMessage const &)> * listener); @loc=static @len=125 @rva=2482464
+	//_Func: public int receive(std::function<void __cdecl(UDPMessage const &)>  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public int receive(int maxPackets); @loc=static @len=285 @rva=2483216
+	//_Func: public void send(void * data, int length, sockaddr_in target); @loc=static @len=14 @rva=2484128
+	//_Func: public void sendReliable(void *  _arg0, int  _arg1, sockaddr_in  _arg2); @loc=optimized @len=0 @rva=0
+	//_Func: public std::vector<unsigned char,std::allocator<unsigned char> > receivePacket(); @loc=static @len=416 @rva=2483504
+	//_Func: public void listen(unsigned short  _arg0); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x28, Member, Type: class std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > >, listeners
+	//_Data: this+0x40, Member, Type: class std::thread, listenerThread
+	//_Data: this+0x50, Member, Type: bool, isExiting
+	//_Data: this+0x58, Member, Type: unsigned char *, recvBuffer
+	//_Data: this+0x60, Member, Type: unsigned __int64, soc
+	//_Data: this+0x68, Member, Type: unsigned __int64, listenSock
+	//_Data: this+0x70, Member, Type: bool, isBlocking
+	//_Data: this+0x71, Member, Type: bool, isServer
+	//_Data: this+0x74, Member, Type: class TCPQueue, buffer
+	//_Func: private void broadcastMessage(UDPMessage &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public TCPSocket & operator=(TCPSocket &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class TCPSocket {
+public:
+	BufferedChannel<unsigned __int64> chNewConnections;
+	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
+	std::thread listenerThread;
+	bool isExiting;
+	unsigned char * recvBuffer;
+	unsigned __int64 soc;
+	unsigned __int64 listenSock;
+	bool isBlocking;
+	bool isServer;
+	TCPQueue buffer;
+	inline TCPSocket()  { }
+	inline void ctor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2481840); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2482080); _f(this); }
+	inline bool connect(IPAddress & target) { typedef bool (*_fpt)(TCPSocket *pthis, IPAddress &); _fpt _f=(_fpt)_drva(2482592); return _f(this, target); }
+	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(TCPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2484144); return _f(this, imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(TCPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2482464); return _f(this, listener); }
+	inline int receive(int maxPackets) { typedef int (*_fpt)(TCPSocket *pthis, int); _fpt _f=(_fpt)_drva(2483216); return _f(this, maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(TCPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2484128); return _f(this, data, length, target); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > receivePacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2483504); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(TCPSocket)==65656),"bad size");
+		static_assert((offsetof(TCPSocket,chNewConnections)==0x0),"bad off");
+		static_assert((offsetof(TCPSocket,listeners)==0x28),"bad off");
+		static_assert((offsetof(TCPSocket,listenerThread)==0x40),"bad off");
+		static_assert((offsetof(TCPSocket,isExiting)==0x50),"bad off");
+		static_assert((offsetof(TCPSocket,recvBuffer)==0x58),"bad off");
+		static_assert((offsetof(TCPSocket,soc)==0x60),"bad off");
+		static_assert((offsetof(TCPSocket,listenSock)==0x68),"bad off");
+		static_assert((offsetof(TCPSocket,isBlocking)==0x70),"bad off");
+		static_assert((offsetof(TCPSocket,isServer)==0x71),"bad off");
+		static_assert((offsetof(TCPSocket,buffer)==0x74),"bad off");
 	};
 };
 
@@ -7456,6 +8293,53 @@ public:
 	};
 };
 
+//UDT: struct NetCarStateProviderDef @len=224
+	//_Data: this+0x0, Member, Type: class ACClient *, client
+	//_Data: this+0x8, Member, Type: unsigned char, sessionID
+	//_Data: this+0x9, Member, Type: unsigned char, guid
+	//_Data: this+0x10, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, driverName
+	//_Data: this+0x30, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, team
+	//_Data: this+0x50, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, nationCode
+	//_Data: this+0x70, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, model
+	//_Data: this+0x90, Member, Type: class IRayTrackCollisionProvider *, rayCastProvider
+	//_Data: this+0x98, Member, Type: class PhysicsAvatar *, physicsAvatar
+	//_Data: this+0xA0, Member, Type: class mat44f, pitPosition
+	//_Func: public void NetCarStateProviderDef(NetCarStateProviderDef &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void NetCarStateProviderDef(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~NetCarStateProviderDef(); @loc=static @len=163 @rva=1660448
+	//_Func: public NetCarStateProviderDef & operator=(NetCarStateProviderDef &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct NetCarStateProviderDef {
+public:
+	ACClient * client;
+	unsigned char sessionID;
+	unsigned char guid;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > driverName;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > model;
+	IRayTrackCollisionProvider * rayCastProvider;
+	PhysicsAvatar * physicsAvatar;
+	mat44f pitPosition;
+	inline NetCarStateProviderDef()  { }
+	inline void dtor() { typedef void (*_fpt)(NetCarStateProviderDef *pthis); _fpt _f=(_fpt)_drva(1660448); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarStateProviderDef)==224),"bad size");
+		static_assert((offsetof(NetCarStateProviderDef,client)==0x0),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,sessionID)==0x8),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,guid)==0x9),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,driverName)==0x10),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,team)==0x30),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,nationCode)==0x50),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,model)==0x70),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,rayCastProvider)==0x90),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,physicsAvatar)==0x98),"bad off");
+		static_assert((offsetof(NetCarStateProviderDef,pitPosition)==0xA0),"bad off");
+	};
+};
+
 //UDT: struct Autoclutch @len=424
 	//_Func: public void ~Autoclutch(); @loc=static @len=62 @rva=2851776
 	//_Data: this+0x0, Member, Type: float, rpmMin
@@ -7692,6 +8576,67 @@ public:
 		static_assert((offsetof(RenderState,currentRenderTarget)==0x1E0),"bad off");
 		static_assert((offsetof(RenderState,currentDepth)==0x1E8),"bad off");
 		static_assert((offsetof(RenderState,overrideNoMS)==0x1F0),"bad off");
+	};
+};
+
+//UDT: class UDPPacket @len=32
+	//_Func: public void UDPPacket(UDPPacket & r); @loc=static @len=104 @rva=2479904
+	//_Func: public void UDPPacket(UDPMessage & msg); @loc=static @len=158 @rva=2479744
+	//_Func: public void UDPPacket(std::vector<unsigned char,std::allocator<unsigned char> > & idata); @loc=static @len=107 @rva=2480016
+	//_Func: public void UDPPacket(); @loc=static @len=61 @rva=2480128
+	//_Func: public void ~UDPPacket(); @loc=static @len=36 @rva=2480192
+	//_Data: this+0x0, Member, Type: class IPAddress, targetIP
+	//_Func: public UDPPacket & operator=(UDPPacket & r); @loc=static @len=76 @rva=2480240
+	//_Func: public void writeString(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st); @loc=static @len=210 @rva=2481520
+	//_Func: public void writeString(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st); @loc=static @len=201 @rva=2481312
+	//_Func: public void writeStringANSI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st); @loc=static @len=93 @rva=2481744
+	//_Func: public std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString(); @loc=static @len=181 @rva=2480592
+	//_Func: public std::basic_string<char,std::char_traits<char>,std::allocator<char> > readBigString(); @loc=optimized @len=0 @rva=0
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW(); @loc=static @len=209 @rva=2480784
+	//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW(); @loc=static @len=209 @rva=2480368
+	//_Func: public void write(void *  _arg0, int  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public void read(void *  _arg0, unsigned int  _arg1); @loc=optimized @len=0 @rva=0
+	//_Func: public void seek(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getSize(); @loc=static @len=4 @rva=2480320
+	//_Func: public void send(TCPSocket & sok); @loc=static @len=254 @rva=2481008
+	//_Func: public void send(UDPSocket & sok); @loc=static @len=41 @rva=2481264
+	//_Func: public bool isEOF(); @loc=static @len=18 @rva=2480336
+	//_Func: public unsigned int getCurrentPos(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x10, Member, Type: unsigned char *, data
+	//_Data: this+0x18, Member, Type: unsigned int, currentDataPos
+	//_Data: this+0x1C, Member, Type: unsigned int, size
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+class UDPPacket {
+public:
+	IPAddress targetIP;
+	unsigned char * data;
+	unsigned int currentDataPos;
+	unsigned int size;
+	inline UDPPacket()  { }
+	inline void ctor(UDPPacket & r) { typedef void (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2479904); _f(this, r); }
+	inline void ctor(UDPMessage & msg) { typedef void (*_fpt)(UDPPacket *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(2479744); _f(this, msg); }
+	inline void ctor(std::vector<unsigned char,std::allocator<unsigned char> > & idata) { typedef void (*_fpt)(UDPPacket *pthis, std::vector<unsigned char,std::allocator<unsigned char> > &); _fpt _f=(_fpt)_drva(2480016); _f(this, idata); }
+	inline void ctor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480128); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480192); _f(this); }
+	inline UDPPacket & operator=(UDPPacket & r) { typedef UDPPacket & (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2480240); return _f(this, r); }
+	inline void writeString(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481520); return _f(this, st); }
+	inline void writeString(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > &); _fpt _f=(_fpt)_drva(2481312); return _f(this, st); }
+	inline void writeStringANSI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481744); return _f(this, st); }
+	inline std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString() { typedef std::basic_string<char,std::char_traits<char>,std::allocator<char> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480592); return _f(this); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480784); return _f(this); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480368); return _f(this); }
+	inline unsigned int getSize() { typedef unsigned int (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480320); return _f(this); }
+	inline void send(TCPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, TCPSocket &); _fpt _f=(_fpt)_drva(2481008); return _f(this, sok); }
+	inline void send(UDPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, UDPSocket &); _fpt _f=(_fpt)_drva(2481264); return _f(this, sok); }
+	inline bool isEOF() { typedef bool (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480336); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(UDPPacket)==32),"bad size");
+		static_assert((offsetof(UDPPacket,targetIP)==0x0),"bad off");
+		static_assert((offsetof(UDPPacket,data)==0x10),"bad off");
+		static_assert((offsetof(UDPPacket,currentDataPos)==0x18),"bad off");
+		static_assert((offsetof(UDPPacket,size)==0x1C),"bad off");
 	};
 };
 
@@ -8036,6 +8981,118 @@ public:
 	};
 };
 
+//UDT: class Node @len=224 @vfcount=11
+	//_VTable: 
+	//_Tag 17
+	//_Tag 17
+	//_Tag 17
+	//_Tag 17
+	//_Func: public void Node(Node & node); @loc=static @len=329 @rva=2152896
+	//_Func: public void Node(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & n); @loc=static @len=326 @rva=2153232
+	//_Func: public void ~Node(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=237 @rva=2153568
+	//_Data: this+0x8, Member, Type: class mat44f, matrix
+	//_Data: this+0x48, Member, Type: class mat44f, matrixWS
+	//_Data: this+0x88, Member, Type: bool, isWSIdentity
+	//_Data: this+0x90, Member, Type: class std::vector<Node *,std::allocator<Node *> >, nodes
+	//_Data: this+0xA8, Member, Type: class Node *, parent
+	//_Data: this+0xB0, Member, Type: int, priority
+	//_Data: this+0xB4, Member, Type: bool, needsMatrixWS
+	//_Data: this+0xB8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Func: public Node * getRootNode(); @loc=optimized @len=0 @rva=0
+	//_Func: public void collapse(); @loc=optimized @len=0 @rva=0
+	//_Func: public vec3f worldToLocal(vec3f & pos); @loc=static @len=407 @rva=2156336
+	//_Func: public vec3f worldToLocalNormal(vec3f & pos); @loc=static @len=355 @rva=2156752
+	//_Func: public vec3f localToWorld(vec3f & pos); @loc=static @len=58 @rva=2155056
+	//_Func: public vec3f localToWorldNormal(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public Node * getParent(); @loc=static @len=8 @rva=2154880
+	//_Func: public void addChild(Node * n); @intro @virtual vtpo=0 vfid=1 @loc=static @len=66 @rva=2153856
+	//_Func: public void compile(CompileContext * cc); @intro @virtual vtpo=0 vfid=2 @loc=static @len=110 @rva=2153936
+	//_Func: public void render(RenderContext * rc); @intro @virtual vtpo=0 vfid=3 @loc=static @len=135 @rva=2155792
+	//_Func: public void removeChild(Node * n); @intro @virtual vtpo=0 vfid=4 @loc=static @len=99 @rva=2155680
+	//_Func: public Node * findChildByName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive); @intro @virtual vtpo=0 vfid=5 @loc=static @len=268 @rva=2154048
+	//_Func: public void findChildrenByName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result); @intro @virtual vtpo=0 vfid=6 @loc=static @len=254 @rva=2154320
+	//_Func: public void findChildrenByPrefix(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result); @intro @virtual vtpo=0 vfid=7 @loc=static @len=302 @rva=2154576
+	//_Func: public mat44f getWorldMatrix(); @intro @virtual vtpo=0 vfid=8 @loc=static @len=147 @rva=2154896
+	//_Func: public void printTree(int ident); @intro @virtual vtpo=0 vfid=9 @loc=static @len=548 @rva=2155120
+	//_Func: public void visit(std::function<bool __cdecl(Node *)> * onVisit, std::function<void __cdecl(Node *)> * onPostVisit); @loc=static @len=281 @rva=2156048
+	//_Func: public void sortNodes(std::function<bool __cdecl(Node *,Node *)>  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public std::vector<Node *,std::allocator<Node *> > getNodesCopy(); @loc=optimized @len=0 @rva=0
+	//_Func: public void renderAudio(); @intro @virtual vtpo=0 vfid=10 @loc=static @len=101 @rva=2155936
+	//_Func: public void setActive(bool a); @loc=static @len=7 @rva=673008
+	//_Func: public bool getActive(); @loc=static @len=8 @rva=418752
+	//_Data: this+0xD8, Member, Type: bool, isActive
+	//_Func: protected void fillHierarchy(std::vector<Node *,std::allocator<Node *> > &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public Node & operator=(Node &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class Node {
+public:
+	mat44f matrix;
+	mat44f matrixWS;
+	bool isWSIdentity;
+	std::vector<Node *,std::allocator<Node *> > nodes;
+	Node * parent;
+	int priority;
+	bool needsMatrixWS;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	bool isActive;
+	inline Node()  { }
+	inline void ctor(Node & node) { typedef void (*_fpt)(Node *pthis, Node &); _fpt _f=(_fpt)_drva(2152896); _f(this, node); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & n) { typedef void (*_fpt)(Node *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2153232); _f(this, n); }
+	virtual ~Node();
+	inline void dtor() { typedef void (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2153568); _f(this); }
+	inline vec3f worldToLocal(vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, vec3f &); _fpt _f=(_fpt)_drva(2156336); return _f(this, pos); }
+	inline vec3f worldToLocalNormal(vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, vec3f &); _fpt _f=(_fpt)_drva(2156752); return _f(this, pos); }
+	inline vec3f localToWorld(vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, vec3f &); _fpt _f=(_fpt)_drva(2155056); return _f(this, pos); }
+	inline Node * getParent() { typedef Node * (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2154880); return _f(this); }
+	virtual void addChild_vf1(Node * n);
+	inline void addChild_impl(Node * n) { typedef void (*_fpt)(Node *pthis, Node *); _fpt _f=(_fpt)_drva(2153856); return _f(this, n); }
+	inline void addChild(Node * n) { return addChild_vf1(n); }
+	virtual void compile_vf2(CompileContext * cc);
+	inline void compile_impl(CompileContext * cc) { typedef void (*_fpt)(Node *pthis, CompileContext *); _fpt _f=(_fpt)_drva(2153936); return _f(this, cc); }
+	inline void compile(CompileContext * cc) { return compile_vf2(cc); }
+	virtual void render_vf3(RenderContext * rc);
+	inline void render_impl(RenderContext * rc) { typedef void (*_fpt)(Node *pthis, RenderContext *); _fpt _f=(_fpt)_drva(2155792); return _f(this, rc); }
+	inline void render(RenderContext * rc) { return render_vf3(rc); }
+	virtual void removeChild_vf4(Node * n);
+	inline void removeChild_impl(Node * n) { typedef void (*_fpt)(Node *pthis, Node *); _fpt _f=(_fpt)_drva(2155680); return _f(this, n); }
+	inline void removeChild(Node * n) { return removeChild_vf4(n); }
+	virtual Node * findChildByName_vf5(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive);
+	inline Node * findChildByName_impl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { typedef Node * (*_fpt)(Node *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); _fpt _f=(_fpt)_drva(2154048); return _f(this, sname, recursive); }
+	inline Node * findChildByName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { return findChildByName_vf5(sname, recursive); }
+	virtual void findChildrenByName_vf6(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result);
+	inline void findChildrenByName_impl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (*_fpt)(Node *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); _fpt _f=(_fpt)_drva(2154320); return _f(this, nname, result); }
+	inline void findChildrenByName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { return findChildrenByName_vf6(nname, result); }
+	virtual void findChildrenByPrefix_vf7(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result);
+	inline void findChildrenByPrefix_impl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (*_fpt)(Node *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); _fpt _f=(_fpt)_drva(2154576); return _f(this, prefix, result); }
+	inline void findChildrenByPrefix(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { return findChildrenByPrefix_vf7(prefix, result); }
+	virtual mat44f getWorldMatrix_vf8();
+	inline mat44f getWorldMatrix_impl() { typedef mat44f (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2154896); return _f(this); }
+	inline mat44f getWorldMatrix() { return getWorldMatrix_vf8(); }
+	virtual void printTree_vf9(int ident);
+	inline void printTree_impl(int ident) { typedef void (*_fpt)(Node *pthis, int); _fpt _f=(_fpt)_drva(2155120); return _f(this, ident); }
+	inline void printTree(int ident) { return printTree_vf9(ident); }
+	inline void visit(std::function<bool __cdecl(Node *)> * onVisit, std::function<void __cdecl(Node *)> * onPostVisit) { typedef void (*_fpt)(Node *pthis, std::function<bool __cdecl(Node *)> *, std::function<void __cdecl(Node *)> *); _fpt _f=(_fpt)_drva(2156048); return _f(this, onVisit, onPostVisit); }
+	virtual void renderAudio_vf10();
+	inline void renderAudio_impl() { typedef void (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2155936); return _f(this); }
+	inline void renderAudio() { return renderAudio_vf10(); }
+	inline void setActive(bool a) { typedef void (*_fpt)(Node *pthis, bool); _fpt _f=(_fpt)_drva(673008); return _f(this, a); }
+	inline bool getActive() { typedef bool (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(418752); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(Node)==224),"bad size");
+		static_assert((offsetof(Node,matrix)==0x8),"bad off");
+		static_assert((offsetof(Node,matrixWS)==0x48),"bad off");
+		static_assert((offsetof(Node,isWSIdentity)==0x88),"bad off");
+		static_assert((offsetof(Node,nodes)==0x90),"bad off");
+		static_assert((offsetof(Node,parent)==0xA8),"bad off");
+		static_assert((offsetof(Node,priority)==0xB0),"bad off");
+		static_assert((offsetof(Node,needsMatrixWS)==0xB4),"bad off");
+		static_assert((offsetof(Node,name)==0xB8),"bad off");
+		static_assert((offsetof(Node,isActive)==0xD8),"bad off");
+	};
+};
+
 //UDT: class ksgui::Control @len=376 @vfcount=21
 	//_VTable: 
 	//_Func: public void Control(ksgui_Control &  _arg0); @loc=optimized @len=0 @rva=0
@@ -8298,6 +9355,29 @@ public:
 	};
 };
 
+//UDT: struct SteerBrake @len=48
+	//_Data: this+0x0, Member, Type: bool, isActive
+	//_Data: this+0x8, Member, Type: class DynamicController, controller
+	//_Func: public void SteerBrake(SteerBrake &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void SteerBrake(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~SteerBrake(); @loc=static @len=9 @rva=2549856
+	//_Func: public SteerBrake & operator=(SteerBrake &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct SteerBrake {
+public:
+	bool isActive;
+	DynamicController controller;
+	inline SteerBrake()  { }
+	inline void dtor() { typedef void (*_fpt)(SteerBrake *pthis); _fpt _f=(_fpt)_drva(2549856); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(SteerBrake)==48),"bad size");
+		static_assert((offsetof(SteerBrake,isActive)==0x0),"bad off");
+		static_assert((offsetof(SteerBrake,controller)==0x8),"bad off");
+	};
+};
+
 //UDT: struct DrivetrainControllers @len=32
 	//_Data: this+0x0, Member, Type: class std::unique_ptr<DynamicController,std::default_delete<DynamicController> >, awdFrontShare
 	//_Data: this+0x8, Member, Type: class std::unique_ptr<DynamicController,std::default_delete<DynamicController> >, awdCenterLock
@@ -8327,26 +9407,79 @@ public:
 	};
 };
 
-//UDT: struct SteerBrake @len=48
-	//_Data: this+0x0, Member, Type: bool, isActive
-	//_Data: this+0x8, Member, Type: class DynamicController, controller
-	//_Func: public void SteerBrake(SteerBrake &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void SteerBrake(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~SteerBrake(); @loc=static @len=9 @rva=2549856
-	//_Func: public SteerBrake & operator=(SteerBrake &  _arg0); @loc=optimized @len=0 @rva=0
+//UDT: struct ACClient::ClientSessionTransition @len=216
+	//_Data: this+0x0, Member, Type: bool, isTransitioning
+	//_Data: this+0x8, Member, Type: class UDPPacket, sessionPacket
+	//_Data: this+0x28, Member, Type: struct RemoteSessionResume, sessionResume
+	//_Func: public void ClientSessionTransition(ACClient_ClientSessionTransition &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ClientSessionTransition(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~ClientSessionTransition(); @loc=static @len=66 @rva=246384
+	//_Func: public ACClient_ClientSessionTransition & operator=(ACClient_ClientSessionTransition &  _arg0); @loc=optimized @len=0 @rva=0
 	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
 //UDT;
 
-struct SteerBrake {
+struct ACClient_ClientSessionTransition {
 public:
-	bool isActive;
-	DynamicController controller;
-	inline SteerBrake()  { }
-	inline void dtor() { typedef void (*_fpt)(SteerBrake *pthis); _fpt _f=(_fpt)_drva(2549856); _f(this); }
+	bool isTransitioning;
+	UDPPacket sessionPacket;
+	RemoteSessionResume sessionResume;
+	inline ACClient_ClientSessionTransition()  { }
+	inline void dtor() { typedef void (*_fpt)(ACClient_ClientSessionTransition *pthis); _fpt _f=(_fpt)_drva(246384); _f(this); }
 	inline void _guard_obj() {
-		static_assert((sizeof(SteerBrake)==48),"bad size");
-		static_assert((offsetof(SteerBrake,isActive)==0x0),"bad off");
-		static_assert((offsetof(SteerBrake,controller)==0x8),"bad off");
+		static_assert((sizeof(ACClient_ClientSessionTransition)==216),"bad size");
+		static_assert((offsetof(ACClient_ClientSessionTransition,isTransitioning)==0x0),"bad off");
+		static_assert((offsetof(ACClient_ClientSessionTransition,sessionPacket)==0x8),"bad off");
+		static_assert((offsetof(ACClient_ClientSessionTransition,sessionResume)==0x28),"bad off");
+	};
+};
+
+//UDT: class ICarPhysicsStateProvider @len=8 @vfcount=3
+	//_VTable: 
+	//_Func: public void ~ICarPhysicsStateProvider(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=783520
+	//_Func: public void getPhysicsState(CarPhysicsState &  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
+	//_Func: public void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
+	//_Func: public void ICarPhysicsStateProvider(ICarPhysicsStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ICarPhysicsStateProvider(); @loc=optimized @len=0 @rva=0
+	//_Func: public ICarPhysicsStateProvider & operator=(ICarPhysicsStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ICarPhysicsStateProvider {
+public:
+	inline ICarPhysicsStateProvider()  { }
+	virtual ~ICarPhysicsStateProvider();
+	inline void dtor() { typedef void (*_fpt)(ICarPhysicsStateProvider *pthis); _fpt _f=(_fpt)_drva(783520); _f(this); }
+	virtual void getPhysicsState_vf1(CarPhysicsState &  _arg0) = 0;
+	inline void getPhysicsState(CarPhysicsState &  _arg0) { return getPhysicsState_vf1( _arg0); }
+	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > &  _arg0) = 0;
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0) { return getWingState_vf2( _arg0); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ICarPhysicsStateProvider)==8),"bad size");
+	};
+};
+
+//UDT: struct ERSPowerController @len=72
+	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
+	//_Data: this+0x20, Member, Type: class DynamicController, ctrl
+	//_Func: public void ERSPowerController(ERSPowerController & __that); @loc=static @len=102 @rva=2692640
+	//_Func: public void ERSPowerController(); @loc=optimized @len=0 @rva=0
+	//_Func: public void ~ERSPowerController(); @loc=static @len=70 @rva=2693104
+	//_Func: public ERSPowerController & operator=(ERSPowerController &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
+//UDT;
+
+struct ERSPowerController {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	DynamicController ctrl;
+	inline ERSPowerController()  { }
+	inline void ctor(ERSPowerController & __that) { typedef void (*_fpt)(ERSPowerController *pthis, ERSPowerController &); _fpt _f=(_fpt)_drva(2692640); _f(this, __that); }
+	inline void dtor() { typedef void (*_fpt)(ERSPowerController *pthis); _fpt _f=(_fpt)_drva(2693104); _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ERSPowerController)==72),"bad size");
+		static_assert((offsetof(ERSPowerController,name)==0x0),"bad off");
+		static_assert((offsetof(ERSPowerController,ctrl)==0x20),"bad off");
 	};
 };
 
@@ -8374,32 +9507,6 @@ public:
 		static_assert((offsetof(TurboDynamicController,turbo)==0x0),"bad off");
 		static_assert((offsetof(TurboDynamicController,controller)==0x8),"bad off");
 		static_assert((offsetof(TurboDynamicController,isWastegate)==0x30),"bad off");
-	};
-};
-
-//UDT: class ICarPhysicsStateProvider @len=8 @vfcount=3
-	//_VTable: 
-	//_Func: public void ~ICarPhysicsStateProvider(); @intro @virtual vtpo=0 vfid=0 @loc=static @len=11 @rva=783520
-	//_Func: public void getPhysicsState(CarPhysicsState &  _arg0); @intro @pure @virtual vtpo=0 vfid=1 @loc=optimized @len=0 @rva=0
-	//_Func: public void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0); @intro @pure @virtual vtpo=0 vfid=2 @loc=optimized @len=0 @rva=0
-	//_Func: public void ICarPhysicsStateProvider(ICarPhysicsStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void ICarPhysicsStateProvider(); @loc=optimized @len=0 @rva=0
-	//_Func: public ICarPhysicsStateProvider & operator=(ICarPhysicsStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void __local_vftable_ctor_closure(); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ICarPhysicsStateProvider {
-public:
-	inline ICarPhysicsStateProvider()  { }
-	virtual ~ICarPhysicsStateProvider();
-	inline void dtor() { typedef void (*_fpt)(ICarPhysicsStateProvider *pthis); _fpt _f=(_fpt)_drva(783520); _f(this); }
-	virtual void getPhysicsState_vf1(CarPhysicsState &  _arg0) = 0;
-	inline void getPhysicsState(CarPhysicsState &  _arg0) { return getPhysicsState_vf1( _arg0); }
-	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > &  _arg0) = 0;
-	inline void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0) { return getWingState_vf2( _arg0); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ICarPhysicsStateProvider)==8),"bad size");
 	};
 };
 
@@ -8433,30 +9540,6 @@ public:
 		static_assert((offsetof(SteeringSystem,car)==0x8),"bad off");
 		static_assert((offsetof(SteeringSystem,has4ws)==0x10),"bad off");
 		static_assert((offsetof(SteeringSystem,ctrl4ws)==0x18),"bad off");
-	};
-};
-
-//UDT: struct ERSPowerController @len=72
-	//_Data: this+0x0, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, name
-	//_Data: this+0x20, Member, Type: class DynamicController, ctrl
-	//_Func: public void ERSPowerController(ERSPowerController & __that); @loc=static @len=102 @rva=2692640
-	//_Func: public void ERSPowerController(); @loc=optimized @len=0 @rva=0
-	//_Func: public void ~ERSPowerController(); @loc=static @len=70 @rva=2693104
-	//_Func: public ERSPowerController & operator=(ERSPowerController &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @loc=optimized @len=0 @rva=0
-//UDT;
-
-struct ERSPowerController {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	DynamicController ctrl;
-	inline ERSPowerController()  { }
-	inline void ctor(ERSPowerController & __that) { typedef void (*_fpt)(ERSPowerController *pthis, ERSPowerController &); _fpt _f=(_fpt)_drva(2692640); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(ERSPowerController *pthis); _fpt _f=(_fpt)_drva(2693104); _f(this); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ERSPowerController)==72),"bad size");
-		static_assert((offsetof(ERSPowerController,name)==0x0),"bad off");
-		static_assert((offsetof(ERSPowerController,ctrl)==0x20),"bad off");
 	};
 };
 
@@ -8653,41 +9736,6 @@ public:
 	};
 };
 
-//UDT: class ksgui::PopOver @len=392 @vfcount=21
-	//_Base: class ksgui::Control @off=0 @len=376
-	//_Func: public void PopOver(ksgui_PopOver &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void PopOver(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui); @loc=static @len=733 @rva=2447104
-	//_Func: public void ~PopOver(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=79 @rva=2447904
-	//_Func: public void renderPopOver(float dt); @loc=static @len=572 @rva=2447984
-	//_Func: public void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText); @loc=static @len=163 @rva=2448672
-	//_Func: public void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle); @loc=static @len=106 @rva=2448560
-	//_Data: this+0x178, Member, Type: class ksgui::TextBox *, textBox
-	//_Data: this+0x180, Member, Type: class ksgui::Label *, title
-	//_Func: public ksgui_PopOver & operator=(ksgui_PopOver &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ksgui_PopOver : public ksgui_Control {
-public:
-	ksgui_TextBox * textBox;
-	ksgui_Label * title;
-	inline ksgui_PopOver()  { }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2447104); _f(this, name, aGui); }
-	virtual ~ksgui_PopOver();
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447904); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void renderPopOver(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447984); return _f(this, dt); }
-	inline void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448672); return _f(this, aText); }
-	inline void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448560); return _f(this, aTitle); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_PopOver)==392),"bad size");
-		static_assert((offsetof(ksgui_PopOver,textBox)==0x178),"bad off");
-		static_assert((offsetof(ksgui_PopOver,title)==0x180),"bad off");
-	};
-};
-
 //UDT: class Kers @len=248 @vfcount=2
 	//_Base: class ITorqueGenerator @off=0 @len=8
 	//_Func: public void ~Kers(); @virtual vtpo=0 vfid=0 @loc=static @len=71 @rva=2847200
@@ -8771,6 +9819,41 @@ public:
 		static_assert((offsetof(Kers,torqueLUT)==0x48),"bad off");
 		static_assert((offsetof(Kers,controller)==0xC8),"bad off");
 		static_assert((offsetof(Kers,hasController)==0xF0),"bad off");
+	};
+};
+
+//UDT: class ksgui::PopOver @len=392 @vfcount=21
+	//_Base: class ksgui::Control @off=0 @len=376
+	//_Func: public void PopOver(ksgui_PopOver &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void PopOver(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui); @loc=static @len=733 @rva=2447104
+	//_Func: public void ~PopOver(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=79 @rva=2447904
+	//_Func: public void renderPopOver(float dt); @loc=static @len=572 @rva=2447984
+	//_Func: public void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText); @loc=static @len=163 @rva=2448672
+	//_Func: public void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle); @loc=static @len=106 @rva=2448560
+	//_Data: this+0x178, Member, Type: class ksgui::TextBox *, textBox
+	//_Data: this+0x180, Member, Type: class ksgui::Label *, title
+	//_Func: public ksgui_PopOver & operator=(ksgui_PopOver &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ksgui_PopOver : public ksgui_Control {
+public:
+	ksgui_TextBox * textBox;
+	ksgui_Label * title;
+	inline ksgui_PopOver()  { }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2447104); _f(this, name, aGui); }
+	virtual ~ksgui_PopOver();
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447904); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	inline void renderPopOver(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447984); return _f(this, dt); }
+	inline void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448672); return _f(this, aText); }
+	inline void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448560); return _f(this, aTitle); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_PopOver)==392),"bad size");
+		static_assert((offsetof(ksgui_PopOver,textBox)==0x178),"bad off");
+		static_assert((offsetof(ksgui_PopOver,title)==0x180),"bad off");
 	};
 };
 
@@ -9016,6 +10099,57 @@ public:
 	};
 };
 
+//UDT: class ksgui::MovingBar @len=512 @vfcount=21
+	//_Base: class ksgui::Control @off=0 @len=376
+	//_Func: public void MovingBar(ksgui_MovingBar &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void MovingBar(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui); @loc=static @len=755 @rva=2468704
+	//_Func: public void ~MovingBar(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Func: public bool onMouseDown(OnMouseDownEvent & message); @virtual vtpo=0 vfid=10 @loc=static @len=160 @rva=2471936
+	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=383 @rva=2472112
+	//_Func: public void onMouseUp(OnMouseUpEvent & message); @virtual vtpo=0 vfid=11 @loc=static @len=12 @rva=2472640
+	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=391 @rva=2472912
+	//_Data: this+0x178, Member, Type: class ksgui::ScrollBar *, sb
+	//_Data: this+0x180, Member, Type: class Texture, upperTexture
+	//_Data: this+0x1A8, Member, Type: class Texture, lowerTexture
+	//_Data: this+0x1D0, Member, Type: class Texture, middleTexture
+	//_Data: this+0x1F8, Member, Type: class vec2f, pressingPoint
+	//_Func: private vec2f getCenter(); @loc=optimized @len=0 @rva=0
+	//_Func: public ksgui_MovingBar & operator=(ksgui_MovingBar &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ksgui_MovingBar : public ksgui_Control {
+public:
+	ksgui_ScrollBar * sb;
+	Texture upperTexture;
+	Texture lowerTexture;
+	Texture middleTexture;
+	vec2f pressingPoint;
+	inline ksgui_MovingBar()  { }
+	inline void ctor(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_MovingBar *pthis, ksgui_ScrollBar *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2468704); _f(this, scrollBar, aGui); }
+	virtual ~ksgui_MovingBar();
+	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
+	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_MovingBar *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2471936); return _f(this, message); }
+	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
+	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2472112); return _f(this, message); }
+	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
+	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2472640); return _f(this, message); }
+	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_MovingBar *pthis, float); _fpt _f=(_fpt)_drva(2472912); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_MovingBar)==512),"bad size");
+		static_assert((offsetof(ksgui_MovingBar,sb)==0x178),"bad off");
+		static_assert((offsetof(ksgui_MovingBar,upperTexture)==0x180),"bad off");
+		static_assert((offsetof(ksgui_MovingBar,lowerTexture)==0x1A8),"bad off");
+		static_assert((offsetof(ksgui_MovingBar,middleTexture)==0x1D0),"bad off");
+		static_assert((offsetof(ksgui_MovingBar,pressingPoint)==0x1F8),"bad off");
+	};
+};
+
 //UDT: class ksgui::ActiveButton @len=576 @vfcount=21
 	//_Base: class ksgui::Control @off=0 @len=376
 	//_Func: public void ActiveButton(ksgui_ActiveButton &  _arg0); @loc=optimized @len=0 @rva=0
@@ -9102,57 +10236,6 @@ public:
 		static_assert((offsetof(ksgui_ActiveButton,oldStatus)==0x1EC),"bad off");
 		static_assert((offsetof(ksgui_ActiveButton,textureOn)==0x1F0),"bad off");
 		static_assert((offsetof(ksgui_ActiveButton,textureOff)==0x218),"bad off");
-	};
-};
-
-//UDT: class ksgui::MovingBar @len=512 @vfcount=21
-	//_Base: class ksgui::Control @off=0 @len=376
-	//_Func: public void MovingBar(ksgui_MovingBar &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void MovingBar(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui); @loc=static @len=755 @rva=2468704
-	//_Func: public void ~MovingBar(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Func: public bool onMouseDown(OnMouseDownEvent & message); @virtual vtpo=0 vfid=10 @loc=static @len=160 @rva=2471936
-	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=383 @rva=2472112
-	//_Func: public void onMouseUp(OnMouseUpEvent & message); @virtual vtpo=0 vfid=11 @loc=static @len=12 @rva=2472640
-	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=391 @rva=2472912
-	//_Data: this+0x178, Member, Type: class ksgui::ScrollBar *, sb
-	//_Data: this+0x180, Member, Type: class Texture, upperTexture
-	//_Data: this+0x1A8, Member, Type: class Texture, lowerTexture
-	//_Data: this+0x1D0, Member, Type: class Texture, middleTexture
-	//_Data: this+0x1F8, Member, Type: class vec2f, pressingPoint
-	//_Func: private vec2f getCenter(); @loc=optimized @len=0 @rva=0
-	//_Func: public ksgui_MovingBar & operator=(ksgui_MovingBar &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ksgui_MovingBar : public ksgui_Control {
-public:
-	ksgui_ScrollBar * sb;
-	Texture upperTexture;
-	Texture lowerTexture;
-	Texture middleTexture;
-	vec2f pressingPoint;
-	inline ksgui_MovingBar()  { }
-	inline void ctor(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_MovingBar *pthis, ksgui_ScrollBar *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2468704); _f(this, scrollBar, aGui); }
-	virtual ~ksgui_MovingBar();
-	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_MovingBar *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2471936); return _f(this, message); }
-	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
-	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2472112); return _f(this, message); }
-	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
-	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2472640); return _f(this, message); }
-	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_MovingBar *pthis, float); _fpt _f=(_fpt)_drva(2472912); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_MovingBar)==512),"bad size");
-		static_assert((offsetof(ksgui_MovingBar,sb)==0x178),"bad off");
-		static_assert((offsetof(ksgui_MovingBar,upperTexture)==0x180),"bad off");
-		static_assert((offsetof(ksgui_MovingBar,lowerTexture)==0x1A8),"bad off");
-		static_assert((offsetof(ksgui_MovingBar,middleTexture)==0x1D0),"bad off");
-		static_assert((offsetof(ksgui_MovingBar,pressingPoint)==0x1F8),"bad off");
 	};
 };
 
@@ -9402,6 +10485,73 @@ public:
 	};
 };
 
+//UDT: class ksgui::Slider @len=456 @vfcount=21
+	//_Base: class ksgui::Control @off=0 @len=376
+	//_Func: public void Slider(ksgui_Slider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Slider(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed); @loc=static @len=1705 @rva=2423280
+	//_Func: public void ~Slider(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+	//_Data: this+0x178, Member, Type: class Event<ksgui::OnSliderInteraction>, evOnSliderInteraction
+	//_Data: this+0x190, Member, Type: class Event<ksgui::OnCutExtremesChanged>, evOnCutExtremesChanged
+	//_Func: public void setValue(float  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=652 @rva=2426240
+	//_Func: public bool onMouseDown(OnMouseDownEvent & message); @virtual vtpo=0 vfid=10 @loc=static @len=335 @rva=2425280
+	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=392 @rva=2425616
+	//_Func: public void onMouseUp(OnMouseUpEvent & message); @virtual vtpo=0 vfid=11 @loc=static @len=221 @rva=2426016
+	//_Func: public void didSelectACutMarker(ksgui_OnControlClicked &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void setSize(float w, float h); @virtual vtpo=0 vfid=7 @loc=static @len=27 @rva=2427504
+	//_Func: public void updateMarkers(); @loc=static @len=307 @rva=2427536
+	//_Func: public void resetMarkers(); @loc=static @len=293 @rva=2426896
+	//_Func: public void setMarkerLeftPosition(float perc); @loc=static @len=158 @rva=2427200
+	//_Func: public void setMarkerRightPosition(float perc); @loc=static @len=142 @rva=2427360
+	//_Data: this+0x1A8, Member, Type: float, value
+	//_Data: this+0x1B0, Member, Type: class ksgui::Control *, mPos
+	//_Data: this+0x1B8, Member, Type: class ksgui::Control *, markerLeft
+	//_Data: this+0x1C0, Member, Type: class ksgui::Control *, markerRight
+	//_Func: public ksgui_Slider & operator=(ksgui_Slider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ksgui_Slider : public ksgui_Control {
+public:
+	Event<ksgui_OnSliderInteraction> evOnSliderInteraction;
+	Event<ksgui_OnCutExtremesChanged> evOnCutExtremesChanged;
+	float value;
+	ksgui_Control * mPos;
+	ksgui_Control * markerLeft;
+	ksgui_Control * markerRight;
+	inline ksgui_Slider()  { }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (*_fpt)(ksgui_Slider *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2423280); _f(this, name, myGui, dressed); }
+	virtual ~ksgui_Slider();
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2426240); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
+	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Slider *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2425280); return _f(this, message); }
+	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
+	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2425616); return _f(this, message); }
+	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
+	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2426016); return _f(this, message); }
+	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	virtual void setSize_vf7(float w, float h);
+	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Slider *pthis, float, float); _fpt _f=(_fpt)_drva(2427504); return _f(this, w, h); }
+	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	inline void updateMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2427536); return _f(this); }
+	inline void resetMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2426896); return _f(this); }
+	inline void setMarkerLeftPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427200); return _f(this, perc); }
+	inline void setMarkerRightPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427360); return _f(this, perc); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_Slider)==456),"bad size");
+		static_assert((offsetof(ksgui_Slider,evOnSliderInteraction)==0x178),"bad off");
+		static_assert((offsetof(ksgui_Slider,evOnCutExtremesChanged)==0x190),"bad off");
+		static_assert((offsetof(ksgui_Slider,value)==0x1A8),"bad off");
+		static_assert((offsetof(ksgui_Slider,mPos)==0x1B0),"bad off");
+		static_assert((offsetof(ksgui_Slider,markerLeft)==0x1B8),"bad off");
+		static_assert((offsetof(ksgui_Slider,markerRight)==0x1C0),"bad off");
+	};
+};
+
 //UDT: class RaceEngineer @len=24 @vfcount=1
 	//_VTable: 
 	//_Func: public void RaceEngineer(RaceEngineer &  _arg0); @loc=optimized @len=0 @rva=0
@@ -9518,73 +10668,6 @@ public:
 	};
 };
 
-//UDT: class ksgui::Slider @len=456 @vfcount=21
-	//_Base: class ksgui::Control @off=0 @len=376
-	//_Func: public void Slider(ksgui_Slider &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void Slider(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed); @loc=static @len=1705 @rva=2423280
-	//_Func: public void ~Slider(); @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-	//_Data: this+0x178, Member, Type: class Event<ksgui::OnSliderInteraction>, evOnSliderInteraction
-	//_Data: this+0x190, Member, Type: class Event<ksgui::OnCutExtremesChanged>, evOnCutExtremesChanged
-	//_Func: public void setValue(float  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=652 @rva=2426240
-	//_Func: public bool onMouseDown(OnMouseDownEvent & message); @virtual vtpo=0 vfid=10 @loc=static @len=335 @rva=2425280
-	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=392 @rva=2425616
-	//_Func: public void onMouseUp(OnMouseUpEvent & message); @virtual vtpo=0 vfid=11 @loc=static @len=221 @rva=2426016
-	//_Func: public void didSelectACutMarker(ksgui_OnControlClicked &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void setSize(float w, float h); @virtual vtpo=0 vfid=7 @loc=static @len=27 @rva=2427504
-	//_Func: public void updateMarkers(); @loc=static @len=307 @rva=2427536
-	//_Func: public void resetMarkers(); @loc=static @len=293 @rva=2426896
-	//_Func: public void setMarkerLeftPosition(float perc); @loc=static @len=158 @rva=2427200
-	//_Func: public void setMarkerRightPosition(float perc); @loc=static @len=142 @rva=2427360
-	//_Data: this+0x1A8, Member, Type: float, value
-	//_Data: this+0x1B0, Member, Type: class ksgui::Control *, mPos
-	//_Data: this+0x1B8, Member, Type: class ksgui::Control *, markerLeft
-	//_Data: this+0x1C0, Member, Type: class ksgui::Control *, markerRight
-	//_Func: public ksgui_Slider & operator=(ksgui_Slider &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ksgui_Slider : public ksgui_Control {
-public:
-	Event<ksgui_OnSliderInteraction> evOnSliderInteraction;
-	Event<ksgui_OnCutExtremesChanged> evOnCutExtremesChanged;
-	float value;
-	ksgui_Control * mPos;
-	ksgui_Control * markerLeft;
-	ksgui_Control * markerRight;
-	inline ksgui_Slider()  { }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (*_fpt)(ksgui_Slider *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2423280); _f(this, name, myGui, dressed); }
-	virtual ~ksgui_Slider();
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2426240); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Slider *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2425280); return _f(this, message); }
-	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
-	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2425616); return _f(this, message); }
-	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
-	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2426016); return _f(this, message); }
-	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
-	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Slider *pthis, float, float); _fpt _f=(_fpt)_drva(2427504); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline void updateMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2427536); return _f(this); }
-	inline void resetMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2426896); return _f(this); }
-	inline void setMarkerLeftPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427200); return _f(this, perc); }
-	inline void setMarkerRightPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427360); return _f(this, perc); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_Slider)==456),"bad size");
-		static_assert((offsetof(ksgui_Slider,evOnSliderInteraction)==0x178),"bad off");
-		static_assert((offsetof(ksgui_Slider,evOnCutExtremesChanged)==0x190),"bad off");
-		static_assert((offsetof(ksgui_Slider,value)==0x1A8),"bad off");
-		static_assert((offsetof(ksgui_Slider,mPos)==0x1B0),"bad off");
-		static_assert((offsetof(ksgui_Slider,markerLeft)==0x1B8),"bad off");
-		static_assert((offsetof(ksgui_Slider,markerRight)==0x1C0),"bad off");
-	};
-};
-
 //UDT: class ksgui::ScrollBar @len=448 @vfcount=21
 	//_Base: class ksgui::Control @off=0 @len=376
 	//_Func: public void ScrollBar(ksgui_ScrollBar &  _arg0); @loc=optimized @len=0 @rva=0
@@ -9673,6 +10756,104 @@ public:
 		static_assert((offsetof(ksgui_ScrollBar,step)==0x1AC),"bad off");
 		static_assert((offsetof(ksgui_ScrollBar,value)==0x1B0),"bad off");
 		static_assert((offsetof(ksgui_ScrollBar,bar)==0x1B8),"bad off");
+	};
+};
+
+//UDT: class ksgui::Taskbar @len=616 @vfcount=21
+	//_Base: class ksgui::Control @off=0 @len=376
+	//_Func: public void Taskbar(ksgui_Taskbar &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void Taskbar(ksgui_GUI * igui); @loc=static @len=2106 @rva=2460192
+	//_Func: public void ~Taskbar(); @virtual vtpo=0 vfid=0 @loc=static @len=260 @rva=2462304
+	//_Data: this+0x178, Member, Type: int, targetX
+	//_Data: this+0x17C, Member, Type: bool, taskBarFullShowed
+	//_Data: this+0x180, Member, Type: class Event<ksgui::OnControlClicked>, evAppOpened
+	//_Data: this+0x198, Member, Type: class Event<ksgui::OnControlClicked>, evAppDismiss
+	//_Data: this+0x1B0, Member, Type: class std::vector<ksgui::Form *,std::allocator<ksgui::Form *> >, forms
+	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=599 @rva=2465872
+	//_Func: public void addForm(ksgui_Form * form); @loc=static @len=467 @rva=2464784
+	//_Func: public void shutdown(); @loc=optimized @len=0 @rva=0
+	//_Func: public void onAppClicked(ksgui_OnControlClicked &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=70 @rva=2465648
+	//_Func: public void mouseWheelMoved(OnMouseWheelMovedEvent & message); @loc=static @len=186 @rva=2465456
+	//_Func: public void selectVirtualDesktop(int id); @loc=static @len=170 @rva=2466480
+	//_Func: public int getNumDekstops(); @loc=optimized @len=0 @rva=0
+	//_Func: public short cycleDekstop(); @loc=static @len=177 @rva=2465264
+	//_Func: public float getTargetFullShow(); @loc=optimized @len=0 @rva=0
+	//_Func: public float getTargetOutOfSight(); @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getFormCount(); @loc=optimized @len=0 @rva=0
+	//_Data: this+0x1C8, Member, Type: class Event<int>, evOnDesktopChange
+	//_Data: this+0x1E0, Member, Type: class vec4f, selectedColor
+	//_Data: this+0x1F0, Member, Type: class vec4f, unselectedColor
+	//_Data: this+0x200, Member, Type: class ksgui::Control *, topScroller
+	//_Data: this+0x208, Member, Type: class ksgui::Control *, bottomScroller
+	//_Data: this+0x210, Member, Type: class std::vector<ksgui::Control *,std::allocator<ksgui::Control *> >, desktops
+	//_Data: this+0x228, Member, Type: float, targetOutOfSight
+	//_Data: this+0x22C, Member, Type: float, targetFullShow
+	//_Data: this+0x230, Member, Type: int, topAppIndex
+	//_Data: this+0x238, Member, Type: class std::shared_ptr<Font>, appFont
+	//_Data: this+0x248, Member, Type: class std::vector<ksgui::TaskBarIcon *,std::allocator<ksgui::TaskBarIcon *> >, icons
+	//_Data: this+0x260, Member, Type: short, virtualDesktop
+	//_Func: protected void setTopAppIndex(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: protected void updateAppIconsPosition(); @loc=static @len=309 @rva=2466656
+	//_Func: protected ksgui_Control * addDesktop(int id, int x, int y); @loc=static @len=543 @rva=2464240
+	//_Func: public ksgui_Taskbar & operator=(ksgui_Taskbar &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ksgui_Taskbar : public ksgui_Control {
+public:
+	int targetX;
+	bool taskBarFullShowed;
+	Event<ksgui_OnControlClicked> evAppOpened;
+	Event<ksgui_OnControlClicked> evAppDismiss;
+	std::vector<ksgui_Form *,std::allocator<ksgui_Form *> > forms;
+	Event<int> evOnDesktopChange;
+	vec4f selectedColor;
+	vec4f unselectedColor;
+	ksgui_Control * topScroller;
+	ksgui_Control * bottomScroller;
+	std::vector<ksgui_Control *,std::allocator<ksgui_Control *> > desktops;
+	float targetOutOfSight;
+	float targetFullShow;
+	int topAppIndex;
+	std::shared_ptr<Font> appFont;
+	std::vector<ksgui_TaskBarIcon *,std::allocator<ksgui_TaskBarIcon *> > icons;
+	short virtualDesktop;
+	inline ksgui_Taskbar()  { }
+	inline void ctor(ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_GUI *); _fpt _f=(_fpt)_drva(2460192); _f(this, igui); }
+	virtual ~ksgui_Taskbar();
+	inline void dtor() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2462304); _f(this); }
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Taskbar *pthis, float); _fpt _f=(_fpt)_drva(2465872); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	inline void addForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2464784); return _f(this, form); }
+	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
+	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2465648); return _f(this, message); }
+	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void mouseWheelMoved(OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2465456); return _f(this, message); }
+	inline void selectVirtualDesktop(int id) { typedef void (*_fpt)(ksgui_Taskbar *pthis, int); _fpt _f=(_fpt)_drva(2466480); return _f(this, id); }
+	inline short cycleDekstop() { typedef short (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2465264); return _f(this); }
+	inline void updateAppIconsPosition() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2466656); return _f(this); }
+	inline ksgui_Control * addDesktop(int id, int x, int y) { typedef ksgui_Control * (*_fpt)(ksgui_Taskbar *pthis, int, int, int); _fpt _f=(_fpt)_drva(2464240); return _f(this, id, x, y); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ksgui_Taskbar)==616),"bad size");
+		static_assert((offsetof(ksgui_Taskbar,targetX)==0x178),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,taskBarFullShowed)==0x17C),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,evAppOpened)==0x180),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,evAppDismiss)==0x198),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,forms)==0x1B0),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,evOnDesktopChange)==0x1C8),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,selectedColor)==0x1E0),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,unselectedColor)==0x1F0),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,topScroller)==0x200),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,bottomScroller)==0x208),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,desktops)==0x210),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,targetOutOfSight)==0x228),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,targetFullShow)==0x22C),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,topAppIndex)==0x230),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,appFont)==0x238),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,icons)==0x248),"bad off");
+		static_assert((offsetof(ksgui_Taskbar,virtualDesktop)==0x260),"bad off");
 	};
 };
 
@@ -9823,104 +11004,6 @@ public:
 		static_assert((offsetof(ksgui_Spinner,items)==0x250),"bad off");
 		static_assert((offsetof(ksgui_Spinner,mirrored)==0x268),"bad off");
 		static_assert((offsetof(ksgui_Spinner,triangleWidth)==0x26C),"bad off");
-	};
-};
-
-//UDT: class ksgui::Taskbar @len=616 @vfcount=21
-	//_Base: class ksgui::Control @off=0 @len=376
-	//_Func: public void Taskbar(ksgui_Taskbar &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void Taskbar(ksgui_GUI * igui); @loc=static @len=2106 @rva=2460192
-	//_Func: public void ~Taskbar(); @virtual vtpo=0 vfid=0 @loc=static @len=260 @rva=2462304
-	//_Data: this+0x178, Member, Type: int, targetX
-	//_Data: this+0x17C, Member, Type: bool, taskBarFullShowed
-	//_Data: this+0x180, Member, Type: class Event<ksgui::OnControlClicked>, evAppOpened
-	//_Data: this+0x198, Member, Type: class Event<ksgui::OnControlClicked>, evAppDismiss
-	//_Data: this+0x1B0, Member, Type: class std::vector<ksgui::Form *,std::allocator<ksgui::Form *> >, forms
-	//_Func: public void render(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=599 @rva=2465872
-	//_Func: public void addForm(ksgui_Form * form); @loc=static @len=467 @rva=2464784
-	//_Func: public void shutdown(); @loc=optimized @len=0 @rva=0
-	//_Func: public void onAppClicked(ksgui_OnControlClicked &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void onMouseMove(OnMouseMoveEvent & message); @virtual vtpo=0 vfid=12 @loc=static @len=70 @rva=2465648
-	//_Func: public void mouseWheelMoved(OnMouseWheelMovedEvent & message); @loc=static @len=186 @rva=2465456
-	//_Func: public void selectVirtualDesktop(int id); @loc=static @len=170 @rva=2466480
-	//_Func: public int getNumDekstops(); @loc=optimized @len=0 @rva=0
-	//_Func: public short cycleDekstop(); @loc=static @len=177 @rva=2465264
-	//_Func: public float getTargetFullShow(); @loc=optimized @len=0 @rva=0
-	//_Func: public float getTargetOutOfSight(); @loc=optimized @len=0 @rva=0
-	//_Func: public unsigned int getFormCount(); @loc=optimized @len=0 @rva=0
-	//_Data: this+0x1C8, Member, Type: class Event<int>, evOnDesktopChange
-	//_Data: this+0x1E0, Member, Type: class vec4f, selectedColor
-	//_Data: this+0x1F0, Member, Type: class vec4f, unselectedColor
-	//_Data: this+0x200, Member, Type: class ksgui::Control *, topScroller
-	//_Data: this+0x208, Member, Type: class ksgui::Control *, bottomScroller
-	//_Data: this+0x210, Member, Type: class std::vector<ksgui::Control *,std::allocator<ksgui::Control *> >, desktops
-	//_Data: this+0x228, Member, Type: float, targetOutOfSight
-	//_Data: this+0x22C, Member, Type: float, targetFullShow
-	//_Data: this+0x230, Member, Type: int, topAppIndex
-	//_Data: this+0x238, Member, Type: class std::shared_ptr<Font>, appFont
-	//_Data: this+0x248, Member, Type: class std::vector<ksgui::TaskBarIcon *,std::allocator<ksgui::TaskBarIcon *> >, icons
-	//_Data: this+0x260, Member, Type: short, virtualDesktop
-	//_Func: protected void setTopAppIndex(int  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: protected void updateAppIconsPosition(); @loc=static @len=309 @rva=2466656
-	//_Func: protected ksgui_Control * addDesktop(int id, int x, int y); @loc=static @len=543 @rva=2464240
-	//_Func: public ksgui_Taskbar & operator=(ksgui_Taskbar &  _arg0); @loc=optimized @len=0 @rva=0
-	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
-//UDT;
-
-class ksgui_Taskbar : public ksgui_Control {
-public:
-	int targetX;
-	bool taskBarFullShowed;
-	Event<ksgui_OnControlClicked> evAppOpened;
-	Event<ksgui_OnControlClicked> evAppDismiss;
-	std::vector<ksgui_Form *,std::allocator<ksgui_Form *> > forms;
-	Event<int> evOnDesktopChange;
-	vec4f selectedColor;
-	vec4f unselectedColor;
-	ksgui_Control * topScroller;
-	ksgui_Control * bottomScroller;
-	std::vector<ksgui_Control *,std::allocator<ksgui_Control *> > desktops;
-	float targetOutOfSight;
-	float targetFullShow;
-	int topAppIndex;
-	std::shared_ptr<Font> appFont;
-	std::vector<ksgui_TaskBarIcon *,std::allocator<ksgui_TaskBarIcon *> > icons;
-	short virtualDesktop;
-	inline ksgui_Taskbar()  { }
-	inline void ctor(ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_GUI *); _fpt _f=(_fpt)_drva(2460192); _f(this, igui); }
-	virtual ~ksgui_Taskbar();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2462304); _f(this); }
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Taskbar *pthis, float); _fpt _f=(_fpt)_drva(2465872); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void addForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2464784); return _f(this, form); }
-	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2465648); return _f(this, message); }
-	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	inline void mouseWheelMoved(OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2465456); return _f(this, message); }
-	inline void selectVirtualDesktop(int id) { typedef void (*_fpt)(ksgui_Taskbar *pthis, int); _fpt _f=(_fpt)_drva(2466480); return _f(this, id); }
-	inline short cycleDekstop() { typedef short (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2465264); return _f(this); }
-	inline void updateAppIconsPosition() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2466656); return _f(this); }
-	inline ksgui_Control * addDesktop(int id, int x, int y) { typedef ksgui_Control * (*_fpt)(ksgui_Taskbar *pthis, int, int, int); _fpt _f=(_fpt)_drva(2464240); return _f(this, id, x, y); }
-	inline void _guard_obj() {
-		static_assert((sizeof(ksgui_Taskbar)==616),"bad size");
-		static_assert((offsetof(ksgui_Taskbar,targetX)==0x178),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,taskBarFullShowed)==0x17C),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,evAppOpened)==0x180),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,evAppDismiss)==0x198),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,forms)==0x1B0),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,evOnDesktopChange)==0x1C8),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,selectedColor)==0x1E0),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,unselectedColor)==0x1F0),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,topScroller)==0x200),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,bottomScroller)==0x208),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,desktops)==0x210),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,targetOutOfSight)==0x228),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,targetFullShow)==0x22C),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,topAppIndex)==0x230),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,appFont)==0x238),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,icons)==0x248),"bad off");
-		static_assert((offsetof(ksgui_Taskbar,virtualDesktop)==0x260),"bad off");
 	};
 };
 
@@ -11739,6 +12822,265 @@ public:
 	};
 };
 
+//UDT: class NetCarStateProvider @len=5560 @multibase=2
+	//_Base: class GameObject @off=0 @len=88
+	//_Base: class ICarPhysicsStateProvider @off=88 @len=8
+	//_Func: public void NetCarStateProvider(NetCarStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void NetCarStateProvider(NetCarStateProviderDef & def); @loc=static @len=4691 @rva=1141872
+	//_Func: public void ~NetCarStateProvider(); @virtual vtpo=0 vfid=0 @loc=static @len=521 @rva=1147072
+	//_Data: this+0x60, Member, Type: class Event<OnSectorSplitEvent>, evOnSectorSplit
+	//_Data: this+0x78, Member, Type: unsigned char, sessionID
+	//_Data: this+0x80, Member, Type: struct DriverInfo, driverInfo
+	//_Data: this+0x100, Member, Type: class vec3f, errorVector
+	//_Data: this+0x10C, Member, Type: int, guid
+	//_Data: this+0x110, Member, Type: int, ping
+	//_Data: this+0x114, Member, Type: unsigned int, lastLap
+	//_Data: this+0x118, Member, Type: unsigned int, bestLap
+	//_Data: this+0x120, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, currentSplits
+	//_Data: this+0x138, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, personalBestSplits
+	//_Data: this+0x150, Member, Type: double, lastUpdateTime
+	//_Data: this+0x158, Member, Type: double, lastTime
+	//_Data: this+0x160, Member, Type: class std::vector<Lap,std::allocator<Lap> >, laps
+	//_Data: this+0x178, Member, Type: struct NetCarPushToPass, p2p
+	//_Data: this+0x18C, Member, Type: bool, hasEverReceivedAPacket
+	//_Data: this+0x190, Member, Type: float, ballastKG
+	//_Data: this+0x194, Member, Type: float, restrictor
+	//_Data: this+0x198, Member, Type: float, hasCollisionInThisStep
+	//_Func: public void update(float dt); @virtual vtpo=0 vfid=1 @loc=static @len=82 @rva=1169744
+	//_Func: public void getPhysicsState(CarPhysicsState & physicsState); @virtual vtpo=88 vfid=1 @loc=static @len=239 @rva=1151520
+	//_Func: public void getWingState(std::vector<WingState,std::allocator<WingState> > & ws); @virtual vtpo=88 vfid=2 @loc=static @len=18 @rva=1153600
+	//_Func: public void onRemoteStateReceived(NetCarState & s); @loc=static @len=1814 @rva=1159648
+	//_Func: public void setCarAvatar(CarAvatar * av); @loc=static @len=91 @rva=1162368
+	//_Func: public CarAvatar * getCarAvatar(); @loc=optimized @len=0 @rva=0
+	//_Func: public NetCarQoS getQos(); @loc=optimized @len=0 @rva=0
+	//_Func: public void resetQos(); @loc=optimized @len=0 @rva=0
+	//_Func: public void setDisconnected(); @loc=optimized @len=0 @rva=0
+	//_Func: public IRigidBody * getBody(); @loc=optimized @len=0 @rva=0
+	//_Func: public void resetDamage(); @loc=static @len=64 @rva=1162048
+	//_Func: public void setDamageZoneLevel(float * zones); @loc=static @len=20 @rva=1162464
+	//_Func: public void activateP2P(); @loc=static @len=24 @rva=1150672
+	//_Tag 17
+	//_Data: this+0x19C, Member, Type: struct NetCarQoS, qos
+	//_Data: this+0x1A8, Member, Type: class ACClient *, client
+	//_Data: this+0x1B0, Member, Type: class mat44f, bodyMatrix
+	//_Data: this+0x1F0, Member, Type: class mat44f[0x4], wheelMatrix
+	//_Data: this+0x2F0, Member, Type: class mat44f[0x4], suspMatrix
+	//_Data: this+0x3F0, Member, Type: struct NetCarState[0x3], netStates
+	//_Data: this+0x588, Member, Type: class vec3f, lastScreenPos
+	//_Data: this+0x594, Member, Type: class mat44f[0x4], wheelBasePosLS
+	//_Data: this+0x698, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, unixName
+	//_Data: this+0x6B8, Member, Type: class IRayTrackCollisionProvider *, rayCastProvider
+	//_Data: this+0x6C0, Member, Type: class vec3f, lastVelocity
+	//_Data: this+0x6CC, Member, Type: class vec3f, instantVelocity
+	//_Data: this+0x6D8, Member, Type: class vec3f, currentVelocity
+	//_Data: this+0x6E8, Member, Type: struct CarPhysicsState, state
+	//_Data: this+0x1258, Member, Type: class std::vector<WingState,std::allocator<WingState> >, wingStates
+	//_Data: this+0x1270, Member, Type: class std::vector<std::vector<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> >,std::allocator<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> > > >,std::allocator<std::vector<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> >,std::allocator<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> > > > > >, wingControllerLists
+	//_Data: this+0x1288, Member, Type: class std::unique_ptr<Node,std::default_delete<Node> >, colliderModel
+	//_Data: this+0x1290, Member, Type: class mat44f, pitPosition
+	//_Data: this+0x12D0, Member, Type: struct SlipStream, slipStream
+	//_Data: this+0x1338, Member, Type: struct DriverInfo, oldDriverInfo
+	//_Data: this+0x13B8, Member, Type: bool, isDisconnected
+	//_Data: this+0x13BC, Member, Type: float, lastStepSpeedkmh
+	//_Data: this+0x13C0, Member, Type: float, lastStepGas
+	//_Data: this+0x13C8, Member, Type: class std::vector<DRSWingSetting,std::allocator<DRSWingSetting> >, drsWingSettings
+	//_Data: this+0x13E0, Member, Type: class vec3f, smoothVelocity
+	//_Data: this+0x13F0, Member, Type: class Concurrency::concurrent_queue<NetCarState,std::allocator<NetCarState> >, incomingStateQueue
+	//_Data: this+0x1418, Member, Type: class std::vector<CarPhysicsState,std::allocator<CarPhysicsState> >, stateCache
+	//_Data: this+0x1430, Member, Type: double, lastIntegrationTime
+	//_Data: this+0x1438, Member, Type: float[0x4], tyreRadius
+	//_Data: this+0x1448, Member, Type: class vec3f, graphicsOffset
+	//_Data: this+0x1454, Member, Type: float, graphicsPitchRotation
+	//_Data: this+0x1458, Member, Type: class mat44f[0x4], tyreLocalRotation
+	//_Data: this+0x1558, Member, Type: class CarAvatar *, avatar
+	//_Data: this+0x1560, Member, Type: class IRigidBody *, body
+	//_Data: this+0x1568, Member, Type: class vec3f, lastDistanceV
+	//_Data: this+0x1574, Member, Type: class vec3f, lastAxis
+	//_Data: this+0x1580, Member, Type: struct SplineLocationData, splineLocationData
+	//_Data: this+0x1588, Member, Type: double, lastSliceTimeStamp
+	//_Data: this+0x1590, Member, Type: float, currentAOA
+	//_Data: this+0x1594, Member, Type: float, carVerticalOffset
+	//_Data: this+0x1598, Member, Type: bool, useLog
+	//_Tag 11
+	//_Data: this+0x15A0, Member, Type: struct NetCarStateProvider::LagDebug, lagDebug
+	//_Func: private bool isLagging(double  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private mat44f getTyreMatrix(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private mat44f getSmoothBodyMatrix(double physics_time, CarPhysicsState & state); @loc=static @len=1825 @rva=1151760
+	//_Func: private vec3f getNetStateLocalVel(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private vec3f getNetStateVelocity(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private vec3f getNetStateAcceleration(int  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private vec3f projectNetStatePos(int ti, double t); @loc=static @len=334 @rva=1161472
+	//_Func: private double getCorrectionDeltaTime(double  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private void getNetStateAngularVelocity(int  _arg0, mat44f &  _arg1, mat44f &  _arg2, vec3f &  _arg3, float &  _arg4); @loc=optimized @len=0 @rva=0
+	//_Func: private void initPhysicsValues(); @loc=static @len=2715 @rva=1155040
+	//_Func: private void step(double physics_time); @loc=static @len=4695 @rva=1162496
+	//_Func: private void stepLagging(double physics_time); @loc=static @len=2030 @rva=1167200
+	//_Func: private void debugLag(bool isLagging, double physics_time); @loc=static @len=207 @rva=1151312
+	//_Func: private void initWings(); @loc=static @len=1884 @rva=1157760
+	//_Func: private void stepWings(); @loc=static @len=389 @rva=1169344
+	//_Func: private void initP2P(); @loc=static @len=675 @rva=1154352
+	//_Func: private void stepP2P(); @loc=static @len=99 @rva=1169232
+	//_Func: private void initDRS(); @loc=static @len=706 @rva=1153632
+	//_Func: public NetCarStateProvider & operator=(NetCarStateProvider &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class NetCarStateProvider : public GameObject, public ICarPhysicsStateProvider {
+public:
+	Event<OnSectorSplitEvent> evOnSectorSplit;
+	unsigned char sessionID;
+	DriverInfo driverInfo;
+	vec3f errorVector;
+	int guid;
+	int ping;
+	unsigned int lastLap;
+	unsigned int bestLap;
+	std::vector<unsigned int,std::allocator<unsigned int> > currentSplits;
+	std::vector<unsigned int,std::allocator<unsigned int> > personalBestSplits;
+	double lastUpdateTime;
+	double lastTime;
+	std::vector<Lap,std::allocator<Lap> > laps;
+	NetCarPushToPass p2p;
+	bool hasEverReceivedAPacket;
+	float ballastKG;
+	float restrictor;
+	float hasCollisionInThisStep;
+	NetCarQoS qos;
+	ACClient * client;
+	mat44f bodyMatrix;
+	mat44f wheelMatrix[0x4];
+	mat44f suspMatrix[0x4];
+	NetCarState netStates[0x3];
+	vec3f lastScreenPos;
+	mat44f wheelBasePosLS[0x4];
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > unixName;
+	IRayTrackCollisionProvider * rayCastProvider;
+	vec3f lastVelocity;
+	vec3f instantVelocity;
+	vec3f currentVelocity;
+	CarPhysicsState state;
+	std::vector<WingState,std::allocator<WingState> > wingStates;
+	std::vector<std::vector<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> >,std::allocator<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> > > >,std::allocator<std::vector<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> >,std::allocator<std::unique_ptr<DynamicWingController,std::default_delete<DynamicWingController> > > > > > wingControllerLists;
+	std::unique_ptr<Node,std::default_delete<Node> > colliderModel;
+	mat44f pitPosition;
+	SlipStream slipStream;
+	DriverInfo oldDriverInfo;
+	bool isDisconnected;
+	float lastStepSpeedkmh;
+	float lastStepGas;
+	std::vector<DRSWingSetting,std::allocator<DRSWingSetting> > drsWingSettings;
+	vec3f smoothVelocity;
+	Concurrency::concurrent_queue<NetCarState,std::allocator<NetCarState> > incomingStateQueue;
+	std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > stateCache;
+	double lastIntegrationTime;
+	float tyreRadius[0x4];
+	vec3f graphicsOffset;
+	float graphicsPitchRotation;
+	mat44f tyreLocalRotation[0x4];
+	CarAvatar * avatar;
+	IRigidBody * body;
+	vec3f lastDistanceV;
+	vec3f lastAxis;
+	SplineLocationData splineLocationData;
+	double lastSliceTimeStamp;
+	float currentAOA;
+	float carVerticalOffset;
+	bool useLog;
+	NetCarStateProvider_LagDebug lagDebug;
+	inline NetCarStateProvider()  { }
+	inline void ctor(NetCarStateProviderDef & def) { typedef void (*_fpt)(NetCarStateProvider *pthis, NetCarStateProviderDef &); _fpt _f=(_fpt)_drva(1141872); _f(this, def); }
+	virtual ~NetCarStateProvider();
+	inline void dtor() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1147072); _f(this); }
+	virtual void update_vf1(float dt);
+	inline void update_impl(float dt) { typedef void (*_fpt)(NetCarStateProvider *pthis, float); _fpt _f=(_fpt)_drva(1169744); return _f(this, dt); }
+	inline void update(float dt) { return update_vf1(dt); }
+	virtual void getPhysicsState_vf1(CarPhysicsState & physicsState);
+	inline void getPhysicsState_impl(CarPhysicsState & physicsState) { typedef void (*_fpt)(NetCarStateProvider *pthis, CarPhysicsState &); _fpt _f=(_fpt)_drva(1151520); return _f(this, physicsState); }
+	inline void getPhysicsState(CarPhysicsState & physicsState) { return getPhysicsState_vf1(physicsState); }
+	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > & ws);
+	inline void getWingState_impl(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (*_fpt)(NetCarStateProvider *pthis, std::vector<WingState,std::allocator<WingState> > &); _fpt _f=(_fpt)_drva(1153600); return _f(this, ws); }
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & ws) { return getWingState_vf2(ws); }
+	inline void onRemoteStateReceived(NetCarState & s) { typedef void (*_fpt)(NetCarStateProvider *pthis, NetCarState &); _fpt _f=(_fpt)_drva(1159648); return _f(this, s); }
+	inline void setCarAvatar(CarAvatar * av) { typedef void (*_fpt)(NetCarStateProvider *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1162368); return _f(this, av); }
+	inline void resetDamage() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1162048); return _f(this); }
+	inline void setDamageZoneLevel(float * zones) { typedef void (*_fpt)(NetCarStateProvider *pthis, float *); _fpt _f=(_fpt)_drva(1162464); return _f(this, zones); }
+	inline void activateP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1150672); return _f(this); }
+	inline mat44f getSmoothBodyMatrix(double physics_time, CarPhysicsState & state) { typedef mat44f (*_fpt)(NetCarStateProvider *pthis, double, CarPhysicsState &); _fpt _f=(_fpt)_drva(1151760); return _f(this, physics_time, state); }
+	inline vec3f projectNetStatePos(int ti, double t) { typedef vec3f (*_fpt)(NetCarStateProvider *pthis, int, double); _fpt _f=(_fpt)_drva(1161472); return _f(this, ti, t); }
+	inline void initPhysicsValues() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1155040); return _f(this); }
+	inline void step(double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, double); _fpt _f=(_fpt)_drva(1162496); return _f(this, physics_time); }
+	inline void stepLagging(double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, double); _fpt _f=(_fpt)_drva(1167200); return _f(this, physics_time); }
+	inline void debugLag(bool isLagging, double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, bool, double); _fpt _f=(_fpt)_drva(1151312); return _f(this, isLagging, physics_time); }
+	inline void initWings() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1157760); return _f(this); }
+	inline void stepWings() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1169344); return _f(this); }
+	inline void initP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1154352); return _f(this); }
+	inline void stepP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1169232); return _f(this); }
+	inline void initDRS() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1153632); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(NetCarStateProvider)==5560),"bad size");
+		static_assert((offsetof(NetCarStateProvider,evOnSectorSplit)==0x60),"bad off");
+		static_assert((offsetof(NetCarStateProvider,sessionID)==0x78),"bad off");
+		static_assert((offsetof(NetCarStateProvider,driverInfo)==0x80),"bad off");
+		static_assert((offsetof(NetCarStateProvider,errorVector)==0x100),"bad off");
+		static_assert((offsetof(NetCarStateProvider,guid)==0x10C),"bad off");
+		static_assert((offsetof(NetCarStateProvider,ping)==0x110),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastLap)==0x114),"bad off");
+		static_assert((offsetof(NetCarStateProvider,bestLap)==0x118),"bad off");
+		static_assert((offsetof(NetCarStateProvider,currentSplits)==0x120),"bad off");
+		static_assert((offsetof(NetCarStateProvider,personalBestSplits)==0x138),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastUpdateTime)==0x150),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastTime)==0x158),"bad off");
+		static_assert((offsetof(NetCarStateProvider,laps)==0x160),"bad off");
+		static_assert((offsetof(NetCarStateProvider,p2p)==0x178),"bad off");
+		static_assert((offsetof(NetCarStateProvider,hasEverReceivedAPacket)==0x18C),"bad off");
+		static_assert((offsetof(NetCarStateProvider,ballastKG)==0x190),"bad off");
+		static_assert((offsetof(NetCarStateProvider,restrictor)==0x194),"bad off");
+		static_assert((offsetof(NetCarStateProvider,hasCollisionInThisStep)==0x198),"bad off");
+		static_assert((offsetof(NetCarStateProvider,qos)==0x19C),"bad off");
+		static_assert((offsetof(NetCarStateProvider,client)==0x1A8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,bodyMatrix)==0x1B0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,wheelMatrix)==0x1F0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,suspMatrix)==0x2F0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,netStates)==0x3F0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastScreenPos)==0x588),"bad off");
+		static_assert((offsetof(NetCarStateProvider,wheelBasePosLS)==0x594),"bad off");
+		static_assert((offsetof(NetCarStateProvider,unixName)==0x698),"bad off");
+		static_assert((offsetof(NetCarStateProvider,rayCastProvider)==0x6B8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastVelocity)==0x6C0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,instantVelocity)==0x6CC),"bad off");
+		static_assert((offsetof(NetCarStateProvider,currentVelocity)==0x6D8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,state)==0x6E8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,wingStates)==0x1258),"bad off");
+		static_assert((offsetof(NetCarStateProvider,wingControllerLists)==0x1270),"bad off");
+		static_assert((offsetof(NetCarStateProvider,colliderModel)==0x1288),"bad off");
+		static_assert((offsetof(NetCarStateProvider,pitPosition)==0x1290),"bad off");
+		static_assert((offsetof(NetCarStateProvider,slipStream)==0x12D0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,oldDriverInfo)==0x1338),"bad off");
+		static_assert((offsetof(NetCarStateProvider,isDisconnected)==0x13B8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastStepSpeedkmh)==0x13BC),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastStepGas)==0x13C0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,drsWingSettings)==0x13C8),"bad off");
+		static_assert((offsetof(NetCarStateProvider,smoothVelocity)==0x13E0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,incomingStateQueue)==0x13F0),"bad off");
+		static_assert((offsetof(NetCarStateProvider,stateCache)==0x1418),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastIntegrationTime)==0x1430),"bad off");
+		static_assert((offsetof(NetCarStateProvider,tyreRadius)==0x1438),"bad off");
+		static_assert((offsetof(NetCarStateProvider,graphicsOffset)==0x1448),"bad off");
+		static_assert((offsetof(NetCarStateProvider,graphicsPitchRotation)==0x1454),"bad off");
+		static_assert((offsetof(NetCarStateProvider,tyreLocalRotation)==0x1458),"bad off");
+		static_assert((offsetof(NetCarStateProvider,avatar)==0x1558),"bad off");
+		static_assert((offsetof(NetCarStateProvider,body)==0x1560),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastDistanceV)==0x1568),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastAxis)==0x1574),"bad off");
+		static_assert((offsetof(NetCarStateProvider,splineLocationData)==0x1580),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lastSliceTimeStamp)==0x1588),"bad off");
+		static_assert((offsetof(NetCarStateProvider,currentAOA)==0x1590),"bad off");
+		static_assert((offsetof(NetCarStateProvider,carVerticalOffset)==0x1594),"bad off");
+		static_assert((offsetof(NetCarStateProvider,useLog)==0x1598),"bad off");
+		static_assert((offsetof(NetCarStateProvider,lagDebug)==0x15A0),"bad off");
+	};
+};
+
 //UDT: class GraphicsManager @len=1248 @vfcount=1
 	//_VTable: 
 	//_Func: public void GraphicsManager(GraphicsManager &  _arg0); @loc=optimized @len=0 @rva=0
@@ -11934,6 +13276,423 @@ public:
 		static_assert((offsetof(GraphicsManager,sysBuffers)==0x408),"bad off");
 		static_assert((offsetof(GraphicsManager,cBuffersMap)==0x4A8),"bad off");
 		static_assert((offsetof(GraphicsManager,shaderManager)==0x4B8),"bad off");
+	};
+};
+
+//UDT: class ACClient @len=67608 @vfcount=6
+	//_Base: class GameObject @off=0 @len=88
+	//_Func: public void ACClient(ACClient &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void ACClient(Sim * isim); @loc=static @len=3257 @rva=238272
+	//_Func: public void ~ACClient(); @virtual vtpo=0 vfid=0 @loc=static @len=1088 @rva=244880
+	//_Data: this+0x58, Member, Type: class Event<OnChatMessageEvent>, evOnChatMessage
+	//_Data: this+0x70, Member, Type: class Event<RemoteSession>, evOnOnlineNewSession
+	//_Data: this+0x88, Member, Type: class Event<RemoteSessionResume>, evOnOnlineEndSession
+	//_Data: this+0xA0, Member, Type: class Event<OnLapCompletedEvent>, evOnLapCompleted
+	//_Data: this+0xB8, Member, Type: class Event<ReceivedVoteDef>, evOnVoteReceived
+	//_Data: this+0xD0, Member, Type: class Event<bool>, evOnVoteNotPassed
+	//_Data: this+0xE8, Member, Type: class Event<bool>, evOnMandatoryPitDone
+	//_Data: this+0x100, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, serverName
+	//_Data: this+0x120, Member, Type: float, remoteSpring
+	//_Data: this+0x124, Member, Type: float, remoteDamper
+	//_Data: this+0x128, Member, Type: float, remoteFactor
+	//_Data: this+0x130, Member, Type: struct DriverInfo, driverInfo
+	//_Data: this+0x1B0, Member, Type: struct ServerInfo, serverInfo
+	//_Data: this+0x1F8, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, guid
+	//_Data: this+0x218, Member, Type: struct ClientRules, rules
+	//_Data: this+0x21C, Member, Type: struct ServerDrivingAssists, serverDrivingAssists
+	//_Data: this+0x228, Member, Type: bool, isTVMode
+	//_Data: this+0x230, Member, Type: double, handshakeServerTimeS
+	//_Data: this+0x238, Member, Type: class std::vector<unsigned char,std::allocator<unsigned char> >, playerCarMD5
+	//_Func: public void renderHUD(float dt); @virtual vtpo=0 vfid=3 @loc=static @len=723 @rva=333392
+	//_Func: public ClientHandshakeResult handshakeTCP(); @loc=static @len=8613 @rva=297808
+	//_Func: public bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars); @loc=static @len=4972 @rva=290688
+	//_Func: public void beginUpdateMode(); @loc=static @len=284 @rva=280288
+	//_Func: public void sendChat(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message); @loc=static @len=263 @rva=338576
+	//_Func: public void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID); @loc=static @len=253 @rva=338848
+	//_Func: public bool hasVoted(); @loc=static @len=12 @rva=306432
+	//_Func: public CarAvatar * getCurrentVotingTarget(); @loc=static @len=12 @rva=287824
+	//_Func: public float getVotingTimeLeft(); @loc=static @len=13 @rva=296512
+	//_Func: public VoteType getCurrentVoteType(); @loc=static @len=11 @rva=287808
+	//_Func: public float getVotingMaxTime(); @loc=static @len=13 @rva=296496
+	//_Func: public void addNetCar(NetCarStateProvider * nc); @loc=static @len=31 @rva=279232
+	//_Func: public NetCarStateProvider * getNetCarFromSessionID(unsigned char id); @loc=static @len=44 @rva=290528
+	//_Func: public void update(float deltaT); @virtual vtpo=0 vfid=1 @loc=static @len=1323 @rva=342832
+	//_Func: public double getPhysicsTime(); @loc=static @len=20 @rva=290576
+	//_Func: public bool isAllowedToSendChatMessage(); @loc=static @len=29 @rva=307616
+	//_Func: public int getPing(CarAvatar * anAvatar); @loc=static @len=75 @rva=290608
+	//_Func: public int getQOS(); @loc=optimized @len=0 @rva=0
+	//_Func: public RemoteSession getCurrentSession(); @loc=static @len=41 @rva=287648
+	//_Func: public RemoteSessionResult & getCurrentSessionResults(); @loc=static @len=8 @rva=287792
+	//_Func: public CarAvatar * getCarAvatarFromSessionID(unsigned char sesid); @loc=static @len=107 @rva=286720
+	//_Func: public int getSessionIDFromCarAvatar(CarAvatar * anAvatar); @loc=static @len=78 @rva=295696
+	//_Func: public int getSessionCount(); @loc=static @len=19 @rva=295664
+	//_Func: public int getCurrentSessionIndex(); @loc=static @len=88 @rva=287696
+	//_Func: public RemoteSession getSessionInfo(int index); @loc=static @len=152 @rva=295936
+	//_Func: public void shutdown(); @virtual vtpo=0 vfid=5 @loc=static @len=120 @rva=339248
+	//_Func: public double getSessionTimeLeft(); @loc=static @len=57 @rva=296096
+	//_Func: public double getSessionOverTime(); @loc=optimized @len=0 @rva=0
+	//_Func: public int getFinishPosition(); @loc=optimized @len=0 @rva=0
+	//_Func: public int getHandshakeCarPosition(); @loc=static @len=7 @rva=1278848
+	//_Func: public unsigned int getCarPosition(CarAvatar * car); @loc=static @len=189 @rva=287168
+	//_Func: public unsigned int getBestLap(); @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getBestLap(CarAvatar * car); @loc=static @len=108 @rva=286272
+	//_Func: public unsigned int getInstanceBestLap(CarAvatar * car); @loc=static @len=108 @rva=287856
+	//_Func: public Lap getLastLap(CarAvatar * car); @loc=static @len=325 @rva=290000
+	//_Func: public unsigned int getLapCount(CarAvatar * car); @loc=static @len=177 @rva=287968
+	//_Func: public void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps); @loc=static @len=1834 @rva=288160
+	//_Func: public bool isBestSplit(int & sector, int & t, bool & isGlobal, CarAvatar * car); @loc=static @len=202 @rva=307648
+	//_Func: public unsigned int getBestSplit(int & sector, bool & isGlobal, CarAvatar * car); @loc=static @len=322 @rva=286384
+	//_Func: public unsigned int getLastSplit(CarAvatar * car, int & sector); @loc=static @len=178 @rva=290336
+	//_Func: public unsigned int getSplit(CarAvatar * car, int & sector); @loc=static @len=274 @rva=296160
+	//_Func: public void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, unsigned int & sector, unsigned int & time, unsigned int & cuts); @loc=static @len=397 @rva=279264
+	//_Func: public void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, unsigned int & laptime, unsigned int & cuts); @loc=static @len=407 @rva=339488
+	//_Func: public Lap getCurrentLap(CarAvatar * car); @loc=static @len=273 @rva=287360
+	//_Func: public void resetCurrentLaps(); @loc=static @len=769 @rva=334128
+	//_Func: public double getSendInterval(); @loc=optimized @len=0 @rva=0
+	//_Func: public NetCarStateProvider * getNetCarFromBody(IRigidBody *  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name); @loc=static @len=322 @rva=286832
+	//_Func: public double getTimetoWait(); @loc=static @len=9 @rva=296448
+	//_Func: public bool getHasExtraLap(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool getIsLastLap(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool getHasLeaderFinished(); @loc=optimized @len=0 @rva=0
+	//_Func: public bool getHasPlayerFinished(); @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getPitWindowStart(); @loc=optimized @len=0 @rva=0
+	//_Func: public unsigned int getPitWindowEnd(); @loc=optimized @len=0 @rva=0
+	//_Func: public void setInvertedGridPositions(int pos); @loc=static @len=7 @rva=1315584
+	//_Func: public int getInvertedGridPositions(); @loc=static @len=7 @rva=1279296
+	//_Func: public void askForP2Pvalue(); @loc=static @len=169 @rva=279664
+	//_Data: this+0x250, Member, Type: bool, debugStartingLights
+	//_Data: this+0x251, Member, Type: bool, isAssociated
+	//_Tag 11
+	//_Data: this+0x258, Member, Type: struct ACClient::ClientSessionTransition, transitionInfo
+	//_Data: this+0x330, Member, Type: struct RemoteSessionResult, sessionResultsGT
+	//_Data: this+0x3A0, Member, Type: class UDPSocket, sok
+	//_Tag 17
+	//_Data: this+0x3D8, Member, Type: class std::vector<std::vector<unsigned char,std::allocator<unsigned char> >,std::allocator<std::vector<unsigned char,std::allocator<unsigned char> > > >, checksumResults
+	//_Data: this+0x3F0, Member, Type: class Sim *, sim
+	//_Data: this+0x3F8, Member, Type: class Car *, car
+	//_Data: this+0x400, Member, Type: class ACClientVotingManager *, votingManager
+	//_Data: this+0x408, Member, Type: class CarAvatar *, avatar
+	//_Data: this+0x410, Member, Type: double, lastSendTime
+	//_Data: this+0x418, Member, Type: double, sendInterval
+	//_Data: this+0x420, Member, Type: double, lastChatMessage
+	//_Data: this+0x428, Member, Type: double, lastSpectatorPulse
+	//_Data: this+0x430, Member, Type: class IPAddress, serverIP
+	//_Data: this+0x440, Member, Type: unsigned char, sessionID
+	//_Data: this+0x448, Member, Type: class std::vector<NetCarStateProvider *,std::allocator<NetCarStateProvider *> >, netCars
+	//_Data: this+0x460, Member, Type: unsigned char, pakSequenceIndex
+	//_Data: this+0x464, Member, Type: int, handshakeCarPosition
+	//_Data: this+0x468, Member, Type: class WrongWayIndicator *, wrongWayIndicator
+	//_Data: this+0x470, Member, Type: int, numWrongWayInfractions
+	//_Data: this+0x478, Member, Type: class TCPSocket, tcpSock
+	//_Data: this+0x104F0, Member, Type: struct RemoteSession, currentSession
+	//_Data: this+0x10530, Member, Type: int, finishPosition
+	//_Data: this+0x10538, Member, Type: class Font *, font
+	//_Data: this+0x10540, Member, Type: class std::vector<RemoteSession,std::allocator<RemoteSession> >, sessions
+	//_Data: this+0x10558, Member, Type: struct DisconnectCountdown, dcCountdown
+	//_Data: this+0x10580, Member, Type: double, lastSessionCheckTime
+	//_Data: this+0x10588, Member, Type: class std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >, welcomeMessage
+	//_Data: this+0x105A8, Member, Type: struct DamageReportDef, damageReport
+	//_Data: this+0x105C8, Member, Type: bool, isFlashingCache
+	//_Data: this+0x105CC, Member, Type: struct WreckerProtection, wreckerProtection
+	//_Data: this+0x105DC, Member, Type: unsigned int, resultScreenTime
+	//_Data: this+0x105E0, Member, Type: unsigned int, raceOverTime
+	//_Data: this+0x105E4, Member, Type: bool, isGasPenaltyDisabled
+	//_Data: this+0x105E8, Member, Type: unsigned int, pitWindowStart
+	//_Data: this+0x105EC, Member, Type: unsigned int, pitWindowEnd
+	//_Data: this+0x105F0, Member, Type: bool, hasLeaderFinished
+	//_Data: this+0x105F1, Member, Type: bool, hasPlayerFinished
+	//_Data: this+0x105F8, Member, Type: double, raceClosingTime
+	//_Data: this+0x10600, Member, Type: bool, isResultScreenOn
+	//_Data: this+0x10601, Member, Type: bool, hasExtraLap
+	//_Data: this+0x10602, Member, Type: bool, isLastLap
+	//_Data: this+0x10603, Member, Type: bool, ignoreResultTeleport
+	//_Data: this+0x10604, Member, Type: int, invertedGridPositions
+	//_Data: this+0x10608, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, localCarCurrentSplits
+	//_Data: this+0x10620, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, localCarBestSplits
+	//_Data: this+0x10638, Member, Type: class std::vector<unsigned int,std::allocator<unsigned int> >, bestSplits
+	//_Data: this+0x10650, Member, Type: unsigned int, globalBestlap
+	//_Data: this+0x10658, Member, Type: class std::vector<Lap,std::allocator<Lap> >, localCarLaps
+	//_Data: this+0x10670, Member, Type: unsigned int, localCarBestLap
+	//_Data: this+0x10674, Member, Type: unsigned int, instanceLocalCarBestLap
+	//_Data: this+0x10678, Member, Type: struct Lap, localCarLastLap
+	//_Data: this+0x106C0, Member, Type: bool, useLog
+	//_Data: this+0x106C1, Member, Type: bool, playerIsSpectator
+	//_Data: this+0x106C8, Member, Type: class std::basic_ofstream<wchar_t,std::char_traits<wchar_t> >, log
+	//_Data: this+0x107D0, Member, Type: struct ClientQOSData, qos
+	//_Tag 11
+	//_Data: this+0x107E8, Member, Type: struct ACClient::ClientEndSession, endSession
+	//_Data: this+0x107F8, Member, Type: class std::vector<ClientCollisionEvent,std::allocator<ClientCollisionEvent> >, clientColissionEvents
+	//_Data: this+0x10810, Member, Type: double, lastClientEventSendTime
+	//_Func: private void sendCarPosition(); @loc=static @len=2142 @rva=336432
+	//_Func: private void onMessage(UDPMessage & msg); @loc=static @len=3695 @rva=309712
+	//_Func: private void onLapCompleted(OnLapCompletedEvent & ev); @loc=static @len=410 @rva=309296
+	//_Func: private void onNewSession(UDPPacket & pak, bool isHandShake); @loc=static @len=3369 @rva=320672
+	//_Func: private void onRemoteLapCompleted(UDPPacket & pak); @loc=static @len=2377 @rva=324720
+	//_Func: private void onRemoteSectorSplit(UDPPacket & pak); @loc=static @len=300 @rva=327104
+	//_Func: private void onPhysicsStep(double pt); @loc=static @len=667 @rva=324048
+	//_Func: private void receiveFromSocket(); @loc=optimized @len=0 @rva=0
+	//_Func: private void logMessage(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message); @loc=static @len=203 @rva=307872
+	//_Func: private int getNumberOfActiveCars(); @loc=optimized @len=0 @rva=0
+	//_Func: private unsigned char getSessionIdFromCarAvatarID(int carAvatarID); @loc=static @len=149 @rva=295776
+	//_Func: private void updateQOS(double pt); @loc=static @len=324 @rva=344528
+	//_Func: private void associate(); @loc=static @len=147 @rva=280128
+	//_Func: private void onMessageTCP(UDPMessage & msg); @loc=static @len=7258 @rva=313408
+	//_Func: private bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg); @loc=static @len=1241 @rva=296560
+	//_Func: private void onTyreCompoundChanged(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName); @loc=static @len=136 @rva=328656
+	//_Func: private void onCollisionEvent(OnCollisionEvent &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: private void addCollisionEvent(NetCarStateProvider * netCar, float speed, vec3f & worldPos, vec3f & relPos); @loc=static @len=388 @rva=277152
+	//_Func: private void onWelcomeMessageReceived(UDPPacket & pak); @loc=static @len=144 @rva=328800
+	//_Func: private void onSetupReceived(UDPPacket & pak); @loc=static @len=820 @rva=327824
+	//_Func: private void onDRSZoneReceived(UDPPacket & pak); @loc=static @len=771 @rva=308512
+	//_Func: private void onRemoteSunAngleReceived(float angle); @loc=static @len=117 @rva=327408
+	//_Func: private void updateDamageReport(); @loc=static @len=360 @rva=344160
+	//_Func: private void onSectorSplit(OnSectorSplitEvent & ev); @loc=static @len=282 @rva=327536
+	//_Func: private void onCollisionWithCar(); @loc=static @len=428 @rva=308080
+	//_Func: public ACClient & operator=(ACClient &  _arg0); @loc=optimized @len=0 @rva=0
+	//_Func: public void * __vecDelDtor(unsigned int  _arg0); @intro @virtual vtpo=0 vfid=0 @loc=optimized @len=0 @rva=0
+//UDT;
+
+class ACClient : public GameObject {
+public:
+	Event<OnChatMessageEvent> evOnChatMessage;
+	Event<RemoteSession> evOnOnlineNewSession;
+	Event<RemoteSessionResume> evOnOnlineEndSession;
+	Event<OnLapCompletedEvent> evOnLapCompleted;
+	Event<ReceivedVoteDef> evOnVoteReceived;
+	Event<bool> evOnVoteNotPassed;
+	Event<bool> evOnMandatoryPitDone;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > serverName;
+	float remoteSpring;
+	float remoteDamper;
+	float remoteFactor;
+	DriverInfo driverInfo;
+	ServerInfo serverInfo;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > guid;
+	ClientRules rules;
+	ServerDrivingAssists serverDrivingAssists;
+	bool isTVMode;
+	double handshakeServerTimeS;
+	std::vector<unsigned char,std::allocator<unsigned char> > playerCarMD5;
+	bool debugStartingLights;
+	bool isAssociated;
+	ACClient_ClientSessionTransition transitionInfo;
+	RemoteSessionResult sessionResultsGT;
+	UDPSocket sok;
+	std::vector<std::vector<unsigned char,std::allocator<unsigned char> >,std::allocator<std::vector<unsigned char,std::allocator<unsigned char> > > > checksumResults;
+	Sim * sim;
+	Car * car;
+	ACClientVotingManager * votingManager;
+	CarAvatar * avatar;
+	double lastSendTime;
+	double sendInterval;
+	double lastChatMessage;
+	double lastSpectatorPulse;
+	IPAddress serverIP;
+	unsigned char sessionID;
+	std::vector<NetCarStateProvider *,std::allocator<NetCarStateProvider *> > netCars;
+	unsigned char pakSequenceIndex;
+	int handshakeCarPosition;
+	WrongWayIndicator * wrongWayIndicator;
+	int numWrongWayInfractions;
+	TCPSocket tcpSock;
+	RemoteSession currentSession;
+	int finishPosition;
+	Font * font;
+	std::vector<RemoteSession,std::allocator<RemoteSession> > sessions;
+	DisconnectCountdown dcCountdown;
+	double lastSessionCheckTime;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > welcomeMessage;
+	DamageReportDef damageReport;
+	bool isFlashingCache;
+	WreckerProtection wreckerProtection;
+	unsigned int resultScreenTime;
+	unsigned int raceOverTime;
+	bool isGasPenaltyDisabled;
+	unsigned int pitWindowStart;
+	unsigned int pitWindowEnd;
+	bool hasLeaderFinished;
+	bool hasPlayerFinished;
+	double raceClosingTime;
+	bool isResultScreenOn;
+	bool hasExtraLap;
+	bool isLastLap;
+	bool ignoreResultTeleport;
+	int invertedGridPositions;
+	std::vector<unsigned int,std::allocator<unsigned int> > localCarCurrentSplits;
+	std::vector<unsigned int,std::allocator<unsigned int> > localCarBestSplits;
+	std::vector<unsigned int,std::allocator<unsigned int> > bestSplits;
+	unsigned int globalBestlap;
+	std::vector<Lap,std::allocator<Lap> > localCarLaps;
+	unsigned int localCarBestLap;
+	unsigned int instanceLocalCarBestLap;
+	Lap localCarLastLap;
+	bool useLog;
+	bool playerIsSpectator;
+	std::basic_ofstream<wchar_t,std::char_traits<wchar_t> > log;
+	ClientQOSData qos;
+	ACClient_ClientEndSession endSession;
+	std::vector<ClientCollisionEvent,std::allocator<ClientCollisionEvent> > clientColissionEvents;
+	double lastClientEventSendTime;
+	inline ACClient()  { }
+	inline void ctor(Sim * isim) { typedef void (*_fpt)(ACClient *pthis, Sim *); _fpt _f=(_fpt)_drva(238272); _f(this, isim); }
+	virtual ~ACClient();
+	inline void dtor() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(244880); _f(this); }
+	virtual void renderHUD_vf3(float dt);
+	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(333392); return _f(this, dt); }
+	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
+	inline ClientHandshakeResult handshakeTCP() { typedef ClientHandshakeResult (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(297808); return _f(this); }
+	inline bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars) { typedef bool (*_fpt)(ACClient *pthis, std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > &); _fpt _f=(_fpt)_drva(290688); return _f(this, remoteCars); }
+	inline void beginUpdateMode() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280288); return _f(this); }
+	inline void sendChat(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(338576); return _f(this, message); }
+	inline void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID) { typedef void (*_fpt)(ACClient *pthis, VoteType, bool, int); _fpt _f=(_fpt)_drva(338848); return _f(this, aVote, aVoteValue, targetAvatarGUID); }
+	inline bool hasVoted() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(306432); return _f(this); }
+	inline CarAvatar * getCurrentVotingTarget() { typedef CarAvatar * (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287824); return _f(this); }
+	inline float getVotingTimeLeft() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296512); return _f(this); }
+	inline VoteType getCurrentVoteType() { typedef VoteType (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287808); return _f(this); }
+	inline float getVotingMaxTime() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296496); return _f(this); }
+	inline void addNetCar(NetCarStateProvider * nc) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *); _fpt _f=(_fpt)_drva(279232); return _f(this, nc); }
+	inline NetCarStateProvider * getNetCarFromSessionID(unsigned char id) { typedef NetCarStateProvider * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(290528); return _f(this, id); }
+	virtual void update_vf1(float deltaT);
+	inline void update_impl(float deltaT) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(342832); return _f(this, deltaT); }
+	inline void update(float deltaT) { return update_vf1(deltaT); }
+	inline double getPhysicsTime() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(290576); return _f(this); }
+	inline bool isAllowedToSendChatMessage() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(307616); return _f(this); }
+	inline int getPing(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290608); return _f(this, anAvatar); }
+	inline RemoteSession getCurrentSession() { typedef RemoteSession (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287648); return _f(this); }
+	inline RemoteSessionResult & getCurrentSessionResults() { typedef RemoteSessionResult & (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287792); return _f(this); }
+	inline CarAvatar * getCarAvatarFromSessionID(unsigned char sesid) { typedef CarAvatar * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(286720); return _f(this, sesid); }
+	inline int getSessionIDFromCarAvatar(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(295696); return _f(this, anAvatar); }
+	inline int getSessionCount() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(295664); return _f(this); }
+	inline int getCurrentSessionIndex() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287696); return _f(this); }
+	inline RemoteSession getSessionInfo(int index) { typedef RemoteSession (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295936); return _f(this, index); }
+	virtual void shutdown_vf5();
+	inline void shutdown_impl() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(339248); return _f(this); }
+	inline void shutdown() { return shutdown_vf5(); }
+	inline double getSessionTimeLeft() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296096); return _f(this); }
+	inline int getHandshakeCarPosition() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1278848); return _f(this); }
+	inline unsigned int getCarPosition(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287168); return _f(this, car); }
+	inline unsigned int getBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(286272); return _f(this, car); }
+	inline unsigned int getInstanceBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287856); return _f(this, car); }
+	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290000); return _f(this, car); }
+	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287968); return _f(this, car); }
+	inline void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps) { typedef void (*_fpt)(ACClient *pthis, CarAvatar *, std::vector<Lap,std::allocator<Lap> > &); _fpt _f=(_fpt)_drva(288160); return _f(this, car, laps); }
+	inline bool isBestSplit(int & sector, int & t, bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(ACClient *pthis, int &, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(307648); return _f(this, sector, t, isGlobal, car); }
+	inline unsigned int getBestSplit(int & sector, bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(286384); return _f(this, sector, isGlobal, car); }
+	inline unsigned int getLastSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(290336); return _f(this, car, sector); }
+	inline unsigned int getSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(296160); return _f(this, car, sector); }
+	inline void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, unsigned int & sector, unsigned int & time, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, unsigned int &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(279264); return _f(this, splits, personalSplits, sector, time, cuts); }
+	inline void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, unsigned int & laptime, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<Lap,std::allocator<Lap> > &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(339488); return _f(this, splits, personalSplits, laps, laptime, cuts); }
+	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287360); return _f(this, car); }
+	inline void resetCurrentLaps() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(334128); return _f(this); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name) { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(286832); return _f(this, unix_name); }
+	inline double getTimetoWait() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296448); return _f(this); }
+	inline void setInvertedGridPositions(int pos) { typedef void (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(1315584); return _f(this, pos); }
+	inline int getInvertedGridPositions() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1279296); return _f(this); }
+	inline void askForP2Pvalue() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(279664); return _f(this); }
+	inline void sendCarPosition() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(336432); return _f(this); }
+	inline void onMessage(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(309712); return _f(this, msg); }
+	inline void onLapCompleted(OnLapCompletedEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(309296); return _f(this, ev); }
+	inline void onNewSession(UDPPacket & pak, bool isHandShake) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &, bool); _fpt _f=(_fpt)_drva(320672); return _f(this, pak, isHandShake); }
+	inline void onRemoteLapCompleted(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(324720); return _f(this, pak); }
+	inline void onRemoteSectorSplit(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327104); return _f(this, pak); }
+	inline void onPhysicsStep(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(324048); return _f(this, pt); }
+	inline void logMessage(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(307872); return _f(this, message); }
+	inline unsigned char getSessionIdFromCarAvatarID(int carAvatarID) { typedef unsigned char (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295776); return _f(this, carAvatarID); }
+	inline void updateQOS(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(344528); return _f(this, pt); }
+	inline void associate() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280128); return _f(this); }
+	inline void onMessageTCP(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(313408); return _f(this, msg); }
+	inline bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg) { typedef bool (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(296560); return _f(this, msg); }
+	inline void onTyreCompoundChanged(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(328656); return _f(this, shortName); }
+	inline void addCollisionEvent(NetCarStateProvider * netCar, float speed, vec3f & worldPos, vec3f & relPos) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *, float, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(277152); return _f(this, netCar, speed, worldPos, relPos); }
+	inline void onWelcomeMessageReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(328800); return _f(this, pak); }
+	inline void onSetupReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327824); return _f(this, pak); }
+	inline void onDRSZoneReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(308512); return _f(this, pak); }
+	inline void onRemoteSunAngleReceived(float angle) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(327408); return _f(this, angle); }
+	inline void updateDamageReport() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(344160); return _f(this); }
+	inline void onSectorSplit(OnSectorSplitEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnSectorSplitEvent &); _fpt _f=(_fpt)_drva(327536); return _f(this, ev); }
+	inline void onCollisionWithCar() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(308080); return _f(this); }
+	inline void _guard_obj() {
+		static_assert((sizeof(ACClient)==67608),"bad size");
+		static_assert((offsetof(ACClient,evOnChatMessage)==0x58),"bad off");
+		static_assert((offsetof(ACClient,evOnOnlineNewSession)==0x70),"bad off");
+		static_assert((offsetof(ACClient,evOnOnlineEndSession)==0x88),"bad off");
+		static_assert((offsetof(ACClient,evOnLapCompleted)==0xA0),"bad off");
+		static_assert((offsetof(ACClient,evOnVoteReceived)==0xB8),"bad off");
+		static_assert((offsetof(ACClient,evOnVoteNotPassed)==0xD0),"bad off");
+		static_assert((offsetof(ACClient,evOnMandatoryPitDone)==0xE8),"bad off");
+		static_assert((offsetof(ACClient,serverName)==0x100),"bad off");
+		static_assert((offsetof(ACClient,remoteSpring)==0x120),"bad off");
+		static_assert((offsetof(ACClient,remoteDamper)==0x124),"bad off");
+		static_assert((offsetof(ACClient,remoteFactor)==0x128),"bad off");
+		static_assert((offsetof(ACClient,driverInfo)==0x130),"bad off");
+		static_assert((offsetof(ACClient,serverInfo)==0x1B0),"bad off");
+		static_assert((offsetof(ACClient,guid)==0x1F8),"bad off");
+		static_assert((offsetof(ACClient,rules)==0x218),"bad off");
+		static_assert((offsetof(ACClient,serverDrivingAssists)==0x21C),"bad off");
+		static_assert((offsetof(ACClient,isTVMode)==0x228),"bad off");
+		static_assert((offsetof(ACClient,handshakeServerTimeS)==0x230),"bad off");
+		static_assert((offsetof(ACClient,playerCarMD5)==0x238),"bad off");
+		static_assert((offsetof(ACClient,debugStartingLights)==0x250),"bad off");
+		static_assert((offsetof(ACClient,isAssociated)==0x251),"bad off");
+		static_assert((offsetof(ACClient,transitionInfo)==0x258),"bad off");
+		static_assert((offsetof(ACClient,sessionResultsGT)==0x330),"bad off");
+		static_assert((offsetof(ACClient,sok)==0x3A0),"bad off");
+		static_assert((offsetof(ACClient,checksumResults)==0x3D8),"bad off");
+		static_assert((offsetof(ACClient,sim)==0x3F0),"bad off");
+		static_assert((offsetof(ACClient,car)==0x3F8),"bad off");
+		static_assert((offsetof(ACClient,votingManager)==0x400),"bad off");
+		static_assert((offsetof(ACClient,avatar)==0x408),"bad off");
+		static_assert((offsetof(ACClient,lastSendTime)==0x410),"bad off");
+		static_assert((offsetof(ACClient,sendInterval)==0x418),"bad off");
+		static_assert((offsetof(ACClient,lastChatMessage)==0x420),"bad off");
+		static_assert((offsetof(ACClient,lastSpectatorPulse)==0x428),"bad off");
+		static_assert((offsetof(ACClient,serverIP)==0x430),"bad off");
+		static_assert((offsetof(ACClient,sessionID)==0x440),"bad off");
+		static_assert((offsetof(ACClient,netCars)==0x448),"bad off");
+		static_assert((offsetof(ACClient,pakSequenceIndex)==0x460),"bad off");
+		static_assert((offsetof(ACClient,handshakeCarPosition)==0x464),"bad off");
+		static_assert((offsetof(ACClient,wrongWayIndicator)==0x468),"bad off");
+		static_assert((offsetof(ACClient,numWrongWayInfractions)==0x470),"bad off");
+		static_assert((offsetof(ACClient,tcpSock)==0x478),"bad off");
+		static_assert((offsetof(ACClient,currentSession)==0x104F0),"bad off");
+		static_assert((offsetof(ACClient,finishPosition)==0x10530),"bad off");
+		static_assert((offsetof(ACClient,font)==0x10538),"bad off");
+		static_assert((offsetof(ACClient,sessions)==0x10540),"bad off");
+		static_assert((offsetof(ACClient,dcCountdown)==0x10558),"bad off");
+		static_assert((offsetof(ACClient,lastSessionCheckTime)==0x10580),"bad off");
+		static_assert((offsetof(ACClient,welcomeMessage)==0x10588),"bad off");
+		static_assert((offsetof(ACClient,damageReport)==0x105A8),"bad off");
+		static_assert((offsetof(ACClient,isFlashingCache)==0x105C8),"bad off");
+		static_assert((offsetof(ACClient,wreckerProtection)==0x105CC),"bad off");
+		static_assert((offsetof(ACClient,resultScreenTime)==0x105DC),"bad off");
+		static_assert((offsetof(ACClient,raceOverTime)==0x105E0),"bad off");
+		static_assert((offsetof(ACClient,isGasPenaltyDisabled)==0x105E4),"bad off");
+		static_assert((offsetof(ACClient,pitWindowStart)==0x105E8),"bad off");
+		static_assert((offsetof(ACClient,pitWindowEnd)==0x105EC),"bad off");
+		static_assert((offsetof(ACClient,hasLeaderFinished)==0x105F0),"bad off");
+		static_assert((offsetof(ACClient,hasPlayerFinished)==0x105F1),"bad off");
+		static_assert((offsetof(ACClient,raceClosingTime)==0x105F8),"bad off");
+		static_assert((offsetof(ACClient,isResultScreenOn)==0x10600),"bad off");
+		static_assert((offsetof(ACClient,hasExtraLap)==0x10601),"bad off");
+		static_assert((offsetof(ACClient,isLastLap)==0x10602),"bad off");
+		static_assert((offsetof(ACClient,ignoreResultTeleport)==0x10603),"bad off");
+		static_assert((offsetof(ACClient,invertedGridPositions)==0x10604),"bad off");
+		static_assert((offsetof(ACClient,localCarCurrentSplits)==0x10608),"bad off");
+		static_assert((offsetof(ACClient,localCarBestSplits)==0x10620),"bad off");
+		static_assert((offsetof(ACClient,bestSplits)==0x10638),"bad off");
+		static_assert((offsetof(ACClient,globalBestlap)==0x10650),"bad off");
+		static_assert((offsetof(ACClient,localCarLaps)==0x10658),"bad off");
+		static_assert((offsetof(ACClient,localCarBestLap)==0x10670),"bad off");
+		static_assert((offsetof(ACClient,instanceLocalCarBestLap)==0x10674),"bad off");
+		static_assert((offsetof(ACClient,localCarLastLap)==0x10678),"bad off");
+		static_assert((offsetof(ACClient,useLog)==0x106C0),"bad off");
+		static_assert((offsetof(ACClient,playerIsSpectator)==0x106C1),"bad off");
+		static_assert((offsetof(ACClient,log)==0x106C8),"bad off");
+		static_assert((offsetof(ACClient,qos)==0x107D0),"bad off");
+		static_assert((offsetof(ACClient,endSession)==0x107E8),"bad off");
+		static_assert((offsetof(ACClient,clientColissionEvents)==0x107F8),"bad off");
+		static_assert((offsetof(ACClient,lastClientEventSendTime)==0x10810),"bad off");
 	};
 };
 
