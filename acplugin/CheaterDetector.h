@@ -1,39 +1,42 @@
 #pragma once
 
-#include "PluginForm.h"
+#include "PluginBase.h"
 #include <unordered_map>
 
 struct CarIni
 {
-	std::wstring name;
-	float mass;
+	std::wstring unixName;
+	float mass = 0;
 };
 
 struct DriverState
 {
-	std::wstring name;
 	std::wstring carName;
-	std::wstring configName;
-	CarIni* carIni;
-	float maxRpm;
-	float maxVel;
-	float maxAcc;
-	float maxDecel;
-	float maxPowerKw;
+	CarAvatar* avatar = nullptr;
+	CarIni* carIni = nullptr;
 
-	DriverState() { reset(); }
+	vec3f vel;
+	float accum = 0;
+	float maxRpm = 0;
+	float maxVel = 0;
+	float maxAcc = 0;
+	float maxDecel = 0;
+	float power = 0;
+	float maxPower = 0;
 
-	void reset() {
-		carIni = nullptr;
+	void resetStats() {
+		vset(vel, 0, 0, 0);
+		accum = 0;
 		maxRpm = 0;
+		maxVel = 0;
 		maxAcc = 0;
 		maxDecel = 0;
-		maxVel = 0;
-		maxPowerKw = 0;
+		power = 0;
+		maxPower = 0;
 	}
 };
 
-class CheaterDetector : public PluginForm
+class CheaterDetector : public PluginBase
 {
 public:
 
@@ -45,14 +48,18 @@ public:
 
 protected:
 
-	AC_OVERRIDE_METHOD(CheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
+	UDT_OVERRIDE_METHOD(CheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
 
 	void updatePlayer();
-	void updateDrivers();
+	void updateDrivers(float deltaT);
 	void dumpState();
-	void changeCar(DriverState* driver, std::wstring& carName, std::wstring& configName);
+
+	enum class EGetMode { GetExisting = 0, GetOrCreate };
+	DriverState* getDriver(CarAvatar* avatar, EGetMode mode = EGetMode::GetExisting);
+	CarIni* getCarIni(const std::wstring& unixName, EGetMode mode = EGetMode::GetExisting);
 	void parseCarIni(CarIni* car);
-	float getCarPowerW(const vec3f& accG, const vec3f& vel, float mass, float gas, float brake);
+
+	float computeCarPowerW(const vec3f& accG, const vec3f& vel, float mass, float gas, float brake);
 
 protected:
 
@@ -62,5 +69,5 @@ protected:
 	ksgui_ActiveButton* _btnDump = nullptr;
 
 	std::unordered_map<std::wstring, CarIni*> _carIni;
-	std::unordered_map<std::wstring, DriverState*> _drivers;
+	std::unordered_map<CarAvatar*, DriverState*> _drivers;
 };

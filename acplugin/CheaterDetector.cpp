@@ -3,7 +3,7 @@
 #define CONST_G 9.80665f
 #define WATTS_PER_HP 745.7f
 
-CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginForm(plugin)
+CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
 {
 	log_printf(L"+CheaterDetector %p", this);
 	auto pthis = this;
@@ -97,8 +97,8 @@ CheaterDetector::~CheaterDetector()
 
 bool CheaterDetector::acpUpdate(ACCarState* carState, float deltaT)
 {
+	updateDrivers(deltaT);
 	updatePlayer();
-	updateDrivers();
 
 	return true;
 }
@@ -118,32 +118,10 @@ bool CheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
 // INTERNALS
 //
 
-void CheaterDetector::updatePlayer()
+void CheaterDetector::updateDrivers(float deltaT)
 {
-	auto avatar = _plugin->carAvatar;
-	auto car = avatar->physics;
+	const float statRate = 1 / 5.0f;
 
-	auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
-	auto maxPower = car->drivetrain.acEngine.maxPowerW;
-	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic;
-
-	auto accG = avatar->physicsState.accG;
-	auto vel = avatar->physicsState.localVelocity;
-	float W = getCarPowerW(accG, vel, car->mass, car->controls.gas, car->controls.brake);
-
-	std::wstring text;
-	text.assign(strf(L"%.1fkg ; %.1fNm ; %.2fkW ; %.2fkW(d)", car->mass, maxTorq, maxPower * 0.001f, maxPowerDyn * 0.001f));
-	_lbSpec->setText(text);
-
-	text.assign(strf(L"% 6.0f kW ; % 6.0f HP", W * 0.001, W / WATTS_PER_HP));
-	_lbPower->setText(text);
-
-	text.assign(strf(L"A %.1f %.1f %.1f ; V %.1f %.1f %.1f", accG.x, accG.y, accG.z, vel.x, vel.y, vel.z));
-	_lbVectors->setText(text);
-}
-
-void CheaterDetector::updateDrivers()
-{
 	for (auto* avatar : _sim->cars) {
 
 		CarPhysicsState* state;
@@ -163,26 +141,20 @@ void CheaterDetector::updateDrivers()
 		const auto& name = avatar->driverInfo.name;
 		if (name.empty()) continue;
 
-		DriverState* driver;
-		auto idriver = _drivers.find(name);
-		if (idriver != _drivers.end()) {
-			driver = idriver->second;
-		}
-		else {
-			log_printf(L"new driver \"%s\"", name.c_str());
-			driver = new DriverState();
-			driver->name = name;
-			_drivers.insert(std::pair<const std::wstring, DriverState*>(name, driver));
-		}
+		DriverState* driver = getDriver(avatar, EGetMode::GetOrCreate);
 
-		if (driver->carName.compare(avatar->unixName) || driver->configName.compare(avatar->configName)) {
-			changeCar(driver, avatar->unixName, avatar->configName);
+		if (!driver->carIni || driver->carName.compare(avatar->unixName)) {
+			log_printf(L"changeCar \"%s\" -> %s (%s)", avatar->driverInfo.name.c_str(), avatar->unixName.c_str(), avatar->configName.c_str());
+			driver->carName = avatar->unixName;
+			driver->carIni = getCarIni(avatar->unixName, EGetMode::GetOrCreate);
+			driver->resetStats();
 		}
 
 		if (state && driver->carIni) {
+
+			// instant
 			driver->maxRpm = tmax(driver->maxRpm, state->engineRPM);
 			driver->maxVel = tmax(driver->maxVel, vlen(state->velocity));
-
 			if (state->brake > 0) {
 				driver->maxDecel = tmax(driver->maxDecel, vlen(state->accG));
 			}
@@ -190,17 +162,57 @@ void CheaterDetector::updateDrivers()
 				driver->maxAcc = tmax(driver->maxAcc, vlen(state->accG));
 			}
 
-			float W = getCarPowerW(state->accG, state->velocity, driver->carIni->mass, state->gas, state->brake);
-			driver->maxPowerKw = tmax(driver->maxPowerKw, W * 0.001f);
+			// over time
+			driver->accum += deltaT;
+			if (driver->accum >= statRate) {
+				driver->accum -= statRate;
+
+				float v1 = vlen(driver->vel);
+				float v2 = vlen(state->velocity);
+				float e1 = driver->carIni->mass * v1 * v1 * 0.5f;
+				float e2 = driver->carIni->mass * v2 * v2 * 0.5f;
+				float e = e2 - e1;
+
+				driver->power = e / statRate;
+				driver->maxPower = tmax(driver->maxPower, driver->power);
+				driver->vel = state->velocity;
+			}
 		}
 	}
+}
+
+void CheaterDetector::updatePlayer()
+{
+	auto avatar = _plugin->carAvatar;
+	auto car = avatar->physics;
+
+	auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
+	auto maxPower = car->drivetrain.acEngine.maxPowerW;
+	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic;
+
+	auto accG = avatar->physicsState.accG;
+	auto vel = avatar->physicsState.velocity;
+
+	auto driver = getDriver(avatar);
+	float W = driver->power * 0.001f;
+	float maxW = driver->maxPower * 0.001f;
+
+	std::wstring text;
+	text.assign(strf(L"%.1f kg ; %.1f Nm ; %.2f kW ; %.2f kW(d)", car->mass, maxTorq, maxPower * 0.001f, maxPowerDyn * 0.001f));
+	_lbSpec->setText(text);
+
+	text.assign(strf(L"% 6.0f kW / % 6.0f kW", W, maxW));
+	_lbPower->setText(text);
+
+	text.assign(strf(L"A %.1f %.1f %.1f ; V %.1f %.1f %.1f", accG.x, accG.y, accG.z, vel.x, vel.y, vel.z));
+	_lbVectors->setText(text);
 }
 
 void CheaterDetector::dumpState()
 {
 	writeConsole(L"dump state");
 
-	log_printf(L"\n# simulated cars #");
+	log_printf(L"\n# Simulated #");
 	for (auto avatar : _sim->cars) {
 		if (avatar->physics) {
 			auto car = avatar->physics;
@@ -208,66 +220,88 @@ void CheaterDetector::dumpState()
 			auto maxPower = car->drivetrain.acEngine.maxPowerW;
 			auto powerRatio = maxPower * 0.001f / car->mass;
 
-			log_printf(L"%.1fkg ; %.1fNm ; %.2fkW ; %.2fkW/kg ; %s ; %s", 
+			log_printf(L"%.1fkg ; %.1fNm ; %.2fkW ; %.2fkW/kg ; %s", 
 				car->mass, maxTorq, maxPower * 0.001f, powerRatio,
-				avatar->unixName.c_str(), avatar->guiName.c_str()
+				avatar->unixName.c_str()
 			);
 		}
 	}
 
-	log_printf(L"\n# drivers #");
-	for (auto& iter : _drivers) {
-		auto* driver = iter.second;
-		log_printf(L"Rpm=%.1f V=%.1f A=%.1f D=%.1f kW=%.1f # \"%s\" -> %s (%s)", 
-			driver->maxRpm, driver->maxVel, driver->maxAcc, driver->maxDecel, driver->maxPowerKw,
-			driver->name.c_str(), driver->carName.c_str(), driver->configName.c_str()
-		);
+	log_printf(L"\n# MP Leaderboard #");
+	auto& leaderboard = _sim->raceManager->mpCacheLeaderboard;
+	for (auto& entry : leaderboard) {
+		auto* avatar = entry.car;
+		auto* driver = getDriver(avatar);
+		if (driver) {
+			double totalSec = entry.bestLap * 0.001;
+			int bestLapM = (int)floor(totalSec / 60.0);
+			double bestLapS = totalSec - bestLapM * 60;
+
+			log_printf(L"%d:%06.3f # rpm %.1f ; V %.1f ; A %.1f ; D %.1f ; W %.1f # \"%s\" %s (%s)", 
+				bestLapM, bestLapS, driver->maxRpm, driver->maxVel, driver->maxAcc, driver->maxDecel, driver->maxPower * 0.001f,
+				avatar->driverInfo.name.c_str(), avatar->unixName.c_str(), avatar->configName.c_str()
+			);
+		}
 	}
 
 	log_printf(L"");
 }
 
-void CheaterDetector::changeCar(DriverState* driver, std::wstring& carName, std::wstring& configName)
+DriverState* CheaterDetector::getDriver(CarAvatar* avatar, EGetMode mode)
 {
-	log_printf(L"change car \"%s\" -> %s (%s)", driver->name.c_str(), carName.c_str(), configName.c_str());
+	auto idriver = _drivers.find(avatar);
+	if (idriver != _drivers.end()) {
+		return idriver->second;
+	}
 
-	CarIni* car;
-	auto icar = _carIni.find(carName);
+	if (mode == EGetMode::GetOrCreate) {
+		log_printf(L"new DriverState");
+		auto driver = new DriverState();
+		driver->avatar = avatar;
+		_drivers.insert(std::pair<CarAvatar*, DriverState*>(avatar, driver));
+		return driver;
+	}
+
+	return nullptr;
+}
+
+CarIni* CheaterDetector::getCarIni(const std::wstring& unixName, EGetMode mode)
+{
+	auto icar = _carIni.find(unixName);
 	if (icar != _carIni.end()) {
-		car = icar->second;
-	}
-	else {
-		log_printf(L"new car \"%s\"", carName.c_str());
-		car = new CarIni();
-		car->name = carName;
-		_carIni.insert(std::pair<const std::wstring, CarIni*>(carName, car));
-		parseCarIni(car);
+		return icar->second;
 	}
 
-	driver->reset();
-	driver->carName = carName;
-	driver->configName = configName;
-	driver->carIni = car;
+	if (mode == EGetMode::GetOrCreate) {
+		log_printf(L"new CarIni");
+		auto car = new CarIni();
+		car->unixName = unixName;
+		parseCarIni(car);
+		_carIni.insert(std::pair<const std::wstring, CarIni*>(unixName, car));
+		return car;
+	}
+
+	return nullptr;
 }
 
 void CheaterDetector::parseCarIni(CarIni* car)
 {
-	log_printf(L"parse car \"%s\"", car->name.c_str());
+	log_printf(L"parseCarIni \"%s\"", car->unixName.c_str());
 
 	std::wstring path(L"content/cars/");
-	path.append(car->name);
+	path.append(car->unixName);
 	path.append(L"/data/car.ini");
 
 	auto ini = new_udt<INIReader>(path);
-
-	std::wstring section(L"BASIC");
-	std::wstring key(L"TOTALMASS");
-	car->mass = ini->getFloat(section, key);
-
+	{
+		std::wstring section(L"BASIC");
+		std::wstring key(L"TOTALMASS");
+		car->mass = ini->getFloat(section, key);
+	}
 	del_udt(ini);
 }
 
-float CheaterDetector::getCarPowerW(const vec3f& accG, const vec3f& vel, float mass, float gas, float brake)
+float CheaterDetector::computeCarPowerW(const vec3f& accG, const vec3f& vel, float mass, float gas, float brake)
 {
 	float Wscale = (gas > 0.0f ? 1.0f : 0.0f) * (brake > 0.0f ? 0.0f : 1.0f); // * (dot(accG, vel) > 0.0f ? 1.0f : 0.0f);
 	vec3f F = vmul(accG, mass * CONST_G);

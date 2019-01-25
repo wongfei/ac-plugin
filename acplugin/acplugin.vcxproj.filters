@@ -12,9 +12,6 @@
     <ClCompile Include="plugin.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="PluginForm.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="vthook.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -22,6 +19,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="CheaterDetector.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginBase.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,9 +35,6 @@
     <ClInclude Include="ac_sdk.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="PluginForm.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="vthook.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="CheaterDetector.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="PluginBase.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

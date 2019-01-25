@@ -6,12 +6,12 @@
 
 using namespace acsdk;
 
-class PluginForm
+class PluginBase
 {
 public:
 
-	PluginForm(ACPlugin* plugin);
-	virtual ~PluginForm();
+	PluginBase(ACPlugin* plugin);
+	virtual ~PluginBase();
 
 	virtual bool acpUpdate(ACCarState* carState, float deltaT);
 	virtual bool acpOnGui(ACPluginContext* context);

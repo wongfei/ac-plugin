@@ -2,7 +2,7 @@
 
 void* _g_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
-static PluginForm* s_app = nullptr;
+static PluginBase* s_app = nullptr;
 
 extern "C" {
 

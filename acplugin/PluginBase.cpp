@@ -1,27 +1,27 @@
-#include "PluginForm.h"
+#include "PluginBase.h"
 
-PluginForm::PluginForm(ACPlugin* plugin)
+PluginBase::PluginBase(ACPlugin* plugin)
 {
 	_plugin = plugin;
 	_sim = plugin->sim;
 	_game = plugin->sim->game;
 }
 
-PluginForm::~PluginForm()
+PluginBase::~PluginBase()
 {
 }
 
-bool PluginForm::acpUpdate(ACCarState* carState, float deltaT)
-{
-	return true;
-}
-
-bool PluginForm::acpOnGui(ACPluginContext* context)
+bool PluginBase::acpUpdate(ACCarState* carState, float deltaT)
 {
 	return true;
 }
 
-void PluginForm::writeConsole(const std::wstring& text)
+bool PluginBase::acpOnGui(ACPluginContext* context)
+{
+	return true;
+}
+
+void PluginBase::writeConsole(const std::wstring& text)
 {
 	std::wstring msg(text);
 	_sim->console->operator<<(&msg);
@@ -29,7 +29,7 @@ void PluginForm::writeConsole(const std::wstring& text)
 	_sim->console->operator<<(&nl);
 }
 
-std::wstring PluginForm::getConfigPath()
+std::wstring PluginBase::getConfigPath()
 {
 	auto path = getDocumentsPath();
 	path.append(L"\\");
@@ -40,7 +40,7 @@ std::wstring PluginForm::getConfigPath()
 	return path;
 }
 
-void PluginForm::loadFormConfig()
+void PluginBase::loadFormConfig()
 {
 	auto path = getConfigPath();
 	auto ini = new_udt<INIReaderDocuments>(&path, false);
@@ -67,7 +67,7 @@ void PluginForm::loadFormConfig()
 	del_udt(ini);
 }
 
-void PluginForm::writeFormConfig()
+void PluginBase::writeFormConfig()
 {
 	auto path = getConfigPath();
 	std::wofstream out;

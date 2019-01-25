@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <d3d11.h>
 #include <memory>
 #include <string>
 #include <iostream>
@@ -102,6 +103,7 @@ public:
 #include "ac_gen.h"
 #pragma warning(pop)
 
+inline void vset(vec3f& v, float x, float y, float z) { v.x = x, v.y = y, v.z = z; }
 inline vec3f makev(float x, float y, float z) { vec3f r; r.x = x, r.y = y, r.z = z; return r; }
 inline vec3f vmul(const vec3f& a, float f) { return makev(a.x * f, a.y * f, a.z * f); }
 inline vec3f vdiv(const vec3f& a, float f) { return makev(a.x / f, a.y / f, a.z / f); }

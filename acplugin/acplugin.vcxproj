@@ -111,7 +111,7 @@
     <ClCompile Include="CheaterDetector.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
-    <ClCompile Include="PluginForm.cpp" />
+    <ClCompile Include="PluginBase.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="vthook.cpp" />
   </ItemGroup>
@@ -121,7 +121,7 @@
     <ClInclude Include="plugin.h" />
     <ClInclude Include="ac_gen.h" />
     <ClInclude Include="ac_sdk.h" />
-    <ClInclude Include="PluginForm.h" />
+    <ClInclude Include="PluginBase.h" />
     <ClInclude Include="vthook.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
