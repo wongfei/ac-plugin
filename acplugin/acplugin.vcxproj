@@ -71,6 +71,7 @@
       <StringPooling>true</StringPooling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,6 +97,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,12 +108,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CheaterDetector.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="PluginForm.cpp" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="vthook.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CheaterDetector.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="plugin.h" />
     <ClInclude Include="ac_gen.h" />

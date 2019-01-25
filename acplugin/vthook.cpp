@@ -2,11 +2,8 @@
 // https://github.com/Thordin/vtable-hook
 //
 
-#include "vthook.h"
-#include <stdint.h>
-
 #ifdef _WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #elif __linux__
 #include <unistd.h>
 #include <sys/mman.h>
@@ -14,11 +11,14 @@ int vtablehook_pagesize = sysconf(_SC_PAGE_SIZE);
 int vtablehook_pagemask = ~(vtablehook_pagesize-1);
 #endif
 
+#include <stdint.h>
+#include "vthook.h"
+
 int vtablehook_unprotect(void* region) {
 #ifdef _WINDOWS
         MEMORY_BASIC_INFORMATION mbi;
-        auto sz = VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-        auto b = VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &mbi.Protect);
+        VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
+        VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &mbi.Protect);
         return mbi.Protect;
 #elif __linux__
         mprotect((void*) ((intptr_t)region & vtablehook_pagemask), vtablehook_pagesize, PROT_READ|PROT_WRITE|PROT_EXEC);
@@ -29,8 +29,8 @@ int vtablehook_unprotect(void* region) {
 void vtablehook_protect(void* region, int protection) {
 #ifdef _WINDOWS
         MEMORY_BASIC_INFORMATION mbi;
-        auto sz = VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-        auto b = VirtualProtect(mbi.BaseAddress, mbi.RegionSize, protection, &mbi.Protect);
+        VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
+        VirtualProtect(mbi.BaseAddress, mbi.RegionSize, protection, &mbi.Protect);
 #elif __linux__
         mprotect((void*) ((intptr_t)region & vtablehook_pagemask), vtablehook_pagesize, protection);
 #endif

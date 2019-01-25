@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdint.h>
+#include <string>
+#include <vector>
 #include "vthook.h"
 
 #define AC_GUARD_METHOD_SIG(_class, _method, _ret, _args)\
@@ -11,11 +14,7 @@ struct guard_##_class##_##_method {\
 #define AC_GET_PTHIS(_hook_class, _base_class, _pthis)\
 	((_hook_class*)get_udt_tag((_base_class*)((void*)_pthis)))
 
-//
-// AC_OVERRIDE_METHOD
 // _base_class->vfptr->thunk->_hook_class->vfptr->method
-//
-
 #define AC_OVERRIDE_METHOD(_hook_class, _base_class, _sig_class, _method, _vfid, _ret, _args, _arg_names)\
 	AC_GUARD_METHOD_SIG(_sig_class, _method, _ret, _args)\
 	virtual _ret _method _args;\
@@ -39,6 +38,12 @@ public:
 		_RawVft* vfptrd;
 	};
 };
+
+template<typename T>
+inline T tmin(T a, T b) { return (a < b ? a : b); }
+
+template<typename T>
+inline T tmax(T a, T b) { return (a > b ? a : b); }
 
 inline void* mem_off(void* mem, size_t off) {
 	return (void*)(((uint8_t*)mem) + off);
@@ -91,34 +96,8 @@ inline void remove_elem(std::vector<T>& vec, E elem) {
 	}
 }
 
-inline std::wstring getDocumentsPath() {
-	wchar_t buf[MAX_PATH];
-	SHGetFolderPathW(0, 5, 0, 0, buf);
-	return std::wstring(buf);
-}
-
-inline bool dirExists(LPCWSTR Path) {
-	DWORD dwAttrib = GetFileAttributesW(Path);
-	return (dwAttrib != INVALID_FILE_ATTRIBUTES && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
-}
-
-inline bool fileExists(LPCWSTR Path) {
-	DWORD dwAttrib = GetFileAttributesW(Path);
-	return (dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
-}
-
-inline void ensureDirExists(const std::wstring& path) {
-	if (!dirExists(path.c_str())) {
-		CreateDirectoryW(path.c_str(), nullptr);
-	}
-}
-
-inline std::wstring strf(const wchar_t* format, ...)
-{
-	wchar_t buf[1024] = {0};
-	va_list args;
-	va_start(args, format);
-	const int count = _vsnwprintf_s(buf, _countof(buf) - 1, _TRUNCATE, format, args);
-	va_end(args);
-	return std::wstring(buf);
-}
+std::wstring strf(const wchar_t* format, ...);
+std::wstring getDocumentsPath();
+bool fileExists(LPCWSTR Path);
+bool dirExists(LPCWSTR Path);
+void ensureDirExists(const std::wstring& path);

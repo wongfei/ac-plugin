@@ -1,4 +1,4 @@
-#include "PluginForm.h"
+#include "CheaterDetector.h"
 
 void* _g_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
@@ -21,10 +21,10 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	log_printf(L"acpInit module=%p plugin=%p", _g_module, plugin);
 
 	#if defined(AC_DEBUG)
-	AC_WAIT_DEBUGGER;
+		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
 	#endif
 
-	s_app = new PluginForm(plugin);
+	s_app = new CheaterDetector(plugin);
 	return true;
 }
 
