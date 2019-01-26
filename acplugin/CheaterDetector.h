@@ -9,30 +9,44 @@ struct CarIni
 	float mass = 0;
 };
 
+struct CarPerf
+{
+	// instant
+	float irpm;
+	float ivel;
+	float iacc;
+	float idec;
+
+	// avg
+	float acc;
+	float dec;
+	float accPower;
+	float decPower;
+
+	void reset() { memset(this, 0, sizeof(CarPerf)); }
+};
+
 struct DriverState
 {
 	std::wstring carName;
 	CarAvatar* avatar = nullptr;
 	CarIni* carIni = nullptr;
 
-	vec3f vel;
-	float accum = 0;
-	float maxRpm = 0;
-	float maxVel = 0;
-	float maxAcc = 0;
-	float maxDecel = 0;
-	float power = 0;
-	float maxPower = 0;
+	CarPerf perf;
+	CarPerf perfMax;
+	CarPerf perfBest;
 
-	void resetStats() {
+	vec3f vel;
+	float accum;
+
+	DriverState() { resetPerf(); }
+
+	void resetPerf() {
+		perf.reset();
+		perfMax.reset();
+		perfBest.reset();
 		vset(vel, 0, 0, 0);
 		accum = 0;
-		maxRpm = 0;
-		maxVel = 0;
-		maxAcc = 0;
-		maxDecel = 0;
-		power = 0;
-		maxPower = 0;
 	}
 };
 
@@ -67,6 +81,8 @@ protected:
 	ksgui_Label* _lbPower = nullptr;
 	ksgui_Label* _lbVectors = nullptr;
 	ksgui_ActiveButton* _btnDump = nullptr;
+
+	std::unique_ptr<GridView> _grid;
 
 	std::unordered_map<std::wstring, CarIni*> _carIni;
 	std::unordered_map<CarAvatar*, DriverState*> _drivers;

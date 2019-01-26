@@ -1,10 +1,12 @@
 #pragma once
 
 #include "plugin.h"
-#include "ac_sdk.h"
-#include "utils.h"
 
+#include "ac_sdk.h"
 using namespace acsdk;
+
+#include "utils.h"
+#include "gui.h"
 
 class PluginBase
 {

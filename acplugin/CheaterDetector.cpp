@@ -11,43 +11,23 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
 	std::wstring name(AC_PLUGIN_NAME);
 	std::wstring title(AC_PLUGIN_TITLE);
 	std::wstring text;
-	bool canBeScaled = false;
 
+	bool canBeScaled = false;
 	_form = new_udt<ksgui_Form>(&name, _game->gui, canBeScaled);
 	_form->formTitle->setText(title);
-	_form->setSize(500, 200);
-	_form->setAutoHideMode(true);
+	_form->setSize(600, 400);
 	_form->devApp = false;
-
+	_form->setAutoHideMode(true);
 	set_udt_tag(_form, this);
 	hook_onMouseDown_vf10(_form);
 
-	name.assign(L"spec");
-	_lbSpec = new_udt<ksgui_Label>(&name, _game->gui);
-	_lbSpec->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
-	_lbSpec->setPosition(10, 40);
-	_lbSpec->foreColor.ctor(1, 0, 0, 1);
-	_form->addControl(_lbSpec);
-
-	name.assign(L"power");
-	_lbPower = new_udt<ksgui_Label>(&name, _game->gui);
-	_lbPower->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
-	_lbPower->setPosition(10, 70);
-	_lbPower->foreColor.ctor(1, 0, 0, 1);
-	_form->addControl(_lbPower);
-
-	name.assign(L"vectors");
-	_lbVectors = new_udt<ksgui_Label>(&name, _game->gui);
-	_lbVectors->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
-	_lbVectors->setPosition(10, 100);
-	_lbVectors->foreColor.ctor(1, 0, 0, 1);
-	_form->addControl(_lbVectors);
+	std::shared_ptr<Font> font(new_udt<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
 
 	name.assign(L"dump");
 	text.assign(L"dump");
 	_btnDump = new_udt<ksgui_ActiveButton>(&name, _game->gui);
-	_btnDump->font.reset(new_udt<Font>(eFontType::eFontProportional, 16.0f, false, false));
-	_btnDump->setPosition(10, 130);
+	_btnDump->font = font;
+	_btnDump->setPosition(500, 40);
 	_btnDump->setSize(80, 25);
 	_btnDump->setText(text);
 	_btnDump->drawBorder = true;
@@ -63,8 +43,33 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
 	_btnDump->evClicked.addHandler(_btnDump, btnHandler);
 	_form->addControl(_btnDump);
 
+	name.assign(L"spec");
+	_lbSpec = new_udt<ksgui_Label>(&name, _game->gui);
+	_lbSpec->font = font;
+	_lbSpec->setPosition(10, 40);
+	_lbSpec->foreColor.ctor(1, 0, 0, 1);
+	_form->addControl(_lbSpec);
+
+	name.assign(L"power");
+	_lbPower = new_udt<ksgui_Label>(&name, _game->gui);
+	_lbPower->font = font;
+	_lbPower->setPosition(10, 70);
+	_lbPower->foreColor.ctor(1, 0, 0, 1);
+	_form->addControl(_lbPower);
+
+	name.assign(L"vectors");
+	_lbVectors = new_udt<ksgui_Label>(&name, _game->gui);
+	_lbVectors->font = font;
+	_lbVectors->setPosition(10, 100);
+	_lbVectors->foreColor.ctor(1, 0, 0, 1);
+	_form->addControl(_lbVectors);
+
+	_grid.reset(new GridView(_game->gui, 10, 8, 65, 25, 12));
+	_grid->setPosition(10, 130);
+	_form->addControl(_grid->getControl());
+
 	loadFormConfig();
-	_form->scaleByMult_impl();
+	_form->scaleByMult();
 
 	plugin->sim->gameScreen->addControl(_form, false);
 	plugin->sim->game->gui->taskbar->addForm(_form);
@@ -120,7 +125,7 @@ bool CheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
 
 void CheaterDetector::updateDrivers(float deltaT)
 {
-	const float statRate = 1 / 5.0f;
+	const float statRate = 1 / 3.0f;
 
 	for (auto* avatar : _sim->cars) {
 
@@ -147,36 +152,104 @@ void CheaterDetector::updateDrivers(float deltaT)
 			log_printf(L"changeCar \"%s\" -> %s (%s)", avatar->driverInfo.name.c_str(), avatar->unixName.c_str(), avatar->configName.c_str());
 			driver->carName = avatar->unixName;
 			driver->carIni = getCarIni(avatar->unixName, EGetMode::GetOrCreate);
-			driver->resetStats();
+			driver->resetPerf();
 		}
 
 		if (state && driver->carIni) {
 
 			// instant
-			driver->maxRpm = tmax(driver->maxRpm, state->engineRPM);
-			driver->maxVel = tmax(driver->maxVel, vlen(state->velocity));
+			driver->perf.irpm = state->engineRPM;
+			driver->perfMax.irpm = tmax(driver->perfMax.irpm, driver->perf.irpm);
+
+			driver->perf.ivel = vlen(state->velocity);
+			driver->perfMax.ivel = tmax(driver->perfMax.ivel, driver->perf.ivel);
+
+			driver->perf.iacc = 0;
+			driver->perf.idec = 0;
+
 			if (state->brake > 0) {
-				driver->maxDecel = tmax(driver->maxDecel, vlen(state->accG));
+				driver->perf.idec = vlen(state->accG) * CONST_G;
+				driver->perfMax.idec = tmax(driver->perfMax.idec, driver->perf.idec);
 			}
 			else if (state->gas > 0) {
-				driver->maxAcc = tmax(driver->maxAcc, vlen(state->accG));
+				driver->perf.iacc = vlen(state->accG) * CONST_G;
+				driver->perfMax.iacc = tmax(driver->perfMax.iacc, driver->perf.iacc);
 			}
 
-			// over time
+			// avg
 			driver->accum += deltaT;
 			if (driver->accum >= statRate) {
-				driver->accum -= statRate;
+
+				vec3f dv = vsub(state->velocity, driver->vel);
+				vec3f a = vmul(dv, 1 / driver->accum); // a = dv / dt
 
 				float v1 = vlen(driver->vel);
 				float v2 = vlen(state->velocity);
 				float e1 = driver->carIni->mass * v1 * v1 * 0.5f;
 				float e2 = driver->carIni->mass * v2 * v2 * 0.5f;
-				float e = e2 - e1;
+				float e = fabsf(e2 - e1);
+				float w = e / driver->accum;
 
-				driver->power = e / statRate;
-				driver->maxPower = tmax(driver->maxPower, driver->power);
+				driver->perf.acc = 0;
+				driver->perf.dec = 0;
+				driver->perf.accPower = 0;
+				driver->perf.decPower = 0;
+
+				if (v1 < v2) { // accel
+					driver->perf.acc = vlen(a);
+					driver->perfMax.acc = tmax(driver->perfMax.acc, driver->perf.acc);
+
+					driver->perf.accPower = w;
+					driver->perfMax.accPower = tmax(driver->perfMax.accPower, driver->perf.accPower);
+				}
+				else { // decel
+					driver->perf.dec = vlen(a);
+					driver->perfMax.dec = tmax(driver->perfMax.dec, driver->perf.dec);
+
+					driver->perf.decPower = w;
+					driver->perfMax.decPower = tmax(driver->perfMax.decPower, driver->perf.decPower);
+				}
+
 				driver->vel = state->velocity;
+				driver->accum = 0;
 			}
+		}
+	}
+
+	int row = 0, col = 0;
+	_grid->setText(row, col++, L"time");
+	_grid->setText(row, col++, L"rpm");
+	_grid->setText(row, col++, L"ivel");
+	_grid->setText(row, col++, L"acc");
+	_grid->setText(row, col++, L"dec");
+	_grid->setText(row, col++, L"accP");
+	_grid->setText(row, col++, L"decP");
+	_grid->setText(row, col++, L"driver");
+	row++;
+
+	auto& leaderboard = _sim->raceManager->mpCacheLeaderboard;
+	for (auto& entry : leaderboard) {
+
+		if (row >= _grid->_rows) break;
+		auto* avatar = entry.car;
+		auto* driver = getDriver(avatar);
+
+		if (driver) {
+			auto& perf = driver->perf;
+			double totalSec = entry.bestLap * 0.001;
+			int bestLapM = (int)floor(totalSec / 60.0);
+			double bestLapS = totalSec - bestLapM * 60;
+
+			col = 0;
+			_grid->setText(row, col++, strf(L"%d:%06.3f", bestLapM, bestLapS));
+			_grid->setText(row, col++, strf(L"%.0f", perf.irpm));
+			_grid->setText(row, col++, strf(L"%.1f", perf.ivel));
+			_grid->setText(row, col++, strf(L"%.1f", perf.acc));
+			_grid->setText(row, col++, strf(L"%.1f", perf.dec));
+			_grid->setText(row, col++, strf(L"%.1f", perf.accPower * 0.001f));
+			_grid->setText(row, col++, strf(L"%.1f", perf.decPower * 0.001f));
+			_grid->setText(row, col++, strf(L"%s", avatar->driverInfo.name.c_str()));
+			row++;
 		}
 	}
 }
@@ -186,25 +259,27 @@ void CheaterDetector::updatePlayer()
 	auto avatar = _plugin->carAvatar;
 	auto car = avatar->physics;
 
+	auto accG = avatar->physicsState.accG;
+	auto vel = avatar->physicsState.velocity;
+
 	auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
 	auto maxPower = car->drivetrain.acEngine.maxPowerW;
 	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic;
 
-	auto accG = avatar->physicsState.accG;
-	auto vel = avatar->physicsState.velocity;
-
 	auto driver = getDriver(avatar);
-	float W = driver->power * 0.001f;
-	float maxW = driver->maxPower * 0.001f;
+	float accPower = driver->perf.accPower * 0.001f;
+	float accPowerMax = driver->perfMax.accPower * 0.001f;
+	float decPower = driver->perf.decPower * 0.001f;
+	float decPowerMax = driver->perfMax.decPower * 0.001f;
 
 	std::wstring text;
 	text.assign(strf(L"%.1f kg ; %.1f Nm ; %.2f kW ; %.2f kW(d)", car->mass, maxTorq, maxPower * 0.001f, maxPowerDyn * 0.001f));
 	_lbSpec->setText(text);
 
-	text.assign(strf(L"% 6.0f kW / % 6.0f kW", W, maxW));
+	text.assign(strf(L"acc % 6.0f / % 6.0f ; dec % 6.0f / % 6.0f ", accPower, accPowerMax, decPower, decPowerMax));
 	_lbPower->setText(text);
 
-	text.assign(strf(L"A %.1f %.1f %.1f ; V %.1f %.1f %.1f", accG.x, accG.y, accG.z, vel.x, vel.y, vel.z));
+	text.assign(strf(L"G %.1f %.1f %.1f ; V %.1f %.1f %.1f", accG.x, accG.y, accG.z, vel.x, vel.y, vel.z));
 	_lbVectors->setText(text);
 }
 
@@ -237,8 +312,10 @@ void CheaterDetector::dumpState()
 			int bestLapM = (int)floor(totalSec / 60.0);
 			double bestLapS = totalSec - bestLapM * 60;
 
-			log_printf(L"%d:%06.3f # rpm %.1f ; V %.1f ; A %.1f ; D %.1f ; W %.1f # \"%s\" %s (%s)", 
-				bestLapM, bestLapS, driver->maxRpm, driver->maxVel, driver->maxAcc, driver->maxDecel, driver->maxPower * 0.001f,
+			log_printf(L"%d:%06.3f # rpm %.1f ; v %.1f ; a %.1f ; d %.1f ; ap %.1f ; dp %.1f # \"%s\" %s (%s)", 
+				bestLapM, bestLapS, 
+				driver->perfMax.irpm, driver->perfMax.ivel, driver->perfMax.acc, driver->perfMax.dec, 
+				driver->perfMax.accPower * 0.001f, driver->perfMax.decPower * 0.001f,
 				avatar->driverInfo.name.c_str(), avatar->unixName.c_str(), avatar->configName.c_str()
 			);
 		}

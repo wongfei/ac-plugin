@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheaterDetector.h" />
+    <ClInclude Include="gui.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="plugin.h" />
     <ClInclude Include="ac_gen.h" />

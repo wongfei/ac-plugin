@@ -47,5 +47,8 @@
     <ClInclude Include="PluginBase.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
