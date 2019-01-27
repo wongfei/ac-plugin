@@ -21,12 +21,16 @@ bool PluginBase::acpOnGui(ACPluginContext* context)
 	return true;
 }
 
-void PluginBase::writeConsole(const std::wstring& text)
+void PluginBase::writeConsole(const std::wstring& text, bool writeToLog)
 {
 	std::wstring msg(text);
 	_sim->console->operator<<(&msg);
 	std::wstring nl(L"\n");
 	_sim->console->operator<<(&nl);
+
+	if (writeToLog) {
+		log_printf(L"%s", text.c_str());
+	}
 }
 
 std::wstring PluginBase::getConfigPath()

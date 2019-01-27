@@ -37,7 +37,7 @@ public:
 	std::vector<std::pair<void*, std::function<void (const T&)> > > handlers;
 
 	inline void addHandler(void* key, std::function<void (const T&)> value) {
-		handlers.push_back(std::pair<void*, std::function<void (const ksgui_OnControlClicked&)> >(key, value));
+		handlers.push_back(std::pair<void*, std::function<void (const T&)> >(key, value));
 	}
 };
 

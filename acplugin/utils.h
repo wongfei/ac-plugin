@@ -45,6 +45,9 @@ inline T tmin(T a, T b) { return (a < b ? a : b); }
 template<typename T>
 inline T tmax(T a, T b) { return (a > b ? a : b); }
 
+template<typename T>
+inline T tclamp(T x, T a, T b) { return (x < a ? a : (x > b ? b : x)); }
+
 inline void* mem_off(void* mem, size_t off) {
 	return (void*)(((uint8_t*)mem) + off);
 }

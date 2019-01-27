@@ -20,9 +20,10 @@ public:
 
 	inline ksgui_Form* getForm() { return _form; }
 
-protected:
+public:
 
-	void writeConsole(const std::wstring& text);
+	void writeConsole(const std::wstring& text, bool writeToLog = false);
+
 	std::wstring getConfigPath();
 	void loadFormConfig();
 	void writeFormConfig();
