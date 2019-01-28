@@ -354,17 +354,18 @@ DriverState* CheaterDetector::getDriver(CarAvatar* avatar, EGetMode mode)
 		auto callback = [pthis, driver](const OnLapCompletedEvent& ev) { 
 
 			auto timeStr(lapToStr(ev.lapTime));
-			auto bestLap = pthis->_sim->raceManager->getBestLap(driver->avatar);
+			// auto bestLap = pthis->_sim->raceManager->getBestLap(driver->avatar); crash
+			// (int)(ev.lapTime == bestLap.time)
 
-			pthis->writeConsole(strf(L"OnLapCompleted: %s ; %s ; \"%s\" ; valid=%d ; cuts=%d ; isBest=%d", 
+			pthis->writeConsole(strf(L"OnLapCompleted: %s ; %s ; \"%s\" ; valid=%d ; cuts=%d", 
 				timeStr.c_str(), driver->avatar->unixName.c_str(), driver->avatar->driverInfo.name.c_str(), 
-				(int)ev.isValid, (int)ev.cuts, (int)(ev.lapTime == bestLap.time)), 
+				(int)ev.isValid, (int)ev.cuts),
 				true
 			);
 			
-			if (ev.lapTime > 0 && ev.lapTime == bestLap.time) {
+			/*if (ev.lapTime > 0 && ev.lapTime == bestLap.time) {
 				driver->perf[(int)EPerfMode::BestLap] = driver->perf[(int)EPerfMode::ActualMax];
-			}
+			}*/
 
 			driver->perf[(int)EPerfMode::PrevLap] = driver->perf[(int)EPerfMode::ActualMax];
 			driver->perf[(int)EPerfMode::ActualMax].reset();
