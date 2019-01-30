@@ -1,21 +1,5 @@
 #pragma once
 
-#include <windows.h>
-#include <d3d11.h>
-#include <memory>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <functional>
-#include <vector>
-#include <map>
-#include <deque>
-#include <mutex>
-#include <thread>
-#include <condition_variable>
-#include <concurrent_queue.h>
-
 extern void* _g_module;
 inline void* _drva(size_t off) { return ((uint8_t*)_g_module) + off; }
 
@@ -34,10 +18,28 @@ template<typename T>
 class Event
 {
 public:
-	std::vector<std::pair<void*, std::function<void (const T&)> > > handlers;
+	typedef std::function<void (const T&)> Callback;
+	typedef std::pair<void*, Callback> Entry;
+	typedef std::vector<Entry> Vec;
+	Vec handlers;
 
-	inline void addHandler(void* key, std::function<void (const T&)> value) {
-		handlers.push_back(std::pair<void*, std::function<void (const T&)> >(key, value));
+	inline void add(void* key, Callback value) {
+		handlers.push_back(Entry(key, value));
+	}
+
+	inline void swapAndPop(void* key) {
+		if (handlers.size() > 1) {
+			for (auto iter = handlers.begin(); iter != handlers.end(); ++iter) {
+				if (iter->first == key) {
+					std::iter_swap(iter, handlers.end() - 1);
+					handlers.pop_back();
+					break;
+				}
+			}
+		}
+		else {
+			handlers.clear();
+		}
 	}
 };
 
@@ -112,5 +114,11 @@ inline vec3f vsub(const vec3f& a, const vec3f& b) { return makev(a.x - b.x, a.y 
 inline float vdot(const vec3f& a, const vec3f& b) { return (a.x * b.x + a.y * b.y + a.z * b.z); }
 inline float vlen(const vec3f& v) { const float sqlen = vdot(v, v); return (sqlen > 0.001f ? sqrtf(sqlen) : 0); }
 inline vec3f vnorm(const vec3f& v) { const float l = vlen(v); if (l > 0) return vmul(v, 1 / l); else return makev(0, 0, 0); }
+
+inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) { 
+	const float s = 1 / 255.0f;
+	vec4f v; (v.x = r*s), (v.y = g*s), (v.z = b*s), (v.w = a);
+	return v;
+}
 
 } // namespace acsdk

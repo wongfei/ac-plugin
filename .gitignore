@@ -1,5 +1,6 @@
 _bin/
 _obj/
+ipch/
 stuff/
 tools/
 

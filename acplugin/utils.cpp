@@ -1,7 +1,4 @@
-#include <windows.h>
-#include <shlobj.h>
-#include <stdio.h>
-#include <stdarg.h>
+#include "precompiled.h"
 #include "utils.h"
 
 std::wstring strf(const wchar_t* format, ...)
@@ -14,23 +11,27 @@ std::wstring strf(const wchar_t* format, ...)
 	return std::wstring(buf);
 }
 
-std::wstring getDocumentsPath() {
+std::wstring getDocumentsPath()
+{
 	wchar_t buf[MAX_PATH];
 	SHGetFolderPathW(0, 5, 0, 0, buf);
 	return std::wstring(buf);
 }
 
-bool fileExists(LPCWSTR Path) {
+bool fileExists(LPCWSTR Path)
+{
 	DWORD dwAttrib = GetFileAttributesW(Path);
 	return (dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
-bool dirExists(LPCWSTR Path) {
+bool dirExists(LPCWSTR Path)
+{
 	DWORD dwAttrib = GetFileAttributesW(Path);
 	return (dwAttrib != INVALID_FILE_ATTRIBUTES && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
-void ensureDirExists(const std::wstring& path) {
+void ensureDirExists(const std::wstring& path)
+{
 	if (!dirExists(path.c_str())) {
 		CreateDirectoryW(path.c_str(), nullptr);
 	}

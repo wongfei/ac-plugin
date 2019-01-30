@@ -1,7 +1,3 @@
-//
-// https://github.com/Thordin/vtable-hook
-//
-
 #pragma once
 
 int vtablehook_unprotect(void* region);

@@ -1,68 +1,8 @@
 #pragma once
 
 #include "PluginBase.h"
-#include <unordered_map>
-
-struct CarIni
-{
-	std::wstring unixName;
-	float mass = 0;
-};
-
-struct CarPerf
-{
-	union {
-		float values[8];
-		struct {
-			// instant
-			float irpm;
-			float ivel;
-			float iacc;
-			float idec;
-			// avg
-			float acc;
-			float dec;
-			float accPower;
-			float decPower;
-		};
-	};
-
-	void reset() { memset(values, 0, sizeof(values)); }
-	void assignMax(const CarPerf& other) {
-		for (int i = 0; i < _countof(values); ++i) {
-			values[i] = tmax(values[i], other.values[i]);
-		}
-	}
-};
-
-enum class EPerfMode : int {
-	Actual = 0,
-	ActualMax,
-	PrevLap,
-	BestLap,
-	COUNT
-};
-
-struct DriverState
-{
-	std::wstring carName;
-	CarAvatar* avatar = nullptr;
-	CarIni* carIni = nullptr;
-
-	CarPerf perf[(int)EPerfMode::COUNT];
-	vec3f vel;
-	float accum;
-
-	DriverState() { resetPerf(); }
-
-	void resetPerf() {
-		for (int i = 0; i < (int)EPerfMode::COUNT; ++i) {
-			perf[i].reset();
-		}
-		vset(vel, 0, 0, 0);
-		accum = 0;
-	}
-};
+#include "DriverState.h"
+#include "GridView.h"
 
 class CheaterDetector : public PluginBase
 {
@@ -74,20 +14,25 @@ public:
 	virtual bool acpUpdate(ACCarState* carState, float deltaT);
 	virtual bool acpOnGui(ACPluginContext* context);
 
-protected:
+public:
 
 	UDT_OVERRIDE_METHOD(CheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
 
-	void updatePlayer();
+	DriverState* initDriver(CarAvatar* avatar);
+	DriverState* getDriver(CarAvatar* avatar);
+	DriverState* getDriver(int id);
+
 	void updateDrivers(float deltaT);
+	void updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT);
+
+	void writeDatalog();
+	void analyzeDatalog(DriverState* driver);
+
+	void redrawControls();
+	void updatePlayerStats();
+	void updatePerfGrid();
+
 	void dumpState();
-
-	enum class EGetMode { GetExisting = 0, GetOrCreate };
-	DriverState* getDriver(CarAvatar* avatar, EGetMode mode = EGetMode::GetExisting);
-	CarIni* getCarIni(const std::wstring& unixName, EGetMode mode = EGetMode::GetExisting);
-	void parseCarIni(CarIni* car);
-
-	void togglePerfMode();
 
 protected:
 
@@ -97,8 +42,6 @@ protected:
 
 	std::unique_ptr<GridView> _gridPerf;
 	ksgui_ActiveButton* _btnPerf = nullptr;
-	EPerfMode _perfMode = EPerfMode::Actual;
 
-	std::unordered_map<std::wstring, CarIni*> _carIni;
 	std::unordered_map<CarAvatar*, DriverState*> _drivers;
 };

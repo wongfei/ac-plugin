@@ -1,3 +1,4 @@
+#include "precompiled.h"
 #include "CheaterDetector.h"
 
 void* _g_module = nullptr;
@@ -25,13 +26,18 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	#endif
 
 	s_app = new CheaterDetector(plugin);
+
+	log_printf(L"acpInit DONE");
 	return true;
 }
 
 AC_EXPORT bool AC_API acpShutdown()
 {
 	log_printf(L"acpShutdown");
+
 	safe_delete(s_app);
+
+	log_printf(L"acpShutdown DONE");
 	return true;
 }
 

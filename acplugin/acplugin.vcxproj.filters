@@ -1,54 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{176a113f-ee81-4c09-80e4-6d37af378e82}</UniqueIdentifier>
+    <Filter Include="CheaterDetector">
+      <UniqueIdentifier>{3ee2891d-e568-439f-8efa-652952232e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{248132dd-fba0-4bdb-aa65-9ca57196e6d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="plugin_core">
+      <UniqueIdentifier>{d7aa8f20-7d42-4ea5-84c0-343dd466747c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AC">
+      <UniqueIdentifier>{e776daa4-f833-478e-8aae-27b3e5680415}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="log.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="plugin.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="utils.cpp">
+      <Filter>helpers</Filter>
     </ClCompile>
     <ClCompile Include="vthook.cpp">
-      <Filter>src</Filter>
+      <Filter>helpers</Filter>
     </ClCompile>
-    <ClCompile Include="utils.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="log.cpp">
+      <Filter>plugin_core</Filter>
     </ClCompile>
-    <ClCompile Include="CheaterDetector.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="plugin.cpp">
+      <Filter>plugin_core</Filter>
     </ClCompile>
     <ClCompile Include="PluginBase.cpp">
-      <Filter>src</Filter>
+      <Filter>plugin_core</Filter>
+    </ClCompile>
+    <ClCompile Include="precompiled.cpp">
+      <Filter>plugin_core</Filter>
+    </ClCompile>
+    <ClCompile Include="CheaterDetector.cpp">
+      <Filter>CheaterDetector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="plugin.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="ac_gen.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="ac_sdk.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="vthook.h">
-      <Filter>src</Filter>
+    <ClInclude Include="udt.h">
+      <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
-      <Filter>src</Filter>
+      <Filter>helpers</Filter>
     </ClInclude>
-    <ClInclude Include="CheaterDetector.h">
-      <Filter>src</Filter>
+    <ClInclude Include="vthook.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="plugin.h">
+      <Filter>plugin_core</Filter>
     </ClInclude>
     <ClInclude Include="PluginBase.h">
-      <Filter>src</Filter>
+      <Filter>plugin_core</Filter>
     </ClInclude>
-    <ClInclude Include="gui.h">
-      <Filter>src</Filter>
+    <ClInclude Include="precompiled.h">
+      <Filter>plugin_core</Filter>
+    </ClInclude>
+    <ClInclude Include="CheaterDetector.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverPerf.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverState.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="GridView.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="ac_gen.h">
+      <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="ac_sdk.h">
+      <Filter>AC</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

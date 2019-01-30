@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdarg.h>
+#include "precompiled.h"
 #include "plugin.h"
 
 #if (AC_LOG_ENABLED)
