@@ -1,32 +1,29 @@
 #include "precompiled.h"
-#include "PluginBase.h"
+#include "PluginApp.h"
 
-PluginBase::PluginBase(ACPlugin* plugin)
+PluginApp::PluginApp(ACPlugin* plugin, const std::wstring& appName)
 {
 	_plugin = plugin;
 	_sim = plugin->sim;
 	_game = plugin->sim->game;
+	_appName = appName;
 }
 
-PluginBase::~PluginBase()
+PluginApp::~PluginApp()
 {
-	for (auto& iter : _carIni) {
-		delete(iter.second);
-	}
-	_carIni.clear();
 }
 
-bool PluginBase::acpUpdate(ACCarState* carState, float deltaT)
+bool PluginApp::acpUpdate(ACCarState* carState, float deltaT)
 {
 	return true;
 }
 
-bool PluginBase::acpOnGui(ACPluginContext* context)
+bool PluginApp::acpOnGui(ACPluginContext* context)
 {
 	return true;
 }
 
-void PluginBase::addTimer(float rate, TimerCallback callback)
+void PluginApp::addTimer(float rate, TimerCallback callback)
 {
 	TimerNode node;
 	node.callback = callback;
@@ -35,61 +32,36 @@ void PluginBase::addTimer(float rate, TimerCallback callback)
 	_timers.push_back(node);
 }
 
-void PluginBase::updateTimers(float deltaT)
+void PluginApp::updateTimers(float deltaT)
 {
 	for (auto& tm : _timers) {
+
 		tm.accum += deltaT;
 		if (tm.accum >= tm.rate) {
 			tm.accum -= tm.rate;
+
+			if (tm.accum >= tm.rate) {
+				tm.accum = 0;
+			}
+
 			tm.callback(tm.rate);
 		}
 	}
 }
 
-CarIni* PluginBase::loadCarIni(const std::wstring& unixName)
-{
-	log_printf(L"loadCarIni %s", unixName.c_str());
-
-	auto car = new CarIni();
-	car->unixName = unixName;
-	_carIni.insert(std::pair<const std::wstring, CarIni*>(unixName, car));
-
-	std::wstring path(L"content/cars/");
-	path.append(unixName);
-	path.append(L"/data/car.ini");
-
-	auto ini = new_udt<INIReader>(path);
-	{
-		std::wstring section(L"BASIC");
-		std::wstring key(L"TOTALMASS");
-		car->mass = ini->getFloat(section, key);
-	}
-	del_udt(ini);
-
-	return car;
-}
-
-CarIni* PluginBase::getCarIni(const std::wstring& unixName)
-{
-	auto icar = _carIni.find(unixName);
-	if (icar != _carIni.end()) {
-		return icar->second;
-	}
-	return nullptr;
-}
-
-std::wstring PluginBase::getConfigPath()
+std::wstring PluginApp::getConfigPath()
 {
 	auto path = getDocumentsPath();
 	path.append(L"\\");
 	path.append(_game->gui->applicationName);
 	path.append(L"\\cfg\\apps\\");
 	ensureDirExists(path);
-	path.append(AC_PLUGIN_NAME L".ini");
+	path.append(_appName);
+	path.append(L".ini");
 	return path;
 }
 
-void PluginBase::loadFormConfig()
+void PluginApp::loadFormConfig()
 {
 	auto path = getConfigPath();
 	auto ini = new_udt<INIReaderDocuments>(&path, false);
@@ -116,7 +88,7 @@ void PluginBase::loadFormConfig()
 	del_udt(ini);
 }
 
-void PluginBase::writeFormConfig()
+void PluginApp::writeFormConfig()
 {
 	auto path = getConfigPath();
 	std::wofstream out;
@@ -131,7 +103,7 @@ void PluginBase::writeFormConfig()
 	out.close();
 }
 
-void PluginBase::writeConsole(const std::wstring& text, bool writeToLog)
+void PluginApp::writeConsole(const std::wstring& text, bool writeToLog)
 {
 	std::wstring msg(text);
 	_sim->console->operator<<(&msg);

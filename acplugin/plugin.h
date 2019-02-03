@@ -4,7 +4,6 @@
 #define AC_EXPORT __declspec(dllexport)
 
 #define AC_PLUGIN_NAME L"hello_plugin"
-#define AC_PLUGIN_TITLE L"Hello Plugin"
 
 #define AC_LOG_ENABLED 1
 #define AC_LOG_NAME AC_PLUGIN_NAME L".log"
@@ -16,3 +15,5 @@
 	#define log_reset()
 	#define log_printf(format, ...)
 #endif
+
+extern void* _g_module;

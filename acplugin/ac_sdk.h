@@ -1,6 +1,5 @@
 #pragma once
 
-extern void* _g_module;
 inline void* _drva(size_t off) { return ((uint8_t*)_g_module) + off; }
 
 namespace acsdk {

@@ -11,13 +11,13 @@ inline std::wstring lapToStr(double lapTimeMs) {
 	return strf(L"%d:%06.3f", m, s);
 }
 
-CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
+CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"cheater_detector")
 {
 	log_printf(L"+CheaterDetector %p", this);
 	auto pthis = this;
 
-	std::wstring name(AC_PLUGIN_NAME);
-	std::wstring title(AC_PLUGIN_TITLE);
+	std::wstring title(L"Cheater Detector");
+	std::wstring name(_appName);
 	std::wstring text;
 
 	bool canBeScaled = false;
@@ -43,9 +43,11 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
 	_lbPower->setPosition(10, 70);
 	_form->addControl(_lbPower);
 
-	_gridPerf.reset(new GridView(_game->gui, 10, 7, 70, 25, 11));
+	_gridPerf.reset(new GridView(_game->gui, 10, 7, 65, 25, 11));
 	_gridPerf->setPosition(10, 100);
-	_gridPerf->getControl()->backColor = rgba(17, 17, 17, 0.8f);
+	_gridPerf->getControl()->drawBorder = false;
+	_gridPerf->getControl()->drawBackground = false;
+	//_gridPerf->getControl()->backColor = rgba(17, 17, 17, 0.8f);
 	_form->addControl(_gridPerf->getControl());
 
 	name.assign(L"dump");
@@ -74,9 +76,11 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginBase(plugin)
 
 	addTimer(DPERF_UPDATE_FREQ_MS * 0.001f, [pthis](float deltaT) { pthis->updateDrivers(deltaT); });
 	addTimer(DPERF_DATALOG_FREQ_MS * 0.001f, [pthis](float deltaT) { pthis->writeDatalog(); });
-	addTimer(0.5f, [pthis](float deltaT) { pthis->redrawControls(); });
+	addTimer(0.2f, [pthis](float deltaT) { pthis->redrawControls(); });
 
-	writeConsole(strf(L"PLUGIN \"%s\" initialized", AC_PLUGIN_NAME));
+	_datalogTmp.reserve(DPERF_DATALOG_BUFFER_MAX);
+
+	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
 
 CheaterDetector::~CheaterDetector()
@@ -88,6 +92,11 @@ CheaterDetector::~CheaterDetector()
 		delete(iter.second);
 	}
 	_drivers.clear();
+
+	for (auto& iter : _carIni) {
+		delete(iter.second);
+	}
+	_carIni.clear();
 
 	writeFormConfig();
 	_form->setVisible(false);
@@ -125,16 +134,8 @@ void CheaterDetector::updateDrivers(float deltaT)
 	for (auto* avatar : _sim->cars) {
 
 		CarPhysicsState* state = nullptr;
-
 		if (!avatar->driverInfo.name.empty()) {
-			if (avatar->physics) {
-				state = &avatar->physicsState;
-			}
-			else if (avatar->netCarStateProvider) {
-				if (!avatar->netCarStateProvider->isDisconnected) {
-					state = &avatar->netCarStateProvider->state;
-				}
-			}
+			state = getCarState(avatar);
 		}
 
 		DriverState* driver = getDriver(avatar);
@@ -176,12 +177,18 @@ DriverState* CheaterDetector::initDriver(CarAvatar* avatar)
 					break;
 				}
 			}
+			const int maxSamples = (int)(ev.lapTime / DPERF_DATALOG_FREQ_MS); // total time ms / sample freq ms
 			auto timeStr(lapToStr(ev.lapTime));
-			pthis->writeConsole(strf(L"OnLapCompleted: ID%d \"%s\" ; %s ; Time %s ; Cuts %d ; Valid %d ; Best %d", 
+
+			pthis->writeConsole(strf(L"OnLapCompleted: ID%d \"%s\" ; %s ; Time %s (%u) ; NumCuts %d ; IsValid %d ; IsBest %d ; NumSamples %d / %d", 
 				driver->avatar->guid, driver->avatar->driverInfo.name.c_str(), driver->avatar->unixName.c_str(), 
-				timeStr.c_str(), (int)ev.cuts, (int)ev.isValid, (int)isBest
+				timeStr.c_str(), ev.lapTime, (int)ev.cuts, (int)ev.isValid, (int)isBest, (int)driver->datalog.size(), (int)maxSamples
 				), true
 			);
+			if (driver->datalog.size() > maxSamples) {
+				std::vector<PerfTable<float> > tmp(driver->datalog.end() - maxSamples, driver->datalog.end());
+				driver->datalog.swap(tmp);
+			}
 			pthis->analyzeDatalog(driver);
 			driver->datalog.clear();
 		}
@@ -208,24 +215,14 @@ void CheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* state, 
 	if (!driver->carIni || driver->carName.compare(avatar->unixName)) {
 		writeConsole(strf(L"OnCarChanged: ID%d \"%s\" -> %s (%s)", avatar->guid, avatar->driverInfo.name.c_str(), avatar->unixName.c_str(), avatar->configName.c_str()), true);
 		driver->carName = avatar->unixName;
-		driver->resetPerf();
 
 		driver->carIni = getCarIni(avatar->unixName);
 		if (!driver->carIni) {
 			driver->carIni = loadCarIni(avatar->unixName);
 		}
-	}
 
-	if (driver->inPitline != avatar->inPitlane) {
-		writeConsole(strf(L"%s: ID%d \"%s\"", (avatar->inPitlane ? L"OnPitEnter" : L"OnPitExit"), avatar->guid, avatar->driverInfo.name.c_str()), true);
-		driver->inPitline = avatar->inPitlane;
+		driver->resetPerf();
 	}
-
-	if (state->lapTime > 0 && (driver->lapTime == 0 || driver->lapTime > state->lapTime)) {
-		writeConsole(strf(L"OnLapStarted: ID%d \"%s\"", avatar->guid, avatar->driverInfo.name.c_str()), true);
-		driver->datalog.clear();
-	}
-	driver->lapTime = state->lapTime;
 
 	auto& perf = driver->perf;
 
@@ -263,69 +260,84 @@ void CheaterDetector::writeDatalog()
 		auto driver = entry.second;
 		if (driver->online && !driver->avatar->inPitlane) {
 
+			if (driver->datalog.size() + 1 >= DPERF_DATALOG_BUFFER_MAX) {
+				// overflow
+				_datalogTmp.clear();
+				_datalogTmp.assign(driver->datalog.begin() + DPERF_DATALOG_BUFFER_MAX/10, driver->datalog.end());
+				driver->datalog.swap(_datalogTmp);
+			}
+
 			driver->datalog.emplace_back();
 			driver->datalog.back() = driver->avg;
-
-			if (driver->datalog.size() >= DPERF_DATALOG_BUFFER_MAX) {
-				// overflow
-				driver->datalog.clear();
-			}
 		}
 	}
 }
 
 void CheaterDetector::analyzeDatalog(DriverState* driver)
 {
-	if (!driver->datalog.size()) return;
-
-	const float step = 10;
-
-	float maxPower = 0;
-	float sum = 0;
-	for (const auto& iter : driver->datalog) {
-		const float power = iter[ePerfParam::Power];
-		maxPower = tmax(maxPower, power);
-		sum += power;
+	const int sampleCount = (int)driver->datalog.size();
+	if (!sampleCount) {
+		log_printf(L"  datalog is empty");
+		return;
 	}
 
-	float avgPower = sum / (float)driver->datalog.size();
-	avgPower = ((int)avgPower / (int)step) * step;
+	const float powerStep = 20;
+	float powerMax = 0;
+	float powerSum = 0;
+	int nzSampleCount = 0;
 
-	const float range = maxPower - avgPower;
-	const int hsize = (int)(range / step);
-	if (hsize <= 1) return;
+	for (const auto& iter : driver->datalog) {
+		const float power = iter[ePerfParam::Power] * KW_TO_HP;
+		if (power > 0) {
+			powerMax = tmax(powerMax, power);
+			powerSum += power;
+			++nzSampleCount;
+		}
+	}
 
-	std::vector<int> histogram;
-	histogram.resize(hsize);
-	memset(&histogram[0], 0, sizeof(int) * hsize);
+	if (!nzSampleCount) {
+		log_printf(L"  no valid samples");
+		return;
+	}
 
-	int samples = 0;
+	const float powerAvg = powerSum / (float)nzSampleCount;
+
+	const float histRange = powerMax;
+	const int histSize = (int)(histRange / powerStep) + 1;
+	if (histSize <= 1) {
+		log_printf(L"  invalid histSize %d ; histRange %.2f ; powerStep %.2f", histSize, histRange, powerStep);
+		return;
+	}
+
+	if (_histogram.size() < histSize) {
+		_histogram.resize(histSize);
+	}
+	memset(&_histogram[0], 0, sizeof(_histogram[0]) * histSize);
+
 	int bad = 0;
 	for (const auto& iter : driver->datalog) {
-		const float power = iter[ePerfParam::Power];
-		if (power > avgPower) {
-			const int id = (int)((power - avgPower) / step);
-			if (id < hsize) {
-				++histogram[id];
-				++samples;
+		const float power = iter[ePerfParam::Power] * KW_TO_HP;
+		if (power > 0) {
+			const int id = (int)(power / powerStep);
+			if (id < histSize) {
+				++_histogram[id];
 			}
 			else {
 				++bad;
 			}
 		}
 	}
-	if (!samples) return;
 
-	writeConsole(strf(L"  avg %.0f kW ; max %.0f kW ; range %.0f ; hsize %d ; samples %d ; bad %d", avgPower, maxPower, range, hsize, samples, bad), true);
+	writeConsole(strf(L"  avg %.2f hp ; max %.2f hp ; histRange %.2f ; histSize %d ; nzSamples %d ; bad %d", 
+		powerAvg, powerMax, histRange, histSize, nzSampleCount, bad
+	), true);
 
-	int n = 0;
-	for (int id = hsize - 1; id >= 0; id--) {
-		if (histogram[id]) {
-			float power =  avgPower + id * step;
-			float perc = histogram[id] / (float)samples;
+	for (int id = histSize - 1; id >= 0; id--) {
+		if (_histogram[id]) {
+			const float perc = _histogram[id] / (float)nzSampleCount;
 			if (perc >= 0.01f) {
-				writeConsole(strf(L"  %.0f kW -> %.2f", power, perc), true);
-				if (++n > 9) break;
+				const float power =  (id + 1) * powerStep;
+				writeConsole(strf(L"  %.0f hp -> %.2f", power, perc), true);
 			}
 		}
 	}
@@ -345,18 +357,18 @@ void CheaterDetector::updatePlayerStats()
 
 	auto car = avatar->physics;
 	auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
-	auto maxPower = car->drivetrain.acEngine.maxPowerW;
-	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic;
+	auto maxPower = car->drivetrain.acEngine.maxPowerW * 0.001f * KW_TO_HP;
+	auto maxPowerDyn = car->drivetrain.acEngine.maxPowerW_Dynamic * 0.001f * KW_TO_HP;
 
 	auto driver = getDriver(avatar);
 	const float hp = driver->avg[ePerfParam::Power].val() * KW_TO_HP;
 	const float hp5 = driver->avg5[ePerfParam::Power].maxv() * KW_TO_HP;
 
 	std::wstring text;
-	text.assign(strf(L"Spec: %.1f kg ; %.1f Nm ; %.2f kW ; %.2f kW(d)", car->mass, maxTorq, maxPower * 0.001f, maxPowerDyn * 0.001f));
+	text.assign(strf(L"Spec: %.1f kg ; %.1f nm ; %.1f hp ; %.1f hp(d)", car->mass, maxTorq, maxPower, maxPowerDyn));
 	_lbSpec->setText(text);
 
-	text.assign(strf(L"Power(hp): %6.1f ; %6.1f ; LapTime: %u", hp, hp5, (unsigned int)avatar->physicsState.lapTime));
+	text.assign(strf(L"Power(hp): %6.1f ; %6.1f ; LapTime %u ; SplinePos %.2f", hp, hp5, avatar->physicsState.lapTime, avatar->physicsState.normalizedSplinePosition));
 	_lbPower->setText(text);
 }
 
@@ -409,12 +421,11 @@ void CheaterDetector::dumpState()
 		if (avatar->physics) {
 			auto car = avatar->physics;
 			auto maxTorq = car->drivetrain.acEngine.maxTorqueNM;
-			auto maxPower = car->drivetrain.acEngine.maxPowerW;
-			auto powerRatio = maxPower * 0.001f / car->mass;
+			auto maxPower = car->drivetrain.acEngine.maxPowerW * 0.001f * KW_TO_HP;
+			auto powerRatio = maxPower / car->mass;
 
-			log_printf(L"%.1fkg ; %.1fNm ; %.2fkW ; %.2fkW/kg ; %s", 
-				car->mass, maxTorq, maxPower * 0.001f, powerRatio,
-				avatar->unixName.c_str()
+			log_printf(L"%.1f kg ; %.1f nm ; %.2f hp ; %.2f hp/kg ; %s", 
+				car->mass, maxTorq, maxPower, powerRatio, avatar->unixName.c_str()
 			);
 		}
 	}
@@ -450,6 +461,50 @@ DriverState* CheaterDetector::getDriver(int id)
 	for (auto iter : _sim->cars) {
 		if (iter->guid == id) {
 			return getDriver(iter);
+		}
+	}
+	return nullptr;
+}
+
+CarIni* CheaterDetector::loadCarIni(const std::wstring& unixName)
+{
+	log_printf(L"loadCarIni %s", unixName.c_str());
+
+	auto car = new CarIni();
+	car->unixName = unixName;
+	_carIni.insert(std::pair<const std::wstring, CarIni*>(unixName, car));
+
+	std::wstring path(L"content/cars/");
+	path.append(unixName);
+	path.append(L"/data/car.ini");
+
+	auto ini = new_udt<INIReader>(path);
+	{
+		std::wstring section(L"BASIC");
+		std::wstring key(L"TOTALMASS");
+		car->mass = ini->getFloat(section, key);
+	}
+	del_udt(ini);
+
+	return car;
+}
+
+CarIni* CheaterDetector::getCarIni(const std::wstring& unixName)
+{
+	auto icar = _carIni.find(unixName);
+	if (icar != _carIni.end()) {
+		return icar->second;
+	}
+	return nullptr;
+}
+
+CarPhysicsState* CheaterDetector::getCarState(CarAvatar* avatar) {
+	if (avatar->physics) {
+		return &avatar->physicsState;
+	}
+	else if (avatar->netCarStateProvider) {
+		if (!avatar->netCarStateProvider->isDisconnected) {
+			return &avatar->netCarStateProvider->state;
 		}
 	}
 	return nullptr;

@@ -7,11 +7,11 @@
     <Filter Include="helpers">
       <UniqueIdentifier>{248132dd-fba0-4bdb-aa65-9ca57196e6d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="plugin_core">
-      <UniqueIdentifier>{d7aa8f20-7d42-4ea5-84c0-343dd466747c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AC">
       <UniqueIdentifier>{e776daa4-f833-478e-8aae-27b3e5680415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="plugin">
+      <UniqueIdentifier>{d7aa8f20-7d42-4ea5-84c0-343dd466747c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,19 +22,19 @@
       <Filter>helpers</Filter>
     </ClCompile>
     <ClCompile Include="log.cpp">
-      <Filter>plugin_core</Filter>
+      <Filter>plugin</Filter>
     </ClCompile>
     <ClCompile Include="plugin.cpp">
-      <Filter>plugin_core</Filter>
-    </ClCompile>
-    <ClCompile Include="PluginBase.cpp">
-      <Filter>plugin_core</Filter>
+      <Filter>plugin</Filter>
     </ClCompile>
     <ClCompile Include="precompiled.cpp">
-      <Filter>plugin_core</Filter>
+      <Filter>plugin</Filter>
     </ClCompile>
     <ClCompile Include="CheaterDetector.cpp">
       <Filter>CheaterDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginApp.cpp">
+      <Filter>plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,13 +48,10 @@
       <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="plugin.h">
-      <Filter>plugin_core</Filter>
-    </ClInclude>
-    <ClInclude Include="PluginBase.h">
-      <Filter>plugin_core</Filter>
+      <Filter>plugin</Filter>
     </ClInclude>
     <ClInclude Include="precompiled.h">
-      <Filter>plugin_core</Filter>
+      <Filter>plugin</Filter>
     </ClInclude>
     <ClInclude Include="CheaterDetector.h">
       <Filter>CheaterDetector</Filter>
@@ -73,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="ac_sdk.h">
       <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="PluginApp.h">
+      <Filter>plugin</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

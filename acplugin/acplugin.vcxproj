@@ -111,7 +111,7 @@
     <ClCompile Include="CheaterDetector.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
-    <ClCompile Include="PluginBase.cpp">
+    <ClCompile Include="PluginApp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="precompiled.cpp">
@@ -132,7 +132,7 @@
     <ClInclude Include="plugin.h" />
     <ClInclude Include="ac_gen.h" />
     <ClInclude Include="ac_sdk.h" />
-    <ClInclude Include="PluginBase.h" />
+    <ClInclude Include="PluginApp.h" />
     <ClInclude Include="vthook.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

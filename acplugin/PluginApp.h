@@ -17,27 +17,18 @@ struct TimerNode
 	float accum;
 };
 
-struct CarIni
-{
-	std::wstring unixName;
-	float mass = 0;
-};
-
-class PluginBase
+class PluginApp
 {
 public:
 
-	PluginBase(ACPlugin* plugin);
-	virtual ~PluginBase();
+	PluginApp(ACPlugin* plugin, const std::wstring& appName);
+	virtual ~PluginApp();
 
 	virtual bool acpUpdate(ACCarState* carState, float deltaT);
 	virtual bool acpOnGui(ACPluginContext* context);
 
 	void addTimer(float rate, TimerCallback callback);
 	void updateTimers(float deltaT);
-
-	CarIni* loadCarIni(const std::wstring& unixName);
-	CarIni* getCarIni(const std::wstring& unixName);
 
 	std::wstring getConfigPath();
 	void loadFormConfig();
@@ -54,6 +45,6 @@ protected:
 	Game* _game = nullptr;
 	ksgui_Form* _form = nullptr;
 
+	std::wstring _appName;
 	std::vector<TimerNode> _timers;
-	std::unordered_map<std::wstring, CarIni*> _carIni;
 };

@@ -3,7 +3,10 @@
 
 void* _g_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
-static PluginBase* s_app = nullptr;
+
+typedef std::shared_ptr<PluginApp> PluginAppPtr;
+typedef std::vector<PluginAppPtr> PluginAppVector;
+static PluginAppVector s_apps;
 
 extern "C" {
 
@@ -25,7 +28,7 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
 	#endif
 
-	s_app = new CheaterDetector(plugin);
+	s_apps.push_back(std::make_shared<CheaterDetector>(plugin));
 
 	log_printf(L"acpInit DONE");
 	return true;
@@ -35,7 +38,7 @@ AC_EXPORT bool AC_API acpShutdown()
 {
 	log_printf(L"acpShutdown");
 
-	safe_delete(s_app);
+	s_apps.clear();
 
 	log_printf(L"acpShutdown DONE");
 	return true;
@@ -43,12 +46,18 @@ AC_EXPORT bool AC_API acpShutdown()
 
 AC_EXPORT bool AC_API acpUpdate(ACCarState* car, float deltaT)
 {
-	return (s_app ? s_app->acpUpdate(car, deltaT) : true);
+	for (auto& app : s_apps) {
+		return app->acpUpdate(car, deltaT);
+	}
+	return true;
 }
 
 AC_EXPORT bool AC_API acpOnGui(ACPluginContext* context)
 {
-	return (s_app ? s_app->acpOnGui(context) : true);
+	for (auto& app : s_apps) {
+		return app->acpOnGui(context);
+	}
+	return true;
 }
 
 AC_EXPORT bool AC_API acpGetControls(ICarControlsProvider** controls)
