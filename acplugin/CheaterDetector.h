@@ -24,6 +24,18 @@ public:
 
 	UDT_OVERRIDE_METHOD(CheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
 
+	void updateState(float deltaT);
+	void updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT);
+
+	void writeDatalog();
+	void analyzeDatalog(DriverState* driver, ePerfParam paramId, float unitScale, float step, const wchar_t* prefix);
+
+	void redrawControls();
+	void updatePlayerStats();
+	void updatePerfGrid();
+
+	void dumpState();
+
 	DriverState* initDriver(CarAvatar* avatar);
 	DriverState* getDriver(CarAvatar* avatar);
 	DriverState* getDriver(int id);
@@ -31,18 +43,6 @@ public:
 	CarIni* loadCarIni(const std::wstring& unixName);
 	CarIni* getCarIni(const std::wstring& unixName);
 	CarPhysicsState* getCarState(CarAvatar* avatar);
-
-	void updateDrivers(float deltaT);
-	void updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT);
-
-	void writeDatalog();
-	void analyzeDatalog(DriverState* driver);
-
-	void redrawControls();
-	void updatePlayerStats();
-	void updatePerfGrid();
-
-	void dumpState();
 
 protected:
 

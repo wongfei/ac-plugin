@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <d3d11.h>
 #include <shlobj.h>
-#include <concurrent_queue.h>
 
 // c
 #include <stdio.h>
@@ -26,3 +25,4 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <concurrent_queue.h>

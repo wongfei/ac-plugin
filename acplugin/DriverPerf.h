@@ -4,7 +4,7 @@ enum class ePerfParam : int {
 	Rpm = 0,
 	Vel,
 	Acc,
-	Power,
+	AccP,
 	COUNT
 };
 
