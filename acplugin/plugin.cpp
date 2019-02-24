@@ -1,7 +1,10 @@
 #include "precompiled.h"
-#include "CheaterDetector.h"
+using namespace acsdk;
 
-void* _g_module = nullptr;
+#include "AppCheaterDetector.h"
+#include "AppCustomPhysics.h"
+
+void* _ac_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
 
 typedef std::shared_ptr<PluginApp> PluginAppPtr;
@@ -18,17 +21,18 @@ AC_EXPORT bool AC_API acpGetName(wchar_t* name)
 
 AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 {
-	_g_module = GetModuleHandleA(nullptr);
+	_ac_module = GetModuleHandleA(nullptr);
 	s_plugin = plugin;
 
 	log_reset();
-	log_printf(L"acpInit module=%p plugin=%p", _g_module, plugin);
+	log_printf(L"acpInit module=%p plugin=%p", _ac_module, plugin);
 
 	#if defined(AC_DEBUG)
 		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
 	#endif
 
-	s_apps.push_back(std::make_shared<CheaterDetector>(plugin));
+	s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
+	s_apps.push_back(std::make_shared<AppCustomPhysics>(plugin));
 
 	log_printf(L"acpInit DONE");
 	return true;
@@ -47,7 +51,7 @@ AC_EXPORT bool AC_API acpShutdown()
 AC_EXPORT bool AC_API acpUpdate(ACCarState* car, float deltaT)
 {
 	for (auto& app : s_apps) {
-		return app->acpUpdate(car, deltaT);
+		app->acpUpdate(car, deltaT);
 	}
 	return true;
 }
@@ -55,7 +59,7 @@ AC_EXPORT bool AC_API acpUpdate(ACCarState* car, float deltaT)
 AC_EXPORT bool AC_API acpOnGui(ACPluginContext* context)
 {
 	for (auto& app : s_apps) {
-		return app->acpOnGui(context);
+		app->acpOnGui(context);
 	}
 	return true;
 }

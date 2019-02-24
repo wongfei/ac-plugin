@@ -10,19 +10,19 @@ struct CarIni
 	float mass = 0;
 };
 
-class CheaterDetector : public PluginApp
+class AppCheaterDetector : public PluginApp
 {
 public:
 
-	CheaterDetector(ACPlugin* plugin);
-	virtual ~CheaterDetector();
+	AppCheaterDetector(ACPlugin* plugin);
+	virtual ~AppCheaterDetector();
 
 	virtual bool acpUpdate(ACCarState* carState, float deltaT);
 	virtual bool acpOnGui(ACPluginContext* context);
 
 public:
 
-	UDT_OVERRIDE_METHOD(CheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
+	UDT_OVERRIDE_METHOD(AppCheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (OnMouseDownEvent &ev), (ev));
 
 	void updateState(float deltaT);
 	void updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT);

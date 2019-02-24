@@ -1,5 +1,7 @@
 #include "precompiled.h"
-#include "CheaterDetector.h"
+using namespace acsdk;
+
+#include "AppCheaterDetector.h"
 
 #define CONST_G 9.80665f
 #define KW_TO_HP 1.34102f
@@ -15,25 +17,16 @@ inline std::wstring lapToStr(double lapTimeMs) {
 	return strf(L"%d:%06.3f", m, s);
 }
 
-CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"cheater_detector")
+AppCheaterDetector::AppCheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"cheater_detector")
 {
-	log_printf(L"+CheaterDetector %p", this);
+	log_printf(L"+AppCheaterDetector %p", this);
 	auto pthis = this;
 
-	std::wstring title(L"Cheater Detector");
-	std::wstring name(_appName);
-	std::wstring text;
-
-	bool canBeScaled = false;
-	_form = new_udt<ksgui_Form>(&name, _game->gui, canBeScaled);
-	_form->formTitle->setText(title);
-	_form->setSize(600, 400);
-	_form->devApp = false;
-	_form->setAutoHideMode(true);
-	set_udt_tag(_form, this);
+	initForm(L"Cheater Detector", 600, 400, PluginApp::FFAutoHide, this);
 	hook_onMouseDown_vf10(_form);
 
 	std::shared_ptr<Font> font(new_udt<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
+	std::wstring name, text;
 
 	name.assign(L"spec");
 	_lbSpec = new_udt<ksgui_Label>(&name, _game->gui);
@@ -51,7 +44,6 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"cheater
 	_gridPerf->setPosition(10, 100);
 	_gridPerf->getControl()->drawBorder = false;
 	_gridPerf->getControl()->drawBackground = false;
-	//_gridPerf->getControl()->backColor = rgba(17, 17, 17, 0.8f);
 	_form->addControl(_gridPerf->getControl());
 
 	name.assign(L"dump");
@@ -72,23 +64,19 @@ CheaterDetector::CheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"cheater
 	_btnDump->evClicked.add(_btnDump, dumpClick);
 	_form->addControl(_btnDump);
 
-	loadFormConfig();
-	_form->scaleByMult();
-	plugin->sim->gameScreen->addControl(_form, false);
-	plugin->sim->game->gui->taskbar->addForm(_form);
-
+	_datalogTmp.reserve(DPERF_DATALOG_BUFFER_MAX);
 	addTimer(DPERF_UPDATE_FREQ_MS * 0.001f, [pthis](float deltaT) { pthis->updateState(deltaT); });
 	addTimer(DPERF_DATALOG_FREQ_MS * 0.001f, [pthis](float deltaT) { pthis->writeDatalog(); });
 	addTimer(0.2f, [pthis](float deltaT) { pthis->redrawControls(); });
 
-	_datalogTmp.reserve(DPERF_DATALOG_BUFFER_MAX);
+	activateForm();
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
 
-CheaterDetector::~CheaterDetector()
+AppCheaterDetector::~AppCheaterDetector()
 {
-	log_printf(L"~CheaterDetector %p", this);
+	log_printf(L"~AppCheaterDetector %p", this);
 
 	for (auto& iter : _drivers) {
 		iter.second->onDestroy();
@@ -100,29 +88,19 @@ CheaterDetector::~CheaterDetector()
 		delete(iter.second);
 	}
 	_carIni.clear();
-
-	writeFormConfig();
-	_form->setVisible(false);
-	remove_elem(_plugin->sim->game->gui->taskbar->forms, _form);
-	remove_elem(_plugin->sim->gameScreen->controls, _form);
-	_form->dtor();
-
-	log_printf(L"~CheaterDetector %p DONE", this);
-	return;
 }
 
-bool CheaterDetector::acpUpdate(ACCarState* carState, float deltaT)
+bool AppCheaterDetector::acpUpdate(ACCarState* carState, float deltaT)
 {
-	updateTimers(deltaT);
-	return true;
+	return PluginApp::acpUpdate(carState, deltaT);
 }
 
-bool CheaterDetector::acpOnGui(ACPluginContext* context)
+bool AppCheaterDetector::acpOnGui(ACPluginContext* context)
 {
-	return true;
+	return PluginApp::acpOnGui(context);
 }
 
-bool CheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
+bool AppCheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
 {
 	bool res = _form->onMouseDown_impl(ev);
 	return res;
@@ -132,7 +110,7 @@ bool CheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
 // INTERNALS
 //
 
-void CheaterDetector::updateState(float deltaT)
+void AppCheaterDetector::updateState(float deltaT)
 {
 	for (auto* avatar : _sim->cars) {
 
@@ -155,7 +133,7 @@ void CheaterDetector::updateState(float deltaT)
 	}
 }
 
-DriverState* CheaterDetector::initDriver(CarAvatar* avatar)
+DriverState* AppCheaterDetector::initDriver(CarAvatar* avatar)
 {
 	log_printf(L"initDriver ID%d", avatar->guid);
 
@@ -209,7 +187,7 @@ DriverState* CheaterDetector::initDriver(CarAvatar* avatar)
 	return driver;
 }
 
-void CheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT)
+void AppCheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT)
 {
 	auto avatar = driver->avatar;
 	const vec3f curPos = getTransform(avatar->bodyMatrix);
@@ -270,7 +248,7 @@ void CheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* state, 
 	driver->computeAvg();
 }
 
-void CheaterDetector::writeDatalog()
+void AppCheaterDetector::writeDatalog()
 {
 	for (auto& entry : _drivers) {
 		auto driver = entry.second;
@@ -289,7 +267,7 @@ void CheaterDetector::writeDatalog()
 	}
 }
 
-void CheaterDetector::analyzeDatalog(DriverState* driver, ePerfParam paramId, float unitScale, float step, const wchar_t* prefix)
+void AppCheaterDetector::analyzeDatalog(DriverState* driver, ePerfParam paramId, float unitScale, float step, const wchar_t* prefix)
 {
 	const size_t sampleCount = driver->datalog.size();
 	if (!sampleCount) {
@@ -361,13 +339,13 @@ void CheaterDetector::analyzeDatalog(DriverState* driver, ePerfParam paramId, fl
 	return;
 }
 
-void CheaterDetector::redrawControls()
+void AppCheaterDetector::redrawControls()
 {
 	updatePlayerStats();
 	updatePerfGrid();
 }
 
-void CheaterDetector::updatePlayerStats()
+void AppCheaterDetector::updatePlayerStats()
 {
 	auto avatar = _plugin->carAvatar;
 
@@ -388,7 +366,7 @@ void CheaterDetector::updatePlayerStats()
 	_lbPower->setText(text);
 }
 
-void CheaterDetector::updatePerfGrid()
+void AppCheaterDetector::updatePerfGrid()
 {
 	std::wstring name;
 
@@ -427,7 +405,7 @@ void CheaterDetector::updatePerfGrid()
 	}
 }
 
-void CheaterDetector::dumpState()
+void AppCheaterDetector::dumpState()
 {
 	writeConsole(L"dump state");
 
@@ -463,7 +441,7 @@ void CheaterDetector::dumpState()
 	log_printf(L"");
 }
 
-DriverState* CheaterDetector::getDriver(CarAvatar* avatar)
+DriverState* AppCheaterDetector::getDriver(CarAvatar* avatar)
 {
 	auto idriver = _drivers.find(avatar);
 	if (idriver != _drivers.end()) {
@@ -472,7 +450,7 @@ DriverState* CheaterDetector::getDriver(CarAvatar* avatar)
 	return nullptr;
 }
 
-DriverState* CheaterDetector::getDriver(int id)
+DriverState* AppCheaterDetector::getDriver(int id)
 {
 	for (auto iter : _sim->cars) {
 		if (iter->guid == id) {
@@ -482,7 +460,7 @@ DriverState* CheaterDetector::getDriver(int id)
 	return nullptr;
 }
 
-CarIni* CheaterDetector::loadCarIni(const std::wstring& unixName)
+CarIni* AppCheaterDetector::loadCarIni(const std::wstring& unixName)
 {
 	log_printf(L"loadCarIni %s", unixName.c_str());
 
@@ -505,7 +483,7 @@ CarIni* CheaterDetector::loadCarIni(const std::wstring& unixName)
 	return car;
 }
 
-CarIni* CheaterDetector::getCarIni(const std::wstring& unixName)
+CarIni* AppCheaterDetector::getCarIni(const std::wstring& unixName)
 {
 	auto icar = _carIni.find(unixName);
 	if (icar != _carIni.end()) {
@@ -514,7 +492,7 @@ CarIni* CheaterDetector::getCarIni(const std::wstring& unixName)
 	return nullptr;
 }
 
-CarPhysicsState* CheaterDetector::getCarState(CarAvatar* avatar) {
+CarPhysicsState* AppCheaterDetector::getCarState(CarAvatar* avatar) {
 	if (avatar->physics) {
 		return &avatar->physicsState;
 	}

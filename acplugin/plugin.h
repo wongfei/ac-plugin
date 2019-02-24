@@ -15,5 +15,3 @@
 	#define log_reset()
 	#define log_printf(format, ...)
 #endif
-
-extern void* _g_module;

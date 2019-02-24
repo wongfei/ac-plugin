@@ -677,12 +677,12 @@ public:
 
 struct TyreThermalState {
 public:
-	float temps[0x3][0xC];
+	float temps[3][12];
 	float coreTemp;
 	float thermalInput;
 	float dynamicPressure;
 	float staticPressure;
-	float lastSetIMO[0x3];
+	float lastSetIMO[3];
 	float cpTemperature;
 	float lastGrain;
 	float lastBlister;
@@ -817,7 +817,7 @@ public:
 	float pressureStatic;
 	float pressureDynamic;
 	double virtualKM;
-	float lastTempIMO[0x3];
+	float lastTempIMO[3];
 	float peakSA;
 	double grain;
 	double blister;
@@ -886,7 +886,7 @@ public:
 struct DamageReportDef {
 public:
 	double lastSendTime;
-	float damageZoneLevel[0x5];
+	float damageZoneLevel[5];
 	inline DamageReportDef()  { }
 };
 
@@ -1250,8 +1250,8 @@ public:
 	unsigned int currentIndex;
 	float lateralOffset;
 	float splineLength;
-	float sides[0x2];
-	float sidesFromIL[0x2];
+	float sides[2];
+	float sidesFromIL[2];
 	float sideVelocity;
 	bool isOutsideTrackLimits;
 	inline SplineLocatorData()  { }
@@ -1273,7 +1273,7 @@ public:
 
 struct SurfaceDef {
 public:
-	wchar_t wavString[0x40];
+	wchar_t wavString[64];
 	float wavPitchSpeed;
 	void * userPointer;
 	float gripMod;
@@ -1477,34 +1477,34 @@ public:
 
 struct ACCarState {
 public:
-	float wheelLF_localPos[0x3];
-	float wheelRF_localPos[0x3];
-	float wheelLR_localPos[0x3];
-	float wheelRR_localPos[0x3];
-	float localVelocity[0x3];
-	float worldVelocity[0x3];
-	float accG[0x3];
+	float wheelLF_localPos[3];
+	float wheelRF_localPos[3];
+	float wheelLR_localPos[3];
+	float wheelRR_localPos[3];
+	float localVelocity[3];
+	float worldVelocity[3];
+	float accG[3];
 	float engineRPMS;
-	float worldPosition[0x3];
-	float bodyMatrix[0x10];
+	float worldPosition[3];
+	float bodyMatrix[16];
 	int gear;
 	bool isEngineLimiterOn;
-	float wheelAngularSpeed[0x4];
+	float wheelAngularSpeed[4];
 	float steer;
 	float gas;
 	float brake;
 	float clutch;
-	float localAngularVelocity[0x3];
-	float ndSlip[0x4];
-	float load[0x4];
-	float Mz[0x4];
-	float tyreDirtyLevel[0x4];
+	float localAngularVelocity[3];
+	float ndSlip[4];
+	float load[4];
+	float Mz[4];
+	float tyreDirtyLevel[4];
 	float lastFF;
 	float drivetrainSpeed;
 	float turboBoost;
 	float performanceMeter;
 	bool isGearGrinding;
-	float damageZoneLevel[0x5];
+	float damageZoneLevel[5];
 	int limiterRPM;
 	float speedMS;
 	inline ACCarState()  { }
@@ -1539,7 +1539,7 @@ public:
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
 	unsigned char sessionID;
-	float damageZoneLevel[0x5];
+	float damageZoneLevel[5];
 	inline ClientRemoteCarDef()  { }
 	inline void ctor(ClientRemoteCarDef & __that) { typedef void (*_fpt)(ClientRemoteCarDef *pthis, ClientRemoteCarDef &); _fpt _f=(_fpt)_drva(241776); _f(this, __that); }
 	inline void dtor() { typedef void (*_fpt)(ClientRemoteCarDef *pthis); _fpt _f=(_fpt)_drva(246128); _f(this); }
@@ -1567,7 +1567,7 @@ public:
 	bool extremeDrifting;
 	bool drifting;
 	bool invalid;
-	float oldDamageZones[0x5];
+	float oldDamageZones[5];
 	inline DriftModeComponent()  { }
 	inline void dtor() { typedef void (*_fpt)(DriftModeComponent *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
 	inline void init(Car * car) { typedef void (*_fpt)(DriftModeComponent *pthis, Car *); _fpt _f=(_fpt)_drva(2882976); return _f(this, car); }
@@ -1662,7 +1662,7 @@ public:
 	unsigned short sin_family;
 	unsigned short sin_port;
 	in_addr sin_addr;
-	char sin_zero[0x8];
+	char sin_zero[8];
 	inline sockaddr_in()  { }
 };
 
@@ -1707,7 +1707,7 @@ public:
 
 class TCPQueue {
 public:
-	unsigned char buffer[0x10000];
+	unsigned char buffer[65536];
 	unsigned int cursor;
 	inline TCPQueue()  { }
 	inline void push(unsigned char * data, unsigned int size) { typedef void (*_fpt)(TCPQueue *pthis, unsigned char *, unsigned int); _fpt _f=(_fpt)_drva(2482992); return _f(this, data, size); }
@@ -2420,7 +2420,7 @@ struct AISplinePayload {
 public:
 	float speedMS;
 	float radius;
-	float sides[0x2];
+	float sides[2];
 	float camber;
 	float direction;
 	vec3f normal;
@@ -2624,7 +2624,7 @@ public:
 	double rcvTime;
 	unsigned char pakSequenceId;
 	float targetHeight;
-	float tyreAngularSpeed[0x4];
+	float tyreAngularSpeed[4];
 	unsigned short engineRPM;
 	float steerAngle;
 	float wheelAngle;
@@ -2883,7 +2883,7 @@ public:
 class TimeLine {
 public:
 	TimeLineType type;
-	vec3f points[0x2];
+	vec3f points[2];
 	int id;
 	float length;
 	vec3f planeNormal;
@@ -3083,7 +3083,7 @@ public:
 	float bumpStopDn;
 	Damper damper;
 	bool isFront;
-	Suspension * suspensions[0x2];
+	Suspension * suspensions[2];
 	Car * car;
 	inline HeaveSpring()  { }
 	inline void dtor() { typedef void (*_fpt)(HeaveSpring *pthis); _fpt _f=(_fpt)_drva(2831104); _f(this); }
@@ -3366,7 +3366,7 @@ public:
 
 class Triangle {
 public:
-	vec3f points[0x3];
+	vec3f points[3];
 	plane4f plane;
 	inline Triangle()  { }
 	inline void ctor(vec3f & p1, vec3f & p2, vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, vec3f &, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
@@ -3615,8 +3615,8 @@ public:
 	float aiBGTargetSpeed;
 	float aiOutsideOffset;
 	float rpms;
-	float susTravel[0x4];
-	float wheelSpeed[0x4];
+	float susTravel[4];
+	float wheelSpeed[4];
 	TimeTransponder * timeTransponder;
 	bool exportEntireSession;
 	float awdFrontShare;
@@ -3629,8 +3629,8 @@ public:
 	float driveVel;
 	float rootVel;
 	float clutchSlip;
-	float avgSurfaceTemps[0x4];
-	float practicalTemps[0x4];
+	float avgSurfaceTemps[4];
+	float practicalTemps[4];
 	float splinePosition;
 	inline Telemetry()  { }
 	inline void dtor() { typedef void (*_fpt)(Telemetry *pthis); _fpt _f=(_fpt)_drva(2866608); _f(this); }
@@ -4013,22 +4013,22 @@ public:
 	float steerLock;
 	int maxGear;
 	float caster;
-	float tyreRadius[0x4];
-	float tyreWidth[0x4];
+	float tyreRadius[4];
+	float tyreWidth[4];
 	float totalMass;
 	float bodyMass;
-	float unsprungWeights[0x4];
+	float unsprungWeights[4];
 	std::vector<WingData,std::allocator<WingData> > wingData;
 	float maxTorqueNM;
 	float maxPowerW;
-	float bumpStopsUp[0x4];
-	float bumpStopsDn[0x4];
+	float bumpStopsUp[4];
+	float bumpStopsDn[4];
 	double maxFuel;
-	vec3f ridePickupPoint[0x2];
-	vec3f susBasePos[0x4];
+	vec3f ridePickupPoint[2];
+	vec3f susBasePos[4];
 	std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > tyreCompounds;
 	float minHeightM;
-	float wheelAngularInertia[0x4];
+	float wheelAngularInertia[4];
 	KPI kpi;
 	float maxTurboBoost;
 	int turboCount;
@@ -4144,7 +4144,7 @@ public:
 
 struct RenderState {
 public:
-	void * textures[0x20];
+	void * textures[32];
 	CullMode cullMode;
 	BlendMode blendMode;
 	DepthMode depthState;
@@ -4245,11 +4245,11 @@ struct CarPhysicsState {
 public:
 	unsigned char physicsGUID;
 	mat44f worldMatrix;
-	mat44f suspensionMatrix[0x4];
-	mat44f tyreMatrix[0x4];
+	mat44f suspensionMatrix[4];
+	mat44f tyreMatrix[4];
 	float engineRPM;
 	bool isEngineLimiterOn;
-	float wheelAngularSpeed[0x4];
+	float wheelAngularSpeed[4];
 	float steer;
 	float gas;
 	float brake;
@@ -4260,15 +4260,15 @@ public:
 	vec3f localVelocity;
 	vec3f localAngularVelocity;
 	vec3f angularVelocity;
-	float slipAngle[0x4];
-	float slipRatio[0x4];
-	float tyreSlip[0x4];
-	float ndSlip[0x4];
-	float load[0x4];
-	float Dy[0x4];
-	float Mz[0x4];
-	float tyreDirtyLevel[0x4];
-	SurfaceDef tyreSurfaceDef[0x4];
+	float slipAngle[4];
+	float slipRatio[4];
+	float tyreSlip[4];
+	float ndSlip[4];
+	float load[4];
+	float Dy[4];
+	float Mz[4];
+	float tyreDirtyLevel[4];
+	SurfaceDef tyreSurfaceDef[4];
 	float cgHeight;
 	vec3f accG;
 	unsigned int lapTime;
@@ -4278,12 +4278,12 @@ public:
 	float lastFF_Pure;
 	float lastFF_Final;
 	SCarStateAero aero;
-	vec3f tyreContactPoint[0x4];
-	vec3f tyreContactNormal[0x4];
-	float camberRAD[0x4];
-	float tyreRadius[0x4];
-	float tyreLoadedRadius[0x4];
-	float suspensionTravel[0x4];
+	vec3f tyreContactPoint[4];
+	vec3f tyreContactNormal[4];
+	float camberRAD[4];
+	float tyreRadius[4];
+	float tyreLoadedRadius[4];
+	float suspensionTravel[4];
 	float normalizedSplinePosition;
 	float driftPoints;
 	float instantDrift;
@@ -4296,34 +4296,34 @@ public:
 	float performanceMeterSpeedDiffMS;
 	bool isGearGrinding;
 	float bodyWorkVolume;
-	float tyreVirtualKM[0x4];
-	float damageZoneLevel[0x5];
+	float tyreVirtualKM[4];
+	float damageZoneLevel[5];
 	int limiterRPM;
 	plane4f groundPlane;
 	double timeStamp;
 	float airDensity;
 	float fuel;
 	float fuelLaps;
-	float rideHeight[0x2];
+	float rideHeight[2];
 	bool isRetired;
 	float engineLifeLeft;
 	float turboBov;
 	float turboBoostLevel;
-	float tyreGrain[0x4];
-	float tyreBlister[0x4];
+	float tyreGrain[4];
+	float tyreBlister[4];
 	DriverActionsState actionsState;
 	CarSetupState setupState;
-	float tyreInflation[0x4];
+	float tyreInflation[4];
 	float kersCharge;
 	float kersInput;
 	float gearRpmWindow;
-	float susDamage[0x4];
-	float tyreFlatSpot[0x4];
+	float susDamage[4];
+	float tyreFlatSpot[4];
 	float water;
-	TyreThermalState tyreThermalStates[0x4];
-	float discTemps[0x4];
-	float wear[0x4];
-	float wearMult[0x4];
+	TyreThermalState tyreThermalStates[4];
+	float discTemps[4];
+	float wear[4];
+	float wearMult[4];
 	float lockControlsTime;
 	float kersCurrentKJ;
 	bool kersIsCharging;
@@ -4331,7 +4331,7 @@ public:
 	unsigned char p2pStatus;
 	unsigned char p2pActivations;
 	float antiSquat;
-	float caster[0x2];
+	float caster[2];
 	inline CarPhysicsState()  { }
 	inline void ctor(CarPhysicsState & __that) { typedef void (*_fpt)(CarPhysicsState *pthis, CarPhysicsState &); _fpt _f=(_fpt)_drva(1179376); _f(this, __that); }
 	inline void ctor() { typedef void (*_fpt)(CarPhysicsState *pthis); _fpt _f=(_fpt)_drva(781920); _f(this); }
@@ -4715,7 +4715,7 @@ public:
 struct AntirollBar {
 public:
 	IRigidBody * carBody;
-	ISuspension * hubs[0x2];
+	ISuspension * hubs[2];
 	DynamicController ctrl;
 	float k;
 	inline AntirollBar()  { }
@@ -5369,7 +5369,7 @@ public:
 	Shader * glShader;
 	Shader * glShaderTex;
 	unsigned int tempCounter;
-	MeshVertex tempVertices[0x3];
+	MeshVertex tempVertices[3];
 	MeshVertex * tempBuffer;
 	unsigned int maxVertices;
 	inline GLRenderer()  { }
@@ -5938,7 +5938,7 @@ public:
 	float electronicOverride;
 	float handBrakeTorque;
 	float ebbInstant;
-	BrakeDisc discs[0x4];
+	BrakeDisc discs[4];
 	float limitDown;
 	float limitUp;
 	float rearCorrectionTorque;
@@ -6025,8 +6025,8 @@ public:
 	std::vector<DynamicWingController,std::allocator<DynamicWingController> > dynamicControllers;
 	Car * car;
 	RaceEngineer engineer;
-	float damageCL[0x5];
-	float damageCD[0x5];
+	float damageCL[5];
+	float damageCD[5];
 	bool hasDamage;
 	WingOverrideDef overrideStatus;
 	float SPEED_DAMAGE_COEFF;
@@ -6234,11 +6234,11 @@ public:
 	NetCarQoS qos;
 	ACClient * client;
 	mat44f bodyMatrix;
-	mat44f wheelMatrix[0x4];
-	mat44f suspMatrix[0x4];
-	NetCarState netStates[0x3];
+	mat44f wheelMatrix[4];
+	mat44f suspMatrix[4];
+	NetCarState netStates[3];
 	vec3f lastScreenPos;
-	mat44f wheelBasePosLS[0x4];
+	mat44f wheelBasePosLS[4];
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > unixName;
 	IRayTrackCollisionProvider * rayCastProvider;
 	vec3f lastVelocity;
@@ -6259,10 +6259,10 @@ public:
 	Concurrency::concurrent_queue<NetCarState,std::allocator<NetCarState> > incomingStateQueue;
 	std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > stateCache;
 	double lastIntegrationTime;
-	float tyreRadius[0x4];
+	float tyreRadius[4];
 	vec3f graphicsOffset;
 	float graphicsPitchRotation;
-	mat44f tyreLocalRotation[0x4];
+	mat44f tyreLocalRotation[4];
 	CarAvatar * avatar;
 	IRigidBody * body;
 	vec3f lastDistanceV;
@@ -6623,7 +6623,7 @@ public:
 	std::vector<ITorqueGenerator *,std::allocator<ITorqueGenerator *> > wheelTorqueGenerators;
 	double damageRpmWindow;
 	double orgRpmWindow;
-	int lockCounter[0x4];
+	int lockCounter[4];
 	DrivetrainControllers controllers;
 	float clutchInertia;
 	float locClutch;
@@ -6686,7 +6686,7 @@ public:
 	CarPhysicsState physicsState;
 	AIState aiState;
 	CarAudioFMOD * carAudioFMOD;
-	SkidMarkBuffer * skidMarkBuffers[0x4];
+	SkidMarkBuffer * skidMarkBuffers[4];
 	CarPhysicsInfo physicsInfo;
 	std::unique_ptr<RaceEngineer,std::default_delete<RaceEngineer> > raceEngineer;
 	ModelBoundariesCoordinates modelBoundaries;
@@ -6717,7 +6717,7 @@ public:
 	int guid;
 	Node * modelLink;
 	Car * physics;
-	vec3f lastSkidPosition[0x4];
+	vec3f lastSkidPosition[4];
 	std::vector<IEventTrigger *,std::allocator<IEventTrigger *> > eventTriggers;
 	ICarPhysicsStateProvider * physicsStateProvider;
 	bool lockVirtualSteer;
@@ -6730,7 +6730,7 @@ public:
 	ICarPhysicsStateProvider * nonReplayPhysicsStateProvider;
 	Node * beltOffNode;
 	Node * beltOnNode;
-	int currentTyreCompoundIndex[0x4];
+	int currentTyreCompoundIndex[4];
 	CarAnimations * carAnimations;
 	float filteredSpeed;
 	int currentEngineBrakeSetting;
@@ -6914,7 +6914,7 @@ public:
 	TractionControl tractionControl;
 	SpeedLimiter speedLimiter;
 	AeroMap aeroMap;
-	Tyre tyres[0x4];
+	Tyre tyres[4];
 	std::vector<ISuspension *,std::allocator<ISuspension *> > suspensions;
 	BrakeSystem brakeSystem;
 	Autoclutch autoClutch;
@@ -6924,7 +6924,7 @@ public:
 	AutoShifter autoShift;
 	GearChanger gearChanger;
 	EDL edl;
-	AntirollBar antirollBars[0x2];
+	AntirollBar antirollBars[2];
 	StabilityControl stabilityControl;
 	double lastCollisionTime;
 	DriftModeComponent driftMode;
@@ -6942,7 +6942,7 @@ public:
 	mat44f pitPosition;
 	SplineLocatorData splineLocatorData;
 	FuelLapEvaluator fuelLapEvaluator;
-	HeaveSpring heaveSprings[0x2];
+	HeaveSpring heaveSprings[2];
 	SteeringSystem steeringSystem;
 	double lastCollisionWithCarTime;
 	SuspensionType suspensionTypeF;
@@ -6977,8 +6977,8 @@ public:
 	double maxFuel;
 	float requestedFuel;
 	double lastBodyMassUpdateTime;
-	float damageZoneLevel[0x5];
-	vec3f ridePickupPoint[0x2];
+	float damageZoneLevel[5];
+	vec3f ridePickupPoint[2];
 	vec3f fuelTankPos;
 	float vibrationPhase;
 	float slipVibrationPhase;

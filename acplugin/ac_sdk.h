@@ -1,6 +1,7 @@
 #pragma once
 
-inline void* _drva(size_t off) { return ((uint8_t*)_g_module) + off; }
+extern void* _ac_module;
+inline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 
 namespace acsdk {
 
@@ -83,17 +84,17 @@ public:
 	virtual ~VertexBuffer();
 };
 
-template<typename A, typename B>
+template<typename T1, typename T2>
 class CubicSpline
 {
 public:
 	class Element
 	{
-		float x;
-		float a;
-		float b;
-		float c;
-		float d;
+		T1 x;
+		T2 a;
+		T2 b;
+		T2 c;
+		T2 d;
 	};
 	std::vector<Element> mElements;
 	virtual ~CubicSpline();

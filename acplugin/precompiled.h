@@ -26,3 +26,9 @@
 #include <mutex>
 #include <condition_variable>
 #include <concurrent_queue.h>
+
+// deps
+#include "MinHook.h"
+
+// AC
+#include "ac_sdk.h"

@@ -13,6 +13,9 @@
     <Filter Include="plugin">
       <UniqueIdentifier>{d7aa8f20-7d42-4ea5-84c0-343dd466747c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CustomPhysics">
+      <UniqueIdentifier>{1709debb-5624-42f8-a4d4-59578bed3d0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils.cpp">
@@ -30,11 +33,17 @@
     <ClCompile Include="precompiled.cpp">
       <Filter>plugin</Filter>
     </ClCompile>
-    <ClCompile Include="CheaterDetector.cpp">
-      <Filter>CheaterDetector</Filter>
-    </ClCompile>
     <ClCompile Include="PluginApp.cpp">
       <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="AppCheaterDetector.cpp">
+      <Filter>CheaterDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="AppCustomPhysics.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomEngine.cpp">
+      <Filter>CustomPhysics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,9 +62,6 @@
     <ClInclude Include="precompiled.h">
       <Filter>plugin</Filter>
     </ClInclude>
-    <ClInclude Include="CheaterDetector.h">
-      <Filter>CheaterDetector</Filter>
-    </ClInclude>
     <ClInclude Include="DriverPerf.h">
       <Filter>CheaterDetector</Filter>
     </ClInclude>
@@ -73,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="PluginApp.h">
       <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="AppCheaterDetector.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="AppCustomPhysics.h">
+      <Filter>CustomPhysics</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomHooks.h">
+      <Filter>CustomPhysics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
