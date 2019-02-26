@@ -1,6 +1,4 @@
 #include "precompiled.h"
-using namespace acsdk;
-
 #include "PluginApp.h"
 
 PluginApp::PluginApp(ACPlugin* plugin, const std::wstring& appName)

@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="AppCheaterDetector.cpp" />
     <ClCompile Include="AppCustomPhysics.cpp" />
+    <ClCompile Include="CustomDrivetrain.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="PluginApp.cpp">

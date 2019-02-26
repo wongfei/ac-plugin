@@ -2,6 +2,7 @@
 
 // win
 #include <windows.h>
+#include <winsock.h>
 #include <d3d11.h>
 #include <shlobj.h>
 

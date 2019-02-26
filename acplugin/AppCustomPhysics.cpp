@@ -1,10 +1,12 @@
 #include "precompiled.h"
-using namespace acsdk;
-
 #include "AppCustomPhysics.h"
 #include "CustomHooks.h"
 
-inline void CreateHookX(const wchar_t* name, LPVOID pDetour, unsigned int rva)
+#define X_CAT(A, B) A##B
+#define X_WSTRING(A) X_CAT(L, #A)
+#define X_HOOK(name) CreateHookX(X_WSTRING(name), &name, RVA_##name)
+
+inline MH_STATUS CreateHookX(const wchar_t* name, LPVOID pDetour, unsigned int rva)
 {
 	LPVOID pTarget = _drva(rva);
 	LPVOID pOriginal = nullptr;
@@ -14,6 +16,8 @@ inline void CreateHookX(const wchar_t* name, LPVOID pDetour, unsigned int rva)
 	{
 		log_printf(L"MH_CreateHook failed: status=%d name=%s", (int)status, name);
 	}
+
+	return status;
 }
 
 AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custom_physics")
@@ -27,9 +31,13 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 		return;
 	}
 
-	CreateHookX(L"Engine_step", &Engine_step, Engine_step_rva);
-	CreateHookX(L"Engine_stepTurbos", &Engine_stepTurbos, Engine_stepTurbos_rva);
-	CreateHookX(L"Turbo_step", &Turbo_step, Turbo_step_rva);
+	X_HOOK(Engine_step);
+	X_HOOK(Engine_stepTurbos);
+	X_HOOK(Turbo_step);
+
+	X_HOOK(Drivetrain_step);
+	X_HOOK(Drivetrain_stepControllers);
+	X_HOOK(Drivetrain_step2WD);
 
 	status = MH_EnableHook(MH_ALL_HOOKS);
 	if (status != MH_OK)

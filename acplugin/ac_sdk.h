@@ -3,8 +3,6 @@
 extern void* _ac_module;
 inline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 
-namespace acsdk {
-
 struct _object {};
 
 template<typename T>
@@ -120,5 +118,3 @@ inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) {
 	vec4f v; (v.x = r*s), (v.y = g*s), (v.z = b*s), (v.w = a);
 	return v;
 }
-
-} // namespace acsdk

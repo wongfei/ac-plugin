@@ -1,6 +1,4 @@
 #include "precompiled.h"
-using namespace acsdk;
-
 #include "CustomHooks.h"
 #include "utils.h"
 

@@ -45,6 +45,9 @@
     <ClCompile Include="CustomEngine.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
+    <ClCompile Include="CustomDrivetrain.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="udt.h">

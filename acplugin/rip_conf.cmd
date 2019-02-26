@@ -6,4 +6,4 @@ set "ac_core=ACPlugin; ACPluginContext; ACClient; ACCarState; Game; Sim; Car; Dr
 set "ac_render=GraphicsManager; ShaderManager; GLRenderer; RenderWindow; RenderContext; RenderTarget; Shader; ShaderVariable; ShaderResource; MaterialResource; MaterialVar; MaterialOption; IndexBuffer"
 set "ac_kgl=KGLTexture; KGLRenderTarget; KGLShader; KGLShaderVar; KGLShaderTexture; KGLShaderCBuffer; KGLShaderVarDesc; KGLShaderCBufferDesc; KGLShaderTextureDesc; KGLVertexBuffer; KGLIndexBuffer"
 set "ac_gui=ksgui::GUI; ksgui::GameScreen; ksgui::Form; ksgui::ActiveButton; ksgui::CheckBox; ksgui::ConnectedLabel; ksgui::CustomSpinner; ksgui::Graph; ksgui::Label; ksgui::ListBox; ksgui::ListBoxRow; ksgui::TextBox; ksgui::MovingBar; ksgui::PopOver; ksgui::ProgressBar; ksgui::ScrollBar; ksgui::Slider; ksgui::Spinner; ksgui::Taskbar; ksgui::TaskBarIcon; ksgui::TextBox; ksgui::TextInput"
-set "ac_excl=-in_addr; -IEventTrigger; -OnValueChanged; -IVertexBuffer; -VertexBuffer"
+set "ac_excl=-in_addr; -sockaddr_in; -IEventTrigger; -OnValueChanged; -IVertexBuffer; -VertexBuffer"

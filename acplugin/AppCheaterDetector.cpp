@@ -1,6 +1,4 @@
 #include "precompiled.h"
-using namespace acsdk;
-
 #include "AppCheaterDetector.h"
 
 #define CONST_G 9.80665f

@@ -56,18 +56,18 @@ enum class VoteType {
 	eVoteUnkonw = 0x3,
 };
 
-enum class JumpStartPenaltyMode {
-	eLockOnGridMode = 0x0,
-	eTeleportToPitMode = 0x1,
-	eDriveThroughMode = 0x2,
-};
-
 enum class PenaltyDescription {
 	eNothing = 0x0,
 	eJumpStart = 0x1,
 	eCantPitPenalty = 0x2,
 	eMandatoryPit = 0x3,
 	eCut = 0x4,
+};
+
+enum class JumpStartPenaltyMode {
+	eLockOnGridMode = 0x0,
+	eTeleportToPitMode = 0x1,
+	eDriveThroughMode = 0x2,
 };
 
 enum class MouseButton {
@@ -416,9 +416,9 @@ struct SVar;
 class ESCMenu;
 struct HWND__;
 struct HINSTANCE__;
-class IMaterialOptionChangeListener;
 class ksgui_ListBox;
 struct ksgui_ListBoxRowData;
+class IMaterialOptionChangeListener;
 class Wing;
 class ICarControlsProvider;
 class GraphicsManager;
@@ -429,9 +429,9 @@ class CBuffer;
 class RaceManager;
 class ShaderVariable;
 class ShaderResource;
+class NetCarStateProvider;
 class ICollisionObject;
 class Node;
-class NetCarStateProvider;
 class IRigidBody;
 struct RayCastResult;
 class IRayCaster;
@@ -494,6 +494,8 @@ class ICarPhysicsStateProvider;
 struct SlipStream;
 class IPhysicsCore;
 class IDebugVisualizer;
+class ACClientVotingManager;
+class WrongWayIndicator;
 class TrackAvatar;
 class SkyBox;
 class ReplayManager;
@@ -529,8 +531,6 @@ class PvsProcessor;
 class GPUProfiler;
 class CubeMap;
 class IVertexBuffer;
-class ACClientVotingManager;
-class WrongWayIndicator;
 class DriverModel;
 struct SetupManager;
 class NodeBoundingSphere;
@@ -617,16 +617,6 @@ public:
 	inline PitStopTime()  { }
 };
 
-struct PitStopTimings {
-public:
-	float tyreChangeTimeSec;
-	float fuelChangeTimeSec;
-	float bodyRepairTimeSec;
-	float engineRepairTimeSec;
-	float suspRepairTimeSec;
-	inline PitStopTimings()  { }
-};
-
 struct PushToPass {
 public:
 	bool enabled;
@@ -669,6 +659,16 @@ public:
 	inline VideoSettings()  { }
 };
 
+struct PitStopTimings {
+public:
+	float tyreChangeTimeSec;
+	float fuelChangeTimeSec;
+	float bodyRepairTimeSec;
+	float engineRepairTimeSec;
+	float suspRepairTimeSec;
+	inline PitStopTimings()  { }
+};
+
 struct SplineLocationData {
 public:
 	int currentIndex;
@@ -703,14 +703,12 @@ public:
 	inline DynamicTrackData()  { }
 };
 
-struct GameStats {
+struct TyreInputs {
 public:
-	double cpuTime;
-	double updateTime;
-	double renderHUDTime;
-	double renderTime;
-	double renderAudioTime;
-	inline GameStats()  { }
+	float brakeTorque;
+	float handBrakeTorque;
+	float electricTorque;
+	inline TyreInputs()  { }
 };
 
 struct ClientQOSData {
@@ -725,14 +723,6 @@ public:
 struct ACPluginContext {
 public:
 	inline ACPluginContext()  { }
-};
-
-struct TyreInputs {
-public:
-	float brakeTorque;
-	float handBrakeTorque;
-	float electricTorque;
-	inline TyreInputs()  { }
 };
 
 class CBuffer {
@@ -858,6 +848,16 @@ public:
 	inline SCarStateAero()  { }
 };
 
+class KGLVertexBuffer {
+public:
+	ID3D11Buffer * buffer;
+	unsigned int stride;
+	inline KGLVertexBuffer()  { }
+	inline void ctor(ID3D11Device * device, unsigned int size, unsigned int stride, void * data, bool isDynamic) { typedef void (*_fpt)(KGLVertexBuffer *pthis, ID3D11Device *, unsigned int, unsigned int, void *, bool); _fpt _f=(_fpt)_drva(146752); _f(this, device, size, stride, data, isDynamic); }
+	inline void map(void * data, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(146992); return _f(this, data, size, context); }
+	inline void mapNoOverWrite(void * data, unsigned int offset, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(147136); return _f(this, data, offset, size, context); }
+};
+
 struct WreckerProtection {
 public:
 	float maxContactsPerKM;
@@ -873,23 +873,6 @@ public:
 	inline OnKeyCharEvent()  { }
 };
 
-class KGLVertexBuffer {
-public:
-	ID3D11Buffer * buffer;
-	unsigned int stride;
-	inline KGLVertexBuffer()  { }
-	inline void ctor(ID3D11Device * device, unsigned int size, unsigned int stride, void * data, bool isDynamic) { typedef void (*_fpt)(KGLVertexBuffer *pthis, ID3D11Device *, unsigned int, unsigned int, void *, bool); _fpt _f=(_fpt)_drva(146752); _f(this, device, size, stride, data, isDynamic); }
-	inline void map(void * data, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(146992); return _f(this, data, size, context); }
-	inline void mapNoOverWrite(void * data, unsigned int offset, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(147136); return _f(this, data, offset, size, context); }
-};
-
-struct DamageReportDef {
-public:
-	double lastSendTime;
-	float damageZoneLevel[5];
-	inline DamageReportDef()  { }
-};
-
 struct TyrePatchData {
 public:
 	float surfaceTransfer;
@@ -898,6 +881,13 @@ public:
 	float internalCoreTransfer;
 	float coolFactorGain;
 	inline TyrePatchData()  { }
+};
+
+struct DamageReportDef {
+public:
+	double lastSendTime;
+	float damageZoneLevel[5];
+	inline DamageReportDef()  { }
 };
 
 struct KGLShaderVarDesc {
@@ -1087,6 +1077,16 @@ public:
 	inline void update() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506192); return _f(this); }
 };
 
+struct GameStats {
+public:
+	double cpuTime;
+	double updateTime;
+	double renderHUDTime;
+	double renderTime;
+	double renderAudioTime;
+	inline GameStats()  { }
+};
+
 struct TyreExternalInputs {
 public:
 	bool isActive;
@@ -1112,6 +1112,15 @@ public:
 	inline DRSDetectionStatus()  { }
 };
 
+struct EngineStatus {
+public:
+	double outTorque;
+	double externalCoastTorque;
+	float turboBoost;
+	bool isLimiterOn;
+	inline EngineStatus()  { }
+};
+
 class SignalGenerator {
 public:
 	float freqScale;
@@ -1125,15 +1134,6 @@ public:
 	inline void step(float dt) { return step_vf1(dt); }
 	virtual float getValue_vf2() = 0;
 	inline float getValue() { return getValue_vf2(); }
-};
-
-struct EngineStatus {
-public:
-	double outTorque;
-	double externalCoastTorque;
-	float turboBoost;
-	bool isLimiterOn;
-	inline EngineStatus()  { }
 };
 
 struct KGLShaderTextureDesc {
@@ -1159,6 +1159,15 @@ public:
 	inline WheelValues()  { }
 };
 
+struct ServerDrivingAssists {
+public:
+	int tc;
+	int abs;
+	bool stability;
+	bool autoClutch;
+	inline ServerDrivingAssists()  { }
+};
+
 struct TyreModelOutput {
 public:
 	float Fy;
@@ -1171,28 +1180,12 @@ public:
 	inline TyreModelOutput()  { }
 };
 
-struct ServerDrivingAssists {
-public:
-	int tc;
-	int abs;
-	bool stability;
-	bool autoClutch;
-	inline ServerDrivingAssists()  { }
-};
-
 struct KGLShaderCBufferDesc {
 public:
 	wchar_t * name;
 	unsigned int size;
 	unsigned int slot;
 	inline KGLShaderCBufferDesc()  { }
-};
-
-struct KPI {
-public:
-	float angleRAD;
-	float scrubRadius;
-	inline KPI()  { }
 };
 
 struct NetCarPushToPass {
@@ -1204,6 +1197,13 @@ public:
 	float timeAccum;
 	int activations;
 	inline NetCarPushToPass()  { }
+};
+
+struct KPI {
+public:
+	float angleRAD;
+	float scrubRadius;
+	inline KPI()  { }
 };
 
 struct PerformanceSplit {
@@ -1229,19 +1229,19 @@ public:
 	inline float getOutputTorque() { return getOutputTorque_vf1(); }
 };
 
-struct HDRLevels {
-public:
-	float minExposure;
-	float maxExposure;
-	inline HDRLevels()  { }
-};
-
 struct DRSZone {
 public:
 	float detection;
 	float start;
 	float end;
 	inline DRSZone()  { }
+};
+
+struct HDRLevels {
+public:
+	float minExposure;
+	float maxExposure;
+	inline HDRLevels()  { }
 };
 
 struct SplineLocatorData {
@@ -1271,6 +1271,14 @@ public:
 	inline NetCarQoS()  { }
 };
 
+class vec2f {
+public:
+	float x;
+	float y;
+	inline vec2f()  { }
+	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
+};
+
 struct SurfaceDef {
 public:
 	wchar_t wavString[64];
@@ -1292,12 +1300,10 @@ public:
 	inline SurfaceDef()  { }
 };
 
-class vec2f {
+struct ClientRules {
 public:
-	float x;
-	float y;
-	inline vec2f()  { }
-	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
+	float maxMetersWrongWay;
+	inline ClientRules()  { }
 };
 
 struct TyreSlipInput {
@@ -1309,12 +1315,6 @@ public:
 	float normalizedSlipY;
 	float D;
 	inline TyreSlipInput()  { }
-};
-
-struct ClientRules {
-public:
-	float maxMetersWrongWay;
-	inline ClientRules()  { }
 };
 
 struct CoastSettings {
@@ -1329,6 +1329,19 @@ public:
 	unsigned int minIndex;
 	unsigned int maxIndex;
 	inline SplineIndexBound()  { }
+};
+
+class Trigger {
+public:
+	bool state;
+	bool lastState;
+	float accumulator;
+	float accumulatorLimit;
+	inline Trigger()  { }
+	inline void ctor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(2339728); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline bool ignoreSubsequentTrue(bool value) { typedef bool (*_fpt)(Trigger *pthis, bool); _fpt _f=(_fpt)_drva(2339744); return _f(this, value); }
+	inline bool keepSteady(float dt, bool value) { typedef bool (*_fpt)(Trigger *pthis, float, bool); _fpt _f=(_fpt)_drva(2339776); return _f(this, dt, value); }
 };
 
 class CarControls {
@@ -1360,19 +1373,6 @@ public:
 	float steer;
 	float clutch;
 	inline CarControls()  { }
-};
-
-class Trigger {
-public:
-	bool state;
-	bool lastState;
-	float accumulator;
-	float accumulatorLimit;
-	inline Trigger()  { }
-	inline void ctor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(2339728); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline bool ignoreSubsequentTrue(bool value) { typedef bool (*_fpt)(Trigger *pthis, bool); _fpt _f=(_fpt)_drva(2339744); return _f(this, value); }
-	inline bool keepSteady(float dt, bool value) { typedef bool (*_fpt)(Trigger *pthis, float, bool); _fpt _f=(_fpt)_drva(2339776); return _f(this, dt, value); }
 };
 
 struct TyreModelInput {
@@ -1469,12 +1469,6 @@ public:
 	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
 };
 
-struct OnRaceInitEvent {
-public:
-	int laps;
-	inline OnRaceInitEvent()  { }
-};
-
 struct ACCarState {
 public:
 	float wheelLF_localPos[3];
@@ -1508,6 +1502,12 @@ public:
 	int limiterRPM;
 	float speedMS;
 	inline ACCarState()  { }
+};
+
+struct OnRaceInitEvent {
+public:
+	int laps;
+	inline OnRaceInitEvent()  { }
 };
 
 struct AWD2Data {
@@ -1647,6 +1647,14 @@ public:
 	inline void print(char * name) { typedef void (*_fpt)(vec3f *pthis, char *); _fpt _f=(_fpt)_drva(918176); return _f(this, name); }
 };
 
+struct UDPMessage {
+public:
+	void * data;
+	int size;
+	sockaddr_in srcAddress;
+	inline UDPMessage()  { }
+};
+
 struct TyreThermalPatch {
 public:
 	std::vector<TyreThermalPatch *,std::allocator<TyreThermalPatch *> > connections;
@@ -1655,15 +1663,6 @@ public:
 	int elementIndex;
 	int stripeIndex;
 	inline TyreThermalPatch()  { }
-};
-
-struct sockaddr_in {
-public:
-	unsigned short sin_family;
-	unsigned short sin_port;
-	in_addr sin_addr;
-	char sin_zero[8];
-	inline sockaddr_in()  { }
 };
 
 struct GearRequestStatus {
@@ -1842,6 +1841,14 @@ public:
 	inline void loadINI() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(2859088); return _f(this); }
 };
 
+struct OnWindowResizeEvent {
+public:
+	int width;
+	int height;
+	RenderWindow * renderWindow;
+	inline OnWindowResizeEvent()  { }
+};
+
 struct OnTyreCompoundChanged {
 public:
 	int tyreIndex;
@@ -1850,14 +1857,6 @@ public:
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > shortName;
 	inline OnTyreCompoundChanged()  { }
 	inline void dtor() { typedef void (*_fpt)(OnTyreCompoundChanged *pthis); _fpt _f=(_fpt)_drva(847584); _f(this); }
-};
-
-struct OnWindowResizeEvent {
-public:
-	int width;
-	int height;
-	RenderWindow * renderWindow;
-	inline OnWindowResizeEvent()  { }
 };
 
 struct ServerInfo {
@@ -1925,13 +1924,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(Task *pthis); _fpt _f=(_fpt)_drva(175552); _f(this); }
 };
 
-struct PenaltyRules {
-public:
-	JumpStartPenaltyMode jumpStartPenaltyMode;
-	short basePitPenaltyLaps;
-	inline PenaltyRules()  { }
-};
-
 struct OnLapCompletedEvent {
 public:
 	unsigned int carIndex;
@@ -1959,6 +1951,13 @@ public:
 	unsigned int seconds;
 	PenaltyDescription descr;
 	inline PenaltyRecord()  { }
+};
+
+struct PenaltyRules {
+public:
+	JumpStartPenaltyMode jumpStartPenaltyMode;
+	short basePitPenaltyLaps;
+	inline PenaltyRules()  { }
 };
 
 struct RealTimeCarDesc {
@@ -2127,15 +2126,6 @@ public:
 	inline void setSystemMessage(wchar_t *  _arg0, wchar_t *  _arg1, bool  _arg2) { return setSystemMessage_vf8( _arg0,  _arg1,  _arg2); }
 };
 
-struct TrackPhysicsStats {
-public:
-	unsigned int objects;
-	unsigned int tris;
-	std::map<int,int,std::less<int>,std::allocator<std::pair<int const ,int> > > groups;
-	inline TrackPhysicsStats()  { }
-	inline void dtor() { typedef void (*_fpt)(TrackPhysicsStats *pthis); _fpt _f=(_fpt)_drva(1862144); _f(this); }
-};
-
 struct Lap {
 public:
 	unsigned int time;
@@ -2148,12 +2138,23 @@ public:
 	inline void dtor() { typedef void (*_fpt)(Lap *pthis); _fpt _f=(_fpt)_drva(246624); _f(this); }
 };
 
-struct MaterialOption {
+struct TrackPhysicsStats {
 public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	IMaterialOptionChangeListener * material;
-	bool value;
-	inline MaterialOption()  { }
+	unsigned int objects;
+	unsigned int tris;
+	std::map<int,int,std::less<int>,std::allocator<std::pair<int const ,int> > > groups;
+	inline TrackPhysicsStats()  { }
+	inline void dtor() { typedef void (*_fpt)(TrackPhysicsStats *pthis); _fpt _f=(_fpt)_drva(1862144); _f(this); }
+};
+
+class IPAddress {
+public:
+	sockaddr_in sokaddr;
+	inline IPAddress()  { }
+	inline void ctor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(508768); _f(this); }
+	inline void ctor(sockaddr_in & addr) { typedef void (*_fpt)(IPAddress *pthis, sockaddr_in &); _fpt _f=(_fpt)_drva(2479584); _f(this, addr); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port) { typedef void (*_fpt)(IPAddress *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned short); _fpt _f=(_fpt)_drva(2479600); _f(this, addr, port); }
+	inline void dtor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
 };
 
 struct ksgui_OnListBoxItemClickedEvent {
@@ -2162,6 +2163,28 @@ public:
 	ksgui_ListBoxRowData * row;
 	unsigned int itemIndex;
 	inline ksgui_OnListBoxItemClickedEvent()  { }
+};
+
+struct MaterialOption {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	IMaterialOptionChangeListener * material;
+	bool value;
+	inline MaterialOption()  { }
+};
+
+struct RemoteSessionResult {
+public:
+	std::vector<int,std::allocator<int> > positions;
+	std::vector<int,std::allocator<int> > times;
+	std::vector<int,std::allocator<int> > lapCounter;
+	std::vector<bool,std::allocator<bool> > hasFinished;
+	unsigned int leaderLapCount;
+	inline RemoteSessionResult()  { }
+	inline void ctor(RemoteSessionResult & __that) { typedef void (*_fpt)(RemoteSessionResult *pthis, RemoteSessionResult &); _fpt _f=(_fpt)_drva(242752); _f(this, __that); }
+	inline void ctor(int carsCount) { typedef void (*_fpt)(RemoteSessionResult *pthis, int); _fpt _f=(_fpt)_drva(242880); _f(this, carsCount); }
+	inline void ctor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(243104); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(246784); _f(this); }
 };
 
 class SetupItem {
@@ -2179,20 +2202,6 @@ public:
 	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (*_fpt)(SetupItem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); _fpt _f=(_fpt)_drva(2929008); _f(this, aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
 	virtual ~SetupItem();
 	inline void dtor() { typedef void (*_fpt)(SetupItem *pthis); _fpt _f=(_fpt)_drva(2929312); _f(this); }
-};
-
-struct RemoteSessionResult {
-public:
-	std::vector<int,std::allocator<int> > positions;
-	std::vector<int,std::allocator<int> > times;
-	std::vector<int,std::allocator<int> > lapCounter;
-	std::vector<bool,std::allocator<bool> > hasFinished;
-	unsigned int leaderLapCount;
-	inline RemoteSessionResult()  { }
-	inline void ctor(RemoteSessionResult & __that) { typedef void (*_fpt)(RemoteSessionResult *pthis, RemoteSessionResult &); _fpt _f=(_fpt)_drva(242752); _f(this, __that); }
-	inline void ctor(int carsCount) { typedef void (*_fpt)(RemoteSessionResult *pthis, int); _fpt _f=(_fpt)_drva(242880); _f(this, carsCount); }
-	inline void ctor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(243104); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(246784); _f(this); }
 };
 
 struct TelemetryChannelData {
@@ -2487,14 +2496,6 @@ public:
 	inline float getValue() { return getValue_vf2(); }
 };
 
-struct UDPMessage {
-public:
-	void * data;
-	int size;
-	sockaddr_in srcAddress;
-	inline UDPMessage()  { }
-};
-
 struct AIState {
 public:
 	float currentSteerSignal;
@@ -2750,6 +2751,15 @@ public:
 	inline OnMouseDownEvent()  { }
 };
 
+struct ClientCollisionEvent {
+public:
+	NetCarStateProvider * netCar;
+	float speed;
+	vec3f worldPos;
+	vec3f relPos;
+	inline ClientCollisionEvent()  { }
+};
+
 class ITyreModel {
 public:
 	inline ITyreModel()  { }
@@ -2778,6 +2788,14 @@ public:
 	inline DynamicTrackObject()  { }
 };
 
+struct RemoteSessionResume {
+public:
+	RemoteSession session;
+	RemoteSessionResult results;
+	inline RemoteSessionResume()  { }
+	inline void ctor() { typedef void (*_fpt)(RemoteSessionResume *pthis); _fpt _f=(_fpt)_drva(243232); _f(this); }
+};
+
 struct ACPhysicsEvent {
 public:
 	eACEventType type;
@@ -2791,24 +2809,6 @@ public:
 	void * voidParam1;
 	unsigned long ulParam0;
 	inline ACPhysicsEvent()  { }
-};
-
-class IPAddress {
-public:
-	sockaddr_in sokaddr;
-	inline IPAddress()  { }
-	inline void ctor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(508768); _f(this); }
-	inline void ctor(sockaddr_in & addr) { typedef void (*_fpt)(IPAddress *pthis, sockaddr_in &); _fpt _f=(_fpt)_drva(2479584); _f(this, addr); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port) { typedef void (*_fpt)(IPAddress *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned short); _fpt _f=(_fpt)_drva(2479600); _f(this, addr, port); }
-	inline void dtor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-};
-
-struct RemoteSessionResume {
-public:
-	RemoteSession session;
-	RemoteSessionResult results;
-	inline RemoteSessionResume()  { }
-	inline void ctor() { typedef void (*_fpt)(RemoteSessionResume *pthis); _fpt _f=(_fpt)_drva(243232); _f(this); }
 };
 
 struct Wind {
@@ -2829,15 +2829,6 @@ public:
 	inline BrushOutput solve(float slip, float friction, float load, float cf1_mix, float asy) { typedef BrushOutput (*_fpt)(BrushTyreModel *pthis, float, float, float, float, float); _fpt _f=(_fpt)_drva(2929600); return _f(this, slip, friction, load, cf1_mix, asy); }
 	inline BrushOutput solveV5(float slip, float load, float asy) { typedef BrushOutput (*_fpt)(BrushTyreModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2929888); return _f(this, slip, load, asy); }
 	inline float getCFFromSlipAngle(float angle) { typedef float (*_fpt)(BrushTyreModel *pthis, float); _fpt _f=(_fpt)_drva(2929536); return _f(this, angle); }
-};
-
-struct ClientCollisionEvent {
-public:
-	NetCarStateProvider * netCar;
-	float speed;
-	vec3f worldPos;
-	vec3f relPos;
-	inline ClientCollisionEvent()  { }
 };
 
 struct DRS {
@@ -2892,6 +2883,23 @@ public:
 	virtual ~TimeLine();
 	inline void dtor() { typedef void (*_fpt)(TimeLine *pthis); _fpt _f=(_fpt)_drva(2928352); _f(this); }
 	inline eTimeLineCheckResponse check(vec3f & p) { typedef eTimeLineCheckResponse (*_fpt)(TimeLine *pthis, vec3f &); _fpt _f=(_fpt)_drva(2928368); return _f(this, p); }
+};
+
+class UDPSocket {
+public:
+	unsigned __int64 soc;
+	bool isBlocking;
+	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
+	unsigned short ping;
+	bool shutdownFlag;
+	double lastPingTime;
+	inline UDPSocket()  { }
+	inline void ctor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2477984); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2478064); _f(this); }
+	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(UDPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2479568); return _f(this, imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(UDPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2478736); return _f(this, listener); }
+	inline int receive(int maxPackets) { typedef int (*_fpt)(UDPSocket *pthis, int); _fpt _f=(_fpt)_drva(2479104); return _f(this, maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(UDPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2479488); return _f(this, data, length, target); }
 };
 
 struct SessionResult {
@@ -3153,6 +3161,29 @@ public:
 	inline bool isSetupRespectingRules() { typedef bool (*_fpt)(SetupManager *pthis); _fpt _f=(_fpt)_drva(2673680); return _f(this); }
 };
 
+class TCPSocket {
+public:
+	BufferedChannel<unsigned __int64> chNewConnections;
+	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
+	std::thread listenerThread;
+	bool isExiting;
+	unsigned char * recvBuffer;
+	unsigned __int64 soc;
+	unsigned __int64 listenSock;
+	bool isBlocking;
+	bool isServer;
+	TCPQueue buffer;
+	inline TCPSocket()  { }
+	inline void ctor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2481840); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2482080); _f(this); }
+	inline bool connect(IPAddress & target) { typedef bool (*_fpt)(TCPSocket *pthis, IPAddress &); _fpt _f=(_fpt)_drva(2482592); return _f(this, target); }
+	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(TCPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2484144); return _f(this, imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(TCPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2482464); return _f(this, listener); }
+	inline int receive(int maxPackets) { typedef int (*_fpt)(TCPSocket *pthis, int); _fpt _f=(_fpt)_drva(2483216); return _f(this, maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(TCPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2484128); return _f(this, data, length, target); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > receivePacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2483504); return _f(this); }
+};
+
 class ACPlugin : public IACPPluginHost {
 public:
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
@@ -3302,6 +3333,15 @@ public:
 	inline DynamicTempData & operator=(DynamicTempData & __that) { typedef DynamicTempData & (*_fpt)(DynamicTempData *pthis, DynamicTempData &); _fpt _f=(_fpt)_drva(1259120); return _f(this, __that); }
 };
 
+class JoypadManager {
+public:
+	std::unique_ptr<Joypad,std::default_delete<Joypad> > joypad;
+	inline JoypadManager()  { }
+	inline void ctor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2375584); _f(this); }
+	inline Joypad * getJoypad() { typedef Joypad * (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(100192); return _f(this); }
+	inline void dtor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2367136); _f(this); }
+};
+
 struct DebugLine {
 public:
 	vec3f p0;
@@ -3323,15 +3363,6 @@ public:
 	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(454352); _f(this, text); }
 	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_ListBoxRowData *pthis, unsigned int); _fpt _f=(_fpt)_drva(2398208); return _f(this, columnIndex); }
 	inline void dtor() { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis); _fpt _f=(_fpt)_drva(454992); _f(this); }
-};
-
-class JoypadManager {
-public:
-	std::unique_ptr<Joypad,std::default_delete<Joypad> > joypad;
-	inline JoypadManager()  { }
-	inline void ctor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2375584); _f(this); }
-	inline Joypad * getJoypad() { typedef Joypad * (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(100192); return _f(this); }
-	inline void dtor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2367136); _f(this); }
 };
 
 class mat44f {
@@ -3383,23 +3414,6 @@ public:
 	inline void ctor(OnSessionEndEvent & __that) { typedef void (*_fpt)(OnSessionEndEvent *pthis, OnSessionEndEvent &); _fpt _f=(_fpt)_drva(1256720); _f(this, __that); }
 	inline void ctor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610032); _f(this); }
 	inline void dtor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610896); _f(this); }
-};
-
-class UDPSocket {
-public:
-	unsigned __int64 soc;
-	bool isBlocking;
-	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
-	unsigned short ping;
-	bool shutdownFlag;
-	double lastPingTime;
-	inline UDPSocket()  { }
-	inline void ctor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2477984); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2478064); _f(this); }
-	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(UDPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2479568); return _f(this, imode); }
-	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(UDPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2478736); return _f(this, listener); }
-	inline int receive(int maxPackets) { typedef int (*_fpt)(UDPSocket *pthis, int); _fpt _f=(_fpt)_drva(2479104); return _f(this, maxPackets); }
-	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(UDPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2479488); return _f(this, data, length, target); }
 };
 
 struct AutoBlip {
@@ -3770,27 +3784,29 @@ public:
 	inline INIReader & operator=(INIReader & __that) { typedef INIReader & (*_fpt)(INIReader *pthis, INIReader &); _fpt _f=(_fpt)_drva(776720); return _f(this, __that); }
 };
 
-class TCPSocket {
+class UDPPacket {
 public:
-	BufferedChannel<unsigned __int64> chNewConnections;
-	std::vector<std::function<void __cdecl(UDPMessage const &)>,std::allocator<std::function<void __cdecl(UDPMessage const &)> > > listeners;
-	std::thread listenerThread;
-	bool isExiting;
-	unsigned char * recvBuffer;
-	unsigned __int64 soc;
-	unsigned __int64 listenSock;
-	bool isBlocking;
-	bool isServer;
-	TCPQueue buffer;
-	inline TCPSocket()  { }
-	inline void ctor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2481840); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2482080); _f(this); }
-	inline bool connect(IPAddress & target) { typedef bool (*_fpt)(TCPSocket *pthis, IPAddress &); _fpt _f=(_fpt)_drva(2482592); return _f(this, target); }
-	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(TCPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2484144); return _f(this, imode); }
-	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(TCPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2482464); return _f(this, listener); }
-	inline int receive(int maxPackets) { typedef int (*_fpt)(TCPSocket *pthis, int); _fpt _f=(_fpt)_drva(2483216); return _f(this, maxPackets); }
-	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(TCPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2484128); return _f(this, data, length, target); }
-	inline std::vector<unsigned char,std::allocator<unsigned char> > receivePacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2483504); return _f(this); }
+	IPAddress targetIP;
+	unsigned char * data;
+	unsigned int currentDataPos;
+	unsigned int size;
+	inline UDPPacket()  { }
+	inline void ctor(UDPPacket & r) { typedef void (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2479904); _f(this, r); }
+	inline void ctor(UDPMessage & msg) { typedef void (*_fpt)(UDPPacket *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(2479744); _f(this, msg); }
+	inline void ctor(std::vector<unsigned char,std::allocator<unsigned char> > & idata) { typedef void (*_fpt)(UDPPacket *pthis, std::vector<unsigned char,std::allocator<unsigned char> > &); _fpt _f=(_fpt)_drva(2480016); _f(this, idata); }
+	inline void ctor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480128); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480192); _f(this); }
+	inline UDPPacket & operator=(UDPPacket & r) { typedef UDPPacket & (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2480240); return _f(this, r); }
+	inline void writeString(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481520); return _f(this, st); }
+	inline void writeString(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > &); _fpt _f=(_fpt)_drva(2481312); return _f(this, st); }
+	inline void writeStringANSI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481744); return _f(this, st); }
+	inline std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString() { typedef std::basic_string<char,std::char_traits<char>,std::allocator<char> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480592); return _f(this); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480784); return _f(this); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480368); return _f(this); }
+	inline unsigned int getSize() { typedef unsigned int (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480320); return _f(this); }
+	inline void send(TCPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, TCPSocket &); _fpt _f=(_fpt)_drva(2481008); return _f(this, sok); }
+	inline void send(UDPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, UDPSocket &); _fpt _f=(_fpt)_drva(2481264); return _f(this, sok); }
+	inline bool isEOF() { typedef bool (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480336); return _f(this); }
 };
 
 class RaceTimingServices : public GameObject {
@@ -3892,6 +3908,15 @@ public:
 	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iniName, bool createFile) { typedef void (*_fpt)(INIReaderDocuments *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool); _fpt _f=(_fpt)_drva(2327376); _f(this, iniName, createFile); }
 	virtual ~INIReaderDocuments();
 	inline void dtor() { typedef void (*_fpt)(INIReaderDocuments *pthis); _fpt _f=(_fpt)_drva(2329024); _f(this); }
+};
+
+struct ACClient_ClientSessionTransition {
+public:
+	bool isTransitioning;
+	UDPPacket sessionPacket;
+	RemoteSessionResume sessionResume;
+	inline ACClient_ClientSessionTransition()  { }
+	inline void dtor() { typedef void (*_fpt)(ACClient_ClientSessionTransition *pthis); _fpt _f=(_fpt)_drva(246384); _f(this); }
 };
 
 class IMeshRenderFilter {
@@ -4175,31 +4200,6 @@ public:
 	inline void ctor(TyreCompoundDef & __that) { typedef void (*_fpt)(TyreCompoundDef *pthis, TyreCompoundDef &); _fpt _f=(_fpt)_drva(2608864); _f(this, __that); }
 	inline void ctor() { typedef void (*_fpt)(TyreCompoundDef *pthis); _fpt _f=(_fpt)_drva(2609248); _f(this); }
 	inline void dtor() { typedef void (*_fpt)(TyreCompoundDef *pthis); _fpt _f=(_fpt)_drva(2549984); _f(this); }
-};
-
-class UDPPacket {
-public:
-	IPAddress targetIP;
-	unsigned char * data;
-	unsigned int currentDataPos;
-	unsigned int size;
-	inline UDPPacket()  { }
-	inline void ctor(UDPPacket & r) { typedef void (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2479904); _f(this, r); }
-	inline void ctor(UDPMessage & msg) { typedef void (*_fpt)(UDPPacket *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(2479744); _f(this, msg); }
-	inline void ctor(std::vector<unsigned char,std::allocator<unsigned char> > & idata) { typedef void (*_fpt)(UDPPacket *pthis, std::vector<unsigned char,std::allocator<unsigned char> > &); _fpt _f=(_fpt)_drva(2480016); _f(this, idata); }
-	inline void ctor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480128); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480192); _f(this); }
-	inline UDPPacket & operator=(UDPPacket & r) { typedef UDPPacket & (*_fpt)(UDPPacket *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(2480240); return _f(this, r); }
-	inline void writeString(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481520); return _f(this, st); }
-	inline void writeString(std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > &); _fpt _f=(_fpt)_drva(2481312); return _f(this, st); }
-	inline void writeStringANSI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481744); return _f(this, st); }
-	inline std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString() { typedef std::basic_string<char,std::char_traits<char>,std::allocator<char> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480592); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480784); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480368); return _f(this); }
-	inline unsigned int getSize() { typedef unsigned int (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480320); return _f(this); }
-	inline void send(TCPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, TCPSocket &); _fpt _f=(_fpt)_drva(2481008); return _f(this, sok); }
-	inline void send(UDPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, UDPSocket &); _fpt _f=(_fpt)_drva(2481264); return _f(this, sok); }
-	inline bool isEOF() { typedef bool (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480336); return _f(this); }
 };
 
 class MaterialVar {
@@ -4634,15 +4634,6 @@ public:
 	inline TurboDynamicController()  { }
 	inline void ctor() { typedef void (*_fpt)(TurboDynamicController *pthis); _fpt _f=(_fpt)_drva(2643056); _f(this); }
 	inline void dtor() { typedef void (*_fpt)(TurboDynamicController *pthis); _fpt _f=(_fpt)_drva(2549856); _f(this); }
-};
-
-struct ACClient_ClientSessionTransition {
-public:
-	bool isTransitioning;
-	UDPPacket sessionPacket;
-	RemoteSessionResume sessionResume;
-	inline ACClient_ClientSessionTransition()  { }
-	inline void dtor() { typedef void (*_fpt)(ACClient_ClientSessionTransition *pthis); _fpt _f=(_fpt)_drva(246384); _f(this); }
 };
 
 struct SteeringSystem {
@@ -5755,6 +5746,167 @@ public:
 	inline void stepWind(float dt) { typedef void (*_fpt)(PhysicsEngine *pthis, float); _fpt _f=(_fpt)_drva(2511744); return _f(this, dt); }
 };
 
+class ACClient : public GameObject {
+public:
+	Event<OnChatMessageEvent> evOnChatMessage;
+	Event<RemoteSession> evOnOnlineNewSession;
+	Event<RemoteSessionResume> evOnOnlineEndSession;
+	Event<OnLapCompletedEvent> evOnLapCompleted;
+	Event<ReceivedVoteDef> evOnVoteReceived;
+	Event<bool> evOnVoteNotPassed;
+	Event<bool> evOnMandatoryPitDone;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > serverName;
+	float remoteSpring;
+	float remoteDamper;
+	float remoteFactor;
+	DriverInfo driverInfo;
+	ServerInfo serverInfo;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > guid;
+	ClientRules rules;
+	ServerDrivingAssists serverDrivingAssists;
+	bool isTVMode;
+	double handshakeServerTimeS;
+	std::vector<unsigned char,std::allocator<unsigned char> > playerCarMD5;
+	bool debugStartingLights;
+	bool isAssociated;
+	ACClient_ClientSessionTransition transitionInfo;
+	RemoteSessionResult sessionResultsGT;
+	UDPSocket sok;
+	std::vector<std::vector<unsigned char,std::allocator<unsigned char> >,std::allocator<std::vector<unsigned char,std::allocator<unsigned char> > > > checksumResults;
+	Sim * sim;
+	Car * car;
+	ACClientVotingManager * votingManager;
+	CarAvatar * avatar;
+	double lastSendTime;
+	double sendInterval;
+	double lastChatMessage;
+	double lastSpectatorPulse;
+	IPAddress serverIP;
+	unsigned char sessionID;
+	std::vector<NetCarStateProvider *,std::allocator<NetCarStateProvider *> > netCars;
+	unsigned char pakSequenceIndex;
+	int handshakeCarPosition;
+	WrongWayIndicator * wrongWayIndicator;
+	int numWrongWayInfractions;
+	TCPSocket tcpSock;
+	RemoteSession currentSession;
+	int finishPosition;
+	Font * font;
+	std::vector<RemoteSession,std::allocator<RemoteSession> > sessions;
+	DisconnectCountdown dcCountdown;
+	double lastSessionCheckTime;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > welcomeMessage;
+	DamageReportDef damageReport;
+	bool isFlashingCache;
+	WreckerProtection wreckerProtection;
+	unsigned int resultScreenTime;
+	unsigned int raceOverTime;
+	bool isGasPenaltyDisabled;
+	unsigned int pitWindowStart;
+	unsigned int pitWindowEnd;
+	bool hasLeaderFinished;
+	bool hasPlayerFinished;
+	double raceClosingTime;
+	bool isResultScreenOn;
+	bool hasExtraLap;
+	bool isLastLap;
+	bool ignoreResultTeleport;
+	int invertedGridPositions;
+	std::vector<unsigned int,std::allocator<unsigned int> > localCarCurrentSplits;
+	std::vector<unsigned int,std::allocator<unsigned int> > localCarBestSplits;
+	std::vector<unsigned int,std::allocator<unsigned int> > bestSplits;
+	unsigned int globalBestlap;
+	std::vector<Lap,std::allocator<Lap> > localCarLaps;
+	unsigned int localCarBestLap;
+	unsigned int instanceLocalCarBestLap;
+	Lap localCarLastLap;
+	bool useLog;
+	bool playerIsSpectator;
+	std::basic_ofstream<wchar_t,std::char_traits<wchar_t> > log;
+	ClientQOSData qos;
+	ACClient_ClientEndSession endSession;
+	std::vector<ClientCollisionEvent,std::allocator<ClientCollisionEvent> > clientColissionEvents;
+	double lastClientEventSendTime;
+	inline ACClient()  { }
+	inline void ctor(Sim * isim) { typedef void (*_fpt)(ACClient *pthis, Sim *); _fpt _f=(_fpt)_drva(238272); _f(this, isim); }
+	virtual ~ACClient();
+	inline void dtor() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(244880); _f(this); }
+	virtual void renderHUD_vf3(float dt);
+	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(333392); return _f(this, dt); }
+	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
+	inline ClientHandshakeResult handshakeTCP() { typedef ClientHandshakeResult (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(297808); return _f(this); }
+	inline bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars) { typedef bool (*_fpt)(ACClient *pthis, std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > &); _fpt _f=(_fpt)_drva(290688); return _f(this, remoteCars); }
+	inline void beginUpdateMode() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280288); return _f(this); }
+	inline void sendChat(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(338576); return _f(this, message); }
+	inline void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID) { typedef void (*_fpt)(ACClient *pthis, VoteType, bool, int); _fpt _f=(_fpt)_drva(338848); return _f(this, aVote, aVoteValue, targetAvatarGUID); }
+	inline bool hasVoted() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(306432); return _f(this); }
+	inline CarAvatar * getCurrentVotingTarget() { typedef CarAvatar * (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287824); return _f(this); }
+	inline float getVotingTimeLeft() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296512); return _f(this); }
+	inline VoteType getCurrentVoteType() { typedef VoteType (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287808); return _f(this); }
+	inline float getVotingMaxTime() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296496); return _f(this); }
+	inline void addNetCar(NetCarStateProvider * nc) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *); _fpt _f=(_fpt)_drva(279232); return _f(this, nc); }
+	inline NetCarStateProvider * getNetCarFromSessionID(unsigned char id) { typedef NetCarStateProvider * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(290528); return _f(this, id); }
+	virtual void update_vf1(float deltaT);
+	inline void update_impl(float deltaT) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(342832); return _f(this, deltaT); }
+	inline void update(float deltaT) { return update_vf1(deltaT); }
+	inline double getPhysicsTime() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(290576); return _f(this); }
+	inline bool isAllowedToSendChatMessage() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(307616); return _f(this); }
+	inline int getPing(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290608); return _f(this, anAvatar); }
+	inline RemoteSession getCurrentSession() { typedef RemoteSession (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287648); return _f(this); }
+	inline RemoteSessionResult & getCurrentSessionResults() { typedef RemoteSessionResult & (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287792); return _f(this); }
+	inline CarAvatar * getCarAvatarFromSessionID(unsigned char sesid) { typedef CarAvatar * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(286720); return _f(this, sesid); }
+	inline int getSessionIDFromCarAvatar(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(295696); return _f(this, anAvatar); }
+	inline int getSessionCount() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(295664); return _f(this); }
+	inline int getCurrentSessionIndex() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287696); return _f(this); }
+	inline RemoteSession getSessionInfo(int index) { typedef RemoteSession (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295936); return _f(this, index); }
+	virtual void shutdown_vf5();
+	inline void shutdown_impl() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(339248); return _f(this); }
+	inline void shutdown() { return shutdown_vf5(); }
+	inline double getSessionTimeLeft() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296096); return _f(this); }
+	inline int getHandshakeCarPosition() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1278848); return _f(this); }
+	inline unsigned int getCarPosition(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287168); return _f(this, car); }
+	inline unsigned int getBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(286272); return _f(this, car); }
+	inline unsigned int getInstanceBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287856); return _f(this, car); }
+	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290000); return _f(this, car); }
+	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287968); return _f(this, car); }
+	inline void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps) { typedef void (*_fpt)(ACClient *pthis, CarAvatar *, std::vector<Lap,std::allocator<Lap> > &); _fpt _f=(_fpt)_drva(288160); return _f(this, car, laps); }
+	inline bool isBestSplit(int & sector, int & t, bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(ACClient *pthis, int &, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(307648); return _f(this, sector, t, isGlobal, car); }
+	inline unsigned int getBestSplit(int & sector, bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(286384); return _f(this, sector, isGlobal, car); }
+	inline unsigned int getLastSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(290336); return _f(this, car, sector); }
+	inline unsigned int getSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(296160); return _f(this, car, sector); }
+	inline void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, unsigned int & sector, unsigned int & time, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, unsigned int &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(279264); return _f(this, splits, personalSplits, sector, time, cuts); }
+	inline void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, unsigned int & laptime, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<Lap,std::allocator<Lap> > &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(339488); return _f(this, splits, personalSplits, laps, laptime, cuts); }
+	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287360); return _f(this, car); }
+	inline void resetCurrentLaps() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(334128); return _f(this); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name) { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(286832); return _f(this, unix_name); }
+	inline double getTimetoWait() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296448); return _f(this); }
+	inline void setInvertedGridPositions(int pos) { typedef void (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(1315584); return _f(this, pos); }
+	inline int getInvertedGridPositions() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1279296); return _f(this); }
+	inline void askForP2Pvalue() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(279664); return _f(this); }
+	inline void sendCarPosition() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(336432); return _f(this); }
+	inline void onMessage(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(309712); return _f(this, msg); }
+	inline void onLapCompleted(OnLapCompletedEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(309296); return _f(this, ev); }
+	inline void onNewSession(UDPPacket & pak, bool isHandShake) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &, bool); _fpt _f=(_fpt)_drva(320672); return _f(this, pak, isHandShake); }
+	inline void onRemoteLapCompleted(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(324720); return _f(this, pak); }
+	inline void onRemoteSectorSplit(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327104); return _f(this, pak); }
+	inline void onPhysicsStep(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(324048); return _f(this, pt); }
+	inline void logMessage(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(307872); return _f(this, message); }
+	inline unsigned char getSessionIdFromCarAvatarID(int carAvatarID) { typedef unsigned char (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295776); return _f(this, carAvatarID); }
+	inline void updateQOS(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(344528); return _f(this, pt); }
+	inline void associate() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280128); return _f(this); }
+	inline void onMessageTCP(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(313408); return _f(this, msg); }
+	inline bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg) { typedef bool (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(296560); return _f(this, msg); }
+	inline void onTyreCompoundChanged(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(328656); return _f(this, shortName); }
+	inline void addCollisionEvent(NetCarStateProvider * netCar, float speed, vec3f & worldPos, vec3f & relPos) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *, float, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(277152); return _f(this, netCar, speed, worldPos, relPos); }
+	inline void onWelcomeMessageReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(328800); return _f(this, pak); }
+	inline void onSetupReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327824); return _f(this, pak); }
+	inline void onDRSZoneReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(308512); return _f(this, pak); }
+	inline void onRemoteSunAngleReceived(float angle) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(327408); return _f(this, angle); }
+	inline void updateDamageReport() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(344160); return _f(this); }
+	inline void onSectorSplit(OnSectorSplitEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnSectorSplitEvent &); _fpt _f=(_fpt)_drva(327536); return _f(this, ev); }
+	inline void onCollisionWithCar() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(308080); return _f(this); }
+};
+
 class Sim : public GameObject, public IKeyEventListener {
 public:
 	Event<OnNewCarLoadedEvent> evNewCarLoaded;
@@ -6384,167 +6536,6 @@ public:
 	inline void initRenderFlags() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2109280); return _f(this); }
 	inline void initSamplerStates() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2109824); return _f(this); }
 	inline void initCBuffers() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108704); return _f(this); }
-};
-
-class ACClient : public GameObject {
-public:
-	Event<OnChatMessageEvent> evOnChatMessage;
-	Event<RemoteSession> evOnOnlineNewSession;
-	Event<RemoteSessionResume> evOnOnlineEndSession;
-	Event<OnLapCompletedEvent> evOnLapCompleted;
-	Event<ReceivedVoteDef> evOnVoteReceived;
-	Event<bool> evOnVoteNotPassed;
-	Event<bool> evOnMandatoryPitDone;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > serverName;
-	float remoteSpring;
-	float remoteDamper;
-	float remoteFactor;
-	DriverInfo driverInfo;
-	ServerInfo serverInfo;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > guid;
-	ClientRules rules;
-	ServerDrivingAssists serverDrivingAssists;
-	bool isTVMode;
-	double handshakeServerTimeS;
-	std::vector<unsigned char,std::allocator<unsigned char> > playerCarMD5;
-	bool debugStartingLights;
-	bool isAssociated;
-	ACClient_ClientSessionTransition transitionInfo;
-	RemoteSessionResult sessionResultsGT;
-	UDPSocket sok;
-	std::vector<std::vector<unsigned char,std::allocator<unsigned char> >,std::allocator<std::vector<unsigned char,std::allocator<unsigned char> > > > checksumResults;
-	Sim * sim;
-	Car * car;
-	ACClientVotingManager * votingManager;
-	CarAvatar * avatar;
-	double lastSendTime;
-	double sendInterval;
-	double lastChatMessage;
-	double lastSpectatorPulse;
-	IPAddress serverIP;
-	unsigned char sessionID;
-	std::vector<NetCarStateProvider *,std::allocator<NetCarStateProvider *> > netCars;
-	unsigned char pakSequenceIndex;
-	int handshakeCarPosition;
-	WrongWayIndicator * wrongWayIndicator;
-	int numWrongWayInfractions;
-	TCPSocket tcpSock;
-	RemoteSession currentSession;
-	int finishPosition;
-	Font * font;
-	std::vector<RemoteSession,std::allocator<RemoteSession> > sessions;
-	DisconnectCountdown dcCountdown;
-	double lastSessionCheckTime;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > welcomeMessage;
-	DamageReportDef damageReport;
-	bool isFlashingCache;
-	WreckerProtection wreckerProtection;
-	unsigned int resultScreenTime;
-	unsigned int raceOverTime;
-	bool isGasPenaltyDisabled;
-	unsigned int pitWindowStart;
-	unsigned int pitWindowEnd;
-	bool hasLeaderFinished;
-	bool hasPlayerFinished;
-	double raceClosingTime;
-	bool isResultScreenOn;
-	bool hasExtraLap;
-	bool isLastLap;
-	bool ignoreResultTeleport;
-	int invertedGridPositions;
-	std::vector<unsigned int,std::allocator<unsigned int> > localCarCurrentSplits;
-	std::vector<unsigned int,std::allocator<unsigned int> > localCarBestSplits;
-	std::vector<unsigned int,std::allocator<unsigned int> > bestSplits;
-	unsigned int globalBestlap;
-	std::vector<Lap,std::allocator<Lap> > localCarLaps;
-	unsigned int localCarBestLap;
-	unsigned int instanceLocalCarBestLap;
-	Lap localCarLastLap;
-	bool useLog;
-	bool playerIsSpectator;
-	std::basic_ofstream<wchar_t,std::char_traits<wchar_t> > log;
-	ClientQOSData qos;
-	ACClient_ClientEndSession endSession;
-	std::vector<ClientCollisionEvent,std::allocator<ClientCollisionEvent> > clientColissionEvents;
-	double lastClientEventSendTime;
-	inline ACClient()  { }
-	inline void ctor(Sim * isim) { typedef void (*_fpt)(ACClient *pthis, Sim *); _fpt _f=(_fpt)_drva(238272); _f(this, isim); }
-	virtual ~ACClient();
-	inline void dtor() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(244880); _f(this); }
-	virtual void renderHUD_vf3(float dt);
-	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(333392); return _f(this, dt); }
-	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
-	inline ClientHandshakeResult handshakeTCP() { typedef ClientHandshakeResult (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(297808); return _f(this); }
-	inline bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars) { typedef bool (*_fpt)(ACClient *pthis, std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > &); _fpt _f=(_fpt)_drva(290688); return _f(this, remoteCars); }
-	inline void beginUpdateMode() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280288); return _f(this); }
-	inline void sendChat(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(338576); return _f(this, message); }
-	inline void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID) { typedef void (*_fpt)(ACClient *pthis, VoteType, bool, int); _fpt _f=(_fpt)_drva(338848); return _f(this, aVote, aVoteValue, targetAvatarGUID); }
-	inline bool hasVoted() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(306432); return _f(this); }
-	inline CarAvatar * getCurrentVotingTarget() { typedef CarAvatar * (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287824); return _f(this); }
-	inline float getVotingTimeLeft() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296512); return _f(this); }
-	inline VoteType getCurrentVoteType() { typedef VoteType (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287808); return _f(this); }
-	inline float getVotingMaxTime() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296496); return _f(this); }
-	inline void addNetCar(NetCarStateProvider * nc) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *); _fpt _f=(_fpt)_drva(279232); return _f(this, nc); }
-	inline NetCarStateProvider * getNetCarFromSessionID(unsigned char id) { typedef NetCarStateProvider * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(290528); return _f(this, id); }
-	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(342832); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline double getPhysicsTime() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(290576); return _f(this); }
-	inline bool isAllowedToSendChatMessage() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(307616); return _f(this); }
-	inline int getPing(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290608); return _f(this, anAvatar); }
-	inline RemoteSession getCurrentSession() { typedef RemoteSession (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287648); return _f(this); }
-	inline RemoteSessionResult & getCurrentSessionResults() { typedef RemoteSessionResult & (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287792); return _f(this); }
-	inline CarAvatar * getCarAvatarFromSessionID(unsigned char sesid) { typedef CarAvatar * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(286720); return _f(this, sesid); }
-	inline int getSessionIDFromCarAvatar(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(295696); return _f(this, anAvatar); }
-	inline int getSessionCount() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(295664); return _f(this); }
-	inline int getCurrentSessionIndex() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287696); return _f(this); }
-	inline RemoteSession getSessionInfo(int index) { typedef RemoteSession (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295936); return _f(this, index); }
-	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(339248); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline double getSessionTimeLeft() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296096); return _f(this); }
-	inline int getHandshakeCarPosition() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1278848); return _f(this); }
-	inline unsigned int getCarPosition(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287168); return _f(this, car); }
-	inline unsigned int getBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(286272); return _f(this, car); }
-	inline unsigned int getInstanceBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287856); return _f(this, car); }
-	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290000); return _f(this, car); }
-	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287968); return _f(this, car); }
-	inline void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps) { typedef void (*_fpt)(ACClient *pthis, CarAvatar *, std::vector<Lap,std::allocator<Lap> > &); _fpt _f=(_fpt)_drva(288160); return _f(this, car, laps); }
-	inline bool isBestSplit(int & sector, int & t, bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(ACClient *pthis, int &, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(307648); return _f(this, sector, t, isGlobal, car); }
-	inline unsigned int getBestSplit(int & sector, bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, int &, bool &, CarAvatar *); _fpt _f=(_fpt)_drva(286384); return _f(this, sector, isGlobal, car); }
-	inline unsigned int getLastSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(290336); return _f(this, car, sector); }
-	inline unsigned int getSplit(CarAvatar * car, int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, int &); _fpt _f=(_fpt)_drva(296160); return _f(this, car, sector); }
-	inline void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, unsigned int & sector, unsigned int & time, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, unsigned int &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(279264); return _f(this, splits, personalSplits, sector, time, cuts); }
-	inline void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, unsigned int & laptime, unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<Lap,std::allocator<Lap> > &, unsigned int &, unsigned int &); _fpt _f=(_fpt)_drva(339488); return _f(this, splits, personalSplits, laps, laptime, cuts); }
-	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287360); return _f(this, car); }
-	inline void resetCurrentLaps() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(334128); return _f(this); }
-	inline std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name) { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(286832); return _f(this, unix_name); }
-	inline double getTimetoWait() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296448); return _f(this); }
-	inline void setInvertedGridPositions(int pos) { typedef void (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(1315584); return _f(this, pos); }
-	inline int getInvertedGridPositions() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1279296); return _f(this); }
-	inline void askForP2Pvalue() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(279664); return _f(this); }
-	inline void sendCarPosition() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(336432); return _f(this); }
-	inline void onMessage(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(309712); return _f(this, msg); }
-	inline void onLapCompleted(OnLapCompletedEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(309296); return _f(this, ev); }
-	inline void onNewSession(UDPPacket & pak, bool isHandShake) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &, bool); _fpt _f=(_fpt)_drva(320672); return _f(this, pak, isHandShake); }
-	inline void onRemoteLapCompleted(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(324720); return _f(this, pak); }
-	inline void onRemoteSectorSplit(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327104); return _f(this, pak); }
-	inline void onPhysicsStep(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(324048); return _f(this, pt); }
-	inline void logMessage(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(307872); return _f(this, message); }
-	inline unsigned char getSessionIdFromCarAvatarID(int carAvatarID) { typedef unsigned char (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295776); return _f(this, carAvatarID); }
-	inline void updateQOS(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(344528); return _f(this, pt); }
-	inline void associate() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280128); return _f(this); }
-	inline void onMessageTCP(UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, UDPMessage &); _fpt _f=(_fpt)_drva(313408); return _f(this, msg); }
-	inline bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg) { typedef bool (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(296560); return _f(this, msg); }
-	inline void onTyreCompoundChanged(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName) { typedef void (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(328656); return _f(this, shortName); }
-	inline void addCollisionEvent(NetCarStateProvider * netCar, float speed, vec3f & worldPos, vec3f & relPos) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *, float, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(277152); return _f(this, netCar, speed, worldPos, relPos); }
-	inline void onWelcomeMessageReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(328800); return _f(this, pak); }
-	inline void onSetupReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327824); return _f(this, pak); }
-	inline void onDRSZoneReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(308512); return _f(this, pak); }
-	inline void onRemoteSunAngleReceived(float angle) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(327408); return _f(this, angle); }
-	inline void updateDamageReport() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(344160); return _f(this); }
-	inline void onSectorSplit(OnSectorSplitEvent & ev) { typedef void (*_fpt)(ACClient *pthis, OnSectorSplitEvent &); _fpt _f=(_fpt)_drva(327536); return _f(this, ev); }
-	inline void onCollisionWithCar() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(308080); return _f(this); }
 };
 
 struct AeroMap {

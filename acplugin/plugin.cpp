@@ -1,6 +1,4 @@
 #include "precompiled.h"
-using namespace acsdk;
-
 #include "AppCheaterDetector.h"
 #include "AppCustomPhysics.h"
 
