@@ -48,6 +48,9 @@
     <ClCompile Include="CustomDrivetrain.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
+    <ClCompile Include="CustomSuspension.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="udt.h">

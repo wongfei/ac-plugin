@@ -72,6 +72,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+      <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -101,6 +102,7 @@
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,6 +117,7 @@
     <ClCompile Include="AppCheaterDetector.cpp" />
     <ClCompile Include="AppCustomPhysics.cpp" />
     <ClCompile Include="CustomDrivetrain.cpp" />
+    <ClCompile Include="CustomSuspension.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="PluginApp.cpp">

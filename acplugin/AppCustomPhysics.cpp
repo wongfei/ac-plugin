@@ -39,6 +39,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	X_HOOK(Drivetrain_stepControllers);
 	X_HOOK(Drivetrain_step2WD);
 
+	//X_HOOK(Suspension_step);
+
 	status = MH_EnableHook(MH_ALL_HOOKS);
 	if (status != MH_OK)
 	{

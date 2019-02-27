@@ -21,3 +21,8 @@ void Drivetrain_stepControllers(Drivetrain* pThis, float dt);
 
 #define RVA_Drivetrain_step2WD 2528480
 void Drivetrain_step2WD(Drivetrain* pThis, float dt);
+
+// Suspension
+
+#define RVA_Suspension_step 2896784
+void Suspension_step(Suspension* pThis, float dt);
