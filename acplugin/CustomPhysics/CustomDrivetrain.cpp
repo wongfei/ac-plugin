@@ -1,6 +1,5 @@
 #include "precompiled.h"
-#include "CustomHooks.h"
-#include "utils.h"
+#include "GameHooks.h"
 
 void Drivetrain_step(Drivetrain* pThis, float dt)
 {

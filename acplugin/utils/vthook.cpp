@@ -1,23 +1,23 @@
+#include "precompiled.h"
+#include "vthook.h"
+
 //
 // https://github.com/Thordin/vtable-hook
 //
 
-#include "precompiled.h"
-#include "vthook.h"
-
 int vtablehook_unprotect(void* region)
 {
 	MEMORY_BASIC_INFORMATION mbi;
-	VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-	VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &mbi.Protect);
+	::VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
+	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &mbi.Protect);
 	return mbi.Protect;
 }
 
 void vtablehook_protect(void* region, int protection)
 {
 	MEMORY_BASIC_INFORMATION mbi;
-	VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-	VirtualProtect(mbi.BaseAddress, mbi.RegionSize, protection, &mbi.Protect);
+	::VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
+	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, protection, &mbi.Protect);
 }
 
 void* vtablehook_hook(void* instance, void* hook, int offset)

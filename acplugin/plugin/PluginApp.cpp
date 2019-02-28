@@ -63,7 +63,7 @@ void PluginApp::destroyForm()
 void PluginApp::loadFormConfig()
 {
 	auto path = getAppConfigPath();
-	auto ini = new_udt<INIReaderDocuments>(&path, false);
+	scoped_udt<INIReaderDocuments> ini(new_udt<INIReaderDocuments>(&path, false));
 	std::wstring section, key;
 
 	section.assign(L"form_config");
@@ -83,8 +83,6 @@ void PluginApp::loadFormConfig()
 		int blocked = ini->getInt(section, key);
 		_form->setBlocked(blocked ? true : false);
 	}
-
-	del_udt(ini);
 }
 
 void PluginApp::writeFormConfig()

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "plugin.h"
-#include "udt.h"
-#include "utils.h"
+#include "utils/common.h"
+#include "utils/udt.h"
 
 typedef std::function<void (float deltaT)> TimerCallback;
 

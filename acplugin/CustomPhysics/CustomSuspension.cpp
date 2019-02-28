@@ -1,14 +1,13 @@
 #include "precompiled.h"
-#include "CustomHooks.h"
-#include "utils.h"
+#include "GameHooks.h"
 
 void Suspension_step(Suspension* pThis, float dt)
 {
-	pThis->steerTorque = 0.0;
+	pThis->steerTorque = 0.0f;
 
-	auto worldHubPos = pThis->hub->getPosition(0);
+	auto worldHubPos = pThis->hub->getPosition(0.0f);
 	auto localHubPos = pThis->carBody->worldToLocal(worldHubPos);
-	auto carBodyM = pThis->carBody->getWorldMatrix(0);
+	auto carBodyM = pThis->carBody->getWorldMatrix(0.0f);
 
 	float M4 = carBodyM.M21;
 	float M5 = carBodyM.M22;
@@ -20,11 +19,11 @@ void Suspension_step(Suspension* pThis, float dt)
 
 	if (pThis->useActiveActuator)
 	{
-		pThis->activeActuator.targetTravel = 0.0;
+		pThis->activeActuator.targetTravel = 0.0f;
 		float fActiveActuator = pThis->activeActuator.eval(dt, fHubDeltaY);
 
-		pThis->car->antirollBars[0].k = 0.0;
-		pThis->car->antirollBars[1].k = 0.0;
+		pThis->car->antirollBars[0].k = 0.0f;
+		pThis->car->antirollBars[1].k = 0.0f;
 
 		vec3f force;
 		force.x = M4 * fActiveActuator;
@@ -46,7 +45,7 @@ void Suspension_step(Suspension* pThis, float dt)
 		float fPackerRange = pThis->packerRange;
 		float fDelta1 = ((fTravel * pThis->progressiveK) + fK) * fTravel;
 
-		if (fPackerRange != 0.0 && fTravel > fPackerRange && fK != 0.0)
+		if (fPackerRange != 0.0f && fTravel > fPackerRange && fK != 0.0f)
 		{
 			fDelta1 += (((fTravel - fPackerRange) * pThis->bumpStopProgressive) + pThis->bumpStopRate) * (fTravel - fPackerRange);
 		}
@@ -60,9 +59,9 @@ void Suspension_step(Suspension* pThis, float dt)
 			pThis->addForceAtPos(force, worldHubPos, false, false);
 
 			vec3f floc;
-			floc.x = 0;
+			floc.x = 0.0f;
 			floc.y = fDelta1;
-			floc.z = 0;
+			floc.z = 0.0f;
 			pThis->carBody->addLocalForceAtLocalPos(floc, pThis->dataRelToWheel.refPoint);
 		}
 
@@ -86,7 +85,7 @@ void Suspension_step(Suspension* pThis, float dt)
 	}
 
 	float fBumpStopUp = pThis->bumpStopUp;
-	if (fBumpStopUp != 0.0 && fHubDeltaY > fBumpStopUp && 0.0 != pThis->k)
+	if (fBumpStopUp != 0.0f && fHubDeltaY > fBumpStopUp && 0.0f != pThis->k)
 	{
 		float fDelta2 = (((fHubDeltaY - fBumpStopUp) * pThis->bumpStopProgressive) + pThis->bumpStopRate) * (fHubDeltaY - fBumpStopUp);
 
@@ -97,14 +96,14 @@ void Suspension_step(Suspension* pThis, float dt)
 		pThis->addForceAtPos(force, worldHubPos, false, false);
 
 		vec3f floc;
-		floc.x = 0;
+		floc.x = 0.0f;
 		floc.y = fDelta2;
-		floc.z = 0;
+		floc.z = 0.0f;
 		pThis->carBody->addLocalForceAtLocalPos(floc, localHubPos);
 	}
 
 	float fBumpStopDown = pThis->bumpStopDn;
-	if (fBumpStopDown != 0.0 && fHubDeltaY < fBumpStopDown && 0.0 != pThis->k)
+	if (fBumpStopDown != 0.0f && fHubDeltaY < fBumpStopDown && 0.0f != pThis->k)
 	{
 		float fDelta3 = (((fHubDeltaY - fBumpStopDown) * pThis->bumpStopProgressive) + pThis->bumpStopRate) * (fHubDeltaY - fBumpStopDown);
 
@@ -115,9 +114,33 @@ void Suspension_step(Suspension* pThis, float dt)
 		pThis->addForceAtPos(force, worldHubPos, false, false);
 
 		vec3f floc;
-		floc.x = 0;
+		floc.x = 0.0f;
 		floc.y = fDelta3;
-		floc.z = 0;
+		floc.z = 0.0f;
 		pThis->carBody->addLocalForceAtLocalPos(floc, localHubPos);
 	}
+}
+
+float Damper_getForce(Damper* pThis, float fSpeed)
+{
+	float fForce;
+	if (fSpeed <= 0.0f)
+	{
+		float fFastThreshRebound = pThis->fastThresholdRebound;
+
+		if (fabsf(fSpeed) <= fFastThreshRebound)
+			fForce = -(fSpeed * pThis->reboundSlow);
+		else
+			fForce = (pThis->fastThresholdRebound * pThis->reboundSlow) - ((fFastThreshRebound + fSpeed) * pThis->reboundFast);
+	}
+	else
+	{
+		float fFastThreshBump = pThis->fastThresholdBump;
+
+		if (fSpeed <= fFastThreshBump)
+			fForce = -fSpeed * pThis->bumpSlow;
+		else
+			fForce = -((fSpeed - fFastThreshBump) * pThis->bumpFast) + (fFastThreshBump * pThis->bumpSlow);
+	}
+	return fForce;
 }

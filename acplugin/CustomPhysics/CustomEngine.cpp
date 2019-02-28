@@ -1,6 +1,5 @@
 #include "precompiled.h"
-#include "CustomHooks.h"
-#include "utils.h"
+#include "GameHooks.h"
 
 void Engine_step(Engine* pThis, SACEngineInput* pInput, float dt)
 {

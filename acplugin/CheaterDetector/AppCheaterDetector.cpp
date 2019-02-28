@@ -470,13 +470,10 @@ CarIni* AppCheaterDetector::loadCarIni(const std::wstring& unixName)
 	path.append(unixName);
 	path.append(L"/data/car.ini");
 
-	auto ini = new_udt<INIReader>(path);
-	{
-		std::wstring section(L"BASIC");
-		std::wstring key(L"TOTALMASS");
-		car->mass = ini->getFloat(section, key);
-	}
-	del_udt(ini);
+	scoped_udt<INIReader> ini(new_udt<INIReader>(path));
+	std::wstring section(L"BASIC");
+	std::wstring key(L"TOTALMASS");
+	car->mass = ini->getFloat(section, key);
 
 	return car;
 }

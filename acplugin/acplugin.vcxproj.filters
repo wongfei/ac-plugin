@@ -4,9 +4,6 @@
     <Filter Include="CheaterDetector">
       <UniqueIdentifier>{3ee2891d-e568-439f-8efa-652952232e4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helpers">
-      <UniqueIdentifier>{248132dd-fba0-4bdb-aa65-9ca57196e6d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AC">
       <UniqueIdentifier>{e776daa4-f833-478e-8aae-27b3e5680415}</UniqueIdentifier>
     </Filter>
@@ -16,84 +13,90 @@
     <Filter Include="CustomPhysics">
       <UniqueIdentifier>{1709debb-5624-42f8-a4d4-59578bed3d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{248132dd-fba0-4bdb-aa65-9ca57196e6d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{4896d16c-d29a-43f2-bd43-c336062e99bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="utils.cpp">
-      <Filter>helpers</Filter>
+    <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp">
+      <Filter>CustomPhysics</Filter>
     </ClCompile>
-    <ClCompile Include="vthook.cpp">
-      <Filter>helpers</Filter>
+    <ClCompile Include="CustomPhysics\CustomDrivetrain.cpp">
+      <Filter>CustomPhysics</Filter>
     </ClCompile>
-    <ClCompile Include="log.cpp">
+    <ClCompile Include="CustomPhysics\CustomEngine.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\CustomSuspension.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp">
+      <Filter>CheaterDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\vthook.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="plugin\log.cpp">
       <Filter>plugin</Filter>
     </ClCompile>
-    <ClCompile Include="plugin.cpp">
+    <ClCompile Include="plugin\plugin.cpp">
       <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="plugin\PluginApp.cpp">
+      <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\common.cpp">
+      <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="precompiled.cpp">
-      <Filter>plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="PluginApp.cpp">
-      <Filter>plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="AppCheaterDetector.cpp">
-      <Filter>CheaterDetector</Filter>
-    </ClCompile>
-    <ClCompile Include="AppCustomPhysics.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomEngine.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomDrivetrain.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomSuspension.cpp">
-      <Filter>CustomPhysics</Filter>
+      <Filter>pch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="udt.h">
-      <Filter>helpers</Filter>
+    <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
+      <Filter>CustomPhysics</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>helpers</Filter>
+    <ClInclude Include="CheaterDetector\AppCheaterDetector.h">
+      <Filter>CheaterDetector</Filter>
     </ClInclude>
-    <ClInclude Include="vthook.h">
-      <Filter>helpers</Filter>
+    <ClInclude Include="CheaterDetector\DriverPerf.h">
+      <Filter>CheaterDetector</Filter>
     </ClInclude>
-    <ClInclude Include="plugin.h">
+    <ClInclude Include="CheaterDetector\DriverState.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="CheaterDetector\GridView.h">
+      <Filter>CheaterDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\udt.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\vthook.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AC\ac_gen.h">
+      <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="AC\ac_sdk.h">
+      <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="plugin\plugin.h">
       <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="plugin\PluginApp.h">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\common.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\GameHooks.h">
+      <Filter>CustomPhysics</Filter>
     </ClInclude>
     <ClInclude Include="precompiled.h">
-      <Filter>plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverPerf.h">
-      <Filter>CheaterDetector</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverState.h">
-      <Filter>CheaterDetector</Filter>
-    </ClInclude>
-    <ClInclude Include="GridView.h">
-      <Filter>CheaterDetector</Filter>
-    </ClInclude>
-    <ClInclude Include="ac_gen.h">
-      <Filter>AC</Filter>
-    </ClInclude>
-    <ClInclude Include="ac_sdk.h">
-      <Filter>AC</Filter>
-    </ClInclude>
-    <ClInclude Include="PluginApp.h">
-      <Filter>plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="AppCheaterDetector.h">
-      <Filter>CheaterDetector</Filter>
-    </ClInclude>
-    <ClInclude Include="AppCustomPhysics.h">
-      <Filter>CustomPhysics</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomHooks.h">
-      <Filter>CustomPhysics</Filter>
+      <Filter>pch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

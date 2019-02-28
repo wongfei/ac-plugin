@@ -52,6 +52,26 @@ inline T* new_udt(Args&&... params) {
 
 template<typename T>
 inline void del_udt(T* obj) {
-	obj->dtor();
-	free(obj);
+	if (obj) {
+		obj->dtor();
+		free(obj);
+	}
 }
+
+template<typename T>
+class scoped_udt
+{
+public:
+	inline scoped_udt() : _udt(nullptr) {}
+	inline scoped_udt(T* udt) : _udt(udt) {}
+	inline ~scoped_udt() { del_udt(_udt); }
+
+	inline T* operator->() { return _udt; }
+	inline const T* operator->() const { return _udt; }
+
+	inline T* get() { return _udt; }
+	inline const T* get() const { return _udt; }
+
+private:
+	T* _udt;
+};

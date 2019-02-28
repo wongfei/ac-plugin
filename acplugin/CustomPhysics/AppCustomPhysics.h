@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginApp.h"
+#include "plugin/PluginApp.h"
 
 class AppCustomPhysics : public PluginApp
 {

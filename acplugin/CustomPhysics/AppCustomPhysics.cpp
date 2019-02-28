@@ -1,6 +1,6 @@
 #include "precompiled.h"
 #include "AppCustomPhysics.h"
-#include "CustomHooks.h"
+#include "GameHooks.h"
 
 #define X_CAT(A, B) A##B
 #define X_WSTRING(A) X_CAT(L, #A)
@@ -39,7 +39,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	X_HOOK(Drivetrain_stepControllers);
 	X_HOOK(Drivetrain_step2WD);
 
-	//X_HOOK(Suspension_step);
+	X_HOOK(Suspension_step);
+	X_HOOK(Damper_getForce);
 
 	status = MH_EnableHook(MH_ALL_HOOKS);
 	if (status != MH_OK)

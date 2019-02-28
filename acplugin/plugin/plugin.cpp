@@ -1,6 +1,6 @@
 #include "precompiled.h"
-#include "AppCheaterDetector.h"
-#include "AppCustomPhysics.h"
+#include "CheaterDetector/AppCheaterDetector.h"
+#include "CustomPhysics/AppCustomPhysics.h"
 
 void* _ac_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
@@ -19,7 +19,7 @@ AC_EXPORT bool AC_API acpGetName(wchar_t* name)
 
 AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 {
-	_ac_module = GetModuleHandleA(nullptr);
+	_ac_module = ::GetModuleHandleA(nullptr);
 	s_plugin = plugin;
 
 	log_reset();

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/common.h"
+
 // Engine
 
 #define RVA_Engine_step 2654432
@@ -26,3 +28,6 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt);
 
 #define RVA_Suspension_step 2896784
 void Suspension_step(Suspension* pThis, float dt);
+
+#define RVA_Damper_getForce 2830976
+float Damper_getForce(Damper* pThis, float fSpeed);
