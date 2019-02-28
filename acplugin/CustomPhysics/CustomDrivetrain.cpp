@@ -126,7 +126,7 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		double fInertiaSum;
 		if (pThis->tractionType == TractionType::AWD) // ???
 		{
-			fInertiaSum = 
+			fInertiaSum =
 				pThis->drive.inertia
 				+ pThis->outShaftL.inertia
 				+ pThis->outShaftR.inertia
@@ -304,24 +304,26 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		pThis->totalTorque = (float)fabs((fabs(pThis->ratio) * (pThis->acEngine.status.outTorque * pThis->locClutch)) - (pThis->tyreLeft->status.feedbackTorque + pThis->tyreRight->status.feedbackTorque));
 	}
 
-	double fGearTorque = pThis->locClutch * pThis->acEngine.status.outTorque * curGear.ratio;
+	float fGearTorque = (float)(pThis->locClutch * pThis->acEngine.status.outTorque * curGear.ratio);
 
 	if (pCar->suspensionTypeR == SuspensionType::Axle)
 	{
+		float fAxleTorq = fGearTorque * pCar->axleTorqueReaction;
+
 		vec3f v;
 		v.x = 0;
 		v.y = 0;
-		v.z = (float)(fGearTorque * pCar->axleTorqueReaction);
+		v.z = fAxleTorq;
 		pCar->body->addLocalTorque(v);
 
 		v.x = 0;
 		v.y = 0;
-		v.z = -(float)(fGearTorque * pCar->axleTorqueReaction);
+		v.z = -fAxleTorq;
 		pCar->rigidAxle->addLocalTorque(v);
 
 		if (pCar->torqueModeEx == TorqueModeEX::reactionTorques)
 		{
-			v.x = -(float)fGearTorque;
+			v.x = -fGearTorque;
 			v.y = 0;
 			v.z = 0;
 
@@ -345,26 +347,19 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 			suspId[1] = 3;
 		}
 
+		float fNegGearTorque = -fGearTorque;
+
 		for (int i = 0; i < 2; ++i)
 		{
-			auto pSusp = pCar->suspensions[suspId[i]];
+			ISuspension* pSusp = pCar->suspensions[suspId[i]];
+			mat44f suspM = pSusp->getHubWorldMatrix();
 
-			// TODO
-			MessageBoxA(nullptr, "_FIXME", "_FIXME", MB_OK);
+			vec3f torq;
+			torq.x = (suspM.M11 * fNegGearTorque) * 0.5f;
+			torq.y = (suspM.M12 * fNegGearTorque) * 0.5f;
+			torq.z = (suspM.M13 * fNegGearTorque) * 0.5f;
 
-			/*vPointVelocity = (float *)(*(__int64(__fastcall **)(ISuspension *, SGearRatio *))pSusp->vfptr->gap8)(
-				pSusp,
-				&pCurGear);
-
-			fX = *vPointVelocity;
-			fY = vPointVelocity[1];
-			fZ = vPointVelocity[2];
-
-			LODWORD(v70) = LODWORD(fGearTorque) ^ _xmm;
-			input.gasInput = (float)(fX * v70) * 0.5;
-			input.carSpeed = (float)(fY * v70) * 0.5;
-			input.altitude = (float)(fZ * v70) * 0.5;
-			pCar4->body->vfptr->addTorque(pCar4->body, (vec3f *)&input);*/
+			pThis->car->body->addTorque(torq);
 		}
 	}
 }

@@ -5,9 +5,9 @@ void Suspension_step(Suspension* pThis, float dt)
 {
 	pThis->steerTorque = 0.0f;
 
-	auto worldHubPos = pThis->hub->getPosition(0.0f);
-	auto localHubPos = pThis->carBody->worldToLocal(worldHubPos);
-	auto carBodyM = pThis->carBody->getWorldMatrix(0.0f);
+	vec3f worldHubPos = pThis->hub->getPosition(0.0f);
+	vec3f localHubPos = pThis->carBody->worldToLocal(worldHubPos);
+	mat44f carBodyM = pThis->carBody->getWorldMatrix(0.0f);
 
 	float M4 = carBodyM.M21;
 	float M5 = carBodyM.M22;
@@ -65,8 +65,8 @@ void Suspension_step(Suspension* pThis, float dt)
 			pThis->carBody->addLocalForceAtLocalPos(floc, pThis->dataRelToWheel.refPoint);
 		}
 
-		auto hubVel = pThis->hub->getVelocity();
-		auto localBodyVel = pThis->carBody->getLocalPointVelocity(pThis->dataRelToWheel.refPoint);
+		vec3f hubVel = pThis->hub->getVelocity();
+		vec3f localBodyVel = pThis->carBody->getLocalPointVelocity(pThis->dataRelToWheel.refPoint);
 		float fDamperSpeed = (((hubVel.y - localBodyVel.y) * M5) + ((hubVel.x - localBodyVel.x) * M4)) + ((hubVel.z - localBodyVel.z) * M6);
 		float fDamperForce = pThis->damper.getForce(fDamperSpeed);
 		pThis->status.damperSpeedMS = fDamperSpeed;
