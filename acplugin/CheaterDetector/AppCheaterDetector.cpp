@@ -100,6 +100,7 @@ bool AppCheaterDetector::acpOnGui(ACPluginContext* context)
 
 bool AppCheaterDetector::onMouseDown_vf10(OnMouseDownEvent& ev)
 {
+	//writeConsole(L"click");
 	bool res = _form->onMouseDown_impl(ev);
 	return res;
 }

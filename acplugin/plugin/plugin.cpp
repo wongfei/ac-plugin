@@ -29,8 +29,12 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
 	#endif
 
+	if (!hook_init()) return false;
+
 	s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
 	s_apps.push_back(std::make_shared<AppCustomPhysics>(plugin));
+
+	hook_enable();
 
 	log_printf(L"acpInit DONE");
 	return true;
@@ -40,7 +44,9 @@ AC_EXPORT bool AC_API acpShutdown()
 {
 	log_printf(L"acpShutdown");
 
+	hook_disable();
 	s_apps.clear();
+	hook_shut();
 
 	log_printf(L"acpShutdown DONE");
 	return true;

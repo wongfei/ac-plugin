@@ -110,8 +110,8 @@ inline vec3f vdiv(const vec3f& a, float f) { return makev(a.x / f, a.y / f, a.z 
 inline vec3f vadd(const vec3f& a, const vec3f& b) { return makev(a.x + b.x, a.y + b.y, a.z + b.z); }
 inline vec3f vsub(const vec3f& a, const vec3f& b) { return makev(a.x - b.x, a.y - b.y, a.z - b.z); }
 inline float vdot(const vec3f& a, const vec3f& b) { return (a.x * b.x + a.y * b.y + a.z * b.z); }
-inline float vlen(const vec3f& v) { const float sqlen = vdot(v, v); return (sqlen > 0.001f ? sqrtf(sqlen) : 0); }
-inline vec3f vnorm(const vec3f& v) { const float l = vlen(v); if (l > 0) return vmul(v, 1 / l); else return makev(0, 0, 0); }
+inline float vlen(const vec3f& v) { const float sqlen = vdot(v, v); return (sqlen != 0.0f ? sqrtf(sqlen) : 0.0f); }
+inline vec3f vnorm(const vec3f& v) { const float len = vlen(v); return (len != 0.0f ? vmul(v, 1.0f / len) : makev(0, 0, 0)); }
 
 inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) { 
 	const float s = 1 / 255.0f;

@@ -24,15 +24,6 @@
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\CustomDrivetrain.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\CustomEngine.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\CustomSuspension.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
     <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp">
       <Filter>CheaterDetector</Filter>
     </ClCompile>
@@ -54,6 +45,19 @@
     <ClCompile Include="precompiled.cpp">
       <Filter>pch</Filter>
     </ClCompile>
+    <ClCompile Include="CustomPhysics\Drivetrain.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Engine.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Suspension.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Tyre.cpp" />
+    <ClCompile Include="CustomPhysics\Damper.cpp" />
+    <ClCompile Include="CustomPhysics\Turbo.cpp" />
+    <ClCompile Include="utils\hook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
@@ -98,5 +102,6 @@
     <ClInclude Include="precompiled.h">
       <Filter>pch</Filter>
     </ClInclude>
+    <ClInclude Include="utils\hook.h" />
   </ItemGroup>
 </Project>

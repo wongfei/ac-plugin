@@ -1,34 +1,31 @@
 #include "precompiled.h"
+#include "plugin/plugin.h"
 #include "vthook.h"
 
-//
-// https://github.com/Thordin/vtable-hook
-//
-
-int vtablehook_unprotect(void* region)
-{
-	MEMORY_BASIC_INFORMATION mbi;
-	::VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &mbi.Protect);
-	return mbi.Protect;
-}
-
-void vtablehook_protect(void* region, int protection)
-{
-	MEMORY_BASIC_INFORMATION mbi;
-	::VirtualQuery((LPCVOID)region, &mbi, sizeof(mbi));
-	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, protection, &mbi.Protect);
-}
-
-void* vtablehook_hook(void* instance, void* hook, int offset)
+void* vtablehook_hook(void* instance, void* hook, size_t offset)
 {
 	intptr_t vtable = *((intptr_t*)instance);
 	intptr_t entry = vtable + sizeof(intptr_t) * offset;
-	intptr_t original = *((intptr_t*) entry);
 
-	int original_protection = vtablehook_unprotect((void*)entry);
+	MEMORY_BASIC_INFORMATION mbi;
+	::ZeroMemory(&mbi, sizeof(mbi));
+
+	SIZE_T size = ::VirtualQuery((LPCVOID)entry, &mbi, sizeof(mbi));
+	if (!size) {
+		log_printf(L"VirtualQuery failed: err=0x%X entry=%p", (unsigned int)GetLastError(), (void*)entry);
+		return nullptr;
+	}
+
+	DWORD dwOrigProtect = 0;
+	if (FALSE == ::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &dwOrigProtect)) {
+		log_printf(L"VirtualProtect failed: err=0x%X entry=%p", (unsigned int)GetLastError(), (void*)entry);
+		return nullptr;
+	}
+
+	intptr_t original = *((intptr_t*)entry);
 	*((intptr_t*)entry) = (intptr_t)hook;
-	vtablehook_protect((void*)entry, original_protection);
+
+	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, dwOrigProtect, &mbi.Protect);
 
 	return (void*)original;
 }

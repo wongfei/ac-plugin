@@ -3,6 +3,7 @@
 #include "plugin.h"
 #include "utils/common.h"
 #include "utils/udt.h"
+#include "utils/hook.h"
 
 typedef std::function<void (float deltaT)> TimerCallback;
 

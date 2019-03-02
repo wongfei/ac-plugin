@@ -1,6 +1,9 @@
 #pragma once
 
+#include "plugin/plugin.h"
 #include "utils/common.h"
+
+#define HOOK_FUNC_RVA(func) hook_create(_drva(RVA_##func), &func, nullptr, UT_WSTRING(func))
 
 // Engine
 
@@ -31,3 +34,8 @@ void Suspension_step(Suspension* pThis, float dt);
 
 #define RVA_Damper_getForce 2830976
 float Damper_getForce(Damper* pThis, float fSpeed);
+
+// Tyre
+
+#define RVA_Tyre_step 2635776
+void Tyre_step(Tyre* pThis, float dt);

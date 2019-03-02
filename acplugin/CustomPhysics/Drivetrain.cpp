@@ -285,7 +285,9 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		{
 			double fComputed = pThis->rootVelocity / pThis->ratio;
 			if (fabs(pThis->drive.velocity - fComputed) > 0.5)
-				printf("EPIC FAIL: driveVelocity=%f computed=%f\n", pThis->drive.velocity, fComputed);
+			{
+				log_printf(L"ERR: Drivetrain_step: driveVelocity=%f computed=%f", pThis->drive.velocity, fComputed);
+			}
 		}
 
 		pThis->tyreLeft->status.angularVelocity = (float)pThis->outShaftL.velocity;
