@@ -14,7 +14,7 @@ void Tyre_step(Tyre* pThis, float dt)
 	pThis->totalHubVelocity = 0.0f;
 	pThis->surfaceDef = nullptr;
 
-	auto hubM = pThis->hub->getHubWorldMatrix();
+	mat44f hubM = pThis->hub->getHubWorldMatrix();
 	pThis->worldRotation = hubM;
 
 	pThis->worldPosition.x = pThis->worldRotation.M41;
@@ -62,7 +62,7 @@ void Tyre_step(Tyre* pThis, float dt)
 
 		if (pThis->rayCaster)
 		{
-			auto hit = pThis->rayCaster->rayCast(rayPos, rayDir);
+			RayCastHit hit = pThis->rayCaster->rayCast(rayPos, rayDir);
 			bHasContact = hit.hasContact;
 
 			if (bHasContact)
@@ -116,7 +116,7 @@ void Tyre_step(Tyre* pThis, float dt)
 		axis.z = (pThis->worldRotation.M22 * hitNorm.x) - (pThis->worldRotation.M21 * hitNorm.y);
 		axis = vnorm(axis);
 
-		auto mat = mat44f::createFromAxisAngle(axis, fAngle);
+		mat44f mat = mat44f::createFromAxisAngle(axis, fAngle);
 
 		float nx = (((mat.M11 * hitNorm.x) + (mat.M21 * hitNorm.y)) + (mat.M31 * hitNorm.z)) + mat.M41;
 		float ny = (((mat.M12 * hitNorm.x) + (mat.M22 * hitNorm.y)) + (mat.M32 * hitNorm.z)) + mat.M42;
@@ -251,4 +251,69 @@ LB_COMPUTE_TORQ:
 	{
 		pThis->onStepCompleted();
 	}
+}
+
+void Tyre_addGroundContact(Tyre* pThis, vec3f& pos, vec3f& normal)
+{
+	vec3f offset = vsub(pThis->worldPosition, pos);
+	float fDistToGround = vlen(offset);
+	pThis->status.distToGround = fDistToGround;
+
+	float fRadius;
+	if (pThis->data.radiusRaiseK == 0.0f)
+		fRadius = pThis->data.radius;
+	else
+		fRadius = (fabsf(pThis->status.angularVelocity) * pThis->data.radiusRaiseK) + pThis->data.radius;
+
+	if (pThis->status.inflation < 1.0f)
+		fRadius = ((fRadius - pThis->data.rimRadius) * pThis->status.inflation) + pThis->data.rimRadius;
+
+	pThis->status.liveRadius = fRadius;
+	pThis->status.effectiveRadius = fRadius;
+
+	if (fDistToGround > fRadius)
+	{
+		pThis->status.loadedRadius = fRadius;
+		pThis->status.depth = 0;
+		pThis->status.load = 0;
+		pThis->status.Fy = 0.0;
+		pThis->status.Fx = 0;
+		pThis->status.Mz = 0;
+		pThis->rSlidingVelocityX = 0;
+		pThis->rSlidingVelocityY = 0;
+		pThis->status.ndSlip = 0;
+	}
+	else
+	{
+		float fDepth = fRadius - fDistToGround;
+		float fLoadedRadius = fRadius - fDepth;
+
+		pThis->status.depth = fDepth;
+		pThis->status.loadedRadius = fLoadedRadius;
+
+		float fMaybePressure;
+		if (fLoadedRadius <= pThis->data.rimRadius)
+		{
+			fMaybePressure = 200000.0f;
+		}
+		else
+		{
+			fMaybePressure = ((pThis->status.pressureDynamic - pThis->modelData.pressureRef) * pThis->modelData.pressureSpringGain) + pThis->data.k;
+			if (fMaybePressure < 0.0f)
+				fMaybePressure = 0.0f;
+		}
+
+		vec3f hubVel = pThis->hub->getPointVelocity(pos);
+		float fLoad = -(vdot(hubVel, normal) * pThis->data.d) + (fDepth * fMaybePressure);
+		pThis->status.load = fLoad;
+
+		vec3f force = vmul(normal, fLoad);
+		pThis->hub->addForceAtPos(force, pos, pThis->driven, false);
+
+		if (pThis->status.load < 0.0f)
+			pThis->status.load = 0.0f;
+	}
+
+	if (pThis->externalInputs.isActive)
+		pThis->status.load = pThis->externalInputs.load;
 }

@@ -39,3 +39,6 @@ float Damper_getForce(Damper* pThis, float fSpeed);
 
 #define RVA_Tyre_step 2635776
 void Tyre_step(Tyre* pThis, float dt);
+
+#define RVA_Tyre_addGroundContact 2611584
+void Tyre_addGroundContact(Tyre* pThis, vec3f& pos, vec3f& normal);
