@@ -104,4 +104,7 @@
     </ClInclude>
     <ClInclude Include="utils\hook.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="CustomPhysics\Tyre.inl" />
+  </ItemGroup>
 </Project>

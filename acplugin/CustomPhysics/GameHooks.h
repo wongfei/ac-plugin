@@ -42,3 +42,6 @@ void Tyre_step(Tyre* pThis, float dt);
 
 #define RVA_Tyre_addGroundContact 2611584
 void Tyre_addGroundContact(Tyre* pThis, vec3f& pos, vec3f& normal);
+
+#define RVA_Tyre_addTyreForcesV10 2616672
+void Tyre_addTyreForcesV10(Tyre* pThis, vec3f& pos, vec3f& normal, SurfaceDef* pSurface, float dt);
