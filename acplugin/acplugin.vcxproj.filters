@@ -30,9 +30,6 @@
     <ClCompile Include="utils\vthook.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="plugin\log.cpp">
-      <Filter>plugin</Filter>
-    </ClCompile>
     <ClCompile Include="plugin\plugin.cpp">
       <Filter>plugin</Filter>
     </ClCompile>
@@ -54,10 +51,27 @@
     <ClCompile Include="CustomPhysics\Suspension.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\Tyre.cpp" />
-    <ClCompile Include="CustomPhysics\Damper.cpp" />
-    <ClCompile Include="CustomPhysics\Turbo.cpp" />
-    <ClCompile Include="utils\hook.cpp" />
+    <ClCompile Include="utils\log.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Turbo.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Tyre.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\hook.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\mempatch.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Damper.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\os.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
@@ -102,9 +116,22 @@
     <ClInclude Include="precompiled.h">
       <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="utils\hook.h" />
+    <ClInclude Include="utils\log.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\hook.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\mempatch.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\os.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CustomPhysics\Tyre.inl" />
+    <None Include="CustomPhysics\Tyre.inl">
+      <Filter>CustomPhysics</Filter>
+    </None>
   </ItemGroup>
 </Project>

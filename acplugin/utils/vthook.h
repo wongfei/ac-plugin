@@ -1,3 +1,3 @@
 #pragma once
 
-void* vtablehook_hook(void* instance, void* hook, size_t offset);
+void* vthook_set(const wchar_t* className, size_t vfid, void* pInstance, void* pHook);

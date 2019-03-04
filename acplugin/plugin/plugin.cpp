@@ -1,6 +1,11 @@
 #include "precompiled.h"
+#include "plugin.h"
+
 #include "CheaterDetector/AppCheaterDetector.h"
 #include "CustomPhysics/AppCustomPhysics.h"
+
+#define AC_PLUGIN_NAME L"hello_plugin"
+#define AC_LOG_NAME AC_PLUGIN_NAME L".log"
 
 void* _ac_module = nullptr;
 static ACPlugin* s_plugin = nullptr;
@@ -22,7 +27,7 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	_ac_module = ::GetModuleHandleA(nullptr);
 	s_plugin = plugin;
 
-	log_reset();
+	log_init(AC_LOG_NAME);
 	log_printf(L"acpInit module=%p plugin=%p", _ac_module, plugin);
 
 	#if defined(AC_DEBUG)
@@ -49,6 +54,7 @@ AC_EXPORT bool AC_API acpShutdown()
 	hook_shut();
 
 	log_printf(L"acpShutdown DONE");
+	log_release();
 	return true;
 }
 

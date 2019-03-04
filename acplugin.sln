@@ -10,20 +10,37 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acplugin", "acplugin\acplug
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "minhook", "minhook\minhook.vcxproj", "{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dinput8", "dinput8\dinput8.vcxproj", "{F716DB57-F46C-4C9B-A0AF-037653A981ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D} = {939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Debug|x64.ActiveCfg = Debug|x64
 		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Debug|x64.Build.0 = Debug|x64
+		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Debug|x86.ActiveCfg = Debug|x64
 		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Release|x64.ActiveCfg = Release|x64
 		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Release|x64.Build.0 = Release|x64
+		{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}.Release|x86.ActiveCfg = Release|x64
 		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Debug|x64.ActiveCfg = Debug|x64
 		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Debug|x64.Build.0 = Debug|x64
+		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Debug|x86.ActiveCfg = Debug|x64
 		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Release|x64.ActiveCfg = Release|x64
 		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Release|x64.Build.0 = Release|x64
+		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}.Release|x86.ActiveCfg = Release|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Debug|x64.ActiveCfg = Debug|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Debug|x64.Build.0 = Debug|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Debug|x86.ActiveCfg = Debug|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Release|x64.ActiveCfg = Release|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Release|x64.Build.0 = Release|x64
+		{F716DB57-F46C-4C9B-A0AF-037653A981ED}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

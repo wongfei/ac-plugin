@@ -1,31 +1,34 @@
 #include "precompiled.h"
-#include "plugin/plugin.h"
 #include "vthook.h"
+#include "log.h"
 
-void* vtablehook_hook(void* instance, void* hook, size_t offset)
+void* vthook_set(const wchar_t* className, size_t vfid, void* pInstance, void* pHook)
 {
-	intptr_t vtable = *((intptr_t*)instance);
-	intptr_t entry = vtable + sizeof(intptr_t) * offset;
+	log_printf(L"vthook_set className=%s vfid=%u pInstance=%p pHook=%p", className, (unsigned int)vfid, pInstance, pHook);
+
+	intptr_t pVTable = *((intptr_t*)pInstance);
+	intptr_t pEntry = pVTable + sizeof(intptr_t) * vfid;
 
 	MEMORY_BASIC_INFORMATION mbi;
-	::ZeroMemory(&mbi, sizeof(mbi));
+	ZeroMemory(&mbi, sizeof(mbi));
 
-	SIZE_T size = ::VirtualQuery((LPCVOID)entry, &mbi, sizeof(mbi));
-	if (!size) {
-		log_printf(L"VirtualQuery failed: err=0x%X entry=%p", (unsigned int)GetLastError(), (void*)entry);
+	if (!VirtualQuery((LPCVOID)pEntry, &mbi, sizeof(mbi)))
+	{
+		log_printf(L"VirtualQuery failed: err=0x%X", (unsigned int)GetLastError());
 		return nullptr;
 	}
 
-	DWORD dwOrigProtect = 0;
-	if (FALSE == ::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &dwOrigProtect)) {
-		log_printf(L"VirtualProtect failed: err=0x%X entry=%p", (unsigned int)GetLastError(), (void*)entry);
+	DWORD OrigProtect = 0;
+	if (!VirtualProtect(mbi.BaseAddress, mbi.RegionSize, PAGE_READWRITE, &OrigProtect))
+	{
+		log_printf(L"VirtualProtect failed: err=0x%X", (unsigned int)GetLastError());
 		return nullptr;
 	}
 
-	intptr_t original = *((intptr_t*)entry);
-	*((intptr_t*)entry) = (intptr_t)hook;
+	intptr_t pOriginal = *((intptr_t*)pEntry);
+	*((intptr_t*)pEntry) = (intptr_t)pHook;
 
-	::VirtualProtect(mbi.BaseAddress, mbi.RegionSize, dwOrigProtect, &mbi.Protect);
+	VirtualProtect(mbi.BaseAddress, mbi.RegionSize, OrigProtect, &mbi.Protect);
 
-	return (void*)original;
+	return (void*)pOriginal;
 }

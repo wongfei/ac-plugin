@@ -19,7 +19,7 @@ struct guard_##_class##_##_method {\
 		auto pthis = UDT_GET_PTHIS(_hook_class, _base_class, this);\
 		return pthis->##_method##_arg_names;\
 	}\
-	inline void hook_##_method(_base_class* pbase) { vtablehook_hook(pbase, method_ptr(&_hook_class::thunk_##_method), _vfid); }
+	inline void hook_##_method(_base_class* pbase) { vthook_set(UT_WSTRING(_base_class), _vfid, pbase, method_ptr(&_hook_class::thunk_##_method)); }
 
 inline void* mem_off(void* mem, size_t off) {
 	return (void*)(((uint8_t*)mem) + off);

@@ -1,20 +1,28 @@
 #include "precompiled.h"
-#include "plugin.h"
+#include "log.h"
 
 #if (AC_LOG_ENABLED)
 
-void log_reset()
+static wchar_t LogName[MAX_PATH] = {0};
+
+void log_init(const wchar_t* filename)
 {
-	FILE* fd = NULL;
-	_wfopen_s(&fd, AC_LOG_NAME, L"wt");
-	if (fd)
+	wcsncpy_s(LogName, filename, MAX_PATH - 1);
+	if (LogName[0])
 	{
-		fclose(fd);
+		FILE* fd = NULL;
+		_wfopen_s(&fd, LogName, L"wt");
+		if (fd)
+		{
+			fclose(fd);
+		}
 	}
 }
 
 void log_printf(const wchar_t* format, ...)
 {
+	if (!LogName[0]) return;
+
 	const size_t BufLen = 1024;
 	wchar_t buf[BufLen];
 
@@ -25,7 +33,7 @@ void log_printf(const wchar_t* format, ...)
 	buf[count] = 0;
 
 	FILE* fd = NULL;
-	_wfopen_s(&fd, AC_LOG_NAME, L"at");
+	_wfopen_s(&fd, LogName, L"at");
 	if (fd)
 	{
 		fwprintf(fd, L"%s\n", buf);
@@ -33,4 +41,9 @@ void log_printf(const wchar_t* format, ...)
 	}
 }
 
-#endif // AC_LOG_ENABLED
+void log_release()
+{
+	LogName[0] = 0;
+}
+
+#endif

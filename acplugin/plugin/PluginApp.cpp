@@ -1,5 +1,6 @@
 #include "precompiled.h"
 #include "PluginApp.h"
+#include "utils/os.h"
 
 PluginApp::PluginApp(ACPlugin* plugin, const std::wstring& appName)
 {
@@ -67,8 +68,8 @@ void PluginApp::loadFormConfig()
 	std::wstring section, key;
 
 	section.assign(L"form_config");
-	if (ini->hasSection(section)) {
-
+	if (ini->hasSection(section))
+	{
 		key.assign(L"POSX");
 		float px = ini->getFloat(section, key);
 		key.assign(L"POSY");
@@ -111,13 +112,14 @@ void PluginApp::addTimer(float rate, TimerCallback callback)
 
 void PluginApp::updateTimers(float deltaT)
 {
-	for (auto& tm : _timers) {
-
+	for (auto& tm : _timers)
+	{
 		tm.accum += deltaT;
-		if (tm.accum >= tm.rate) {
+		if (tm.accum >= tm.rate)
+		{
 			tm.accum -= tm.rate;
-
-			if (tm.accum >= tm.rate) {
+			if (tm.accum >= tm.rate)
+			{
 				tm.accum = 0;
 			}
 
@@ -133,18 +135,19 @@ void PluginApp::writeConsole(const std::wstring& text, bool writeToLog)
 	std::wstring nl(L"\n");
 	_sim->console->operator<<(&nl);
 
-	if (writeToLog) {
+	if (writeToLog)
+	{
 		log_printf(L"%s", text.c_str());
 	}
 }
 
 std::wstring PluginApp::getAppConfigPath()
 {
-	auto path = getDocumentsPath();
+	auto path = osGetDocumentsPath();
 	path.append(L"\\");
 	path.append(_game->gui->applicationName);
 	path.append(L"\\cfg\\apps\\");
-	ensureDirExists(path);
+	osEnsureDirExists(path);
 	path.append(_appName);
 	path.append(L".ini");
 	return path;

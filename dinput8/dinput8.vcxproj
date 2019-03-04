@@ -11,24 +11,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}</ProjectGuid>
+    <ProjectGuid>{F716DB57-F46C-4C9B-A0AF-037653A981ED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>acplugin</RootNamespace>
+    <RootNamespace>dinput8</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>acplugin</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -36,96 +35,67 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ac_debug.props" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\ac_release.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\ac_debug.props" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../acplugin/;</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+      <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>dinput8.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>minhook.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../acplugin/;</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>minhook.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
-      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
-      <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>dinput8.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
       <AdditionalDependencies>minhook.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp" />
-    <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />
-    <ClCompile Include="CustomPhysics\Damper.cpp" />
-    <ClCompile Include="CustomPhysics\Drivetrain.cpp" />
-    <ClCompile Include="CustomPhysics\Suspension.cpp" />
-    <ClCompile Include="CustomPhysics\Turbo.cpp" />
-    <ClCompile Include="CustomPhysics\Tyre.cpp" />
-    <ClCompile Include="utils\hook.cpp" />
-    <ClCompile Include="plugin\plugin.cpp" />
-    <ClCompile Include="utils\log.cpp" />
-    <ClCompile Include="plugin\PluginApp.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="precompiled.cpp">
+    <ClCompile Include="..\acplugin\precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="utils\common.cpp" />
-    <ClCompile Include="utils\mempatch.cpp" />
-    <ClCompile Include="utils\os.cpp" />
-    <ClCompile Include="utils\vthook.cpp" />
+    <ClCompile Include="..\acplugin\utils\hook.cpp" />
+    <ClCompile Include="..\acplugin\utils\log.cpp" />
+    <ClCompile Include="..\acplugin\utils\mempatch.cpp" />
+    <ClCompile Include="..\acplugin\utils\os.cpp" />
+    <ClCompile Include="dinput8.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CustomPhysics\Engine.cpp">
-      <FileType>CppHeader</FileType>
-    </ClCompile>
-    <ClInclude Include="CustomPhysics\AppCustomPhysics.h" />
-    <ClInclude Include="CustomPhysics\GameHooks.h" />
-    <ClInclude Include="CheaterDetector\DriverPerf.h" />
-    <ClInclude Include="CheaterDetector\DriverState.h" />
-    <ClInclude Include="CheaterDetector\AppCheaterDetector.h" />
-    <ClInclude Include="CheaterDetector\GridView.h" />
-    <ClInclude Include="utils\hook.h" />
-    <ClInclude Include="precompiled.h" />
-    <ClInclude Include="utils\log.h" />
-    <ClInclude Include="utils\mempatch.h" />
-    <ClInclude Include="utils\os.h" />
-    <ClInclude Include="utils\udt.h" />
-    <ClInclude Include="utils\common.h" />
-    <ClInclude Include="plugin\plugin.h" />
-    <ClInclude Include="AC\ac_gen.h" />
-    <ClInclude Include="AC\ac_sdk.h" />
-    <ClInclude Include="plugin\PluginApp.h" />
-    <ClInclude Include="utils\vthook.h" />
+    <None Include="dinput8.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CustomPhysics\Tyre.inl" />
+    <ClInclude Include="..\acplugin\precompiled.h" />
+    <ClInclude Include="..\acplugin\utils\hook.h" />
+    <ClInclude Include="..\acplugin\utils\log.h" />
+    <ClInclude Include="..\acplugin\utils\mempatch.h" />
+    <ClInclude Include="..\acplugin\utils\os.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "plugin/plugin.h"
+#include "utils/log.h"
 #include "utils/common.h"
 
-#define HOOK_FUNC_RVA(func) hook_create(_drva(RVA_##func), &func, nullptr, UT_WSTRING(func))
+#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &func)
 
 // Engine
 

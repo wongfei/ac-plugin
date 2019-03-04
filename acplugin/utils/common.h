@@ -26,7 +26,3 @@ inline void remove_elem(std::vector<T>& vec, E elem) {
 }
 
 std::wstring strf(const wchar_t* format, ...);
-std::wstring getDocumentsPath();
-bool fileExists(LPCWSTR Path);
-bool dirExists(LPCWSTR Path);
-void ensureDirExists(const std::wstring& path);
