@@ -21,6 +21,9 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
 	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
 
+	HOOK_FUNC_RVA(Car_step);
+	HOOK_FUNC_RVA(Car_stepComponents);
+
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
 

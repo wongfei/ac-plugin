@@ -72,6 +72,9 @@
     <ClCompile Include="utils\os.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="CustomPhysics\Car.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">

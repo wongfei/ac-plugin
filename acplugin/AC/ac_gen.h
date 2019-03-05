@@ -416,10 +416,10 @@ struct SVar;
 class ESCMenu;
 struct HWND__;
 struct HINSTANCE__;
+class IMaterialOptionChangeListener;
 class ksgui_ListBox;
 struct ksgui_ListBoxRowData;
 class Wing;
-class IMaterialOptionChangeListener;
 class GraphicsManager;
 class ICarControlsProvider;
 class Shader;
@@ -429,20 +429,22 @@ class CBuffer;
 class RaceManager;
 class ShaderVariable;
 class ShaderResource;
-class NetCarStateProvider;
-class Node;
 class ICollisionObject;
+class Node;
+class NetCarStateProvider;
 class IRigidBody;
 struct SurfaceDef;
 struct RayCastResult;
 class IRayCaster;
 class Task;
 class Suspension;
-class AISpline;
-class Track;
+class CarControls;
+struct CarControlsInput;
 class PhysicsCore;
 struct dxTriMeshData;
 struct dxGeom;
+class AISpline;
+class Track;
 struct KGLShaderTexture;
 struct KGLShaderVar;
 class SetupItem;
@@ -458,10 +460,10 @@ class IVarCallback;
 class Renderable;
 class PhysicsEngine;
 class ISphereCollisionCallback;
+class Damper;
 class IRayTrackCollisionProvider;
 class ACClient;
 class PhysicsAvatar;
-class Damper;
 class Material;
 struct CarPhysicsState;
 class MaterialVar;
@@ -469,9 +471,9 @@ class IJoint;
 class ICollisionCallback;
 struct CompileContext;
 struct RenderContext;
-class MaterialResource;
 class ksgui_GUI;
 class GLRenderer;
+class MaterialResource;
 class Turbo;
 class ISuspension;
 class IKeyEventListener;
@@ -653,43 +655,22 @@ public:
 	inline DynamicTrackData& operator=(const DynamicTrackData& other) = default;
 };
 
-struct SplineLocationData {
+struct TyreThermalState {
 public:
-	int currentIndex;
-	inline SplineLocationData() { }
-	inline SplineLocationData(const SplineLocationData& other) = default;
-	inline SplineLocationData& operator=(const SplineLocationData& other) = default;
-};
-
-struct TyreModelInput {
-public:
-	float load;
-	float slipAngleRAD;
-	float slipRatio;
-	float camberRAD;
-	float speed;
-	float u;
-	int tyreIndex;
-	float cpLength;
-	float grain;
-	float blister;
-	float pressureRatio;
-	bool useSimpleModel;
-	inline TyreModelInput() { }
-	inline TyreModelInput(const TyreModelInput& other) = default;
-	inline TyreModelInput& operator=(const TyreModelInput& other) = default;
-};
-
-struct GameStats {
-public:
-	double cpuTime;
-	double updateTime;
-	double renderHUDTime;
-	double renderTime;
-	double renderAudioTime;
-	inline GameStats() { }
-	inline GameStats(const GameStats& other) = default;
-	inline GameStats& operator=(const GameStats& other) = default;
+	float temps[3][12];
+	float coreTemp;
+	float thermalInput;
+	float dynamicPressure;
+	float staticPressure;
+	float lastSetIMO[3];
+	float cpTemperature;
+	float lastGrain;
+	float lastBlister;
+	float mult;
+	bool isHot;
+	inline TyreThermalState() { }
+	inline TyreThermalState(const TyreThermalState& other) = default;
+	inline TyreThermalState& operator=(const TyreThermalState& other) = default;
 };
 
 class CBuffer {
@@ -716,6 +697,26 @@ public:
 	inline void map(void * bdata, int bsize) { typedef void (*_fpt)(CBuffer *pthis, void *, int); _fpt _f=(_fpt)_drva(2202096); return _f(this, bdata, bsize); }
 	inline void init(int islot, int isize) { typedef void (*_fpt)(CBuffer *pthis, int, int); _fpt _f=(_fpt)_drva(2202000); return _f(this, islot, isize); }
 	inline void release() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2202128); return _f(this); }
+};
+
+struct GameStats {
+public:
+	double cpuTime;
+	double updateTime;
+	double renderHUDTime;
+	double renderTime;
+	double renderAudioTime;
+	inline GameStats() { }
+	inline GameStats(const GameStats& other) = default;
+	inline GameStats& operator=(const GameStats& other) = default;
+};
+
+struct HeaveSpringStatus {
+public:
+	float travel;
+	inline HeaveSpringStatus() { }
+	inline HeaveSpringStatus(const HeaveSpringStatus& other) = default;
+	inline HeaveSpringStatus& operator=(const HeaveSpringStatus& other) = default;
 };
 
 struct WingOverrideDef {
@@ -791,22 +792,26 @@ public:
 	inline void ctor(ID3D11Device * device, unsigned int size, unsigned short * data) { typedef void (*_fpt)(KGLIndexBuffer *pthis, ID3D11Device *, unsigned int, unsigned short *); _fpt _f=(_fpt)_drva(147296); _f(this, device, size, data); }
 };
 
-struct TyreThermalState {
+class IJoint {
 public:
-	float temps[3][12];
-	float coreTemp;
-	float thermalInput;
-	float dynamicPressure;
-	float staticPressure;
-	float lastSetIMO[3];
-	float cpTemperature;
-	float lastGrain;
-	float lastBlister;
-	float mult;
-	bool isHot;
-	inline TyreThermalState() { }
-	inline TyreThermalState(const TyreThermalState& other) = default;
-	inline TyreThermalState& operator=(const TyreThermalState& other) = default;
+	inline IJoint() { }
+	inline IJoint(const IJoint& other) = default;
+	inline IJoint& operator=(const IJoint& other) = default;
+	virtual void release_vf0() = 0;
+	inline void release() { return release_vf0(); }
+	virtual void setERPCFM_vf1(float  _arg0, float  _arg1) = 0;
+	inline void setERPCFM(float  _arg0, float  _arg1) { return setERPCFM_vf1( _arg0,  _arg1); }
+	virtual ~IJoint();
+};
+
+struct TyreInputs {
+public:
+	float brakeTorque;
+	float handBrakeTorque;
+	float electricTorque;
+	inline TyreInputs() { }
+	inline TyreInputs(const TyreInputs& other) = default;
+	inline TyreInputs& operator=(const TyreInputs& other) = default;
 };
 
 class KGLVertexBuffer {
@@ -855,53 +860,6 @@ public:
 	inline RenderStats& operator=(const RenderStats& other) = default;
 };
 
-struct TyreInputs {
-public:
-	float brakeTorque;
-	float handBrakeTorque;
-	float electricTorque;
-	inline TyreInputs() { }
-	inline TyreInputs(const TyreInputs& other) = default;
-	inline TyreInputs& operator=(const TyreInputs& other) = default;
-};
-
-struct RendererFlags {
-public:
-	int maxFrameLatency;
-	float mipLodBias;
-	inline RendererFlags() { }
-	inline RendererFlags(const RendererFlags& other) = default;
-	inline RendererFlags& operator=(const RendererFlags& other) = default;
-};
-
-struct WindSettings {
-public:
-	float baseSpeed;
-	float baseDirection;
-	inline WindSettings() { }
-	inline WindSettings(const WindSettings& other) = default;
-	inline WindSettings& operator=(const WindSettings& other) = default;
-};
-
-struct WreckerProtection {
-public:
-	float maxContactsPerKM;
-	int warningCount;
-	int contacts;
-	bool blackListRequested;
-	inline WreckerProtection() { }
-	inline WreckerProtection(const WreckerProtection& other) = default;
-	inline WreckerProtection& operator=(const WreckerProtection& other) = default;
-};
-
-struct OnKeyCharEvent {
-public:
-	unsigned int key;
-	inline OnKeyCharEvent() { }
-	inline OnKeyCharEvent(const OnKeyCharEvent& other) = default;
-	inline OnKeyCharEvent& operator=(const OnKeyCharEvent& other) = default;
-};
-
 struct TyreStatus {
 public:
 	float depth;
@@ -947,6 +905,55 @@ public:
 	inline TyreStatus& operator=(const TyreStatus& other) = default;
 };
 
+struct RendererFlags {
+public:
+	int maxFrameLatency;
+	float mipLodBias;
+	inline RendererFlags() { }
+	inline RendererFlags(const RendererFlags& other) = default;
+	inline RendererFlags& operator=(const RendererFlags& other) = default;
+};
+
+struct WindSettings {
+public:
+	float baseSpeed;
+	float baseDirection;
+	inline WindSettings() { }
+	inline WindSettings(const WindSettings& other) = default;
+	inline WindSettings& operator=(const WindSettings& other) = default;
+};
+
+struct WreckerProtection {
+public:
+	float maxContactsPerKM;
+	int warningCount;
+	int contacts;
+	bool blackListRequested;
+	inline WreckerProtection() { }
+	inline WreckerProtection(const WreckerProtection& other) = default;
+	inline WreckerProtection& operator=(const WreckerProtection& other) = default;
+};
+
+struct OnKeyCharEvent {
+public:
+	unsigned int key;
+	inline OnKeyCharEvent() { }
+	inline OnKeyCharEvent(const OnKeyCharEvent& other) = default;
+	inline OnKeyCharEvent& operator=(const OnKeyCharEvent& other) = default;
+};
+
+struct TyrePatchData {
+public:
+	float surfaceTransfer;
+	float patchTransfer;
+	float patchCoreTransfer;
+	float internalCoreTransfer;
+	float coolFactorGain;
+	inline TyrePatchData() { }
+	inline TyrePatchData(const TyrePatchData& other) = default;
+	inline TyrePatchData& operator=(const TyrePatchData& other) = default;
+};
+
 struct DamageReportDef {
 public:
 	double lastSendTime;
@@ -975,16 +982,29 @@ public:
 	inline void dtor() { typedef void (*_fpt)(ICollisionObject *pthis); _fpt _f=(_fpt)_drva(2939088); _f(this); }
 };
 
-struct TyrePatchData {
+struct TyreData {
 public:
-	float surfaceTransfer;
-	float patchTransfer;
-	float patchCoreTransfer;
-	float internalCoreTransfer;
-	float coolFactorGain;
-	inline TyrePatchData() { }
-	inline TyrePatchData(const TyrePatchData& other) = default;
-	inline TyrePatchData& operator=(const TyrePatchData& other) = default;
+	float width;
+	float radius;
+	float k;
+	float d;
+	float angularInertia;
+	float thermalFrictionK;
+	float thermalRollingK;
+	float thermalRollingSurfaceK;
+	float grainThreshold;
+	float blisterThreshold;
+	float grainGamma;
+	float blisterGamma;
+	float grainGain;
+	float blisterGain;
+	float rimRadius;
+	float optimumTemp;
+	float softnessIndex;
+	float radiusRaiseK;
+	inline TyreData() { }
+	inline TyreData(const TyreData& other) = default;
+	inline TyreData& operator=(const TyreData& other) = default;
 };
 
 struct AIStraightData {
@@ -1066,29 +1086,13 @@ public:
 	inline CoreCPUTimes& operator=(const CoreCPUTimes& other) = default;
 };
 
-struct TyreData {
+struct BrushOutput {
 public:
-	float width;
-	float radius;
-	float k;
-	float d;
-	float angularInertia;
-	float thermalFrictionK;
-	float thermalRollingK;
-	float thermalRollingSurfaceK;
-	float grainThreshold;
-	float blisterThreshold;
-	float grainGamma;
-	float blisterGamma;
-	float grainGain;
-	float blisterGain;
-	float rimRadius;
-	float optimumTemp;
-	float softnessIndex;
-	float radiusRaiseK;
-	inline TyreData() { }
-	inline TyreData(const TyreData& other) = default;
-	inline TyreData& operator=(const TyreData& other) = default;
+	float force;
+	float slip;
+	inline BrushOutput() { }
+	inline BrushOutput(const BrushOutput& other) = default;
+	inline BrushOutput& operator=(const BrushOutput& other) = default;
 };
 
 struct DRSWingSetting {
@@ -1158,15 +1162,6 @@ public:
 	inline ERSStatus& operator=(const ERSStatus& other) = default;
 };
 
-struct BrushOutput {
-public:
-	float force;
-	float slip;
-	inline BrushOutput() { }
-	inline BrushOutput(const BrushOutput& other) = default;
-	inline BrushOutput& operator=(const BrushOutput& other) = default;
-};
-
 struct TyreExternalInputs {
 public:
 	bool isActive;
@@ -1176,6 +1171,23 @@ public:
 	inline TyreExternalInputs() { }
 	inline TyreExternalInputs(const TyreExternalInputs& other) = default;
 	inline TyreExternalInputs& operator=(const TyreExternalInputs& other) = default;
+};
+
+class SignalGenerator {
+public:
+	float freqScale;
+	int value;
+	inline SignalGenerator() { }
+	inline SignalGenerator(const SignalGenerator& other) = default;
+	inline SignalGenerator& operator=(const SignalGenerator& other) = default;
+	inline void ctor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282048); _f(this); }
+	virtual ~SignalGenerator();
+	inline void dtor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282080); _f(this); }
+	virtual void step_vf1(float dt);
+	inline void step_impl(float dt) { typedef void (*_fpt)(SignalGenerator *pthis, float); _fpt _f=(_fpt)_drva(2282240); return _f(this, dt); }
+	inline void step(float dt) { return step_vf1(dt); }
+	virtual float getValue_vf2() = 0;
+	inline float getValue() { return getValue_vf2(); }
 };
 
 struct TyreSlipOutput {
@@ -1346,12 +1358,17 @@ public:
 	inline NetCarPushToPass& operator=(const NetCarPushToPass& other) = default;
 };
 
-struct HeaveSpringStatus {
+struct TyreSlipInput {
 public:
-	float travel;
-	inline HeaveSpringStatus() { }
-	inline HeaveSpringStatus(const HeaveSpringStatus& other) = default;
-	inline HeaveSpringStatus& operator=(const HeaveSpringStatus& other) = default;
+	float slip;
+	float friction;
+	float load;
+	float normalizedSlipX;
+	float normalizedSlipY;
+	float D;
+	inline TyreSlipInput() { }
+	inline TyreSlipInput(const TyreSlipInput& other) = default;
+	inline TyreSlipInput& operator=(const TyreSlipInput& other) = default;
 };
 
 struct HDRLevels {
@@ -1429,21 +1446,18 @@ public:
 	inline SurfaceDef& operator=(const SurfaceDef& other) = default;
 };
 
-class SignalGenerator {
+struct TyreModelOutput {
 public:
-	float freqScale;
-	int value;
-	inline SignalGenerator() { }
-	inline SignalGenerator(const SignalGenerator& other) = default;
-	inline SignalGenerator& operator=(const SignalGenerator& other) = default;
-	inline void ctor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282048); _f(this); }
-	virtual ~SignalGenerator();
-	inline void dtor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282080); _f(this); }
-	virtual void step_vf1(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SignalGenerator *pthis, float); _fpt _f=(_fpt)_drva(2282240); return _f(this, dt); }
-	inline void step(float dt) { return step_vf1(dt); }
-	virtual float getValue_vf2() = 0;
-	inline float getValue() { return getValue_vf2(); }
+	float Fy;
+	float Fx;
+	float Mz;
+	float trail;
+	float ndSlip;
+	float Dy;
+	float Dx;
+	inline TyreModelOutput() { }
+	inline TyreModelOutput(const TyreModelOutput& other) = default;
+	inline TyreModelOutput& operator=(const TyreModelOutput& other) = default;
 };
 
 struct NetCarQoS {
@@ -1465,13 +1479,15 @@ public:
 	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
 };
 
-struct SplineIndexBound {
+struct SACEngineInput {
 public:
-	unsigned int minIndex;
-	unsigned int maxIndex;
-	inline SplineIndexBound() { }
-	inline SplineIndexBound(const SplineIndexBound& other) = default;
-	inline SplineIndexBound& operator=(const SplineIndexBound& other) = default;
+	float gasInput;
+	float carSpeed;
+	float altitude;
+	float rpm;
+	inline SACEngineInput() { }
+	inline SACEngineInput(const SACEngineInput& other) = default;
+	inline SACEngineInput& operator=(const SACEngineInput& other) = default;
 };
 
 struct ClientRules {
@@ -1482,28 +1498,29 @@ public:
 	inline ClientRules& operator=(const ClientRules& other) = default;
 };
 
-struct AISplineDanger {
+struct SplineIndexBound {
 public:
-	float startPos;
-	float endPos;
-	float left;
-	float right;
-	inline AISplineDanger() { }
-	inline AISplineDanger(const AISplineDanger& other) = default;
-	inline AISplineDanger& operator=(const AISplineDanger& other) = default;
+	unsigned int minIndex;
+	unsigned int maxIndex;
+	inline SplineIndexBound() { }
+	inline SplineIndexBound(const SplineIndexBound& other) = default;
+	inline SplineIndexBound& operator=(const SplineIndexBound& other) = default;
 };
 
-struct TyreSlipInput {
+class Damper {
 public:
-	float slip;
-	float friction;
-	float load;
-	float normalizedSlipX;
-	float normalizedSlipY;
-	float D;
-	inline TyreSlipInput() { }
-	inline TyreSlipInput(const TyreSlipInput& other) = default;
-	inline TyreSlipInput& operator=(const TyreSlipInput& other) = default;
+	float reboundSlow;
+	float reboundFast;
+	float bumpSlow;
+	float bumpFast;
+	float fastThresholdBump;
+	float fastThresholdRebound;
+	inline Damper() { }
+	inline Damper(const Damper& other) = default;
+	inline Damper& operator=(const Damper& other) = default;
+	inline void ctor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(2830928); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
 };
 
 class CarControls {
@@ -1598,6 +1615,18 @@ public:
 	inline DownshiftProtection& operator=(const DownshiftProtection& other) = default;
 };
 
+struct VibrationDef {
+public:
+	float curbs;
+	float gforce;
+	float slips;
+	float engine;
+	float abs;
+	inline VibrationDef() { }
+	inline VibrationDef(const VibrationDef& other) = default;
+	inline VibrationDef& operator=(const VibrationDef& other) = default;
+};
+
 struct TurboDef {
 public:
 	float maxBoost;
@@ -1620,20 +1649,15 @@ public:
 	inline TrackInfo& operator=(const TrackInfo& other) = default;
 };
 
-class Damper {
+struct AISplineDanger {
 public:
-	float reboundSlow;
-	float reboundFast;
-	float bumpSlow;
-	float bumpFast;
-	float fastThresholdBump;
-	float fastThresholdRebound;
-	inline Damper() { }
-	inline Damper(const Damper& other) = default;
-	inline Damper& operator=(const Damper& other) = default;
-	inline void ctor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(2830928); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
+	float startPos;
+	float endPos;
+	float left;
+	float right;
+	inline AISplineDanger() { }
+	inline AISplineDanger(const AISplineDanger& other) = default;
+	inline AISplineDanger& operator=(const AISplineDanger& other) = default;
 };
 
 struct OnRaceInitEvent {
@@ -1644,29 +1668,32 @@ public:
 	inline OnRaceInitEvent& operator=(const OnRaceInitEvent& other) = default;
 };
 
-struct SACEngineInput {
+struct CoastSettings {
 public:
-	float gasInput;
-	float carSpeed;
-	float altitude;
-	float rpm;
-	inline SACEngineInput() { }
-	inline SACEngineInput(const SACEngineInput& other) = default;
-	inline SACEngineInput& operator=(const SACEngineInput& other) = default;
+	float coast1;
+	float coast2;
+	inline CoastSettings() { }
+	inline CoastSettings(const CoastSettings& other) = default;
+	inline CoastSettings& operator=(const CoastSettings& other) = default;
 };
 
-struct TyreModelOutput {
+struct TyreModelInput {
 public:
-	float Fy;
-	float Fx;
-	float Mz;
-	float trail;
-	float ndSlip;
-	float Dy;
-	float Dx;
-	inline TyreModelOutput() { }
-	inline TyreModelOutput(const TyreModelOutput& other) = default;
-	inline TyreModelOutput& operator=(const TyreModelOutput& other) = default;
+	float load;
+	float slipAngleRAD;
+	float slipRatio;
+	float camberRAD;
+	float speed;
+	float u;
+	int tyreIndex;
+	float cpLength;
+	float grain;
+	float blister;
+	float pressureRatio;
+	bool useSimpleModel;
+	inline TyreModelInput() { }
+	inline TyreModelInput(const TyreModelInput& other) = default;
+	inline TyreModelInput& operator=(const TyreModelInput& other) = default;
 };
 
 struct ACCarState {
@@ -1706,13 +1733,14 @@ public:
 	inline ACCarState& operator=(const ACCarState& other) = default;
 };
 
-struct CoastSettings {
+struct AWD2Data {
 public:
-	float coast1;
-	float coast2;
-	inline CoastSettings() { }
-	inline CoastSettings(const CoastSettings& other) = default;
-	inline CoastSettings& operator=(const CoastSettings& other) = default;
+	double ramp;
+	double maxTorque;
+	float currentLockTorque;
+	inline AWD2Data() { }
+	inline AWD2Data(const AWD2Data& other) = default;
+	inline AWD2Data& operator=(const AWD2Data& other) = default;
 };
 
 struct PitStopTimings {
@@ -1727,16 +1755,6 @@ public:
 	inline PitStopTimings& operator=(const PitStopTimings& other) = default;
 };
 
-struct AWD2Data {
-public:
-	double ramp;
-	double maxTorque;
-	float currentLockTorque;
-	inline AWD2Data() { }
-	inline AWD2Data(const AWD2Data& other) = default;
-	inline AWD2Data& operator=(const AWD2Data& other) = default;
-};
-
 struct PitStopTime {
 public:
 	float total;
@@ -1746,6 +1764,14 @@ public:
 	inline PitStopTime() { }
 	inline PitStopTime(const PitStopTime& other) = default;
 	inline PitStopTime& operator=(const PitStopTime& other) = default;
+};
+
+struct SplineLocationData {
+public:
+	int currentIndex;
+	inline SplineLocationData() { }
+	inline SplineLocationData(const SplineLocationData& other) = default;
+	inline SplineLocationData& operator=(const SplineLocationData& other) = default;
 };
 
 struct PushToPass {
@@ -1951,6 +1977,15 @@ public:
 	inline ksgui_OnSpinnerValueChanged& operator=(const ksgui_OnSpinnerValueChanged& other) = default;
 };
 
+struct OnGearRequestEvent {
+public:
+	GearChangeRequest request;
+	int nextGear;
+	inline OnGearRequestEvent() { }
+	inline OnGearRequestEvent(const OnGearRequestEvent& other) = default;
+	inline OnGearRequestEvent& operator=(const OnGearRequestEvent& other) = default;
+};
+
 struct DisconnectCountdown {
 public:
 	bool isSignaled;
@@ -1960,15 +1995,6 @@ public:
 	inline DisconnectCountdown(const DisconnectCountdown& other) = default;
 	inline DisconnectCountdown& operator=(const DisconnectCountdown& other) = default;
 	inline void dtor() { typedef void (*_fpt)(DisconnectCountdown *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
-};
-
-struct OnGearRequestEvent {
-public:
-	GearChangeRequest request;
-	int nextGear;
-	inline OnGearRequestEvent() { }
-	inline OnGearRequestEvent(const OnGearRequestEvent& other) = default;
-	inline OnGearRequestEvent& operator=(const OnGearRequestEvent& other) = default;
 };
 
 struct OnStepCompleteEvent {
@@ -2244,6 +2270,16 @@ public:
 	inline PenaltyRules& operator=(const PenaltyRules& other) = default;
 };
 
+struct RealTimeCarDesc {
+public:
+	CarAvatar * car;
+	bool crossedForTheFirstTime;
+	float approxPos;
+	inline RealTimeCarDesc() { }
+	inline RealTimeCarDesc(const RealTimeCarDesc& other) = default;
+	inline RealTimeCarDesc& operator=(const RealTimeCarDesc& other) = default;
+};
+
 struct OnLapCompletedEvent {
 public:
 	unsigned int carIndex;
@@ -2277,16 +2313,6 @@ public:
 	inline PenaltyRecord() { }
 	inline PenaltyRecord(const PenaltyRecord& other) = default;
 	inline PenaltyRecord& operator=(const PenaltyRecord& other) = default;
-};
-
-struct RealTimeCarDesc {
-public:
-	CarAvatar * car;
-	bool crossedForTheFirstTime;
-	float approxPos;
-	inline RealTimeCarDesc() { }
-	inline RealTimeCarDesc(const RealTimeCarDesc& other) = default;
-	inline RealTimeCarDesc& operator=(const RealTimeCarDesc& other) = default;
 };
 
 struct MultiplayerStatus {
@@ -2546,24 +2572,14 @@ public:
 	inline void dtor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
 };
 
-struct INISection {
+struct MaterialOption {
 public:
-	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > > keys;
-	inline INISection() { }
-	inline INISection(const INISection& other) = default;
-	inline INISection& operator=(const INISection& other) = default;
-	inline bool hasKey(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & k) { typedef bool (*_fpt)(INISection *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322496); return _f(this, k); }
-	inline void dtor() { typedef void (*_fpt)(INISection *pthis); _fpt _f=(_fpt)_drva(4512704); _f(this); }
-};
-
-struct ksgui_OnListBoxItemClickedEvent {
-public:
-	ksgui_ListBox * listBox;
-	ksgui_ListBoxRowData * row;
-	unsigned int itemIndex;
-	inline ksgui_OnListBoxItemClickedEvent() { }
-	inline ksgui_OnListBoxItemClickedEvent(const ksgui_OnListBoxItemClickedEvent& other) = default;
-	inline ksgui_OnListBoxItemClickedEvent& operator=(const ksgui_OnListBoxItemClickedEvent& other) = default;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	IMaterialOptionChangeListener * material;
+	bool value;
+	inline MaterialOption() { }
+	inline MaterialOption(const MaterialOption& other) = default;
+	inline MaterialOption& operator=(const MaterialOption& other) = default;
 };
 
 class SetupItem {
@@ -2583,6 +2599,16 @@ public:
 	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (*_fpt)(SetupItem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); _fpt _f=(_fpt)_drva(2929008); _f(this, aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
 	virtual ~SetupItem();
 	inline void dtor() { typedef void (*_fpt)(SetupItem *pthis); _fpt _f=(_fpt)_drva(2929312); _f(this); }
+};
+
+struct ksgui_OnListBoxItemClickedEvent {
+public:
+	ksgui_ListBox * listBox;
+	ksgui_ListBoxRowData * row;
+	unsigned int itemIndex;
+	inline ksgui_OnListBoxItemClickedEvent() { }
+	inline ksgui_OnListBoxItemClickedEvent(const ksgui_OnListBoxItemClickedEvent& other) = default;
+	inline ksgui_OnListBoxItemClickedEvent& operator=(const ksgui_OnListBoxItemClickedEvent& other) = default;
 };
 
 struct DRSWingConnection {
@@ -2651,14 +2677,21 @@ public:
 	inline void dtor() { typedef void (*_fpt)(TelemetryChannelData *pthis); _fpt _f=(_fpt)_drva(811392); _f(this); }
 };
 
-struct MaterialOption {
+class RenderTarget {
 public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	IMaterialOptionChangeListener * material;
-	bool value;
-	inline MaterialOption() { }
-	inline MaterialOption(const MaterialOption& other) = default;
-	inline MaterialOption& operator=(const MaterialOption& other) = default;
+	eRenderTargetFormat format;
+	int width;
+	int height;
+	bool hasNullDepth;
+	void * kidColor;
+	void * kidDepth;
+	inline RenderTarget() { }
+	inline RenderTarget(const RenderTarget& other) = default;
+	inline RenderTarget& operator=(const RenderTarget& other) = default;
+	inline void ctor(GraphicsManager * graphics, eRenderTargetFormat fmt, unsigned int iwidth, unsigned int iheight, bool hasColor, bool hasDepth, int mips) { typedef void (*_fpt)(RenderTarget *pthis, GraphicsManager *, eRenderTargetFormat, unsigned int, unsigned int, bool, bool, int); _fpt _f=(_fpt)_drva(2211888); _f(this, graphics, fmt, iwidth, iheight, hasColor, hasDepth, mips); }
+	virtual ~RenderTarget();
+	inline void dtor() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212176); _f(this); }
+	inline void clear() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212336); return _f(this); }
 };
 
 class Session {
@@ -2683,23 +2716,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
 };
 
-class RenderTarget {
-public:
-	eRenderTargetFormat format;
-	int width;
-	int height;
-	bool hasNullDepth;
-	void * kidColor;
-	void * kidDepth;
-	inline RenderTarget() { }
-	inline RenderTarget(const RenderTarget& other) = default;
-	inline RenderTarget& operator=(const RenderTarget& other) = default;
-	inline void ctor(GraphicsManager * graphics, eRenderTargetFormat fmt, unsigned int iwidth, unsigned int iheight, bool hasColor, bool hasDepth, int mips) { typedef void (*_fpt)(RenderTarget *pthis, GraphicsManager *, eRenderTargetFormat, unsigned int, unsigned int, bool, bool, int); _fpt _f=(_fpt)_drva(2211888); _f(this, graphics, fmt, iwidth, iheight, hasColor, hasDepth, mips); }
-	virtual ~RenderTarget();
-	inline void dtor() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212176); _f(this); }
-	inline void clear() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212336); return _f(this); }
-};
-
 struct OnControlsProviderChanged {
 public:
 	Car * car;
@@ -2707,6 +2723,16 @@ public:
 	inline OnControlsProviderChanged() { }
 	inline OnControlsProviderChanged(const OnControlsProviderChanged& other) = default;
 	inline OnControlsProviderChanged& operator=(const OnControlsProviderChanged& other) = default;
+};
+
+struct INISection {
+public:
+	std::map<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::less<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > >,std::allocator<std::pair<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > const ,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > > keys;
+	inline INISection() { }
+	inline INISection(const INISection& other) = default;
+	inline INISection& operator=(const INISection& other) = default;
+	inline bool hasKey(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & k) { typedef bool (*_fpt)(INISection *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322496); return _f(this, k); }
+	inline void dtor() { typedef void (*_fpt)(INISection *pthis); _fpt _f=(_fpt)_drva(4512704); _f(this); }
 };
 
 struct OnFlagEvent {
@@ -2905,23 +2931,6 @@ public:
 	inline void addHeadSource(float heat) { typedef void (*_fpt)(ThermalObject *pthis, float); _fpt _f=(_fpt)_drva(2830064); return _f(this, heat); }
 };
 
-class Turbo {
-public:
-	float userSetting;
-	float rotation;
-	TurboDef data;
-	inline Turbo() { }
-	inline Turbo(const Turbo& other) = default;
-	inline Turbo& operator=(const Turbo& other) = default;
-	inline void ctor(TurboDef & data) { typedef void (*_fpt)(Turbo *pthis, TurboDef &); _fpt _f=(_fpt)_drva(2811696); _f(this, data); }
-	inline void dtor() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void step(float gas, float rpms, float dt) { typedef void (*_fpt)(Turbo *pthis, float, float, float); _fpt _f=(_fpt)_drva(2811840); return _f(this, gas, rpms, dt); }
-	inline float getBoost() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811776); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811792); return _f(this); }
-	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Turbo *pthis, float); _fpt _f=(_fpt)_drva(2811808); return _f(this, value); }
-	inline float getWastegate() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2645504); return _f(this); }
-};
-
 class SinSignalGenerator : public SignalGenerator {
 public:
 	inline SinSignalGenerator() { }
@@ -2955,6 +2964,23 @@ public:
 	inline AIState& operator=(const AIState& other) = default;
 };
 
+class Turbo {
+public:
+	float userSetting;
+	float rotation;
+	TurboDef data;
+	inline Turbo() { }
+	inline Turbo(const Turbo& other) = default;
+	inline Turbo& operator=(const Turbo& other) = default;
+	inline void ctor(TurboDef & data) { typedef void (*_fpt)(Turbo *pthis, TurboDef &); _fpt _f=(_fpt)_drva(2811696); _f(this, data); }
+	inline void dtor() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void step(float gas, float rpms, float dt) { typedef void (*_fpt)(Turbo *pthis, float, float, float); _fpt _f=(_fpt)_drva(2811840); return _f(this, gas, rpms, dt); }
+	inline float getBoost() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811776); return _f(this); }
+	inline void reset() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811792); return _f(this); }
+	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Turbo *pthis, float); _fpt _f=(_fpt)_drva(2811808); return _f(this, value); }
+	inline float getWastegate() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2645504); return _f(this); }
+};
+
 struct CarCollisionBounds {
 public:
 	vec3f min;
@@ -2966,27 +2992,6 @@ public:
 	inline CarCollisionBounds() { }
 	inline CarCollisionBounds(const CarCollisionBounds& other) = default;
 	inline CarCollisionBounds& operator=(const CarCollisionBounds& other) = default;
-};
-
-class Joypad {
-public:
-	inline Joypad() { }
-	inline Joypad(const Joypad& other) = default;
-	inline Joypad& operator=(const Joypad& other) = default;
-	virtual void acquire_vf0() = 0;
-	inline void acquire() { return acquire_vf0(); }
-	virtual vec2f getLeftStick_vf1() = 0;
-	inline vec2f getLeftStick() { return getLeftStick_vf1(); }
-	virtual vec2f getRightStick_vf2() = 0;
-	inline vec2f getRightStick() { return getRightStick_vf2(); }
-	virtual float getLeftTrigger_vf3() = 0;
-	inline float getLeftTrigger() { return getLeftTrigger_vf3(); }
-	virtual float getRightTrigger_vf4() = 0;
-	inline float getRightTrigger() { return getRightTrigger_vf4(); }
-	virtual unsigned int getButtonMask_vf5() = 0;
-	inline unsigned int getButtonMask() { return getButtonMask_vf5(); }
-	virtual void setVibrations_vf6(float  _arg0, float  _arg1) = 0;
-	inline void setVibrations(float  _arg0, float  _arg1) { return setVibrations_vf6( _arg0,  _arg1); }
 };
 
 struct CarCollisionBox {
@@ -3132,6 +3137,27 @@ public:
 	inline void ctor(vec3f & acolor, float arefValue, bool bisVertical) { typedef void (*_fpt)(ksgui_GraphReferenceAxis *pthis, vec3f &, float, bool); _fpt _f=(_fpt)_drva(2987152); _f(this, acolor, arefValue, bisVertical); }
 };
 
+class Joypad {
+public:
+	inline Joypad() { }
+	inline Joypad(const Joypad& other) = default;
+	inline Joypad& operator=(const Joypad& other) = default;
+	virtual void acquire_vf0() = 0;
+	inline void acquire() { return acquire_vf0(); }
+	virtual vec2f getLeftStick_vf1() = 0;
+	inline vec2f getLeftStick() { return getLeftStick_vf1(); }
+	virtual vec2f getRightStick_vf2() = 0;
+	inline vec2f getRightStick() { return getRightStick_vf2(); }
+	virtual float getLeftTrigger_vf3() = 0;
+	inline float getLeftTrigger() { return getLeftTrigger_vf3(); }
+	virtual float getRightTrigger_vf4() = 0;
+	inline float getRightTrigger() { return getRightTrigger_vf4(); }
+	virtual unsigned int getButtonMask_vf5() = 0;
+	inline unsigned int getButtonMask() { return getButtonMask_vf5(); }
+	virtual void setVibrations_vf6(float  _arg0, float  _arg1) = 0;
+	inline void setVibrations(float  _arg0, float  _arg1) { return setVibrations_vf6( _arg0,  _arg1); }
+};
+
 struct SystemCBuffers {
 public:
 	CBuffer cbCamera;
@@ -3238,15 +3264,26 @@ public:
 	inline CollisionEvent& operator=(const CollisionEvent& other) = default;
 };
 
-struct ClientCollisionEvent {
+class ITyreModel {
 public:
-	NetCarStateProvider * netCar;
-	float speed;
-	vec3f worldPos;
-	vec3f relPos;
-	inline ClientCollisionEvent() { }
-	inline ClientCollisionEvent(const ClientCollisionEvent& other) = default;
-	inline ClientCollisionEvent& operator=(const ClientCollisionEvent& other) = default;
+	inline ITyreModel() { }
+	inline ITyreModel(const ITyreModel& other) = default;
+	inline ITyreModel& operator=(const ITyreModel& other) = default;
+	virtual ~ITyreModel();
+	inline void dtor() { typedef void (*_fpt)(ITyreModel *pthis); _fpt _f=(_fpt)_drva(4503904); _f(this); }
+	virtual TyreModelOutput solve_vf1(TyreModelInput &  _arg0) = 0;
+	inline TyreModelOutput solve(TyreModelInput &  _arg0) { return solve_vf1( _arg0); }
+};
+
+struct RayCastHit {
+public:
+	vec3f pos;
+	vec3f normal;
+	ICollisionObject * collisionObject;
+	bool hasContact;
+	inline RayCastHit() { }
+	inline RayCastHit(const RayCastHit& other) = default;
+	inline RayCastHit& operator=(const RayCastHit& other) = default;
 };
 
 struct DynamicTrackObject {
@@ -3259,17 +3296,6 @@ public:
 	inline DynamicTrackObject() { }
 	inline DynamicTrackObject(const DynamicTrackObject& other) = default;
 	inline DynamicTrackObject& operator=(const DynamicTrackObject& other) = default;
-};
-
-struct RayCastHit {
-public:
-	vec3f pos;
-	vec3f normal;
-	ICollisionObject * collisionObject;
-	bool hasContact;
-	inline RayCastHit() { }
-	inline RayCastHit(const RayCastHit& other) = default;
-	inline RayCastHit& operator=(const RayCastHit& other) = default;
 };
 
 struct RemoteSessionResume {
@@ -3324,6 +3350,17 @@ public:
 	inline void step(float dt) { typedef void (*_fpt)(DRS *pthis, float); _fpt _f=(_fpt)_drva(2838112); return _f(this, dt); }
 };
 
+struct ClientCollisionEvent {
+public:
+	NetCarStateProvider * netCar;
+	float speed;
+	vec3f worldPos;
+	vec3f relPos;
+	inline ClientCollisionEvent() { }
+	inline ClientCollisionEvent(const ClientCollisionEvent& other) = default;
+	inline ClientCollisionEvent& operator=(const ClientCollisionEvent& other) = default;
+};
+
 struct Wind {
 public:
 	vec3f vector;
@@ -3354,6 +3391,18 @@ public:
 	inline OnMouseUpEvent& operator=(const OnMouseUpEvent& other) = default;
 };
 
+struct RayCastResult {
+public:
+	SurfaceDef * surfaceDef;
+	vec3f pos;
+	vec3f normal;
+	bool hasHit;
+	void * collisionObject;
+	inline RayCastResult() { }
+	inline RayCastResult(const RayCastResult& other) = default;
+	inline RayCastResult& operator=(const RayCastResult& other) = default;
+};
+
 class BrushTyreModel {
 public:
 	BrushTyreModelData data;
@@ -3376,29 +3425,6 @@ public:
 	inline MeshVertex() { }
 	inline MeshVertex(const MeshVertex& other) = default;
 	inline MeshVertex& operator=(const MeshVertex& other) = default;
-};
-
-struct RayCastResult {
-public:
-	SurfaceDef * surfaceDef;
-	vec3f pos;
-	vec3f normal;
-	bool hasHit;
-	void * collisionObject;
-	inline RayCastResult() { }
-	inline RayCastResult(const RayCastResult& other) = default;
-	inline RayCastResult& operator=(const RayCastResult& other) = default;
-};
-
-class ITyreModel {
-public:
-	inline ITyreModel() { }
-	inline ITyreModel(const ITyreModel& other) = default;
-	inline ITyreModel& operator=(const ITyreModel& other) = default;
-	virtual ~ITyreModel();
-	inline void dtor() { typedef void (*_fpt)(ITyreModel *pthis); _fpt _f=(_fpt)_drva(4503904); _f(this); }
-	virtual TyreModelOutput solve_vf1(TyreModelInput &  _arg0) = 0;
-	inline TyreModelOutput solve(TyreModelInput &  _arg0) { return solve_vf1( _arg0); }
 };
 
 class UDPSocket {
@@ -3617,6 +3643,48 @@ public:
 	inline void ctor() { typedef void (*_fpt)(HeaveSpring *pthis); _fpt _f=(_fpt)_drva(2546416); _f(this); }
 };
 
+class ICarControlsProvider {
+public:
+	bool ffEnabled;
+	float ffFilter;
+	bool suppressPenalties;
+	bool isAutoclutchNeeded;
+	bool useFakeUndersteerFF;
+	bool keyboardEnabled;
+	inline ICarControlsProvider() { }
+	inline ICarControlsProvider(const ICarControlsProvider& other) = default;
+	inline ICarControlsProvider& operator=(const ICarControlsProvider& other) = default;
+	virtual ~ICarControlsProvider();
+	inline void dtor() { typedef void (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(523776); _f(this); }
+	virtual void acquireControls_vf1(CarControls *  _arg0, float  _arg1, CarControlsInput *  _arg2) = 0;
+	inline void acquireControls(CarControls *  _arg0, float  _arg1, CarControlsInput *  _arg2) { return acquireControls_vf1( _arg0,  _arg1,  _arg2); }
+	virtual bool getAction_vf2(DriverActions  _arg0) = 0;
+	inline bool getAction(DriverActions  _arg0) { return getAction_vf2( _arg0); }
+	virtual void sendFF_vf3(float  _arg0, float  _arg1, float  _arg2) = 0;
+	inline void sendFF(float  _arg0, float  _arg1, float  _arg2) { return sendFF_vf3( _arg0,  _arg1,  _arg2); }
+	virtual char * getName_vf4() = 0;
+	inline char * getName() { return getName_vf4(); }
+	virtual float getFFGlobalGain_vf5() = 0;
+	inline float getFFGlobalGain() { return getFFGlobalGain_vf5(); }
+	virtual bool isDeviceConnected_vf6() = 0;
+	inline bool isDeviceConnected() { return isDeviceConnected_vf6(); }
+	virtual void onAutoShifterChanged_vf7(bool newmode);
+	inline void onAutoShifterChanged_impl(bool newmode) { typedef void (*_fpt)(ICarControlsProvider *pthis, bool); _fpt _f=(_fpt)_drva(96368); return _f(this, newmode); }
+	inline void onAutoShifterChanged(bool newmode) { return onAutoShifterChanged_vf7(newmode); }
+	virtual bool IsKeyboardControl_vf8();
+	inline bool IsKeyboardControl_impl() { typedef bool (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(140928); return _f(this); }
+	inline bool IsKeyboardControl() { return IsKeyboardControl_vf8(); }
+	virtual void setVibrations_vf9(VibrationDef & vibrations);
+	inline void setVibrations_impl(VibrationDef & vibrations) { typedef void (*_fpt)(ICarControlsProvider *pthis, VibrationDef &); _fpt _f=(_fpt)_drva(96368); return _f(this, vibrations); }
+	inline void setVibrations(VibrationDef & vibrations) { return setVibrations_vf9(vibrations); }
+	virtual void setEngineRPM_vf10(float rpm, float minRpm, float maxRpm);
+	inline void setEngineRPM_impl(float rpm, float minRpm, float maxRpm) { typedef void (*_fpt)(ICarControlsProvider *pthis, float, float, float); _fpt _f=(_fpt)_drva(96368); return _f(this, rpm, minRpm, maxRpm); }
+	inline void setEngineRPM(float rpm, float minRpm, float maxRpm) { return setEngineRPM_vf10(rpm, minRpm, maxRpm); }
+	virtual bool shouldDelete_vf11();
+	inline bool shouldDelete_impl() { typedef bool (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(706688); return _f(this); }
+	inline bool shouldDelete() { return shouldDelete_vf11(); }
+};
+
 struct TimeTransponder {
 public:
 	unsigned int t;
@@ -3655,28 +3723,6 @@ public:
 	inline void split(int sectorIndex) { typedef void (*_fpt)(TimeTransponder *pthis, int); _fpt _f=(_fpt)_drva(2691408); return _f(this, sectorIndex); }
 };
 
-struct SplineLocator {
-public:
-	AISpline * currentSpline;
-	Car * car;
-	int currentIndex;
-	Track * track;
-	float normalizedPos;
-	float offset;
-	bool isOutsideLimits;
-	inline SplineLocator() { }
-	inline SplineLocator(const SplineLocator& other) = default;
-	inline SplineLocator& operator=(const SplineLocator& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(SplineLocator *pthis, Car *); _fpt _f=(_fpt)_drva(2798240); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(SplineLocator *pthis, float); _fpt _f=(_fpt)_drva(2799040); return _f(this, dt); }
-	inline static float locateOnSpline(AISpline * spline, vec3f & pos, int & index) { typedef float (*_fpt)(AISpline *, vec3f &, int &); _fpt _f=(_fpt)_drva(2798320); return _f(spline, pos, index); }
-	inline static float locateOnSplineWithBounds(AISpline * spline, vec3f & pos, std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, int & index) { typedef float (*_fpt)(AISpline *, vec3f &, std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, int &); _fpt _f=(_fpt)_drva(2798592); return _f(spline, pos, bounds, index); }
-	inline void getSides(float * sides, float nsplinepos) { typedef void (*_fpt)(SplineLocator *pthis, float *, float); _fpt _f=(_fpt)_drva(2797872); return _f(this, sides, nsplinepos); }
-	inline void reset() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798880); return _f(this); }
-	inline void resetToClosestPoint() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798896); return _f(this); }
-};
-
 class CollisionMeshODE : public ICollisionObject {
 public:
 	dxTriMeshData * trimeshData;
@@ -3704,6 +3750,28 @@ public:
 	virtual unsigned long getMask_vf4();
 	inline unsigned long getMask_impl() { typedef unsigned long (*_fpt)(CollisionMeshODE *pthis); _fpt _f=(_fpt)_drva(2944384); return _f(this); }
 	inline unsigned long getMask() { return getMask_vf4(); }
+};
+
+struct SplineLocator {
+public:
+	AISpline * currentSpline;
+	Car * car;
+	int currentIndex;
+	Track * track;
+	float normalizedPos;
+	float offset;
+	bool isOutsideLimits;
+	inline SplineLocator() { }
+	inline SplineLocator(const SplineLocator& other) = default;
+	inline SplineLocator& operator=(const SplineLocator& other) = default;
+	inline void dtor() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void init(Car * car) { typedef void (*_fpt)(SplineLocator *pthis, Car *); _fpt _f=(_fpt)_drva(2798240); return _f(this, car); }
+	inline void step(float dt) { typedef void (*_fpt)(SplineLocator *pthis, float); _fpt _f=(_fpt)_drva(2799040); return _f(this, dt); }
+	inline static float locateOnSpline(AISpline * spline, vec3f & pos, int & index) { typedef float (*_fpt)(AISpline *, vec3f &, int &); _fpt _f=(_fpt)_drva(2798320); return _f(spline, pos, index); }
+	inline static float locateOnSplineWithBounds(AISpline * spline, vec3f & pos, std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, int & index) { typedef float (*_fpt)(AISpline *, vec3f &, std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, int &); _fpt _f=(_fpt)_drva(2798592); return _f(spline, pos, bounds, index); }
+	inline void getSides(float * sides, float nsplinepos) { typedef void (*_fpt)(SplineLocator *pthis, float *, float); _fpt _f=(_fpt)_drva(2797872); return _f(this, sides, nsplinepos); }
+	inline void reset() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798880); return _f(this); }
+	inline void resetToClosestPoint() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798896); return _f(this); }
 };
 
 class KGLShader {
@@ -3902,6 +3970,19 @@ public:
 	inline void dtor() { typedef void (*_fpt)(ClutchSequence *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
 };
 
+struct DynamicTempData {
+public:
+	Curve temperatureCurve;
+	double temperatureStartTime;
+	float baseRoad;
+	float baseAir;
+	inline DynamicTempData() { }
+	inline DynamicTempData(const DynamicTempData& other) = default;
+	inline DynamicTempData& operator=(const DynamicTempData& other) = default;
+	inline void ctor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1256656); _f(this); }
+	inline void dtor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
+};
+
 struct acEngineData {
 public:
 	Curve powerCurve;
@@ -3921,30 +4002,6 @@ public:
 	inline acEngineData& operator=(const acEngineData& other) = default;
 	inline void ctor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643104); _f(this); }
 	inline void dtor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643504); _f(this); }
-};
-
-struct DynamicTempData {
-public:
-	Curve temperatureCurve;
-	double temperatureStartTime;
-	float baseRoad;
-	float baseAir;
-	inline DynamicTempData() { }
-	inline DynamicTempData(const DynamicTempData& other) = default;
-	inline DynamicTempData& operator=(const DynamicTempData& other) = default;
-	inline void ctor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1256656); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
-};
-
-class JoypadManager {
-public:
-	std::unique_ptr<Joypad,std::default_delete<Joypad> > joypad;
-	inline JoypadManager() { }
-	inline JoypadManager(const JoypadManager& other) = default;
-	inline JoypadManager& operator=(const JoypadManager& other) = default;
-	inline void ctor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2375584); _f(this); }
-	inline Joypad * getJoypad() { typedef Joypad * (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(100192); return _f(this); }
-	inline void dtor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2367136); _f(this); }
 };
 
 class IRayCaster {
@@ -3970,19 +4027,6 @@ public:
 	inline DebugLine& operator=(const DebugLine& other) = default;
 };
 
-class Triangle {
-public:
-	vec3f points[3];
-	plane4f plane;
-	inline Triangle() { }
-	inline Triangle(const Triangle& other) = default;
-	inline Triangle& operator=(const Triangle& other) = default;
-	inline void ctor(vec3f & p1, vec3f & p2, vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, vec3f &, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
-	virtual ~Triangle();
-	inline void dtor() { typedef void (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145440); _f(this); }
-	inline float computeArea() { typedef float (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145456); return _f(this); }
-};
-
 struct ksgui_ListBoxRowData {
 public:
 	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
@@ -3997,6 +4041,17 @@ public:
 	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(454352); _f(this, text); }
 	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_ListBoxRowData *pthis, unsigned int); _fpt _f=(_fpt)_drva(2398208); return _f(this, columnIndex); }
 	inline void dtor() { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis); _fpt _f=(_fpt)_drva(454992); _f(this); }
+};
+
+class JoypadManager {
+public:
+	std::unique_ptr<Joypad,std::default_delete<Joypad> > joypad;
+	inline JoypadManager() { }
+	inline JoypadManager(const JoypadManager& other) = default;
+	inline JoypadManager& operator=(const JoypadManager& other) = default;
+	inline void ctor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2375584); _f(this); }
+	inline Joypad * getJoypad() { typedef Joypad * (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(100192); return _f(this); }
+	inline void dtor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2367136); _f(this); }
 };
 
 class mat44f {
@@ -4047,6 +4102,19 @@ public:
 	inline void ctor(OnSessionEndEvent & __that) { typedef void (*_fpt)(OnSessionEndEvent *pthis, OnSessionEndEvent &); _fpt _f=(_fpt)_drva(1256720); _f(this, __that); }
 	inline void ctor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610032); _f(this); }
 	inline void dtor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610896); _f(this); }
+};
+
+class Triangle {
+public:
+	vec3f points[3];
+	plane4f plane;
+	inline Triangle() { }
+	inline Triangle(const Triangle& other) = default;
+	inline Triangle& operator=(const Triangle& other) = default;
+	inline void ctor(vec3f & p1, vec3f & p2, vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, vec3f &, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
+	virtual ~Triangle();
+	inline void dtor() { typedef void (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145440); _f(this); }
+	inline float computeArea() { typedef float (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145456); return _f(this); }
 };
 
 struct TractionControl {
@@ -4279,27 +4347,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2550256); _f(this); }
 };
 
-class Font {
-public:
-	float scale;
-	bool shadowed;
-	float shadowPixelDistance;
-	void * kid;
-	unsigned int color;
-	float currentAlpha;
-	inline Font() { }
-	inline Font(const Font& other) = default;
-	inline Font& operator=(const Font& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & fontFamily, eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2099808); _f(this, fontFamily, fontType, size, italic, bold); }
-	inline void ctor(eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2100144); _f(this, fontType, size, italic, bold); }
-	inline void dtor() { typedef void (*_fpt)(Font *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline static void cleanup() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(2101040); return _f(); }
-	inline void blitString(float x, float y, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & s, float ascale, eFontAlign align) { typedef void (*_fpt)(Font *pthis, float, float, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float, eFontAlign); _fpt _f=(_fpt)_drva(2100768); return _f(this, x, y, s, ascale, align); }
-	inline void setColor(vec4f & cc) { typedef void (*_fpt)(Font *pthis, vec4f &); _fpt _f=(_fpt)_drva(2102576); return _f(this, cc); }
-	inline void setColor(float r, float g, float b, float a) { typedef void (*_fpt)(Font *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2102704); return _f(this, r, g, b, a); }
-	inline static void * getFontWrapper(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, bool italic, bool bold) { typedef void * (*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, bool); _fpt _f=(_fpt)_drva(2101456); return _f(name, italic, bold); }
-};
-
 struct Telemetry {
 public:
 	std::vector<TelemetryChannel,std::allocator<TelemetryChannel> > channels;
@@ -4347,6 +4394,27 @@ public:
 	inline void step(float td) { typedef void (*_fpt)(Telemetry *pthis, float); _fpt _f=(_fpt)_drva(2880944); return _f(this, td); }
 	inline void save(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(Telemetry *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2879600); return _f(this, filename); }
 	inline void ctor() { typedef void (*_fpt)(Telemetry *pthis); _fpt _f=(_fpt)_drva(2546480); _f(this); }
+};
+
+class Font {
+public:
+	float scale;
+	bool shadowed;
+	float shadowPixelDistance;
+	void * kid;
+	unsigned int color;
+	float currentAlpha;
+	inline Font() { }
+	inline Font(const Font& other) = default;
+	inline Font& operator=(const Font& other) = default;
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & fontFamily, eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2099808); _f(this, fontFamily, fontType, size, italic, bold); }
+	inline void ctor(eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2100144); _f(this, fontType, size, italic, bold); }
+	inline void dtor() { typedef void (*_fpt)(Font *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline static void cleanup() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(2101040); return _f(); }
+	inline void blitString(float x, float y, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & s, float ascale, eFontAlign align) { typedef void (*_fpt)(Font *pthis, float, float, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float, eFontAlign); _fpt _f=(_fpt)_drva(2100768); return _f(this, x, y, s, ascale, align); }
+	inline void setColor(vec4f & cc) { typedef void (*_fpt)(Font *pthis, vec4f &); _fpt _f=(_fpt)_drva(2102576); return _f(this, cc); }
+	inline void setColor(float r, float g, float b, float a) { typedef void (*_fpt)(Font *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2102704); return _f(this, r, g, b, a); }
+	inline static void * getFontWrapper(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, bool italic, bool bold) { typedef void * (*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, bool); _fpt _f=(_fpt)_drva(2101456); return _f(name, italic, bold); }
 };
 
 class ResourceStore {
@@ -4781,24 +4849,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(CarPhysicsInfo *pthis); _fpt _f=(_fpt)_drva(847488); _f(this); }
 };
 
-struct NetCarStateProviderDef {
-public:
-	ACClient * client;
-	unsigned char sessionID;
-	unsigned char guid;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > driverName;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > model;
-	IRayTrackCollisionProvider * rayCastProvider;
-	PhysicsAvatar * physicsAvatar;
-	mat44f pitPosition;
-	inline NetCarStateProviderDef() { }
-	inline NetCarStateProviderDef(const NetCarStateProviderDef& other) = default;
-	inline NetCarStateProviderDef& operator=(const NetCarStateProviderDef& other) = default;
-	inline void dtor() { typedef void (*_fpt)(NetCarStateProviderDef *pthis); _fpt _f=(_fpt)_drva(1660448); _f(this); }
-};
-
 class ISuspension {
 public:
 	float k;
@@ -4865,6 +4915,24 @@ public:
 	inline void setERPCFM(float  _arg0, float  _arg1) { return setERPCFM_vf23( _arg0,  _arg1); }
 	virtual void addLocalForceAndTorque_vf24(vec3f &  _arg0, vec3f &  _arg1, vec3f &  _arg2) = 0;
 	inline void addLocalForceAndTorque(vec3f &  _arg0, vec3f &  _arg1, vec3f &  _arg2) { return addLocalForceAndTorque_vf24( _arg0,  _arg1,  _arg2); }
+};
+
+struct NetCarStateProviderDef {
+public:
+	ACClient * client;
+	unsigned char sessionID;
+	unsigned char guid;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > driverName;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > team;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > nationCode;
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > model;
+	IRayTrackCollisionProvider * rayCastProvider;
+	PhysicsAvatar * physicsAvatar;
+	mat44f pitPosition;
+	inline NetCarStateProviderDef() { }
+	inline NetCarStateProviderDef(const NetCarStateProviderDef& other) = default;
+	inline NetCarStateProviderDef& operator=(const NetCarStateProviderDef& other) = default;
+	inline void dtor() { typedef void (*_fpt)(NetCarStateProviderDef *pthis); _fpt _f=(_fpt)_drva(1660448); _f(this); }
 };
 
 struct Autoclutch {
@@ -5011,6 +5079,55 @@ public:
 	inline void set() { typedef void (*_fpt)(MaterialVar *pthis); _fpt _f=(_fpt)_drva(383104); return _f(this); }
 };
 
+class IPhysicsCore {
+public:
+	inline IPhysicsCore() { }
+	inline IPhysicsCore(const IPhysicsCore& other) = default;
+	inline IPhysicsCore& operator=(const IPhysicsCore& other) = default;
+	virtual void resetCollisions_vf0() = 0;
+	inline void resetCollisions() { return resetCollisions_vf0(); }
+	virtual void initMultithreading_vf1() = 0;
+	inline void initMultithreading() { return initMultithreading_vf1(); }
+	virtual void step_vf2(float  _arg0) = 0;
+	inline void step(float  _arg0) { return step_vf2( _arg0); }
+	virtual IRigidBody * createRigidBody_vf3() = 0;
+	inline IRigidBody * createRigidBody() { return createRigidBody_vf3(); }
+	virtual void release_vf4() = 0;
+	inline void release() { return release_vf4(); }
+	virtual IJoint * createDistanceJoint_vf5(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, vec3f &  _arg3) = 0;
+	inline IJoint * createDistanceJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, vec3f &  _arg3) { return createDistanceJoint_vf5( _arg0,  _arg1,  _arg2,  _arg3); }
+	virtual IJoint * createBumpJoint_vf6(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, float  _arg3, float  _arg4) = 0;
+	inline IJoint * createBumpJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, float  _arg3, float  _arg4) { return createBumpJoint_vf6( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
+	virtual ICollisionObject * createCollisionMesh_vf7(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) = 0;
+	inline ICollisionObject * createCollisionMesh(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) { return createCollisionMesh_vf7( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7,  _arg8); }
+	virtual RayCastHit rayCast_vf8(vec3f &  _arg0, vec3f &  _arg1, float  _arg2) = 0;
+	inline RayCastHit rayCast(vec3f &  _arg0, vec3f &  _arg1, float  _arg2) { return rayCast_vf8( _arg0,  _arg1,  _arg2); }
+	virtual void setCollisionCallback_vf9(ICollisionCallback *  _arg0) = 0;
+	inline void setCollisionCallback(ICollisionCallback *  _arg0) { return setCollisionCallback_vf9( _arg0); }
+	virtual void reseatDistanceJointLocal_vf10(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) = 0;
+	inline void reseatDistanceJointLocal(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) { return reseatDistanceJointLocal_vf10( _arg0,  _arg1,  _arg2); }
+	virtual void reseatDistanceJointLength_vf11(IJoint *  _arg0, float  _arg1) = 0;
+	inline void reseatDistanceJointLength(IJoint *  _arg0, float  _arg1) { return reseatDistanceJointLength_vf11( _arg0,  _arg1); }
+	virtual void setRigidBodyIterations_vf12(int  _arg0) = 0;
+	inline void setRigidBodyIterations(int  _arg0) { return setRigidBodyIterations_vf12( _arg0); }
+	virtual IJoint * createSliderJoint_vf13(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) = 0;
+	inline IJoint * createSliderJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) { return createSliderJoint_vf13( _arg0,  _arg1,  _arg2); }
+	virtual void setSliderAxis_vf14(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) = 0;
+	inline void setSliderAxis(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) { return setSliderAxis_vf14( _arg0,  _arg1,  _arg2); }
+	virtual IJoint * createBallJoint_vf15(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) = 0;
+	inline IJoint * createBallJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) { return createBallJoint_vf15( _arg0,  _arg1,  _arg2); }
+	virtual IJoint * createFixedJoint_vf16(IRigidBody *  _arg0, IRigidBody *  _arg1) = 0;
+	inline IJoint * createFixedJoint(IRigidBody *  _arg0, IRigidBody *  _arg1) { return createFixedJoint_vf16( _arg0,  _arg1); }
+	virtual IRayCaster * createRayCaster_vf17(float  _arg0) = 0;
+	inline IRayCaster * createRayCaster(float  _arg0) { return createRayCaster_vf17( _arg0); }
+	virtual CoreCPUTimes getCoreCPUTimes_vf18() = 0;
+	inline CoreCPUTimes getCoreCPUTimes() { return getCoreCPUTimes_vf18(); }
+	virtual void setNoCollisionSteps_vf19(int  _arg0) = 0;
+	inline void setNoCollisionSteps(int  _arg0) { return setNoCollisionSteps_vf19( _arg0); }
+	virtual ~IPhysicsCore();
+	inline void dtor() { typedef void (*_fpt)(IPhysicsCore *pthis); _fpt _f=(_fpt)_drva(2931728); _f(this); }
+};
+
 struct CarPhysicsState {
 public:
 	unsigned char physicsGUID;
@@ -5110,55 +5227,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(CarPhysicsState *pthis); _fpt _f=(_fpt)_drva(783504); _f(this); }
 };
 
-class IPhysicsCore {
-public:
-	inline IPhysicsCore() { }
-	inline IPhysicsCore(const IPhysicsCore& other) = default;
-	inline IPhysicsCore& operator=(const IPhysicsCore& other) = default;
-	virtual void resetCollisions_vf0() = 0;
-	inline void resetCollisions() { return resetCollisions_vf0(); }
-	virtual void initMultithreading_vf1() = 0;
-	inline void initMultithreading() { return initMultithreading_vf1(); }
-	virtual void step_vf2(float  _arg0) = 0;
-	inline void step(float  _arg0) { return step_vf2( _arg0); }
-	virtual IRigidBody * createRigidBody_vf3() = 0;
-	inline IRigidBody * createRigidBody() { return createRigidBody_vf3(); }
-	virtual void release_vf4() = 0;
-	inline void release() { return release_vf4(); }
-	virtual IJoint * createDistanceJoint_vf5(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, vec3f &  _arg3) = 0;
-	inline IJoint * createDistanceJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, vec3f &  _arg3) { return createDistanceJoint_vf5( _arg0,  _arg1,  _arg2,  _arg3); }
-	virtual IJoint * createBumpJoint_vf6(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, float  _arg3, float  _arg4) = 0;
-	inline IJoint * createBumpJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2, float  _arg3, float  _arg4) { return createBumpJoint_vf6( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
-	virtual ICollisionObject * createCollisionMesh_vf7(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) = 0;
-	inline ICollisionObject * createCollisionMesh(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) { return createCollisionMesh_vf7( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7,  _arg8); }
-	virtual RayCastHit rayCast_vf8(vec3f &  _arg0, vec3f &  _arg1, float  _arg2) = 0;
-	inline RayCastHit rayCast(vec3f &  _arg0, vec3f &  _arg1, float  _arg2) { return rayCast_vf8( _arg0,  _arg1,  _arg2); }
-	virtual void setCollisionCallback_vf9(ICollisionCallback *  _arg0) = 0;
-	inline void setCollisionCallback(ICollisionCallback *  _arg0) { return setCollisionCallback_vf9( _arg0); }
-	virtual void reseatDistanceJointLocal_vf10(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) = 0;
-	inline void reseatDistanceJointLocal(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) { return reseatDistanceJointLocal_vf10( _arg0,  _arg1,  _arg2); }
-	virtual void reseatDistanceJointLength_vf11(IJoint *  _arg0, float  _arg1) = 0;
-	inline void reseatDistanceJointLength(IJoint *  _arg0, float  _arg1) { return reseatDistanceJointLength_vf11( _arg0,  _arg1); }
-	virtual void setRigidBodyIterations_vf12(int  _arg0) = 0;
-	inline void setRigidBodyIterations(int  _arg0) { return setRigidBodyIterations_vf12( _arg0); }
-	virtual IJoint * createSliderJoint_vf13(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) = 0;
-	inline IJoint * createSliderJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) { return createSliderJoint_vf13( _arg0,  _arg1,  _arg2); }
-	virtual void setSliderAxis_vf14(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) = 0;
-	inline void setSliderAxis(IJoint *  _arg0, vec3f &  _arg1, vec3f &  _arg2) { return setSliderAxis_vf14( _arg0,  _arg1,  _arg2); }
-	virtual IJoint * createBallJoint_vf15(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) = 0;
-	inline IJoint * createBallJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, vec3f &  _arg2) { return createBallJoint_vf15( _arg0,  _arg1,  _arg2); }
-	virtual IJoint * createFixedJoint_vf16(IRigidBody *  _arg0, IRigidBody *  _arg1) = 0;
-	inline IJoint * createFixedJoint(IRigidBody *  _arg0, IRigidBody *  _arg1) { return createFixedJoint_vf16( _arg0,  _arg1); }
-	virtual IRayCaster * createRayCaster_vf17(float  _arg0) = 0;
-	inline IRayCaster * createRayCaster(float  _arg0) { return createRayCaster_vf17( _arg0); }
-	virtual CoreCPUTimes getCoreCPUTimes_vf18() = 0;
-	inline CoreCPUTimes getCoreCPUTimes() { return getCoreCPUTimes_vf18(); }
-	virtual void setNoCollisionSteps_vf19(int  _arg0) = 0;
-	inline void setNoCollisionSteps(int  _arg0) { return setNoCollisionSteps_vf19( _arg0); }
-	virtual ~IPhysicsCore();
-	inline void dtor() { typedef void (*_fpt)(IPhysicsCore *pthis); _fpt _f=(_fpt)_drva(2931728); _f(this); }
-};
-
 class Node {
 public:
 	mat44f matrix;
@@ -5214,41 +5282,6 @@ public:
 	inline void renderAudio() { return renderAudio_vf10(); }
 	inline void setActive(bool a) { typedef void (*_fpt)(Node *pthis, bool); _fpt _f=(_fpt)_drva(673008); return _f(this, a); }
 	inline bool getActive() { typedef bool (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(418752); return _f(this); }
-};
-
-class Material {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	Shader * shader;
-	bool doubleFace;
-	bool wireFrame;
-	GraphicsManager * graphics;
-	std::vector<MaterialVar *,std::allocator<MaterialVar *> > vars;
-	std::vector<MaterialResource,std::allocator<MaterialResource> > resources;
-	std::vector<CBuffer,std::allocator<CBuffer> > cBuffers;
-	std::vector<ShaderVariable *,std::allocator<ShaderVariable *> > shaderVars;
-	int guid;
-	DepthMode depthMode;
-	BlendMode blendMode;
-	CullMode cullMode;
-	bool doubleFaceShadow;
-	inline Material() { }
-	inline Material(const Material& other) = default;
-	inline Material& operator=(const Material& other) = default;
-	inline void ctor(Material * mat) { typedef void (*_fpt)(Material *pthis, Material *); _fpt _f=(_fpt)_drva(2136640); _f(this, mat); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); _fpt _f=(_fpt)_drva(2136432); _f(this, iname, graphics); }
-	inline void dtor() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2137440); _f(this); }
-	inline void apply(RenderContext * rc) { typedef void (*_fpt)(Material *pthis, RenderContext *); _fpt _f=(_fpt)_drva(2139872); return _f(this, rc); }
-	inline void setShader(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2144000); return _f(this, name); }
-	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, vec4f & value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, vec4f &); _fpt _f=(_fpt)_drva(2144528); return _f(this, name, value); }
-	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, vec3f & value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, vec3f &); _fpt _f=(_fpt)_drva(2144368); return _f(this, name, value); }
-	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, float value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float); _fpt _f=(_fpt)_drva(2144688); return _f(this, name, value); }
-	inline MaterialVar * getVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & vname) { typedef MaterialVar * (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140976); return _f(this, vname); }
-	inline void setTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & rname, Texture & tex) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, Texture &); _fpt _f=(_fpt)_drva(2144064); return _f(this, rname, tex); }
-	inline int getResourceIndex(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef int (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140736); return _f(this, name); }
-	inline void resetVars() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2143552); return _f(this); }
-	inline void initShaderVars(bool updateOptions) { typedef void (*_fpt)(Material *pthis, bool); _fpt _f=(_fpt)_drva(2141232); return _f(this, updateOptions); }
-	inline void createCBuffers() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2140480); return _f(this); }
 };
 
 class ksgui_Control {
@@ -5357,6 +5390,41 @@ public:
 	inline void stepRepeatInterval(float dt) { typedef void (*_fpt)(ksgui_Control *pthis, float); _fpt _f=(_fpt)_drva(2380224); return _f(this, dt); }
 };
 
+class Material {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	Shader * shader;
+	bool doubleFace;
+	bool wireFrame;
+	GraphicsManager * graphics;
+	std::vector<MaterialVar *,std::allocator<MaterialVar *> > vars;
+	std::vector<MaterialResource,std::allocator<MaterialResource> > resources;
+	std::vector<CBuffer,std::allocator<CBuffer> > cBuffers;
+	std::vector<ShaderVariable *,std::allocator<ShaderVariable *> > shaderVars;
+	int guid;
+	DepthMode depthMode;
+	BlendMode blendMode;
+	CullMode cullMode;
+	bool doubleFaceShadow;
+	inline Material() { }
+	inline Material(const Material& other) = default;
+	inline Material& operator=(const Material& other) = default;
+	inline void ctor(Material * mat) { typedef void (*_fpt)(Material *pthis, Material *); _fpt _f=(_fpt)_drva(2136640); _f(this, mat); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); _fpt _f=(_fpt)_drva(2136432); _f(this, iname, graphics); }
+	inline void dtor() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2137440); _f(this); }
+	inline void apply(RenderContext * rc) { typedef void (*_fpt)(Material *pthis, RenderContext *); _fpt _f=(_fpt)_drva(2139872); return _f(this, rc); }
+	inline void setShader(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2144000); return _f(this, name); }
+	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, vec4f & value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, vec4f &); _fpt _f=(_fpt)_drva(2144528); return _f(this, name, value); }
+	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, vec3f & value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, vec3f &); _fpt _f=(_fpt)_drva(2144368); return _f(this, name, value); }
+	inline void setVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, float value) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float); _fpt _f=(_fpt)_drva(2144688); return _f(this, name, value); }
+	inline MaterialVar * getVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & vname) { typedef MaterialVar * (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140976); return _f(this, vname); }
+	inline void setTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & rname, Texture & tex) { typedef void (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, Texture &); _fpt _f=(_fpt)_drva(2144064); return _f(this, rname, tex); }
+	inline int getResourceIndex(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef int (*_fpt)(Material *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140736); return _f(this, name); }
+	inline void resetVars() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2143552); return _f(this); }
+	inline void initShaderVars(bool updateOptions) { typedef void (*_fpt)(Material *pthis, bool); _fpt _f=(_fpt)_drva(2141232); return _f(this, updateOptions); }
+	inline void createCBuffers() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2140480); return _f(this); }
+};
+
 class RenderWindow {
 public:
 	void * hWnd;
@@ -5403,6 +5471,17 @@ public:
 	inline void dtor() { typedef void (*_fpt)(DrivetrainControllers *pthis); _fpt _f=(_fpt)_drva(2515184); _f(this); }
 };
 
+struct ERSPowerController {
+public:
+	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
+	DynamicController ctrl;
+	inline ERSPowerController() { }
+	inline ERSPowerController(const ERSPowerController& other) = default;
+	inline ERSPowerController& operator=(const ERSPowerController& other) = default;
+	inline void ctor(ERSPowerController & __that) { typedef void (*_fpt)(ERSPowerController *pthis, ERSPowerController &); _fpt _f=(_fpt)_drva(2692640); _f(this, __that); }
+	inline void dtor() { typedef void (*_fpt)(ERSPowerController *pthis); _fpt _f=(_fpt)_drva(2693104); _f(this); }
+};
+
 struct TurboDynamicController {
 public:
 	Turbo * turbo;
@@ -5427,17 +5506,6 @@ public:
 	inline void dtor() { typedef void (*_fpt)(SteeringSystem *pthis); _fpt _f=(_fpt)_drva(2864640); _f(this); }
 	inline void init(Car * car) { typedef void (*_fpt)(SteeringSystem *pthis, Car *); _fpt _f=(_fpt)_drva(2851024); return _f(this, car); }
 	inline void step(float dt) { typedef void (*_fpt)(SteeringSystem *pthis, float); _fpt _f=(_fpt)_drva(2851248); return _f(this, dt); }
-};
-
-struct ERSPowerController {
-public:
-	std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > name;
-	DynamicController ctrl;
-	inline ERSPowerController() { }
-	inline ERSPowerController(const ERSPowerController& other) = default;
-	inline ERSPowerController& operator=(const ERSPowerController& other) = default;
-	inline void ctor(ERSPowerController & __that) { typedef void (*_fpt)(ERSPowerController *pthis, ERSPowerController &); _fpt _f=(_fpt)_drva(2692640); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(ERSPowerController *pthis); _fpt _f=(_fpt)_drva(2693104); _f(this); }
 };
 
 class ICarPhysicsStateProvider {
@@ -5518,6 +5586,25 @@ public:
 	inline void ctor() { typedef void (*_fpt)(AntirollBar *pthis); _fpt _f=(_fpt)_drva(2538800); _f(this); }
 };
 
+class KeyboardManager {
+public:
+	RenderWindow & renderWindow;
+	std::vector<IKeyEventListener *,std::allocator<IKeyEventListener *> > listeners;
+	IKeyEventListener * focusListener;
+	inline KeyboardManager() : renderWindow(*((RenderWindow*)NULL)) { }
+	inline KeyboardManager(const KeyboardManager& other) = default;
+	inline KeyboardManager& operator=(const KeyboardManager& other) = default;
+	inline void ctor(RenderWindow & arenderWindow) { typedef void (*_fpt)(KeyboardManager *pthis, RenderWindow &); _fpt _f=(_fpt)_drva(2372096); _f(this, arenderWindow); }
+	virtual ~KeyboardManager();
+	inline void dtor() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2372176); _f(this); }
+	inline void registerEventHandlers() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2375440); return _f(this); }
+	inline void onKeyDownEvent(OnKeyEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, OnKeyEvent &); _fpt _f=(_fpt)_drva(2374432); return _f(this, message); }
+	inline void onKeyPressEvent(OnKeyCharEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, OnKeyCharEvent &); _fpt _f=(_fpt)_drva(2374560); return _f(this, message); }
+	inline void addGodListener(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2373984); return _f(this, l); }
+	inline void getFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2944432); return _f(this, l); }
+	inline void releaseFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2375568); return _f(this, l); }
+};
+
 class ksgui_ConnectedLabel : public ksgui_Control {
 public:
 	ksgui_VariableConnection variableConnection;
@@ -5537,25 +5624,6 @@ public:
 	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis, float); _fpt _f=(_fpt)_drva(4516784); return _f(this, dt); }
 	inline void render(float dt) { return render_vf3(dt); }
 	inline void init() { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis); _fpt _f=(_fpt)_drva(4516352); return _f(this); }
-};
-
-class KeyboardManager {
-public:
-	RenderWindow & renderWindow;
-	std::vector<IKeyEventListener *,std::allocator<IKeyEventListener *> > listeners;
-	IKeyEventListener * focusListener;
-	inline KeyboardManager() : renderWindow(*((RenderWindow*)NULL)) { }
-	inline KeyboardManager(const KeyboardManager& other) = default;
-	inline KeyboardManager& operator=(const KeyboardManager& other) = default;
-	inline void ctor(RenderWindow & arenderWindow) { typedef void (*_fpt)(KeyboardManager *pthis, RenderWindow &); _fpt _f=(_fpt)_drva(2372096); _f(this, arenderWindow); }
-	virtual ~KeyboardManager();
-	inline void dtor() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2372176); _f(this); }
-	inline void registerEventHandlers() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2375440); return _f(this); }
-	inline void onKeyDownEvent(OnKeyEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, OnKeyEvent &); _fpt _f=(_fpt)_drva(2374432); return _f(this, message); }
-	inline void onKeyPressEvent(OnKeyCharEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, OnKeyCharEvent &); _fpt _f=(_fpt)_drva(2374560); return _f(this, message); }
-	inline void addGodListener(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2373984); return _f(this, l); }
-	inline void getFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2944432); return _f(this, l); }
-	inline void releaseFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2375568); return _f(this, l); }
 };
 
 class Kers : public ITorqueGenerator {
@@ -5642,34 +5710,6 @@ public:
 	inline void setCheck(bool aCheck) { typedef void (*_fpt)(ksgui_CheckBox *pthis, bool); _fpt _f=(_fpt)_drva(2403648); return _f(this, aCheck); }
 };
 
-class ksgui_CustomSpinner : public ksgui_Control {
-public:
-	bool pressToIncrement;
-	ksgui_Control * leftButton;
-	ksgui_Control * rightButton;
-	ksgui_Control * upButton;
-	ksgui_Control * downButton;
-	ksgui_Label * title;
-	Texture bar;
-	float barPositionNormalized;
-	CustomSpinnerMode mode;
-	inline ksgui_CustomSpinner() { }
-	inline ksgui_CustomSpinner(const ksgui_CustomSpinner& other) = default;
-	inline ksgui_CustomSpinner& operator=(const ksgui_CustomSpinner& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui, CustomSpinnerMode aMode) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, CustomSpinnerMode); _fpt _f=(_fpt)_drva(2419408); _f(this, name, aGui, aMode); }
-	virtual ~ksgui_CustomSpinner();
-	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float, float); _fpt _f=(_fpt)_drva(2422512); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2420928); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2422464); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
-	inline void resize(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2421696); return _f(this, value); }
-};
-
 class ksgui_ListBoxRow : public ksgui_Control {
 public:
 	vec4f rowBackground;
@@ -5720,6 +5760,34 @@ public:
 	inline void onKeyDown_impl(OnKeyEvent & message) { typedef void (*_fpt)(ksgui_TextInput *pthis, OnKeyEvent &); _fpt _f=(_fpt)_drva(96368); return _f(this, message); }
 	inline void onKeyDown(OnKeyEvent & message) { return onKeyDown_vf15(message); }
 	inline void validateText() { typedef void (*_fpt)(ksgui_TextInput *pthis); _fpt _f=(_fpt)_drva(2381856); return _f(this); }
+};
+
+class ksgui_CustomSpinner : public ksgui_Control {
+public:
+	bool pressToIncrement;
+	ksgui_Control * leftButton;
+	ksgui_Control * rightButton;
+	ksgui_Control * upButton;
+	ksgui_Control * downButton;
+	ksgui_Label * title;
+	Texture bar;
+	float barPositionNormalized;
+	CustomSpinnerMode mode;
+	inline ksgui_CustomSpinner() { }
+	inline ksgui_CustomSpinner(const ksgui_CustomSpinner& other) = default;
+	inline ksgui_CustomSpinner& operator=(const ksgui_CustomSpinner& other) = default;
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui, CustomSpinnerMode aMode) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, CustomSpinnerMode); _fpt _f=(_fpt)_drva(2419408); _f(this, name, aGui, aMode); }
+	virtual ~ksgui_CustomSpinner();
+	virtual void setSize_vf7(float w, float h);
+	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float, float); _fpt _f=(_fpt)_drva(2422512); return _f(this, w, h); }
+	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2420928); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	virtual void scaleByMult_vf19(float value);
+	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2422464); return _f(this, value); }
+	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
+	inline void resize(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2421696); return _f(this, value); }
 };
 
 class ksgui_ActiveButton : public ksgui_Control {
@@ -5956,40 +6024,6 @@ public:
 	inline void onMouseWheelMovedEvent(OnMouseWheelMovedEvent & message) { return onMouseWheelMovedEvent_vf13(message); }
 };
 
-class ksgui_Slider : public ksgui_Control {
-public:
-	Event<ksgui_OnSliderInteraction> evOnSliderInteraction;
-	Event<ksgui_OnCutExtremesChanged> evOnCutExtremesChanged;
-	float value;
-	ksgui_Control * mPos;
-	ksgui_Control * markerLeft;
-	ksgui_Control * markerRight;
-	inline ksgui_Slider() { }
-	inline ksgui_Slider(const ksgui_Slider& other) = default;
-	inline ksgui_Slider& operator=(const ksgui_Slider& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (*_fpt)(ksgui_Slider *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2423280); _f(this, name, myGui, dressed); }
-	virtual ~ksgui_Slider();
-	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2426240); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Slider *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2425280); return _f(this, message); }
-	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
-	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2425616); return _f(this, message); }
-	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
-	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2426016); return _f(this, message); }
-	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
-	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Slider *pthis, float, float); _fpt _f=(_fpt)_drva(2427504); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline void updateMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2427536); return _f(this); }
-	inline void resetMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2426896); return _f(this); }
-	inline void setMarkerLeftPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427200); return _f(this, perc); }
-	inline void setMarkerRightPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427360); return _f(this, perc); }
-};
-
 class RaceEngineer {
 public:
 	Car * car;
@@ -6038,6 +6072,40 @@ public:
 	inline KPI getKPI_RAD(int index) { typedef KPI (*_fpt)(RaceEngineer *pthis, int); _fpt _f=(_fpt)_drva(2605152); return _f(this, index); }
 	inline float getAntiSquat() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2602768); return _f(this); }
 	inline float evalLateralGFromLoads(float speed, float aeroRatio, float mass, float * loads) { typedef float (*_fpt)(RaceEngineer *pthis, float, float, float, float *); _fpt _f=(_fpt)_drva(2597472); return _f(this, speed, aeroRatio, mass, loads); }
+};
+
+class ksgui_Slider : public ksgui_Control {
+public:
+	Event<ksgui_OnSliderInteraction> evOnSliderInteraction;
+	Event<ksgui_OnCutExtremesChanged> evOnCutExtremesChanged;
+	float value;
+	ksgui_Control * mPos;
+	ksgui_Control * markerLeft;
+	ksgui_Control * markerRight;
+	inline ksgui_Slider() { }
+	inline ksgui_Slider(const ksgui_Slider& other) = default;
+	inline ksgui_Slider& operator=(const ksgui_Slider& other) = default;
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (*_fpt)(ksgui_Slider *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2423280); _f(this, name, myGui, dressed); }
+	virtual ~ksgui_Slider();
+	virtual void render_vf3(float dt);
+	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2426240); return _f(this, dt); }
+	inline void render(float dt) { return render_vf3(dt); }
+	virtual bool onMouseDown_vf10(OnMouseDownEvent & message);
+	inline bool onMouseDown_impl(OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Slider *pthis, OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2425280); return _f(this, message); }
+	inline bool onMouseDown(OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	virtual void onMouseMove_vf12(OnMouseMoveEvent & message);
+	inline void onMouseMove_impl(OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2425616); return _f(this, message); }
+	inline void onMouseMove(OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	virtual void onMouseUp_vf11(OnMouseUpEvent & message);
+	inline void onMouseUp_impl(OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2426016); return _f(this, message); }
+	inline void onMouseUp(OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	virtual void setSize_vf7(float w, float h);
+	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Slider *pthis, float, float); _fpt _f=(_fpt)_drva(2427504); return _f(this, w, h); }
+	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	inline void updateMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2427536); return _f(this); }
+	inline void resetMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2426896); return _f(this); }
+	inline void setMarkerLeftPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427200); return _f(this, perc); }
+	inline void setMarkerRightPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427360); return _f(this, perc); }
 };
 
 class ksgui_ScrollBar : public ksgui_Control {
@@ -7091,54 +7159,6 @@ public:
 	inline void renderAxes(GLRenderer & gl) { typedef void (*_fpt)(ksgui_Graph *pthis, GLRenderer &); _fpt _f=(_fpt)_drva(2390944); return _f(this, gl); }
 };
 
-class ERS : public ITorqueGenerator, public ICoastGenerator {
-public:
-	bool present;
-	float kineticRecovery;
-	ERSStatus status;
-	bool isHeatCharginBattery;
-	std::vector<ERSPowerController,std::allocator<ERSPowerController> > ersPowerControllers;
-	std::vector<ERSPowerController,std::allocator<ERSPowerController> > ersPowerControllersFront;
-	int defaultPowerControllerIndex;
-	bool isCharging;
-	ERSCockpitControls cockpitControls;
-	Car * car;
-	double chargeK;
-	double dischargeK;
-	double dischargeKFront;
-	bool hasButtonOverride;
-	Curve torqueLUT;
-	Curve coastLUT;
-	DynamicController controller;
-	DynamicController controllerFront;
-	double charge;
-	float maxJ;
-	float currentJ;
-	float input;
-	double heatChargeK;
-	float heatTorque;
-	float rearCorrectionTorque;
-	DynamicController frontController;
-	Curve frontTorqueLUT;
-	float frontTorqueVectoringBias;
-	inline ERS() { }
-	inline ERS(const ERS& other) = default;
-	inline ERS& operator=(const ERS& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692352); _f(this); }
-	virtual ~ERS();
-	inline void dtor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692816); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(ERS *pthis, Car *); _fpt _f=(_fpt)_drva(2694192); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(ERS *pthis, float); _fpt _f=(_fpt)_drva(2699488); return _f(this, dt); }
-	virtual float getOutputTorque_vf1();
-	inline float getOutputTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2694096); return _f(this); }
-	inline float getOutputTorque() { return getOutputTorque_vf1(); }
-	virtual float getCoastTorque_vf1();
-	inline float getCoastTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2693952); return _f(this); }
-	inline float getCoastTorque() { return getCoastTorque_vf1(); }
-	inline void reset() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2699168); return _f(this); }
-	inline void setPowerController(int index) { typedef void (*_fpt)(ERS *pthis, int); _fpt _f=(_fpt)_drva(2699200); return _f(this, index); }
-};
-
 class AISpline {
 public:
 	unsigned int lapTime;
@@ -7187,6 +7207,54 @@ public:
 	inline void getPayloadIndices(float pos, unsigned int * i0, unsigned int * i1, float * blend) { typedef void (*_fpt)(AISpline *pthis, float, unsigned int *, unsigned int *, float *); _fpt _f=(_fpt)_drva(2782256); return _f(this, pos, i0, i1, blend); }
 	inline void initStraights(float radiusThreshold) { typedef void (*_fpt)(AISpline *pthis, float); _fpt _f=(_fpt)_drva(2785584); return _f(this, radiusThreshold); }
 	inline bool getStraightDataFromIndex(int index, AIStraightData & data, float radiusThreshold) { typedef bool (*_fpt)(AISpline *pthis, int, AIStraightData &, float); _fpt _f=(_fpt)_drva(2784432); return _f(this, index, data, radiusThreshold); }
+};
+
+class ERS : public ITorqueGenerator, public ICoastGenerator {
+public:
+	bool present;
+	float kineticRecovery;
+	ERSStatus status;
+	bool isHeatCharginBattery;
+	std::vector<ERSPowerController,std::allocator<ERSPowerController> > ersPowerControllers;
+	std::vector<ERSPowerController,std::allocator<ERSPowerController> > ersPowerControllersFront;
+	int defaultPowerControllerIndex;
+	bool isCharging;
+	ERSCockpitControls cockpitControls;
+	Car * car;
+	double chargeK;
+	double dischargeK;
+	double dischargeKFront;
+	bool hasButtonOverride;
+	Curve torqueLUT;
+	Curve coastLUT;
+	DynamicController controller;
+	DynamicController controllerFront;
+	double charge;
+	float maxJ;
+	float currentJ;
+	float input;
+	double heatChargeK;
+	float heatTorque;
+	float rearCorrectionTorque;
+	DynamicController frontController;
+	Curve frontTorqueLUT;
+	float frontTorqueVectoringBias;
+	inline ERS() { }
+	inline ERS(const ERS& other) = default;
+	inline ERS& operator=(const ERS& other) = default;
+	inline void ctor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692352); _f(this); }
+	virtual ~ERS();
+	inline void dtor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692816); _f(this); }
+	inline void init(Car * car) { typedef void (*_fpt)(ERS *pthis, Car *); _fpt _f=(_fpt)_drva(2694192); return _f(this, car); }
+	inline void step(float dt) { typedef void (*_fpt)(ERS *pthis, float); _fpt _f=(_fpt)_drva(2699488); return _f(this, dt); }
+	virtual float getOutputTorque_vf1();
+	inline float getOutputTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2694096); return _f(this); }
+	inline float getOutputTorque() { return getOutputTorque_vf1(); }
+	virtual float getCoastTorque_vf1();
+	inline float getCoastTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2693952); return _f(this); }
+	inline float getCoastTorque() { return getCoastTorque_vf1(); }
+	inline void reset() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2699168); return _f(this); }
+	inline void setPowerController(int index) { typedef void (*_fpt)(ERS *pthis, int); _fpt _f=(_fpt)_drva(2699200); return _f(this, index); }
 };
 
 class Wing {
