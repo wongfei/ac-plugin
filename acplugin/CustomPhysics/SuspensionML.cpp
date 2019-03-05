@@ -36,10 +36,10 @@ void SuspensionML_step(SuspensionML* pThis, float dt)
 	vDeltaVel.y *= vM2.y;
 	vDeltaVel.z *= vM2.z;
 
-	float fDamperSpeed = vdot(vDeltaVel, vDeltaVel);
-	float fDamperForce = pThis->damper.getForce(fDamperSpeed);
+	float fSpeed = vDeltaVel.x + vDeltaVel.y + vDeltaVel.z;
+	pThis->status.damperSpeedMS = fSpeed;
 
-	pThis->status.damperSpeedMS = fDamperSpeed;
+	float fDamperForce = pThis->damper.getForce(fSpeed);
 
 	vForce = vmul(vM2, fDamperForce);
 	pThis->addForceAtPos(vForce, vHubWorld, false, false);

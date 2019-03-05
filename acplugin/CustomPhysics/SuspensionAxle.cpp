@@ -87,10 +87,10 @@ void SuspensionAxle_step(SuspensionAxle* pThis, float dt)
 	vDeltaVel.y *= vDelta.y;
 	vDeltaVel.z *= vDelta.z;
 
-	float fSpeed = vdot(vDeltaVel, vDeltaVel);
-	float fDamperForce = pThis->damper.getForce(fSpeed);
-
+	float fSpeed = vDeltaVel.x + vDeltaVel.y + vDeltaVel.z;
 	pThis->status.damperSpeedMS = fSpeed;
+
+	float fDamperForce = pThis->damper.getForce(fSpeed);
 
 	vec3f vForce = vmul(vDelta, fDamperForce);
 	pThis->addForceAtPos(vForce, vAxleWorld, false, false);
