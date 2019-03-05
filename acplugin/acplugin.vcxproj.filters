@@ -75,6 +75,21 @@
     <ClCompile Include="CustomPhysics\Car.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
+    <ClCompile Include="CustomPhysics\Drivetrain2WD.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\SuspensionAxle.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\SuspensionML.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\TyreForcesV10.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\SuspensionStrut.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">

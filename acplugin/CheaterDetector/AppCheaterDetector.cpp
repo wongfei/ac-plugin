@@ -417,8 +417,9 @@ void AppCheaterDetector::dumpState()
 			auto maxPower = car->drivetrain.acEngine.maxPowerW * 0.001f * KW_TO_HP;
 			auto powerRatio = maxPower / car->mass;
 
-			log_printf(L"%.1f kg ; %.1f nm ; %.2f hp ; %.2f hp/kg ; %s", 
-				car->mass, maxTorq, maxPower, powerRatio, avatar->unixName.c_str()
+			log_printf(L"%.1f kg ; %.1f nm ; %.2f hp ; %.2f hp/kg ; %s ; SuspF=%d ; SuspR=%d ; DiffType=%d", 
+				car->mass, maxTorq, maxPower, powerRatio, avatar->unixName.c_str(),
+				(int)car->suspensionTypeF, (int)car->suspensionTypeR, (int)car->drivetrain.diffType
 			);
 		}
 	}

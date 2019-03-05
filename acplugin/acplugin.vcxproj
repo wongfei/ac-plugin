@@ -84,9 +84,14 @@
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />
     <ClCompile Include="CustomPhysics\Damper.cpp" />
     <ClCompile Include="CustomPhysics\Drivetrain.cpp" />
+    <ClCompile Include="CustomPhysics\Drivetrain2WD.cpp" />
     <ClCompile Include="CustomPhysics\Suspension.cpp" />
+    <ClCompile Include="CustomPhysics\SuspensionAxle.cpp" />
+    <ClCompile Include="CustomPhysics\SuspensionML.cpp" />
+    <ClCompile Include="CustomPhysics\SuspensionStrut.cpp" />
     <ClCompile Include="CustomPhysics\Turbo.cpp" />
     <ClCompile Include="CustomPhysics\Tyre.cpp" />
+    <ClCompile Include="CustomPhysics\TyreForcesV10.cpp" />
     <ClCompile Include="utils\hook.cpp" />
     <ClCompile Include="plugin\plugin.cpp" />
     <ClCompile Include="utils\log.cpp" />

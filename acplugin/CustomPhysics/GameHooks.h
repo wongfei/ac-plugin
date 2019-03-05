@@ -29,11 +29,20 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt);
 
 // Suspension
 
+#define RVA_Damper_getForce 2830976
+float Damper_getForce(Damper* pThis, float fSpeed);
+
 #define RVA_Suspension_step 2896784
 void Suspension_step(Suspension* pThis, float dt);
 
-#define RVA_Damper_getForce 2830976
-float Damper_getForce(Damper* pThis, float fSpeed);
+#define RVA_SuspensionAxle_step 2918256
+void SuspensionAxle_step(SuspensionAxle* pThis, float dt);
+
+#define RVA_SuspensionML_step 2927360
+void SuspensionML_step(SuspensionML* pThis, float dt);
+
+#define RVA_SuspensionStrut_step 2909696
+void SuspensionStrut_step(SuspensionStrut* pThis, float dt);
 
 // Tyre
 

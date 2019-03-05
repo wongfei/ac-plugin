@@ -14,8 +14,11 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Drivetrain_stepControllers);
 	HOOK_FUNC_RVA(Drivetrain_step2WD);
 
-	HOOK_FUNC_RVA(Suspension_step);
 	HOOK_FUNC_RVA(Damper_getForce);
+	HOOK_FUNC_RVA(Suspension_step);
+	HOOK_FUNC_RVA(SuspensionAxle_step);
+	HOOK_FUNC_RVA(SuspensionML_step);
+	//HOOK_FUNC_RVA(SuspensionStrut_step);
 
 	HOOK_FUNC_RVA(Tyre_step);
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
