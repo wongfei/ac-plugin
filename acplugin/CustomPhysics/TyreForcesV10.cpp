@@ -114,7 +114,8 @@ void Tyre_addTyreForcesV10(Tyre* pThis, vec3f& pos, vec3f& normal, SurfaceDef* p
 	tmi.pressureRatio = (pThis->status.pressureDynamic / pThis->modelData.idealPressure) - 1.0f;
 	tmi.useSimpleModel = 1.0f < pThis->aiMult;
 
-	TyreModelOutput tmo = pThis->tyreModel->solve(tmi);
+	// TODO: ITyreModel::solve crashes
+	TyreModelOutput tmo = ((SCTM*)(pThis->tyreModel))->solve_impl(tmi);
 
 	pThis->status.Fy = tmo.Fy * pThis->aiMult;
 	pThis->status.Fx = -tmo.Fx;

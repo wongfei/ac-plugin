@@ -6,6 +6,9 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 {
 	log_printf(L"+AppCustomPhysics %p", this);
 
+	HOOK_FUNC_RVA(Car_step);
+	HOOK_FUNC_RVA(Car_stepComponents);
+
 	HOOK_FUNC_RVA(Engine_step);
 	HOOK_FUNC_RVA(Engine_stepTurbos);
 	HOOK_FUNC_RVA(Turbo_step);
@@ -23,9 +26,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Tyre_step);
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
 	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
-
-	HOOK_FUNC_RVA(Car_step);
-	HOOK_FUNC_RVA(Car_stepComponents);
+	HOOK_FUNC_RVA(SCTM_solve);
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }

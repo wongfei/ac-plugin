@@ -5,6 +5,14 @@
 
 #define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &func)
 
+// Car
+
+#define RVA_Car_step 2579872
+void Car_step(Car* pThis, float dt);
+
+#define RVA_Car_stepComponents 2581712
+void Car_stepComponents(Car* pThis, float dt);
+
 // Engine
 
 #define RVA_Engine_step 2654432
@@ -55,10 +63,5 @@ void Tyre_addGroundContact(Tyre* pThis, vec3f& pos, vec3f& normal);
 #define RVA_Tyre_addTyreForcesV10 2616672
 void Tyre_addTyreForcesV10(Tyre* pThis, vec3f& pos, vec3f& normal, SurfaceDef* pSurface, float dt);
 
-// Car
-
-#define RVA_Car_step 2579872
-void Car_step(Car* pThis, float dt);
-
-#define RVA_Car_stepComponents 2581712
-void Car_stepComponents(Car* pThis, float dt);
+#define RVA_SCTM_solve 4504608
+TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi);
