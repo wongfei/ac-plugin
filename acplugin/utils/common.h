@@ -25,4 +25,8 @@ inline void remove_elem(std::vector<T>& vec, E elem) {
 	}
 }
 
+inline uint64_t now_milliseconds() {
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+}
+
 std::wstring strf(const wchar_t* format, ...);

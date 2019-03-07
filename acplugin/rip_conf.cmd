@@ -9,8 +9,8 @@ set "ac_gui=ksgui::GUI; ksgui::GameScreen; ksgui::Form; ksgui::ActiveButton; ksg
 set "ac_excl=-in_addr; -sockaddr_in; -IEventTrigger; -OnValueChanged; -IVertexBuffer; -VertexBuffer"
 
 set "ac_plugin=ACPlugin; ACPluginContext; ACClient; ACCarState"
-set "ac_game=Game; RaceManager; RaceTimingServices; LapDB"
-set "ac_sim=Sim; PhysicsEngine; IPhysicsCore; IRigidBody; IJoint; ICollisionObject; IRayCaster; RayCastResult; CollisionMeshODE; Track; TrackAvatar"
-set "ac_car=CarAvatar; Car; Drivetrain; Engine; Suspension; SuspensionAxle; SuspensionML; SuspensionStrut; ICarControlsProvider; ICarPhysicsStateProvider; NetCarStateProvider"
+set "ac_game=Game; RaceManager; RaceTimingServices; LapDB; DirectInput; DICarControl"
+set "ac_sim=Sim; PhysicsEngine; PhysicsDriveThread; PhysicsCore; IPhysicsCore; RigidBodyODE; IRigidBody; IJoint; ICollisionObject; IRayCaster; RayCastResult; CollisionMeshODE; Track; TrackAvatar"
+set "ac_car=CarAvatar; Car; Drivetrain; Engine; Suspension; SuspensionAxle; SuspensionML; SuspensionStrut; CarControls; CarControlsInput; NetCarStateProvider"
 
 set "ac_names=%ac_plugin%;%ac_game%;%ac_sim%;%ac_car%;%ac_render%;%ac_kgl%;%ac_gui%;%ac_excl%"

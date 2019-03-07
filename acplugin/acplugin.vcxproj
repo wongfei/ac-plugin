@@ -85,6 +85,7 @@
     <ClCompile Include="CustomPhysics\Damper.cpp" />
     <ClCompile Include="CustomPhysics\Drivetrain.cpp" />
     <ClCompile Include="CustomPhysics\Drivetrain2WD.cpp" />
+    <ClCompile Include="CustomPhysics\Timer.cpp" />
     <ClCompile Include="CustomPhysics\Suspension.cpp" />
     <ClCompile Include="CustomPhysics\SuspensionAxle.cpp" />
     <ClCompile Include="CustomPhysics\SuspensionML.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="CheaterDetector\DriverState.h" />
     <ClInclude Include="CheaterDetector\AppCheaterDetector.h" />
     <ClInclude Include="CheaterDetector\GridView.h" />
+    <ClInclude Include="CustomPhysics\Timer.h" />
     <ClInclude Include="utils\hook.h" />
     <ClInclude Include="precompiled.h" />
     <ClInclude Include="utils\log.h" />

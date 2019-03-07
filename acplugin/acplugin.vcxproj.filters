@@ -93,6 +93,7 @@
     <ClCompile Include="CustomPhysics\TyreModel.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
+    <ClCompile Include="CustomPhysics\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
@@ -149,6 +150,7 @@
     <ClInclude Include="utils\os.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CustomPhysics\Tyre.inl">

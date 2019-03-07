@@ -3,7 +3,13 @@
 #include "utils/log.h"
 #include "utils/common.h"
 
-#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &func)
+#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
+#define HOOK_FUNC_RVA_2(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
+
+// Core
+
+#define RVA_PhysicsDriveThread_run 1192272
+void PhysicsDriveThread_run(PhysicsDriveThread* pThis);
 
 // Car
 
@@ -12,6 +18,9 @@ void Car_step(Car* pThis, float dt);
 
 #define RVA_Car_stepComponents 2581712
 void Car_stepComponents(Car* pThis, float dt);
+
+#define RVA_Car_pollControls 2575984
+void Car_pollControls(Car* pThis, float dt);
 
 // Engine
 
