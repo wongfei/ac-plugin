@@ -1,5 +1,6 @@
 #pragma once
 
+#define NOMINMAX
 #define DIRECTINPUT_VERSION 0x0800
 
 // win

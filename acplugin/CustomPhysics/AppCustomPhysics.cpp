@@ -2,22 +2,9 @@
 #include "AppCustomPhysics.h"
 #include "GameHooks.h"
 #include "Timer.h"
+#include "Car.inl"
 
 static AppCustomPhysics* s_custom_physics = nullptr;
-
-inline void rotateCar(Car* pCar, mat44f& mat)
-{
-	pCar->body->setRotation(mat);
-	pCar->fuelTankBody->setRotation(mat);
-
-	for (auto& s : pCar->suspensions)
-	{
-		s->attach();
-	}
-
-	pCar->body->stop(1.0f);
-	pCar->fuelTankBody->stop(1.0f);
-}
 
 void PhysicsDriveThread_run(PhysicsDriveThread* pThis)
 {
@@ -62,6 +49,12 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(SCTM_solve);
 	#endif
 
+	#if 0
+	_plugin->car->controlsProvider->ffEnabled = false;
+	#endif
+
+	addConsoleCommands();
+
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
 
@@ -91,7 +84,9 @@ void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 		}
 
 		if (!pThis->directInput && pThis->useDirectInput)
+		{
 			pThis->directInput = DirectInput::singleton();
+		}
 
 		if (pThis->isPaused)
 		{
@@ -104,137 +99,91 @@ void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 			pThis->occupancy.exchange(0);
 			pThis->cpuTimeLocal = 0.0;
 			pThis->engine.stepPaused();
-			Sleep(0xAu);
+			Sleep(10);
 		}
 		else
 		{
-			if (GetAsyncKeyState(VK_OEM_4) & 1) // {
+			processUserInput();
+
+			int iNumLoops = 0;
+			double fGt = ksGetTime() * pThis->timeScale;
+
+			if (fGt - pThis->currentTime > 1000.0)
 			{
-				if (_controlMode == EControlMode::Default)
-				{
-					log_printf(L"begin record");
-					_sampleId = 0;
-					_controlSamples.clear();
-					_controlMode = EControlMode::Record;
-					_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
-				}
-				else if (_controlMode == EControlMode::Record)
-				{
-					log_printf(L"end record");
-					_controlMode = EControlMode::Default;
-					saveControlSamples(L"control_samples.raw");
-				}
+				log_printf(L"RESET PHYSICS TIMER");
+				pThis->currentTime = fGt;
 			}
 
-			if (GetAsyncKeyState(VK_OEM_6) & 1) // }
+			if (fGt > pThis->currentTime)
 			{
-				if (_controlMode == EControlMode::Default)
+				do
 				{
-					log_printf(L"begin replay");
-					loadControlSamples(L"control_samples.raw");
-					if (_controlSamples.size())
+					if (pThis->directInput && pThis->useDirectInput)
 					{
-						_plugin->car->controlsProvider->ffEnabled = false;
-						float height = _plugin->carAvatar->raceEngineer->getBaseCarHeight();
-						vec3f pos = makev(_bodyMat.M41, _bodyMat.M42 - height, _bodyMat.M43);
-						_plugin->car->forcePosition(pos, true);
-						rotateCar(_plugin->car, _bodyMat);
-						_controlMode = EControlMode::Replay;
+						pThis->directInput->poll();
+						pThis->diCommandManager.step();
 					}
-				}
-				else if (_controlMode == EControlMode::Replay)
-				{
-					log_printf(L"end replay");
-					_plugin->car->controlsProvider->ffEnabled = true;
-					_controlMode = EControlMode::Default;
-				}
-			}
 
-			{
-				int iNumLoops = 0;
-				double fGt = ksGetTime() * pThis->timeScale;
-
-				if (fGt - pThis->currentTime > 1000.0)
-				{
-					log_printf(L"RESET PHYSICS TIMER");
-					pThis->currentTime = fGt;
-				}
-
-				if (fGt > pThis->currentTime)
-				{
-					do
+					if (_controlMode == EControlMode::Record)
 					{
-						if (pThis->directInput && pThis->useDirectInput)
+						CarControlsSample sample;
+						sample.sampleId = _sampleId;
+						sample.currentTime = pThis->currentTime;
+						sample.gameTime = fGt;
+						sample.controls = _plugin->car->controls;
+						_controlSamples.push_back(sample);
+						_sampleId++;
+					}
+					else if (_controlMode == EControlMode::Replay)
+					{
+						if (_sampleId < _controlSamples.size())
 						{
-							pThis->directInput->poll();
-							pThis->diCommandManager.step();
-						}
-
-						if (_controlMode == EControlMode::Record)
-						{
-							CarControlsSample sample;
-							sample.sampleId = _sampleId;
-							sample.currentTime = pThis->currentTime;
-							sample.gameTime = fGt;
-							sample.controls = _plugin->car->controls;
-							_controlSamples.push_back(sample);
+							_plugin->car->controls = _controlSamples[_sampleId].controls;
 							_sampleId++;
 						}
+					}
 
-						if (_controlMode == EControlMode::Replay)
-						{
-							if (_sampleId < _controlSamples.size())
-							{
-								_plugin->car->controls = _controlSamples[_sampleId].controls;
-								_sampleId++;
-							}
-							if (_sampleId >= _controlSamples.size())
-							{
-								log_printf(L"replay done");
-								_controlMode = EControlMode::Default;
-							}
-						}
+					double fCurTime = pThis->currentTime + 3.0;
+					pThis->currentTime = fCurTime;
+					++iNumLoops;
 
-						double fCurTime = pThis->currentTime + 3.0;
-						pThis->currentTime = fCurTime;
-						++iNumLoops;
-
-						double fBeginTime = ksGetQPTTime();
+					double fBeginTime = ksGetQPTTime();
+					{
 						pThis->engine.step(0.003, fCurTime, fGt);
-						double fEndTime = ksGetQPTTime();
+					}
+					double fEndTime = ksGetQPTTime();
 
-						double fElapsed = fEndTime - fBeginTime;
-						pThis->cpuTimeLocal = (float)fElapsed;
+					double fElapsed = fEndTime - fBeginTime;
+					pThis->cpuTimeLocal = (float)fElapsed;
 
-						double fElapsedLimit = 300;
-						double fElapsedX = (signed int)(float)((float)(fElapsed * 0.33333334) * 100.0);
+					const double fElapsedLimit = 300;
+					double fElapsedX = ((fElapsed * 0.33333334) * 100.0);
 
-						if (fElapsedX >= fElapsedLimit)
-							fElapsedX = fElapsedLimit;
+					if (fElapsedX >= fElapsedLimit)
+						fElapsedX = fElapsedLimit;
 
-						pThis->occupancy.exchange((int)fElapsedX);
+					pThis->occupancy.exchange((int)fElapsedX);
 
-						for (auto& h : pThis->evPhysicsStepCompleted.handlers)
+					for (auto& h : pThis->evPhysicsStepCompleted.handlers)
+					{
+						if (h.second)
 						{
-							if (h.second)
-							{
-								h.second(pThis->engine.physicsTime);
-							}
+							h.second(pThis->engine.physicsTime);
 						}
 					}
-					while (fGt > pThis->currentTime);
+				}
+				while (fGt > pThis->currentTime);
 
-					if (iNumLoops > 0)
-					{
-						pThis->lastStepTimestamp = fGt;
-					}
+				if (iNumLoops > 0)
+				{
+					pThis->lastStepTimestamp = fGt;
+				}
 
-					if (iNumLoops > 1)
-					{
-						log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
-						if (fGt > 30000.0)
-							pThis->physicsLateLoops++;
-					}
+				if (iNumLoops > 1)
+				{
+					log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
+					if (fGt > 30000.0)
+						pThis->physicsLateLoops++;
 				}
 			}
 		}
@@ -246,24 +195,252 @@ void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 
 void AppCustomPhysics::pollControls(Car* pCar, float dt)
 {
-	if (!_gameStarted && _controlMode != EControlMode::Default)
+	if (!_gameStarted)
 	{
 		_gameStarted = true;
-		_sim->startGame();
+		if (_controlMode != EControlMode::Default)
+		{
+			_sim->startGame();
+		}
 	}
 
 	if (pCar == _plugin->car && _controlMode == EControlMode::Replay)
 	{
+		// ignore controls when replaying
 		return;
 	}
 
 	((void(*)(Car*, float))_orig_Car_pollControls)(pCar, dt);
 }
 
-void AppCustomPhysics::saveControlSamples(const wchar_t* filename)
+void AppCustomPhysics::processUserInput()
 {
-	log_printf(L"saveControlSamples filename=%s samples=%u sampleSize=%u", 
-		filename, (unsigned int)_controlSamples.size(), (unsigned int)sizeof(CarControlsSample));
+	if (_cmdRecord || GetAsyncKeyState(VK_OEM_4) & 1) // {
+	{
+		if (_controlMode == EControlMode::Default)
+		{
+			if (!_cmdRecord || _recName.empty()) _recName = L"tmp";
+			writeConsole(strf(L"start record \"%s\"", _recName.c_str()), true);
+			_sampleId = 0;
+			_controlSamples.clear();
+			_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
+			teleportCar(_plugin->carAvatar, _bodyMat);
+			resetTelemetry();
+
+			if (_cmdRecord) _sim->console->show(false);
+			_recStartTime = ksGetQPTTime();
+			_controlMode = EControlMode::Record;
+		}
+		else if (_controlMode == EControlMode::Record)
+		{
+			writeConsole(strf(L"stop record \"%s\"", _recName.c_str()), true);
+			saveControlSamples(L"record_" + _recName + L".raw");
+			saveTelemetry(L"record_" + _recName + L".csv");
+			_controlMode = EControlMode::Default;
+		}
+
+		_cmdRecord = false;
+		_cmdReplay = false;
+	}
+
+	bool stopReplay = false;
+
+	if (_cmdReplay || GetAsyncKeyState(VK_OEM_6) & 1) // }
+	{
+		if (_controlMode == EControlMode::Default)
+		{
+			if (!_cmdReplay || _recName.empty()) _recName = L"tmp";
+			writeConsole(strf(L"start replay \"%s\"", _recName.c_str()), true);
+			loadControlSamples(L"record_" + _recName + L".raw");
+			if (_controlSamples.size())
+			{
+				_plugin->car->controlsProvider->ffEnabled = false;
+				teleportCar(_plugin->carAvatar, _bodyMat);
+				resetTelemetry();
+
+				if (_cmdReplay) _sim->console->show(false);
+				_recStartTime = ksGetQPTTime();
+				_controlMode = EControlMode::Replay;
+			}
+		}
+		else if (_controlMode == EControlMode::Replay)
+		{
+			stopReplay = true;
+		}
+
+		_cmdRecord = false;
+		_cmdReplay = false;
+	}
+
+	if ((_controlMode == EControlMode::Replay) && (stopReplay || (_sampleId >= _controlSamples.size())))
+	{
+		writeConsole(strf(L"stop replay \"%s\"", _recName.c_str()), true);
+		saveTelemetry(L"replay_" + _recName + L".csv");
+		_plugin->car->controlsProvider->ffEnabled = true;
+		_controlMode = EControlMode::Default;
+	}
+}
+
+void AppCustomPhysics::addConsoleCommands()
+{
+	auto pThis = this;
+	{
+		std::wstring name(L"rec");
+		std::function<bool(std::wstring)> func = [pThis](std::wstring s) {
+			if (s.find_first_of(L"rec ") == 0 && s.length() > 4)
+			{
+				pThis->cmdRecord(s.substr(4));
+			}
+			return true;
+		};
+		std::function<std::wstring(void)> help = []() {
+			return L"";
+		};
+		_sim->console->addCommand(name, &func, &help);
+	}
+	{
+		std::wstring name(L"rep");
+		std::function<bool(std::wstring)> func = [pThis](std::wstring s) {
+			if (s.find_first_of(L"rep ") == 0 && s.length() > 4)
+			{
+				pThis->cmdReplay(s.substr(4));
+			}
+			return true;
+		};
+		std::function<std::wstring(void)> help = []() {
+			return L"";
+		};
+		_sim->console->addCommand(name, &func, &help);
+	}
+}
+
+void AppCustomPhysics::cmdRecord(const std::wstring& name)
+{
+	if (!_cmdRecord && _controlMode == EControlMode::Default)
+	{
+		_recName = name;
+		_cmdRecord = true;
+	}
+}
+
+void AppCustomPhysics::cmdReplay(const std::wstring& name)
+{
+	if (!_cmdReplay && _controlMode == EControlMode::Default)
+	{
+		_recName = name;
+		_cmdReplay = true;
+	}
+}
+
+void AppCustomPhysics::resetTelemetry()
+{
+	for (auto& chan : _plugin->car->telemetry.channels)
+	{
+		chan.data.values.clear();
+		chan.data.frequency = 200;
+	}
+}
+
+static const wchar_t* TelemetryUnitsNames[] = 
+{
+	L"m",
+	L"C",
+	L"G",
+	L"rad/s",
+	L"",
+	L"m/s",
+	L"bar",
+	L"MS",
+	L"",
+	L"%",
+	L"W",
+	L"vmq",
+	L"V",
+	L"NM",
+	L"rad",
+	L"N",
+	L"mm",
+	L"deg",
+	L"fkg",
+	L"rpm",
+};
+
+void AppCustomPhysics::saveTelemetry(const std::wstring& filename)
+{
+	log_printf(L"saveTelemetry filename=%s", filename.c_str());
+
+	//std::wstring tmp(filename + L"_ac");
+	//_plugin->car->telemetry.save(&tmp);
+
+	#if 1
+	FILE* fd = NULL;
+	_wfopen_s(&fd, filename.c_str(), L"w");
+	if (!fd)
+	{
+		log_printf(L"ERR: fopen failed");
+	}
+	else
+	{
+		double elapsed = ksGetQPTTime() - _recStartTime;
+
+		fwprintf(fd, L"\"Format\",\"MoTeC CSV File\",,,\"Workbook\",\"\"\n");
+		fwprintf(fd, L"\"Venue\",\"%s\",,,\"Worksheet\",\"\"\n", filename.c_str());
+		fwprintf(fd, L"\"Vehicle\",\"test\",,,\"Vehicle Desc\",\"\"\n");
+		fwprintf(fd, L"\"Driver\",\"test\",,,\"Engine ID\",\"\"\n");
+		fwprintf(fd, L"\"Device\",\"ADL\"\n");
+		fwprintf(fd, L"\"Comment\",\"Tires: test\",,,\"Session\",\"PRACTICE\"\n");
+		fwprintf(fd, L"\"Log Date\",\"05.12.2018\",,,\"Origin Time\",\"0.000\",\"s\"\n");
+		fwprintf(fd, L"\"Log Time\",\"17:42:00\",,,\"Start Time\",\"0.000\",\"s\"\n");
+		fwprintf(fd, L"\"Sample Rate\",\"200.000\",\"Hz\",,\"End Time\",\"%.3f\",\"s\"\n", elapsed);
+		fwprintf(fd, L"\"Duration\",\"%.3f\",\"s\",,\"Start Distance\",\"0.0\",\"m\"\n", elapsed);
+		fwprintf(fd, L"\"Range\",\"Lap 1\",,,\"End Distance\",\"9999.9\",\"m\"\n");
+
+		fwprintf(fd, L"\n\n");
+
+		const Telemetry& telem = _plugin->car->telemetry;
+		const size_t numChannels = telem.channels.size();
+		size_t numSamples = numChannels > 0 ? telem.channels[0].data.values.size() : 0;
+
+		for (size_t chanId = 0; chanId < numChannels; ++chanId)
+		{
+			const auto& chan = telem.channels[chanId];
+			fwprintf(fd, L"\"%S\"", chan.name.c_str());
+			if (chanId + 1 < numChannels) fwprintf(fd, L",");
+
+			numSamples = tmin<size_t>(numSamples, chan.data.values.size());
+		}
+
+		fwprintf(fd, L"\n");
+
+		for (size_t chanId = 0; chanId < numChannels; ++chanId)
+		{
+			const auto& chan = telem.channels[chanId];
+			fwprintf(fd, L"\"%s\"", TelemetryUnitsNames[(int)chan.data.units]);
+			if (chanId + 1 < numChannels) fwprintf(fd, L",");
+		}
+
+		fwprintf(fd, L"\n\n");
+
+		for (size_t sampleId = 0; sampleId < numSamples; ++sampleId)
+		{
+			for (size_t chanId = 0; chanId < numChannels; ++chanId)
+			{
+				const auto& chan = telem.channels[chanId];
+				fwprintf(fd, L"\"%.3f\"", chan.data.values[sampleId]);
+				if (chanId + 1 < numChannels) fwprintf(fd, L",");
+			}
+			fwprintf(fd, L"\n");
+		}
+
+		fclose(fd);
+	}
+	#endif
+}
+
+void AppCustomPhysics::saveControlSamples(const std::wstring& filename)
+{
+	log_printf(L"saveControlSamples filename=%s samples=%u sampleSize=%u",
+	   filename.c_str(), (unsigned int)_controlSamples.size(), (unsigned int)sizeof(CarControlsSample));
 
 	if (!_controlSamples.size())
 	{
@@ -272,7 +449,7 @@ void AppCustomPhysics::saveControlSamples(const wchar_t* filename)
 	else
 	{
 		FILE* fd = NULL;
-		_wfopen_s(&fd, filename, L"wb");
+		_wfopen_s(&fd, filename.c_str(), L"wb");
 		if (!fd)
 		{
 			log_printf(L"ERR: fopen failed");
@@ -291,15 +468,15 @@ void AppCustomPhysics::saveControlSamples(const wchar_t* filename)
 	}
 }
 
-void AppCustomPhysics::loadControlSamples(const wchar_t* filename)
+void AppCustomPhysics::loadControlSamples(const std::wstring& filename)
 {
-	log_printf(L"loadControlSamples filename=%s", filename);
+	log_printf(L"loadControlSamples filename=%s", filename.c_str());
 
 	_controlSamples.clear();
 	_sampleId = 0;
 
 	FILE* fd = NULL;
-	_wfopen_s(&fd, filename, L"rb");
+	_wfopen_s(&fd, filename.c_str(), L"rb");
 	if (!fd)
 	{
 		log_printf(L"ERR: fopen failed");

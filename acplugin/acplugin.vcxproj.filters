@@ -156,5 +156,6 @@
     <None Include="CustomPhysics\Tyre.inl">
       <Filter>CustomPhysics</Filter>
     </None>
+    <None Include="CustomPhysics\Car.inl" />
   </ItemGroup>
 </Project>

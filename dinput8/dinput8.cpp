@@ -5,6 +5,7 @@
 
 static void ExecuteInjected()
 {
+	//============================================================================
 	// void Sim::Sim(Sim* this, Game* igame)
 	// bDevMode = INIReader::getInt(pIni, L"AC_APPS", L"ENABLE_DEV_APPS");
 
@@ -15,6 +16,16 @@ static void ExecuteInjected()
 	ParseByteArray(PatchBytes, "B8 01 00 00 00 40 0F 9F C6 90 90");
 
 	PatchProcess(GetCurrentProcess(), OrigBytes, PatchBytes, nullptr, OrigBytes.size() - 11);
+
+	//============================================================================
+	// void Telemetry::init(Telemetry *this, Car *car)
+	// v3->debugPhysics = v7 != 0;
+
+	ParseByteArray(OrigBytes, "E8 CC CC CC CC 90 4C 8D 45 B0 48 8D 55 D0 48 8D 8D CC CC CC CC E8 CC CC CC CC 85 C0 0F 95 C0 88 47 40 48 83 7D CC CC 72 09 48 8B 4D D0 E8 CC CC CC CC 48 C7 45 CC CC CC CC CC");
+
+	//ParseByteArray(PatchBytes, "B8 01 00 00 00 40 0F 9F C6 90 90");
+
+	//PatchProcess(GetCurrentProcess(), OrigBytes, PatchBytes, nullptr, OrigBytes.size() - 11);
 }
 
 BOOL WINAPI DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)

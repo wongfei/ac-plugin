@@ -29,9 +29,16 @@ public:
 
 	void run(PhysicsDriveThread* pThread);
 	void pollControls(Car* pCar, float dt);
+	void processUserInput();
 
-	void saveControlSamples(const wchar_t* filename);
-	void loadControlSamples(const wchar_t* filename);
+	void addConsoleCommands();
+	void cmdRecord(const std::wstring& name);
+	void cmdReplay(const std::wstring& name);
+
+	void resetTelemetry();
+	void saveTelemetry(const std::wstring& filename);
+	void saveControlSamples(const std::wstring& filename);
+	void loadControlSamples(const std::wstring& filename);
 
 protected:
 
@@ -40,12 +47,17 @@ protected:
 		Record,
 		Replay
 	};
-	EControlMode _controlMode = EControlMode::Default;
 
+	EControlMode _controlMode = EControlMode::Default;
+	bool _gameStarted = false;
+	bool _cmdRecord = false;
+	bool _cmdReplay = false;
+
+	std::wstring _recName;
 	std::vector<CarControlsSample> _controlSamples;
 	mat44f _bodyMat;
 	uint64_t _sampleId = 0;
-	bool _gameStarted = false;
+	double _recStartTime = 0;
 
 	void* _orig_PhysicsDriveThread_run = nullptr;
 	void* _orig_Car_pollControls = nullptr;

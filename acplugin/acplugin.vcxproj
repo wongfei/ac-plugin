@@ -134,6 +134,7 @@
     <ClInclude Include="utils\vthook.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CustomPhysics\Car.inl" />
     <None Include="CustomPhysics\Tyre.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

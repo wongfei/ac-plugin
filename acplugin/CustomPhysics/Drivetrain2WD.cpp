@@ -19,7 +19,6 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 
 	const SGearRatio& curGear = pThis->gears[pThis->currentGear]; // pThis->getCurrentGear()
 	pThis->ratio = pThis->finalRatio * curGear.ratio;
-
 	pThis->engine.inertia = pThis->acEngine.inertia;
 
 	for (auto& TorqGen : pThis->wheelTorqueGenerators)
@@ -88,7 +87,8 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 				+ pThis->outShaftL.inertia
 				+ pThis->outShaftR.inertia;
 		}
-		fNewEngineInertia = fInertiaSum / (pThis->ratio * pThis->ratio) + pThis->clutchInertia + fEngineInertia;
+
+		fNewEngineInertia = fInertiaSum / fabs(pThis->ratio * pThis->ratio) + pThis->clutchInertia + fEngineInertia;
 	}
 
 	double fInertiaFromWheels = pThis->getInertiaFromWheels();
@@ -143,7 +143,7 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		}
 	}
 
-	if (pThis->tractionType == TractionType::AWD) // ???
+	if (pThis->tractionType == TractionType::AWD) // TODO: same for AWD_NEW?
 	{
 		fDeltaDriveV = fDeltaDriveV * 0.5 * 2.0;
 		pThis->outShaftLF.velocity += fDeltaDriveV;
@@ -160,13 +160,13 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 	}
 	else if (pThis->diffType == DifferentialType::LSD)
 	{
-		double fOutClutchTorq;
+		double fOutClutchTorq, fDiffLoad;
+
 		if (fClutchTorq != 0.0)
 			fOutClutchTorq = -fClutchTorq;
 		else
 			fOutClutchTorq = pThis->locClutch * pThis->acEngine.status.outTorque;
 
-		double fDiffLoad;
 		if (fOutClutchTorq <= 0.0)
 			fDiffLoad = fabs(pThis->ratio * pThis->diffCoastRamp * fOutClutchTorq);
 		else
@@ -202,8 +202,8 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 	{
 		float fTorqL = (pThis->tyreLeft->absOverride * pThis->tyreLeft->inputs.brakeTorque) + pThis->tyreLeft->inputs.handBrakeTorque;
 		float fTorqR = (pThis->tyreRight->absOverride * pThis->tyreRight->inputs.brakeTorque) + pThis->tyreRight->inputs.handBrakeTorque;
-
 		bool bFlag = true;
+
 		if (fabs(pThis->ratio * pThis->acEngine.status.outTorque) <= (fTorqL + fTorqR))
 		{
 			if (pCar->valueCache.speed.value <= 1.0f) // pCar->getSpeed()
@@ -224,7 +224,7 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		}
 	}
 
-	if (pThis->tractionType != TractionType::AWD_NEW) // ???
+	if (pThis->tractionType != TractionType::AWD_NEW)
 	{
 		if (!pThis->clutchOpenState)
 			pThis->engine.velocity = pThis->rootVelocity;
@@ -251,7 +251,10 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 	}
 	else
 	{
-		pThis->totalTorque = (float)fabs((fabs(pThis->ratio) * (pThis->acEngine.status.outTorque * pThis->locClutch)) - (pThis->tyreLeft->status.feedbackTorque + pThis->tyreRight->status.feedbackTorque));
+		pThis->totalTorque = (float)fabs(
+			(fabs(pThis->ratio) * (pThis->acEngine.status.outTorque * pThis->locClutch)) 
+			- (pThis->tyreLeft->status.feedbackTorque + pThis->tyreRight->status.feedbackTorque)
+		);
 	}
 
 	float fGearTorque = (float)(pThis->locClutch * pThis->acEngine.status.outTorque * curGear.ratio);
@@ -260,22 +263,15 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 	{
 		float fAxleTorq = fGearTorque * pCar->axleTorqueReaction;
 
-		vec3f v;
-		v.x = 0;
-		v.y = 0;
-		v.z = fAxleTorq;
+		vec3f v = makev(0, 0, fAxleTorq);
 		pCar->body->addLocalTorque(v);
 
-		v.x = 0;
-		v.y = 0;
-		v.z = -fAxleTorq;
+		v = makev(0, 0, -fAxleTorq);
 		pCar->rigidAxle->addLocalTorque(v);
 
 		if (pCar->torqueModeEx == TorqueModeEX::reactionTorques)
 		{
-			v.x = -fGearTorque;
-			v.y = 0;
-			v.z = 0;
+			v = makev(-fGearTorque, 0, 0);
 
 			if (pCar->axleTorqueReaction == 0.0f)
 				pCar->body->addLocalTorque(v);

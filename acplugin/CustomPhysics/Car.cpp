@@ -66,19 +66,19 @@ void Car_step(Car* pThis, float dt)
 
 	if (pThis->controlsProvider)
 	{
-		/*if (bControlsLocked)
+		if (bControlsLocked)
 		{
 			pThis->controls.gas = 0;
 			pThis->controls.brake = 0;
 			pThis->controls.steer = 0;
 			pThis->controls.clutch = 0;
-		}*/
+		}
 
-		/*if (pThis->isGentleStopping)
+		if (pThis->isGentleStopping)
 		{
 			pThis->controls.gas = 0.0;
 			pThis->controls.brake = 0.2;
-		}*/
+		}
 
 		/*if (pThis->penaltyTime > 0.0f)
 		{
