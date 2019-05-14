@@ -41,12 +41,15 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Suspension_step);
 	HOOK_FUNC_RVA(SuspensionAxle_step);
 	HOOK_FUNC_RVA(SuspensionML_step);
-	//HOOK_FUNC_RVA(SuspensionStrut_step); // TODO
+	HOOK_FUNC_RVA(SuspensionStrut_step);
 
 	HOOK_FUNC_RVA(Tyre_step);
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
 	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
 	HOOK_FUNC_RVA(SCTM_solve);
+
+	HOOK_FUNC_RVA(BrakeSystem_step);
+	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
 	#endif
 
 	#if 0

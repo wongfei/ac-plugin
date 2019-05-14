@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomPhysics\BrakeSystem.cpp" />
     <ClCompile Include="CustomPhysics\Car.cpp" />
     <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp" />
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />

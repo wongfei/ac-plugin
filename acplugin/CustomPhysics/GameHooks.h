@@ -74,3 +74,11 @@ void Tyre_addTyreForcesV10(Tyre* pThis, vec3f& pos, vec3f& normal, SurfaceDef* p
 
 #define RVA_SCTM_solve 4504608
 TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi);
+
+// Brake
+
+#define RVA_BrakeSystem_step 2680384
+void BrakeSystem_step(BrakeSystem* pThis, float dt);
+
+#define RVA_BrakeSystem_stepTemps 2681120
+void BrakeSystem_stepTemps(BrakeSystem* pThis, float dt);

@@ -94,6 +94,7 @@
       <Filter>CustomPhysics</Filter>
     </ClCompile>
     <ClCompile Include="CustomPhysics\Timer.cpp" />
+    <ClCompile Include="CustomPhysics\BrakeSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
