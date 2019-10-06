@@ -93,8 +93,12 @@
     <ClCompile Include="CustomPhysics\TyreModel.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\Timer.cpp" />
-    <ClCompile Include="CustomPhysics\BrakeSystem.cpp" />
+    <ClCompile Include="CustomPhysics\BrakeSystem.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Timer.cpp">
+      <Filter>CustomPhysics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
@@ -151,12 +155,16 @@
     <ClInclude Include="utils\os.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="CustomPhysics\Timer.h" />
+    <ClInclude Include="CustomPhysics\Timer.h">
+      <Filter>CustomPhysics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CustomPhysics\Tyre.inl">
       <Filter>CustomPhysics</Filter>
     </None>
-    <None Include="CustomPhysics\Car.inl" />
+    <None Include="CustomPhysics\Car.inl">
+      <Filter>CustomPhysics</Filter>
+    </None>
   </ItemGroup>
 </Project>

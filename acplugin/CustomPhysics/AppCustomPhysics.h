@@ -34,6 +34,7 @@ public:
 	void addConsoleCommands();
 	void cmdRecord(const std::wstring& name);
 	void cmdReplay(const std::wstring& name);
+	void cmdDumpCar();
 
 	void resetTelemetry();
 	void saveTelemetry(const std::wstring& filename);

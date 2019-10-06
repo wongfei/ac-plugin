@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acplugin", "acplugin\acplugin.vcxproj", "{3C3955D9-24D9-4304-A6DE-A4ADFBAABD65}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,9 +11,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "minhook", "minhook\minhook.vcxproj", "{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dinput8", "dinput8\dinput8.vcxproj", "{F716DB57-F46C-4C9B-A0AF-037653A981ED}"
-	ProjectSection(ProjectDependencies) = postProject
-		{939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D} = {939A8B0A-1DB9-4B8B-9E3F-3E1502F5F28D}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

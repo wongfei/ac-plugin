@@ -315,6 +315,20 @@ void AppCustomPhysics::addConsoleCommands()
 		};
 		_sim->console->addCommand(name, &func, &help);
 	}
+	{
+		std::wstring name(L"dumpcar");
+		std::function<bool(std::wstring)> func = [pThis](std::wstring s) {
+			if (s.compare(L"dumpcar") == 0)
+			{
+				pThis->cmdDumpCar();
+			}
+			return true;
+		};
+		std::function<std::wstring(void)> help = []() {
+			return L"";
+		};
+		_sim->console->addCommand(name, &func, &help);
+	}
 }
 
 void AppCustomPhysics::cmdRecord(const std::wstring& name)
@@ -332,6 +346,31 @@ void AppCustomPhysics::cmdReplay(const std::wstring& name)
 	{
 		_recName = name;
 		_cmdReplay = true;
+	}
+}
+
+void AppCustomPhysics::cmdDumpCar()
+{
+	FILE* fd = fopen("car.raw", "wb");
+	if (fd)
+	{
+		char magic[4] = { 'C','A','R','!' };
+		fwrite(magic, sizeof(magic), 1, fd);
+
+		uint64_t carSize = sizeof(Car);
+		fwrite(&carSize, sizeof(carSize), 1, fd);
+		fwrite(_plugin->car, carSize, 1, fd);
+
+		uint64_t numSusp = _plugin->car->suspensions.size();
+		fwrite(&numSusp, sizeof(numSusp), 1, fd);
+
+		for (auto* susp : _plugin->car->suspensions)
+		{
+			fwrite(susp, sizeof(ISuspension), 1, fd);
+		}
+
+		fclose(fd);
+		writeConsole(strf(L"dumped!"), true);
 	}
 }
 
