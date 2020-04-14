@@ -3,6 +3,7 @@
 
 #include "CheaterDetector/AppCheaterDetector.h"
 #include "CustomPhysics/AppCustomPhysics.h"
+#include "FaceTrack/AppFaceTrack.h"
 
 #define AC_PLUGIN_NAME L"hello_plugin"
 #define AC_LOG_NAME AC_PLUGIN_NAME L".log"
@@ -30,14 +31,15 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	log_init(AC_LOG_NAME);
 	log_printf(L"acpInit module=%p plugin=%p", _ac_module, plugin);
 
-	#if defined(AC_DEBUG)
+	//#if defined(AC_DEBUG)
 		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
-	#endif
+	//#endif
 
 	if (!hook_init()) return false;
 
-	s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
+	//s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
 	s_apps.push_back(std::make_shared<AppCustomPhysics>(plugin));
+	//s_apps.push_back(std::make_shared<AppFaceTrack>(plugin));
 
 	hook_enable();
 

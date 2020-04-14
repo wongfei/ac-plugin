@@ -42,23 +42,8 @@
     <ClCompile Include="precompiled.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\Drivetrain.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Engine.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Suspension.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
     <ClCompile Include="utils\log.cpp">
       <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Turbo.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Tyre.cpp">
-      <Filter>CustomPhysics</Filter>
     </ClCompile>
     <ClCompile Include="utils\hook.cpp">
       <Filter>utils</Filter>
@@ -66,39 +51,13 @@
     <ClCompile Include="utils\mempatch.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\Damper.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
     <ClCompile Include="utils\os.cpp">
       <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Car.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\Drivetrain2WD.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\SuspensionAxle.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\SuspensionML.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\TyreForcesV10.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\SuspensionStrut.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\TyreModel.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPhysics\BrakeSystem.cpp">
-      <Filter>CustomPhysics</Filter>
     </ClCompile>
     <ClCompile Include="CustomPhysics\Timer.cpp">
       <Filter>CustomPhysics</Filter>
     </ClCompile>
+    <ClCompile Include="FaceTrack\AppFaceTrack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h">
@@ -137,9 +96,6 @@
     <ClInclude Include="utils\common.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="CustomPhysics\GameHooks.h">
-      <Filter>CustomPhysics</Filter>
-    </ClInclude>
     <ClInclude Include="precompiled.h">
       <Filter>pch</Filter>
     </ClInclude>
@@ -158,13 +114,26 @@
     <ClInclude Include="CustomPhysics\Timer.h">
       <Filter>CustomPhysics</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CustomPhysics\Tyre.inl">
-      <Filter>CustomPhysics</Filter>
-    </None>
-    <None Include="CustomPhysics\Car.inl">
-      <Filter>CustomPhysics</Filter>
-    </None>
+    <ClInclude Include="FaceTrack\AppFaceTrack.h" />
+    <ClInclude Include="FaceTrack\facetrack.h" />
+    <ClInclude Include="CustomPhysics\Impl\CarUtils.h" />
+    <ClInclude Include="CustomPhysics\Impl\ThermalObject.h" />
+    <ClInclude Include="CustomPhysics\Impl\TyreUtils.h" />
+    <ClInclude Include="CustomPhysics\Impl\AntirollBar.h" />
+    <ClInclude Include="CustomPhysics\Impl\BrakeSystem.h" />
+    <ClInclude Include="CustomPhysics\Impl\BrushSlipProvider.h" />
+    <ClInclude Include="CustomPhysics\Impl\Car.h" />
+    <ClInclude Include="CustomPhysics\Impl\Damper.h" />
+    <ClInclude Include="CustomPhysics\Impl\Drivetrain.h" />
+    <ClInclude Include="CustomPhysics\Impl\Drivetrain2WD.h" />
+    <ClInclude Include="CustomPhysics\Impl\Suspension.h" />
+    <ClInclude Include="CustomPhysics\Impl\SuspensionAxle.h" />
+    <ClInclude Include="CustomPhysics\Impl\SuspensionML.h" />
+    <ClInclude Include="CustomPhysics\Impl\SuspensionStrut.h" />
+    <ClInclude Include="CustomPhysics\Impl\Turbo.h" />
+    <ClInclude Include="CustomPhysics\Impl\Tyre.h" />
+    <ClInclude Include="CustomPhysics\Impl\TyreForces.h" />
+    <ClInclude Include="CustomPhysics\Impl\TyreModel.h" />
+    <ClInclude Include="CustomPhysics\Impl\Engine.h" />
   </ItemGroup>
 </Project>

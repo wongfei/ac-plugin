@@ -8,6 +8,7 @@
 #include <winsock.h>
 #include <d3d11.h>
 #include <dinput.h>
+#include <DirectXMath.h>
 #include <shlobj.h>
 #include <tlhelp32.h>
 

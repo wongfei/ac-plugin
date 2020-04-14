@@ -1,8 +1,34 @@
 #include "precompiled.h"
 #include "AppCustomPhysics.h"
-#include "GameHooks.h"
+
+#include "utils/log.h"
+#include "utils/common.h"
 #include "Timer.h"
-#include "Car.inl"
+
+#include "Impl/AntirollBar.h"
+#include "Impl/BrakeSystem.h"
+#include "Impl/BrushSlipProvider.h"
+#include "Impl/CarUtils.h"
+#include "Impl/Car.h"
+#include "Impl/Damper.h"
+#include "Impl/Drivetrain.h"
+#include "Impl/Drivetrain2WD.h"
+#include "Impl/Engine.h"
+#include "Impl/Suspension.h"
+#include "Impl/SuspensionAxle.h"
+#include "Impl/SuspensionML.h"
+#include "Impl/SuspensionStrut.h"
+#include "Impl/ThermalObject.h"
+#include "Impl/Turbo.h"
+#include "Impl/TyreUtils.h"
+#include "Impl/Tyre.h"
+#include "Impl/TyreForces.h"
+#include "Impl/TyreModel.h"
+
+#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
+#define HOOK_FUNC_RVA_2(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
+
+#define RVA_PhysicsDriveThread_run 1192272
 
 static AppCustomPhysics* s_custom_physics = nullptr;
 
@@ -21,42 +47,82 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	log_printf(L"+AppCustomPhysics %p", this);
 	s_custom_physics = this;
 
+	log_printf(L"carName=%s", plugin->car->screenName.c_str());
+	log_printf(L"suspensionTypeF=%d", (int)plugin->car->suspensionTypeF);
+	log_printf(L"suspensionTypeR=%d", (int)plugin->car->suspensionTypeR);
+	log_printf(L"torqueModeEx=%d", (int)plugin->car->torqueModeEx);
+	log_printf(L"tractionType=%d", (int)plugin->car->drivetrain.tractionType);
+	log_printf(L"diffType=%d", (int)plugin->car->drivetrain.diffType);
+
+	#if 0
 	ksInitTimerVars();
 	HOOK_FUNC_RVA_2(PhysicsDriveThread_run);
 	HOOK_FUNC_RVA_2(Car_pollControls);
+	addConsoleCommands();
+	#endif
+
+	#if 0
+		_plugin->car->controlsProvider->ffEnabled = false;
+	#endif
 
 	#if 1
+	HOOK_FUNC_RVA(AntirollBar_step);
+	HOOK_FUNC_RVA(BrakeSystem_step);
+	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
+
+	HOOK_FUNC_RVA(BrushTyreModel_solve);
+	HOOK_FUNC_RVA(BrushTyreModel_solveV5);
+	HOOK_FUNC_RVA(BrushTyreModel_getCFFromSlipAngle);
+	HOOK_FUNC_RVA(BrushSlipProvider_getSlipForce);
+
 	HOOK_FUNC_RVA(Car_step);
 	HOOK_FUNC_RVA(Car_stepComponents);
+	HOOK_FUNC_RVA(Car_updateAirPressure);
+	HOOK_FUNC_RVA(Car_updateBodyMass);
+	HOOK_FUNC_RVA(Car_calcBodyMass);
+
+	HOOK_FUNC_RVA(Damper_getForce);
+
+	HOOK_FUNC_RVA(Drivetrain_step);
+	HOOK_FUNC_RVA(Drivetrain_step2WD);
+	HOOK_FUNC_RVA(Drivetrain_stepControllers);
+	HOOK_FUNC_RVA(Drivetrain_getInertiaFromWheels);
+	HOOK_FUNC_RVA(Drivetrain_getInertiaFromEngine);
+	HOOK_FUNC_RVA(Drivetrain_reallignSpeeds);
+	HOOK_FUNC_RVA(Drivetrain_accelerateDrivetrainBlock);
+	HOOK_FUNC_RVA(Drivetrain_getEngineRPM);
 
 	HOOK_FUNC_RVA(Engine_step);
 	HOOK_FUNC_RVA(Engine_stepTurbos);
-	HOOK_FUNC_RVA(Turbo_step);
 
-	HOOK_FUNC_RVA(Drivetrain_step);
-	HOOK_FUNC_RVA(Drivetrain_stepControllers);
-	HOOK_FUNC_RVA(Drivetrain_step2WD);
-
-	HOOK_FUNC_RVA(Damper_getForce);
 	HOOK_FUNC_RVA(Suspension_step);
 	HOOK_FUNC_RVA(SuspensionAxle_step);
 	HOOK_FUNC_RVA(SuspensionML_step);
 	HOOK_FUNC_RVA(SuspensionStrut_step);
 
+	HOOK_FUNC_RVA(ThermalObject_step);
+
+	HOOK_FUNC_RVA(Turbo_step);
+
 	HOOK_FUNC_RVA(Tyre_step);
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
+	HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
+	HOOK_FUNC_RVA(Tyre_updateLockedState);
+	HOOK_FUNC_RVA(Tyre_stepRotationMatrix);
+	HOOK_FUNC_RVA(Tyre_stepThermalModel);
+	HOOK_FUNC_RVA(Tyre_stepTyreBlankets);
+	HOOK_FUNC_RVA(Tyre_stepGrainBlister);
+	HOOK_FUNC_RVA(Tyre_stepFlatSpot);
+
 	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
+	HOOK_FUNC_RVA(Tyre_stepRelaxationLength);
+	HOOK_FUNC_RVA(Tyre_getCorrectedD);
+	HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
+	HOOK_FUNC_RVA(Tyre_stepPuncture);
+	HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
+
 	HOOK_FUNC_RVA(SCTM_solve);
-
-	HOOK_FUNC_RVA(BrakeSystem_step);
-	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
 	#endif
-
-	#if 0
-	_plugin->car->controlsProvider->ffEnabled = false;
-	#endif
-
-	addConsoleCommands();
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
@@ -227,7 +293,7 @@ void AppCustomPhysics::processUserInput()
 			_sampleId = 0;
 			_controlSamples.clear();
 			_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
-			teleportCar(_plugin->carAvatar, _bodyMat);
+			CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
 			resetTelemetry();
 
 			if (_cmdRecord) _sim->console->show(false);
@@ -258,7 +324,7 @@ void AppCustomPhysics::processUserInput()
 			if (_controlSamples.size())
 			{
 				_plugin->car->controlsProvider->ffEnabled = false;
-				teleportCar(_plugin->carAvatar, _bodyMat);
+				CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
 				resetTelemetry();
 
 				if (_cmdReplay) _sim->console->show(false);
