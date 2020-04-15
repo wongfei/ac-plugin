@@ -102,7 +102,7 @@ void Car_step(Car* pThis, float dt)
 	float fSteerAngleSig = (pThis->steerLock * pThis->controls.steer) / pThis->steerRatio;
 	if (!isfinite(fSteerAngleSig))
 	{
-		DEBUG_BREAK;
+		log_printf(L"INF fSteerAngleSig");
 		fSteerAngleSig = 0.0f;
 	}
 

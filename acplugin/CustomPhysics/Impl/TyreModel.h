@@ -21,7 +21,7 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 	float fUnk1Tan = tanf(fUnk1);
 	float fSlipAngleSin = sinf(fSlipAngle);
 
-	float fBlister1 = tclamp(tmi.blister * 0.01f, 0.0f, 1.0f);
+	float fBlister1 = tclamp(tmi.blister * 0.009999999f, 0.0f, 1.0f);
 	float fBlister2 = (fBlister1 * 0.2f) + 1.0f;
 
 	float fStaticDy = pThis->getStaticDY(tmi.load);
@@ -54,14 +54,14 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 	{
 		float fCamberUnk = (fCamberRadTmp * pThis->dcamber0) - ((fCamberRadTmp * fCamberRadTmp) * pThis->dcamber1);
 		if (fCamberUnk <= -1.0f)
-			fCamberUnk = -0.9f;
+			fCamberUnk = -0.8999999f;
 
 		fUDy += (((fUDy / (fCamberUnk + 1.0f)) - fUDy) * pThis->dCamberBlend);
 	}
 
 	float fSlipRatio = tmi.slipRatio;
 	float fSlipAngleCos = cosf(tmi.slipAngleRAD);
-	float fSlipRatioClamped = tmax(-1.0f, fSlipRatio); // (fSlipRatio > -0.99999f ? fSlipRatio : -0.99999f); // TODO: ???
+	float fSlipRatioClamped = (fSlipRatio > -0.99998999f ? fSlipRatio : -0.99999f); // ???
 
 	float fSpeed = tmi.speed;
 	float a = fSpeed * fSlipAngleSin;
@@ -74,7 +74,7 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 
 	float fLoadSubFz0 = tmi.load - pThis->Fz0;
 	float fPCfGain = pThis->pressureCfGain;
-	float fCF = ((((1.0f / ((((fLoadSubFz0 / pThis->Fz0) * (pThis->maxSlip1 - pThis->maxSlip0)) + pThis->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.01f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
+	float fCF = ((((1.0f / ((((fLoadSubFz0 / pThis->Fz0) * (pThis->maxSlip1 - pThis->maxSlip0)) + pThis->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.0099999998f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
 
 	float fUnk3 = fSlipRatio / (fSlipRatioClamped + 1.0f);
 	float fUnk4 = fUnk1Tan / (fSlipRatioClamped + 1.0f);
@@ -97,10 +97,10 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 	tmo.Fy = ((fPureFyDy * fDy) * (fUnk4 / fSlip)) * tmi.load;
 	tmo.Fx = ((fUnk3 / fSlip) * fPureFyDx) * tmi.load;
 
-	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.0064f) / 3.0f));
+	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.0063999998f) / 3.0f));
 	tmo.ndSlip = fNdSlip;
 
-	float fUnk5 = 1.0f - (fNdSlip * 0.8f);
+	float fUnk5 = 1.0f - (fNdSlip * 0.80000001f);
 	fUnk5 = tclamp(fUnk5, 0.0f, 1.0f);
 
 	float fTrail = (((((3.0f - (fUnk5 * 2.0f)) * (fUnk5 * fUnk5)) * 1.1f) - 0.1f) * tmi.cpLength) * 0.12f;

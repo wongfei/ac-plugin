@@ -142,7 +142,7 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 
 	if (!(isfinite(force.x) && isfinite(force.y) && isfinite(force.z)))
 	{
-		DEBUG_BREAK;
+		log_printf(L"INF vTyreForce");
 		force = vec3f(0, 0, 0);
 	}
 

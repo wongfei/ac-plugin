@@ -39,7 +39,7 @@ void Tyre_step(Tyre* pThis, float dt)
 
 	if (!isfinite(pThis->status.angularVelocity))
 	{
-		DEBUG_BREAK;
+		log_printf(L"INF status.angularVelocity");
 		pThis->status.angularVelocity = 0.0f;
 	}
 
@@ -220,11 +220,17 @@ LB_COMPUTE_TORQ:
 		fTorq = pThis->status.rollingResistence - ((fAngularVelocitySign * fBrakeTorque) + pThis->localMX);
 	}
 
+	if (!isfinite(fTorq))
+	{
+		log_printf(L"INF fTorq");
+		fTorq = 0.0f;
+	}
+
 	float fFeedbackTorque = fTorq + pThis->inputs.electricTorque;
 
 	if (!isfinite(fFeedbackTorque))
 	{
-		DEBUG_BREAK;
+		log_printf(L"INF fFeedbackTorque");
 		fFeedbackTorque = 0.0f;
 	}
 
@@ -437,7 +443,7 @@ void Tyre_stepThermalModel(Tyre* pThis, float dt)
 	}
 	else
 	{
-		DEBUG_BREAK;
+		log_printf(L"INF fThermalInput");
 	}
 
 	if (pCar)
@@ -502,7 +508,7 @@ void Tyre_stepGrainBlister(Tyre* pThis, float dt, float hubVelocity)
 								}
 								else
 								{
-									DEBUG_BREAK;
+									log_printf(L"INF fGrainTest1");
 								}
 							}
 						}
@@ -520,7 +526,7 @@ void Tyre_stepGrainBlister(Tyre* pThis, float dt, float hubVelocity)
 				}
 				else
 				{
-					DEBUG_BREAK;
+					log_printf(L"INF fGrainTest2");
 				}
 			}
 
@@ -546,7 +552,7 @@ void Tyre_stepGrainBlister(Tyre* pThis, float dt, float hubVelocity)
 								}
 								else
 								{
-									DEBUG_BREAK;
+									log_printf(L"INF fBlisterTest");
 								}
 							}
 						}

@@ -54,7 +54,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	log_printf(L"tractionType=%d", (int)plugin->car->drivetrain.tractionType);
 	log_printf(L"diffType=%d", (int)plugin->car->drivetrain.diffType);
 
-	#if 0
+	#if 1
 	ksInitTimerVars();
 	HOOK_FUNC_RVA_2(PhysicsDriveThread_run);
 	HOOK_FUNC_RVA_2(Car_pollControls);

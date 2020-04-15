@@ -31,9 +31,9 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 	log_init(AC_LOG_NAME);
 	log_printf(L"acpInit module=%p plugin=%p", _ac_module, plugin);
 
-	//#if defined(AC_DEBUG)
+	#if defined(AC_DEBUG)
 		MessageBoxA(NULL, "_acplugin", "_acplugin", MB_OK);
-	//#endif
+	#endif
 
 	if (!hook_init()) return false;
 
