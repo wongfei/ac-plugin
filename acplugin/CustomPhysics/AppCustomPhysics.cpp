@@ -5,25 +5,31 @@
 #include "utils/common.h"
 #include "Timer.h"
 
-#include "Impl/AntirollBar.h"
-#include "Impl/BrakeSystem.h"
-#include "Impl/BrushSlipProvider.h"
+#include "Impl/DynamicController.h"
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
-#include "Impl/Damper.h"
+
 #include "Impl/Drivetrain.h"
 #include "Impl/Drivetrain2WD.h"
 #include "Impl/Engine.h"
+#include "Impl/Turbo.h"
+
 #include "Impl/Suspension.h"
 #include "Impl/SuspensionAxle.h"
 #include "Impl/SuspensionML.h"
 #include "Impl/SuspensionStrut.h"
-#include "Impl/ThermalObject.h"
-#include "Impl/Turbo.h"
+#include "Impl/Damper.h"
+
 #include "Impl/TyreUtils.h"
 #include "Impl/Tyre.h"
 #include "Impl/TyreForces.h"
 #include "Impl/TyreModel.h"
+#include "Impl/TyreThermalModel.h"
+#include "Impl/BrushSlipProvider.h"
+
+#include "Impl/AntirollBar.h"
+#include "Impl/BrakeSystem.h"
+#include "Impl/ThermalObject.h"
 
 #define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
 #define HOOK_FUNC_RVA_2(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
@@ -66,14 +72,10 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	#endif
 
 	#if 1
-	HOOK_FUNC_RVA(AntirollBar_step);
-	HOOK_FUNC_RVA(BrakeSystem_step);
-	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
 
-	HOOK_FUNC_RVA(BrushTyreModel_solve);
-	HOOK_FUNC_RVA(BrushTyreModel_solveV5);
-	HOOK_FUNC_RVA(BrushTyreModel_getCFFromSlipAngle);
-	HOOK_FUNC_RVA(BrushSlipProvider_getSlipForce);
+	//
+	// Car
+	//
 
 	HOOK_FUNC_RVA(Car_step);
 	HOOK_FUNC_RVA(Car_stepComponents);
@@ -81,7 +83,24 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Car_updateBodyMass);
 	HOOK_FUNC_RVA(Car_calcBodyMass);
 
+	HOOK_FUNC_RVA(DynamicController_eval);
+	HOOK_FUNC_RVA(DynamicController_getInput);
+	HOOK_FUNC_RVA(DynamicController_getOversteerFactor);
+	HOOK_FUNC_RVA(DynamicController_getRearSpeedRatio);
+
+	//
+	// Suspension
+	//
+
+	HOOK_FUNC_RVA(Suspension_step);
+	HOOK_FUNC_RVA(SuspensionAxle_step);
+	HOOK_FUNC_RVA(SuspensionML_step);
+	HOOK_FUNC_RVA(SuspensionStrut_step);
 	HOOK_FUNC_RVA(Damper_getForce);
+
+	//
+	// Drivetrain
+	//
 
 	HOOK_FUNC_RVA(Drivetrain_step);
 	HOOK_FUNC_RVA(Drivetrain_step2WD);
@@ -92,36 +111,53 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_FUNC_RVA(Drivetrain_accelerateDrivetrainBlock);
 	HOOK_FUNC_RVA(Drivetrain_getEngineRPM);
 
+	//
+	// Engine
+	//
+
 	HOOK_FUNC_RVA(Engine_step);
 	HOOK_FUNC_RVA(Engine_stepTurbos);
-
-	HOOK_FUNC_RVA(Suspension_step);
-	HOOK_FUNC_RVA(SuspensionAxle_step);
-	HOOK_FUNC_RVA(SuspensionML_step);
-	HOOK_FUNC_RVA(SuspensionStrut_step);
-
-	HOOK_FUNC_RVA(ThermalObject_step);
-
 	HOOK_FUNC_RVA(Turbo_step);
+
+	//
+	// Tyre
+	//
 
 	HOOK_FUNC_RVA(Tyre_step);
 	HOOK_FUNC_RVA(Tyre_addGroundContact);
-	HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
+	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
+		HOOK_FUNC_RVA(Tyre_stepRelaxationLength);
+		HOOK_FUNC_RVA(Tyre_getCorrectedD);
+		HOOK_FUNC_RVA(SCTM_solve);
+			HOOK_FUNC_RVA(SCTM_getStaticDY);
+			HOOK_FUNC_RVA(SCTM_getStaticDX);
+			HOOK_FUNC_RVA(SCTM_getPureFY);
+		HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
+		HOOK_FUNC_RVA(Tyre_stepPuncture);
+		HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
 	HOOK_FUNC_RVA(Tyre_updateLockedState);
+	HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
 	HOOK_FUNC_RVA(Tyre_stepRotationMatrix);
 	HOOK_FUNC_RVA(Tyre_stepThermalModel);
+		HOOK_FUNC_RVA(TyreThermalModel_step);
 	HOOK_FUNC_RVA(Tyre_stepTyreBlankets);
 	HOOK_FUNC_RVA(Tyre_stepGrainBlister);
 	HOOK_FUNC_RVA(Tyre_stepFlatSpot);
 
-	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
-	HOOK_FUNC_RVA(Tyre_stepRelaxationLength);
-	HOOK_FUNC_RVA(Tyre_getCorrectedD);
-	HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
-	HOOK_FUNC_RVA(Tyre_stepPuncture);
-	HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
+	HOOK_FUNC_RVA(BrushTyreModel_solve);
+	HOOK_FUNC_RVA(BrushTyreModel_solveV5);
+	HOOK_FUNC_RVA(BrushTyreModel_getCFFromSlipAngle);
+	HOOK_FUNC_RVA(BrushSlipProvider_getSlipForce);
 
-	HOOK_FUNC_RVA(SCTM_solve);
+	//
+	// Stuff
+	//
+
+	HOOK_FUNC_RVA(BrakeSystem_step);
+	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
+	HOOK_FUNC_RVA(AntirollBar_step);
+	HOOK_FUNC_RVA(ThermalObject_step);
+
 	#endif
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));

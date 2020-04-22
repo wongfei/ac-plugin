@@ -1,6 +1,11 @@
 #pragma once
 
 #define RVA_SCTM_solve 4504608
+#define RVA_SCTM_getStaticDY 4504496
+#define RVA_SCTM_getStaticDX 4504368
+#define RVA_SCTM_getPureFY 4504176
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 {
@@ -115,3 +120,53 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 
 	return tmo;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float SCTM_getStaticDX(SCTM* pThis, float load)
+{
+	if (pThis->dxLoadCurve.getCount() <= 0)
+	{
+		if (load != 0.0)
+			return (powf(load, pThis->lsExpX) * pThis->lsMultX) / load;
+	}
+	else
+	{
+		return pThis->dxLoadCurve.getCubicSplineValue(load);
+	}
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float SCTM_getStaticDY(SCTM* pThis, float load)
+{
+	if (pThis->dyLoadCurve.getCount() <= 0)
+	{
+		if (load != 0.0f)
+			return (powf(load, pThis->lsExpY) * pThis->lsMultY) / load;
+	}
+	else
+	{
+		return pThis->dyLoadCurve.getCubicSplineValue(load);
+	}
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float SCTM_getPureFY(SCTM* pThis, float D, float cf, float load, float slip)
+{
+	float v5 = (cf * 2.0f) * 0.0063999998f;
+	float v6 = 1.0f / (v5 / 3.0f);
+	float fy;
+
+	if (v6 < slip)
+		fy = ((1.0f / (((slip - v6) * pThis->falloffSpeed) + 1.0f)) * (1.0f - pThis->asy)) + pThis->asy;
+	else
+		fy = (((1.0f - (slip / v6)) * (1.0f - (slip / v6))) * (v5 * slip)) + ((3.0f - ((slip / v6) * 2.0f)) * ((slip / v6) * (slip / v6)));
+
+	return fy;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

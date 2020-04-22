@@ -22,7 +22,7 @@ void BrakeSystem_step(BrakeSystem* pThis, float dt)
 
 		if (fLoadAWD != 0.0f)
 		{
-			float fSpeed = getSpeedV(pThis->car);
+			float fSpeed = Car_getSpeedValue(pThis->car);
 			if (fSpeed * 3.6f > 10.0f)
 				bFlag = true;
 		}
@@ -40,7 +40,7 @@ void BrakeSystem_step(BrakeSystem* pThis, float dt)
 		fFrontBias = pThis->ebbInstant;
 	}
 
-	fFrontBias = tclamp<float>(fFrontBias, pThis->limitDown, pThis->limitUp);
+	fFrontBias = tclamp(fFrontBias, pThis->limitDown, pThis->limitUp);
 
 	float fOverride = pThis->electronicOverride;
 	if (fOverride <= pThis->car->controls.brake)
@@ -84,7 +84,7 @@ void BrakeSystem_stepTemps(BrakeSystem* pThis, float dt)
 	{
 		pTyre->inputs.brakeTorque = pDisc->perfCurve.getValue(pDisc->t) * pTyre->inputs.brakeTorque;
 
-		float fSpeed = getSpeedV(pThis->car);
+		float fSpeed = Car_getSpeedValue(pThis->car);
 		float fCool = (((fSpeed * 3.6f) * pDisc->coolSpeedFactor) + 1.0f) * pDisc->coolTransfer;
 
 		pDisc->t += (((pThis->car->ksPhysics->ambientTemperature - pDisc->t) * fCool) * dt);

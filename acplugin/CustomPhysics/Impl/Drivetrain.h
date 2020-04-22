@@ -53,7 +53,7 @@ void Drivetrain_stepControllers(Drivetrain* pThis, float dt)
 
 	if (pThis->controllers.awdCenterLock.get())
 	{
-		float fScale = ((getSpeedV(pThis->car) * 3.6f) - 5.0f) * 0.05f;
+		float fScale = ((Car_getSpeedValue(pThis->car) * 3.6f) - 5.0f) * 0.05f;
 		fScale = tclamp(fScale, 0.0f, 1.0f);
 
 		pThis->awdCenterDiff.preload = ((pThis->controllers.awdCenterLock->eval() - 20.0f) * fScale) + 20.0f;

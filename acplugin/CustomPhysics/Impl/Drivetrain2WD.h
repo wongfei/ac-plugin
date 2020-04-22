@@ -202,7 +202,7 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 
 		if (fabs(pThis->ratio * pThis->acEngine.status.outTorque) <= (fTorqL + fTorqR))
 		{
-			if (getSpeedV(pCar) <= 1.0f)
+			if (Car_getSpeedValue(pCar) <= 1.0f)
 				bFlag = false;
 		}
 

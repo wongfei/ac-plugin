@@ -197,4 +197,5 @@ inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) {
 inline DirectX::XMMATRIX xmload(const mat44f& m) { return DirectX::XMMATRIX(&m.M11); }
 inline mat44f xmstore(const DirectX::XMMATRIX& m) { DirectX::XMFLOAT4X4 f44; DirectX::XMStoreFloat4x4(&f44, m); return *(mat44f*)&f44._11; }
 
-inline float getSpeedV(Car* pCar) { return pCar->valueCache.speed.value; }
+inline Speed Car_getSpeed(Car* pCar) { return pCar->valueCache.speed; }
+inline float Car_getSpeedValue(Car* pCar) { return pCar->valueCache.speed.value; }

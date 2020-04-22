@@ -2,8 +2,8 @@
 
 #define RVA_Tyre_step 2635776
 #define RVA_Tyre_addGroundContact 2611584
-#define RVA_Tyre_updateAngularSpeed 2641824
 #define RVA_Tyre_updateLockedState 2642032
+#define RVA_Tyre_updateAngularSpeed 2641824
 #define RVA_Tyre_stepRotationMatrix 2640768
 #define RVA_Tyre_stepThermalModel 2641056
 #define RVA_Tyre_stepTyreBlankets 2641680
@@ -340,6 +340,23 @@ void Tyre_addGroundContact(Tyre* pThis, const vec3f& pos, const vec3f& normal)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+void Tyre_updateLockedState(Tyre* pThis, float dt)
+{
+	if (pThis->status.isLocked)
+	{
+		float fBrake = pThis->absOverride * pThis->inputs.brakeTorque;
+		if (fBrake <= pThis->inputs.handBrakeTorque)
+			fBrake = pThis->inputs.handBrakeTorque;
+
+		pThis->status.isLocked =
+			(fabsf(fBrake) >= fabsf(pThis->status.loadedRadius * pThis->status.Fx))
+			&& (fabsf(pThis->status.angularVelocity) < 1.0f)
+			&& (!pThis->driven);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Tyre_updateAngularSpeed(Tyre* pThis, float dt)
 {
 	pThis->updateLockedState(dt);
@@ -358,23 +375,6 @@ void Tyre_updateAngularSpeed(Tyre* pThis, float dt)
 
 	if (fabsf(pThis->status.angularVelocity) < 1.0f)
 		pThis->status.angularVelocity = pThis->status.angularVelocity * 0.9f;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Tyre_updateLockedState(Tyre* pThis, float dt)
-{
-	if (pThis->status.isLocked)
-	{
-		float fBrake = pThis->absOverride * pThis->inputs.brakeTorque;
-		if (fBrake <= pThis->inputs.handBrakeTorque)
-			fBrake = pThis->inputs.handBrakeTorque;
-
-		pThis->status.isLocked =
-			(fabsf(fBrake) >= fabsf(pThis->status.loadedRadius * pThis->status.Fx))
-			&& (fabsf(pThis->status.angularVelocity) < 1.0f)
-			&& (!pThis->driven);
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +411,7 @@ void Tyre_stepThermalModel(Tyre* pThis, float dt)
 		* ((pThis->status.D * pThis->status.load) * pThis->data.thermalFrictionK))
 		* fGripLevel;
 
-	auto* pSurface = pThis->surfaceDef;
+	SurfaceDef* pSurface = pThis->surfaceDef;
 	if (pSurface)
 		fThermalInput *= pSurface->gripMod;
 
@@ -459,7 +459,7 @@ void Tyre_stepTyreBlankets(Tyre* pThis, float dt)
 {
 	if (pThis->tyreBlanketsOn)
 	{
-		if (getSpeedV(pThis->car) * 3.6f > 10.0f)
+		if (Car_getSpeedValue(pThis->car) * 3.6f > 10.0f)
 			pThis->tyreBlanketsOn = 0.0f;
 
 		float fTemp = pThis->blanketTemperature;

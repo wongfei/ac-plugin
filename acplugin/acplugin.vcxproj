@@ -104,6 +104,7 @@
       <FileType>CppCode</FileType>
     </ClInclude>
     <ClCompile Include="CustomPhysics\Timer.cpp" />
+    <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
     <ClInclude Include="CustomPhysics\Impl\Suspension.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -154,6 +155,7 @@
     <ClInclude Include="CheaterDetector\DriverState.h" />
     <ClInclude Include="CheaterDetector\AppCheaterDetector.h" />
     <ClInclude Include="CheaterDetector\GridView.h" />
+    <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreUtils.h" />
     <ClInclude Include="CustomPhysics\Timer.h" />
     <ClInclude Include="FaceTrack\AppFaceTrack.h" />
@@ -170,6 +172,9 @@
     <ClInclude Include="AC\ac_sdk.h" />
     <ClInclude Include="plugin\PluginApp.h" />
     <ClInclude Include="utils\vthook.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CustomPhysics\Impl\CallOrder.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

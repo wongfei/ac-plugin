@@ -224,7 +224,7 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 void Tyre_stepRelaxationLength(Tyre* pThis, float svx, float svy, float hubVelocity, float dt)
 {
 	float fRelaxLen = pThis->modelData.relaxationLength;
-	float fNdSlip = tclamp<float>(pThis->status.ndSlip, 0.0f, 1.0f);
+	float fNdSlip = tclamp(pThis->status.ndSlip, 0.0f, 1.0f);
 
 	float v8 = ((((pThis->status.load / pThis->modelData.Fz0) * fRelaxLen) - fRelaxLen) * 0.3f) + fRelaxLen;
 	float v9 = ((fRelaxLen - (v8 * 2.0f)) * fNdSlip) + (v8 * 2.0f);
@@ -237,7 +237,7 @@ void Tyre_stepRelaxationLength(Tyre* pThis, float svx, float svy, float hubVeloc
 	else
 	{
 		float v10 = (hubVelocity * dt) / v9;
-		if (v10 < 1.0f) // TODO: not sure
+		if (v10 < 1.0f)
 		{
 			if (v10 < 0.04f)
 				v10 = 0.04f;
@@ -255,17 +255,17 @@ void Tyre_stepRelaxationLength(Tyre* pThis, float svx, float svy, float hubVeloc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-float Tyre_getCorrectedD(Tyre* pThis, float d, float* wear_mult)
+float Tyre_getCorrectedD(Tyre* pThis, float d, float* outWearMult)
 {
 	float fD = pThis->thermalModel.getCorrectedD(d, pThis->status.camberRAD) / ((fabsf(pThis->status.pressureDynamic - pThis->modelData.idealPressure) * pThis->modelData.pressureGainD) + 1.0f);
 
 	if (pThis->modelData.wearCurve.getCount())
 	{
-		float fWear = pThis->modelData.wearCurve.getValue((float)pThis->status.virtualKM);
-		fD = fD * fWear;
+		float fWearMult = pThis->modelData.wearCurve.getValue((float)pThis->status.virtualKM);
+		fD *= fWearMult;
 
-		if (wear_mult)
-			*wear_mult = fWear;
+		if (outWearMult)
+			*outWearMult = fWearMult;
 	}
 
 	return fD;
@@ -289,8 +289,8 @@ void Tyre_stepDirtyLevel(Tyre* pThis, float dt, float hubSpeed)
 
 	if (pThis->aiMult == 1.0f)
 	{
-		float fDirty = 1.0f - tclamp<float>(pThis->status.dirtyLevel * 0.05f, 0.0f, 1.0f);
-		float fScale = tmax<float>(0.8f, fDirty);
+		float fDirty = 1.0f - tclamp((pThis->status.dirtyLevel * 0.05f), 0.0f, 1.0f);
+		float fScale = tmax(0.8f, fDirty);
 
 		pThis->status.Mz = fScale * pThis->status.Mz;
 		pThis->status.Fx = fScale * pThis->status.Fx;
@@ -329,8 +329,6 @@ void Tyre_addTyreForceToHub(Tyre* pThis, const vec3f& pos, const vec3f& force) /
 	float* M3 = &mxWR.M31;
 	float* M4 = &mxWR.M41;
 
-	//M4.m128_u64[0] = __PAIR64__(LODWORD(fWorldY), LODWORD(fWorldX));
-	//M4.m128_f32[2] = fWorldZ;
 	M4[0] = fWorldX;
 	M4[1] = fWorldY;
 	M4[2] = fWorldZ;

@@ -55,7 +55,14 @@ void Car_step(Car* pThis, float dt)
 
 	if (pThis->blackFlagged && !pThis->isInPits())
 	{
-		// TODO
+		// TODO: check
+		const float* M3 = &pThis->pitPosition.M31;
+		vec3f vRot(-M3[0], -M3[1], -M3[2]);
+		pThis->forceRotation(vRot);
+
+		const float* M4 = &pThis->pitPosition.M41;
+		vec3f vPos(M4[0], M4[1], M4[2]);
+		pThis->forcePosition(vPos, true);
 	}
 
 	pThis->updateAirPressure();
@@ -120,7 +127,7 @@ void Car_step(Car* pThis, float dt)
 
 	pThis->autoClutch.step(dt);
 
-	float fSpeed = getSpeedV(pThis);
+	float fSpeed = Car_getSpeedValue(pThis);
 	vec3f fAngVel = pThis->body->getAngularVelocity();
 	float fAngVelMag = vdot(fAngVel, fAngVel);
 
@@ -254,7 +261,7 @@ void Car_updateAirPressure(Car* pThis) // TODO: check this
 			if (pSS != &pThis->slipStream) // TODO: skip self?
 			{
 				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * pThis->slipStreamEffectGain);
-				fSlip = tclamp<float>(fSlip, 0.0f, 1.0f);
+				fSlip = tclamp(fSlip, 0.0f, 1.0f);
 
 				if (fMinSlip > fSlip)
 				{
@@ -284,7 +291,7 @@ void Car_updateBodyMass(Car* pThis)
 		}
 
 		float fFuelMass = pThis->fuelKG * (float)pThis->fuel;
-		pThis->fuelTankBody->setMassBox(fFuelMass, tmax<float>(0.1f, fFuelMass), 0.5f, 0.5f); // TODO: not sure
+		pThis->fuelTankBody->setMassBox(fFuelMass, tmax(0.1f, fFuelMass), 0.5f, 0.5f); // TODO: not sure
 
 		pThis->lastBodyMassUpdateTime = pThis->ksPhysics->physicsTime;
 	}
