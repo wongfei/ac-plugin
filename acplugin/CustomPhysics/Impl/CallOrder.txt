@@ -43,11 +43,15 @@ Car::stepComponents
 Tyre::step
 	Tyre::addGroundContact
 	Tyre::addTyreForcesV10
-		Tyre::stepRelaxationLength
 		Tyre::getCorrectedD
+			TyreThermalModel::getCorrectedD
 		SCTM::solve
+			SCTM::getStaticDY
+			SCTM::getStaticDX
+			SCTM::getPureFY
 		Tyre::stepDirtyLevel
 		Tyre::stepPuncture
+			TyreThermalModel::getIMO
 		Tyre::addTyreForceToHub
 	Tyre::updateLockedState
 	Tyre::updateAngularSpeed
@@ -56,7 +60,19 @@ Tyre::step
 		TyreThermalModel::addThermalInput
 		TyreThermalModel::addThermalCoreInput
 		TyreThermalModel::step
+			TyreThermalModel::getCurrentCPTemp
 		Tyre::stepTyreBlankets
+			TyreThermalModel::setTemperature
 	Tyre::stepGrainBlister
 	Tyre::stepFlatSpot
 	Tyre::onStepCompleted
+
+// LEGACY
+Tyre::addTyreForces
+	Tyre::stepRelaxationLength
+	Tyre::getDY
+	Tyre::getDX
+	Tyre::getCamberedDy
+	Tyre::getCorrectedD
+	Tyre::stepDirtyLevel
+	Tyre::stepPuncture

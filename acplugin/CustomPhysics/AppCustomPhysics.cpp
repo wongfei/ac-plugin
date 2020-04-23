@@ -23,6 +23,7 @@
 #include "Impl/TyreUtils.h"
 #include "Impl/Tyre.h"
 #include "Impl/TyreForces.h"
+#include "Impl/TyreForcesLegacy.h"
 #include "Impl/TyreModel.h"
 #include "Impl/TyreThermalModel.h"
 #include "Impl/BrushSlipProvider.h"
@@ -124,25 +125,34 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	//
 
 	HOOK_FUNC_RVA(Tyre_step);
-	HOOK_FUNC_RVA(Tyre_addGroundContact);
-	HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
-		HOOK_FUNC_RVA(Tyre_stepRelaxationLength);
-		HOOK_FUNC_RVA(Tyre_getCorrectedD);
-		HOOK_FUNC_RVA(SCTM_solve);
-			HOOK_FUNC_RVA(SCTM_getStaticDY);
-			HOOK_FUNC_RVA(SCTM_getStaticDX);
-			HOOK_FUNC_RVA(SCTM_getPureFY);
-		HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
-		HOOK_FUNC_RVA(Tyre_stepPuncture);
-		HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
-	HOOK_FUNC_RVA(Tyre_updateLockedState);
-	HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
-	HOOK_FUNC_RVA(Tyre_stepRotationMatrix);
-	HOOK_FUNC_RVA(Tyre_stepThermalModel);
-		HOOK_FUNC_RVA(TyreThermalModel_step);
-	HOOK_FUNC_RVA(Tyre_stepTyreBlankets);
-	HOOK_FUNC_RVA(Tyre_stepGrainBlister);
-	HOOK_FUNC_RVA(Tyre_stepFlatSpot);
+		HOOK_FUNC_RVA(Tyre_addGroundContact);
+		
+		HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
+			HOOK_FUNC_RVA(Tyre_getCorrectedD);
+				HOOK_FUNC_RVA(TyreThermalModel_getCorrectedD);
+			HOOK_FUNC_RVA(SCTM_solve);
+				HOOK_FUNC_RVA(SCTM_getStaticDY);
+				HOOK_FUNC_RVA(SCTM_getStaticDX);
+				HOOK_FUNC_RVA(SCTM_getPureFY);
+			HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
+			HOOK_FUNC_RVA(Tyre_stepPuncture);
+				HOOK_FUNC_RVA(TyreThermalModel_getIMO);
+			HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
+		
+		HOOK_FUNC_RVA(Tyre_updateLockedState);
+		HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
+		HOOK_FUNC_RVA(Tyre_stepRotationMatrix);
+
+		HOOK_FUNC_RVA(Tyre_stepThermalModel);
+			HOOK_FUNC_RVA(TyreThermalModel_addThermalInput);
+			HOOK_FUNC_RVA(TyreThermalModel_addThermalCoreInput);
+			HOOK_FUNC_RVA(TyreThermalModel_step);
+				HOOK_FUNC_RVA(TyreThermalModel_getCurrentCPTemp);
+			HOOK_FUNC_RVA(Tyre_stepTyreBlankets);
+				HOOK_FUNC_RVA(TyreThermalModel_setTemperature);
+
+		HOOK_FUNC_RVA(Tyre_stepGrainBlister);
+		HOOK_FUNC_RVA(Tyre_stepFlatSpot);
 
 	HOOK_FUNC_RVA(BrushTyreModel_solve);
 	HOOK_FUNC_RVA(BrushTyreModel_solveV5);

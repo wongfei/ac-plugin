@@ -127,6 +127,7 @@
     <ClInclude Include="CustomPhysics\Impl\TyreForces.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\TyreForcesLegacy.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreModel.h">
       <FileType>CppCode</FileType>
     </ClInclude>

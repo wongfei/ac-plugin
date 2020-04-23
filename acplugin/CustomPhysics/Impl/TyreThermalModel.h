@@ -1,6 +1,16 @@
 #pragma once
 
 #define RVA_TyreThermalModel_step 2810688
+#define RVA_TyreThermalModel_getPatchAt 2809776
+#define RVA_TyreThermalModel_getCorrectedD 2808768
+#define RVA_TyreThermalModel_getIMO 2809264
+#define RVA_TyreThermalModel_addThermalCoreInput 2805872
+#define RVA_TyreThermalModel_addThermalInput 2805904
+#define RVA_TyreThermalModel_getCurrentCPTemp 2808800
+#define RVA_TyreThermalModel_getPracticalTemp 2810176
+#define RVA_TyreThermalModel_getAvgSurfaceTemp 2808720
+#define RVA_TyreThermalModel_setTemperature 2810640
+#define RVA_TyreThermalModel_reset 2810304
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,24 +70,13 @@ void TyreThermalModel_step(TyreThermalModel* pThis, float dt, float angularSpeed
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void TyreThermalModel_addThermalCoreInput(TyreThermalModel* pThis, float temp)
+TyreThermalPatch* TyreThermalModel_getPatchAt(TyreThermalModel* pThis, int x, int y)
 {
-	pThis->coreTInput += temp;
-}
+	if (x >= 0 && x < pThis->stripes && y >= 0 && y < pThis->elements)
+		return &pThis->patches[y + x * pThis->elements];
 
-void TyreThermalModel_addThermalInput(TyreThermalModel* pThis, float xpos, float pressureRel, float temp)
-{
-	// TODO
-}
-
-float TyreThermalModel_getAvgSurfaceTemp(TyreThermalModel* pThis)
-{
-	float fSum = 0;
-	for (auto& patch : pThis->patches)
-	{
-		fSum += patch.T;
-	}
-	return fSum / 36.0f;
+	SHOULD_NOT_REACH;
+	return &pThis->patches[0];
 }
 
 float TyreThermalModel_getCorrectedD(TyreThermalModel* pThis, float d, float camberRAD)
@@ -85,12 +84,6 @@ float TyreThermalModel_getCorrectedD(TyreThermalModel* pThis, float d, float cam
 	if (pThis->isActive)
 		return d * pThis->thermalMultD;
 	return d;
-}
-
-float TyreThermalModel_getCurrentCPTemp(TyreThermalModel* pThis, float camber)
-{
-	// TODO
-	return 0;
 }
 
 void TyreThermalModel_getIMO(TyreThermalModel* pThis, float* pfOut)
@@ -107,18 +100,59 @@ void TyreThermalModel_getIMO(TyreThermalModel* pThis, float* pfOut)
 	}
 }
 
-TyreThermalPatch* TyreThermalModel_getPatchAt(TyreThermalModel* pThis, int x, int y)
+void TyreThermalModel_addThermalCoreInput(TyreThermalModel* pThis, float temp)
 {
-	if (x >= 0 && x < pThis->stripes && y >= 0 && y < pThis->elements)
-		return &pThis->patches[y + x * pThis->elements];
+	pThis->coreTInput += temp;
+}
 
-	SHOULD_NOT_REACH;
-	return &pThis->patches[0];
+void TyreThermalModel_addThermalInput(TyreThermalModel* pThis, float xpos, float pressureRel, float temp)
+{
+	float fNormXcs = tclamp((xpos * pThis->camberSpreadK), -1.0f, 1.0f);
+
+	float fPhase = (float)(pThis->phase * 0.1591549430964443);
+	int iElemY = ((int)(fPhase * pThis->elements)) % pThis->elements;
+
+	float fT = (pThis->car ? pThis->car->ksPhysics->roadTemperature : 26.0f) + temp;
+	float fPr1 = pressureRel * 0.1f;
+	float fPr2 = (pressureRel * -0.5f) + 1.0f;
+
+	auto& patch0 = pThis->getPatchAt(0, iElemY);
+	patch0.inputT += ((((fNormXcs + 1.0f) - (fPr1 * 0.5f)) * fPr2) * fT);
+
+	auto& patch1 = pThis->getPatchAt(1, iElemY);
+	patch1.inputT += (((fPr1 + 1.0f) * fPr2) * fT);
+
+	auto& patch2 = pThis->getPatchAt(2, iElemY);
+	patch2.inputT += ((((1.0f - fNormXcs) - (fPr1 * 0.5f)) * fPr2) * fT);
+}
+
+float TyreThermalModel_getCurrentCPTemp(TyreThermalModel* pThis, float camber)
+{
+	float fNormCsk = tclamp((camber * pThis->camberSpreadK), -1.0f, 1.0f);
+
+	float fPhase = (float)(pThis->phase * 0.1591549430964443);
+	int iElemY = ((int)(fPhase * pThis->elements)) % pThis->elements;
+
+	auto& patch0 = pThis->getPatchAt(0, iElemY);
+	auto& patch1 = pThis->getPatchAt(1, iElemY);
+	auto& patch2 = pThis->getPatchAt(2, iElemY);
+
+	return ((((fNormCsk + 1.0f) * patch0.T) + patch1.T) + ((1.0f - fNormCsk) * patch2.T)) * 0.33333334f;
 }
 
 float TyreThermalModel_getPracticalTemp(TyreThermalModel* pThis, float camberRAD)
 {
 	return ((pThis->getCurrentCPTemp(camberRAD) - pThis->coreTemp) * 0.25f) + pThis->coreTemp;
+}
+
+float TyreThermalModel_getAvgSurfaceTemp(TyreThermalModel* pThis)
+{
+	float fSum = 0;
+	for (auto& patch : pThis->patches)
+	{
+		fSum += patch.T;
+	}
+	return fSum / 36.0f;
 }
 
 void TyreThermalModel_setTemperature(TyreThermalModel* pThis, float optimumTemp)
@@ -129,3 +163,12 @@ void TyreThermalModel_setTemperature(TyreThermalModel* pThis, float optimumTemp)
 		patch.T = optimumTemp;
 	}
 }
+
+void TyreThermalModel_reset(TyreThermalModel* pThis)
+{
+	float fT = pThis->car ? pThis->car->ksPhysics->ambientTemperature : 26.0f;
+	pThis->setTemperature(fT);
+	pThis->phase = 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
