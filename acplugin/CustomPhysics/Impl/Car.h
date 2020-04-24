@@ -1,31 +1,35 @@
 #pragma once
 
-#define RVA_Car_step 2579872
-#define RVA_Car_stepComponents 2581712
-#define RVA_Car_pollControls 2575984
-#define RVA_Car_stepThermalObjects 2583024
-#define RVA_Car_updateAirPressure 2583264
-#define RVA_Car_updateBodyMass 2583664
-#define RVA_Car_calcBodyMass 2554736
+BEGIN_HOOK_OBJ(Car)
 
-void Car_step(Car* pThis, float dt)
+	#define RVA_Car_step 2579872
+	#define RVA_Car_stepComponents 2581712
+	#define RVA_Car_stepThermalObjects 2583024
+	#define RVA_Car_updateAirPressure 2583264
+	#define RVA_Car_updateBodyMass 2583664
+	#define RVA_Car_calcBodyMass 2554736
+
+	void _step(float dt);
+	void _stepComponents(float dt);
+	void _stepThermalObjects(float dt);
+	void _updateAirPressure();
+	void _updateBodyMass();
+	float _calcBodyMass();
+
+END_HOOK_OBJ()
+
+void _Car::_step(float dt)
 {
-	if (!pThis)
+	if (!this->physicsGUID)
 	{
-		SHOULD_NOT_REACH;
-		return;
-	}
-
-	if (!pThis->physicsGUID)
-	{
-		vec3f bodyVelocity = pThis->body->getVelocity();
+		vec3f bodyVelocity = this->body->getVelocity();
 		float fVelSq = vdot(bodyVelocity, bodyVelocity);
 		float ERP;
 
 		if (fVelSq >= 1.0f)
 		{
 			ERP = 0.3f;
-			for (auto& pSusp : pThis->suspensions)
+			for (auto& pSusp : this->suspensions)
 			{
 				pSusp->setERPCFM(ERP, pSusp->baseCFM);
 			}
@@ -33,234 +37,234 @@ void Car_step(Car* pThis, float dt)
 		else
 		{
 			ERP = 0.9f;
-			for (auto& pSusp : pThis->suspensions)
+			for (auto& pSusp : this->suspensions)
 			{
 				pSusp->setERPCFM(ERP, 0.0000001f);
 			}
 		}
 
-		pThis->fuelTankJoint->setERPCFM(ERP, -1.0f);
+		this->fuelTankJoint->setERPCFM(ERP, -1.0f);
 	}
 
-	bool bControlsLocked = pThis->isControlsLocked || pThis->lockControlsTime > pThis->ksPhysics->physicsTime;
+	bool bControlsLocked = this->isControlsLocked || this->lockControlsTime > this->ksPhysics->physicsTime;
 
-	pThis->pollControls(dt);
+	this->pollControls(dt);
 
-	bool bHeadlightsSwitch = pThis->controlsProvider->getAction(DriverActions::eHeadlightsSwitch);
+	bool bHeadlightsSwitch = this->controlsProvider->getAction(DriverActions::eHeadlightsSwitch);
 
-	if (pThis->controlsProvider && bHeadlightsSwitch && !pThis->lastLigthSwitchState)
-		pThis->lightsOn = pThis->lightsOn == 0;
+	if (this->controlsProvider && bHeadlightsSwitch && !this->lastLigthSwitchState)
+		this->lightsOn = this->lightsOn == 0;
 
-	pThis->lastLigthSwitchState = bHeadlightsSwitch;
+	this->lastLigthSwitchState = bHeadlightsSwitch;
 
-	if (pThis->blackFlagged && !pThis->isInPits())
+	if (this->blackFlagged && !this->isInPits())
 	{
 		// TODO: check
-		const float* M3 = &pThis->pitPosition.M31;
+		const float* M3 = &this->pitPosition.M31;
 		vec3f vRot(-M3[0], -M3[1], -M3[2]);
-		pThis->forceRotation(vRot);
+		this->forceRotation(vRot);
 
-		const float* M4 = &pThis->pitPosition.M41;
+		const float* M4 = &this->pitPosition.M41;
 		vec3f vPos(M4[0], M4[1], M4[2]);
-		pThis->forcePosition(vPos, true);
+		this->forcePosition(vPos, true);
 	}
 
-	pThis->updateAirPressure();
+	this->updateAirPressure();
 
-	float fRpmAbs = fabsf(pThis->drivetrain.getEngineRPM());
-	float fTurboBoost = tmax(0.0f, pThis->drivetrain.acEngine.status.turboBoost);
-	double fNewFuel = pThis->fuel - (fRpmAbs * dt * pThis->drivetrain.acEngine.gasUsage) * (fTurboBoost + 1.0) * pThis->fuelConsumptionK * 0.001 * pThis->ksPhysics->fuelConsumptionRate;
-	pThis->fuel = fNewFuel;
+	float fRpmAbs = fabsf(this->drivetrain.getEngineRPM());
+	float fTurboBoost = tmax(0.0f, this->drivetrain.acEngine.status.turboBoost);
+	double fNewFuel = this->fuel - (fRpmAbs * dt * this->drivetrain.acEngine.gasUsage) * (fTurboBoost + 1.0) * this->fuelConsumptionK * 0.001 * this->ksPhysics->fuelConsumptionRate;
+	this->fuel = fNewFuel;
 
 	if (fNewFuel > 0.0f)
 	{
-		pThis->drivetrain.acEngine.fuelPressure = 1.0f;
+		this->drivetrain.acEngine.fuelPressure = 1.0f;
 	}
 	else
 	{
-		pThis->fuel = 0.0f;
-		pThis->drivetrain.acEngine.fuelPressure = 0.0f;
+		this->fuel = 0.0f;
+		this->drivetrain.acEngine.fuelPressure = 0.0f;
 	}
 
-	pThis->updateBodyMass();
+	this->updateBodyMass();
 
-	if (pThis->controlsProvider)
+	if (this->controlsProvider)
 	{
 		if (bControlsLocked)
 		{
-			pThis->controls.gas = 0;
-			pThis->controls.brake = 0;
-			pThis->controls.steer = 0;
-			pThis->controls.clutch = 0;
+			this->controls.gas = 0;
+			this->controls.brake = 0;
+			this->controls.steer = 0;
+			this->controls.clutch = 0;
 		}
 
-		if (pThis->isGentleStopping)
+		if (this->isGentleStopping)
 		{
-			pThis->controls.gas = 0.0;
-			pThis->controls.brake = 0.2;
+			this->controls.gas = 0.0;
+			this->controls.brake = 0.2;
 		}
 
-		if (pThis->penaltyTime > 0.0f)
+		if (this->penaltyTime > 0.0f)
 		{
 			// TODO
 		}
 	}
 
-	float fSteerAngleSig = (pThis->steerLock * pThis->controls.steer) / pThis->steerRatio;
+	float fSteerAngleSig = (this->steerLock * this->controls.steer) / this->steerRatio;
 	if (!isfinite(fSteerAngleSig))
 	{
 		log_printf(L"INF fSteerAngleSig");
 		fSteerAngleSig = 0.0f;
 	}
 
-	pThis->finalSteerAngleSignal = fSteerAngleSig;
+	this->finalSteerAngleSignal = fSteerAngleSig;
 
 	bool bAllTyresLoaded = true;
 	for (int i = 0; i < 4; ++i)
 	{
-		if (pThis->tyres[i].status.load <= 0.0f)
+		if (this->tyres[i].status.load <= 0.0f)
 		{
 			bAllTyresLoaded = false;
 			break;
 		}
 	}
 
-	pThis->autoClutch.step(dt);
+	this->autoClutch.step(dt);
 
-	float fSpeed = Car_getSpeedValue(pThis);
-	vec3f fAngVel = pThis->body->getAngularVelocity();
+	float fSpeed = Car_getSpeedValue(this);
+	vec3f fAngVel = this->body->getAngularVelocity();
 	float fAngVelMag = vdot(fAngVel, fAngVel);
 
 	if (fSpeed >= 0.5f || fAngVelMag >= 1.0f)
 	{
-		pThis->sleepingFrames = 0;
+		this->sleepingFrames = 0;
 	}
 	else
 	{
-		if ((pThis->controls.gas <= 0.01f
-			|| pThis->controls.clutch <= 0.01f
-			|| pThis->drivetrain.currentGear == 1)
+		if ((this->controls.gas <= 0.01f
+			|| this->controls.clutch <= 0.01f
+			|| this->drivetrain.currentGear == 1)
 			&& bAllTyresLoaded)
 		{
-			++pThis->sleepingFrames;
+			++this->sleepingFrames;
 		}
 		else
 		{
-			pThis->sleepingFrames = 0;
+			this->sleepingFrames = 0;
 		}
 
-		if (pThis->sleepingFrames > pThis->framesToSleep)
+		if (this->sleepingFrames > this->framesToSleep)
 		{
-			pThis->body->stop(0.99f);
-			pThis->fuelTankBody->stop(0.99f);
+			this->body->stop(0.99f);
+			this->fuelTankBody->stop(0.99f);
 		}
 	}
 
-	vec3f bodyVel = pThis->body->getVelocity();
-	vec3f tmp = vsub(bodyVel, pThis->lastVelocity);
+	vec3f bodyVel = this->body->getVelocity();
+	vec3f tmp = vsub(bodyVel, this->lastVelocity);
 	tmp = vmul(tmp, (1.0f / dt) * 0.10197838f);
-	pThis->lastVelocity = bodyVel;
+	this->lastVelocity = bodyVel;
 
-	vec3f accG = pThis->body->worldToLocalNormal(tmp);
-	pThis->accG = accG;
+	vec3f accG = this->body->worldToLocalNormal(tmp);
+	this->accG = accG;
 
-	pThis->stepThermalObjects(dt);
-	pThis->stepComponents(dt);
-	pThis->updateColliderStatus(dt);
+	this->stepThermalObjects(dt);
+	this->stepComponents(dt);
+	this->updateColliderStatus(dt);
 
-	if (!pThis->physicsGUID)
-		pThis->stepJumpStart(dt);
+	if (!this->physicsGUID)
+		this->stepJumpStart(dt);
 }
 
-void Car_stepComponents(Car* pThis, float dt)
+void _Car::_stepComponents(float dt)
 {
-	pThis->brakeSystem.step(dt);
-	pThis->edl.step(dt);
+	this->brakeSystem.step(dt);
+	this->edl.step(dt);
 
-	for (auto& susp : pThis->suspensions)
+	for (auto& susp : this->suspensions)
 	{
 		susp->step(dt);
 	}
 
 	for (int i = 0; i < 4; ++i)
 	{
-		pThis->tyres[i].step(dt);
+		this->tyres[i].step(dt);
 	}
 
 	for (int i = 0; i < 2; ++i)
 	{
-		if (pThis->heaveSprings[i].k != 0.0f)
-			pThis->heaveSprings[i].step(dt);
+		if (this->heaveSprings[i].k != 0.0f)
+			this->heaveSprings[i].step(dt);
 	}
 
-	pThis->drs.step(dt);
-	pThis->aeroMap.step(dt);
+	this->drs.step(dt);
+	this->aeroMap.step(dt);
 
-	if (pThis->kers.present)
-		pThis->kers.step(dt);
+	if (this->kers.present)
+		this->kers.step(dt);
 
-	if (pThis->ers.present)
-		pThis->ers.step(dt);
+	if (this->ers.present)
+		this->ers.step(dt);
 
-	pThis->steeringSystem.step(dt);
-	pThis->autoBlip.step(dt);
-	pThis->autoShift.step(dt);
-	pThis->gearChanger.step(dt);
-	pThis->drivetrain.step(dt);
+	this->steeringSystem.step(dt);
+	this->autoBlip.step(dt);
+	this->autoShift.step(dt);
+	this->gearChanger.step(dt);
+	this->drivetrain.step(dt);
 
 	for (int i = 0; i < 2; ++i)
 	{
-		pThis->antirollBars[i].step(dt);
+		this->antirollBars[i].step(dt);
 	}
 
-	pThis->abs.step(dt);
-	pThis->tractionControl.step(dt);
-	pThis->speedLimiter.step(dt);
-	pThis->colliderManager.step(dt);
-	pThis->setupManager.step(dt);
+	this->abs.step(dt);
+	this->tractionControl.step(dt);
+	this->speedLimiter.step(dt);
+	this->colliderManager.step(dt);
+	this->setupManager.step(dt);
 
-	if (!pThis->physicsGUID)
+	if (!this->physicsGUID)
 	{
-		pThis->telemetry.step(dt);
-		pThis->driftMode.step(dt);
-		pThis->performanceMeter.step(dt);
-		pThis->lapInvalidator.step(dt);
-		pThis->penaltyManager.step(dt);
+		this->telemetry.step(dt);
+		this->driftMode.step(dt);
+		this->performanceMeter.step(dt);
+		this->lapInvalidator.step(dt);
+		this->penaltyManager.step(dt);
 	}
 
-	pThis->splineLocator.step(dt);
-	pThis->stabilityControl.step(dt);
-	pThis->transponder.step(dt);
-	pThis->fuelLapEvaluator.step(dt);
+	this->splineLocator.step(dt);
+	this->stabilityControl.step(dt);
+	this->transponder.step(dt);
+	this->fuelLapEvaluator.step(dt);
 }
 
-void Car_stepThermalObjects(Car* pThis, float dt)
+void _Car::_stepThermalObjects(float dt)
 {
-	float fRpm = pThis->drivetrain.getEngineRPM();
-	if (fRpm > (pThis->drivetrain.acEngine.data.minimum * 0.8f))
+	float fRpm = this->drivetrain.getEngineRPM();
+	if (fRpm > (this->drivetrain.acEngine.data.minimum * 0.8f))
 	{
-		float fLimiter = (float)pThis->drivetrain.acEngine.getLimiterRPM();
-		pThis->water.addHeadSource((((fRpm / fLimiter) * 20.0f) * pThis->controls.gas) + 85.0f);
+		float fLimiter = (float)this->drivetrain.acEngine.getLimiterRPM();
+		this->water.addHeadSource((((fRpm / fLimiter) * 20.0f) * this->controls.gas) + 85.0f);
 	}
 
-	pThis->water.step(dt, pThis->ksPhysics->ambientTemperature, pThis->valueCache.speed);
+	this->water.step(dt, this->ksPhysics->ambientTemperature, this->valueCache.speed);
 }
 
-void Car_updateAirPressure(Car* pThis) // TODO: check this
+void _Car::_updateAirPressure() // TODO: check this
 {
-	float fAirDensity = pThis->ksPhysics->getAirDensity();
+	float fAirDensity = this->ksPhysics->getAirDensity();
 
-	if (pThis->slipStreamEffectGain > 0.0f)
+	if (this->slipStreamEffectGain > 0.0f)
 	{
-		vec3f vPos = pThis->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
+		vec3f vPos = this->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
 		float fMinSlip = 1.0f;
 
-		for (auto iterSS = pThis->ksPhysics->slipStreams.begin(); iterSS != pThis->ksPhysics->slipStreams.end(); ++iterSS)
+		for (auto iterSS = this->ksPhysics->slipStreams.begin(); iterSS != this->ksPhysics->slipStreams.end(); ++iterSS)
 		{
 			SlipStream* pSS = *iterSS;
-			if (pSS != &pThis->slipStream) // TODO: skip self?
+			if (pSS != &this->slipStream) // TODO: skip self?
 			{
-				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * pThis->slipStreamEffectGain);
+				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain);
 				fSlip = tclamp(fSlip, 0.0f, 1.0f);
 
 				if (fMinSlip > fSlip)
@@ -270,38 +274,38 @@ void Car_updateAirPressure(Car* pThis) // TODO: check this
 			}
 		}
 
-		fAirDensity = ((fAirDensity - (fMinSlip * fAirDensity)) * (0.75f / pThis->slipStreamEffectGain)) + (fMinSlip * fAirDensity);
+		fAirDensity = ((fAirDensity - (fMinSlip * fAirDensity)) * (0.75f / this->slipStreamEffectGain)) + (fMinSlip * fAirDensity);
 	}
 
-	pThis->aeroMap.airDensity = fAirDensity;
+	this->aeroMap.airDensity = fAirDensity;
 }
 
-void Car_updateBodyMass(Car* pThis)
+void _Car::_updateBodyMass()
 {
-	if (pThis->ksPhysics->physicsTime - pThis->lastBodyMassUpdateTime > 1000.0)
+	if (this->ksPhysics->physicsTime - this->lastBodyMassUpdateTime > 1000.0)
 	{
-		if (pThis->bodyInertia.x != 0.0f || pThis->bodyInertia.y != 0.0f || pThis->bodyInertia.z != 0.0f)
+		if (this->bodyInertia.x != 0.0f || this->bodyInertia.y != 0.0f || this->bodyInertia.z != 0.0f)
 		{
-			float fBodyMass = pThis->calcBodyMass();
-			pThis->body->setMassBox(fBodyMass, pThis->bodyInertia.x, pThis->bodyInertia.y, pThis->bodyInertia.z);
+			float fBodyMass = this->calcBodyMass();
+			this->body->setMassBox(fBodyMass, this->bodyInertia.x, this->bodyInertia.y, this->bodyInertia.z);
 		}
 		else
 		{
-			pThis->body->setMassExplicitInertia(pThis->mass, pThis->explicitInertia.x, pThis->explicitInertia.y, pThis->explicitInertia.z);
+			this->body->setMassExplicitInertia(this->mass, this->explicitInertia.x, this->explicitInertia.y, this->explicitInertia.z);
 		}
 
-		float fFuelMass = pThis->fuelKG * (float)pThis->fuel;
-		pThis->fuelTankBody->setMassBox(fFuelMass, tmax(0.1f, fFuelMass), 0.5f, 0.5f); // TODO: not sure
+		float fFuelMass = this->fuelKG * (float)this->fuel;
+		this->fuelTankBody->setMassBox(fFuelMass, tmax(0.1f, fFuelMass), 0.5f, 0.5f); // TODO: not sure
 
-		pThis->lastBodyMassUpdateTime = pThis->ksPhysics->physicsTime;
+		this->lastBodyMassUpdateTime = this->ksPhysics->physicsTime;
 	}
 }
 
-float Car_calcBodyMass(Car* pThis)
+float _Car::_calcBodyMass()
 {
 	float fSuspMass = 0;
 	for (int i = 0; i < 4; ++i)
-		fSuspMass += pThis->suspensions[i]->getMass();
+		fSuspMass += this->suspensions[i]->getMass();
 
-	return (pThis->mass - fSuspMass) + pThis->ballastKG;
+	return (this->mass - fSuspMass) + this->ballastKG;
 }

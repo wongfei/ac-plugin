@@ -13,6 +13,8 @@ struct CarControlsSample
 {
 	uint64_t sampleId;
 	double currentTime;
+	double lastStepTimestamp;
+	double physicsTime;
 	double gameTime;
 	CarControls controls;
 };
@@ -28,8 +30,12 @@ public:
 	virtual bool acpOnGui(ACPluginContext* context) { return true; }
 
 	void run(PhysicsDriveThread* pThread);
+	void stepNormal(PhysicsDriveThread* pThis);
+	void stepReplay(PhysicsDriveThread* pThis);
+	void stepPhysicsEngine(PhysicsDriveThread* pThis, double fCurTime, double fGt);
+
 	void pollControls(Car* pCar, float dt);
-	void processUserInput();
+	void processCustomInput();
 
 	void addConsoleCommands();
 	void cmdRecord(const std::wstring& name);
@@ -59,7 +65,5 @@ protected:
 	mat44f _bodyMat;
 	uint64_t _sampleId = 0;
 	double _recStartTime = 0;
-
-	void* _orig_PhysicsDriveThread_run = nullptr;
-	void* _orig_Car_pollControls = nullptr;
+	double _recStopTime = 0;
 };

@@ -1,23 +1,29 @@
 #pragma once
 
-#define RVA_Damper_getForce 2830976
+BEGIN_HOOK_OBJ(Damper)
 
-float Damper_getForce(Damper* pThis, float fSpeed)
+	#define RVA_Damper_getForce 2830976
+
+	float _getForce(float fSpeed);
+
+END_HOOK_OBJ()
+
+float _Damper::_getForce(float fSpeed)
 {
 	float fForce;
 	if (fSpeed <= 0.0f)
 	{
-		if (fabsf(fSpeed) <= pThis->fastThresholdRebound)
-			fForce = -(fSpeed * pThis->reboundSlow);
+		if (fabsf(fSpeed) <= this->fastThresholdRebound)
+			fForce = -(fSpeed * this->reboundSlow);
 		else
-			fForce = (pThis->fastThresholdRebound * pThis->reboundSlow) - ((pThis->fastThresholdRebound + fSpeed) * pThis->reboundFast);
+			fForce = (this->fastThresholdRebound * this->reboundSlow) - ((this->fastThresholdRebound + fSpeed) * this->reboundFast);
 	}
 	else
 	{
-		if (fSpeed <= pThis->fastThresholdBump)
-			fForce = -(fSpeed * pThis->bumpSlow);
+		if (fSpeed <= this->fastThresholdBump)
+			fForce = -(fSpeed * this->bumpSlow);
 		else
-			fForce = -(((fSpeed - pThis->fastThresholdBump) * pThis->bumpFast) + (pThis->fastThresholdBump * pThis->bumpSlow));
+			fForce = -(((fSpeed - this->fastThresholdBump) * this->bumpFast) + (this->fastThresholdBump * this->bumpSlow));
 	}
 	return fForce;
 }

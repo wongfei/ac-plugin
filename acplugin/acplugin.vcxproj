@@ -88,6 +88,7 @@
     <ClInclude Include="CustomPhysics\Impl\BrushSlipProvider.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\BrushTyreModel.h" />
     <ClInclude Include="CustomPhysics\Impl\Car.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -158,6 +159,7 @@
     <ClInclude Include="CheaterDetector\GridView.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreUtils.h" />
+    <ClInclude Include="CustomPhysics\Impl\Wing.h" />
     <ClInclude Include="CustomPhysics\Timer.h" />
     <ClInclude Include="FaceTrack\AppFaceTrack.h" />
     <ClInclude Include="FaceTrack\facetrack.h" />

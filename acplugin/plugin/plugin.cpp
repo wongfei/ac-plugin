@@ -37,7 +37,7 @@ AC_EXPORT bool AC_API acpInit(ACPlugin* plugin)
 
 	if (!hook_init()) return false;
 
-	//s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
+	s_apps.push_back(std::make_shared<AppCheaterDetector>(plugin));
 	s_apps.push_back(std::make_shared<AppCustomPhysics>(plugin));
 	//s_apps.push_back(std::make_shared<AppFaceTrack>(plugin));
 

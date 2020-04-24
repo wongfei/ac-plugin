@@ -1,17 +1,23 @@
 #pragma once
 
-#define RVA_ThermalObject_step 2830080
+BEGIN_HOOK_OBJ(ThermalObject)
 
-void ThermalObject_step(ThermalObject* pThis, float dt, float ambientTemp, const Speed &speed)
+	#define RVA_ThermalObject_step 2830080
+
+	void _step(float dt, float ambientTemp, const Speed &speed);
+
+END_HOOK_OBJ()
+
+void _ThermalObject::_step(float dt, float ambientTemp, const Speed &speed)
 {
-	float fAccum = pThis->heatAccumulator;
-	float fOneDivMass = 1.0f / pThis->tmass;
-	float fCool = 1.0f - pThis->coolSpeedK * speed.value;
-	pThis->heatAccumulator = 0.0f;
+	float fAccum = this->heatAccumulator;
+	float fOneDivMass = 1.0f / this->tmass;
+	float fCool = 1.0f - this->coolSpeedK * speed.value;
+	this->heatAccumulator = 0.0f;
 
-	float fTemp = (((((fCool * ambientTemp) - pThis->t) * fOneDivMass) * dt) * pThis->coolFactor) + pThis->t;
-	pThis->t = fTemp;
+	float fTemp = (((((fCool * ambientTemp) - this->t) * fOneDivMass) * dt) * this->coolFactor) + this->t;
+	this->t = fTemp;
 
 	if (fAccum != 0.0f)
-		pThis->t = ((((fAccum - fTemp) * fOneDivMass) * dt) * pThis->heatFactor) + fTemp;
+		this->t = ((((fAccum - fTemp) * fOneDivMass) * dt) * this->heatFactor) + fTemp;
 }

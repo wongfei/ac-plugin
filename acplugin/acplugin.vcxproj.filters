@@ -138,6 +138,8 @@
     <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h" />
     <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreForcesLegacy.h" />
+    <ClInclude Include="CustomPhysics\Impl\Wing.h" />
+    <ClInclude Include="CustomPhysics\Impl\BrushTyreModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt" />

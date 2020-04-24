@@ -1,191 +1,191 @@
 #pragma once
 
-void Drivetrain_step2WD(Drivetrain* pThis, float dt)
+void _Drivetrain::_step2WD(float dt)
 {
-	auto pCar = pThis->car;
+	auto pCar = this->car;
 
-	int iGearRequest = (int)pThis->gearRequest.request - 1;
-	if ((!iGearRequest || iGearRequest == 1) && (pThis->gearRequest.timeout < pThis->gearRequest.timeAccumulator))
+	int iGearRequest = (int)this->gearRequest.request - 1;
+	if ((!iGearRequest || iGearRequest == 1) && (this->gearRequest.timeout < this->gearRequest.timeAccumulator))
 	{
-		pThis->currentGear = pThis->gearRequest.requestedGear;
-		pThis->gearRequest.request = GearChangeRequest::eNoGearRequest;
+		this->currentGear = this->gearRequest.requestedGear;
+		this->gearRequest.request = GearChangeRequest::eNoGearRequest;
 	}
 
-	if (pThis->gearRequest.request != GearChangeRequest::eNoGearRequest)
+	if (this->gearRequest.request != GearChangeRequest::eNoGearRequest)
 	{
-		pThis->gearRequest.timeAccumulator += dt;
+		this->gearRequest.timeAccumulator += dt;
 	}
 
-	const SGearRatio& curGear = pThis->gears[pThis->currentGear]; // pThis->getCurrentGear()
-	pThis->ratio = pThis->finalRatio * curGear.ratio;
-	pThis->engine.inertia = pThis->acEngine.inertia;
+	const SGearRatio& curGear = this->gears[this->currentGear]; // this->getCurrentGear()
+	this->ratio = this->finalRatio * curGear.ratio;
+	this->engine.inertia = this->acEngine.inertia;
 
-	for (auto& TorqGen : pThis->wheelTorqueGenerators)
+	for (auto& TorqGen : this->wheelTorqueGenerators)
 	{
 		float fTorq = TorqGen->getOutputTorque() * 0.5f;
-		pThis->tyreLeft->status.feedbackTorque += fTorq;
-		pThis->tyreRight->status.feedbackTorque += fTorq;
+		this->tyreLeft->status.feedbackTorque += fTorq;
+		this->tyreRight->status.feedbackTorque += fTorq;
 	}
 
-	if (pThis->lastRatio != pThis->ratio)
+	if (this->lastRatio != this->ratio)
 	{
-		pThis->reallignSpeeds(dt);
-		pThis->lastRatio = pThis->ratio;
+		this->reallignSpeeds(dt);
+		this->lastRatio = this->ratio;
 	}
 
 	SACEngineInput input;
 	memset(&input, 0, sizeof(input));
 
-	if (pThis->cutOff > 0.0)
+	if (this->cutOff > 0.0)
 	{
-		pThis->cutOff -= dt;
+		this->cutOff -= dt;
 	}
 	else
 	{
 		input.gasInput = pCar->controls.gas;
 	}
 
-	input.rpm = (float)((pThis->engine.velocity * 0.15915507) * 60.0);
-	pThis->acEngine.step(input, dt);
+	input.rpm = (float)((this->engine.velocity * 0.15915507) * 60.0);
+	this->acEngine.step(input, dt);
 
-	if (pThis->locClutch < 1.0f)
+	if (this->locClutch < 1.0f)
 	{
-		pThis->clutchOpenState = true;
+		this->clutchOpenState = true;
 	}
-	else if (pThis->engine.velocity != 0.0)
+	else if (this->engine.velocity != 0.0)
 	{
-		pThis->clutchOpenState = (fabs(pThis->rootVelocity / pThis->engine.velocity - 1.0) >= 0.1);
+		this->clutchOpenState = (fabs(this->rootVelocity / this->engine.velocity - 1.0) >= 0.1);
 	}
 	else
 	{
-		pThis->clutchOpenState = (pThis->rootVelocity != 0.0);
+		this->clutchOpenState = (this->rootVelocity != 0.0);
 	}
 
-	double fEngineInertia = pThis->engine.inertia;
+	double fEngineInertia = this->engine.inertia;
 	double fNewEngineInertia = fEngineInertia;
 
-	if (pThis->ratio != 0.0)
+	if (this->ratio != 0.0)
 	{
 		double fInertiaSum;
-		if (pThis->tractionType == TractionType::AWD) // TODO: AWD in step2WD???
+		if (this->tractionType == TractionType::AWD) // TODO: AWD in step2WD???
 		{
 			fInertiaSum =
-				pThis->drive.inertia
-				+ pThis->outShaftL.inertia
-				+ pThis->outShaftR.inertia
-				+ pThis->outShaftLF.inertia
-				+ pThis->outShaftRF.inertia;
+				this->drive.inertia
+				+ this->outShaftL.inertia
+				+ this->outShaftR.inertia
+				+ this->outShaftLF.inertia
+				+ this->outShaftRF.inertia;
 		}
 		else
 		{
 			fInertiaSum =
-				pThis->drive.inertia
-				+ pThis->outShaftL.inertia
-				+ pThis->outShaftR.inertia;
+				this->drive.inertia
+				+ this->outShaftL.inertia
+				+ this->outShaftR.inertia;
 		}
 
-		fNewEngineInertia = fInertiaSum / (pThis->ratio * pThis->ratio) + pThis->clutchInertia + fEngineInertia;
+		fNewEngineInertia = fInertiaSum / (this->ratio * this->ratio) + this->clutchInertia + fEngineInertia;
 	}
 
-	double fInertiaFromWheels = pThis->getInertiaFromWheels();
+	double fInertiaFromWheels = this->getInertiaFromWheels();
 	double fDeltaDriveV = 0.0;
 	double fClutchTorq = 0.0;
 
-	if (!pThis->clutchOpenState)
+	if (!this->clutchOpenState)
 	{
-		double fDeltaRootV = (pThis->acEngine.status.outTorque / fNewEngineInertia) * dt;
-		pThis->rootVelocity += fDeltaRootV;
+		double fDeltaRootV = (this->acEngine.status.outTorque / fNewEngineInertia) * dt;
+		this->rootVelocity += fDeltaRootV;
 
-		if (pThis->ratio == 0.0)
+		if (this->ratio == 0.0)
 		{
-			fDeltaDriveV = (pThis->tyreRight->status.feedbackTorque + pThis->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
-			pThis->drive.velocity += fDeltaDriveV;
+			fDeltaDriveV = (this->tyreRight->status.feedbackTorque + this->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
+			this->drive.velocity += fDeltaDriveV;
 		}
 		else
 		{
-			pThis->accelerateDrivetrainBlock(fDeltaRootV / pThis->ratio, true);
+			this->accelerateDrivetrainBlock(fDeltaRootV / this->ratio, true);
 
-			fDeltaDriveV = (pThis->tyreRight->status.feedbackTorque + pThis->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
-			pThis->rootVelocity += fDeltaDriveV * pThis->ratio;
-			pThis->drive.velocity += fDeltaDriveV;
+			fDeltaDriveV = (this->tyreRight->status.feedbackTorque + this->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
+			this->rootVelocity += fDeltaDriveV * this->ratio;
+			this->drive.velocity += fDeltaDriveV;
 		}
 	}
 	else
 	{
-		fClutchTorq = -((pThis->engine.velocity - pThis->rootVelocity) / (fabs(pThis->engine.velocity - pThis->rootVelocity) + 4.0) * (pThis->locClutch * pThis->clutchMaxTorque));
-		pThis->currentClutchTorque = (float)fClutchTorq;
+		fClutchTorq = -((this->engine.velocity - this->rootVelocity) / (fabs(this->engine.velocity - this->rootVelocity) + 4.0) * (this->locClutch * this->clutchMaxTorque));
+		this->currentClutchTorque = (float)fClutchTorq;
 
-		if (pThis->ratio != 0.0)
+		if (this->ratio != 0.0)
 		{
-			pThis->engine.velocity += (fClutchTorq + pThis->acEngine.status.outTorque) / fEngineInertia * dt;
+			this->engine.velocity += (fClutchTorq + this->acEngine.status.outTorque) / fEngineInertia * dt;
 
 			double fDeltaRootV = (-fClutchTorq / (fNewEngineInertia - fEngineInertia)) * dt;
-			pThis->rootVelocity += fDeltaRootV;
+			this->rootVelocity += fDeltaRootV;
 
-			pThis->accelerateDrivetrainBlock(fDeltaRootV / pThis->ratio, true);
+			this->accelerateDrivetrainBlock(fDeltaRootV / this->ratio, true);
 
-			fDeltaDriveV = (pThis->tyreRight->status.feedbackTorque + pThis->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
-			pThis->rootVelocity += fDeltaDriveV * pThis->ratio;
-			pThis->drive.velocity += fDeltaDriveV;
+			fDeltaDriveV = (this->tyreRight->status.feedbackTorque + this->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
+			this->rootVelocity += fDeltaDriveV * this->ratio;
+			this->drive.velocity += fDeltaDriveV;
 		}
 		else
 		{
-			double fNewEngineVelocity = pThis->engine.velocity + pThis->acEngine.status.outTorque / fEngineInertia * dt;
-			pThis->engine.velocity = fNewEngineVelocity;
-			pThis->rootVelocity = fNewEngineVelocity;
+			double fNewEngineVelocity = this->engine.velocity + this->acEngine.status.outTorque / fEngineInertia * dt;
+			this->engine.velocity = fNewEngineVelocity;
+			this->rootVelocity = fNewEngineVelocity;
 
-			fDeltaDriveV = (pThis->tyreRight->status.feedbackTorque + pThis->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
-			pThis->drive.velocity += fDeltaDriveV;
+			fDeltaDriveV = (this->tyreRight->status.feedbackTorque + this->tyreLeft->status.feedbackTorque) / fInertiaFromWheels * dt;
+			this->drive.velocity += fDeltaDriveV;
 		}
 	}
 
-	if (pThis->tractionType == TractionType::AWD) // TODO: AWD in step2WD???
+	if (this->tractionType == TractionType::AWD) // TODO: AWD in step2WD???
 	{
 		fDeltaDriveV = fDeltaDriveV * 0.5 * 2.0;
-		pThis->outShaftLF.velocity += fDeltaDriveV;
-		pThis->outShaftRF.velocity += fDeltaDriveV;
+		this->outShaftLF.velocity += fDeltaDriveV;
+		this->outShaftRF.velocity += fDeltaDriveV;
 	}
 
-	pThis->outShaftL.velocity += fDeltaDriveV;
-	pThis->outShaftR.velocity += fDeltaDriveV;
+	this->outShaftL.velocity += fDeltaDriveV;
+	this->outShaftR.velocity += fDeltaDriveV;
 
-	if (pThis->diffType == DifferentialType::Spool)
+	if (this->diffType == DifferentialType::Spool)
 	{
-		pThis->outShaftL.velocity = pThis->drive.velocity;
-		pThis->outShaftR.velocity = pThis->drive.velocity;
+		this->outShaftL.velocity = this->drive.velocity;
+		this->outShaftR.velocity = this->drive.velocity;
 	}
-	else if (pThis->diffType == DifferentialType::LSD)
+	else if (this->diffType == DifferentialType::LSD)
 	{
 		double fOutClutchTorq, fDiffLoad;
 
 		if (fClutchTorq != 0.0)
 			fOutClutchTorq = -fClutchTorq;
 		else
-			fOutClutchTorq = pThis->locClutch * pThis->acEngine.status.outTorque;
+			fOutClutchTorq = this->locClutch * this->acEngine.status.outTorque;
 
 		if (fOutClutchTorq <= 0.0)
-			fDiffLoad = fabs(pThis->ratio * pThis->diffCoastRamp * fOutClutchTorq);
+			fDiffLoad = fabs(this->ratio * this->diffCoastRamp * fOutClutchTorq);
 		else
-			fDiffLoad = fabs(pThis->ratio) * (pThis->diffPowerRamp * fOutClutchTorq);
+			fDiffLoad = fabs(this->ratio) * (this->diffPowerRamp * fOutClutchTorq);
 
-		double fDiffTotalLoad = fDiffLoad + pThis->diffPreLoad;
+		double fDiffTotalLoad = fDiffLoad + this->diffPreLoad;
 
-		if (fabs(pThis->outShaftL.velocity - pThis->drive.velocity) >= 0.1
-			|| fabs(pThis->tyreRight->status.feedbackTorque - pThis->tyreLeft->status.feedbackTorque) > fDiffTotalLoad)
+		if (fabs(this->outShaftL.velocity - this->drive.velocity) >= 0.1
+			|| fabs(this->tyreRight->status.feedbackTorque - this->tyreLeft->status.feedbackTorque) > fDiffTotalLoad)
 		{
-			double fUnk1 = -((pThis->outShaftL.velocity - pThis->outShaftR.velocity) / (fabs(pThis->outShaftL.velocity - pThis->outShaftR.velocity) + 0.01) * fDiffTotalLoad);
-			double fDeltaV1 = dt * (fUnk1 / pThis->outShaftL.inertia * 0.5);
-			pThis->outShaftL.velocity += fDeltaV1;
-			pThis->outShaftR.velocity -= fDeltaV1;
+			double fUnk1 = -((this->outShaftL.velocity - this->outShaftR.velocity) / (fabs(this->outShaftL.velocity - this->outShaftR.velocity) + 0.01) * fDiffTotalLoad);
+			double fDeltaV1 = dt * (fUnk1 / this->outShaftL.inertia * 0.5);
+			this->outShaftL.velocity += fDeltaV1;
+			this->outShaftR.velocity -= fDeltaV1;
 
-			double fDeltaV2 = dt * ((pThis->tyreRight->status.feedbackTorque - pThis->tyreLeft->status.feedbackTorque) / pThis->outShaftR.inertia * 0.5);
-			pThis->outShaftL.velocity -= fDeltaV2;
-			pThis->outShaftR.velocity += fDeltaV2;
+			double fDeltaV2 = dt * ((this->tyreRight->status.feedbackTorque - this->tyreLeft->status.feedbackTorque) / this->outShaftR.inertia * 0.5);
+			this->outShaftL.velocity -= fDeltaV2;
+			this->outShaftR.velocity += fDeltaV2;
 		}
 		else
 		{
-			pThis->outShaftL.velocity = pThis->drive.velocity;
-			pThis->outShaftR.velocity = pThis->drive.velocity;
+			this->outShaftL.velocity = this->drive.velocity;
+			this->outShaftR.velocity = this->drive.velocity;
 		}
 	}
 	else
@@ -194,13 +194,13 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 		return;
 	}
 
-	if (pThis->tyreLeft->status.isLocked && pThis->tyreRight->status.isLocked)
+	if (this->tyreLeft->status.isLocked && this->tyreRight->status.isLocked)
 	{
-		float fTorqL = (pThis->tyreLeft->absOverride * pThis->tyreLeft->inputs.brakeTorque) + pThis->tyreLeft->inputs.handBrakeTorque;
-		float fTorqR = (pThis->tyreRight->absOverride * pThis->tyreRight->inputs.brakeTorque) + pThis->tyreRight->inputs.handBrakeTorque;
+		float fTorqL = (this->tyreLeft->absOverride * this->tyreLeft->inputs.brakeTorque) + this->tyreLeft->inputs.handBrakeTorque;
+		float fTorqR = (this->tyreRight->absOverride * this->tyreRight->inputs.brakeTorque) + this->tyreRight->inputs.handBrakeTorque;
 		bool bFlag = true;
 
-		if (fabs(pThis->ratio * pThis->acEngine.status.outTorque) <= (fTorqL + fTorqR))
+		if (fabs(this->ratio * this->acEngine.status.outTorque) <= (fTorqL + fTorqR))
 		{
 			if (Car_getSpeedValue(pCar) <= 1.0f)
 				bFlag = false;
@@ -208,45 +208,45 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 
 		if (bFlag)
 		{
-			pThis->tyreLeft->status.isLocked = false;
-			pThis->tyreRight->status.isLocked = false;
+			this->tyreLeft->status.isLocked = false;
+			this->tyreRight->status.isLocked = false;
 		}
-		else if (pThis->clutchOpenState)
+		else if (this->clutchOpenState)
 		{
-			pThis->rootVelocity = 0.0;
-			pThis->drive.velocity = 0.0;
-			pThis->outShaftL.velocity = 0.0;
-			pThis->outShaftR.velocity = 0.0;
+			this->rootVelocity = 0.0;
+			this->drive.velocity = 0.0;
+			this->outShaftL.velocity = 0.0;
+			this->outShaftR.velocity = 0.0;
 		}
 	}
 
-	if (pThis->tractionType != TractionType::AWD_NEW) // TODO: AWD_NEW in step2WD???
+	if (this->tractionType != TractionType::AWD_NEW) // TODO: AWD_NEW in step2WD???
 	{
-		if (!pThis->clutchOpenState)
-			pThis->engine.velocity = pThis->rootVelocity;
+		if (!this->clutchOpenState)
+			this->engine.velocity = this->rootVelocity;
 
-		if (pThis->ratio != 0.0)
+		if (this->ratio != 0.0)
 		{
-			DEBUG_ASSERT((fabs(pThis->drive.velocity - (pThis->rootVelocity / pThis->ratio)) <= 0.5));
+			DEBUG_ASSERT((fabs(this->drive.velocity - (this->rootVelocity / this->ratio)) <= 0.5));
 		}
 
-		pThis->tyreLeft->status.angularVelocity = (float)pThis->outShaftL.velocity;
-		pThis->tyreRight->status.angularVelocity = (float)pThis->outShaftR.velocity;
+		this->tyreLeft->status.angularVelocity = (float)this->outShaftL.velocity;
+		this->tyreRight->status.angularVelocity = (float)this->outShaftR.velocity;
 
-		pThis->tyreLeft->stepRotationMatrix(dt);
-		pThis->tyreRight->stepRotationMatrix(dt);
+		this->tyreLeft->stepRotationMatrix(dt);
+		this->tyreRight->stepRotationMatrix(dt);
 	}
 
-	if (pThis->ratio == 0.0)
+	if (this->ratio == 0.0)
 	{
-		pThis->totalTorque = (float)fabs(pThis->acEngine.status.outTorque * pThis->locClutch);
+		this->totalTorque = (float)fabs(this->acEngine.status.outTorque * this->locClutch);
 	}
 	else
 	{
-		pThis->totalTorque = (float)fabs((fabs(pThis->ratio) * (pThis->acEngine.status.outTorque * pThis->locClutch)) - (pThis->tyreLeft->status.feedbackTorque + pThis->tyreRight->status.feedbackTorque));
+		this->totalTorque = (float)fabs((fabs(this->ratio) * (this->acEngine.status.outTorque * this->locClutch)) - (this->tyreLeft->status.feedbackTorque + this->tyreRight->status.feedbackTorque));
 	}
 
-	float fGearTorque = (float)(pThis->locClutch * pThis->acEngine.status.outTorque * curGear.ratio);
+	float fGearTorque = (float)(this->locClutch * this->acEngine.status.outTorque * curGear.ratio);
 
 	if (pCar->suspensionTypeR == SuspensionType::Axle)
 	{
@@ -268,10 +268,10 @@ void Drivetrain_step2WD(Drivetrain* pThis, float dt)
 				pCar->rigidAxle->addLocalTorque(vTorq);
 		}
 	}
-	else if (pCar->torqueModeEx == TorqueModeEX::reactionTorques && !pThis->tyreLeft->status.isLocked && !pThis->tyreRight->status.isLocked)
+	else if (pCar->torqueModeEx == TorqueModeEX::reactionTorques && !this->tyreLeft->status.isLocked && !this->tyreRight->status.isLocked)
 	{
 		int suspId[2];
-		if (pThis->tractionType == TractionType::FWD)
+		if (this->tractionType == TractionType::FWD)
 		{
 			suspId[0] = 0;
 			suspId[1] = 1;

@@ -1,13 +1,22 @@
 #pragma once
 
-#define RVA_SCTM_solve 4504608
-#define RVA_SCTM_getStaticDY 4504496
-#define RVA_SCTM_getStaticDX 4504368
-#define RVA_SCTM_getPureFY 4504176
+BEGIN_HOOK_OBJ(SCTM)
+
+	#define RVA_SCTM_solve 4504608
+	#define RVA_SCTM_getStaticDY 4504496
+	#define RVA_SCTM_getStaticDX 4504368
+	#define RVA_SCTM_getPureFY 4504176
+
+	TyreModelOutput _solve(TyreModelInput& tmi);
+	float _getStaticDX(float load);
+	float _getStaticDY(float load);
+	float _getPureFY(float D, float cf, float load, float slip);
+
+END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
+TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
 {
 	TyreModelOutput tmo;
 
@@ -17,26 +26,26 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 		return tmo;
 	}
 
-	float fAsy = pThis->asy;
+	float fAsy = this->asy;
 	if (tmi.useSimpleModel)
-		pThis->asy = 1.0;
+		this->asy = 1.0;
 
 	float fSlipAngle = tmi.slipAngleRAD;
-	float fUnk1 = (sinf(tmi.camberRAD) * pThis->camberGain) + fSlipAngle;
+	float fUnk1 = (sinf(tmi.camberRAD) * this->camberGain) + fSlipAngle;
 	float fUnk1Tan = tanf(fUnk1);
 	float fSlipAngleSin = sinf(fSlipAngle);
 
 	float fBlister1 = tclamp(tmi.blister * 0.009999999f, 0.0f, 1.0f);
 	float fBlister2 = (fBlister1 * 0.2f) + 1.0f;
 
-	float fStaticDy = pThis->getStaticDY(tmi.load);
-	float fStaticDx = pThis->getStaticDX(tmi.load);
+	float fStaticDy = this->getStaticDY(tmi.load);
+	float fStaticDx = this->getStaticDX(tmi.load);
 
 	float fUDy = tmi.u * fStaticDy / fBlister2;
 	float fUDx = tmi.u * fStaticDx / fBlister2;
 
 	if (tmi.slipRatio < 0.0f)
-		fUDx = fUDx * pThis->brakeDXMod;
+		fUDx = fUDx * this->brakeDXMod;
 
 	float fCamberRad = tmi.camberRAD;
 	float fCamberRadTmp = fabsf(fCamberRad);
@@ -46,22 +55,22 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 
 	fCamberRadTmp = -fCamberRadTmp;
 
-	if (pThis->dCamberCurve.getCount())
+	if (this->dCamberCurve.getCount())
 	{
 		float fCamberDeg = fCamberRadTmp * 57.29578f;
 
-		if (pThis->useSmoothDCamberCurve)
-			fUDy *= pThis->dCamberCurve.getCubicSplineValue(fCamberDeg);
+		if (this->useSmoothDCamberCurve)
+			fUDy *= this->dCamberCurve.getCubicSplineValue(fCamberDeg);
 		else
-			fUDy *= pThis->dCamberCurve.getValue(fCamberDeg);
+			fUDy *= this->dCamberCurve.getValue(fCamberDeg);
 	}
 	else
 	{
-		float fCamberUnk = (fCamberRadTmp * pThis->dcamber0) - ((fCamberRadTmp * fCamberRadTmp) * pThis->dcamber1);
+		float fCamberUnk = (fCamberRadTmp * this->dcamber0) - ((fCamberRadTmp * fCamberRadTmp) * this->dcamber1);
 		if (fCamberUnk <= -1.0f)
 			fCamberUnk = -0.8999999f;
 
-		fUDy += (((fUDy / (fCamberUnk + 1.0f)) - fUDy) * pThis->dCamberBlend);
+		fUDy += (((fUDy / (fCamberUnk + 1.0f)) - fUDy) * this->dCamberBlend);
 	}
 
 	float fSlipRatio = tmi.slipRatio;
@@ -72,20 +81,20 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 	float a = fSpeed * fSlipAngleSin;
 	float b = (fSpeed * fSlipRatio) * fSlipAngleCos;
 	float fUnk2 = sqrtf((a * a) + (b * b));
-	float fUnk2Scaled = fUnk2 * pThis->speedSensitivity;
+	float fUnk2Scaled = fUnk2 * this->speedSensitivity;
 
 	float fDy = fUDy / (fUnk2Scaled + 1.0f);
 	float fDx = fUDx / (fUnk2Scaled + 1.0f);
 
-	float fLoadSubFz0 = tmi.load - pThis->Fz0;
-	float fPCfGain = pThis->pressureCfGain;
-	float fCF = ((((1.0f / ((((fLoadSubFz0 / pThis->Fz0) * (pThis->maxSlip1 - pThis->maxSlip0)) + pThis->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.0099999998f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
+	float fLoadSubFz0 = tmi.load - this->Fz0;
+	float fPCfGain = this->pressureCfGain;
+	float fCF = ((((1.0f / ((((fLoadSubFz0 / this->Fz0) * (this->maxSlip1 - this->maxSlip0)) + this->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.0099999998f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
 
 	float fUnk3 = fSlipRatio / (fSlipRatioClamped + 1.0f);
 	float fUnk4 = fUnk1Tan / (fSlipRatioClamped + 1.0f);
 	float fSlip;
 
-	float fCombFactor = pThis->combinedFactor;
+	float fCombFactor = this->combinedFactor;
 	if (fCombFactor <= 0.0f || fCombFactor == 2.0f)
 	{
 		fSlip = sqrtf((fUnk4 * fUnk4) + (fUnk3 * fUnk3));
@@ -96,8 +105,8 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 		fSlip = powf(fUnk34Comb, 1.0f / fCombFactor);
 	}
 
-	float fPureFyDx = pThis->getPureFY(fDx, fCF * pThis->cfXmult, tmi.load, fSlip) * fDx;
-	float fPureFyDy = pThis->getPureFY(fDy, fCF, tmi.load, fSlip);
+	float fPureFyDx = this->getPureFY(fDx, fCF * this->cfXmult, tmi.load, fSlip) * fDx;
+	float fPureFyDy = this->getPureFY(fDy, fCF, tmi.load, fSlip);
 
 	tmo.Fy = ((fPureFyDy * fDy) * (fUnk4 / fSlip)) * tmi.load;
 	tmo.Fx = ((fUnk3 / fSlip) * fPureFyDx) * tmi.load;
@@ -116,53 +125,53 @@ TyreModelOutput SCTM_solve(SCTM* pThis, TyreModelInput& tmi)
 	tmo.Dy = fDy;
 	tmo.Dx = fDx;
 
-	pThis->asy = fAsy;
+	this->asy = fAsy;
 
 	return tmo;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-float SCTM_getStaticDX(SCTM* pThis, float load)
+float _SCTM::_getStaticDX(float load)
 {
-	if (pThis->dxLoadCurve.getCount() <= 0)
+	if (this->dxLoadCurve.getCount() <= 0)
 	{
 		if (load != 0.0)
-			return (powf(load, pThis->lsExpX) * pThis->lsMultX) / load;
+			return (powf(load, this->lsExpX) * this->lsMultX) / load;
 	}
 	else
 	{
-		return pThis->dxLoadCurve.getCubicSplineValue(load);
+		return this->dxLoadCurve.getCubicSplineValue(load);
 	}
 	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-float SCTM_getStaticDY(SCTM* pThis, float load)
+float _SCTM::_getStaticDY(float load)
 {
-	if (pThis->dyLoadCurve.getCount() <= 0)
+	if (this->dyLoadCurve.getCount() <= 0)
 	{
 		if (load != 0.0f)
-			return (powf(load, pThis->lsExpY) * pThis->lsMultY) / load;
+			return (powf(load, this->lsExpY) * this->lsMultY) / load;
 	}
 	else
 	{
-		return pThis->dyLoadCurve.getCubicSplineValue(load);
+		return this->dyLoadCurve.getCubicSplineValue(load);
 	}
 	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-float SCTM_getPureFY(SCTM* pThis, float D, float cf, float load, float slip)
+float _SCTM::_getPureFY(float D, float cf, float load, float slip)
 {
 	float v5 = (cf * 2.0f) * 0.0063999998f;
 	float v6 = 1.0f / (v5 / 3.0f);
 	float fy;
 
 	if (v6 < slip)
-		fy = ((1.0f / (((slip - v6) * pThis->falloffSpeed) + 1.0f)) * (1.0f - pThis->asy)) + pThis->asy;
+		fy = ((1.0f / (((slip - v6) * this->falloffSpeed) + 1.0f)) * (1.0f - this->asy)) + this->asy;
 	else
 		fy = (((1.0f - (slip / v6)) * (1.0f - (slip / v6))) * (v5 * slip)) + ((3.0f - ((slip / v6) * 2.0f)) * ((slip / v6) * (slip / v6)));
 

@@ -5,6 +5,11 @@
 #include "utils/common.h"
 #include "Timer.h"
 
+//
+
+#define BEGIN_HOOK_OBJ(name) struct _##name : public name {
+#define END_HOOK_OBJ() };
+
 #include "Impl/DynamicController.h"
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
@@ -26,18 +31,24 @@
 #include "Impl/TyreForcesLegacy.h"
 #include "Impl/TyreModel.h"
 #include "Impl/TyreThermalModel.h"
+#include "Impl/BrushTyreModel.h"
 #include "Impl/BrushSlipProvider.h"
 
 #include "Impl/AntirollBar.h"
 #include "Impl/BrakeSystem.h"
 #include "Impl/ThermalObject.h"
 
-#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
-#define HOOK_FUNC_RVA_2(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
+#include "Impl/Wing.h"
 
-#define RVA_PhysicsDriveThread_run 1192272
+//
 
 static AppCustomPhysics* s_custom_physics = nullptr;
+
+#define RVA_PhysicsDriveThread_run 1192272
+#define RVA_Car_pollControls 2575984
+
+void* _orig_PhysicsDriveThread_run = nullptr;
+void* _orig_Car_pollControls = nullptr;
 
 void PhysicsDriveThread_run(PhysicsDriveThread* pThis)
 {
@@ -48,6 +59,14 @@ void Car_pollControls(Car* pThis, float dt)
 {
 	s_custom_physics->pollControls(pThis, dt);
 }
+
+//
+
+#define RND_SEED 666
+
+#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
+#define HOOK_FUNC_RVA_ORIG(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
+#define HOOK_METHOD_RVA(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func))
 
 AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custom_physics")
 {
@@ -63,8 +82,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 
 	#if 1
 	ksInitTimerVars();
-	HOOK_FUNC_RVA_2(PhysicsDriveThread_run);
-	HOOK_FUNC_RVA_2(Car_pollControls);
+	HOOK_FUNC_RVA_ORIG(PhysicsDriveThread_run);
+	HOOK_FUNC_RVA_ORIG(Car_pollControls);
 	addConsoleCommands();
 	#endif
 
@@ -78,95 +97,99 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	// Car
 	//
 
-	HOOK_FUNC_RVA(Car_step);
-	HOOK_FUNC_RVA(Car_stepComponents);
-	HOOK_FUNC_RVA(Car_updateAirPressure);
-	HOOK_FUNC_RVA(Car_updateBodyMass);
-	HOOK_FUNC_RVA(Car_calcBodyMass);
+	HOOK_METHOD_RVA(Car, step);
+	HOOK_METHOD_RVA(Car, stepComponents);
+	HOOK_METHOD_RVA(Car, updateAirPressure);
+	HOOK_METHOD_RVA(Car, updateBodyMass);
+	HOOK_METHOD_RVA(Car, calcBodyMass);
 
-	HOOK_FUNC_RVA(DynamicController_eval);
-	HOOK_FUNC_RVA(DynamicController_getInput);
-	HOOK_FUNC_RVA(DynamicController_getOversteerFactor);
-	HOOK_FUNC_RVA(DynamicController_getRearSpeedRatio);
+	HOOK_METHOD_RVA(DynamicController, eval);
+	HOOK_METHOD_RVA(DynamicController, getInput);
+	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
+	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
 
 	//
 	// Suspension
 	//
 
-	HOOK_FUNC_RVA(Suspension_step);
-	HOOK_FUNC_RVA(SuspensionAxle_step);
-	HOOK_FUNC_RVA(SuspensionML_step);
-	HOOK_FUNC_RVA(SuspensionStrut_step);
-	HOOK_FUNC_RVA(Damper_getForce);
+	HOOK_METHOD_RVA(Suspension, step);
+	HOOK_METHOD_RVA(SuspensionAxle, step);
+	HOOK_METHOD_RVA(SuspensionML, step);
+	HOOK_METHOD_RVA(SuspensionStrut, step);
+	HOOK_METHOD_RVA(Damper, getForce);
 
 	//
 	// Drivetrain
 	//
 
-	HOOK_FUNC_RVA(Drivetrain_step);
-	HOOK_FUNC_RVA(Drivetrain_step2WD);
-	HOOK_FUNC_RVA(Drivetrain_stepControllers);
-	HOOK_FUNC_RVA(Drivetrain_getInertiaFromWheels);
-	HOOK_FUNC_RVA(Drivetrain_getInertiaFromEngine);
-	HOOK_FUNC_RVA(Drivetrain_reallignSpeeds);
-	HOOK_FUNC_RVA(Drivetrain_accelerateDrivetrainBlock);
-	HOOK_FUNC_RVA(Drivetrain_getEngineRPM);
+	HOOK_METHOD_RVA(Drivetrain, step);
+	HOOK_METHOD_RVA(Drivetrain, step2WD);
+	HOOK_METHOD_RVA(Drivetrain, stepControllers);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
+	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
+	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
+	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
 
 	//
 	// Engine
 	//
 
-	HOOK_FUNC_RVA(Engine_step);
-	HOOK_FUNC_RVA(Engine_stepTurbos);
-	HOOK_FUNC_RVA(Turbo_step);
+	HOOK_METHOD_RVA(Engine, step);
+	HOOK_METHOD_RVA(Engine, stepTurbos);
+	HOOK_METHOD_RVA(Turbo, step);
 
 	//
 	// Tyre
 	//
 
-	HOOK_FUNC_RVA(Tyre_step);
-		HOOK_FUNC_RVA(Tyre_addGroundContact);
-		
-		HOOK_FUNC_RVA(Tyre_addTyreForcesV10);
-			HOOK_FUNC_RVA(Tyre_getCorrectedD);
-				HOOK_FUNC_RVA(TyreThermalModel_getCorrectedD);
-			HOOK_FUNC_RVA(SCTM_solve);
-				HOOK_FUNC_RVA(SCTM_getStaticDY);
-				HOOK_FUNC_RVA(SCTM_getStaticDX);
-				HOOK_FUNC_RVA(SCTM_getPureFY);
-			HOOK_FUNC_RVA(Tyre_stepDirtyLevel);
-			HOOK_FUNC_RVA(Tyre_stepPuncture);
-				HOOK_FUNC_RVA(TyreThermalModel_getIMO);
-			HOOK_FUNC_RVA(Tyre_addTyreForceToHub);
-		
-		HOOK_FUNC_RVA(Tyre_updateLockedState);
-		HOOK_FUNC_RVA(Tyre_updateAngularSpeed);
-		HOOK_FUNC_RVA(Tyre_stepRotationMatrix);
+	HOOK_METHOD_RVA(Tyre, step);
+		HOOK_METHOD_RVA(Tyre, addGroundContact);
+		HOOK_METHOD_RVA(Tyre, addTyreForcesV10);
+			HOOK_METHOD_RVA(Tyre, getCorrectedD);
+				HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
+			HOOK_METHOD_RVA(SCTM, solve);
+				HOOK_METHOD_RVA(SCTM, getStaticDY);
+				HOOK_METHOD_RVA(SCTM, getStaticDX);
+				HOOK_METHOD_RVA(SCTM, getPureFY);
+			HOOK_METHOD_RVA(Tyre, stepDirtyLevel);
+			HOOK_METHOD_RVA(Tyre, stepPuncture);
+				HOOK_METHOD_RVA(TyreThermalModel, getIMO);
+			HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
+		HOOK_METHOD_RVA(Tyre, updateLockedState);
+		HOOK_METHOD_RVA(Tyre, updateAngularSpeed);
+		HOOK_METHOD_RVA(Tyre, stepRotationMatrix);
+		HOOK_METHOD_RVA(Tyre, stepThermalModel);
+			HOOK_METHOD_RVA(TyreThermalModel, addThermalInput);
+			HOOK_METHOD_RVA(TyreThermalModel, addThermalCoreInput);
+			HOOK_METHOD_RVA(TyreThermalModel, step);
+				HOOK_METHOD_RVA(TyreThermalModel, getCurrentCPTemp);
+			HOOK_METHOD_RVA(Tyre, stepTyreBlankets);
+				HOOK_METHOD_RVA(TyreThermalModel, setTemperature);
+		HOOK_METHOD_RVA(Tyre, stepGrainBlister);
+		HOOK_METHOD_RVA(Tyre, stepFlatSpot);
 
-		HOOK_FUNC_RVA(Tyre_stepThermalModel);
-			HOOK_FUNC_RVA(TyreThermalModel_addThermalInput);
-			HOOK_FUNC_RVA(TyreThermalModel_addThermalCoreInput);
-			HOOK_FUNC_RVA(TyreThermalModel_step);
-				HOOK_FUNC_RVA(TyreThermalModel_getCurrentCPTemp);
-			HOOK_FUNC_RVA(Tyre_stepTyreBlankets);
-				HOOK_FUNC_RVA(TyreThermalModel_setTemperature);
-
-		HOOK_FUNC_RVA(Tyre_stepGrainBlister);
-		HOOK_FUNC_RVA(Tyre_stepFlatSpot);
-
-	HOOK_FUNC_RVA(BrushTyreModel_solve);
-	HOOK_FUNC_RVA(BrushTyreModel_solveV5);
-	HOOK_FUNC_RVA(BrushTyreModel_getCFFromSlipAngle);
-	HOOK_FUNC_RVA(BrushSlipProvider_getSlipForce);
+	HOOK_METHOD_RVA(BrushTyreModel, solve);
+	HOOK_METHOD_RVA(BrushTyreModel, solveV5);
+	HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
+	HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
 
 	//
 	// Stuff
 	//
 
-	HOOK_FUNC_RVA(BrakeSystem_step);
-	HOOK_FUNC_RVA(BrakeSystem_stepTemps);
-	HOOK_FUNC_RVA(AntirollBar_step);
-	HOOK_FUNC_RVA(ThermalObject_step);
+	HOOK_METHOD_RVA(BrakeSystem, step);
+	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
+	HOOK_METHOD_RVA(AntirollBar, step);
+	HOOK_METHOD_RVA(ThermalObject, step);
+
+	//
+	// Wing
+	//
+
+	HOOK_METHOD_RVA(Wing, step);
+	HOOK_METHOD_RVA(Wing, addDrag);
+	HOOK_METHOD_RVA(Wing, addLift);
 
 	#endif
 
@@ -180,12 +203,12 @@ AppCustomPhysics::~AppCustomPhysics()
 
 void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 {
-	while (!*(volatile bool*)&pThis->shuttingDown)
+	while (!(*(volatile bool*)&pThis->shuttingDown))
 	{
 		if (!pThis->isPhysicsInitialized)
 		{
 			//srand(timeGetTime());
-			srand(666);
+			srand(RND_SEED);
 
 			if (pThis->setAffinityMask)
 			{
@@ -218,93 +241,175 @@ void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 		}
 		else
 		{
-			processUserInput();
+			processCustomInput();
 
-			int iNumLoops = 0;
-			double fGt = ksGetTime() * pThis->timeScale;
-
-			if (fGt - pThis->currentTime > 1000.0)
+			switch (_controlMode)
 			{
-				log_printf(L"RESET PHYSICS TIMER");
-				pThis->currentTime = fGt;
-			}
+				case EControlMode::Default:
+				case EControlMode::Record:
+					stepNormal(pThis);
+					break;
 
-			if (fGt > pThis->currentTime)
-			{
-				do
-				{
-					if (pThis->directInput && pThis->useDirectInput)
-					{
-						pThis->directInput->poll();
-						pThis->diCommandManager.step();
-					}
-
-					if (_controlMode == EControlMode::Record)
-					{
-						CarControlsSample sample;
-						sample.sampleId = _sampleId;
-						sample.currentTime = pThis->currentTime;
-						sample.gameTime = fGt;
-						sample.controls = _plugin->car->controls;
-						_controlSamples.push_back(sample);
-						_sampleId++;
-					}
-					else if (_controlMode == EControlMode::Replay)
-					{
-						if (_sampleId < _controlSamples.size())
-						{
-							_plugin->car->controls = _controlSamples[_sampleId].controls;
-							_sampleId++;
-						}
-					}
-
-					double fCurTime = pThis->currentTime + 3.0;
-					pThis->currentTime = fCurTime;
-					++iNumLoops;
-
-					double fBeginTime = ksGetQPTTime();
-					{
-						pThis->engine.step(0.003, fCurTime, fGt);
-					}
-					double fEndTime = ksGetQPTTime();
-
-					double fElapsed = fEndTime - fBeginTime;
-					pThis->cpuTimeLocal = (float)fElapsed;
-
-					const double fElapsedLimit = 300;
-					double fElapsedX = ((fElapsed * 0.33333334) * 100.0);
-
-					if (fElapsedX >= fElapsedLimit)
-						fElapsedX = fElapsedLimit;
-
-					pThis->occupancy.exchange((int)fElapsedX);
-
-					for (auto& h : pThis->evPhysicsStepCompleted.handlers)
-					{
-						if (h.second)
-						{
-							h.second(pThis->engine.physicsTime);
-						}
-					}
-				}
-				while (fGt > pThis->currentTime);
-
-				if (iNumLoops > 0)
-				{
-					pThis->lastStepTimestamp = fGt;
-				}
-
-				if (iNumLoops > 1)
-				{
-					log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
-					if (fGt > 30000.0)
-						pThis->physicsLateLoops++;
-				}
+				case EControlMode::Replay:
+					stepReplay(pThis);
+					break;
 			}
 		}
 
 		pThis->cpuTimeAtomic.exchange(pThis->cpuTimeLocal);
-		Sleep(0);
+
+		if (_controlMode != EControlMode::Replay)
+			Sleep(0);
+	}
+}
+
+void AppCustomPhysics::stepNormal(PhysicsDriveThread* pThis)
+{
+	double fGt = ksGetTime() * pThis->timeScale;
+	int iNumLoops = 0;
+
+	if (fGt - pThis->currentTime > 1000.0)
+	{
+		log_printf(L"RESET PHYSICS TIMER");
+		pThis->currentTime = fGt;
+	}
+
+	if (fGt > pThis->currentTime)
+	{
+		do
+		{
+			double fCurTime = pThis->currentTime + 3.0;
+
+			if (pThis->directInput && pThis->useDirectInput)
+			{
+				pThis->directInput->poll();
+				pThis->diCommandManager.step();
+			}
+
+			if (_controlMode == EControlMode::Record)
+			{
+				if (_sampleId == 0)
+				{
+					srand(RND_SEED);
+					_recStartTime = ksGetQPTTime();
+
+					_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
+					CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
+					resetTelemetry();
+				}
+
+				CarControlsSample sample;
+				sample.sampleId = _sampleId;
+				sample.currentTime = fCurTime;
+				sample.lastStepTimestamp = pThis->lastStepTimestamp;
+				sample.physicsTime = pThis->engine.physicsTime;
+				sample.gameTime = fGt;
+				sample.controls = _plugin->car->controls;
+				_controlSamples.push_back(sample);
+				_sampleId++;
+			}
+
+			stepPhysicsEngine(pThis, fCurTime, fGt);
+			++iNumLoops;
+		} 
+		while (fGt > pThis->currentTime);
+
+		if (iNumLoops > 1)
+		{
+			log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
+			if (fGt > 30000.0)
+				pThis->physicsLateLoops++;
+		}
+	}
+}
+
+void AppCustomPhysics::stepReplay(PhysicsDriveThread* pThis)
+{
+	if (_controlMode != EControlMode::Replay) 
+		return;
+
+	if (_sampleId >= _controlSamples.size())
+		return;
+
+	double t0 = ksGetQPTTime();
+
+	const auto& sample = _controlSamples[_sampleId];
+	_plugin->car->controls = sample.controls;
+
+	if (_sampleId == 0)
+	{
+		srand(RND_SEED);
+		_recStartTime = t0;
+
+		pThis->currentTime = sample.currentTime;
+		pThis->lastStepTimestamp = sample.lastStepTimestamp;
+		pThis->engine.physicsTime = sample.physicsTime;
+		pThis->engine.gameTime = sample.gameTime;
+
+		CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
+		resetTelemetry();
+	}
+
+	stepPhysicsEngine(pThis, sample.currentTime, sample.gameTime);
+	_sampleId++;
+
+	if (_sampleId < _controlSamples.size())
+	{
+		const auto& nextSample = _controlSamples[_sampleId];
+		double dur = nextSample.gameTime - sample.gameTime;
+
+		for (;;)
+		{
+			double t1 = ksGetQPTTime();
+			if ((t1 - t0) >= dur)
+				break;
+			else
+				Sleep(0);
+		}
+	}
+	else // replay done
+	{
+		/*double fCurTime = ksGetTime() * pThis->timeScale;
+		pThis->currentTime = fCurTime;
+		pThis->lastStepTimestamp = fCurTime;
+		pThis->engine.physicsTime = fCurTime;
+		pThis->engine.gameTime = fCurTime;*/
+	}
+}
+
+void AppCustomPhysics::stepPhysicsEngine(PhysicsDriveThread* pThis, double fCurTime, double fGt)
+{
+	double fBeginTime = ksGetQPTTime();
+	{
+		pThis->currentTime = fCurTime;
+
+		// (dt, currentTime, gt)
+		pThis->engine.step(0.003, fCurTime, fGt);
+
+		// modifies:
+		// pThis->engine.physicsTime = fCurTime;
+		// pThis->engine.gameTime = fGt;
+
+		pThis->lastStepTimestamp = fGt;
+	}
+	double fEndTime = ksGetQPTTime();
+
+	double fElapsed = fEndTime - fBeginTime;
+	pThis->cpuTimeLocal = (float)fElapsed;
+
+	const double fElapsedLimit = 300;
+	double fElapsedX = ((fElapsed * 0.33333334) * 100.0);
+	if (fElapsedX >= fElapsedLimit) 
+		fElapsedX = fElapsedLimit;
+
+	pThis->occupancy.exchange((int)fElapsedX);
+
+	for (auto& h : pThis->evPhysicsStepCompleted.handlers)
+	{
+		if (h.second)
+		{
+			h.second(pThis->engine.physicsTime);
+		}
 	}
 }
 
@@ -328,32 +433,29 @@ void AppCustomPhysics::pollControls(Car* pCar, float dt)
 	((void(*)(Car*, float))_orig_Car_pollControls)(pCar, dt);
 }
 
-void AppCustomPhysics::processUserInput()
+void AppCustomPhysics::processCustomInput()
 {
 	if (_cmdRecord || GetAsyncKeyState(VK_OEM_4) & 1) // {
 	{
 		if (_controlMode == EControlMode::Default)
 		{
+			if (_cmdRecord) _sim->console->show(false);
 			if (!_cmdRecord || _recName.empty()) _recName = L"tmp";
 			writeConsole(strf(L"start record \"%s\"", _recName.c_str()), true);
+
 			_sampleId = 0;
 			_controlSamples.clear();
-			_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
-			CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
-			resetTelemetry();
-
-			if (_cmdRecord) _sim->console->show(false);
-			_recStartTime = ksGetQPTTime();
 			_controlMode = EControlMode::Record;
 		}
 		else if (_controlMode == EControlMode::Record)
 		{
-			writeConsole(strf(L"stop record \"%s\"", _recName.c_str()), true);
-			saveControlSamples(L"record_" + _recName + L".raw");
-			saveTelemetry(L"record_" + _recName + L".csv");
 			_controlMode = EControlMode::Default;
-		}
+			_recStopTime = ksGetQPTTime();
 
+			writeConsole(strf(L"stop record \"%s\"", _recName.c_str()), true);
+			saveControlSamples(_recName + L".input");
+			saveTelemetry(_recName + L"_orig_telem.csv");
+		}
 		_cmdRecord = false;
 		_cmdReplay = false;
 	}
@@ -366,15 +468,14 @@ void AppCustomPhysics::processUserInput()
 		{
 			if (!_cmdReplay || _recName.empty()) _recName = L"tmp";
 			writeConsole(strf(L"start replay \"%s\"", _recName.c_str()), true);
-			loadControlSamples(L"record_" + _recName + L".raw");
+
+			_sampleId = 0;
+			loadControlSamples(_recName + L".input");
+			
 			if (_controlSamples.size())
 			{
-				_plugin->car->controlsProvider->ffEnabled = false;
-				CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
-				resetTelemetry();
-
 				if (_cmdReplay) _sim->console->show(false);
-				_recStartTime = ksGetQPTTime();
+				_plugin->car->controlsProvider->ffEnabled = false;
 				_controlMode = EControlMode::Replay;
 			}
 		}
@@ -382,23 +483,36 @@ void AppCustomPhysics::processUserInput()
 		{
 			stopReplay = true;
 		}
-
 		_cmdRecord = false;
 		_cmdReplay = false;
 	}
 
 	if ((_controlMode == EControlMode::Replay) && (stopReplay || (_sampleId >= _controlSamples.size())))
 	{
-		writeConsole(strf(L"stop replay \"%s\"", _recName.c_str()), true);
-		saveTelemetry(L"replay_" + _recName + L".csv");
-		_plugin->car->controlsProvider->ffEnabled = true;
 		_controlMode = EControlMode::Default;
+		_recStopTime = ksGetQPTTime();
+
+		writeConsole(strf(L"stop replay \"%s\"", _recName.c_str()), true);
+		saveTelemetry(_recName + L"_replay_telem.csv");
+		_plugin->car->controlsProvider->ffEnabled = true;
 	}
 }
 
 void AppCustomPhysics::addConsoleCommands()
 {
 	auto pThis = this;
+	{
+		std::wstring name(L"rname");
+		std::function<bool(std::wstring)> func = [pThis](std::wstring s) {
+			if (s.find_first_of(L"rname ") == 0 && s.length() > 6)
+			{
+				pThis->_recName = s.substr(6);
+			}
+			return true;
+		};
+		std::function<std::wstring(void)> help = []() { return L""; };
+		_sim->console->addCommand(name, &func, &help);
+	}
 	{
 		std::wstring name(L"rec");
 		std::function<bool(std::wstring)> func = [pThis](std::wstring s) {
@@ -408,9 +522,7 @@ void AppCustomPhysics::addConsoleCommands()
 			}
 			return true;
 		};
-		std::function<std::wstring(void)> help = []() {
-			return L"";
-		};
+		std::function<std::wstring(void)> help = []() { return L""; };
 		_sim->console->addCommand(name, &func, &help);
 	}
 	{
@@ -422,9 +534,7 @@ void AppCustomPhysics::addConsoleCommands()
 			}
 			return true;
 		};
-		std::function<std::wstring(void)> help = []() {
-			return L"";
-		};
+		std::function<std::wstring(void)> help = []() { return L""; };
 		_sim->console->addCommand(name, &func, &help);
 	}
 	{
@@ -436,9 +546,7 @@ void AppCustomPhysics::addConsoleCommands()
 			}
 			return true;
 		};
-		std::function<std::wstring(void)> help = []() {
-			return L"";
-		};
+		std::function<std::wstring(void)> help = []() { return L""; };
 		_sim->console->addCommand(name, &func, &help);
 	}
 }
@@ -488,11 +596,16 @@ void AppCustomPhysics::cmdDumpCar()
 
 void AppCustomPhysics::resetTelemetry()
 {
+	writeConsole(strf(L"resetTelemetry"), true);
+
 	for (auto& chan : _plugin->car->telemetry.channels)
 	{
 		chan.data.values.clear();
 		chan.data.frequency = 200;
+		chan.lastTickTime = 0;
 	}
+
+	 //_plugin->car->telemetry.isEnabled = true;
 }
 
 static const wchar_t* TelemetryUnitsNames[] = 
@@ -521,7 +634,8 @@ static const wchar_t* TelemetryUnitsNames[] =
 
 void AppCustomPhysics::saveTelemetry(const std::wstring& filename)
 {
-	log_printf(L"saveTelemetry filename=%s", filename.c_str());
+	double elapsed = _recStopTime - _recStartTime;
+	writeConsole(strf(L"saveTelemetry filename=%s elapsed=%f", filename.c_str(), elapsed), true);
 
 	//std::wstring tmp(filename + L"_ac");
 	//_plugin->car->telemetry.save(&tmp);
@@ -535,8 +649,6 @@ void AppCustomPhysics::saveTelemetry(const std::wstring& filename)
 	}
 	else
 	{
-		double elapsed = ksGetQPTTime() - _recStartTime;
-
 		fwprintf(fd, L"\"Format\",\"MoTeC CSV File\",,,\"Workbook\",\"\"\n");
 		fwprintf(fd, L"\"Venue\",\"%s\",,,\"Worksheet\",\"\"\n", filename.c_str());
 		fwprintf(fd, L"\"Vehicle\",\"test\",,,\"Vehicle Desc\",\"\"\n");
@@ -627,7 +739,6 @@ void AppCustomPhysics::loadControlSamples(const std::wstring& filename)
 	log_printf(L"loadControlSamples filename=%s", filename.c_str());
 
 	_controlSamples.clear();
-	_sampleId = 0;
 
 	FILE* fd = NULL;
 	_wfopen_s(&fd, filename.c_str(), L"rb");

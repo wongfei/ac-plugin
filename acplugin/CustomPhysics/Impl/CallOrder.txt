@@ -76,3 +76,11 @@ Tyre::addTyreForces
 	Tyre::getCorrectedD
 	Tyre::stepDirtyLevel
 	Tyre::stepPuncture
+
+AeroMap::step
+	AeroMap::addDrag
+	AeroMap::addLift
+	Wing::step
+		Wing::stepDynamicControllers
+		Wing::addDrag
+		Wing::addLift

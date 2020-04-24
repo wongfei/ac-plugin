@@ -14,7 +14,22 @@ typedef __m128 _OWORD;
 #define SHOULD_NOT_REACH DEBUG_ASSERT(false)
 
 extern void* _ac_module;
-inline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
+__forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
+
+inline intptr_t get_vtp(void* obj) { return *((intptr_t*)obj); }
+inline intptr_t get_vfp(void* obj, size_t id) { return *((intptr_t*)(get_vtp(obj) + id * sizeof(intptr_t))); }
+
+template<typename TOUT, typename TIN>
+TOUT xcast(TIN in)
+{
+    union
+    {
+        TIN in;
+        TOUT out;
+    }
+    u = { in };
+    return u.out;
+}
 
 struct _object {};
 

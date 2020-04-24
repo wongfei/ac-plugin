@@ -1235,17 +1235,17 @@ public:
 	inline ICollisionObject(const ICollisionObject& other) = default;
 	inline ICollisionObject& operator=(const ICollisionObject& other) = default;
 	virtual void release_vf0() = 0;
-	inline void release() { return release_vf0(); }
+	inline void release() { typedef void (ICollisionObject::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual void setUserPointer_vf1(void *  _arg0) = 0;
-	inline void setUserPointer(void *  _arg0) { return setUserPointer_vf1( _arg0); }
+	inline void setUserPointer(void *  _arg0) { typedef void (ICollisionObject::*_fpt)(void *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0); }
 	virtual void * getUserPointer_vf2() = 0;
-	inline void * getUserPointer() { return getUserPointer_vf2(); }
+	inline void * getUserPointer() { typedef void * (ICollisionObject::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	virtual unsigned long getGroup_vf3() = 0;
-	inline unsigned long getGroup() { return getGroup_vf3(); }
+	inline unsigned long getGroup() { typedef unsigned long (ICollisionObject::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
 	virtual unsigned long getMask_vf4() = 0;
-	inline unsigned long getMask() { return getMask_vf4(); }
+	inline unsigned long getMask() { typedef unsigned long (ICollisionObject::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual ~ICollisionObject();
-	inline void dtor() { typedef void (*_fpt)(ICollisionObject *pthis); _fpt _f=(_fpt)_drva(2939088); _f(this); }
+	inline void dtor() { typedef void (ICollisionObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(2939088)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ICollisionObject)==8),"bad size");
 	};
@@ -1469,10 +1469,10 @@ public:
 	inline GameTime() { }
 	inline GameTime(const GameTime& other) = default;
 	inline GameTime& operator=(const GameTime& other) = default;
-	inline void ctor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506064); _f(this); }
+	inline void ctor() { typedef void (GameTime::*_fpt)(); auto _f=xcast<_fpt>(_drva(4506064)); (this->*_f)(); }
 	virtual ~GameTime();
-	inline void dtor() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506128); _f(this); }
-	inline void update() { typedef void (*_fpt)(GameTime *pthis); _fpt _f=(_fpt)_drva(4506192); return _f(this); }
+	inline void dtor() { typedef void (GameTime::*_fpt)(); auto _f=xcast<_fpt>(_drva(4506128)); (this->*_f)(); }
+	inline void update() { typedef void (GameTime::*_fpt)(); auto _f=xcast<_fpt>(_drva(4506192)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GameTime)==56),"bad size");
 		static_assert((offsetof(GameTime,now)==0x8),"bad off");
@@ -1529,9 +1529,9 @@ public:
 	inline ITorqueGenerator(const ITorqueGenerator& other) = default;
 	inline ITorqueGenerator& operator=(const ITorqueGenerator& other) = default;
 	virtual ~ITorqueGenerator();
-	inline void dtor() { typedef void (*_fpt)(ITorqueGenerator *pthis); _fpt _f=(_fpt)_drva(2549840); _f(this); }
+	inline void dtor() { typedef void (ITorqueGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549840)); (this->*_f)(); }
 	virtual float getOutputTorque_vf1() = 0;
-	inline float getOutputTorque() { return getOutputTorque_vf1(); }
+	inline float getOutputTorque() { typedef float (ITorqueGenerator::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ITorqueGenerator)==8),"bad size");
 	};
@@ -1785,9 +1785,9 @@ public:
 	inline IJoint(const IJoint& other) = default;
 	inline IJoint& operator=(const IJoint& other) = default;
 	virtual void release_vf0() = 0;
-	inline void release() { return release_vf0(); }
+	inline void release() { typedef void (IJoint::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual void setERPCFM_vf1(float  _arg0, float  _arg1) = 0;
-	inline void setERPCFM(float  _arg0, float  _arg1) { return setERPCFM_vf1( _arg0,  _arg1); }
+	inline void setERPCFM(float  _arg0, float  _arg1) { typedef void (IJoint::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1); }
 	virtual ~IJoint();
 	inline void _guard_obj() {
 		static_assert((sizeof(IJoint)==8),"bad size");
@@ -1844,9 +1844,9 @@ public:
 	inline ICoastGenerator(const ICoastGenerator& other) = default;
 	inline ICoastGenerator& operator=(const ICoastGenerator& other) = default;
 	virtual ~ICoastGenerator();
-	inline void dtor() { typedef void (*_fpt)(ICoastGenerator *pthis); _fpt _f=(_fpt)_drva(2693184); _f(this); }
+	inline void dtor() { typedef void (ICoastGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2693184)); (this->*_f)(); }
 	virtual float getCoastTorque_vf1() = 0;
-	inline float getCoastTorque() { return getCoastTorque_vf1(); }
+	inline float getCoastTorque() { typedef float (ICoastGenerator::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ICoastGenerator)==8),"bad size");
 	};
@@ -1873,8 +1873,8 @@ public:
 	inline ksgui_ksRect() { }
 	inline ksgui_ksRect(const ksgui_ksRect& other) = default;
 	inline ksgui_ksRect& operator=(const ksgui_ksRect& other) = default;
-	inline float getWidth() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(694320); return _f(this); }
-	inline float getHeight() { typedef float (*_fpt)(ksgui_ksRect *pthis); _fpt _f=(_fpt)_drva(220096); return _f(this); }
+	inline float getWidth() { typedef float (ksgui_ksRect::*_fpt)(); auto _f=xcast<_fpt>(_drva(694320)); return (this->*_f)(); }
+	inline float getHeight() { typedef float (ksgui_ksRect::*_fpt)(); auto _f=xcast<_fpt>(_drva(220096)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ksRect)==16),"bad size");
 		static_assert((offsetof(ksgui_ksRect,left)==0x0),"bad off");
@@ -1963,7 +1963,7 @@ public:
 	inline ThreadMutex() { }
 	inline ThreadMutex(const ThreadMutex& other) = default;
 	inline ThreadMutex& operator=(const ThreadMutex& other) = default;
-	inline void dtor() { typedef void (*_fpt)(ThreadMutex *pthis); _fpt _f=(_fpt)_drva(783552); _f(this); }
+	inline void dtor() { typedef void (ThreadMutex::*_fpt)(); auto _f=xcast<_fpt>(_drva(783552)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ThreadMutex)==40),"bad size");
 		static_assert((offsetof(ThreadMutex,criticalSection)==0x0),"bad off");
@@ -1995,11 +1995,11 @@ public:
 	inline PIDController() { }
 	inline PIDController(const PIDController& other) = default;
 	inline PIDController& operator=(const PIDController& other) = default;
-	inline void ctor() { typedef void (*_fpt)(PIDController *pthis); _fpt _f=(_fpt)_drva(4515600); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(PIDController *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float eval(float targetv, float currentv, float dt) { typedef float (*_fpt)(PIDController *pthis, float, float, float); _fpt _f=(_fpt)_drva(4515616); return _f(this, targetv, currentv, dt); }
-	inline void setPID(float p, float i, float d) { typedef void (*_fpt)(PIDController *pthis, float, float, float); _fpt _f=(_fpt)_drva(4515824); return _f(this, p, i, d); }
-	inline void reset() { typedef void (*_fpt)(PIDController *pthis); _fpt _f=(_fpt)_drva(4515808); return _f(this); }
+	inline void ctor() { typedef void (PIDController::*_fpt)(); auto _f=xcast<_fpt>(_drva(4515600)); (this->*_f)(); }
+	inline void dtor() { typedef void (PIDController::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline float eval(float targetv, float currentv, float dt) { typedef float (PIDController::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(4515616)); return (this->*_f)(targetv, currentv, dt); }
+	inline void setPID(float p, float i, float d) { typedef void (PIDController::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(4515824)); return (this->*_f)(p, i, d); }
+	inline void reset() { typedef void (PIDController::*_fpt)(); auto _f=xcast<_fpt>(_drva(4515808)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PIDController)==20),"bad size");
 		static_assert((offsetof(PIDController,P)==0x0),"bad off");
@@ -2081,7 +2081,7 @@ public:
 	inline KGLIndexBuffer() { }
 	inline KGLIndexBuffer(const KGLIndexBuffer& other) = default;
 	inline KGLIndexBuffer& operator=(const KGLIndexBuffer& other) = default;
-	inline void ctor(ID3D11Device * device, unsigned int size, unsigned short * data) { typedef void (*_fpt)(KGLIndexBuffer *pthis, ID3D11Device *, unsigned int, unsigned short *); _fpt _f=(_fpt)_drva(147296); _f(this, device, size, data); }
+	inline void ctor(ID3D11Device * device, unsigned int size, unsigned short * data) { typedef void (KGLIndexBuffer::*_fpt)(ID3D11Device *, unsigned int, unsigned short *); auto _f=xcast<_fpt>(_drva(147296)); (this->*_f)(device, size, data); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLIndexBuffer)==8),"bad size");
 		static_assert((offsetof(KGLIndexBuffer,buffer)==0x0),"bad off");
@@ -2165,7 +2165,7 @@ public:
 	inline KGLRenderTarget() { }
 	inline KGLRenderTarget(const KGLRenderTarget& other) = default;
 	inline KGLRenderTarget& operator=(const KGLRenderTarget& other) = default;
-	inline void ctor(ID3D11Device * device, DXGI_FORMAT fmt, unsigned int iwidth, unsigned int iheight, bool isDepth, int aSamples, int mips) { typedef void (*_fpt)(KGLRenderTarget *pthis, ID3D11Device *, DXGI_FORMAT, unsigned int, unsigned int, bool, int, int); _fpt _f=(_fpt)_drva(144080); _f(this, device, fmt, iwidth, iheight, isDepth, aSamples, mips); }
+	inline void ctor(ID3D11Device * device, DXGI_FORMAT fmt, unsigned int iwidth, unsigned int iheight, bool isDepth, int aSamples, int mips) { typedef void (KGLRenderTarget::*_fpt)(ID3D11Device *, DXGI_FORMAT, unsigned int, unsigned int, bool, int, int); auto _f=xcast<_fpt>(_drva(144080)); (this->*_f)(device, fmt, iwidth, iheight, isDepth, aSamples, mips); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLRenderTarget)==48),"bad size");
 		static_assert((offsetof(KGLRenderTarget,rtTexture)==0x0),"bad off");
@@ -2293,7 +2293,7 @@ public:
 	inline CommandItem() { }
 	inline CommandItem(const CommandItem& other) = default;
 	inline CommandItem& operator=(const CommandItem& other) = default;
-	inline void ctor(int akey) { typedef void (*_fpt)(CommandItem *pthis, int); _fpt _f=(_fpt)_drva(953184); _f(this, akey); }
+	inline void ctor(int akey) { typedef void (CommandItem::*_fpt)(int); auto _f=xcast<_fpt>(_drva(953184)); (this->*_f)(akey); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CommandItem)==4),"bad size");
 		static_assert((offsetof(CommandItem,key)==0x0),"bad off");
@@ -2402,10 +2402,10 @@ public:
 	inline Trigger() { }
 	inline Trigger(const Trigger& other) = default;
 	inline Trigger& operator=(const Trigger& other) = default;
-	inline void ctor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(2339728); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Trigger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline bool ignoreSubsequentTrue(bool value) { typedef bool (*_fpt)(Trigger *pthis, bool); _fpt _f=(_fpt)_drva(2339744); return _f(this, value); }
-	inline bool keepSteady(float dt, bool value) { typedef bool (*_fpt)(Trigger *pthis, float, bool); _fpt _f=(_fpt)_drva(2339776); return _f(this, dt, value); }
+	inline void ctor() { typedef void (Trigger::*_fpt)(); auto _f=xcast<_fpt>(_drva(2339728)); (this->*_f)(); }
+	inline void dtor() { typedef void (Trigger::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline bool ignoreSubsequentTrue(bool value) { typedef bool (Trigger::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2339744)); return (this->*_f)(value); }
+	inline bool keepSteady(float dt, bool value) { typedef bool (Trigger::*_fpt)(float, bool); auto _f=xcast<_fpt>(_drva(2339776)); return (this->*_f)(dt, value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Trigger)==12),"bad size");
 		static_assert((offsetof(Trigger,state)==0x0),"bad off");
@@ -2526,7 +2526,7 @@ public:
 	inline vec2f() { }
 	inline vec2f(const vec2f& other) = default;
 	inline vec2f& operator=(const vec2f& other) = default;
-	inline void ctor(float ix, float iy) { typedef void (*_fpt)(vec2f *pthis, float, float); _fpt _f=(_fpt)_drva(216944); _f(this, ix, iy); }
+	inline void ctor(float ix, float iy) { typedef void (vec2f::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(216944)); (this->*_f)(ix, iy); }
 	inline void _guard_obj() {
 		static_assert((sizeof(vec2f)==8),"bad size");
 		static_assert((offsetof(vec2f,x)==0x0),"bad off");
@@ -2621,17 +2621,17 @@ public:
 	inline CBuffer() { }
 	inline CBuffer(const CBuffer& other) = default;
 	inline CBuffer& operator=(const CBuffer& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2201856); _f(this); }
-	inline void ctor(int islot, int isize) { typedef void (*_fpt)(CBuffer *pthis, int, int); _fpt _f=(_fpt)_drva(2201744); _f(this, islot, isize); }
-	inline void dtor() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2202128); _f(this); }
-	inline void set(int * value, int offset, int size) { typedef void (*_fpt)(CBuffer *pthis, int *, int, int); _fpt _f=(_fpt)_drva(2202192); return _f(this, value, offset, size); }
-	inline void set(float * value, int offset, int size) { typedef void (*_fpt)(CBuffer *pthis, float *, int, int); _fpt _f=(_fpt)_drva(2202192); return _f(this, value, offset, size); }
-	inline void get(float * value, int offset, int size) { typedef void (*_fpt)(CBuffer *pthis, float *, int, int); _fpt _f=(_fpt)_drva(2201968); return _f(this, value, offset, size); }
-	inline void commit() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2201888); return _f(this); }
-	inline void touch() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2202240); return _f(this); }
-	inline void map(void * bdata, int bsize) { typedef void (*_fpt)(CBuffer *pthis, void *, int); _fpt _f=(_fpt)_drva(2202096); return _f(this, bdata, bsize); }
-	inline void init(int islot, int isize) { typedef void (*_fpt)(CBuffer *pthis, int, int); _fpt _f=(_fpt)_drva(2202000); return _f(this, islot, isize); }
-	inline void release() { typedef void (*_fpt)(CBuffer *pthis); _fpt _f=(_fpt)_drva(2202128); return _f(this); }
+	inline void ctor() { typedef void (CBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2201856)); (this->*_f)(); }
+	inline void ctor(int islot, int isize) { typedef void (CBuffer::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2201744)); (this->*_f)(islot, isize); }
+	inline void dtor() { typedef void (CBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2202128)); (this->*_f)(); }
+	inline void set(int * value, int offset, int size) { typedef void (CBuffer::*_fpt)(int *, int, int); auto _f=xcast<_fpt>(_drva(2202192)); return (this->*_f)(value, offset, size); }
+	inline void set(float * value, int offset, int size) { typedef void (CBuffer::*_fpt)(float *, int, int); auto _f=xcast<_fpt>(_drva(2202192)); return (this->*_f)(value, offset, size); }
+	inline void get(float * value, int offset, int size) { typedef void (CBuffer::*_fpt)(float *, int, int); auto _f=xcast<_fpt>(_drva(2201968)); return (this->*_f)(value, offset, size); }
+	inline void commit() { typedef void (CBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2201888)); return (this->*_f)(); }
+	inline void touch() { typedef void (CBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2202240)); return (this->*_f)(); }
+	inline void map(void * bdata, int bsize) { typedef void (CBuffer::*_fpt)(void *, int); auto _f=xcast<_fpt>(_drva(2202096)); return (this->*_f)(bdata, bsize); }
+	inline void init(int islot, int isize) { typedef void (CBuffer::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2202000)); return (this->*_f)(islot, isize); }
+	inline void release() { typedef void (CBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2202128)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CBuffer)==40),"bad size");
 		static_assert((offsetof(CBuffer,size)==0x0),"bad off");
@@ -2878,14 +2878,14 @@ public:
 	inline Speed() { }
 	inline Speed(const Speed& other) = default;
 	inline Speed& operator=(const Speed& other) = default;
-	inline void ctor(float v) { typedef void (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2333072); _f(this, v); }
-	inline void ctor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(2333024); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline static Speed fromMS(float ms) { typedef Speed (*_fpt)(float); _fpt _f=(_fpt)_drva(2333072); return _f(ms); }
-	inline static Speed fromKMH(float ms) { typedef Speed (*_fpt)(float); _fpt _f=(_fpt)_drva(2333040); return _f(ms); }
-	inline static Speed fromMPH(float ms) { typedef Speed (*_fpt)(float); _fpt _f=(_fpt)_drva(2333056); return _f(ms); }
-	inline float kmh() { typedef float (*_fpt)(Speed *pthis); _fpt _f=(_fpt)_drva(364368); return _f(this); }
-	inline Speed operator*(float v2) { typedef Speed (*_fpt)(Speed *pthis, float); _fpt _f=(_fpt)_drva(2502224); return _f(this, v2); }
+	inline void ctor(float v) { typedef void (Speed::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2333072)); (this->*_f)(v); }
+	inline void ctor() { typedef void (Speed::*_fpt)(); auto _f=xcast<_fpt>(_drva(2333024)); (this->*_f)(); }
+	inline void dtor() { typedef void (Speed::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline static Speed fromMS(float ms) { typedef Speed (*_fpt)(float); auto _f=(_fpt)_drva(2333072); return _f(ms); }
+	inline static Speed fromKMH(float ms) { typedef Speed (*_fpt)(float); auto _f=(_fpt)_drva(2333040); return _f(ms); }
+	inline static Speed fromMPH(float ms) { typedef Speed (*_fpt)(float); auto _f=(_fpt)_drva(2333056); return _f(ms); }
+	inline float kmh() { typedef float (Speed::*_fpt)(); auto _f=xcast<_fpt>(_drva(364368)); return (this->*_f)(); }
+	inline Speed operator*(float v2) { typedef Speed (Speed::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2502224)); return (this->*_f)(v2); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Speed)==4),"bad size");
 		static_assert((offsetof(Speed,value)==0x0),"bad off");
@@ -3007,9 +3007,9 @@ public:
 	inline KGLVertexBuffer() { }
 	inline KGLVertexBuffer(const KGLVertexBuffer& other) = default;
 	inline KGLVertexBuffer& operator=(const KGLVertexBuffer& other) = default;
-	inline void ctor(ID3D11Device * device, unsigned int size, unsigned int stride, void * data, bool isDynamic) { typedef void (*_fpt)(KGLVertexBuffer *pthis, ID3D11Device *, unsigned int, unsigned int, void *, bool); _fpt _f=(_fpt)_drva(146752); _f(this, device, size, stride, data, isDynamic); }
-	inline void map(void * data, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(146992); return _f(this, data, size, context); }
-	inline void mapNoOverWrite(void * data, unsigned int offset, unsigned int size, ID3D11DeviceContext * context) { typedef void (*_fpt)(KGLVertexBuffer *pthis, void *, unsigned int, unsigned int, ID3D11DeviceContext *); _fpt _f=(_fpt)_drva(147136); return _f(this, data, offset, size, context); }
+	inline void ctor(ID3D11Device * device, unsigned int size, unsigned int stride, void * data, bool isDynamic) { typedef void (KGLVertexBuffer::*_fpt)(ID3D11Device *, unsigned int, unsigned int, void *, bool); auto _f=xcast<_fpt>(_drva(146752)); (this->*_f)(device, size, stride, data, isDynamic); }
+	inline void map(void * data, unsigned int size, ID3D11DeviceContext * context) { typedef void (KGLVertexBuffer::*_fpt)(void *, unsigned int, ID3D11DeviceContext *); auto _f=xcast<_fpt>(_drva(146992)); return (this->*_f)(data, size, context); }
+	inline void mapNoOverWrite(void * data, unsigned int offset, unsigned int size, ID3D11DeviceContext * context) { typedef void (KGLVertexBuffer::*_fpt)(void *, unsigned int, unsigned int, ID3D11DeviceContext *); auto _f=xcast<_fpt>(_drva(147136)); return (this->*_f)(data, offset, size, context); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLVertexBuffer)==16),"bad size");
 		static_assert((offsetof(KGLVertexBuffer,buffer)==0x0),"bad off");
@@ -3130,14 +3130,14 @@ public:
 	inline SignalGenerator() { }
 	inline SignalGenerator(const SignalGenerator& other) = default;
 	inline SignalGenerator& operator=(const SignalGenerator& other) = default;
-	inline void ctor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282048); _f(this); }
+	inline void ctor() { typedef void (SignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2282048)); (this->*_f)(); }
 	virtual ~SignalGenerator();
-	inline void dtor() { typedef void (*_fpt)(SignalGenerator *pthis); _fpt _f=(_fpt)_drva(2282080); _f(this); }
+	inline void dtor() { typedef void (SignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2282080)); (this->*_f)(); }
 	virtual void step_vf1(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SignalGenerator *pthis, float); _fpt _f=(_fpt)_drva(2282240); return _f(this, dt); }
-	inline void step(float dt) { return step_vf1(dt); }
+	inline void step_impl(float dt) { typedef void (SignalGenerator::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2282240)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (SignalGenerator::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
 	virtual float getValue_vf2() = 0;
-	inline float getValue() { return getValue_vf2(); }
+	inline float getValue() { typedef float (SignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SignalGenerator)==16),"bad size");
 		static_assert((offsetof(SignalGenerator,freqScale)==0x8),"bad off");
@@ -3653,9 +3653,9 @@ public:
 	inline Damper() { }
 	inline Damper(const Damper& other) = default;
 	inline Damper& operator=(const Damper& other) = default;
-	inline void ctor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(2830928); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Damper *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float getForce(float v) { typedef float (*_fpt)(Damper *pthis, float); _fpt _f=(_fpt)_drva(2830976); return _f(this, v); }
+	inline void ctor() { typedef void (Damper::*_fpt)(); auto _f=xcast<_fpt>(_drva(2830928)); (this->*_f)(); }
+	inline void dtor() { typedef void (Damper::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline float getForce(float v) { typedef float (Damper::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2830976)); return (this->*_f)(v); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Damper)==24),"bad size");
 		static_assert((offsetof(Damper,reboundSlow)==0x0),"bad off");
@@ -3877,9 +3877,9 @@ public:
 	inline vec4f() { }
 	inline vec4f(const vec4f& other) = default;
 	inline vec4f& operator=(const vec4f& other) = default;
-	inline void ctor(const vec3f & v3, float vw) { typedef void (*_fpt)(vec4f *pthis, const vec3f &, float); _fpt _f=(_fpt)_drva(962960); _f(this, v3, vw); }
-	inline void ctor(float ix, float iy, float iz, float iw) { typedef void (*_fpt)(vec4f *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(3178496); _f(this, ix, iy, iz, iw); }
-	inline void ctor() { typedef void (*_fpt)(vec4f *pthis); _fpt _f=(_fpt)_drva(508768); _f(this); }
+	inline void ctor(const vec3f & v3, float vw) { typedef void (vec4f::*_fpt)(const vec3f &, float); auto _f=xcast<_fpt>(_drva(962960)); (this->*_f)(v3, vw); }
+	inline void ctor(float ix, float iy, float iz, float iw) { typedef void (vec4f::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(3178496)); (this->*_f)(ix, iy, iz, iw); }
+	inline void ctor() { typedef void (vec4f::*_fpt)(); auto _f=xcast<_fpt>(_drva(508768)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(vec4f)==16),"bad size");
 		static_assert((offsetof(vec4f,x)==0x0),"bad off");
@@ -3913,7 +3913,7 @@ public:
 	inline LeaderboardEntry() { }
 	inline LeaderboardEntry(const LeaderboardEntry& other) = default;
 	inline LeaderboardEntry& operator=(const LeaderboardEntry& other) = default;
-	inline bool operator<(const LeaderboardEntry & l) { typedef bool (*_fpt)(LeaderboardEntry *pthis, const LeaderboardEntry &); _fpt _f=(_fpt)_drva(1327408); return _f(this, l); }
+	inline bool operator<(const LeaderboardEntry & l) { typedef bool (LeaderboardEntry::*_fpt)(const LeaderboardEntry &); auto _f=xcast<_fpt>(_drva(1327408)); return (this->*_f)(l); }
 	inline void _guard_obj() {
 		static_assert((sizeof(LeaderboardEntry)==32),"bad size");
 		static_assert((offsetof(LeaderboardEntry,car)==0x0),"bad off");
@@ -3972,7 +3972,7 @@ public:
 	inline OnChatMessageEvent() { }
 	inline OnChatMessageEvent(const OnChatMessageEvent& other) = default;
 	inline OnChatMessageEvent& operator=(const OnChatMessageEvent& other) = default;
-	inline void dtor() { typedef void (*_fpt)(OnChatMessageEvent *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void dtor() { typedef void (OnChatMessageEvent::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OnChatMessageEvent)==40),"bad size");
 		static_assert((offsetof(OnChatMessageEvent,sessionID)==0x0),"bad off");
@@ -4018,7 +4018,7 @@ public:
 	inline MultiplayerStatus() { }
 	inline MultiplayerStatus(const MultiplayerStatus& other) = default;
 	inline MultiplayerStatus& operator=(const MultiplayerStatus& other) = default;
-	inline void dtor() { typedef void (*_fpt)(MultiplayerStatus *pthis); _fpt _f=(_fpt)_drva(1258160); _f(this); }
+	inline void dtor() { typedef void (MultiplayerStatus::*_fpt)(); auto _f=xcast<_fpt>(_drva(1258160)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(MultiplayerStatus)==32),"bad size");
 		static_assert((offsetof(MultiplayerStatus,completedFlags)==0x0),"bad off");
@@ -4066,7 +4066,7 @@ public:
 	inline FadeModeDef() { }
 	inline FadeModeDef(const FadeModeDef& other) = default;
 	inline FadeModeDef& operator=(const FadeModeDef& other) = default;
-	inline void ctor(FadeMode aMode, void * aSender, float aTime) { typedef void (*_fpt)(FadeModeDef *pthis, FadeMode, void *, float); _fpt _f=(_fpt)_drva(242368); _f(this, aMode, aSender, aTime); }
+	inline void ctor(FadeMode aMode, void * aSender, float aTime) { typedef void (FadeModeDef::*_fpt)(FadeMode, void *, float); auto _f=xcast<_fpt>(_drva(242368)); (this->*_f)(aMode, aSender, aTime); }
 	inline void _guard_obj() {
 		static_assert((sizeof(FadeModeDef)==24),"bad size");
 		static_assert((offsetof(FadeModeDef,mode)==0x0),"bad off");
@@ -4163,8 +4163,8 @@ public:
 	inline ClientRemoteCarDef() { }
 	inline ClientRemoteCarDef(const ClientRemoteCarDef& other) = default;
 	inline ClientRemoteCarDef& operator=(const ClientRemoteCarDef& other) = default;
-	inline void ctor(const ClientRemoteCarDef & __that) { typedef void (*_fpt)(ClientRemoteCarDef *pthis, const ClientRemoteCarDef &); _fpt _f=(_fpt)_drva(241776); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(ClientRemoteCarDef *pthis); _fpt _f=(_fpt)_drva(246128); _f(this); }
+	inline void ctor(const ClientRemoteCarDef & __that) { typedef void (ClientRemoteCarDef::*_fpt)(const ClientRemoteCarDef &); auto _f=xcast<_fpt>(_drva(241776)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (ClientRemoteCarDef::*_fpt)(); auto _f=xcast<_fpt>(_drva(246128)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ClientRemoteCarDef)==216),"bad size");
 		static_assert((offsetof(ClientRemoteCarDef,model)==0x0),"bad off");
@@ -4194,7 +4194,7 @@ public:
 	inline plane4f() { }
 	inline plane4f(const plane4f& other) = default;
 	inline plane4f& operator=(const plane4f& other) = default;
-	inline void ctor(const vec3f & point1, const vec3f & point2, const vec3f & point3) { typedef void (*_fpt)(plane4f *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(1146576); _f(this, point1, point2, point3); }
+	inline void ctor(const vec3f & point1, const vec3f & point2, const vec3f & point3) { typedef void (plane4f::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(1146576)); (this->*_f)(point1, point2, point3); }
 	inline void _guard_obj() {
 		static_assert((sizeof(plane4f)==16),"bad size");
 		static_assert((offsetof(plane4f,normal)==0x0),"bad off");
@@ -4229,8 +4229,8 @@ public:
 	inline ClientHandshakeResult() { }
 	inline ClientHandshakeResult(const ClientHandshakeResult& other) = default;
 	inline ClientHandshakeResult& operator=(const ClientHandshakeResult& other) = default;
-	inline void ctor(const ClientHandshakeResult & __that) { typedef void (*_fpt)(ClientHandshakeResult *pthis, const ClientHandshakeResult &); _fpt _f=(_fpt)_drva(241536); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(ClientHandshakeResult *pthis); _fpt _f=(_fpt)_drva(245968); _f(this); }
+	inline void ctor(const ClientHandshakeResult & __that) { typedef void (ClientHandshakeResult::*_fpt)(const ClientHandshakeResult &); auto _f=xcast<_fpt>(_drva(241536)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (ClientHandshakeResult::*_fpt)(); auto _f=xcast<_fpt>(_drva(245968)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ClientHandshakeResult)==144),"bad size");
 		static_assert((offsetof(ClientHandshakeResult,success)==0x0),"bad off");
@@ -4287,9 +4287,9 @@ public:
 	inline StabilityControl() { }
 	inline StabilityControl(const StabilityControl& other) = default;
 	inline StabilityControl& operator=(const StabilityControl& other) = default;
-	inline void dtor() { typedef void (*_fpt)(StabilityControl *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(StabilityControl *pthis, Car *); _fpt _f=(_fpt)_drva(2882096); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(StabilityControl *pthis, float); _fpt _f=(_fpt)_drva(2882128); return _f(this, dt); }
+	inline void dtor() { typedef void (StabilityControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (StabilityControl::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2882096)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (StabilityControl::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2882128)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(StabilityControl)==24),"bad size");
 		static_assert((offsetof(StabilityControl,gain)==0x0),"bad off");
@@ -4329,7 +4329,7 @@ public:
 	inline IVarCallback(const IVarCallback& other) = default;
 	inline IVarCallback& operator=(const IVarCallback& other) = default;
 	virtual void onSetVar_vf0(SVar *  _arg0, float  _arg1) = 0;
-	inline void onSetVar(SVar *  _arg0, float  _arg1) { return onSetVar_vf0( _arg0,  _arg1); }
+	inline void onSetVar(SVar *  _arg0, float  _arg1) { typedef void (IVarCallback::*_fpt)(SVar *, float); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)( _arg0,  _arg1); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IVarCallback)==8),"bad size");
 	};
@@ -4431,7 +4431,7 @@ public:
 	inline TrackData() { }
 	inline TrackData(const TrackData& other) = default;
 	inline TrackData& operator=(const TrackData& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TrackData *pthis); _fpt _f=(_fpt)_drva(776352); _f(this); }
+	inline void dtor() { typedef void (TrackData::*_fpt)(); auto _f=xcast<_fpt>(_drva(776352)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TrackData)==72),"bad size");
 		static_assert((offsetof(TrackData,name)==0x0),"bad off");
@@ -4518,7 +4518,7 @@ public:
 	inline DisconnectCountdown() { }
 	inline DisconnectCountdown(const DisconnectCountdown& other) = default;
 	inline DisconnectCountdown& operator=(const DisconnectCountdown& other) = default;
-	inline void dtor() { typedef void (*_fpt)(DisconnectCountdown *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void dtor() { typedef void (DisconnectCountdown::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DisconnectCountdown)==40),"bad size");
 		static_assert((offsetof(DisconnectCountdown,isSignaled)==0x0),"bad off");
@@ -4547,7 +4547,7 @@ public:
 	inline Task() { }
 	inline Task(const Task& other) = default;
 	inline Task& operator=(const Task& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Task *pthis); _fpt _f=(_fpt)_drva(175552); _f(this); }
+	inline void dtor() { typedef void (Task::*_fpt)(); auto _f=xcast<_fpt>(_drva(175552)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Task)==40),"bad size");
 		static_assert((offsetof(Task,isDone)==0x0),"bad off");
@@ -4590,7 +4590,7 @@ public:
 	inline ksgui_GraphReferenceAxis() { }
 	inline ksgui_GraphReferenceAxis(const ksgui_GraphReferenceAxis& other) = default;
 	inline ksgui_GraphReferenceAxis& operator=(const ksgui_GraphReferenceAxis& other) = default;
-	inline void ctor(const vec3f & acolor, float arefValue, bool bisVertical) { typedef void (*_fpt)(ksgui_GraphReferenceAxis *pthis, const vec3f &, float, bool); _fpt _f=(_fpt)_drva(2987152); _f(this, acolor, arefValue, bisVertical); }
+	inline void ctor(const vec3f & acolor, float arefValue, bool bisVertical) { typedef void (ksgui_GraphReferenceAxis::*_fpt)(const vec3f &, float, bool); auto _f=xcast<_fpt>(_drva(2987152)); (this->*_f)(acolor, arefValue, bisVertical); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_GraphReferenceAxis)==20),"bad size");
 		static_assert((offsetof(ksgui_GraphReferenceAxis,color)==0x0),"bad off");
@@ -4637,8 +4637,8 @@ public:
 	inline TCPQueue() { }
 	inline TCPQueue(const TCPQueue& other) = default;
 	inline TCPQueue& operator=(const TCPQueue& other) = default;
-	inline void push(unsigned char * data, unsigned int size) { typedef void (*_fpt)(TCPQueue *pthis, unsigned char *, unsigned int); _fpt _f=(_fpt)_drva(2482992); return _f(this, data, size); }
-	inline std::vector<unsigned char,std::allocator<unsigned char> > getPacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPQueue *pthis); _fpt _f=(_fpt)_drva(2482752); return _f(this); }
+	inline void push(unsigned char * data, unsigned int size) { typedef void (TCPQueue::*_fpt)(unsigned char *, unsigned int); auto _f=xcast<_fpt>(_drva(2482992)); return (this->*_f)(data, size); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > getPacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (TCPQueue::*_fpt)(); auto _f=xcast<_fpt>(_drva(2482752)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TCPQueue)==65540),"bad size");
 		static_assert((offsetof(TCPQueue,buffer)==0x0),"bad off");
@@ -4713,9 +4713,9 @@ public:
 	inline ICollisionCallback(const ICollisionCallback& other) = default;
 	inline ICollisionCallback& operator=(const ICollisionCallback& other) = default;
 	virtual ~ICollisionCallback();
-	inline void dtor() { typedef void (*_fpt)(ICollisionCallback *pthis); _fpt _f=(_fpt)_drva(2501856); _f(this); }
+	inline void dtor() { typedef void (ICollisionCallback::*_fpt)(); auto _f=xcast<_fpt>(_drva(2501856)); (this->*_f)(); }
 	virtual void onCollisionCallBack_vf1(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) = 0;
-	inline void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) { return onCollisionCallBack_vf1( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6); }
+	inline void onCollisionCallBack(void *  _arg0, void *  _arg1, void *  _arg2, void *  _arg3, vec3f  _arg4, vec3f  _arg5, float  _arg6) { typedef void (ICollisionCallback::*_fpt)(void *, void *, void *, void *, vec3f, vec3f, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ICollisionCallback)==8),"bad size");
 	};
@@ -4789,10 +4789,10 @@ public:
 	inline LapInvalidator() { }
 	inline LapInvalidator(const LapInvalidator& other) = default;
 	inline LapInvalidator& operator=(const LapInvalidator& other) = default;
-	inline void dtor() { typedef void (*_fpt)(LapInvalidator *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(LapInvalidator *pthis, Car *); _fpt _f=(_fpt)_drva(2865408); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(LapInvalidator *pthis, float); _fpt _f=(_fpt)_drva(2884992); return _f(this, dt); }
-	inline void onEnterPenaltyZone(int tyre_count, float black_flag_time) { typedef void (*_fpt)(LapInvalidator *pthis, int, float); _fpt _f=(_fpt)_drva(2884560); return _f(this, tyre_count, black_flag_time); }
+	inline void dtor() { typedef void (LapInvalidator::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (LapInvalidator::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2865408)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (LapInvalidator::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2884992)); return (this->*_f)(dt); }
+	inline void onEnterPenaltyZone(int tyre_count, float black_flag_time) { typedef void (LapInvalidator::*_fpt)(int, float); auto _f=xcast<_fpt>(_drva(2884560)); return (this->*_f)(tyre_count, black_flag_time); }
 	inline void _guard_obj() {
 		static_assert((sizeof(LapInvalidator)==32),"bad size");
 		static_assert((offsetof(LapInvalidator,collisionSafeTime)==0x0),"bad off");
@@ -4845,9 +4845,9 @@ public:
 	inline GearChanger() { }
 	inline GearChanger(const GearChanger& other) = default;
 	inline GearChanger& operator=(const GearChanger& other) = default;
-	inline void dtor() { typedef void (*_fpt)(GearChanger *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(GearChanger *pthis, Car *); _fpt _f=(_fpt)_drva(2861888); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(GearChanger *pthis, float); _fpt _f=(_fpt)_drva(2861904); return _f(this, dt); }
+	inline void dtor() { typedef void (GearChanger::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (GearChanger::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2861888)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (GearChanger::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2861904)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GearChanger)==24),"bad size");
 		static_assert((offsetof(GearChanger,wasGearUpTriggered)==0x0),"bad off");
@@ -4890,10 +4890,10 @@ public:
 	inline AutoShifter() { }
 	inline AutoShifter(const AutoShifter& other) = default;
 	inline AutoShifter& operator=(const AutoShifter& other) = default;
-	inline void dtor() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(AutoShifter *pthis, Car *); _fpt _f=(_fpt)_drva(2859040); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(AutoShifter *pthis, float); _fpt _f=(_fpt)_drva(2861040); return _f(this, dt); }
-	inline void loadINI() { typedef void (*_fpt)(AutoShifter *pthis); _fpt _f=(_fpt)_drva(2859088); return _f(this); }
+	inline void dtor() { typedef void (AutoShifter::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (AutoShifter::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2859040)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (AutoShifter::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2861040)); return (this->*_f)(dt); }
+	inline void loadINI() { typedef void (AutoShifter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2859088)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AutoShifter)==40),"bad size");
 		static_assert((offsetof(AutoShifter,isActive)==0x0),"bad off");
@@ -4949,9 +4949,9 @@ public:
 	inline EDL() { }
 	inline EDL(const EDL& other) = default;
 	inline EDL& operator=(const EDL& other) = default;
-	inline void dtor() { typedef void (*_fpt)(EDL *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void step(float td) { typedef void (*_fpt)(EDL *pthis, float); _fpt _f=(_fpt)_drva(2864224); return _f(this, td); }
-	inline void init(Car * a_car) { typedef void (*_fpt)(EDL *pthis, Car *); _fpt _f=(_fpt)_drva(2862064); return _f(this, a_car); }
+	inline void dtor() { typedef void (EDL::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void step(float td) { typedef void (EDL::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2864224)); return (this->*_f)(td); }
+	inline void init(Car * a_car) { typedef void (EDL::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2862064)); return (this->*_f)(a_car); }
 	inline void _guard_obj() {
 		static_assert((sizeof(EDL)==56),"bad size");
 		static_assert((offsetof(EDL,isPresent)==0x0),"bad off");
@@ -4994,8 +4994,8 @@ public:
 	inline ServerInfo() { }
 	inline ServerInfo(const ServerInfo& other) = default;
 	inline ServerInfo& operator=(const ServerInfo& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ServerInfo *pthis); _fpt _f=(_fpt)_drva(243344); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(ServerInfo *pthis); _fpt _f=(_fpt)_drva(776352); _f(this); }
+	inline void ctor() { typedef void (ServerInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(243344)); (this->*_f)(); }
+	inline void dtor() { typedef void (ServerInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(776352)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ServerInfo)==72),"bad size");
 		static_assert((offsetof(ServerInfo,name)==0x0),"bad off");
@@ -5094,11 +5094,11 @@ public:
 	inline DriftModeComponent() { }
 	inline DriftModeComponent(const DriftModeComponent& other) = default;
 	inline DriftModeComponent& operator=(const DriftModeComponent& other) = default;
-	inline void dtor() { typedef void (*_fpt)(DriftModeComponent *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(DriftModeComponent *pthis, Car *); _fpt _f=(_fpt)_drva(2882976); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(DriftModeComponent *pthis, float); _fpt _f=(_fpt)_drva(2883360); return _f(this, dt); }
-	inline bool checkExtremeDrifting() { typedef bool (*_fpt)(DriftModeComponent *pthis); _fpt _f=(_fpt)_drva(2882640); return _f(this); }
-	inline void validateDrift() { typedef void (*_fpt)(DriftModeComponent *pthis); _fpt _f=(_fpt)_drva(2884208); return _f(this); }
+	inline void dtor() { typedef void (DriftModeComponent::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (DriftModeComponent::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2882976)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (DriftModeComponent::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2883360)); return (this->*_f)(dt); }
+	inline bool checkExtremeDrifting() { typedef bool (DriftModeComponent::*_fpt)(); auto _f=xcast<_fpt>(_drva(2882640)); return (this->*_f)(); }
+	inline void validateDrift() { typedef void (DriftModeComponent::*_fpt)(); auto _f=xcast<_fpt>(_drva(2884208)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DriftModeComponent)==80),"bad size");
 		static_assert((offsetof(DriftModeComponent,car)==0x0),"bad off");
@@ -5136,9 +5136,9 @@ public:
 	inline SpeedLimiter() { }
 	inline SpeedLimiter(const SpeedLimiter& other) = default;
 	inline SpeedLimiter& operator=(const SpeedLimiter& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SpeedLimiter *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(SpeedLimiter *pthis, Car *); _fpt _f=(_fpt)_drva(2865408); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(SpeedLimiter *pthis, float); _fpt _f=(_fpt)_drva(2865424); return _f(this, dt); }
+	inline void dtor() { typedef void (SpeedLimiter::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (SpeedLimiter::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2865408)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (SpeedLimiter::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2865424)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SpeedLimiter)==16),"bad size");
 		static_assert((offsetof(SpeedLimiter,shoudLimit)==0x0),"bad off");
@@ -5266,9 +5266,9 @@ public:
 	inline DriverInfo() { }
 	inline DriverInfo(const DriverInfo& other) = default;
 	inline DriverInfo& operator=(const DriverInfo& other) = default;
-	inline void ctor(const DriverInfo & __that) { typedef void (*_fpt)(DriverInfo *pthis, const DriverInfo &); _fpt _f=(_fpt)_drva(242096); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(242288); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(DriverInfo *pthis); _fpt _f=(_fpt)_drva(246464); _f(this); }
+	inline void ctor(const DriverInfo & __that) { typedef void (DriverInfo::*_fpt)(const DriverInfo &); auto _f=xcast<_fpt>(_drva(242096)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (DriverInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(242288)); (this->*_f)(); }
+	inline void dtor() { typedef void (DriverInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(246464)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DriverInfo)==128),"bad size");
 		static_assert((offsetof(DriverInfo,name)==0x0),"bad off");
@@ -5303,7 +5303,7 @@ public:
 	inline ReceivedVoteDef() { }
 	inline ReceivedVoteDef(const ReceivedVoteDef& other) = default;
 	inline ReceivedVoteDef& operator=(const ReceivedVoteDef& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ReceivedVoteDef *pthis); _fpt _f=(_fpt)_drva(242528); _f(this); }
+	inline void ctor() { typedef void (ReceivedVoteDef::*_fpt)(); auto _f=xcast<_fpt>(_drva(242528)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ReceivedVoteDef)==28),"bad size");
 		static_assert((offsetof(ReceivedVoteDef,voteType)==0x0),"bad off");
@@ -5334,8 +5334,8 @@ public:
 	inline SGearRatio() { }
 	inline SGearRatio(const SGearRatio& other) = default;
 	inline SGearRatio& operator=(const SGearRatio& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio) { typedef void (*_fpt)(SGearRatio *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); _fpt _f=(_fpt)_drva(2514800); _f(this, iname, iratio); }
-	inline void dtor() { typedef void (*_fpt)(SGearRatio *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, double iratio) { typedef void (SGearRatio::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); auto _f=xcast<_fpt>(_drva(2514800)); (this->*_f)(iname, iratio); }
+	inline void dtor() { typedef void (SGearRatio::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SGearRatio)==40),"bad size");
 		static_assert((offsetof(SGearRatio,ratio)==0x0),"bad off");
@@ -5411,7 +5411,7 @@ public:
 	inline OnLapCompletedEvent() { }
 	inline OnLapCompletedEvent(const OnLapCompletedEvent& other) = default;
 	inline OnLapCompletedEvent& operator=(const OnLapCompletedEvent& other) = default;
-	inline void dtor() { typedef void (*_fpt)(OnLapCompletedEvent *pthis); _fpt _f=(_fpt)_drva(246720); _f(this); }
+	inline void dtor() { typedef void (OnLapCompletedEvent::*_fpt)(); auto _f=xcast<_fpt>(_drva(246720)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OnLapCompletedEvent)==56),"bad size");
 		static_assert((offsetof(OnLapCompletedEvent,carIndex)==0x0),"bad off");
@@ -5500,11 +5500,11 @@ public:
 	inline FileChangeObserver() { }
 	inline FileChangeObserver(const FileChangeObserver& other) = default;
 	inline FileChangeObserver& operator=(const FileChangeObserver& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (*_fpt)(FileChangeObserver *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2339840); _f(this, a_filename); }
-	inline void dtor() { typedef void (*_fpt)(FileChangeObserver *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
-	inline bool hasChanged() { typedef bool (*_fpt)(FileChangeObserver *pthis); _fpt _f=(_fpt)_drva(2339904); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(FileChangeObserver *pthis); _fpt _f=(_fpt)_drva(2340144); return _f(this); }
-	inline void observe(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (*_fpt)(FileChangeObserver *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2339952); return _f(this, a_filename); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (FileChangeObserver::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2339840)); (this->*_f)(a_filename); }
+	inline void dtor() { typedef void (FileChangeObserver::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
+	inline bool hasChanged() { typedef bool (FileChangeObserver::*_fpt)(); auto _f=xcast<_fpt>(_drva(2339904)); return (this->*_f)(); }
+	inline void reset() { typedef void (FileChangeObserver::*_fpt)(); auto _f=xcast<_fpt>(_drva(2340144)); return (this->*_f)(); }
+	inline void observe(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (FileChangeObserver::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2339952)); return (this->*_f)(a_filename); }
 	inline void _guard_obj() {
 		static_assert((sizeof(FileChangeObserver)==48),"bad size");
 		static_assert((offsetof(FileChangeObserver,lastFileTime)==0x0),"bad off");
@@ -5602,7 +5602,7 @@ public:
 	inline KGLShaderCBuffer() { }
 	inline KGLShaderCBuffer(const KGLShaderCBuffer& other) = default;
 	inline KGLShaderCBuffer& operator=(const KGLShaderCBuffer& other) = default;
-	inline void dtor() { typedef void (*_fpt)(KGLShaderCBuffer *pthis); _fpt _f=(_fpt)_drva(113184); _f(this); }
+	inline void dtor() { typedef void (KGLShaderCBuffer::*_fpt)(); auto _f=xcast<_fpt>(_drva(113184)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLShaderCBuffer)==40),"bad size");
 		static_assert((offsetof(KGLShaderCBuffer,cBufferName)==0x0),"bad off");
@@ -5720,7 +5720,7 @@ public:
 	inline GridElement() { }
 	inline GridElement(const GridElement& other) = default;
 	inline GridElement& operator=(const GridElement& other) = default;
-	inline void dtor() { typedef void (*_fpt)(GridElement *pthis); _fpt _f=(_fpt)_drva(2731104); _f(this); }
+	inline void dtor() { typedef void (GridElement::*_fpt)(); auto _f=xcast<_fpt>(_drva(2731104)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GridElement)==24),"bad size");
 		static_assert((offsetof(GridElement,closestIndices)==0x0),"bad off");
@@ -5763,12 +5763,12 @@ public:
 	inline FuelLapEvaluator() { }
 	inline FuelLapEvaluator(const FuelLapEvaluator& other) = default;
 	inline FuelLapEvaluator& operator=(const FuelLapEvaluator& other) = default;
-	inline void dtor() { typedef void (*_fpt)(FuelLapEvaluator *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline float getFuelLaps() { typedef float (*_fpt)(FuelLapEvaluator *pthis); _fpt _f=(_fpt)_drva(2675296); return _f(this); }
-	inline void setIgnoreLap(bool value) { typedef void (*_fpt)(FuelLapEvaluator *pthis, bool); _fpt _f=(_fpt)_drva(2675536); return _f(this, value); }
-	inline void init(Car * icar) { typedef void (*_fpt)(FuelLapEvaluator *pthis, Car *); _fpt _f=(_fpt)_drva(2675376); return _f(this, icar); }
-	inline float getFuelPerLap() { typedef float (*_fpt)(FuelLapEvaluator *pthis); _fpt _f=(_fpt)_drva(2675344); return _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(FuelLapEvaluator *pthis, float); _fpt _f=(_fpt)_drva(2675552); return _f(this, dt); }
+	inline void dtor() { typedef void (FuelLapEvaluator::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline float getFuelLaps() { typedef float (FuelLapEvaluator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2675296)); return (this->*_f)(); }
+	inline void setIgnoreLap(bool value) { typedef void (FuelLapEvaluator::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2675536)); return (this->*_f)(value); }
+	inline void init(Car * icar) { typedef void (FuelLapEvaluator::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2675376)); return (this->*_f)(icar); }
+	inline float getFuelPerLap() { typedef float (FuelLapEvaluator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2675344)); return (this->*_f)(); }
+	inline void step(float dt) { typedef void (FuelLapEvaluator::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2675552)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(FuelLapEvaluator)==72),"bad size");
 		static_assert((offsetof(FuelLapEvaluator,car)==0x0),"bad off");
@@ -5802,7 +5802,7 @@ public:
 	inline TrackAvatar_SectorDescription() { }
 	inline TrackAvatar_SectorDescription(const TrackAvatar_SectorDescription& other) = default;
 	inline TrackAvatar_SectorDescription& operator=(const TrackAvatar_SectorDescription& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TrackAvatar_SectorDescription *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
+	inline void dtor() { typedef void (TrackAvatar_SectorDescription::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TrackAvatar_SectorDescription)==40),"bad size");
 		static_assert((offsetof(TrackAvatar_SectorDescription,in)==0x0),"bad off");
@@ -5908,7 +5908,7 @@ public:
 	inline OnTyreCompoundChanged() { }
 	inline OnTyreCompoundChanged(const OnTyreCompoundChanged& other) = default;
 	inline OnTyreCompoundChanged& operator=(const OnTyreCompoundChanged& other) = default;
-	inline void dtor() { typedef void (*_fpt)(OnTyreCompoundChanged *pthis); _fpt _f=(_fpt)_drva(847584); _f(this); }
+	inline void dtor() { typedef void (OnTyreCompoundChanged::*_fpt)(); auto _f=xcast<_fpt>(_drva(847584)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OnTyreCompoundChanged)==72),"bad size");
 		static_assert((offsetof(OnTyreCompoundChanged,tyreIndex)==0x0),"bad off");
@@ -5936,7 +5936,7 @@ public:
 	inline ShaderResource() { }
 	inline ShaderResource(const ShaderResource& other) = default;
 	inline ShaderResource& operator=(const ShaderResource& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, int islot) { typedef void (*_fpt)(ShaderResource *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, int); _fpt _f=(_fpt)_drva(2282272); _f(this, iname, islot); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, int islot) { typedef void (ShaderResource::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, int); auto _f=xcast<_fpt>(_drva(2282272)); (this->*_f)(iname, islot); }
 	virtual ~ShaderResource();
 	inline void _guard_obj() {
 		static_assert((sizeof(ShaderResource)==48),"bad size");
@@ -6158,7 +6158,7 @@ public:
 	inline LightingSettings() { }
 	inline LightingSettings(const LightingSettings& other) = default;
 	inline LightingSettings& operator=(const LightingSettings& other) = default;
-	inline void ctor() { typedef void (*_fpt)(LightingSettings *pthis); _fpt _f=(_fpt)_drva(2104736); _f(this); }
+	inline void ctor() { typedef void (LightingSettings::*_fpt)(); auto _f=xcast<_fpt>(_drva(2104736)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(LightingSettings)==180),"bad size");
 		static_assert((offsetof(LightingSettings,lightDirection)==0x0),"bad off");
@@ -6203,7 +6203,7 @@ public:
 	inline IndexBuffer() { }
 	inline IndexBuffer(const IndexBuffer& other) = default;
 	inline IndexBuffer& operator=(const IndexBuffer& other) = default;
-	inline void ctor(std::vector<unsigned short,std::allocator<unsigned short> > & indices) { typedef void (*_fpt)(IndexBuffer *pthis, std::vector<unsigned short,std::allocator<unsigned short> > &); _fpt _f=(_fpt)_drva(2258768); _f(this, indices); }
+	inline void ctor(std::vector<unsigned short,std::allocator<unsigned short> > & indices) { typedef void (IndexBuffer::*_fpt)(std::vector<unsigned short,std::allocator<unsigned short> > &); auto _f=xcast<_fpt>(_drva(2258768)); (this->*_f)(indices); }
 	virtual ~IndexBuffer();
 	inline void _guard_obj() {
 		static_assert((sizeof(IndexBuffer)==16),"bad size");
@@ -6234,7 +6234,7 @@ public:
 	inline KGLShaderVar() { }
 	inline KGLShaderVar(const KGLShaderVar& other) = default;
 	inline KGLShaderVar& operator=(const KGLShaderVar& other) = default;
-	inline void dtor() { typedef void (*_fpt)(KGLShaderVar *pthis); _fpt _f=(_fpt)_drva(130576); _f(this); }
+	inline void dtor() { typedef void (KGLShaderVar::*_fpt)(); auto _f=xcast<_fpt>(_drva(130576)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLShaderVar)==80),"bad size");
 		static_assert((offsetof(KGLShaderVar,name)==0x0),"bad off");
@@ -6262,7 +6262,7 @@ public:
 	inline KGLShaderTexture() { }
 	inline KGLShaderTexture(const KGLShaderTexture& other) = default;
 	inline KGLShaderTexture& operator=(const KGLShaderTexture& other) = default;
-	inline void dtor() { typedef void (*_fpt)(KGLShaderTexture *pthis); _fpt _f=(_fpt)_drva(113184); _f(this); }
+	inline void dtor() { typedef void (KGLShaderTexture::*_fpt)(); auto _f=xcast<_fpt>(_drva(113184)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLShaderTexture)==40),"bad size");
 		static_assert((offsetof(KGLShaderTexture,name)==0x0),"bad off");
@@ -6337,10 +6337,10 @@ public:
 	inline SetupItem() : connectedFloat(*((float*)NULL)) { }
 	inline SetupItem(const SetupItem& other) = default;
 	inline SetupItem& operator=(const SetupItem& other) = default;
-	inline void ctor(const SetupItem & __that) { typedef void (*_fpt)(SetupItem *pthis, const SetupItem &); _fpt _f=(_fpt)_drva(2657424); _f(this, __that); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (*_fpt)(SetupItem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); _fpt _f=(_fpt)_drva(2929008); _f(this, aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
+	inline void ctor(const SetupItem & __that) { typedef void (SetupItem::*_fpt)(const SetupItem &); auto _f=xcast<_fpt>(_drva(2657424)); (this->*_f)(__that); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aname, float & aconnectedFloat, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * units, bool isAttached, float multiplier, float labelMult) { typedef void (SetupItem::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, float, float); auto _f=xcast<_fpt>(_drva(2929008)); (this->*_f)(aname, aconnectedFloat, units, isAttached, multiplier, labelMult); }
 	virtual ~SetupItem();
-	inline void dtor() { typedef void (*_fpt)(SetupItem *pthis); _fpt _f=(_fpt)_drva(2929312); _f(this); }
+	inline void dtor() { typedef void (SetupItem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2929312)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SetupItem)==136),"bad size");
 		static_assert((offsetof(SetupItem,name)==0x8),"bad off");
@@ -6375,23 +6375,23 @@ public:
 	inline IACPPluginHost(const IACPPluginHost& other) = default;
 	inline IACPPluginHost& operator=(const IACPPluginHost& other) = default;
 	virtual HWND__ * getHwnd_vf0() = 0;
-	inline HWND__ * getHwnd() { return getHwnd_vf0(); }
+	inline HWND__ * getHwnd() { typedef HWND__ * (IACPPluginHost::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual HINSTANCE__ * getHInstance_vf1() = 0;
-	inline HINSTANCE__ * getHInstance() { return getHInstance_vf1(); }
+	inline HINSTANCE__ * getHInstance() { typedef HINSTANCE__ * (IACPPluginHost::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void setABS_vf2(float  _arg0) = 0;
-	inline void setABS(float  _arg0) { return setABS_vf2( _arg0); }
+	inline void setABS(float  _arg0) { typedef void (IACPPluginHost::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	virtual void setTC_vf3(float  _arg0) = 0;
-	inline void setTC(float  _arg0) { return setTC_vf3( _arg0); }
+	inline void setTC(float  _arg0) { typedef void (IACPPluginHost::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)( _arg0); }
 	virtual void setStabilityControl_vf4(float  _arg0) = 0;
-	inline void setStabilityControl(float  _arg0) { return setStabilityControl_vf4( _arg0); }
+	inline void setStabilityControl(float  _arg0) { typedef void (IACPPluginHost::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)( _arg0); }
 	virtual void setIdealLine_vf5(bool  _arg0, bool  _arg1) = 0;
-	inline void setIdealLine(bool  _arg0, bool  _arg1) { return setIdealLine_vf5( _arg0,  _arg1); }
+	inline void setIdealLine(bool  _arg0, bool  _arg1) { typedef void (IACPPluginHost::*_fpt)(bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void setAutoShift_vf6(bool  _arg0) = 0;
-	inline void setAutoShift(bool  _arg0) { return setAutoShift_vf6( _arg0); }
+	inline void setAutoShift(bool  _arg0) { typedef void (IACPPluginHost::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)( _arg0); }
 	virtual void setBrakeBias_vf7(float  _arg0) = 0;
-	inline void setBrakeBias(float  _arg0) { return setBrakeBias_vf7( _arg0); }
+	inline void setBrakeBias(float  _arg0) { typedef void (IACPPluginHost::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)( _arg0); }
 	virtual void setSystemMessage_vf8(const wchar_t *  _arg0, const wchar_t *  _arg1, bool  _arg2) = 0;
-	inline void setSystemMessage(const wchar_t *  _arg0, const wchar_t *  _arg1, bool  _arg2) { return setSystemMessage_vf8( _arg0,  _arg1,  _arg2); }
+	inline void setSystemMessage(const wchar_t *  _arg0, const wchar_t *  _arg1, bool  _arg2) { typedef void (IACPPluginHost::*_fpt)(const wchar_t *, const wchar_t *, bool); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IACPPluginHost)==8),"bad size");
 	};
@@ -6581,7 +6581,7 @@ public:
 	inline TrackPhysicsStats() { }
 	inline TrackPhysicsStats(const TrackPhysicsStats& other) = default;
 	inline TrackPhysicsStats& operator=(const TrackPhysicsStats& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TrackPhysicsStats *pthis); _fpt _f=(_fpt)_drva(1862144); _f(this); }
+	inline void dtor() { typedef void (TrackPhysicsStats::*_fpt)(); auto _f=xcast<_fpt>(_drva(1862144)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TrackPhysicsStats)==24),"bad size");
 		static_assert((offsetof(TrackPhysicsStats,objects)==0x0),"bad off");
@@ -6617,10 +6617,10 @@ public:
 	inline RenderTarget() { }
 	inline RenderTarget(const RenderTarget& other) = default;
 	inline RenderTarget& operator=(const RenderTarget& other) = default;
-	inline void ctor(GraphicsManager * graphics, eRenderTargetFormat fmt, unsigned int iwidth, unsigned int iheight, bool hasColor, bool hasDepth, int mips) { typedef void (*_fpt)(RenderTarget *pthis, GraphicsManager *, eRenderTargetFormat, unsigned int, unsigned int, bool, bool, int); _fpt _f=(_fpt)_drva(2211888); _f(this, graphics, fmt, iwidth, iheight, hasColor, hasDepth, mips); }
+	inline void ctor(GraphicsManager * graphics, eRenderTargetFormat fmt, unsigned int iwidth, unsigned int iheight, bool hasColor, bool hasDepth, int mips) { typedef void (RenderTarget::*_fpt)(GraphicsManager *, eRenderTargetFormat, unsigned int, unsigned int, bool, bool, int); auto _f=xcast<_fpt>(_drva(2211888)); (this->*_f)(graphics, fmt, iwidth, iheight, hasColor, hasDepth, mips); }
 	virtual ~RenderTarget();
-	inline void dtor() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212176); _f(this); }
-	inline void clear() { typedef void (*_fpt)(RenderTarget *pthis); _fpt _f=(_fpt)_drva(2212336); return _f(this); }
+	inline void dtor() { typedef void (RenderTarget::*_fpt)(); auto _f=xcast<_fpt>(_drva(2212176)); (this->*_f)(); }
+	inline void clear() { typedef void (RenderTarget::*_fpt)(); auto _f=xcast<_fpt>(_drva(2212336)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RenderTarget)==40),"bad size");
 		static_assert((offsetof(RenderTarget,format)==0x8),"bad off");
@@ -6675,13 +6675,13 @@ public:
 	inline CameraMouseControlBase() { }
 	inline CameraMouseControlBase(const CameraMouseControlBase& other) = default;
 	inline CameraMouseControlBase& operator=(const CameraMouseControlBase& other) = default;
-	inline void ctor(Camera * camera) { typedef void (*_fpt)(CameraMouseControlBase *pthis, Camera *); _fpt _f=(_fpt)_drva(2161696); _f(this, camera); }
+	inline void ctor(Camera * camera) { typedef void (CameraMouseControlBase::*_fpt)(Camera *); auto _f=xcast<_fpt>(_drva(2161696)); (this->*_f)(camera); }
 	virtual ~CameraMouseControlBase();
-	inline void dtor() { typedef void (*_fpt)(CameraMouseControlBase *pthis); _fpt _f=(_fpt)_drva(2161776); _f(this); }
-	inline void update(float deltaT) { typedef void (*_fpt)(CameraMouseControlBase *pthis, float); _fpt _f=(_fpt)_drva(2162480); return _f(this, deltaT); }
-	inline Camera * getCamera() { typedef Camera * (*_fpt)(CameraMouseControlBase *pthis); _fpt _f=(_fpt)_drva(2161840); return _f(this); }
-	inline void stepKeyboard(float dt, float msp) { typedef void (*_fpt)(CameraMouseControlBase *pthis, float, float); _fpt _f=(_fpt)_drva(2162176); return _f(this, dt, msp); }
-	inline void mouseLook(float dt, float speed) { typedef void (*_fpt)(CameraMouseControlBase *pthis, float, float); _fpt _f=(_fpt)_drva(2161856); return _f(this, dt, speed); }
+	inline void dtor() { typedef void (CameraMouseControlBase::*_fpt)(); auto _f=xcast<_fpt>(_drva(2161776)); (this->*_f)(); }
+	inline void update(float deltaT) { typedef void (CameraMouseControlBase::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2162480)); return (this->*_f)(deltaT); }
+	inline Camera * getCamera() { typedef Camera * (CameraMouseControlBase::*_fpt)(); auto _f=xcast<_fpt>(_drva(2161840)); return (this->*_f)(); }
+	inline void stepKeyboard(float dt, float msp) { typedef void (CameraMouseControlBase::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2162176)); return (this->*_f)(dt, msp); }
+	inline void mouseLook(float dt, float speed) { typedef void (CameraMouseControlBase::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2161856)); return (this->*_f)(dt, speed); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraMouseControlBase)==64),"bad size");
 		static_assert((offsetof(CameraMouseControlBase,MOVE_SPEED)==0x8),"bad off");
@@ -6723,8 +6723,8 @@ public:
 	inline Lap() { }
 	inline Lap(const Lap& other) = default;
 	inline Lap& operator=(const Lap& other) = default;
-	inline void ctor(const Lap & __that) { typedef void (*_fpt)(Lap *pthis, const Lap &); _fpt _f=(_fpt)_drva(242400); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(Lap *pthis); _fpt _f=(_fpt)_drva(246624); _f(this); }
+	inline void ctor(const Lap & __that) { typedef void (Lap::*_fpt)(const Lap &); auto _f=xcast<_fpt>(_drva(242400)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (Lap::*_fpt)(); auto _f=xcast<_fpt>(_drva(246624)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Lap)==72),"bad size");
 		static_assert((offsetof(Lap,time)==0x0),"bad off");
@@ -6751,8 +6751,8 @@ public:
 	inline INISection() { }
 	inline INISection(const INISection& other) = default;
 	inline INISection& operator=(const INISection& other) = default;
-	inline bool hasKey(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & k) { typedef bool (*_fpt)(INISection *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322496); return _f(this, k); }
-	inline void dtor() { typedef void (*_fpt)(INISection *pthis); _fpt _f=(_fpt)_drva(4512704); _f(this); }
+	inline bool hasKey(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & k) { typedef bool (INISection::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2322496)); return (this->*_f)(k); }
+	inline void dtor() { typedef void (INISection::*_fpt)(); auto _f=xcast<_fpt>(_drva(4512704)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(INISection)==16),"bad size");
 		static_assert((offsetof(INISection,keys)==0x0),"bad off");
@@ -6844,10 +6844,10 @@ public:
 	inline IPAddress() { }
 	inline IPAddress(const IPAddress& other) = default;
 	inline IPAddress& operator=(const IPAddress& other) = default;
-	inline void ctor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(508768); _f(this); }
-	inline void ctor(const sockaddr_in & addr) { typedef void (*_fpt)(IPAddress *pthis, const sockaddr_in &); _fpt _f=(_fpt)_drva(2479584); _f(this, addr); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port) { typedef void (*_fpt)(IPAddress *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned short); _fpt _f=(_fpt)_drva(2479600); _f(this, addr, port); }
-	inline void dtor() { typedef void (*_fpt)(IPAddress *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
+	inline void ctor() { typedef void (IPAddress::*_fpt)(); auto _f=xcast<_fpt>(_drva(508768)); (this->*_f)(); }
+	inline void ctor(const sockaddr_in & addr) { typedef void (IPAddress::*_fpt)(const sockaddr_in &); auto _f=xcast<_fpt>(_drva(2479584)); (this->*_f)(addr); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & addr, unsigned short port) { typedef void (IPAddress::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned short); auto _f=xcast<_fpt>(_drva(2479600)); (this->*_f)(addr, port); }
+	inline void dtor() { typedef void (IPAddress::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IPAddress)==16),"bad size");
 		static_assert((offsetof(IPAddress,sokaddr)==0x0),"bad off");
@@ -6889,9 +6889,9 @@ public:
 	inline TrackIR() { }
 	inline TrackIR(const TrackIR& other) = default;
 	inline TrackIR& operator=(const TrackIR& other) = default;
-	inline void ctor(HWND__ * hwnd) { typedef void (*_fpt)(TrackIR *pthis, HWND__ *); _fpt _f=(_fpt)_drva(1892320); _f(this, hwnd); }
-	inline void dtor() { typedef void (*_fpt)(TrackIR *pthis); _fpt _f=(_fpt)_drva(1893024); _f(this); }
-	inline void getOffsets(vec3f & rot, vec3f & pos) { typedef void (*_fpt)(TrackIR *pthis, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(1893680); return _f(this, rot, pos); }
+	inline void ctor(HWND__ * hwnd) { typedef void (TrackIR::*_fpt)(HWND__ *); auto _f=xcast<_fpt>(_drva(1892320)); (this->*_f)(hwnd); }
+	inline void dtor() { typedef void (TrackIR::*_fpt)(); auto _f=xcast<_fpt>(_drva(1893024)); (this->*_f)(); }
+	inline void getOffsets(vec3f & rot, vec3f & pos) { typedef void (TrackIR::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(_drva(1893680)); return (this->*_f)(rot, pos); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TrackIR)==8),"bad size");
 		static_assert((offsetof(TrackIR,isValid)==0x0),"bad off");
@@ -6923,10 +6923,10 @@ public:
 	inline RemoteSessionResult() { }
 	inline RemoteSessionResult(const RemoteSessionResult& other) = default;
 	inline RemoteSessionResult& operator=(const RemoteSessionResult& other) = default;
-	inline void ctor(const RemoteSessionResult & __that) { typedef void (*_fpt)(RemoteSessionResult *pthis, const RemoteSessionResult &); _fpt _f=(_fpt)_drva(242752); _f(this, __that); }
-	inline void ctor(int carsCount) { typedef void (*_fpt)(RemoteSessionResult *pthis, int); _fpt _f=(_fpt)_drva(242880); _f(this, carsCount); }
-	inline void ctor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(243104); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(RemoteSessionResult *pthis); _fpt _f=(_fpt)_drva(246784); _f(this); }
+	inline void ctor(const RemoteSessionResult & __that) { typedef void (RemoteSessionResult::*_fpt)(const RemoteSessionResult &); auto _f=xcast<_fpt>(_drva(242752)); (this->*_f)(__that); }
+	inline void ctor(int carsCount) { typedef void (RemoteSessionResult::*_fpt)(int); auto _f=xcast<_fpt>(_drva(242880)); (this->*_f)(carsCount); }
+	inline void ctor() { typedef void (RemoteSessionResult::*_fpt)(); auto _f=xcast<_fpt>(_drva(243104)); (this->*_f)(); }
+	inline void dtor() { typedef void (RemoteSessionResult::*_fpt)(); auto _f=xcast<_fpt>(_drva(246784)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RemoteSessionResult)==112),"bad size");
 		static_assert((offsetof(RemoteSessionResult,positions)==0x0),"bad off");
@@ -6994,9 +6994,9 @@ public:
 	inline Session() { }
 	inline Session(const Session& other) = default;
 	inline Session& operator=(const Session& other) = default;
-	inline void ctor(const Session & __that) { typedef void (*_fpt)(Session *pthis, const Session &); _fpt _f=(_fpt)_drva(704528); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(610160); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Session *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
+	inline void ctor(const Session & __that) { typedef void (Session::*_fpt)(const Session &); auto _f=xcast<_fpt>(_drva(704528)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (Session::*_fpt)(); auto _f=xcast<_fpt>(_drva(610160)); (this->*_f)(); }
+	inline void dtor() { typedef void (Session::*_fpt)(); auto _f=xcast<_fpt>(_drva(584992)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Session)==112),"bad size");
 		static_assert((offsetof(Session,sessionType)==0x0),"bad off");
@@ -7071,9 +7071,9 @@ public:
 	inline RemoteSession() { }
 	inline RemoteSession(const RemoteSession& other) = default;
 	inline RemoteSession& operator=(const RemoteSession& other) = default;
-	inline void ctor(const RemoteSession & __that) { typedef void (*_fpt)(RemoteSession *pthis, const RemoteSession &); _fpt _f=(_fpt)_drva(242560); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(RemoteSession *pthis); _fpt _f=(_fpt)_drva(242672); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(RemoteSession *pthis); _fpt _f=(_fpt)_drva(2334528); _f(this); }
+	inline void ctor(const RemoteSession & __that) { typedef void (RemoteSession::*_fpt)(const RemoteSession &); auto _f=xcast<_fpt>(_drva(242560)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (RemoteSession::*_fpt)(); auto _f=xcast<_fpt>(_drva(242672)); (this->*_f)(); }
+	inline void dtor() { typedef void (RemoteSession::*_fpt)(); auto _f=xcast<_fpt>(_drva(2334528)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RemoteSession)==64),"bad size");
 		static_assert((offsetof(RemoteSession,name)==0x0),"bad off");
@@ -7166,10 +7166,10 @@ public:
 	inline KGLTexture() { }
 	inline KGLTexture(const KGLTexture& other) = default;
 	inline KGLTexture& operator=(const KGLTexture& other) = default;
-	inline void ctor(const void * buffer, int size, ID3D11Device * device) { typedef void (*_fpt)(KGLTexture *pthis, const void *, int, ID3D11Device *); _fpt _f=(_fpt)_drva(145776); _f(this, buffer, size, device); }
-	inline void ctor(const void * buffer, DXGI_FORMAT format, unsigned int width, unsigned int height, ID3D11Device * device) { typedef void (*_fpt)(KGLTexture *pthis, const void *, DXGI_FORMAT, unsigned int, unsigned int, ID3D11Device *); _fpt _f=(_fpt)_drva(146080); _f(this, buffer, format, width, height, device); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, ID3D11Device * device) { typedef void (*_fpt)(KGLTexture *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ID3D11Device *); _fpt _f=(_fpt)_drva(145440); _f(this, filename, device); }
-	inline void initSize() { typedef void (*_fpt)(KGLTexture *pthis); _fpt _f=(_fpt)_drva(146448); return _f(this); }
+	inline void ctor(const void * buffer, int size, ID3D11Device * device) { typedef void (KGLTexture::*_fpt)(const void *, int, ID3D11Device *); auto _f=xcast<_fpt>(_drva(145776)); (this->*_f)(buffer, size, device); }
+	inline void ctor(const void * buffer, DXGI_FORMAT format, unsigned int width, unsigned int height, ID3D11Device * device) { typedef void (KGLTexture::*_fpt)(const void *, DXGI_FORMAT, unsigned int, unsigned int, ID3D11Device *); auto _f=xcast<_fpt>(_drva(146080)); (this->*_f)(buffer, format, width, height, device); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, ID3D11Device * device) { typedef void (KGLTexture::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ID3D11Device *); auto _f=xcast<_fpt>(_drva(145440)); (this->*_f)(filename, device); }
+	inline void initSize() { typedef void (KGLTexture::*_fpt)(); auto _f=xcast<_fpt>(_drva(146448)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLTexture)==64),"bad size");
 		static_assert((offsetof(KGLTexture,shaderResourceView)==0x0),"bad off");
@@ -7201,7 +7201,7 @@ public:
 	inline TelemetryChannelData() { }
 	inline TelemetryChannelData(const TelemetryChannelData& other) = default;
 	inline TelemetryChannelData& operator=(const TelemetryChannelData& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TelemetryChannelData *pthis); _fpt _f=(_fpt)_drva(811392); _f(this); }
+	inline void dtor() { typedef void (TelemetryChannelData::*_fpt)(); auto _f=xcast<_fpt>(_drva(811392)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TelemetryChannelData)==32),"bad size");
 		static_assert((offsetof(TelemetryChannelData,values)==0x0),"bad off");
@@ -7242,15 +7242,15 @@ public:
 	inline DirectInput() { }
 	inline DirectInput(const DirectInput& other) = default;
 	inline DirectInput& operator=(const DirectInput& other) = default;
-	inline static DirectInput * singleton() { typedef DirectInput * (*_fpt)(); _fpt _f=(_fpt)_drva(2355856); return _f(); }
-	inline static void cleanup() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(2355040); return _f(); }
-	inline InputDevice * getDevice(int index) { typedef InputDevice * (*_fpt)(DirectInput *pthis, int); _fpt _f=(_fpt)_drva(2355200); return _f(this, index); }
-	inline void initJoys() { typedef void (*_fpt)(DirectInput *pthis); _fpt _f=(_fpt)_drva(2355248); return _f(this); }
-	inline void poll() { typedef void (*_fpt)(DirectInput *pthis); _fpt _f=(_fpt)_drva(2355552); return _f(this); }
-	inline void forceFF(float v) { typedef void (*_fpt)(DirectInput *pthis, float); _fpt _f=(_fpt)_drva(2355088); return _f(this, v); }
-	inline void ctor() { typedef void (*_fpt)(DirectInput *pthis); _fpt _f=(_fpt)_drva(2353328); _f(this); }
+	inline static DirectInput * singleton() { typedef DirectInput * (*_fpt)(); auto _f=(_fpt)_drva(2355856); return _f(); }
+	inline static void cleanup() { typedef void (*_fpt)(); auto _f=(_fpt)_drva(2355040); return _f(); }
+	inline InputDevice * getDevice(int index) { typedef InputDevice * (DirectInput::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2355200)); return (this->*_f)(index); }
+	inline void initJoys() { typedef void (DirectInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2355248)); return (this->*_f)(); }
+	inline void poll() { typedef void (DirectInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2355552)); return (this->*_f)(); }
+	inline void forceFF(float v) { typedef void (DirectInput::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2355088)); return (this->*_f)(v); }
+	inline void ctor() { typedef void (DirectInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2353328)); (this->*_f)(); }
 	virtual ~DirectInput();
-	inline void dtor() { typedef void (*_fpt)(DirectInput *pthis); _fpt _f=(_fpt)_drva(2353568); _f(this); }
+	inline void dtor() { typedef void (DirectInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2353568)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DirectInput)==64),"bad size");
 		static_assert((offsetof(DirectInput,guids)==0x8),"bad off");
@@ -7278,13 +7278,13 @@ public:
 	inline IRayTrackCollisionProvider(const IRayTrackCollisionProvider& other) = default;
 	inline IRayTrackCollisionProvider& operator=(const IRayTrackCollisionProvider& other) = default;
 	virtual ~IRayTrackCollisionProvider();
-	inline void dtor() { typedef void (*_fpt)(IRayTrackCollisionProvider *pthis); _fpt _f=(_fpt)_drva(2585840); _f(this); }
+	inline void dtor() { typedef void (IRayTrackCollisionProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2585840)); (this->*_f)(); }
 	virtual bool rayCast_vf1(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3) = 0;
-	inline bool rayCast(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3) { return rayCast_vf1( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline bool rayCast(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3) { typedef bool (IRayTrackCollisionProvider::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual bool rayCastWithRayCaster_vf2(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3, IRayCaster *  _arg4) = 0;
-	inline bool rayCastWithRayCaster(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3, IRayCaster *  _arg4) { return rayCastWithRayCaster_vf2( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
+	inline bool rayCastWithRayCaster(const vec3f &  _arg0, const vec3f &  _arg1, RayCastResult *  _arg2, float  _arg3, IRayCaster *  _arg4) { typedef bool (IRayTrackCollisionProvider::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float, IRayCaster *); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
 	virtual IRayCaster * createRayCaster_vf3(float  _arg0) = 0;
-	inline IRayCaster * createRayCaster(float  _arg0) { return createRayCaster_vf3( _arg0); }
+	inline IRayCaster * createRayCaster(float  _arg0) { typedef IRayCaster * (IRayTrackCollisionProvider::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)( _arg0); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IRayTrackCollisionProvider)==8),"bad size");
 	};
@@ -7312,11 +7312,11 @@ public:
 	inline ShaderManager() { }
 	inline ShaderManager(const ShaderManager& other) = default;
 	inline ShaderManager& operator=(const ShaderManager& other) = default;
-	inline void ctor(GraphicsManager * graphics) { typedef void (*_fpt)(ShaderManager *pthis, GraphicsManager *); _fpt _f=(_fpt)_drva(2259120); _f(this, graphics); }
+	inline void ctor(GraphicsManager * graphics) { typedef void (ShaderManager::*_fpt)(GraphicsManager *); auto _f=xcast<_fpt>(_drva(2259120)); (this->*_f)(graphics); }
 	virtual ~ShaderManager();
-	inline void dtor() { typedef void (*_fpt)(ShaderManager *pthis); _fpt _f=(_fpt)_drva(2259152); _f(this); }
-	inline Shader * getShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef Shader * (*_fpt)(ShaderManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2259776); return _f(this, name); }
-	inline void cleanup() { typedef void (*_fpt)(ShaderManager *pthis); _fpt _f=(_fpt)_drva(2259680); return _f(this); }
+	inline void dtor() { typedef void (ShaderManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2259152)); (this->*_f)(); }
+	inline Shader * getShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef Shader * (ShaderManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2259776)); return (this->*_f)(name); }
+	inline void cleanup() { typedef void (ShaderManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2259680)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ShaderManager)==40),"bad size");
 		static_assert((offsetof(ShaderManager,graphics)==0x8),"bad off");
@@ -7357,26 +7357,26 @@ public:
 	inline GameObject() { }
 	inline GameObject(const GameObject& other) = default;
 	inline GameObject& operator=(const GameObject& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, Game * igame) { typedef void (*_fpt)(GameObject *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Game *); _fpt _f=(_fpt)_drva(2358320); _f(this, iname, igame); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, Game * igame) { typedef void (GameObject::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Game *); auto _f=xcast<_fpt>(_drva(2358320)); (this->*_f)(iname, igame); }
 	virtual ~GameObject();
-	inline void dtor() { typedef void (*_fpt)(GameObject *pthis); _fpt _f=(_fpt)_drva(2358496); _f(this); }
-	inline GameObject * getParent() { typedef GameObject * (*_fpt)(GameObject *pthis); _fpt _f=(_fpt)_drva(2358672); return _f(this); }
+	inline void dtor() { typedef void (GameObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(2358496)); (this->*_f)(); }
+	inline GameObject * getParent() { typedef GameObject * (GameObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(2358672)); return (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(GameObject *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
+	inline void update_impl(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
 	virtual void render_vf2(float deltaT);
-	inline void render_impl(float deltaT) { typedef void (*_fpt)(GameObject *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, deltaT); }
-	inline void render(float deltaT) { return render_vf2(deltaT); }
+	inline void render_impl(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(deltaT); }
+	inline void render(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(deltaT); }
 	virtual void renderHUD_vf3(float deltaT);
-	inline void renderHUD_impl(float deltaT) { typedef void (*_fpt)(GameObject *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, deltaT); }
-	inline void renderHUD(float deltaT) { return renderHUD_vf3(deltaT); }
+	inline void renderHUD_impl(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(deltaT); }
+	inline void renderHUD(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(deltaT); }
 	virtual void renderAudio_vf4(float deltaT);
-	inline void renderAudio_impl(float deltaT) { typedef void (*_fpt)(GameObject *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, deltaT); }
-	inline void renderAudio(float deltaT) { return renderAudio_vf4(deltaT); }
+	inline void renderAudio_impl(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(deltaT); }
+	inline void renderAudio(float deltaT) { typedef void (GameObject::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(deltaT); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(GameObject *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline GameObject * getGameObject(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name) { typedef GameObject * (*_fpt)(GameObject *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1177456); return _f(this, name); }
+	inline void shutdown_impl() { typedef void (GameObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (GameObject::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline GameObject * getGameObject(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name) { typedef GameObject * (GameObject::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1177456)); return (this->*_f)(name); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GameObject)==88),"bad size");
 		static_assert((offsetof(GameObject,game)==0x8),"bad off");
@@ -7435,10 +7435,10 @@ public:
 	inline ShaderVariable() { }
 	inline ShaderVariable(const ShaderVariable& other) = default;
 	inline ShaderVariable& operator=(const ShaderVariable& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, CBuffer * cbuffer, int ioffset, int isize) { typedef void (*_fpt)(ShaderVariable *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, CBuffer *, int, int); _fpt _f=(_fpt)_drva(2135136); _f(this, iname, cbuffer, ioffset, isize); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, CBuffer * cbuffer, int ioffset, int isize) { typedef void (ShaderVariable::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, CBuffer *, int, int); auto _f=xcast<_fpt>(_drva(2135136)); (this->*_f)(iname, cbuffer, ioffset, isize); }
 	virtual ~ShaderVariable();
-	inline void set(int * value) { typedef void (*_fpt)(ShaderVariable *pthis, int *); _fpt _f=(_fpt)_drva(2135552); return _f(this, value); }
-	inline void set(float * value) { typedef void (*_fpt)(ShaderVariable *pthis, float *); _fpt _f=(_fpt)_drva(2135552); return _f(this, value); }
+	inline void set(int * value) { typedef void (ShaderVariable::*_fpt)(int *); auto _f=xcast<_fpt>(_drva(2135552)); return (this->*_f)(value); }
+	inline void set(float * value) { typedef void (ShaderVariable::*_fpt)(float *); auto _f=xcast<_fpt>(_drva(2135552)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ShaderVariable)==64),"bad size");
 		static_assert((offsetof(ShaderVariable,name)==0x8),"bad off");
@@ -7467,10 +7467,10 @@ public:
 	inline OptionsManager() { }
 	inline OptionsManager(const OptionsManager& other) = default;
 	inline OptionsManager& operator=(const OptionsManager& other) = default;
-	inline void ctor() { typedef void (*_fpt)(OptionsManager *pthis); _fpt _f=(_fpt)_drva(1627248); _f(this); }
+	inline void ctor() { typedef void (OptionsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1627248)); (this->*_f)(); }
 	virtual ~OptionsManager();
-	inline void dtor() { typedef void (*_fpt)(OptionsManager *pthis); _fpt _f=(_fpt)_drva(1628464); _f(this); }
-	inline void loadOptions() { typedef void (*_fpt)(OptionsManager *pthis); _fpt _f=(_fpt)_drva(1628704); return _f(this); }
+	inline void dtor() { typedef void (OptionsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1628464)); (this->*_f)(); }
+	inline void loadOptions() { typedef void (OptionsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1628704)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OptionsManager)==24),"bad size");
 		static_assert((offsetof(OptionsManager,options)==0x8),"bad off");
@@ -7504,10 +7504,10 @@ public:
 	inline TimeLine() { }
 	inline TimeLine(const TimeLine& other) = default;
 	inline TimeLine& operator=(const TimeLine& other) = default;
-	inline void ctor(const vec3f & p1, const vec3f & p2, int iid, TimeLineType type) { typedef void (*_fpt)(TimeLine *pthis, const vec3f &, const vec3f &, int, TimeLineType); _fpt _f=(_fpt)_drva(2928048); _f(this, p1, p2, iid, type); }
+	inline void ctor(const vec3f & p1, const vec3f & p2, int iid, TimeLineType type) { typedef void (TimeLine::*_fpt)(const vec3f &, const vec3f &, int, TimeLineType); auto _f=xcast<_fpt>(_drva(2928048)); (this->*_f)(p1, p2, iid, type); }
 	virtual ~TimeLine();
-	inline void dtor() { typedef void (*_fpt)(TimeLine *pthis); _fpt _f=(_fpt)_drva(2928352); _f(this); }
-	inline eTimeLineCheckResponse check(const vec3f & p) { typedef eTimeLineCheckResponse (*_fpt)(TimeLine *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2928368); return _f(this, p); }
+	inline void dtor() { typedef void (TimeLine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2928352)); (this->*_f)(); }
+	inline eTimeLineCheckResponse check(const vec3f & p) { typedef eTimeLineCheckResponse (TimeLine::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2928368)); return (this->*_f)(p); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TimeLine)==56),"bad size");
 		static_assert((offsetof(TimeLine,type)==0x8),"bad off");
@@ -7542,12 +7542,12 @@ public:
 	inline CarRaceInfo() { }
 	inline CarRaceInfo(const CarRaceInfo& other) = default;
 	inline CarRaceInfo& operator=(const CarRaceInfo& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CarRaceInfo *pthis); _fpt _f=(_fpt)_drva(948448); _f(this); }
+	inline void ctor() { typedef void (CarRaceInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(948448)); (this->*_f)(); }
 	virtual ~CarRaceInfo();
-	inline void dtor() { typedef void (*_fpt)(CarRaceInfo *pthis); _fpt _f=(_fpt)_drva(948528); _f(this); }
-	inline void setSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, int gp) { typedef void (*_fpt)(CarRaceInfo *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); _fpt _f=(_fpt)_drva(951456); return _f(this, setName, gp); }
-	inline int getSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef int (*_fpt)(CarRaceInfo *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(950352); return _f(this, setName); }
-	inline void init(CarAvatar * acar) { typedef void (*_fpt)(CarRaceInfo *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(950384); return _f(this, acar); }
+	inline void dtor() { typedef void (CarRaceInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(948528)); (this->*_f)(); }
+	inline void setSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, int gp) { typedef void (CarRaceInfo::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); auto _f=xcast<_fpt>(_drva(951456)); return (this->*_f)(setName, gp); }
+	inline int getSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef int (CarRaceInfo::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(950352)); return (this->*_f)(setName); }
+	inline void init(CarAvatar * acar) { typedef void (CarRaceInfo::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(950384)); return (this->*_f)(acar); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarRaceInfo)==40),"bad size");
 		static_assert((offsetof(CarRaceInfo,car)==0x8),"bad off");
@@ -7603,13 +7603,13 @@ public:
 	inline Shader() { }
 	inline Shader(const Shader& other) = default;
 	inline Shader& operator=(const Shader& other) = default;
-	inline void ctor(GraphicsManager * graphics, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (*_fpt)(Shader *pthis, GraphicsManager *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2203104); _f(this, graphics, ifilename); }
+	inline void ctor(GraphicsManager * graphics, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (Shader::*_fpt)(GraphicsManager *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2203104)); (this->*_f)(graphics, ifilename); }
 	virtual ~Shader();
-	inline void dtor() { typedef void (*_fpt)(Shader *pthis); _fpt _f=(_fpt)_drva(2203376); _f(this); }
-	inline void apply() { typedef void (*_fpt)(Shader *pthis); _fpt _f=(_fpt)_drva(2204592); return _f(this); }
-	inline ShaderVariable * getVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef ShaderVariable * (*_fpt)(Shader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2204608); return _f(this, name); }
-	inline bool initShaderBinary() { typedef bool (*_fpt)(Shader *pthis); _fpt _f=(_fpt)_drva(2204816); return _f(this); }
-	inline void reflectVars() { typedef void (*_fpt)(Shader *pthis); _fpt _f=(_fpt)_drva(2205008); return _f(this); }
+	inline void dtor() { typedef void (Shader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2203376)); (this->*_f)(); }
+	inline void apply() { typedef void (Shader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2204592)); return (this->*_f)(); }
+	inline ShaderVariable * getVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef ShaderVariable * (Shader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2204608)); return (this->*_f)(name); }
+	inline bool initShaderBinary() { typedef bool (Shader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2204816)); return (this->*_f)(); }
+	inline void reflectVars() { typedef void (Shader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2205008)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Shader)==200),"bad size");
 		static_assert((offsetof(Shader,name)==0x8),"bad off");
@@ -7659,7 +7659,7 @@ public:
 	inline OnNewSessionEvent() { }
 	inline OnNewSessionEvent(const OnNewSessionEvent& other) = default;
 	inline OnNewSessionEvent& operator=(const OnNewSessionEvent& other) = default;
-	inline void dtor() { typedef void (*_fpt)(OnNewSessionEvent *pthis); _fpt _f=(_fpt)_drva(584992); _f(this); }
+	inline void dtor() { typedef void (OnNewSessionEvent::*_fpt)(); auto _f=xcast<_fpt>(_drva(584992)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OnNewSessionEvent)==120),"bad size");
 		static_assert((offsetof(OnNewSessionEvent,newSession)==0x0),"bad off");
@@ -7706,9 +7706,9 @@ public:
 	inline IKeyEventListener(const IKeyEventListener& other) = default;
 	inline IKeyEventListener& operator=(const IKeyEventListener& other) = default;
 	virtual void onKeyDown_vf0(const OnKeyEvent &  _arg0) = 0;
-	inline void onKeyDown(const OnKeyEvent &  _arg0) { return onKeyDown_vf0( _arg0); }
+	inline void onKeyDown(const OnKeyEvent &  _arg0) { typedef void (IKeyEventListener::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)( _arg0); }
 	virtual void onKeyChar_vf1(unsigned int  _arg0) = 0;
-	inline void onKeyChar(unsigned int  _arg0) { return onKeyChar_vf1( _arg0); }
+	inline void onKeyChar(unsigned int  _arg0) { typedef void (IKeyEventListener::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IKeyEventListener)==8),"bad size");
 	};
@@ -7757,19 +7757,19 @@ public:
 	inline Joypad(const Joypad& other) = default;
 	inline Joypad& operator=(const Joypad& other) = default;
 	virtual void acquire_vf0() = 0;
-	inline void acquire() { return acquire_vf0(); }
+	inline void acquire() { typedef void (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual vec2f getLeftStick_vf1() = 0;
-	inline vec2f getLeftStick() { return getLeftStick_vf1(); }
+	inline vec2f getLeftStick() { typedef vec2f (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec2f getRightStick_vf2() = 0;
-	inline vec2f getRightStick() { return getRightStick_vf2(); }
+	inline vec2f getRightStick() { typedef vec2f (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	virtual float getLeftTrigger_vf3() = 0;
-	inline float getLeftTrigger() { return getLeftTrigger_vf3(); }
+	inline float getLeftTrigger() { typedef float (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
 	virtual float getRightTrigger_vf4() = 0;
-	inline float getRightTrigger() { return getRightTrigger_vf4(); }
+	inline float getRightTrigger() { typedef float (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual unsigned int getButtonMask_vf5() = 0;
-	inline unsigned int getButtonMask() { return getButtonMask_vf5(); }
+	inline unsigned int getButtonMask() { typedef unsigned int (Joypad::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
 	virtual void setVibrations_vf6(float  _arg0, float  _arg1) = 0;
-	inline void setVibrations(float  _arg0, float  _arg1) { return setVibrations_vf6( _arg0,  _arg1); }
+	inline void setVibrations(float  _arg0, float  _arg1) { typedef void (Joypad::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)( _arg0,  _arg1); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Joypad)==8),"bad size");
 	};
@@ -7811,12 +7811,12 @@ public:
 	inline SinSignalGenerator() { }
 	inline SinSignalGenerator(const SinSignalGenerator& other) = default;
 	inline SinSignalGenerator& operator=(const SinSignalGenerator& other) = default;
-	inline void ctor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197680); _f(this); }
+	inline void ctor() { typedef void (SinSignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2197680)); (this->*_f)(); }
 	virtual ~SinSignalGenerator();
-	inline void dtor() { typedef void (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197728); _f(this); }
+	inline void dtor() { typedef void (SinSignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2197728)); (this->*_f)(); }
 	virtual float getValue_vf2();
-	inline float getValue_impl() { typedef float (*_fpt)(SinSignalGenerator *pthis); _fpt _f=(_fpt)_drva(2197808); return _f(this); }
-	inline float getValue() { return getValue_vf2(); }
+	inline float getValue_impl() { typedef float (SinSignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2197808)); return (this->*_f)(); }
+	inline float getValue() { typedef float (SinSignalGenerator::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SinSignalGenerator)==16),"bad size");
 	};
@@ -7848,13 +7848,13 @@ public:
 	inline Turbo() { }
 	inline Turbo(const Turbo& other) = default;
 	inline Turbo& operator=(const Turbo& other) = default;
-	inline void ctor(TurboDef & data) { typedef void (*_fpt)(Turbo *pthis, TurboDef &); _fpt _f=(_fpt)_drva(2811696); _f(this, data); }
-	inline void dtor() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void step(float gas, float rpms, float dt) { typedef void (*_fpt)(Turbo *pthis, float, float, float); _fpt _f=(_fpt)_drva(2811840); return _f(this, gas, rpms, dt); }
-	inline float getBoost() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811776); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2811792); return _f(this); }
-	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Turbo *pthis, float); _fpt _f=(_fpt)_drva(2811808); return _f(this, value); }
-	inline float getWastegate() { typedef float (*_fpt)(Turbo *pthis); _fpt _f=(_fpt)_drva(2645504); return _f(this); }
+	inline void ctor(TurboDef & data) { typedef void (Turbo::*_fpt)(TurboDef &); auto _f=xcast<_fpt>(_drva(2811696)); (this->*_f)(data); }
+	inline void dtor() { typedef void (Turbo::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void step(float gas, float rpms, float dt) { typedef void (Turbo::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2811840)); return (this->*_f)(gas, rpms, dt); }
+	inline float getBoost() { typedef float (Turbo::*_fpt)(); auto _f=xcast<_fpt>(_drva(2811776)); return (this->*_f)(); }
+	inline void reset() { typedef void (Turbo::*_fpt)(); auto _f=xcast<_fpt>(_drva(2811792)); return (this->*_f)(); }
+	inline void setTurboBoostLevel(float value) { typedef void (Turbo::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2811808)); return (this->*_f)(value); }
+	inline float getWastegate() { typedef float (Turbo::*_fpt)(); auto _f=xcast<_fpt>(_drva(2645504)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Turbo)==36),"bad size");
 		static_assert((offsetof(Turbo,userSetting)==0x0),"bad off");
@@ -7882,7 +7882,7 @@ public:
 	inline SystemCBuffers() { }
 	inline SystemCBuffers(const SystemCBuffers& other) = default;
 	inline SystemCBuffers& operator=(const SystemCBuffers& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SystemCBuffers *pthis); _fpt _f=(_fpt)_drva(2106176); _f(this); }
+	inline void dtor() { typedef void (SystemCBuffers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2106176)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SystemCBuffers)==160),"bad size");
 		static_assert((offsetof(SystemCBuffers,cbCamera)==0x0),"bad off");
@@ -7921,11 +7921,11 @@ public:
 	inline ThermalObject() { }
 	inline ThermalObject(const ThermalObject& other) = default;
 	inline ThermalObject& operator=(const ThermalObject& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2829952); _f(this); }
+	inline void ctor() { typedef void (ThermalObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(2829952)); (this->*_f)(); }
 	virtual ~ThermalObject();
-	inline void dtor() { typedef void (*_fpt)(ThermalObject *pthis); _fpt _f=(_fpt)_drva(2830000); _f(this); }
-	inline void step(float dt, float ambientTemp, const Speed & speed) { typedef void (*_fpt)(ThermalObject *pthis, float, float, const Speed &); _fpt _f=(_fpt)_drva(2830080); return _f(this, dt, ambientTemp, speed); }
-	inline void addHeadSource(float heat) { typedef void (*_fpt)(ThermalObject *pthis, float); _fpt _f=(_fpt)_drva(2830064); return _f(this, heat); }
+	inline void dtor() { typedef void (ThermalObject::*_fpt)(); auto _f=xcast<_fpt>(_drva(2830000)); (this->*_f)(); }
+	inline void step(float dt, float ambientTemp, const Speed & speed) { typedef void (ThermalObject::*_fpt)(float, float, const Speed &); auto _f=xcast<_fpt>(_drva(2830080)); return (this->*_f)(dt, ambientTemp, speed); }
+	inline void addHeadSource(float heat) { typedef void (ThermalObject::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2830064)); return (this->*_f)(heat); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ThermalObject)==32),"bad size");
 		static_assert((offsetof(ThermalObject,tmass)==0x8),"bad off");
@@ -7950,7 +7950,7 @@ public:
 	inline PhysicsValueCache() { }
 	inline PhysicsValueCache(const PhysicsValueCache& other) = default;
 	inline PhysicsValueCache& operator=(const PhysicsValueCache& other) = default;
-	inline void dtor() { typedef void (*_fpt)(PhysicsValueCache *pthis); _fpt _f=(_fpt)_drva(1183184); _f(this); }
+	inline void dtor() { typedef void (PhysicsValueCache::*_fpt)(); auto _f=xcast<_fpt>(_drva(1183184)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PhysicsValueCache)==4),"bad size");
 		static_assert((offsetof(PhysicsValueCache,speed)==0x0),"bad off");
@@ -7992,9 +7992,9 @@ public:
 	inline ActiveActuator() { }
 	inline ActiveActuator(const ActiveActuator& other) = default;
 	inline ActiveActuator& operator=(const ActiveActuator& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ActiveActuator *pthis); _fpt _f=(_fpt)_drva(2930128); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(ActiveActuator *pthis); _fpt _f=(_fpt)_drva(2930176); _f(this); }
-	inline float eval(float dt, float currentTravel) { typedef float (*_fpt)(ActiveActuator *pthis, float, float); _fpt _f=(_fpt)_drva(2930192); return _f(this, dt, currentTravel); }
+	inline void ctor() { typedef void (ActiveActuator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2930128)); (this->*_f)(); }
+	inline void dtor() { typedef void (ActiveActuator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2930176)); (this->*_f)(); }
+	inline float eval(float dt, float currentTravel) { typedef float (ActiveActuator::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2930192)); return (this->*_f)(dt, currentTravel); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ActiveActuator)==24),"bad size");
 		static_assert((offsetof(ActiveActuator,targetTravel)==0x0),"bad off");
@@ -8017,7 +8017,7 @@ public:
 	inline CarControlsInput() { }
 	inline CarControlsInput(const CarControlsInput& other) = default;
 	inline CarControlsInput& operator=(const CarControlsInput& other) = default;
-	inline void dtor() { typedef void (*_fpt)(CarControlsInput *pthis); _fpt _f=(_fpt)_drva(2930176); _f(this); }
+	inline void dtor() { typedef void (CarControlsInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2930176)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarControlsInput)==8),"bad size");
 		static_assert((offsetof(CarControlsInput,steerLock)==0x0),"bad off");
@@ -8120,11 +8120,11 @@ public:
 	inline BrushTyreModel() { }
 	inline BrushTyreModel(const BrushTyreModel& other) = default;
 	inline BrushTyreModel& operator=(const BrushTyreModel& other) = default;
-	inline void ctor() { typedef void (*_fpt)(BrushTyreModel *pthis); _fpt _f=(_fpt)_drva(2929488); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrushTyreModel *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline BrushOutput solve(float slip, float friction, float load, float cf1_mix, float asy) { typedef BrushOutput (*_fpt)(BrushTyreModel *pthis, float, float, float, float, float); _fpt _f=(_fpt)_drva(2929600); return _f(this, slip, friction, load, cf1_mix, asy); }
-	inline BrushOutput solveV5(float slip, float load, float asy) { typedef BrushOutput (*_fpt)(BrushTyreModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2929888); return _f(this, slip, load, asy); }
-	inline float getCFFromSlipAngle(float angle) { typedef float (*_fpt)(BrushTyreModel *pthis, float); _fpt _f=(_fpt)_drva(2929536); return _f(this, angle); }
+	inline void ctor() { typedef void (BrushTyreModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2929488)); (this->*_f)(); }
+	inline void dtor() { typedef void (BrushTyreModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline BrushOutput solve(float slip, float friction, float load, float cf1_mix, float asy) { typedef BrushOutput (BrushTyreModel::*_fpt)(float, float, float, float, float); auto _f=xcast<_fpt>(_drva(2929600)); return (this->*_f)(slip, friction, load, cf1_mix, asy); }
+	inline BrushOutput solveV5(float slip, float load, float asy) { typedef BrushOutput (BrushTyreModel::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2929888)); return (this->*_f)(slip, load, asy); }
+	inline float getCFFromSlipAngle(float angle) { typedef float (BrushTyreModel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2929536)); return (this->*_f)(angle); }
 	inline void _guard_obj() {
 		static_assert((sizeof(BrushTyreModel)==28),"bad size");
 		static_assert((offsetof(BrushTyreModel,data)==0x0),"bad off");
@@ -8227,21 +8227,21 @@ public:
 	inline mat44f() { }
 	inline mat44f(const mat44f& other) = default;
 	inline mat44f& operator=(const mat44f& other) = default;
-	inline bool isFinite() { typedef bool (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(2072368); return _f(this); }
-	inline static mat44f createBillboard(const vec3f & objectPosition, const vec3f & cameraPosition, const vec3f & cameraUpVector, const vec3f & cameraForwardVector) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(511792); return _f(objectPosition, cameraPosition, cameraUpVector, cameraForwardVector); }
-	inline static mat44f createTarget(const vec3f & cameraPosition, const vec3f & cameraTarget) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(393040); return _f(cameraPosition, cameraTarget); }
-	inline static mat44f createLookAt(const vec3f & cameraPosition, const vec3f & cameraTarget, const vec3f & cameraUpVector) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(147600); return _f(cameraPosition, cameraTarget, cameraUpVector); }
-	inline vec3f getScale() { typedef vec3f (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(2071424); return _f(this); }
-	inline void setScale(const vec3f & s) { typedef void (*_fpt)(mat44f *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2134544); return _f(this, s); }
-	inline static mat44f createFromAxisAngle(const vec3f & axis, float angle) { typedef mat44f (*_fpt)(const vec3f &, float); _fpt _f=(_fpt)_drva(356768); return _f(axis, angle); }
-	inline void setTranslation(const vec3f & value) { typedef void (*_fpt)(mat44f *pthis, const vec3f &); _fpt _f=(_fpt)_drva(394240); return _f(this, value); }
-	inline vec3f getTranslation() { typedef vec3f (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(296464); return _f(this); }
-	inline bool isIdentity() { typedef bool (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(1817520); return _f(this); }
-	inline void setFromHeadingUp(const vec3f & h, const vec3f & u) { typedef void (*_fpt)(mat44f *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(393968); return _f(this, h, u); }
-	inline vec3f toEuler() { typedef vec3f (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(340800); return _f(this); }
-	inline static mat44f createFromEuler(const vec3f & angles, const vec3f & translation) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(1150704); return _f(angles, translation); }
-	inline static mat44f createFromEulerSafe(vec3f euler, vec3f translation) { typedef mat44f (*_fpt)(vec3f, vec3f); _fpt _f=(_fpt)_drva(1399856); return _f(euler, translation); }
-	inline void print() { typedef void (*_fpt)(mat44f *pthis); _fpt _f=(_fpt)_drva(938816); return _f(this); }
+	inline bool isFinite() { typedef bool (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(2072368)); return (this->*_f)(); }
+	inline static mat44f createBillboard(const vec3f & objectPosition, const vec3f & cameraPosition, const vec3f & cameraUpVector, const vec3f & cameraForwardVector) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &, const vec3f &, const vec3f &); auto _f=(_fpt)_drva(511792); return _f(objectPosition, cameraPosition, cameraUpVector, cameraForwardVector); }
+	inline static mat44f createTarget(const vec3f & cameraPosition, const vec3f & cameraTarget) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &); auto _f=(_fpt)_drva(393040); return _f(cameraPosition, cameraTarget); }
+	inline static mat44f createLookAt(const vec3f & cameraPosition, const vec3f & cameraTarget, const vec3f & cameraUpVector) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=(_fpt)_drva(147600); return _f(cameraPosition, cameraTarget, cameraUpVector); }
+	inline vec3f getScale() { typedef vec3f (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(2071424)); return (this->*_f)(); }
+	inline void setScale(const vec3f & s) { typedef void (mat44f::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2134544)); return (this->*_f)(s); }
+	inline static mat44f createFromAxisAngle(const vec3f & axis, float angle) { typedef mat44f (*_fpt)(const vec3f &, float); auto _f=(_fpt)_drva(356768); return _f(axis, angle); }
+	inline void setTranslation(const vec3f & value) { typedef void (mat44f::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(394240)); return (this->*_f)(value); }
+	inline vec3f getTranslation() { typedef vec3f (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(296464)); return (this->*_f)(); }
+	inline bool isIdentity() { typedef bool (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(1817520)); return (this->*_f)(); }
+	inline void setFromHeadingUp(const vec3f & h, const vec3f & u) { typedef void (mat44f::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(393968)); return (this->*_f)(h, u); }
+	inline vec3f toEuler() { typedef vec3f (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(340800)); return (this->*_f)(); }
+	inline static mat44f createFromEuler(const vec3f & angles, const vec3f & translation) { typedef mat44f (*_fpt)(const vec3f &, const vec3f &); auto _f=(_fpt)_drva(1150704); return _f(angles, translation); }
+	inline static mat44f createFromEulerSafe(vec3f euler, vec3f translation) { typedef mat44f (*_fpt)(vec3f, vec3f); auto _f=(_fpt)_drva(1399856); return _f(euler, translation); }
+	inline void print() { typedef void (mat44f::*_fpt)(); auto _f=xcast<_fpt>(_drva(938816)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(mat44f)==64),"bad size");
 		static_assert((offsetof(mat44f,M11)==0x0),"bad off");
@@ -8293,10 +8293,10 @@ public:
 	inline ksgui_ListBoxRowData() { }
 	inline ksgui_ListBoxRowData(const ksgui_ListBoxRowData& other) = default;
 	inline ksgui_ListBoxRowData& operator=(const ksgui_ListBoxRowData& other) = default;
-	inline void ctor(const ksgui_ListBoxRowData & __that) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, const ksgui_ListBoxRowData &); _fpt _f=(_fpt)_drva(2395072); _f(this, __that); }
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(454352); _f(this, text); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_ListBoxRowData *pthis, unsigned int); _fpt _f=(_fpt)_drva(2398208); return _f(this, columnIndex); }
-	inline void dtor() { typedef void (*_fpt)(ksgui_ListBoxRowData *pthis); _fpt _f=(_fpt)_drva(454992); _f(this); }
+	inline void ctor(const ksgui_ListBoxRowData & __that) { typedef void (ksgui_ListBoxRowData::*_fpt)(const ksgui_ListBoxRowData &); auto _f=xcast<_fpt>(_drva(2395072)); (this->*_f)(__that); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (ksgui_ListBoxRowData::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(454352)); (this->*_f)(text); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getColumn(unsigned int columnIndex) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (ksgui_ListBoxRowData::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2398208)); return (this->*_f)(columnIndex); }
+	inline void dtor() { typedef void (ksgui_ListBoxRowData::*_fpt)(); auto _f=xcast<_fpt>(_drva(454992)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ListBoxRowData)==104),"bad size");
 		static_assert((offsetof(ksgui_ListBoxRowData,name)==0x0),"bad off");
@@ -8326,9 +8326,9 @@ public:
 	inline IRayCaster& operator=(const IRayCaster& other) = default;
 	virtual ~IRayCaster();
 	virtual RayCastHit rayCast_vf1(const vec3f &  _arg0, const vec3f &  _arg1) = 0;
-	inline RayCastHit rayCast(const vec3f &  _arg0, const vec3f &  _arg1) { return rayCast_vf1( _arg0,  _arg1); }
+	inline RayCastHit rayCast(const vec3f &  _arg0, const vec3f &  _arg1) { typedef RayCastHit (IRayCaster::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void release_vf2() = 0;
-	inline void release() { return release_vf2(); }
+	inline void release() { typedef void (IRayCaster::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IRayCaster)==8),"bad size");
 	};
@@ -8356,10 +8356,10 @@ public:
 	inline Triangle() { }
 	inline Triangle(const Triangle& other) = default;
 	inline Triangle& operator=(const Triangle& other) = default;
-	inline void ctor(const vec3f & p1, const vec3f & p2, const vec3f & p3) { typedef void (*_fpt)(Triangle *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2144864); _f(this, p1, p2, p3); }
+	inline void ctor(const vec3f & p1, const vec3f & p2, const vec3f & p3) { typedef void (Triangle::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2144864)); (this->*_f)(p1, p2, p3); }
 	virtual ~Triangle();
-	inline void dtor() { typedef void (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145440); _f(this); }
-	inline float computeArea() { typedef float (*_fpt)(Triangle *pthis); _fpt _f=(_fpt)_drva(2145456); return _f(this); }
+	inline void dtor() { typedef void (Triangle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2145440)); (this->*_f)(); }
+	inline float computeArea() { typedef float (Triangle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2145456)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Triangle)==64),"bad size");
 		static_assert((offsetof(Triangle,points)==0x8),"bad off");
@@ -8398,9 +8398,9 @@ public:
 	inline DRS() { }
 	inline DRS(const DRS& other) = default;
 	inline DRS& operator=(const DRS& other) = default;
-	inline void dtor() { typedef void (*_fpt)(DRS *pthis); _fpt _f=(_fpt)_drva(650384); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(DRS *pthis, Car *); _fpt _f=(_fpt)_drva(2835248); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(DRS *pthis, float); _fpt _f=(_fpt)_drva(2838112); return _f(this, dt); }
+	inline void dtor() { typedef void (DRS::*_fpt)(); auto _f=xcast<_fpt>(_drva(650384)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (DRS::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2835248)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (DRS::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2838112)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DRS)==48),"bad size");
 		static_assert((offsetof(DRS,isPresent)==0x0),"bad off");
@@ -8431,7 +8431,7 @@ public:
 	inline RemoteSessionResume() { }
 	inline RemoteSessionResume(const RemoteSessionResume& other) = default;
 	inline RemoteSessionResume& operator=(const RemoteSessionResume& other) = default;
-	inline void ctor() { typedef void (*_fpt)(RemoteSessionResume *pthis); _fpt _f=(_fpt)_drva(243232); _f(this); }
+	inline void ctor() { typedef void (RemoteSessionResume::*_fpt)(); auto _f=xcast<_fpt>(_drva(243232)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RemoteSessionResume)==176),"bad size");
 		static_assert((offsetof(RemoteSessionResume,session)==0x0),"bad off");
@@ -8456,9 +8456,9 @@ public:
 	inline ITyreModel(const ITyreModel& other) = default;
 	inline ITyreModel& operator=(const ITyreModel& other) = default;
 	virtual ~ITyreModel();
-	inline void dtor() { typedef void (*_fpt)(ITyreModel *pthis); _fpt _f=(_fpt)_drva(4503904); _f(this); }
+	inline void dtor() { typedef void (ITyreModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(4503904)); (this->*_f)(); }
 	virtual TyreModelOutput solve_vf1(const TyreModelInput &  _arg0) = 0;
-	inline TyreModelOutput solve(const TyreModelInput &  _arg0) { return solve_vf1( _arg0); }
+	inline TyreModelOutput solve(const TyreModelInput &  _arg0) { typedef TyreModelOutput (ITyreModel::*_fpt)(const TyreModelInput &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ITyreModel)==8),"bad size");
 	};
@@ -8496,7 +8496,7 @@ public:
 	inline Wind() { }
 	inline Wind(const Wind& other) = default;
 	inline Wind& operator=(const Wind& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Wind *pthis); _fpt _f=(_fpt)_drva(2502208); _f(this); }
+	inline void dtor() { typedef void (Wind::*_fpt)(); auto _f=xcast<_fpt>(_drva(2502208)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Wind)==20),"bad size");
 		static_assert((offsetof(Wind,vector)==0x0),"bad off");
@@ -8529,7 +8529,7 @@ public:
 	inline SessionResult() { }
 	inline SessionResult(const SessionResult& other) = default;
 	inline SessionResult& operator=(const SessionResult& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SessionResult *pthis); _fpt _f=(_fpt)_drva(611008); _f(this); }
+	inline void dtor() { typedef void (SessionResult::*_fpt)(); auto _f=xcast<_fpt>(_drva(611008)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SessionResult)==120),"bad size");
 		static_assert((offsetof(SessionResult,laps)==0x0),"bad off");
@@ -8569,10 +8569,10 @@ public:
 	inline ThreadPool() { }
 	inline ThreadPool(const ThreadPool& other) = default;
 	inline ThreadPool& operator=(const ThreadPool& other) = default;
-	inline void ctor(int inumThreads, std::function<void __cdecl(int)> * initFun) { typedef void (*_fpt)(ThreadPool *pthis, int, std::function<void __cdecl(int)> *); _fpt _f=(_fpt)_drva(2950304); _f(this, inumThreads, initFun); }
+	inline void ctor(int inumThreads, std::function<void __cdecl(int)> * initFun) { typedef void (ThreadPool::*_fpt)(int, std::function<void __cdecl(int)> *); auto _f=xcast<_fpt>(_drva(2950304)); (this->*_f)(inumThreads, initFun); }
 	virtual ~ThreadPool();
-	inline void dtor() { typedef void (*_fpt)(ThreadPool *pthis); _fpt _f=(_fpt)_drva(2951328); _f(this); }
-	inline void addTask(Task & task) { typedef void (*_fpt)(ThreadPool *pthis, Task &); _fpt _f=(_fpt)_drva(2953008); return _f(this, task); }
+	inline void dtor() { typedef void (ThreadPool::*_fpt)(); auto _f=xcast<_fpt>(_drva(2951328)); (this->*_f)(); }
+	inline void addTask(Task & task) { typedef void (ThreadPool::*_fpt)(Task &); auto _f=xcast<_fpt>(_drva(2953008)); return (this->*_f)(task); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ThreadPool)==104),"bad size");
 		static_assert((offsetof(ThreadPool,numThreads)==0x8),"bad off");
@@ -8616,9 +8616,9 @@ public:
 	inline LapDB() { }
 	inline LapDB(const LapDB& other) = default;
 	inline LapDB& operator=(const LapDB& other) = default;
-	inline void ctor(CarAvatar * icar) { typedef void (*_fpt)(LapDB *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1326000); _f(this, icar); }
-	inline void reset() { typedef void (*_fpt)(LapDB *pthis); _fpt _f=(_fpt)_drva(1334192); return _f(this); }
-	inline void dtor() { typedef void (*_fpt)(LapDB *pthis); _fpt _f=(_fpt)_drva(1326656); _f(this); }
+	inline void ctor(CarAvatar * icar) { typedef void (LapDB::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1326000)); (this->*_f)(icar); }
+	inline void reset() { typedef void (LapDB::*_fpt)(); auto _f=xcast<_fpt>(_drva(1334192)); return (this->*_f)(); }
+	inline void dtor() { typedef void (LapDB::*_fpt)(); auto _f=xcast<_fpt>(_drva(1326656)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(LapDB)==176),"bad size");
 		static_assert((offsetof(LapDB,totalTime)==0x0),"bad off");
@@ -8679,20 +8679,20 @@ public:
 	inline Curve() { }
 	inline Curve(const Curve& other) = default;
 	inline Curve& operator=(const Curve& other) = default;
-	inline void ctor(const Curve & __that) { typedef void (*_fpt)(Curve *pthis, const Curve &); _fpt _f=(_fpt)_drva(844960); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(Curve *pthis); _fpt _f=(_fpt)_drva(2119856); _f(this); }
+	inline void ctor(const Curve & __that) { typedef void (Curve::*_fpt)(const Curve &); auto _f=xcast<_fpt>(_drva(844960)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (Curve::*_fpt)(); auto _f=xcast<_fpt>(_drva(2119856)); (this->*_f)(); }
 	virtual ~Curve();
-	inline void dtor() { typedef void (*_fpt)(Curve *pthis); _fpt _f=(_fpt)_drva(2119952); _f(this); }
-	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (*_fpt)(Curve *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2124368); return _f(this, ifilename); }
-	inline void loadEncrypted(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataFile) { typedef void (*_fpt)(Curve *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2125648); return _f(this, ifilename, dataFile); }
-	inline void scale(float v) { typedef void (*_fpt)(Curve *pthis, float); _fpt _f=(_fpt)_drva(2126816); return _f(this, v); }
-	inline float getValue(float ref) { typedef float (*_fpt)(Curve *pthis, float); _fpt _f=(_fpt)_drva(2124176); return _f(this, ref); }
-	inline float getCubicSplineValue(float ref) { typedef float (*_fpt)(Curve *pthis, float); _fpt _f=(_fpt)_drva(2124016); return _f(this, ref); }
-	inline void addValue(float ref, float val) { typedef void (*_fpt)(Curve *pthis, float, float); _fpt _f=(_fpt)_drva(2120416); return _f(this, ref, val); }
-	inline float getMaxReference() { typedef float (*_fpt)(Curve *pthis); _fpt _f=(_fpt)_drva(2124080); return _f(this); }
-	inline int getCount() { typedef int (*_fpt)(Curve *pthis); _fpt _f=(_fpt)_drva(2124000); return _f(this); }
-	inline std::pair<float,float> getPairAtIndex(int index) { typedef std::pair<float,float> (*_fpt)(Curve *pthis, int); _fpt _f=(_fpt)_drva(2124096); return _f(this, index); }
-	inline void print() { typedef void (*_fpt)(Curve *pthis); _fpt _f=(_fpt)_drva(2126672); return _f(this); }
+	inline void dtor() { typedef void (Curve::*_fpt)(); auto _f=xcast<_fpt>(_drva(2119952)); (this->*_f)(); }
+	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (Curve::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2124368)); return (this->*_f)(ifilename); }
+	inline void loadEncrypted(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataFile) { typedef void (Curve::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2125648)); return (this->*_f)(ifilename, dataFile); }
+	inline void scale(float v) { typedef void (Curve::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2126816)); return (this->*_f)(v); }
+	inline float getValue(float ref) { typedef float (Curve::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2124176)); return (this->*_f)(ref); }
+	inline float getCubicSplineValue(float ref) { typedef float (Curve::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2124016)); return (this->*_f)(ref); }
+	inline void addValue(float ref, float val) { typedef void (Curve::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2120416)); return (this->*_f)(ref, val); }
+	inline float getMaxReference() { typedef float (Curve::*_fpt)(); auto _f=xcast<_fpt>(_drva(2124080)); return (this->*_f)(); }
+	inline int getCount() { typedef int (Curve::*_fpt)(); auto _f=xcast<_fpt>(_drva(2124000)); return (this->*_f)(); }
+	inline std::pair<float,float> getPairAtIndex(int index) { typedef std::pair<float,float> (Curve::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2124096)); return (this->*_f)(index); }
+	inline void print() { typedef void (Curve::*_fpt)(); auto _f=xcast<_fpt>(_drva(2126672)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Curve)==128),"bad size");
 		static_assert((offsetof(Curve,references)==0x8),"bad off");
@@ -8740,12 +8740,12 @@ public:
 	inline UDPSocket() { }
 	inline UDPSocket(const UDPSocket& other) = default;
 	inline UDPSocket& operator=(const UDPSocket& other) = default;
-	inline void ctor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2477984); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(UDPSocket *pthis); _fpt _f=(_fpt)_drva(2478064); _f(this); }
-	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(UDPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2479568); return _f(this, imode); }
-	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(UDPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2478736); return _f(this, listener); }
-	inline int receive(int maxPackets) { typedef int (*_fpt)(UDPSocket *pthis, int); _fpt _f=(_fpt)_drva(2479104); return _f(this, maxPackets); }
-	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(UDPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2479488); return _f(this, data, length, target); }
+	inline void ctor() { typedef void (UDPSocket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2477984)); (this->*_f)(); }
+	inline void dtor() { typedef void (UDPSocket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2478064)); (this->*_f)(); }
+	inline void setBlockingMode(bool imode) { typedef void (UDPSocket::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2479568)); return (this->*_f)(imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (UDPSocket::*_fpt)(std::function<void __cdecl(UDPMessage const &)> *); auto _f=xcast<_fpt>(_drva(2478736)); return (this->*_f)(listener); }
+	inline int receive(int maxPackets) { typedef int (UDPSocket::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2479104)); return (this->*_f)(maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (UDPSocket::*_fpt)(void *, int, sockaddr_in); auto _f=xcast<_fpt>(_drva(2479488)); return (this->*_f)(data, length, target); }
 	inline void _guard_obj() {
 		static_assert((sizeof(UDPSocket)==56),"bad size");
 		static_assert((offsetof(UDPSocket,soc)==0x0),"bad off");
@@ -8780,9 +8780,9 @@ public:
 	inline TelemetryChannel() { }
 	inline TelemetryChannel(const TelemetryChannel& other) = default;
 	inline TelemetryChannel& operator=(const TelemetryChannel& other) = default;
-	inline void ctor(const TelemetryChannel & __that) { typedef void (*_fpt)(TelemetryChannel *pthis, const TelemetryChannel &); _fpt _f=(_fpt)_drva(2866288); _f(this, __that); }
-	inline void ctor(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale) { typedef void (*_fpt)(TelemetryChannel *pthis, const std::basic_string<char,std::char_traits<char>,std::allocator<char> > &, float *, TelemetryUnits, int, float); _fpt _f=(_fpt)_drva(2866448); _f(this, name, adataSource, units, frequency, scale); }
-	inline void dtor() { typedef void (*_fpt)(TelemetryChannel *pthis); _fpt _f=(_fpt)_drva(2549872); _f(this); }
+	inline void ctor(const TelemetryChannel & __that) { typedef void (TelemetryChannel::*_fpt)(const TelemetryChannel &); auto _f=xcast<_fpt>(_drva(2866288)); (this->*_f)(__that); }
+	inline void ctor(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > & name, float * adataSource, TelemetryUnits units, int frequency, float scale) { typedef void (TelemetryChannel::*_fpt)(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > &, float *, TelemetryUnits, int, float); auto _f=xcast<_fpt>(_drva(2866448)); (this->*_f)(name, adataSource, units, frequency, scale); }
+	inline void dtor() { typedef void (TelemetryChannel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549872)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TelemetryChannel)==88),"bad size");
 		static_assert((offsetof(TelemetryChannel,name)==0x0),"bad off");
@@ -8831,12 +8831,12 @@ public:
 	inline PerformanceMeter() { }
 	inline PerformanceMeter(const PerformanceMeter& other) = default;
 	inline PerformanceMeter& operator=(const PerformanceMeter& other) = default;
-	inline void dtor() { typedef void (*_fpt)(PerformanceMeter *pthis); _fpt _f=(_fpt)_drva(2536400); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(PerformanceMeter *pthis, Car *); _fpt _f=(_fpt)_drva(2537408); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(PerformanceMeter *pthis, float); _fpt _f=(_fpt)_drva(2537696); return _f(this, dt); }
-	inline PerformanceSplit getCurrentSplit() { typedef PerformanceSplit (*_fpt)(PerformanceMeter *pthis); _fpt _f=(_fpt)_drva(2537216); return _f(this); }
-	inline bool hasData() { typedef bool (*_fpt)(PerformanceMeter *pthis); _fpt _f=(_fpt)_drva(2537376); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(PerformanceMeter *pthis); _fpt _f=(_fpt)_drva(2537600); return _f(this); }
+	inline void dtor() { typedef void (PerformanceMeter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2536400)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (PerformanceMeter::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2537408)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (PerformanceMeter::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2537696)); return (this->*_f)(dt); }
+	inline PerformanceSplit getCurrentSplit() { typedef PerformanceSplit (PerformanceMeter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2537216)); return (this->*_f)(); }
+	inline bool hasData() { typedef bool (PerformanceMeter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2537376)); return (this->*_f)(); }
+	inline void reset() { typedef void (PerformanceMeter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2537600)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PerformanceMeter)==112),"bad size");
 		static_assert((offsetof(PerformanceMeter,isEnabled)==0x0),"bad off");
@@ -8869,9 +8869,9 @@ public:
 	inline CommandManager() { }
 	inline CommandManager(const CommandManager& other) = default;
 	inline CommandManager& operator=(const CommandManager& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(953200); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(CommandManager *pthis); _fpt _f=(_fpt)_drva(2105504); _f(this); }
-	inline int getCommand(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName) { typedef int (*_fpt)(CommandManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(962064); return _f(this, commandName); }
+	inline void ctor() { typedef void (CommandManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(953200)); (this->*_f)(); }
+	inline void dtor() { typedef void (CommandManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2105504)); (this->*_f)(); }
+	inline int getCommand(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & commandName) { typedef int (CommandManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(962064)); return (this->*_f)(commandName); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CommandManager)==16),"bad size");
 		static_assert((offsetof(CommandManager,commands)==0x0),"bad off");
@@ -8903,14 +8903,14 @@ public:
 	inline CameraCarManager() { }
 	inline CameraCarManager(const CameraCarManager& other) = default;
 	inline CameraCarManager& operator=(const CameraCarManager& other) = default;
-	inline void ctor(Sim * a_sim, CameraForward * a_camera) { typedef void (*_fpt)(CameraCarManager *pthis, Sim *, CameraForward *); _fpt _f=(_fpt)_drva(803952); _f(this, a_sim, a_camera); }
+	inline void ctor(Sim * a_sim, CameraForward * a_camera) { typedef void (CameraCarManager::*_fpt)(Sim *, CameraForward *); auto _f=xcast<_fpt>(_drva(803952)); (this->*_f)(a_sim, a_camera); }
 	virtual ~CameraCarManager();
-	inline void setCurrentCamera(unsigned int cameraIndex) { typedef void (*_fpt)(CameraCarManager *pthis, unsigned int); _fpt _f=(_fpt)_drva(804720); return _f(this, cameraIndex); }
-	inline int getCameraCount() { typedef int (*_fpt)(CameraCarManager *pthis); _fpt _f=(_fpt)_drva(804544); return _f(this); }
+	inline void setCurrentCamera(unsigned int cameraIndex) { typedef void (CameraCarManager::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(804720)); return (this->*_f)(cameraIndex); }
+	inline int getCameraCount() { typedef int (CameraCarManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(804544)); return (this->*_f)(); }
 	virtual void update_vf1(float dt);
-	inline void update_impl(float dt) { typedef void (*_fpt)(CameraCarManager *pthis, float); _fpt _f=(_fpt)_drva(804816); return _f(this, dt); }
-	inline void update(float dt) { return update_vf1(dt); }
-	inline void nextCamera() { typedef void (*_fpt)(CameraCarManager *pthis); _fpt _f=(_fpt)_drva(804624); return _f(this); }
+	inline void update_impl(float dt) { typedef void (CameraCarManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(804816)); return (this->*_f)(dt); }
+	inline void update(float dt) { typedef void (CameraCarManager::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
+	inline void nextCamera() { typedef void (CameraCarManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(804624)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraCarManager)==112),"bad size");
 		static_assert((offsetof(CameraCarManager,sim)==0x58),"bad off");
@@ -8949,13 +8949,13 @@ public:
 	inline Texture() { }
 	inline Texture(const Texture& other) = default;
 	inline Texture& operator=(const Texture& other) = default;
-	inline void ctor(const RenderTarget & rt) { typedef void (*_fpt)(Texture *pthis, const RenderTarget &); _fpt _f=(_fpt)_drva(2088512); _f(this, rt); }
-	inline void ctor(unsigned char * buffer, unsigned int size) { typedef void (*_fpt)(Texture *pthis, unsigned char *, unsigned int); _fpt _f=(_fpt)_drva(2088576); _f(this, buffer, size); }
-	inline void ctor(unsigned char * buffer, unsigned int width, unsigned int height, PixelFormat aFormat) { typedef void (*_fpt)(Texture *pthis, unsigned char *, unsigned int, unsigned int, PixelFormat); _fpt _f=(_fpt)_drva(2088640); _f(this, buffer, width, height, aFormat); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(Texture *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2088384); _f(this, filename); }
-	inline void ctor() { typedef void (*_fpt)(Texture *pthis); _fpt _f=(_fpt)_drva(205552); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Texture *pthis); _fpt _f=(_fpt)_drva(2180672); _f(this); }
-	inline void release() { typedef void (*_fpt)(Texture *pthis); _fpt _f=(_fpt)_drva(2088720); return _f(this); }
+	inline void ctor(const RenderTarget & rt) { typedef void (Texture::*_fpt)(const RenderTarget &); auto _f=xcast<_fpt>(_drva(2088512)); (this->*_f)(rt); }
+	inline void ctor(unsigned char * buffer, unsigned int size) { typedef void (Texture::*_fpt)(unsigned char *, unsigned int); auto _f=xcast<_fpt>(_drva(2088576)); (this->*_f)(buffer, size); }
+	inline void ctor(unsigned char * buffer, unsigned int width, unsigned int height, PixelFormat aFormat) { typedef void (Texture::*_fpt)(unsigned char *, unsigned int, unsigned int, PixelFormat); auto _f=xcast<_fpt>(_drva(2088640)); (this->*_f)(buffer, width, height, aFormat); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (Texture::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2088384)); (this->*_f)(filename); }
+	inline void ctor() { typedef void (Texture::*_fpt)(); auto _f=xcast<_fpt>(_drva(205552)); (this->*_f)(); }
+	inline void dtor() { typedef void (Texture::*_fpt)(); auto _f=xcast<_fpt>(_drva(2180672)); (this->*_f)(); }
+	inline void release() { typedef void (Texture::*_fpt)(); auto _f=xcast<_fpt>(_drva(2088720)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Texture)==40),"bad size");
 		static_assert((offsetof(Texture,kid)==0x0),"bad off");
@@ -8989,8 +8989,8 @@ public:
 	inline DebugString() { }
 	inline DebugString(const DebugString& other) = default;
 	inline DebugString& operator=(const DebugString& other) = default;
-	inline void ctor(const DebugString & __that) { typedef void (*_fpt)(DebugString *pthis, const DebugString &); _fpt _f=(_fpt)_drva(508160); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(DebugString *pthis); _fpt _f=(_fpt)_drva(2353488); _f(this); }
+	inline void ctor(const DebugString & __that) { typedef void (DebugString::*_fpt)(const DebugString &); auto _f=xcast<_fpt>(_drva(508160)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (DebugString::*_fpt)(); auto _f=xcast<_fpt>(_drva(2353488)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DebugString)==80),"bad size");
 		static_assert((offsetof(DebugString,p)==0x0),"bad off");
@@ -9032,14 +9032,14 @@ public:
 	inline Font() { }
 	inline Font(const Font& other) = default;
 	inline Font& operator=(const Font& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & fontFamily, eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2099808); _f(this, fontFamily, fontType, size, italic, bold); }
-	inline void ctor(eFontType fontType, float size, bool italic, bool bold) { typedef void (*_fpt)(Font *pthis, eFontType, float, bool, bool); _fpt _f=(_fpt)_drva(2100144); _f(this, fontType, size, italic, bold); }
-	inline void dtor() { typedef void (*_fpt)(Font *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline static void cleanup() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(2101040); return _f(); }
-	inline void blitString(float x, float y, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & s, float ascale, eFontAlign align) { typedef void (*_fpt)(Font *pthis, float, float, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float, eFontAlign); _fpt _f=(_fpt)_drva(2100768); return _f(this, x, y, s, ascale, align); }
-	inline void setColor(const vec4f & cc) { typedef void (*_fpt)(Font *pthis, const vec4f &); _fpt _f=(_fpt)_drva(2102576); return _f(this, cc); }
-	inline void setColor(float r, float g, float b, float a) { typedef void (*_fpt)(Font *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2102704); return _f(this, r, g, b, a); }
-	inline static void * getFontWrapper(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, bool italic, bool bold) { typedef void * (*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, bool); _fpt _f=(_fpt)_drva(2101456); return _f(name, italic, bold); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & fontFamily, eFontType fontType, float size, bool italic, bool bold) { typedef void (Font::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, eFontType, float, bool, bool); auto _f=xcast<_fpt>(_drva(2099808)); (this->*_f)(fontFamily, fontType, size, italic, bold); }
+	inline void ctor(eFontType fontType, float size, bool italic, bool bold) { typedef void (Font::*_fpt)(eFontType, float, bool, bool); auto _f=xcast<_fpt>(_drva(2100144)); (this->*_f)(fontType, size, italic, bold); }
+	inline void dtor() { typedef void (Font::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline static void cleanup() { typedef void (*_fpt)(); auto _f=(_fpt)_drva(2101040); return _f(); }
+	inline void blitString(float x, float y, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & s, float ascale, eFontAlign align) { typedef void (Font::*_fpt)(float, float, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float, eFontAlign); auto _f=xcast<_fpt>(_drva(2100768)); return (this->*_f)(x, y, s, ascale, align); }
+	inline void setColor(const vec4f & cc) { typedef void (Font::*_fpt)(const vec4f &); auto _f=xcast<_fpt>(_drva(2102576)); return (this->*_f)(cc); }
+	inline void setColor(float r, float g, float b, float a) { typedef void (Font::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2102704)); return (this->*_f)(r, g, b, a); }
+	inline static void * getFontWrapper(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, bool italic, bool bold) { typedef void * (*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool, bool); auto _f=(_fpt)_drva(2101456); return _f(name, italic, bold); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Font)==32),"bad size");
 		static_assert((offsetof(Font,scale)==0x0),"bad off");
@@ -9091,11 +9091,11 @@ public:
 	inline HeaveSpring() { }
 	inline HeaveSpring(const HeaveSpring& other) = default;
 	inline HeaveSpring& operator=(const HeaveSpring& other) = default;
-	inline void dtor() { typedef void (*_fpt)(HeaveSpring *pthis); _fpt _f=(_fpt)_drva(2831104); _f(this); }
-	inline void init(Car * car, Suspension * s0, Suspension * s1, bool isFront) { typedef void (*_fpt)(HeaveSpring *pthis, Car *, Suspension *, Suspension *, bool); _fpt _f=(_fpt)_drva(2831120); return _f(this, car, s0, s1, isFront); }
-	inline void step(float dt) { typedef void (*_fpt)(HeaveSpring *pthis, float); _fpt _f=(_fpt)_drva(2832736); return _f(this, dt); }
-	inline void initData() { typedef void (*_fpt)(HeaveSpring *pthis); _fpt _f=(_fpt)_drva(2831168); return _f(this); }
-	inline void ctor() { typedef void (*_fpt)(HeaveSpring *pthis); _fpt _f=(_fpt)_drva(2546416); _f(this); }
+	inline void dtor() { typedef void (HeaveSpring::*_fpt)(); auto _f=xcast<_fpt>(_drva(2831104)); (this->*_f)(); }
+	inline void init(Car * car, Suspension * s0, Suspension * s1, bool isFront) { typedef void (HeaveSpring::*_fpt)(Car *, Suspension *, Suspension *, bool); auto _f=xcast<_fpt>(_drva(2831120)); return (this->*_f)(car, s0, s1, isFront); }
+	inline void step(float dt) { typedef void (HeaveSpring::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2832736)); return (this->*_f)(dt); }
+	inline void initData() { typedef void (HeaveSpring::*_fpt)(); auto _f=xcast<_fpt>(_drva(2831168)); return (this->*_f)(); }
+	inline void ctor() { typedef void (HeaveSpring::*_fpt)(); auto _f=xcast<_fpt>(_drva(2546416)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(HeaveSpring)==88),"bad size");
 		static_assert((offsetof(HeaveSpring,isPresent)==0x0),"bad off");
@@ -9174,21 +9174,21 @@ public:
 	inline TimeTransponder() { }
 	inline TimeTransponder(const TimeTransponder& other) = default;
 	inline TimeTransponder& operator=(const TimeTransponder& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2688112); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(TimeTransponder *pthis, Car *); _fpt _f=(_fpt)_drva(2688960); return _f(this, car); }
-	inline bool isValid() { typedef bool (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2689408); return _f(this); }
-	inline void onTimeLinePassed(int index, bool isFinishLine) { typedef void (*_fpt)(TimeTransponder *pthis, int, bool); _fpt _f=(_fpt)_drva(2690080); return _f(this, index, isFinishLine); }
-	inline TimeLineStatus & getStatus(int index) { typedef TimeLineStatus & (*_fpt)(TimeTransponder *pthis, int); _fpt _f=(_fpt)_drva(2688736); return _f(this, index); }
-	inline std::vector<unsigned int,std::allocator<unsigned int> > getLastLapSplits() { typedef std::vector<unsigned int,std::allocator<unsigned int> > (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2688688); return _f(this); }
-	inline void invalidate() { typedef void (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2689264); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2690656); return _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(TimeTransponder *pthis, float); _fpt _f=(_fpt)_drva(2691568); return _f(this, dt); }
-	inline void armFirstLap() { typedef void (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2688656); return _f(this); }
-	inline void addCut() { typedef void (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2688640); return _f(this); }
-	inline int getCuts() { typedef int (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2688672); return _f(this); }
-	inline bool isInOpenTrackTransition() { typedef bool (*_fpt)(TimeTransponder *pthis); _fpt _f=(_fpt)_drva(2689376); return _f(this); }
-	inline void lap(bool valid) { typedef void (*_fpt)(TimeTransponder *pthis, bool); _fpt _f=(_fpt)_drva(2689616); return _f(this, valid); }
-	inline void split(int sectorIndex) { typedef void (*_fpt)(TimeTransponder *pthis, int); _fpt _f=(_fpt)_drva(2691408); return _f(this, sectorIndex); }
+	inline void dtor() { typedef void (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2688112)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (TimeTransponder::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2688960)); return (this->*_f)(car); }
+	inline bool isValid() { typedef bool (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2689408)); return (this->*_f)(); }
+	inline void onTimeLinePassed(int index, bool isFinishLine) { typedef void (TimeTransponder::*_fpt)(int, bool); auto _f=xcast<_fpt>(_drva(2690080)); return (this->*_f)(index, isFinishLine); }
+	inline TimeLineStatus & getStatus(int index) { typedef TimeLineStatus & (TimeTransponder::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2688736)); return (this->*_f)(index); }
+	inline std::vector<unsigned int,std::allocator<unsigned int> > getLastLapSplits() { typedef std::vector<unsigned int,std::allocator<unsigned int> > (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2688688)); return (this->*_f)(); }
+	inline void invalidate() { typedef void (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2689264)); return (this->*_f)(); }
+	inline void reset() { typedef void (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2690656)); return (this->*_f)(); }
+	inline void step(float dt) { typedef void (TimeTransponder::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2691568)); return (this->*_f)(dt); }
+	inline void armFirstLap() { typedef void (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2688656)); return (this->*_f)(); }
+	inline void addCut() { typedef void (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2688640)); return (this->*_f)(); }
+	inline int getCuts() { typedef int (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2688672)); return (this->*_f)(); }
+	inline bool isInOpenTrackTransition() { typedef bool (TimeTransponder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2689376)); return (this->*_f)(); }
+	inline void lap(bool valid) { typedef void (TimeTransponder::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2689616)); return (this->*_f)(valid); }
+	inline void split(int sectorIndex) { typedef void (TimeTransponder::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2691408)); return (this->*_f)(sectorIndex); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TimeTransponder)==152),"bad size");
 		static_assert((offsetof(TimeTransponder,t)==0x0),"bad off");
@@ -9251,34 +9251,34 @@ public:
 	inline ICarControlsProvider(const ICarControlsProvider& other) = default;
 	inline ICarControlsProvider& operator=(const ICarControlsProvider& other) = default;
 	virtual ~ICarControlsProvider();
-	inline void dtor() { typedef void (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(523776); _f(this); }
+	inline void dtor() { typedef void (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(523776)); (this->*_f)(); }
 	virtual void acquireControls_vf1(CarControls *  _arg0, float  _arg1, CarControlsInput *  _arg2) = 0;
-	inline void acquireControls(CarControls *  _arg0, float  _arg1, CarControlsInput *  _arg2) { return acquireControls_vf1( _arg0,  _arg1,  _arg2); }
+	inline void acquireControls(CarControls *  _arg0, float  _arg1, CarControlsInput *  _arg2) { typedef void (ICarControlsProvider::*_fpt)(CarControls *, float, CarControlsInput *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual bool getAction_vf2(DriverActions  _arg0) = 0;
-	inline bool getAction(DriverActions  _arg0) { return getAction_vf2( _arg0); }
+	inline bool getAction(DriverActions  _arg0) { typedef bool (ICarControlsProvider::*_fpt)(DriverActions); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	virtual void sendFF_vf3(float  _arg0, float  _arg1, float  _arg2) = 0;
-	inline void sendFF(float  _arg0, float  _arg1, float  _arg2) { return sendFF_vf3( _arg0,  _arg1,  _arg2); }
+	inline void sendFF(float  _arg0, float  _arg1, float  _arg2) { typedef void (ICarControlsProvider::*_fpt)(float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual const char * getName_vf4() = 0;
-	inline const char * getName() { return getName_vf4(); }
+	inline const char * getName() { typedef const char * (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual float getFFGlobalGain_vf5() = 0;
-	inline float getFFGlobalGain() { return getFFGlobalGain_vf5(); }
+	inline float getFFGlobalGain() { typedef float (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
 	virtual bool isDeviceConnected_vf6() = 0;
-	inline bool isDeviceConnected() { return isDeviceConnected_vf6(); }
+	inline bool isDeviceConnected() { typedef bool (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual void onAutoShifterChanged_vf7(bool newmode);
-	inline void onAutoShifterChanged_impl(bool newmode) { typedef void (*_fpt)(ICarControlsProvider *pthis, bool); _fpt _f=(_fpt)_drva(96368); return _f(this, newmode); }
-	inline void onAutoShifterChanged(bool newmode) { return onAutoShifterChanged_vf7(newmode); }
+	inline void onAutoShifterChanged_impl(bool newmode) { typedef void (ICarControlsProvider::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(newmode); }
+	inline void onAutoShifterChanged(bool newmode) { typedef void (ICarControlsProvider::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(newmode); }
 	virtual bool IsKeyboardControl_vf8();
-	inline bool IsKeyboardControl_impl() { typedef bool (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(140928); return _f(this); }
-	inline bool IsKeyboardControl() { return IsKeyboardControl_vf8(); }
+	inline bool IsKeyboardControl_impl() { typedef bool (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(140928)); return (this->*_f)(); }
+	inline bool IsKeyboardControl() { typedef bool (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual void setVibrations_vf9(const VibrationDef & vibrations);
-	inline void setVibrations_impl(const VibrationDef & vibrations) { typedef void (*_fpt)(ICarControlsProvider *pthis, const VibrationDef &); _fpt _f=(_fpt)_drva(96368); return _f(this, vibrations); }
-	inline void setVibrations(const VibrationDef & vibrations) { return setVibrations_vf9(vibrations); }
+	inline void setVibrations_impl(const VibrationDef & vibrations) { typedef void (ICarControlsProvider::*_fpt)(const VibrationDef &); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(vibrations); }
+	inline void setVibrations(const VibrationDef & vibrations) { typedef void (ICarControlsProvider::*_fpt)(const VibrationDef &); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(vibrations); }
 	virtual void setEngineRPM_vf10(float rpm, float minRpm, float maxRpm);
-	inline void setEngineRPM_impl(float rpm, float minRpm, float maxRpm) { typedef void (*_fpt)(ICarControlsProvider *pthis, float, float, float); _fpt _f=(_fpt)_drva(96368); return _f(this, rpm, minRpm, maxRpm); }
-	inline void setEngineRPM(float rpm, float minRpm, float maxRpm) { return setEngineRPM_vf10(rpm, minRpm, maxRpm); }
+	inline void setEngineRPM_impl(float rpm, float minRpm, float maxRpm) { typedef void (ICarControlsProvider::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(rpm, minRpm, maxRpm); }
+	inline void setEngineRPM(float rpm, float minRpm, float maxRpm) { typedef void (ICarControlsProvider::*_fpt)(float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(rpm, minRpm, maxRpm); }
 	virtual bool shouldDelete_vf11();
-	inline bool shouldDelete_impl() { typedef bool (*_fpt)(ICarControlsProvider *pthis); _fpt _f=(_fpt)_drva(706688); return _f(this); }
-	inline bool shouldDelete() { return shouldDelete_vf11(); }
+	inline bool shouldDelete_impl() { typedef bool (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(706688)); return (this->*_f)(); }
+	inline bool shouldDelete() { typedef bool (ICarControlsProvider::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ICarControlsProvider)==24),"bad size");
 		static_assert((offsetof(ICarControlsProvider,ffEnabled)==0x8),"bad off");
@@ -9322,12 +9322,12 @@ public:
 	inline CarColliderManager() { }
 	inline CarColliderManager(const CarColliderManager& other) = default;
 	inline CarColliderManager& operator=(const CarColliderManager& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CarColliderManager *pthis); _fpt _f=(_fpt)_drva(2545584); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(CarColliderManager *pthis); _fpt _f=(_fpt)_drva(2766048); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(CarColliderManager *pthis, Car *); _fpt _f=(_fpt)_drva(2766672); return _f(this, acar); }
-	inline CarCollisionBox getBox(int index) { typedef CarCollisionBox (*_fpt)(CarColliderManager *pthis, int); _fpt _f=(_fpt)_drva(2766528); return _f(this, index); }
-	inline void step(float dt) { typedef void (*_fpt)(CarColliderManager *pthis, float); _fpt _f=(_fpt)_drva(2768208); return _f(this, dt); }
-	inline void loadINI() { typedef void (*_fpt)(CarColliderManager *pthis); _fpt _f=(_fpt)_drva(2766752); return _f(this); }
+	inline void ctor() { typedef void (CarColliderManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2545584)); (this->*_f)(); }
+	inline void dtor() { typedef void (CarColliderManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2766048)); (this->*_f)(); }
+	inline void init(Car * acar) { typedef void (CarColliderManager::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2766672)); return (this->*_f)(acar); }
+	inline CarCollisionBox getBox(int index) { typedef CarCollisionBox (CarColliderManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2766528)); return (this->*_f)(index); }
+	inline void step(float dt) { typedef void (CarColliderManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2768208)); return (this->*_f)(dt); }
+	inline void loadINI() { typedef void (CarColliderManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2766752)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarColliderManager)==128),"bad size");
 		static_assert((offsetof(CarColliderManager,isLive)==0x0),"bad off");
@@ -9369,23 +9369,23 @@ public:
 	inline CollisionMeshODE() { }
 	inline CollisionMeshODE(const CollisionMeshODE& other) = default;
 	inline CollisionMeshODE& operator=(const CollisionMeshODE& other) = default;
-	inline void ctor(PhysicsCore * core, float * vertices, int numVertices, unsigned short * indices, int indexCount, unsigned long group, unsigned long mask, unsigned int space_id) { typedef void (*_fpt)(CollisionMeshODE *pthis, PhysicsCore *, float *, int, unsigned short *, int, unsigned long, unsigned long, unsigned int); _fpt _f=(_fpt)_drva(2943920); _f(this, core, vertices, numVertices, indices, indexCount, group, mask, space_id); }
+	inline void ctor(PhysicsCore * core, float * vertices, int numVertices, unsigned short * indices, int indexCount, unsigned long group, unsigned long mask, unsigned int space_id) { typedef void (CollisionMeshODE::*_fpt)(PhysicsCore *, float *, int, unsigned short *, int, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(_drva(2943920)); (this->*_f)(core, vertices, numVertices, indices, indexCount, group, mask, space_id); }
 	virtual ~CollisionMeshODE();
 	virtual void release_vf0();
-	inline void release_impl() { typedef void (*_fpt)(CollisionMeshODE *pthis); _fpt _f=(_fpt)_drva(2944400); return _f(this); }
-	inline void release() { return release_vf0(); }
+	inline void release_impl() { typedef void (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2944400)); return (this->*_f)(); }
+	inline void release() { typedef void (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual void setUserPointer_vf1(void * p);
-	inline void setUserPointer_impl(void * p) { typedef void (*_fpt)(CollisionMeshODE *pthis, void *); _fpt _f=(_fpt)_drva(2944432); return _f(this, p); }
-	inline void setUserPointer(void * p) { return setUserPointer_vf1(p); }
+	inline void setUserPointer_impl(void * p) { typedef void (CollisionMeshODE::*_fpt)(void *); auto _f=xcast<_fpt>(_drva(2944432)); return (this->*_f)(p); }
+	inline void setUserPointer(void * p) { typedef void (CollisionMeshODE::*_fpt)(void *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(p); }
 	virtual void * getUserPointer_vf2();
-	inline void * getUserPointer_impl() { typedef void * (*_fpt)(CollisionMeshODE *pthis); _fpt _f=(_fpt)_drva(2161840); return _f(this); }
-	inline void * getUserPointer() { return getUserPointer_vf2(); }
+	inline void * getUserPointer_impl() { typedef void * (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2161840)); return (this->*_f)(); }
+	inline void * getUserPointer() { typedef void * (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	virtual unsigned long getGroup_vf3();
-	inline unsigned long getGroup_impl() { typedef unsigned long (*_fpt)(CollisionMeshODE *pthis); _fpt _f=(_fpt)_drva(2944368); return _f(this); }
-	inline unsigned long getGroup() { return getGroup_vf3(); }
+	inline unsigned long getGroup_impl() { typedef unsigned long (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2944368)); return (this->*_f)(); }
+	inline unsigned long getGroup() { typedef unsigned long (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
 	virtual unsigned long getMask_vf4();
-	inline unsigned long getMask_impl() { typedef unsigned long (*_fpt)(CollisionMeshODE *pthis); _fpt _f=(_fpt)_drva(2944384); return _f(this); }
-	inline unsigned long getMask() { return getMask_vf4(); }
+	inline unsigned long getMask_impl() { typedef unsigned long (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2944384)); return (this->*_f)(); }
+	inline unsigned long getMask() { typedef unsigned long (CollisionMeshODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CollisionMeshODE)==48),"bad size");
 		static_assert((offsetof(CollisionMeshODE,trimeshData)==0x8),"bad off");
@@ -9433,14 +9433,14 @@ public:
 	inline SplineLocator() { }
 	inline SplineLocator(const SplineLocator& other) = default;
 	inline SplineLocator& operator=(const SplineLocator& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(96368); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(SplineLocator *pthis, Car *); _fpt _f=(_fpt)_drva(2798240); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(SplineLocator *pthis, float); _fpt _f=(_fpt)_drva(2799040); return _f(this, dt); }
-	inline static float locateOnSpline(AISpline * spline, const vec3f & pos, int & index) { typedef float (*_fpt)(AISpline *, const vec3f &, int &); _fpt _f=(_fpt)_drva(2798320); return _f(spline, pos, index); }
-	inline static float locateOnSplineWithBounds(AISpline * spline, const vec3f & pos, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, int & index) { typedef float (*_fpt)(AISpline *, const vec3f &, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, int &); _fpt _f=(_fpt)_drva(2798592); return _f(spline, pos, bounds, index); }
-	inline void getSides(float * sides, float nsplinepos) { typedef void (*_fpt)(SplineLocator *pthis, float *, float); _fpt _f=(_fpt)_drva(2797872); return _f(this, sides, nsplinepos); }
-	inline void reset() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798880); return _f(this); }
-	inline void resetToClosestPoint() { typedef void (*_fpt)(SplineLocator *pthis); _fpt _f=(_fpt)_drva(2798896); return _f(this); }
+	inline void dtor() { typedef void (SplineLocator::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (SplineLocator::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2798240)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (SplineLocator::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2799040)); return (this->*_f)(dt); }
+	inline static float locateOnSpline(AISpline * spline, const vec3f & pos, int & index) { typedef float (*_fpt)(AISpline *, const vec3f &, int &); auto _f=(_fpt)_drva(2798320); return _f(spline, pos, index); }
+	inline static float locateOnSplineWithBounds(AISpline * spline, const vec3f & pos, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, int & index) { typedef float (*_fpt)(AISpline *, const vec3f &, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, int &); auto _f=(_fpt)_drva(2798592); return _f(spline, pos, bounds, index); }
+	inline void getSides(float * sides, float nsplinepos) { typedef void (SplineLocator::*_fpt)(float *, float); auto _f=xcast<_fpt>(_drva(2797872)); return (this->*_f)(sides, nsplinepos); }
+	inline void reset() { typedef void (SplineLocator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2798880)); return (this->*_f)(); }
+	inline void resetToClosestPoint() { typedef void (SplineLocator::*_fpt)(); auto _f=xcast<_fpt>(_drva(2798896)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SplineLocator)==48),"bad size");
 		static_assert((offsetof(SplineLocator,currentSpline)==0x0),"bad off");
@@ -9494,14 +9494,14 @@ public:
 	inline KGLShader() { }
 	inline KGLShader(const KGLShader& other) = default;
 	inline KGLShader& operator=(const KGLShader& other) = default;
-	inline void dtor() { typedef void (*_fpt)(KGLShader *pthis); _fpt _f=(_fpt)_drva(126672); _f(this); }
-	inline static void clearInputLayouts() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(131232); return _f(); }
-	inline KGLShaderVar * getVarByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef KGLShaderVar * (*_fpt)(KGLShader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(131024); return _f(this, name); }
-	inline void loadShaderBinary(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(KGLShader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(127168); return _f(this, filename); }
-	inline void createVertexShader(ID3D10Blob * blob) { typedef void (*_fpt)(KGLShader *pthis, ID3D10Blob *); _fpt _f=(_fpt)_drva(128144); return _f(this, blob); }
-	inline void createPixelShader(ID3D10Blob * blob) { typedef void (*_fpt)(KGLShader *pthis, ID3D10Blob *); _fpt _f=(_fpt)_drva(128336); return _f(this, blob); }
-	inline void reflectVars(ID3D10Blob * blob, bool isPS) { typedef void (*_fpt)(KGLShader *pthis, ID3D10Blob *, bool); _fpt _f=(_fpt)_drva(128496); return _f(this, blob, isPS); }
-	inline void addCBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned int size, unsigned int slot) { typedef void (*_fpt)(KGLShader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned int, unsigned int); _fpt _f=(_fpt)_drva(130672); return _f(this, name, size, slot); }
+	inline void dtor() { typedef void (KGLShader::*_fpt)(); auto _f=xcast<_fpt>(_drva(126672)); (this->*_f)(); }
+	inline static void clearInputLayouts() { typedef void (*_fpt)(); auto _f=(_fpt)_drva(131232); return _f(); }
+	inline KGLShaderVar * getVarByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef KGLShaderVar * (KGLShader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(131024)); return (this->*_f)(name); }
+	inline void loadShaderBinary(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (KGLShader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(127168)); return (this->*_f)(filename); }
+	inline void createVertexShader(ID3D10Blob * blob) { typedef void (KGLShader::*_fpt)(ID3D10Blob *); auto _f=xcast<_fpt>(_drva(128144)); return (this->*_f)(blob); }
+	inline void createPixelShader(ID3D10Blob * blob) { typedef void (KGLShader::*_fpt)(ID3D10Blob *); auto _f=xcast<_fpt>(_drva(128336)); return (this->*_f)(blob); }
+	inline void reflectVars(ID3D10Blob * blob, bool isPS) { typedef void (KGLShader::*_fpt)(ID3D10Blob *, bool); auto _f=xcast<_fpt>(_drva(128496)); return (this->*_f)(blob, isPS); }
+	inline void addCBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned int size, unsigned int slot) { typedef void (KGLShader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned int, unsigned int); auto _f=xcast<_fpt>(_drva(130672)); return (this->*_f)(name, size, slot); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KGLShader)==144),"bad size");
 		static_assert((offsetof(KGLShader,vs)==0x0),"bad off");
@@ -9543,12 +9543,12 @@ public:
 	inline CameraMouseControl() { }
 	inline CameraMouseControl(const CameraMouseControl& other) = default;
 	inline CameraMouseControl& operator=(const CameraMouseControl& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * camera, Game * igame) { typedef void (*_fpt)(CameraMouseControl *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Game *); _fpt _f=(_fpt)_drva(2358688); _f(this, name, camera, igame); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * camera, Game * igame) { typedef void (CameraMouseControl::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Game *); auto _f=xcast<_fpt>(_drva(2358688)); (this->*_f)(name, camera, igame); }
 	virtual ~CameraMouseControl();
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(CameraMouseControl *pthis, float); _fpt _f=(_fpt)_drva(2359360); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void setAudioDistanceScale() { typedef void (*_fpt)(CameraMouseControl *pthis); _fpt _f=(_fpt)_drva(2359328); return _f(this); }
+	inline void update_impl(float deltaT) { typedef void (CameraMouseControl::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2359360)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (CameraMouseControl::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void setAudioDistanceScale() { typedef void (CameraMouseControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(2359328)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraMouseControl)==176),"bad size");
 		static_assert((offsetof(CameraMouseControl,base)==0x58),"bad off");
@@ -9597,13 +9597,13 @@ public:
 	inline SetupManager() { }
 	inline SetupManager(const SetupManager& other) = default;
 	inline SetupManager& operator=(const SetupManager& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SetupManager *pthis); _fpt _f=(_fpt)_drva(2657648); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(SetupManager *pthis, Car *); _fpt _f=(_fpt)_drva(2658960); return _f(this, acar); }
-	inline void step(float dt) { typedef void (*_fpt)(SetupManager *pthis, float); _fpt _f=(_fpt)_drva(2674832); return _f(this, dt); }
-	inline SetupItem * getSetupItem(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef SetupItem * (*_fpt)(SetupManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2658736); return _f(this, name); }
-	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(SetupManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2673808); return _f(this, filename); }
-	inline void initItems(bool attached) { typedef void (*_fpt)(SetupManager *pthis, bool); _fpt _f=(_fpt)_drva(2659696); return _f(this, attached); }
-	inline bool isSetupRespectingRules() { typedef bool (*_fpt)(SetupManager *pthis); _fpt _f=(_fpt)_drva(2673680); return _f(this); }
+	inline void dtor() { typedef void (SetupManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2657648)); (this->*_f)(); }
+	inline void init(Car * acar) { typedef void (SetupManager::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2658960)); return (this->*_f)(acar); }
+	inline void step(float dt) { typedef void (SetupManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2674832)); return (this->*_f)(dt); }
+	inline SetupItem * getSetupItem(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef SetupItem * (SetupManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2658736)); return (this->*_f)(name); }
+	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (SetupManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2673808)); return (this->*_f)(filename); }
+	inline void initItems(bool attached) { typedef void (SetupManager::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2659696)); return (this->*_f)(attached); }
+	inline bool isSetupRespectingRules() { typedef bool (SetupManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2673680)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SetupManager)==80),"bad size");
 		static_assert((offsetof(SetupManager,items)==0x0),"bad off");
@@ -9662,14 +9662,14 @@ public:
 	inline TCPSocket() { }
 	inline TCPSocket(const TCPSocket& other) = default;
 	inline TCPSocket& operator=(const TCPSocket& other) = default;
-	inline void ctor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2481840); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2482080); _f(this); }
-	inline bool connect(const IPAddress & target) { typedef bool (*_fpt)(TCPSocket *pthis, const IPAddress &); _fpt _f=(_fpt)_drva(2482592); return _f(this, target); }
-	inline void setBlockingMode(bool imode) { typedef void (*_fpt)(TCPSocket *pthis, bool); _fpt _f=(_fpt)_drva(2484144); return _f(this, imode); }
-	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (*_fpt)(TCPSocket *pthis, std::function<void __cdecl(UDPMessage const &)> *); _fpt _f=(_fpt)_drva(2482464); return _f(this, listener); }
-	inline int receive(int maxPackets) { typedef int (*_fpt)(TCPSocket *pthis, int); _fpt _f=(_fpt)_drva(2483216); return _f(this, maxPackets); }
-	inline void send(void * data, int length, sockaddr_in target) { typedef void (*_fpt)(TCPSocket *pthis, void *, int, sockaddr_in); _fpt _f=(_fpt)_drva(2484128); return _f(this, data, length, target); }
-	inline std::vector<unsigned char,std::allocator<unsigned char> > receivePacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(TCPSocket *pthis); _fpt _f=(_fpt)_drva(2483504); return _f(this); }
+	inline void ctor() { typedef void (TCPSocket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2481840)); (this->*_f)(); }
+	inline void dtor() { typedef void (TCPSocket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2482080)); (this->*_f)(); }
+	inline bool connect(const IPAddress & target) { typedef bool (TCPSocket::*_fpt)(const IPAddress &); auto _f=xcast<_fpt>(_drva(2482592)); return (this->*_f)(target); }
+	inline void setBlockingMode(bool imode) { typedef void (TCPSocket::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2484144)); return (this->*_f)(imode); }
+	inline void addListener(std::function<void __cdecl(UDPMessage const &)> * listener) { typedef void (TCPSocket::*_fpt)(std::function<void __cdecl(UDPMessage const &)> *); auto _f=xcast<_fpt>(_drva(2482464)); return (this->*_f)(listener); }
+	inline int receive(int maxPackets) { typedef int (TCPSocket::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2483216)); return (this->*_f)(maxPackets); }
+	inline void send(void * data, int length, sockaddr_in target) { typedef void (TCPSocket::*_fpt)(void *, int, sockaddr_in); auto _f=xcast<_fpt>(_drva(2484128)); return (this->*_f)(data, length, target); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > receivePacket() { typedef std::vector<unsigned char,std::allocator<unsigned char> > (TCPSocket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2483504)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TCPSocket)==65656),"bad size");
 		static_assert((offsetof(TCPSocket,chNewConnections)==0x0),"bad off");
@@ -9732,38 +9732,38 @@ public:
 	inline ACPlugin() { }
 	inline ACPlugin(const ACPlugin& other) = default;
 	inline ACPlugin& operator=(const ACPlugin& other) = default;
-	inline void ctor(Sim * aSim, HINSTANCE__ * module) { typedef void (*_fpt)(ACPlugin *pthis, Sim *, HINSTANCE__ *); _fpt _f=(_fpt)_drva(784032); _f(this, aSim, module); }
+	inline void ctor(Sim * aSim, HINSTANCE__ * module) { typedef void (ACPlugin::*_fpt)(Sim *, HINSTANCE__ *); auto _f=xcast<_fpt>(_drva(784032)); (this->*_f)(aSim, module); }
 	virtual ~ACPlugin();
-	inline void dtor() { typedef void (*_fpt)(ACPlugin *pthis); _fpt _f=(_fpt)_drva(784720); _f(this); }
-	inline void update(ACCarState * state, float dt) { typedef void (*_fpt)(ACPlugin *pthis, ACCarState *, float); _fpt _f=(_fpt)_drva(785920); return _f(this, state, dt); }
-	inline void onGui(ACPluginContext * cc) { typedef void (*_fpt)(ACPlugin *pthis, ACPluginContext *); _fpt _f=(_fpt)_drva(785184); return _f(this, cc); }
+	inline void dtor() { typedef void (ACPlugin::*_fpt)(); auto _f=xcast<_fpt>(_drva(784720)); (this->*_f)(); }
+	inline void update(ACCarState * state, float dt) { typedef void (ACPlugin::*_fpt)(ACCarState *, float); auto _f=xcast<_fpt>(_drva(785920)); return (this->*_f)(state, dt); }
+	inline void onGui(ACPluginContext * cc) { typedef void (ACPlugin::*_fpt)(ACPluginContext *); auto _f=xcast<_fpt>(_drva(785184)); return (this->*_f)(cc); }
 	virtual HWND__ * getHwnd_vf0();
-	inline HWND__ * getHwnd_impl() { typedef HWND__ * (*_fpt)(ACPlugin *pthis); _fpt _f=(_fpt)_drva(785168); return _f(this); }
-	inline HWND__ * getHwnd() { return getHwnd_vf0(); }
+	inline HWND__ * getHwnd_impl() { typedef HWND__ * (ACPlugin::*_fpt)(); auto _f=xcast<_fpt>(_drva(785168)); return (this->*_f)(); }
+	inline HWND__ * getHwnd() { typedef HWND__ * (ACPlugin::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual HINSTANCE__ * getHInstance_vf1();
-	inline HINSTANCE__ * getHInstance_impl() { typedef HINSTANCE__ * (*_fpt)(ACPlugin *pthis); _fpt _f=(_fpt)_drva(785152); return _f(this); }
-	inline HINSTANCE__ * getHInstance() { return getHInstance_vf1(); }
+	inline HINSTANCE__ * getHInstance_impl() { typedef HINSTANCE__ * (ACPlugin::*_fpt)(); auto _f=xcast<_fpt>(_drva(785152)); return (this->*_f)(); }
+	inline HINSTANCE__ * getHInstance() { typedef HINSTANCE__ * (ACPlugin::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void setABS_vf2(float value);
-	inline void setABS_impl(float value) { typedef void (*_fpt)(ACPlugin *pthis, float); _fpt _f=(_fpt)_drva(785200); return _f(this, value); }
-	inline void setABS(float value) { return setABS_vf2(value); }
+	inline void setABS_impl(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(_drva(785200)); return (this->*_f)(value); }
+	inline void setABS(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(value); }
 	virtual void setTC_vf3(float value);
-	inline void setTC_impl(float value) { typedef void (*_fpt)(ACPlugin *pthis, float); _fpt _f=(_fpt)_drva(785856); return _f(this, value); }
-	inline void setTC(float value) { return setTC_vf3(value); }
+	inline void setTC_impl(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(_drva(785856)); return (this->*_f)(value); }
+	inline void setTC(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(value); }
 	virtual void setStabilityControl_vf4(float value);
-	inline void setStabilityControl_impl(float value) { typedef void (*_fpt)(ACPlugin *pthis, float); _fpt _f=(_fpt)_drva(785440); return _f(this, value); }
-	inline void setStabilityControl(float value) { return setStabilityControl_vf4(value); }
+	inline void setStabilityControl_impl(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(_drva(785440)); return (this->*_f)(value); }
+	inline void setStabilityControl(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(value); }
 	virtual void setIdealLine_vf5(bool value, bool isFromPhysicsThread);
-	inline void setIdealLine_impl(bool value, bool isFromPhysicsThread) { typedef void (*_fpt)(ACPlugin *pthis, bool, bool); _fpt _f=(_fpt)_drva(785296); return _f(this, value, isFromPhysicsThread); }
-	inline void setIdealLine(bool value, bool isFromPhysicsThread) { return setIdealLine_vf5(value, isFromPhysicsThread); }
+	inline void setIdealLine_impl(bool value, bool isFromPhysicsThread) { typedef void (ACPlugin::*_fpt)(bool, bool); auto _f=xcast<_fpt>(_drva(785296)); return (this->*_f)(value, isFromPhysicsThread); }
+	inline void setIdealLine(bool value, bool isFromPhysicsThread) { typedef void (ACPlugin::*_fpt)(bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(value, isFromPhysicsThread); }
 	virtual void setAutoShift_vf6(bool value);
-	inline void setAutoShift_impl(bool value) { typedef void (*_fpt)(ACPlugin *pthis, bool); _fpt _f=(_fpt)_drva(785264); return _f(this, value); }
-	inline void setAutoShift(bool value) { return setAutoShift_vf6(value); }
+	inline void setAutoShift_impl(bool value) { typedef void (ACPlugin::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(785264)); return (this->*_f)(value); }
+	inline void setAutoShift(bool value) { typedef void (ACPlugin::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(value); }
 	virtual void setBrakeBias_vf7(float value);
-	inline void setBrakeBias_impl(float value) { typedef void (*_fpt)(ACPlugin *pthis, float); _fpt _f=(_fpt)_drva(785280); return _f(this, value); }
-	inline void setBrakeBias(float value) { return setBrakeBias_vf7(value); }
+	inline void setBrakeBias_impl(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(_drva(785280)); return (this->*_f)(value); }
+	inline void setBrakeBias(float value) { typedef void (ACPlugin::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(value); }
 	virtual void setSystemMessage_vf8(const wchar_t * message, const wchar_t * description, bool isFromPhysicsThread);
-	inline void setSystemMessage_impl(const wchar_t * message, const wchar_t * description, bool isFromPhysicsThread) { typedef void (*_fpt)(ACPlugin *pthis, const wchar_t *, const wchar_t *, bool); _fpt _f=(_fpt)_drva(785456); return _f(this, message, description, isFromPhysicsThread); }
-	inline void setSystemMessage(const wchar_t * message, const wchar_t * description, bool isFromPhysicsThread) { return setSystemMessage_vf8(message, description, isFromPhysicsThread); }
+	inline void setSystemMessage_impl(const wchar_t * message, const wchar_t * description, bool isFromPhysicsThread) { typedef void (ACPlugin::*_fpt)(const wchar_t *, const wchar_t *, bool); auto _f=xcast<_fpt>(_drva(785456)); return (this->*_f)(message, description, isFromPhysicsThread); }
+	inline void setSystemMessage(const wchar_t * message, const wchar_t * description, bool isFromPhysicsThread) { typedef void (ACPlugin::*_fpt)(const wchar_t *, const wchar_t *, bool); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(message, description, isFromPhysicsThread); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ACPlugin)==120),"bad size");
 		static_assert((offsetof(ACPlugin,name)==0x8),"bad off");
@@ -9869,9 +9869,9 @@ public:
 	inline TyreModelData() { }
 	inline TyreModelData(const TyreModelData& other) = default;
 	inline TyreModelData& operator=(const TyreModelData& other) = default;
-	inline void ctor(const TyreModelData & __that) { typedef void (*_fpt)(TyreModelData *pthis, const TyreModelData &); _fpt _f=(_fpt)_drva(2609552); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(TyreModelData *pthis); _fpt _f=(_fpt)_drva(2547280); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TyreModelData *pthis); _fpt _f=(_fpt)_drva(2550176); _f(this); }
+	inline void ctor(const TyreModelData & __that) { typedef void (TyreModelData::*_fpt)(const TyreModelData &); auto _f=xcast<_fpt>(_drva(2609552)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (TyreModelData::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547280)); (this->*_f)(); }
+	inline void dtor() { typedef void (TyreModelData::*_fpt)(); auto _f=xcast<_fpt>(_drva(2550176)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TyreModelData)==656),"bad size");
 		static_assert((offsetof(TyreModelData,version)==0x0),"bad off");
@@ -9938,8 +9938,8 @@ public:
 	inline BrakeDisc() { }
 	inline BrakeDisc(const BrakeDisc& other) = default;
 	inline BrakeDisc& operator=(const BrakeDisc& other) = default;
-	inline void ctor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2538976); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrakeDisc *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
+	inline void ctor() { typedef void (BrakeDisc::*_fpt)(); auto _f=xcast<_fpt>(_drva(2538976)); (this->*_f)(); }
+	inline void dtor() { typedef void (BrakeDisc::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547808)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(BrakeDisc)==144),"bad size");
 		static_assert((offsetof(BrakeDisc,t)==0x0),"bad off");
@@ -9971,8 +9971,8 @@ public:
 	inline DynamicTempData() { }
 	inline DynamicTempData(const DynamicTempData& other) = default;
 	inline DynamicTempData& operator=(const DynamicTempData& other) = default;
-	inline void ctor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1256656); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(DynamicTempData *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
+	inline void ctor() { typedef void (DynamicTempData::*_fpt)(); auto _f=xcast<_fpt>(_drva(1256656)); (this->*_f)(); }
+	inline void dtor() { typedef void (DynamicTempData::*_fpt)(); auto _f=xcast<_fpt>(_drva(1258144)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DynamicTempData)==144),"bad size");
 		static_assert((offsetof(DynamicTempData,temperatureCurve)==0x0),"bad off");
@@ -10002,8 +10002,8 @@ public:
 	inline ClutchSequence() { }
 	inline ClutchSequence(const ClutchSequence& other) = default;
 	inline ClutchSequence& operator=(const ClutchSequence& other) = default;
-	inline void ctor(Curve & c) { typedef void (*_fpt)(ClutchSequence *pthis, Curve &); _fpt _f=(_fpt)_drva(2851616); _f(this, c); }
-	inline void dtor() { typedef void (*_fpt)(ClutchSequence *pthis); _fpt _f=(_fpt)_drva(1258144); _f(this); }
+	inline void ctor(Curve & c) { typedef void (ClutchSequence::*_fpt)(Curve &); auto _f=xcast<_fpt>(_drva(2851616)); (this->*_f)(c); }
+	inline void dtor() { typedef void (ClutchSequence::*_fpt)(); auto _f=xcast<_fpt>(_drva(1258144)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ClutchSequence)==136),"bad size");
 		static_assert((offsetof(ClutchSequence,clutchCurve)==0x0),"bad off");
@@ -10049,8 +10049,8 @@ public:
 	inline acEngineData() { }
 	inline acEngineData(const acEngineData& other) = default;
 	inline acEngineData& operator=(const acEngineData& other) = default;
-	inline void ctor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643104); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(acEngineData *pthis); _fpt _f=(_fpt)_drva(2643504); _f(this); }
+	inline void ctor() { typedef void (acEngineData::*_fpt)(); auto _f=xcast<_fpt>(_drva(2643104)); (this->*_f)(); }
+	inline void dtor() { typedef void (acEngineData::*_fpt)(); auto _f=xcast<_fpt>(_drva(2643504)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(acEngineData)==296),"bad size");
 		static_assert((offsetof(acEngineData,powerCurve)==0x0),"bad off");
@@ -10086,7 +10086,7 @@ public:
 	inline CameraCarDefinition() { }
 	inline CameraCarDefinition(const CameraCarDefinition& other) = default;
 	inline CameraCarDefinition& operator=(const CameraCarDefinition& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CameraCarDefinition *pthis); _fpt _f=(_fpt)_drva(839936); _f(this); }
+	inline void ctor() { typedef void (CameraCarDefinition::*_fpt)(); auto _f=xcast<_fpt>(_drva(839936)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraCarDefinition)==76),"bad size");
 		static_assert((offsetof(CameraCarDefinition,matrix)==0x0),"bad off");
@@ -10112,9 +10112,9 @@ public:
 	inline JoypadManager() { }
 	inline JoypadManager(const JoypadManager& other) = default;
 	inline JoypadManager& operator=(const JoypadManager& other) = default;
-	inline void ctor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2375584); _f(this); }
-	inline Joypad * getJoypad() { typedef Joypad * (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(100192); return _f(this); }
-	inline void dtor() { typedef void (*_fpt)(JoypadManager *pthis); _fpt _f=(_fpt)_drva(2367136); _f(this); }
+	inline void ctor() { typedef void (JoypadManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2375584)); (this->*_f)(); }
+	inline Joypad * getJoypad() { typedef Joypad * (JoypadManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(100192)); return (this->*_f)(); }
+	inline void dtor() { typedef void (JoypadManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2367136)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(JoypadManager)==8),"bad size");
 		static_assert((offsetof(JoypadManager,joypad)==0x0),"bad off");
@@ -10138,9 +10138,9 @@ public:
 	inline OnSessionEndEvent() { }
 	inline OnSessionEndEvent(const OnSessionEndEvent& other) = default;
 	inline OnSessionEndEvent& operator=(const OnSessionEndEvent& other) = default;
-	inline void ctor(const OnSessionEndEvent & __that) { typedef void (*_fpt)(OnSessionEndEvent *pthis, const OnSessionEndEvent &); _fpt _f=(_fpt)_drva(1256720); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610032); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(OnSessionEndEvent *pthis); _fpt _f=(_fpt)_drva(610896); _f(this); }
+	inline void ctor(const OnSessionEndEvent & __that) { typedef void (OnSessionEndEvent::*_fpt)(const OnSessionEndEvent &); auto _f=xcast<_fpt>(_drva(1256720)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (OnSessionEndEvent::*_fpt)(); auto _f=xcast<_fpt>(_drva(610032)); (this->*_f)(); }
+	inline void dtor() { typedef void (OnSessionEndEvent::*_fpt)(); auto _f=xcast<_fpt>(_drva(610896)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(OnSessionEndEvent)==232),"bad size");
 		static_assert((offsetof(OnSessionEndEvent,currentSession)==0x0),"bad off");
@@ -10164,7 +10164,7 @@ public:
 	inline sphere() { }
 	inline sphere(const sphere& other) = default;
 	inline sphere& operator=(const sphere& other) = default;
-	inline sphere transform(const mat44f & matrix) { typedef sphere (*_fpt)(sphere *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2198528); return _f(this, matrix); }
+	inline sphere transform(const mat44f & matrix) { typedef sphere (sphere::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2198528)); return (this->*_f)(matrix); }
 	inline void _guard_obj() {
 		static_assert((sizeof(sphere)==16),"bad size");
 		static_assert((offsetof(sphere,center)==0x0),"bad off");
@@ -10194,9 +10194,9 @@ public:
 	inline FFPostProcessor() { }
 	inline FFPostProcessor(const FFPostProcessor& other) = default;
 	inline FFPostProcessor& operator=(const FFPostProcessor& other) = default;
-	inline void ctor() { typedef void (*_fpt)(FFPostProcessor *pthis); _fpt _f=(_fpt)_drva(2594144); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(FFPostProcessor *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
-	inline float getProcessedFF(float v) { typedef float (*_fpt)(FFPostProcessor *pthis, float); _fpt _f=(_fpt)_drva(2595456); return _f(this, v); }
+	inline void ctor() { typedef void (FFPostProcessor::*_fpt)(); auto _f=xcast<_fpt>(_drva(2594144)); (this->*_f)(); }
+	inline void dtor() { typedef void (FFPostProcessor::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547808)); (this->*_f)(); }
+	inline float getProcessedFF(float v) { typedef float (FFPostProcessor::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2595456)); return (this->*_f)(v); }
 	inline void _guard_obj() {
 		static_assert((sizeof(FFPostProcessor)==144),"bad size");
 		static_assert((offsetof(FFPostProcessor,enabled)==0x0),"bad off");
@@ -10228,7 +10228,7 @@ public:
 	inline IMeshRenderFilter& operator=(const IMeshRenderFilter& other) = default;
 	virtual ~IMeshRenderFilter();
 	virtual bool isVisible_vf1(Renderable *  _arg0, const mat44f &  _arg1) = 0;
-	inline bool isVisible(Renderable *  _arg0, const mat44f &  _arg1) { return isVisible_vf1( _arg0,  _arg1); }
+	inline bool isVisible(Renderable *  _arg0, const mat44f &  _arg1) { typedef bool (IMeshRenderFilter::*_fpt)(Renderable *, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IMeshRenderFilter)==16),"bad size");
 		static_assert((offsetof(IMeshRenderFilter,passID)==0x8),"bad off");
@@ -10255,8 +10255,8 @@ public:
 	inline MaterialResource() { }
 	inline MaterialResource(const MaterialResource& other) = default;
 	inline MaterialResource& operator=(const MaterialResource& other) = default;
-	inline void ctor(const MaterialResource & __that) { typedef void (*_fpt)(MaterialResource *pthis, const MaterialResource &); _fpt _f=(_fpt)_drva(2137040); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(MaterialResource *pthis); _fpt _f=(_fpt)_drva(2137904); _f(this); }
+	inline void ctor(const MaterialResource & __that) { typedef void (MaterialResource::*_fpt)(const MaterialResource &); auto _f=xcast<_fpt>(_drva(2137040)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (MaterialResource::*_fpt)(); auto _f=xcast<_fpt>(_drva(2137904)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(MaterialResource)==80),"bad size");
 		static_assert((offsetof(MaterialResource,slot)==0x0),"bad off");
@@ -10322,87 +10322,87 @@ public:
 	inline IRigidBody(const IRigidBody& other) = default;
 	inline IRigidBody& operator=(const IRigidBody& other) = default;
 	virtual void setMassExplicitInertia_vf0(float  _arg0, float  _arg1, float  _arg2, float  _arg3) = 0;
-	inline void setMassExplicitInertia(float  _arg0, float  _arg1, float  _arg2, float  _arg3) { return setMassExplicitInertia_vf0( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline void setMassExplicitInertia(float  _arg0, float  _arg1, float  _arg2, float  _arg3) { typedef void (IRigidBody::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual bool isEnabled_vf1() = 0;
-	inline bool isEnabled() { return isEnabled_vf1(); }
+	inline bool isEnabled() { typedef bool (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void setEnabled_vf2(bool  _arg0) = 0;
-	inline void setEnabled(bool  _arg0) { return setEnabled_vf2( _arg0); }
+	inline void setEnabled(bool  _arg0) { typedef void (IRigidBody::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	virtual void setAutoDisable_vf3(bool  _arg0) = 0;
-	inline void setAutoDisable(bool  _arg0) { return setAutoDisable_vf3( _arg0); }
+	inline void setAutoDisable(bool  _arg0) { typedef void (IRigidBody::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)( _arg0); }
 	virtual void removeCollisionObjects_vf4() = 0;
-	inline void removeCollisionObjects() { return removeCollisionObjects_vf4(); }
+	inline void removeCollisionObjects() { typedef void (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual float getMass_vf5() = 0;
-	inline float getMass() { return getMass_vf5(); }
+	inline float getMass() { typedef float (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
 	virtual void release_vf6() = 0;
-	inline void release() { return release_vf6(); }
+	inline void release() { typedef void (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual void setMassBox_vf7(float  _arg0, float  _arg1, float  _arg2, float  _arg3) = 0;
-	inline void setMassBox(float  _arg0, float  _arg1, float  _arg2, float  _arg3) { return setMassBox_vf7( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline void setMassBox(float  _arg0, float  _arg1, float  _arg2, float  _arg3) { typedef void (IRigidBody::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual vec3f getLocalInertia_vf8() = 0;
-	inline vec3f getLocalInertia() { return getLocalInertia_vf8(); }
+	inline vec3f getLocalInertia() { typedef vec3f (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual mat44f getWorldMatrix_vf9(float  _arg0) = 0;
-	inline mat44f getWorldMatrix(float  _arg0) { return getWorldMatrix_vf9( _arg0); }
+	inline mat44f getWorldMatrix(float  _arg0) { typedef mat44f (IRigidBody::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)( _arg0); }
 	virtual vec3f localToWorld_vf10(const vec3f &  _arg0) = 0;
-	inline vec3f localToWorld(const vec3f &  _arg0) { return localToWorld_vf10( _arg0); }
+	inline vec3f localToWorld(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)( _arg0); }
 	virtual vec3f worldToLocal_vf11(const vec3f &  _arg0) = 0;
-	inline vec3f worldToLocal(const vec3f &  _arg0) { return worldToLocal_vf11( _arg0); }
+	inline vec3f worldToLocal(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)( _arg0); }
 	virtual vec3f localToWorldNormal_vf12(const vec3f &  _arg0) = 0;
-	inline vec3f localToWorldNormal(const vec3f &  _arg0) { return localToWorldNormal_vf12( _arg0); }
+	inline vec3f localToWorldNormal(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)( _arg0); }
 	virtual vec3f worldToLocalNormal_vf13(const vec3f &  _arg0) = 0;
-	inline vec3f worldToLocalNormal(const vec3f &  _arg0) { return worldToLocalNormal_vf13( _arg0); }
+	inline vec3f worldToLocalNormal(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)( _arg0); }
 	virtual void stop_vf14(float  _arg0) = 0;
-	inline void stop(float  _arg0) { return stop_vf14( _arg0); }
+	inline void stop(float  _arg0) { typedef void (IRigidBody::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)( _arg0); }
 	virtual vec3f getVelocity_vf15() = 0;
-	inline vec3f getVelocity() { return getVelocity_vf15(); }
+	inline vec3f getVelocity() { typedef vec3f (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(); }
 	virtual void setVelocity_vf16(const vec3f &  _arg0) = 0;
-	inline void setVelocity(const vec3f &  _arg0) { return setVelocity_vf16( _arg0); }
+	inline void setVelocity(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)( _arg0); }
 	virtual void setAngularVelocity_vf17(const vec3f &  _arg0) = 0;
-	inline void setAngularVelocity(const vec3f &  _arg0) { return setAngularVelocity_vf17( _arg0); }
+	inline void setAngularVelocity(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)( _arg0); }
 	virtual void setPosition_vf18(const vec3f &  _arg0) = 0;
-	inline void setPosition(const vec3f &  _arg0) { return setPosition_vf18( _arg0); }
+	inline void setPosition(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)( _arg0); }
 	virtual void setRotation_vf19(const mat44f &  _arg0) = 0;
-	inline void setRotation(const mat44f &  _arg0) { return setRotation_vf19( _arg0); }
+	inline void setRotation(const mat44f &  _arg0) { typedef void (IRigidBody::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)( _arg0); }
 	virtual vec3f getPosition_vf20(float  _arg0) = 0;
-	inline vec3f getPosition(float  _arg0) { return getPosition_vf20( _arg0); }
+	inline vec3f getPosition(float  _arg0) { typedef vec3f (IRigidBody::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)( _arg0); }
 	virtual vec3f getAngularVelocity_vf21() = 0;
-	inline vec3f getAngularVelocity() { return getAngularVelocity_vf21(); }
+	inline vec3f getAngularVelocity() { typedef vec3f (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(); }
 	virtual vec3f getLocalAngularVelocity_vf22() = 0;
-	inline vec3f getLocalAngularVelocity() { return getLocalAngularVelocity_vf22(); }
+	inline vec3f getLocalAngularVelocity() { typedef vec3f (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(); }
 	virtual vec3f getLocalVelocity_vf23() = 0;
-	inline vec3f getLocalVelocity() { return getLocalVelocity_vf23(); }
+	inline vec3f getLocalVelocity() { typedef vec3f (IRigidBody::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(); }
 	virtual void setBoxColliderMask_vf24(unsigned __int64  _arg0, unsigned long  _arg1) = 0;
-	inline void setBoxColliderMask(unsigned __int64  _arg0, unsigned long  _arg1) { return setBoxColliderMask_vf24( _arg0,  _arg1); }
+	inline void setBoxColliderMask(unsigned __int64  _arg0, unsigned long  _arg1) { typedef void (IRigidBody::*_fpt)(unsigned __int64, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)( _arg0,  _arg1); }
 	virtual unsigned __int64 addBoxCollider_vf25(const vec3f &  _arg0, const vec3f &  _arg1, unsigned int  _arg2, unsigned long  _arg3, unsigned int  _arg4) = 0;
-	inline unsigned __int64 addBoxCollider(const vec3f &  _arg0, const vec3f &  _arg1, unsigned int  _arg2, unsigned long  _arg3, unsigned int  _arg4) { return addBoxCollider_vf25( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
+	inline unsigned __int64 addBoxCollider(const vec3f &  _arg0, const vec3f &  _arg1, unsigned int  _arg2, unsigned long  _arg3, unsigned int  _arg4) { typedef unsigned __int64 (IRigidBody::*_fpt)(const vec3f &, const vec3f &, unsigned int, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 25)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
 	virtual void addSphereCollider_vf26(const vec3f &  _arg0, float  _arg1, unsigned int  _arg2, ISphereCollisionCallback *  _arg3) = 0;
-	inline void addSphereCollider(const vec3f &  _arg0, float  _arg1, unsigned int  _arg2, ISphereCollisionCallback *  _arg3) { return addSphereCollider_vf26( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline void addSphereCollider(const vec3f &  _arg0, float  _arg1, unsigned int  _arg2, ISphereCollisionCallback *  _arg3) { typedef void (IRigidBody::*_fpt)(const vec3f &, float, unsigned int, ISphereCollisionCallback *); auto _f=xcast<_fpt>(get_vfp(this, 26)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual void addLocalForce_vf27(const vec3f &  _arg0) = 0;
-	inline void addLocalForce(const vec3f &  _arg0) { return addLocalForce_vf27( _arg0); }
+	inline void addLocalForce(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 27)); return (this->*_f)( _arg0); }
 	virtual void addLocalTorque_vf28(const vec3f &  _arg0) = 0;
-	inline void addLocalTorque(const vec3f &  _arg0) { return addLocalTorque_vf28( _arg0); }
+	inline void addLocalTorque(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 28)); return (this->*_f)( _arg0); }
 	virtual void addLocalForceAtPos_vf29(const vec3f &  _arg0, const vec3f &  _arg1) = 0;
-	inline void addLocalForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1) { return addLocalForceAtPos_vf29( _arg0,  _arg1); }
+	inline void addLocalForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1) { typedef void (IRigidBody::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 29)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void addLocalForceAtLocalPos_vf30(const vec3f &  _arg0, const vec3f &  _arg1) = 0;
-	inline void addLocalForceAtLocalPos(const vec3f &  _arg0, const vec3f &  _arg1) { return addLocalForceAtLocalPos_vf30( _arg0,  _arg1); }
+	inline void addLocalForceAtLocalPos(const vec3f &  _arg0, const vec3f &  _arg1) { typedef void (IRigidBody::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 30)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void addForceAtLocalPos_vf31(const vec3f &  _arg0, const vec3f &  _arg1) = 0;
-	inline void addForceAtLocalPos(const vec3f &  _arg0, const vec3f &  _arg1) { return addForceAtLocalPos_vf31( _arg0,  _arg1); }
+	inline void addForceAtLocalPos(const vec3f &  _arg0, const vec3f &  _arg1) { typedef void (IRigidBody::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 31)); return (this->*_f)( _arg0,  _arg1); }
 	virtual vec3f getLocalPointVelocity_vf32(const vec3f &  _arg0) = 0;
-	inline vec3f getLocalPointVelocity(const vec3f &  _arg0) { return getLocalPointVelocity_vf32( _arg0); }
+	inline vec3f getLocalPointVelocity(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 32)); return (this->*_f)( _arg0); }
 	virtual vec3f getPointVelocity_vf33(const vec3f &  _arg0) = 0;
-	inline vec3f getPointVelocity(const vec3f &  _arg0) { return getPointVelocity_vf33( _arg0); }
+	inline vec3f getPointVelocity(const vec3f &  _arg0) { typedef vec3f (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 33)); return (this->*_f)( _arg0); }
 	virtual void addForceAtPos_vf34(const vec3f &  _arg0, const vec3f &  _arg1) = 0;
-	inline void addForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1) { return addForceAtPos_vf34( _arg0,  _arg1); }
+	inline void addForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1) { typedef void (IRigidBody::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 34)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void addTorque_vf35(const vec3f &  _arg0) = 0;
-	inline void addTorque(const vec3f &  _arg0) { return addTorque_vf35( _arg0); }
+	inline void addTorque(const vec3f &  _arg0) { typedef void (IRigidBody::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 35)); return (this->*_f)( _arg0); }
 	virtual void addMeshCollider_vf36(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, unsigned int  _arg3, mat44f  _arg4, unsigned long  _arg5, unsigned long  _arg6, unsigned int  _arg7) = 0;
-	inline void addMeshCollider(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, unsigned int  _arg3, mat44f  _arg4, unsigned long  _arg5, unsigned long  _arg6, unsigned int  _arg7) { return addMeshCollider_vf36( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7); }
+	inline void addMeshCollider(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, unsigned int  _arg3, mat44f  _arg4, unsigned long  _arg5, unsigned long  _arg6, unsigned int  _arg7) { typedef void (IRigidBody::*_fpt)(float *, unsigned int, unsigned short *, unsigned int, mat44f, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 36)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7); }
 	virtual void setMeshCollideCategory_vf37(unsigned int  _arg0, unsigned long  _arg1) = 0;
-	inline void setMeshCollideCategory(unsigned int  _arg0, unsigned long  _arg1) { return setMeshCollideCategory_vf37( _arg0,  _arg1); }
+	inline void setMeshCollideCategory(unsigned int  _arg0, unsigned long  _arg1) { typedef void (IRigidBody::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 37)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void setMeshCollideMask_vf38(unsigned int  _arg0, unsigned long  _arg1) = 0;
-	inline void setMeshCollideMask(unsigned int  _arg0, unsigned long  _arg1) { return setMeshCollideMask_vf38( _arg0,  _arg1); }
+	inline void setMeshCollideMask(unsigned int  _arg0, unsigned long  _arg1) { typedef void (IRigidBody::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 38)); return (this->*_f)( _arg0,  _arg1); }
 	virtual unsigned long getMeshCollideCategory_vf39(unsigned int  _arg0) = 0;
-	inline unsigned long getMeshCollideCategory(unsigned int  _arg0) { return getMeshCollideCategory_vf39( _arg0); }
+	inline unsigned long getMeshCollideCategory(unsigned int  _arg0) { typedef unsigned long (IRigidBody::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 39)); return (this->*_f)( _arg0); }
 	virtual unsigned long getMeshCollideMask_vf40(unsigned int  _arg0) = 0;
-	inline unsigned long getMeshCollideMask(unsigned int  _arg0) { return getMeshCollideMask_vf40( _arg0); }
+	inline unsigned long getMeshCollideMask(unsigned int  _arg0) { typedef unsigned long (IRigidBody::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 40)); return (this->*_f)( _arg0); }
 	virtual ~IRigidBody();
 	inline void _guard_obj() {
 		static_assert((sizeof(IRigidBody)==8),"bad size");
@@ -10438,9 +10438,9 @@ public:
 	inline DynamicControllerStage() { }
 	inline DynamicControllerStage(const DynamicControllerStage& other) = default;
 	inline DynamicControllerStage& operator=(const DynamicControllerStage& other) = default;
-	inline void ctor(const DynamicControllerStage & __that) { typedef void (*_fpt)(DynamicControllerStage *pthis, const DynamicControllerStage &); _fpt _f=(_fpt)_drva(2546288); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(DynamicControllerStage *pthis); _fpt _f=(_fpt)_drva(2819968); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(DynamicControllerStage *pthis); _fpt _f=(_fpt)_drva(2549824); _f(this); }
+	inline void ctor(const DynamicControllerStage & __that) { typedef void (DynamicControllerStage::*_fpt)(const DynamicControllerStage &); auto _f=xcast<_fpt>(_drva(2546288)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (DynamicControllerStage::*_fpt)(); auto _f=xcast<_fpt>(_drva(2819968)); (this->*_f)(); }
+	inline void dtor() { typedef void (DynamicControllerStage::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549824)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DynamicControllerStage)==160),"bad size");
 		static_assert((offsetof(DynamicControllerStage,inputVar)==0x0),"bad off");
@@ -10486,10 +10486,10 @@ public:
 	inline SlipStream() { }
 	inline SlipStream(const SlipStream& other) = default;
 	inline SlipStream& operator=(const SlipStream& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SlipStream *pthis); _fpt _f=(_fpt)_drva(2796272); _f(this); }
-	inline void init(PhysicsEngine * pe) { typedef void (*_fpt)(SlipStream *pthis, PhysicsEngine *); _fpt _f=(_fpt)_drva(2796992); return _f(this, pe); }
-	inline float getSlipEffect(const vec3f & p) { typedef float (*_fpt)(SlipStream *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2796640); return _f(this, p); }
-	inline void setPosition(const vec3f & pos, const vec3f & vel) { typedef void (*_fpt)(SlipStream *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2797184); return _f(this, pos, vel); }
+	inline void dtor() { typedef void (SlipStream::*_fpt)(); auto _f=xcast<_fpt>(_drva(2796272)); (this->*_f)(); }
+	inline void init(PhysicsEngine * pe) { typedef void (SlipStream::*_fpt)(PhysicsEngine *); auto _f=xcast<_fpt>(_drva(2796992)); return (this->*_f)(pe); }
+	inline float getSlipEffect(const vec3f & p) { typedef float (SlipStream::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2796640)); return (this->*_f)(p); }
+	inline void setPosition(const vec3f & pos, const vec3f & vel) { typedef void (SlipStream::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2797184)); return (this->*_f)(pos, vel); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SlipStream)==104),"bad size");
 		static_assert((offsetof(SlipStream,triangle)==0x0),"bad off");
@@ -10534,14 +10534,14 @@ public:
 	inline BrushSlipProvider() { }
 	inline BrushSlipProvider(const BrushSlipProvider& other) = default;
 	inline BrushSlipProvider& operator=(const BrushSlipProvider& other) = default;
-	inline void ctor(float maxAngle, float xu, float flex) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float, float); _fpt _f=(_fpt)_drva(2830208); _f(this, maxAngle, xu, flex); }
-	inline void ctor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830384); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830448); _f(this); }
+	inline void ctor(float maxAngle, float xu, float flex) { typedef void (BrushSlipProvider::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2830208)); (this->*_f)(maxAngle, xu, flex); }
+	inline void ctor() { typedef void (BrushSlipProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2830384)); (this->*_f)(); }
+	inline void dtor() { typedef void (BrushSlipProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2830448)); (this->*_f)(); }
 	virtual TyreSlipOutput getSlipForce_vf0(const TyreSlipInput & input, bool useasy);
-	inline TyreSlipOutput getSlipForce_impl(const TyreSlipInput & input, bool useasy) { typedef TyreSlipOutput (*_fpt)(BrushSlipProvider *pthis, const TyreSlipInput &, bool); _fpt _f=(_fpt)_drva(2830736); return _f(this, input, useasy); }
-	inline TyreSlipOutput getSlipForce(const TyreSlipInput & input, bool useasy) { return getSlipForce_vf0(input, useasy); }
-	inline void calcMaximum(float load, float * maximum, float * max_slip) { typedef void (*_fpt)(BrushSlipProvider *pthis, float, float *, float *); _fpt _f=(_fpt)_drva(2830480); return _f(this, load, maximum, max_slip); }
-	inline void recomputeMaximum() { typedef void (*_fpt)(BrushSlipProvider *pthis); _fpt _f=(_fpt)_drva(2830896); return _f(this); }
+	inline TyreSlipOutput getSlipForce_impl(const TyreSlipInput & input, bool useasy) { typedef TyreSlipOutput (BrushSlipProvider::*_fpt)(const TyreSlipInput &, bool); auto _f=xcast<_fpt>(_drva(2830736)); return (this->*_f)(input, useasy); }
+	inline TyreSlipOutput getSlipForce(const TyreSlipInput & input, bool useasy) { typedef TyreSlipOutput (BrushSlipProvider::*_fpt)(const TyreSlipInput &, bool); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(input, useasy); }
+	inline void calcMaximum(float load, float * maximum, float * max_slip) { typedef void (BrushSlipProvider::*_fpt)(float, float *, float *); auto _f=xcast<_fpt>(_drva(2830480)); return (this->*_f)(load, maximum, max_slip); }
+	inline void recomputeMaximum() { typedef void (BrushSlipProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2830896)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(BrushSlipProvider)==56),"bad size");
 		static_assert((offsetof(BrushSlipProvider,brushModel)==0x8),"bad off");
@@ -10619,10 +10619,10 @@ public:
 	inline ACCamera() { }
 	inline ACCamera(const ACCamera& other) = default;
 	inline ACCamera& operator=(const ACCamera& other) = default;
-	inline void ctor(const ACCamera & __that) { typedef void (*_fpt)(ACCamera *pthis, const ACCamera &); _fpt _f=(_fpt)_drva(829808); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(ACCamera *pthis); _fpt _f=(_fpt)_drva(2048576); _f(this); }
+	inline void ctor(const ACCamera & __that) { typedef void (ACCamera::*_fpt)(const ACCamera &); auto _f=xcast<_fpt>(_drva(829808)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (ACCamera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2048576)); (this->*_f)(); }
 	virtual ~ACCamera();
-	inline void dtor() { typedef void (*_fpt)(ACCamera *pthis); _fpt _f=(_fpt)_drva(2048944); _f(this); }
+	inline void dtor() { typedef void (ACCamera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2048944)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ACCamera)==248),"bad size");
 		static_assert((offsetof(ACCamera,name)==0x8),"bad off");
@@ -10695,9 +10695,9 @@ public:
 	inline WingData() { }
 	inline WingData(const WingData& other) = default;
 	inline WingData& operator=(const WingData& other) = default;
-	inline void ctor(const WingData & __that) { typedef void (*_fpt)(WingData *pthis, const WingData &); _fpt _f=(_fpt)_drva(845872); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(WingData *pthis); _fpt _f=(_fpt)_drva(2826944); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(WingData *pthis); _fpt _f=(_fpt)_drva(847680); _f(this); }
+	inline void ctor(const WingData & __that) { typedef void (WingData::*_fpt)(const WingData &); auto _f=xcast<_fpt>(_drva(845872)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (WingData::*_fpt)(); auto _f=xcast<_fpt>(_drva(2826944)); (this->*_f)(); }
+	inline void dtor() { typedef void (WingData::*_fpt)(); auto _f=xcast<_fpt>(_drva(847680)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(WingData)==592),"bad size");
 		static_assert((offsetof(WingData,name)==0x0),"bad off");
@@ -10755,12 +10755,12 @@ public:
 	inline ABS() { }
 	inline ABS(const ABS& other) = default;
 	inline ABS& operator=(const ABS& other) = default;
-	inline void dtor() { typedef void (*_fpt)(ABS *pthis); _fpt _f=(_fpt)_drva(2681552); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(ABS *pthis, Car *); _fpt _f=(_fpt)_drva(2681936); return _f(this, acar); }
-	inline void step(float td) { typedef void (*_fpt)(ABS *pthis, float); _fpt _f=(_fpt)_drva(2684432); return _f(this, td); }
-	inline void cycleMode(int value) { typedef void (*_fpt)(ABS *pthis, int); _fpt _f=(_fpt)_drva(2681568); return _f(this, value); }
-	inline std::pair<unsigned int,unsigned int> getCurrentMode() { typedef std::pair<unsigned int,unsigned int> (*_fpt)(ABS *pthis); _fpt _f=(_fpt)_drva(2681792); return _f(this); }
-	inline bool isInAction() { typedef bool (*_fpt)(ABS *pthis); _fpt _f=(_fpt)_drva(2684368); return _f(this); }
+	inline void dtor() { typedef void (ABS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2681552)); (this->*_f)(); }
+	inline void init(Car * acar) { typedef void (ABS::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2681936)); return (this->*_f)(acar); }
+	inline void step(float td) { typedef void (ABS::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2684432)); return (this->*_f)(td); }
+	inline void cycleMode(int value) { typedef void (ABS::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2681568)); return (this->*_f)(value); }
+	inline std::pair<unsigned int,unsigned int> getCurrentMode() { typedef std::pair<unsigned int,unsigned int> (ABS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2681792)); return (this->*_f)(); }
+	inline bool isInAction() { typedef bool (ABS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2684368)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ABS)==168),"bad size");
 		static_assert((offsetof(ABS,isPresent)==0x0),"bad off");
@@ -10815,11 +10815,11 @@ public:
 	inline TractionControl() { }
 	inline TractionControl(const TractionControl& other) = default;
 	inline TractionControl& operator=(const TractionControl& other) = default;
-	inline void dtor() { typedef void (*_fpt)(TractionControl *pthis); _fpt _f=(_fpt)_drva(2685136); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(TractionControl *pthis, Car *); _fpt _f=(_fpt)_drva(2685504); return _f(this, acar); }
-	inline void step(float dt) { typedef void (*_fpt)(TractionControl *pthis, float); _fpt _f=(_fpt)_drva(2687488); return _f(this, dt); }
-	inline void cycleMode(int value) { typedef void (*_fpt)(TractionControl *pthis, int); _fpt _f=(_fpt)_drva(2685152); return _f(this, value); }
-	inline std::pair<unsigned int,unsigned int> getCurrentMode() { typedef std::pair<unsigned int,unsigned int> (*_fpt)(TractionControl *pthis); _fpt _f=(_fpt)_drva(2685360); return _f(this); }
+	inline void dtor() { typedef void (TractionControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(2685136)); (this->*_f)(); }
+	inline void init(Car * acar) { typedef void (TractionControl::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2685504)); return (this->*_f)(acar); }
+	inline void step(float dt) { typedef void (TractionControl::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2687488)); return (this->*_f)(dt); }
+	inline void cycleMode(int value) { typedef void (TractionControl::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2685152)); return (this->*_f)(value); }
+	inline std::pair<unsigned int,unsigned int> getCurrentMode() { typedef std::pair<unsigned int,unsigned int> (TractionControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(2685360)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TractionControl)==168),"bad size");
 		static_assert((offsetof(TractionControl,isPresent)==0x0),"bad off");
@@ -10864,10 +10864,10 @@ public:
 	inline AutoBlip() { }
 	inline AutoBlip(const AutoBlip& other) = default;
 	inline AutoBlip& operator=(const AutoBlip& other) = default;
-	inline void dtor() { typedef void (*_fpt)(AutoBlip *pthis); _fpt _f=(_fpt)_drva(2547808); _f(this); }
-	inline void init(Car * acar) { typedef void (*_fpt)(AutoBlip *pthis, Car *); _fpt _f=(_fpt)_drva(2857232); return _f(this, acar); }
-	inline void step(float dt) { typedef void (*_fpt)(AutoBlip *pthis, float); _fpt _f=(_fpt)_drva(2858736); return _f(this, dt); }
-	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (*_fpt)(AutoBlip *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2857392); return _f(this, carModel); }
+	inline void dtor() { typedef void (AutoBlip::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547808)); (this->*_f)(); }
+	inline void init(Car * acar) { typedef void (AutoBlip::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2857232)); return (this->*_f)(acar); }
+	inline void step(float dt) { typedef void (AutoBlip::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2858736)); return (this->*_f)(dt); }
+	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (AutoBlip::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2857392)); return (this->*_f)(carModel); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AutoBlip)==168),"bad size");
 		static_assert((offsetof(AutoBlip,isActive)==0x0),"bad off");
@@ -10932,21 +10932,21 @@ public:
 	inline TyreThermalModel() { }
 	inline TyreThermalModel(const TyreThermalModel& other) = default;
 	inline TyreThermalModel& operator=(const TyreThermalModel& other) = default;
-	inline void init(int a_elements, int a_stripes, Car * car) { typedef void (*_fpt)(TyreThermalModel *pthis, int, int, Car *); _fpt _f=(_fpt)_drva(2810224); return _f(this, a_elements, a_stripes, car); }
-	inline void step(float dt, float angularSpeed, float camberRAD) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2810688); return _f(this, dt, angularSpeed, camberRAD); }
-	inline void addThermalInput(float xpos, float pressureRel, float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float, float, float); _fpt _f=(_fpt)_drva(2805904); return _f(this, xpos, pressureRel, temp); }
-	inline TyreThermalPatch & getPatchAt(int x, int y) { typedef TyreThermalPatch & (*_fpt)(TyreThermalModel *pthis, int, int); _fpt _f=(_fpt)_drva(2809776); return _f(this, x, y); }
-	inline float getCurrentCPTemp(float camber) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2808800); return _f(this, camber); }
-	inline float getCorrectedD(float d, float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float, float); _fpt _f=(_fpt)_drva(2808768); return _f(this, d, camberRAD); }
-	inline float getAvgSurfaceTemp() { typedef float (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2808720); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2810304); return _f(this); }
-	inline void getIMO(float * out) { typedef void (*_fpt)(TyreThermalModel *pthis, float *); _fpt _f=(_fpt)_drva(2809264); return _f(this, out); }
-	inline void setTemperature(float optimumTemp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810640); return _f(this, optimumTemp); }
-	inline float getPracticalTemp(float camberRAD) { typedef float (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2810176); return _f(this, camberRAD); }
-	inline void addThermalCoreInput(float temp) { typedef void (*_fpt)(TyreThermalModel *pthis, float); _fpt _f=(_fpt)_drva(2805872); return _f(this, temp); }
-	inline void buildTyre() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2806528); return _f(this); }
-	inline void ctor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2547584); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TyreThermalModel *pthis); _fpt _f=(_fpt)_drva(2550256); _f(this); }
+	inline void init(int a_elements, int a_stripes, Car * car) { typedef void (TyreThermalModel::*_fpt)(int, int, Car *); auto _f=xcast<_fpt>(_drva(2810224)); return (this->*_f)(a_elements, a_stripes, car); }
+	inline void step(float dt, float angularSpeed, float camberRAD) { typedef void (TyreThermalModel::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2810688)); return (this->*_f)(dt, angularSpeed, camberRAD); }
+	inline void addThermalInput(float xpos, float pressureRel, float temp) { typedef void (TyreThermalModel::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2805904)); return (this->*_f)(xpos, pressureRel, temp); }
+	inline TyreThermalPatch & getPatchAt(int x, int y) { typedef TyreThermalPatch & (TyreThermalModel::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2809776)); return (this->*_f)(x, y); }
+	inline float getCurrentCPTemp(float camber) { typedef float (TyreThermalModel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2808800)); return (this->*_f)(camber); }
+	inline float getCorrectedD(float d, float camberRAD) { typedef float (TyreThermalModel::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2808768)); return (this->*_f)(d, camberRAD); }
+	inline float getAvgSurfaceTemp() { typedef float (TyreThermalModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2808720)); return (this->*_f)(); }
+	inline void reset() { typedef void (TyreThermalModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2810304)); return (this->*_f)(); }
+	inline void getIMO(float * out) { typedef void (TyreThermalModel::*_fpt)(float *); auto _f=xcast<_fpt>(_drva(2809264)); return (this->*_f)(out); }
+	inline void setTemperature(float optimumTemp) { typedef void (TyreThermalModel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2810640)); return (this->*_f)(optimumTemp); }
+	inline float getPracticalTemp(float camberRAD) { typedef float (TyreThermalModel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2810176)); return (this->*_f)(camberRAD); }
+	inline void addThermalCoreInput(float temp) { typedef void (TyreThermalModel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2805872)); return (this->*_f)(temp); }
+	inline void buildTyre() { typedef void (TyreThermalModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2806528)); return (this->*_f)(); }
+	inline void ctor() { typedef void (TyreThermalModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547584)); (this->*_f)(); }
+	inline void dtor() { typedef void (TyreThermalModel::*_fpt)(); auto _f=xcast<_fpt>(_drva(2550256)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TyreThermalModel)==224),"bad size");
 		static_assert((offsetof(TyreThermalModel,elements)==0x0),"bad off");
@@ -10989,12 +10989,12 @@ public:
 	inline ResourceStore() { }
 	inline ResourceStore(const ResourceStore& other) = default;
 	inline ResourceStore& operator=(const ResourceStore& other) = default;
-	inline void ctor(GraphicsManager * rm) { typedef void (*_fpt)(ResourceStore *pthis, GraphicsManager *); _fpt _f=(_fpt)_drva(2097040); _f(this, rm); }
+	inline void ctor(GraphicsManager * rm) { typedef void (ResourceStore::*_fpt)(GraphicsManager *); auto _f=xcast<_fpt>(_drva(2097040)); (this->*_f)(rm); }
 	virtual ~ResourceStore();
-	inline void dtor() { typedef void (*_fpt)(ResourceStore *pthis); _fpt _f=(_fpt)_drva(2097120); _f(this); }
-	inline Texture getTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting) { typedef Texture (*_fpt)(ResourceStore *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); _fpt _f=(_fpt)_drva(2097360); return _f(this, filename, onlyExisting); }
-	inline Texture getTextureFromBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size) { typedef Texture (*_fpt)(ResourceStore *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned char *, int); _fpt _f=(_fpt)_drva(2097744); return _f(this, name, buffer, size); }
-	inline bool hasTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef bool (*_fpt)(ResourceStore *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2098112); return _f(this, name); }
+	inline void dtor() { typedef void (ResourceStore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2097120)); (this->*_f)(); }
+	inline Texture getTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, bool onlyExisting) { typedef Texture (ResourceStore::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); auto _f=xcast<_fpt>(_drva(2097360)); return (this->*_f)(filename, onlyExisting); }
+	inline Texture getTextureFromBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, unsigned char * buffer, int size) { typedef Texture (ResourceStore::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned char *, int); auto _f=xcast<_fpt>(_drva(2097744)); return (this->*_f)(name, buffer, size); }
+	inline bool hasTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef bool (ResourceStore::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2098112)); return (this->*_f)(name); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ResourceStore)==32),"bad size");
 		static_assert((offsetof(ResourceStore,store)==0x8),"bad off");
@@ -11092,11 +11092,11 @@ public:
 	inline Telemetry() { }
 	inline Telemetry(const Telemetry& other) = default;
 	inline Telemetry& operator=(const Telemetry& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Telemetry *pthis); _fpt _f=(_fpt)_drva(2866608); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(Telemetry *pthis, Car *); _fpt _f=(_fpt)_drva(2867216); return _f(this, car); }
-	inline void step(float td) { typedef void (*_fpt)(Telemetry *pthis, float); _fpt _f=(_fpt)_drva(2880944); return _f(this, td); }
-	inline void save(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(Telemetry *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2879600); return _f(this, filename); }
-	inline void ctor() { typedef void (*_fpt)(Telemetry *pthis); _fpt _f=(_fpt)_drva(2546480); _f(this); }
+	inline void dtor() { typedef void (Telemetry::*_fpt)(); auto _f=xcast<_fpt>(_drva(2866608)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (Telemetry::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2867216)); return (this->*_f)(car); }
+	inline void step(float td) { typedef void (Telemetry::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2880944)); return (this->*_f)(td); }
+	inline void save(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (Telemetry::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2879600)); return (this->*_f)(filename); }
+	inline void ctor() { typedef void (Telemetry::*_fpt)(); auto _f=xcast<_fpt>(_drva(2546480)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Telemetry)==256),"bad size");
 		static_assert((offsetof(Telemetry,channels)==0x0),"bad off");
@@ -11213,15 +11213,15 @@ public:
 	inline SCTM() { }
 	inline SCTM(const SCTM& other) = default;
 	inline SCTM& operator=(const SCTM& other) = default;
-	inline void ctor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503744); _f(this); }
+	inline void ctor() { typedef void (SCTM::*_fpt)(); auto _f=xcast<_fpt>(_drva(4503744)); (this->*_f)(); }
 	virtual ~SCTM();
-	inline void dtor() { typedef void (*_fpt)(SCTM *pthis); _fpt _f=(_fpt)_drva(4503920); _f(this); }
+	inline void dtor() { typedef void (SCTM::*_fpt)(); auto _f=xcast<_fpt>(_drva(4503920)); (this->*_f)(); }
 	virtual TyreModelOutput solve_vf1(const TyreModelInput & in);
-	inline TyreModelOutput solve_impl(const TyreModelInput & in) { typedef TyreModelOutput (*_fpt)(SCTM *pthis, const TyreModelInput &); _fpt _f=(_fpt)_drva(4504608); return _f(this, in); }
-	inline TyreModelOutput solve(const TyreModelInput & in) { return solve_vf1(in); }
-	inline float getStaticDY(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504496); return _f(this, load); }
-	inline float getStaticDX(float load) { typedef float (*_fpt)(SCTM *pthis, float); _fpt _f=(_fpt)_drva(4504368); return _f(this, load); }
-	inline float getPureFY(float D, float cf, float load, float slip) { typedef float (*_fpt)(SCTM *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(4504176); return _f(this, D, cf, load, slip); }
+	inline TyreModelOutput solve_impl(const TyreModelInput & in) { typedef TyreModelOutput (SCTM::*_fpt)(const TyreModelInput &); auto _f=xcast<_fpt>(_drva(4504608)); return (this->*_f)(in); }
+	inline TyreModelOutput solve(const TyreModelInput & in) { typedef TyreModelOutput (SCTM::*_fpt)(const TyreModelInput &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(in); }
+	inline float getStaticDY(float load) { typedef float (SCTM::*_fpt)(float); auto _f=xcast<_fpt>(_drva(4504496)); return (this->*_f)(load); }
+	inline float getStaticDX(float load) { typedef float (SCTM::*_fpt)(float); auto _f=xcast<_fpt>(_drva(4504368)); return (this->*_f)(load); }
+	inline float getPureFY(float D, float cf, float load, float slip) { typedef float (SCTM::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(4504176)); return (this->*_f)(D, cf, load, slip); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SCTM)==488),"bad size");
 		static_assert((offsetof(SCTM,lsMultY)==0x8),"bad off");
@@ -11287,7 +11287,7 @@ public:
 	inline NetCarStateProviderDef() { }
 	inline NetCarStateProviderDef(const NetCarStateProviderDef& other) = default;
 	inline NetCarStateProviderDef& operator=(const NetCarStateProviderDef& other) = default;
-	inline void dtor() { typedef void (*_fpt)(NetCarStateProviderDef *pthis); _fpt _f=(_fpt)_drva(1660448); _f(this); }
+	inline void dtor() { typedef void (NetCarStateProviderDef::*_fpt)(); auto _f=xcast<_fpt>(_drva(1660448)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(NetCarStateProviderDef)==224),"bad size");
 		static_assert((offsetof(NetCarStateProviderDef,client)==0x0),"bad off");
@@ -11365,55 +11365,55 @@ public:
 	inline ISuspension(const ISuspension& other) = default;
 	inline ISuspension& operator=(const ISuspension& other) = default;
 	virtual ~ISuspension();
-	inline void dtor() { typedef void (*_fpt)(ISuspension *pthis); _fpt _f=(_fpt)_drva(2886448); _f(this); }
+	inline void dtor() { typedef void (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2886448)); (this->*_f)(); }
 	virtual mat44f getHubWorldMatrix_vf1() = 0;
-	inline mat44f getHubWorldMatrix() { return getHubWorldMatrix_vf1(); }
+	inline mat44f getHubWorldMatrix() { typedef mat44f (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec3f getPointVelocity_vf2(const vec3f &  _arg0) = 0;
-	inline vec3f getPointVelocity(const vec3f &  _arg0) { return getPointVelocity_vf2( _arg0); }
+	inline vec3f getPointVelocity(const vec3f &  _arg0) { typedef vec3f (ISuspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	virtual void addForceAtPos_vf3(const vec3f &  _arg0, const vec3f &  _arg1, bool  _arg2, bool  _arg3) = 0;
-	inline void addForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1, bool  _arg2, bool  _arg3) { return addForceAtPos_vf3( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline void addForceAtPos(const vec3f &  _arg0, const vec3f &  _arg1, bool  _arg2, bool  _arg3) { typedef void (ISuspension::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual void addTorque_vf4(const vec3f &  _arg0) = 0;
-	inline void addTorque(const vec3f &  _arg0) { return addTorque_vf4( _arg0); }
+	inline void addTorque(const vec3f &  _arg0) { typedef void (ISuspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)( _arg0); }
 	virtual void setSteerLengthOffset_vf5(float  _arg0) = 0;
-	inline void setSteerLengthOffset(float  _arg0) { return setSteerLengthOffset_vf5( _arg0); }
+	inline void setSteerLengthOffset(float  _arg0) { typedef void (ISuspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)( _arg0); }
 	virtual float getSteerTorque_vf6() = 0;
-	inline float getSteerTorque() { return getSteerTorque_vf6(); }
+	inline float getSteerTorque() { typedef float (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual vec3f getHubAngularVelocity_vf7() = 0;
-	inline vec3f getHubAngularVelocity() { return getHubAngularVelocity_vf7(); }
+	inline vec3f getHubAngularVelocity() { typedef vec3f (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(); }
 	virtual void attach_vf8() = 0;
-	inline void attach() { return attach_vf8(); }
+	inline void attach() { typedef void (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual SuspensionStatus & getStatus_vf9() = 0;
-	inline SuspensionStatus & getStatus() { return getStatus_vf9(); }
+	inline SuspensionStatus & getStatus() { typedef SuspensionStatus & (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual vec3f getBasePosition_vf10() = 0;
-	inline vec3f getBasePosition() { return getBasePosition_vf10(); }
+	inline vec3f getBasePosition() { typedef vec3f (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
 	virtual float getK_vf11() = 0;
-	inline float getK() { return getK_vf11(); }
+	inline float getK() { typedef float (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	virtual Damper * getDamper_vf12() = 0;
-	inline Damper * getDamper() { return getDamper_vf12(); }
+	inline Damper * getDamper() { typedef Damper * (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(); }
 	virtual float getPackerRange_vf13() = 0;
-	inline float getPackerRange() { return getPackerRange_vf13(); }
+	inline float getPackerRange() { typedef float (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(); }
 	virtual std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_vf14(const mat44f &  _arg0, const mat44f &  _arg1) = 0;
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f &  _arg0, const mat44f &  _arg1) { return getDebugLines_vf14( _arg0,  _arg1); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f &  _arg0, const mat44f &  _arg1) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (ISuspension::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void setDamage_vf15(float  _arg0) = 0;
-	inline void setDamage(float  _arg0) { return setDamage_vf15( _arg0); }
+	inline void setDamage(float  _arg0) { typedef void (ISuspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)( _arg0); }
 	virtual void resetDamage_vf16() = 0;
-	inline void resetDamage() { return resetDamage_vf16(); }
+	inline void resetDamage() { typedef void (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(); }
 	virtual float getDamage_vf17() = 0;
-	inline float getDamage() { return getDamage_vf17(); }
+	inline float getDamage() { typedef float (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(); }
 	virtual float getMass_vf18() = 0;
-	inline float getMass() { return getMass_vf18(); }
+	inline float getMass() { typedef float (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void stop_vf19() = 0;
-	inline void stop() { return stop_vf19(); }
+	inline void stop() { typedef void (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(); }
 	virtual vec3f getVelocity_vf20() = 0;
-	inline vec3f getVelocity() { return getVelocity_vf20(); }
+	inline vec3f getVelocity() { typedef vec3f (ISuspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	virtual void getSteerBasis_vf21(vec3f &  _arg0, vec3f &  _arg1) = 0;
-	inline void getSteerBasis(vec3f &  _arg0, vec3f &  _arg1) { return getSteerBasis_vf21( _arg0,  _arg1); }
+	inline void getSteerBasis(vec3f &  _arg0, vec3f &  _arg1) { typedef void (ISuspension::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void step_vf22(float  _arg0) = 0;
-	inline void step(float  _arg0) { return step_vf22( _arg0); }
+	inline void step(float  _arg0) { typedef void (ISuspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)( _arg0); }
 	virtual void setERPCFM_vf23(float  _arg0, float  _arg1) = 0;
-	inline void setERPCFM(float  _arg0, float  _arg1) { return setERPCFM_vf23( _arg0,  _arg1); }
+	inline void setERPCFM(float  _arg0, float  _arg1) { typedef void (ISuspension::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void addLocalForceAndTorque_vf24(const vec3f &  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) = 0;
-	inline void addLocalForceAndTorque(const vec3f &  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { return addLocalForceAndTorque_vf24( _arg0,  _arg1,  _arg2); }
+	inline void addLocalForceAndTorque(const vec3f &  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { typedef void (ISuspension::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ISuspension)==56),"bad size");
 		static_assert((offsetof(ISuspension,k)==0x8),"bad off");
@@ -11465,7 +11465,7 @@ public:
 	inline RenderState() { }
 	inline RenderState(const RenderState& other) = default;
 	inline RenderState& operator=(const RenderState& other) = default;
-	inline void ctor() { typedef void (*_fpt)(RenderState *pthis); _fpt _f=(_fpt)_drva(2105216); _f(this); }
+	inline void ctor() { typedef void (RenderState::*_fpt)(); auto _f=xcast<_fpt>(_drva(2105216)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RenderState)==504),"bad size");
 		static_assert((offsetof(RenderState,textures)==0x0),"bad off");
@@ -11528,31 +11528,31 @@ public:
 	inline Spline() { }
 	inline Spline(const Spline& other) = default;
 	inline Spline& operator=(const Spline& other) = default;
-	inline void ctor() { typedef void (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2019712); _f(this); }
+	inline void ctor() { typedef void (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2019712)); (this->*_f)(); }
 	virtual ~Spline();
-	inline void dtor() { typedef void (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2019760); _f(this); }
-	inline vec3f pointAt(unsigned int index) { typedef vec3f (*_fpt)(Spline *pthis, unsigned int); _fpt _f=(_fpt)_drva(2025504); return _f(this, index); }
-	inline void setPointAt(unsigned int index, vec3f point) { typedef void (*_fpt)(Spline *pthis, unsigned int, vec3f); _fpt _f=(_fpt)_drva(2025904); return _f(this, index, point); }
-	inline SplinePoint splinePointAt(unsigned int index) { typedef SplinePoint (*_fpt)(Spline *pthis, unsigned int); _fpt _f=(_fpt)_drva(2025984); return _f(this, index); }
-	inline void addPoint(const vec3f & p, int tag) { typedef void (*_fpt)(Spline *pthis, const vec3f &, int); _fpt _f=(_fpt)_drva(2020960); return _f(this, p, tag); }
-	inline void addSplinePoint(const SplinePoint & p) { typedef void (*_fpt)(Spline *pthis, const SplinePoint &); _fpt _f=(_fpt)_drva(2021152); return _f(this, p); }
+	inline void dtor() { typedef void (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2019760)); (this->*_f)(); }
+	inline vec3f pointAt(unsigned int index) { typedef vec3f (Spline::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2025504)); return (this->*_f)(index); }
+	inline void setPointAt(unsigned int index, vec3f point) { typedef void (Spline::*_fpt)(unsigned int, vec3f); auto _f=xcast<_fpt>(_drva(2025904)); return (this->*_f)(index, point); }
+	inline SplinePoint splinePointAt(unsigned int index) { typedef SplinePoint (Spline::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2025984)); return (this->*_f)(index); }
+	inline void addPoint(const vec3f & p, int tag) { typedef void (Spline::*_fpt)(const vec3f &, int); auto _f=xcast<_fpt>(_drva(2020960)); return (this->*_f)(p, tag); }
+	inline void addSplinePoint(const SplinePoint & p) { typedef void (Spline::*_fpt)(const SplinePoint &); auto _f=xcast<_fpt>(_drva(2021152)); return (this->*_f)(p); }
 	virtual void clear_vf1();
-	inline void clear_impl() { typedef void (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2021616); return _f(this); }
-	inline void clear() { return clear_vf1(); }
-	inline float length() { typedef float (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2024352); return _f(this); }
-	inline unsigned int pointsCount() { typedef unsigned int (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2025600); return _f(this); }
-	inline unsigned int closestPointIndex(const vec3f & point, float * distance) { typedef unsigned int (*_fpt)(Spline *pthis, const vec3f &, float *); _fpt _f=(_fpt)_drva(2021632); return _f(this, point, distance); }
-	inline unsigned int closestPointIndexWithBounds(const vec3f & point, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, float * distance) { typedef unsigned int (*_fpt)(Spline *pthis, const vec3f &, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, float *); _fpt _f=(_fpt)_drva(2021904); return _f(this, point, bounds, distance); }
-	inline std::vector<unsigned int,std::allocator<unsigned int> > closestPointIndicesFlat(const vec3f & point, unsigned int numberOfNeigbours, float * distance) { typedef std::vector<unsigned int,std::allocator<unsigned int> > (*_fpt)(Spline *pthis, const vec3f &, unsigned int, float *); _fpt _f=(_fpt)_drva(2022144); return _f(this, point, numberOfNeigbours, distance); }
-	inline vec3f getSplineDirection(const vec3f & point) { typedef vec3f (*_fpt)(Spline *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2023888); return _f(this, point); }
-	inline unsigned int wrapIndex(int index) { typedef unsigned int (*_fpt)(Spline *pthis, int); _fpt _f=(_fpt)_drva(2026192); return _f(this, index); }
-	inline void loadFromCSV(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(Spline *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2024384); return _f(this, filename); }
-	inline vec3f getPointSmooth(float v) { typedef vec3f (*_fpt)(Spline *pthis, float); _fpt _f=(_fpt)_drva(2023504); return _f(this, v); }
-	inline void applyMatrix(const mat44f & m) { typedef void (*_fpt)(Spline *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2021168); return _f(this, m); }
-	inline int tagAt(unsigned int index) { typedef int (*_fpt)(Spline *pthis, unsigned int); _fpt _f=(_fpt)_drva(2026128); return _f(this, index); }
-	inline bool isClosed() { typedef bool (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2024208); return _f(this); }
-	inline void reverse() { typedef void (*_fpt)(Spline *pthis); _fpt _f=(_fpt)_drva(2025840); return _f(this); }
-	inline float boundInsideSpline(float value) { typedef float (*_fpt)(Spline *pthis, float); _fpt _f=(_fpt)_drva(2021472); return _f(this, value); }
+	inline void clear_impl() { typedef void (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2021616)); return (this->*_f)(); }
+	inline void clear() { typedef void (Spline::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
+	inline float length() { typedef float (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2024352)); return (this->*_f)(); }
+	inline unsigned int pointsCount() { typedef unsigned int (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2025600)); return (this->*_f)(); }
+	inline unsigned int closestPointIndex(const vec3f & point, float * distance) { typedef unsigned int (Spline::*_fpt)(const vec3f &, float *); auto _f=xcast<_fpt>(_drva(2021632)); return (this->*_f)(point, distance); }
+	inline unsigned int closestPointIndexWithBounds(const vec3f & point, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > & bounds, float * distance) { typedef unsigned int (Spline::*_fpt)(const vec3f &, const std::vector<SplineIndexBound,std::allocator<SplineIndexBound> > &, float *); auto _f=xcast<_fpt>(_drva(2021904)); return (this->*_f)(point, bounds, distance); }
+	inline std::vector<unsigned int,std::allocator<unsigned int> > closestPointIndicesFlat(const vec3f & point, unsigned int numberOfNeigbours, float * distance) { typedef std::vector<unsigned int,std::allocator<unsigned int> > (Spline::*_fpt)(const vec3f &, unsigned int, float *); auto _f=xcast<_fpt>(_drva(2022144)); return (this->*_f)(point, numberOfNeigbours, distance); }
+	inline vec3f getSplineDirection(const vec3f & point) { typedef vec3f (Spline::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2023888)); return (this->*_f)(point); }
+	inline unsigned int wrapIndex(int index) { typedef unsigned int (Spline::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2026192)); return (this->*_f)(index); }
+	inline void loadFromCSV(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (Spline::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2024384)); return (this->*_f)(filename); }
+	inline vec3f getPointSmooth(float v) { typedef vec3f (Spline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2023504)); return (this->*_f)(v); }
+	inline void applyMatrix(const mat44f & m) { typedef void (Spline::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2021168)); return (this->*_f)(m); }
+	inline int tagAt(unsigned int index) { typedef int (Spline::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2026128)); return (this->*_f)(index); }
+	inline bool isClosed() { typedef bool (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2024208)); return (this->*_f)(); }
+	inline void reverse() { typedef void (Spline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2025840)); return (this->*_f)(); }
+	inline float boundInsideSpline(float value) { typedef float (Spline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2021472)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Spline)==40),"bad size");
 		static_assert((offsetof(Spline,points)==0x8),"bad off");
@@ -11605,14 +11605,14 @@ public:
 	inline PenaltyManager() { }
 	inline PenaltyManager(const PenaltyManager& other) = default;
 	inline PenaltyManager& operator=(const PenaltyManager& other) = default;
-	inline void dtor() { typedef void (*_fpt)(PenaltyManager *pthis); _fpt _f=(_fpt)_drva(2513088); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(PenaltyManager *pthis, Car *); _fpt _f=(_fpt)_drva(2514000); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(PenaltyManager *pthis, float); _fpt _f=(_fpt)_drva(2514448); return _f(this, dt); }
-	inline void reset() { typedef void (*_fpt)(PenaltyManager *pthis); _fpt _f=(_fpt)_drva(2514240); return _f(this); }
-	inline void resetPenalty() { typedef void (*_fpt)(PenaltyManager *pthis); _fpt _f=(_fpt)_drva(2514320); return _f(this); }
-	inline bool checkBlackFlag() { typedef bool (*_fpt)(PenaltyManager *pthis); _fpt _f=(_fpt)_drva(2513936); return _f(this); }
-	inline void addJumpStartPenalty() { typedef void (*_fpt)(PenaltyManager *pthis); _fpt _f=(_fpt)_drva(2513552); return _f(this); }
-	inline void decreasePitPenaltyLaps(bool isValidLap) { typedef void (*_fpt)(PenaltyManager *pthis, bool); _fpt _f=(_fpt)_drva(2513968); return _f(this, isValidLap); }
+	inline void dtor() { typedef void (PenaltyManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2513088)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (PenaltyManager::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2514000)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (PenaltyManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2514448)); return (this->*_f)(dt); }
+	inline void reset() { typedef void (PenaltyManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2514240)); return (this->*_f)(); }
+	inline void resetPenalty() { typedef void (PenaltyManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2514320)); return (this->*_f)(); }
+	inline bool checkBlackFlag() { typedef bool (PenaltyManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2513936)); return (this->*_f)(); }
+	inline void addJumpStartPenalty() { typedef void (PenaltyManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2513552)); return (this->*_f)(); }
+	inline void decreasePitPenaltyLaps(bool isValidLap) { typedef void (PenaltyManager::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2513968)); return (this->*_f)(isValidLap); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PenaltyManager)==72),"bad size");
 		static_assert((offsetof(PenaltyManager,evOnPenalty)==0x0),"bad off");
@@ -11690,35 +11690,35 @@ public:
 	inline INIReader() { }
 	inline INIReader(const INIReader& other) = default;
 	inline INIReader& operator=(const INIReader& other) = default;
-	inline void ctor(const INIReader & __that) { typedef void (*_fpt)(INIReader *pthis, const INIReader &); _fpt _f=(_fpt)_drva(776000); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(INIReader *pthis); _fpt _f=(_fpt)_drva(2310160); _f(this); }
-	inline void ctor(const std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & stream) { typedef void (*_fpt)(INIReader *pthis, const std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2310928); _f(this, stream); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2310304); _f(this, ifilename); }
+	inline void ctor(const INIReader & __that) { typedef void (INIReader::*_fpt)(const INIReader &); auto _f=xcast<_fpt>(_drva(776000)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (INIReader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2310160)); (this->*_f)(); }
+	inline void ctor(const std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & stream) { typedef void (INIReader::*_fpt)(const std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2310928)); (this->*_f)(stream); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & ifilename) { typedef void (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2310304)); (this->*_f)(ifilename); }
 	virtual ~INIReader();
-	inline void dtor() { typedef void (*_fpt)(INIReader *pthis); _fpt _f=(_fpt)_drva(2311168); _f(this); }
-	inline static void clearCache() { typedef void (*_fpt)(); _fpt _f=(_fpt)_drva(2312464); return _f(); }
-	inline bool hasSection(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef bool (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322608); return _f(this, section); }
-	inline bool hasKey(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef bool (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322176); return _f(this, section, key); }
-	inline int getHex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef int (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2316912); return _f(this, section, key); }
-	inline int getInt(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef int (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2317424); return _f(this, section, key); }
-	inline float getFloat(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef float (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2316480); return _f(this, section, key); }
-	inline void getSections(std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > & outSections) { typedef void (*_fpt)(INIReader *pthis, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &); _fpt _f=(_fpt)_drva(2318272); return _f(this, outSections); }
-	inline void getKeyes(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * section, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > & keyes) { typedef void (*_fpt)(INIReader *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &); _fpt _f=(_fpt)_drva(2317840); return _f(this, section, keyes); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getString(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2318576); return _f(this, section, key); }
-	inline vec2f getFloat2(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec2f (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2316128); return _f(this, section, key); }
-	inline vec3f getFloat3(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec3f (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2316192); return _f(this, section, key); }
-	inline vec4f getFloat4(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec4f (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2316384); return _f(this, section, key); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getFileName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(INIReader *pthis); _fpt _f=(_fpt)_drva(2316064); return _f(this); }
-	inline void setVerboseMode(bool mode) { typedef void (*_fpt)(INIReader *pthis, bool); _fpt _f=(_fpt)_drva(2327152); return _f(this, mode); }
-	inline Curve getCurve(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef Curve (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2314304); return _f(this, section, key); }
-	inline void printCode() { typedef void (*_fpt)(INIReader *pthis); _fpt _f=(_fpt)_drva(2327120); return _f(this); }
-	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2322752); return _f(this, filename); }
-	inline void loadEncrypt(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataFile) { typedef void (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2323824); return _f(this, filename, dataFile); }
-	inline void errorReport(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * message) { typedef void (*_fpt)(INIReader *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2313840); return _f(this, message); }
-	inline void parse() { typedef void (*_fpt)(INIReader *pthis); _fpt _f=(_fpt)_drva(2324096); return _f(this); }
-	inline void getVector2(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y) { typedef void (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &); _fpt _f=(_fpt)_drva(2319104); return _f(this, section, key, x, y); }
-	inline void getVector3(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y, float & z) { typedef void (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &, float &); _fpt _f=(_fpt)_drva(2319680); return _f(this, section, key, x, y, z); }
-	inline bool getVector4(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y, float & z, float & w) { typedef bool (*_fpt)(INIReader *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &, float &, float &); _fpt _f=(_fpt)_drva(2321104); return _f(this, section, key, x, y, z, w); }
+	inline void dtor() { typedef void (INIReader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2311168)); (this->*_f)(); }
+	inline static void clearCache() { typedef void (*_fpt)(); auto _f=(_fpt)_drva(2312464); return _f(); }
+	inline bool hasSection(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef bool (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2322608)); return (this->*_f)(section); }
+	inline bool hasKey(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef bool (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2322176)); return (this->*_f)(section, key); }
+	inline int getHex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef int (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2316912)); return (this->*_f)(section, key); }
+	inline int getInt(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef int (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2317424)); return (this->*_f)(section, key); }
+	inline float getFloat(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef float (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2316480)); return (this->*_f)(section, key); }
+	inline void getSections(std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > & outSections) { typedef void (INIReader::*_fpt)(std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &); auto _f=xcast<_fpt>(_drva(2318272)); return (this->*_f)(outSections); }
+	inline void getKeyes(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * section, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > & keyes) { typedef void (INIReader::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > &); auto _f=xcast<_fpt>(_drva(2317840)); return (this->*_f)(section, keyes); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getString(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2318576)); return (this->*_f)(section, key); }
+	inline vec2f getFloat2(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec2f (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2316128)); return (this->*_f)(section, key); }
+	inline vec3f getFloat3(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec3f (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2316192)); return (this->*_f)(section, key); }
+	inline vec4f getFloat4(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef vec4f (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2316384)); return (this->*_f)(section, key); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getFileName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (INIReader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2316064)); return (this->*_f)(); }
+	inline void setVerboseMode(bool mode) { typedef void (INIReader::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2327152)); return (this->*_f)(mode); }
+	inline Curve getCurve(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key) { typedef Curve (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2314304)); return (this->*_f)(section, key); }
+	inline void printCode() { typedef void (INIReader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2327120)); return (this->*_f)(); }
+	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2322752)); return (this->*_f)(filename); }
+	inline void loadEncrypt(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataFile) { typedef void (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2323824)); return (this->*_f)(filename, dataFile); }
+	inline void errorReport(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * message) { typedef void (INIReader::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2313840)); return (this->*_f)(message); }
+	inline void parse() { typedef void (INIReader::*_fpt)(); auto _f=xcast<_fpt>(_drva(2324096)); return (this->*_f)(); }
+	inline void getVector2(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y) { typedef void (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &); auto _f=xcast<_fpt>(_drva(2319104)); return (this->*_f)(section, key, x, y); }
+	inline void getVector3(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y, float & z) { typedef void (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &, float &); auto _f=xcast<_fpt>(_drva(2319680)); return (this->*_f)(section, key, x, y, z); }
+	inline bool getVector4(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & key, float & x, float & y, float & z, float & w) { typedef bool (INIReader::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float &, float &, float &, float &); auto _f=xcast<_fpt>(_drva(2321104)); return (this->*_f)(section, key, x, y, z, w); }
 	inline void _guard_obj() {
 		static_assert((sizeof(INIReader)==104),"bad size");
 		static_assert((offsetof(INIReader,ready)==0x8),"bad off");
@@ -11769,12 +11769,12 @@ public:
 	inline MaterialVar() { }
 	inline MaterialVar(const MaterialVar& other) = default;
 	inline MaterialVar& operator=(const MaterialVar& other) = default;
-	inline void ctor(ShaderVariable * ivar) { typedef void (*_fpt)(MaterialVar *pthis, ShaderVariable *); _fpt _f=(_fpt)_drva(2137184); _f(this, ivar); }
-	inline void copyValues(const MaterialVar * mv) { typedef void (*_fpt)(MaterialVar *pthis, const MaterialVar *); _fpt _f=(_fpt)_drva(2140240); return _f(this, mv); }
-	inline void setFloat(float v) { typedef void (*_fpt)(MaterialVar *pthis, float); _fpt _f=(_fpt)_drva(383184); return _f(this, v); }
-	inline void setFloat3(const vec3f & v) { typedef void (*_fpt)(MaterialVar *pthis, const vec3f &); _fpt _f=(_fpt)_drva(918464); return _f(this, v); }
-	inline vec3f getFloat3() { typedef vec3f (*_fpt)(MaterialVar *pthis); _fpt _f=(_fpt)_drva(909296); return _f(this); }
-	inline void set() { typedef void (*_fpt)(MaterialVar *pthis); _fpt _f=(_fpt)_drva(383104); return _f(this); }
+	inline void ctor(ShaderVariable * ivar) { typedef void (MaterialVar::*_fpt)(ShaderVariable *); auto _f=xcast<_fpt>(_drva(2137184)); (this->*_f)(ivar); }
+	inline void copyValues(const MaterialVar * mv) { typedef void (MaterialVar::*_fpt)(const MaterialVar *); auto _f=xcast<_fpt>(_drva(2140240)); return (this->*_f)(mv); }
+	inline void setFloat(float v) { typedef void (MaterialVar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(383184)); return (this->*_f)(v); }
+	inline void setFloat3(const vec3f & v) { typedef void (MaterialVar::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(918464)); return (this->*_f)(v); }
+	inline vec3f getFloat3() { typedef vec3f (MaterialVar::*_fpt)(); auto _f=xcast<_fpt>(_drva(909296)); return (this->*_f)(); }
+	inline void set() { typedef void (MaterialVar::*_fpt)(); auto _f=xcast<_fpt>(_drva(383104)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(MaterialVar)==144),"bad size");
 		static_assert((offsetof(MaterialVar,name)==0x0),"bad off");
@@ -11825,21 +11825,21 @@ public:
 	inline UDPPacket() { }
 	inline UDPPacket(const UDPPacket& other) = default;
 	inline UDPPacket& operator=(const UDPPacket& other) = default;
-	inline void ctor(const UDPPacket & r) { typedef void (*_fpt)(UDPPacket *pthis, const UDPPacket &); _fpt _f=(_fpt)_drva(2479904); _f(this, r); }
-	inline void ctor(const UDPMessage & msg) { typedef void (*_fpt)(UDPPacket *pthis, const UDPMessage &); _fpt _f=(_fpt)_drva(2479744); _f(this, msg); }
-	inline void ctor(const std::vector<unsigned char,std::allocator<unsigned char> > & idata) { typedef void (*_fpt)(UDPPacket *pthis, const std::vector<unsigned char,std::allocator<unsigned char> > &); _fpt _f=(_fpt)_drva(2480016); _f(this, idata); }
-	inline void ctor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480128); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480192); _f(this); }
-	inline void writeString(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481520); return _f(this, st); }
-	inline void writeString(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st) { typedef void (*_fpt)(UDPPacket *pthis, const std::basic_string<char,std::char_traits<char>,std::allocator<char> > &); _fpt _f=(_fpt)_drva(2481312); return _f(this, st); }
-	inline void writeStringANSI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (*_fpt)(UDPPacket *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2481744); return _f(this, st); }
-	inline std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString() { typedef std::basic_string<char,std::char_traits<char>,std::allocator<char> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480592); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480784); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480368); return _f(this); }
-	inline unsigned int getSize() { typedef unsigned int (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480320); return _f(this); }
-	inline void send(TCPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, TCPSocket &); _fpt _f=(_fpt)_drva(2481008); return _f(this, sok); }
-	inline void send(UDPSocket & sok) { typedef void (*_fpt)(UDPPacket *pthis, UDPSocket &); _fpt _f=(_fpt)_drva(2481264); return _f(this, sok); }
-	inline bool isEOF() { typedef bool (*_fpt)(UDPPacket *pthis); _fpt _f=(_fpt)_drva(2480336); return _f(this); }
+	inline void ctor(const UDPPacket & r) { typedef void (UDPPacket::*_fpt)(const UDPPacket &); auto _f=xcast<_fpt>(_drva(2479904)); (this->*_f)(r); }
+	inline void ctor(const UDPMessage & msg) { typedef void (UDPPacket::*_fpt)(const UDPMessage &); auto _f=xcast<_fpt>(_drva(2479744)); (this->*_f)(msg); }
+	inline void ctor(const std::vector<unsigned char,std::allocator<unsigned char> > & idata) { typedef void (UDPPacket::*_fpt)(const std::vector<unsigned char,std::allocator<unsigned char> > &); auto _f=xcast<_fpt>(_drva(2480016)); (this->*_f)(idata); }
+	inline void ctor() { typedef void (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480128)); (this->*_f)(); }
+	inline void dtor() { typedef void (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480192)); (this->*_f)(); }
+	inline void writeString(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (UDPPacket::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2481520)); return (this->*_f)(st); }
+	inline void writeString(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > & st) { typedef void (UDPPacket::*_fpt)(const std::basic_string<char,std::char_traits<char>,std::allocator<char> > &); auto _f=xcast<_fpt>(_drva(2481312)); return (this->*_f)(st); }
+	inline void writeStringANSI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & st) { typedef void (UDPPacket::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2481744)); return (this->*_f)(st); }
+	inline std::basic_string<char,std::char_traits<char>,std::allocator<char> > readString() { typedef std::basic_string<char,std::char_traits<char>,std::allocator<char> > (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480592)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480784)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > readBigStringW() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480368)); return (this->*_f)(); }
+	inline unsigned int getSize() { typedef unsigned int (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480320)); return (this->*_f)(); }
+	inline void send(TCPSocket & sok) { typedef void (UDPPacket::*_fpt)(TCPSocket &); auto _f=xcast<_fpt>(_drva(2481008)); return (this->*_f)(sok); }
+	inline void send(UDPSocket & sok) { typedef void (UDPPacket::*_fpt)(UDPSocket &); auto _f=xcast<_fpt>(_drva(2481264)); return (this->*_f)(sok); }
+	inline bool isEOF() { typedef bool (UDPPacket::*_fpt)(); auto _f=xcast<_fpt>(_drva(2480336)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(UDPPacket)==32),"bad size");
 		static_assert((offsetof(UDPPacket,targetIP)==0x0),"bad off");
@@ -11913,23 +11913,23 @@ public:
 	inline CameraDrivableManager() { }
 	inline CameraDrivableManager(const CameraDrivableManager& other) = default;
 	inline CameraDrivableManager& operator=(const CameraDrivableManager& other) = default;
-	inline void ctor(Sim * sim, CameraForward * camera) { typedef void (*_fpt)(CameraDrivableManager *pthis, Sim *, CameraForward *); _fpt _f=(_fpt)_drva(805504); _f(this, sim, camera); }
+	inline void ctor(Sim * sim, CameraForward * camera) { typedef void (CameraDrivableManager::*_fpt)(Sim *, CameraForward *); auto _f=xcast<_fpt>(_drva(805504)); (this->*_f)(sim, camera); }
 	virtual ~CameraDrivableManager();
-	inline void dtor() { typedef void (*_fpt)(CameraDrivableManager *pthis); _fpt _f=(_fpt)_drva(810432); _f(this); }
+	inline void dtor() { typedef void (CameraDrivableManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(810432)); (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(813616); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void setCurrentCamera(int cameraIndex) { typedef void (*_fpt)(CameraDrivableManager *pthis, int); _fpt _f=(_fpt)_drva(813408); return _f(this, cameraIndex); }
-	inline bool nextMode() { typedef bool (*_fpt)(CameraDrivableManager *pthis); _fpt _f=(_fpt)_drva(812944); return _f(this); }
-	inline void setDrivableCameraDefAt(int index, DrivableCameraDef def) { typedef void (*_fpt)(CameraDrivableManager *pthis, int, DrivableCameraDef); _fpt _f=(_fpt)_drva(813424); return _f(this, index, def); }
-	inline bool shouldUseInternalSounds() { typedef bool (*_fpt)(CameraDrivableManager *pthis); _fpt _f=(_fpt)_drva(813488); return _f(this); }
-	inline void updateChase(float dt) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(815392); return _f(this, dt); }
-	inline void updateBumper(float dt) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(814576); return _f(this, dt); }
-	inline void updateBonnet(float dt) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(813984); return _f(this, dt); }
-	inline void updateDash(float dt) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(818000); return _f(this, dt); }
-	inline void updateLook(float deltaT) { typedef void (*_fpt)(CameraDrivableManager *pthis, float); _fpt _f=(_fpt)_drva(818656); return _f(this, deltaT); }
-	inline void lookBack() { typedef void (*_fpt)(CameraDrivableManager *pthis); _fpt _f=(_fpt)_drva(812640); return _f(this); }
-	inline void initChaseCamFromINI() { typedef void (*_fpt)(CameraDrivableManager *pthis); _fpt _f=(_fpt)_drva(811456); return _f(this); }
+	inline void update_impl(float deltaT) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(813616)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void setCurrentCamera(int cameraIndex) { typedef void (CameraDrivableManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(813408)); return (this->*_f)(cameraIndex); }
+	inline bool nextMode() { typedef bool (CameraDrivableManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(812944)); return (this->*_f)(); }
+	inline void setDrivableCameraDefAt(int index, DrivableCameraDef def) { typedef void (CameraDrivableManager::*_fpt)(int, DrivableCameraDef); auto _f=xcast<_fpt>(_drva(813424)); return (this->*_f)(index, def); }
+	inline bool shouldUseInternalSounds() { typedef bool (CameraDrivableManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(813488)); return (this->*_f)(); }
+	inline void updateChase(float dt) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(815392)); return (this->*_f)(dt); }
+	inline void updateBumper(float dt) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(814576)); return (this->*_f)(dt); }
+	inline void updateBonnet(float dt) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(813984)); return (this->*_f)(dt); }
+	inline void updateDash(float dt) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(818000)); return (this->*_f)(dt); }
+	inline void updateLook(float deltaT) { typedef void (CameraDrivableManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(818656)); return (this->*_f)(deltaT); }
+	inline void lookBack() { typedef void (CameraDrivableManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(812640)); return (this->*_f)(); }
+	inline void initChaseCamFromINI() { typedef void (CameraDrivableManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(811456)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraDrivableManager)==304),"bad size");
 		static_assert((offsetof(CameraDrivableManager,currentMode)==0x58),"bad off");
@@ -11988,47 +11988,47 @@ public:
 	inline IPhysicsCore(const IPhysicsCore& other) = default;
 	inline IPhysicsCore& operator=(const IPhysicsCore& other) = default;
 	virtual void resetCollisions_vf0() = 0;
-	inline void resetCollisions() { return resetCollisions_vf0(); }
+	inline void resetCollisions() { typedef void (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual void initMultithreading_vf1() = 0;
-	inline void initMultithreading() { return initMultithreading_vf1(); }
+	inline void initMultithreading() { typedef void (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void step_vf2(float  _arg0) = 0;
-	inline void step(float  _arg0) { return step_vf2( _arg0); }
+	inline void step(float  _arg0) { typedef void (IPhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	virtual IRigidBody * createRigidBody_vf3() = 0;
-	inline IRigidBody * createRigidBody() { return createRigidBody_vf3(); }
+	inline IRigidBody * createRigidBody() { typedef IRigidBody * (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
 	virtual void release_vf4() = 0;
-	inline void release() { return release_vf4(); }
+	inline void release() { typedef void (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual IJoint * createDistanceJoint_vf5(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, const vec3f &  _arg3) = 0;
-	inline IJoint * createDistanceJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, const vec3f &  _arg3) { return createDistanceJoint_vf5( _arg0,  _arg1,  _arg2,  _arg3); }
+	inline IJoint * createDistanceJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, const vec3f &  _arg3) { typedef IJoint * (IPhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3); }
 	virtual IJoint * createBumpJoint_vf6(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, float  _arg3, float  _arg4) = 0;
-	inline IJoint * createBumpJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, float  _arg3, float  _arg4) { return createBumpJoint_vf6( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
+	inline IJoint * createBumpJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2, float  _arg3, float  _arg4) { typedef IJoint * (IPhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, float, float); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4); }
 	virtual ICollisionObject * createCollisionMesh_vf7(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, const mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) = 0;
-	inline ICollisionObject * createCollisionMesh(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, const mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) { return createCollisionMesh_vf7( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7,  _arg8); }
+	inline ICollisionObject * createCollisionMesh(float *  _arg0, unsigned int  _arg1, unsigned short *  _arg2, int  _arg3, const mat44f &  _arg4, IRigidBody *  _arg5, unsigned long  _arg6, unsigned long  _arg7, unsigned int  _arg8) { typedef ICollisionObject * (IPhysicsCore::*_fpt)(float *, unsigned int, unsigned short *, int, const mat44f &, IRigidBody *, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)( _arg0,  _arg1,  _arg2,  _arg3,  _arg4,  _arg5,  _arg6,  _arg7,  _arg8); }
 	virtual RayCastHit rayCast_vf8(const vec3f &  _arg0, const vec3f &  _arg1, float  _arg2) = 0;
-	inline RayCastHit rayCast(const vec3f &  _arg0, const vec3f &  _arg1, float  _arg2) { return rayCast_vf8( _arg0,  _arg1,  _arg2); }
+	inline RayCastHit rayCast(const vec3f &  _arg0, const vec3f &  _arg1, float  _arg2) { typedef RayCastHit (IPhysicsCore::*_fpt)(const vec3f &, const vec3f &, float); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual void setCollisionCallback_vf9(ICollisionCallback *  _arg0) = 0;
-	inline void setCollisionCallback(ICollisionCallback *  _arg0) { return setCollisionCallback_vf9( _arg0); }
+	inline void setCollisionCallback(ICollisionCallback *  _arg0) { typedef void (IPhysicsCore::*_fpt)(ICollisionCallback *); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)( _arg0); }
 	virtual void reseatDistanceJointLocal_vf10(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) = 0;
-	inline void reseatDistanceJointLocal(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { return reseatDistanceJointLocal_vf10( _arg0,  _arg1,  _arg2); }
+	inline void reseatDistanceJointLocal(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { typedef void (IPhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual void reseatDistanceJointLength_vf11(IJoint *  _arg0, float  _arg1) = 0;
-	inline void reseatDistanceJointLength(IJoint *  _arg0, float  _arg1) { return reseatDistanceJointLength_vf11( _arg0,  _arg1); }
+	inline void reseatDistanceJointLength(IJoint *  _arg0, float  _arg1) { typedef void (IPhysicsCore::*_fpt)(IJoint *, float); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)( _arg0,  _arg1); }
 	virtual void setRigidBodyIterations_vf12(int  _arg0) = 0;
-	inline void setRigidBodyIterations(int  _arg0) { return setRigidBodyIterations_vf12( _arg0); }
+	inline void setRigidBodyIterations(int  _arg0) { typedef void (IPhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)( _arg0); }
 	virtual IJoint * createSliderJoint_vf13(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) = 0;
-	inline IJoint * createSliderJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) { return createSliderJoint_vf13( _arg0,  _arg1,  _arg2); }
+	inline IJoint * createSliderJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) { typedef IJoint * (IPhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual void setSliderAxis_vf14(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) = 0;
-	inline void setSliderAxis(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { return setSliderAxis_vf14( _arg0,  _arg1,  _arg2); }
+	inline void setSliderAxis(IJoint *  _arg0, const vec3f &  _arg1, const vec3f &  _arg2) { typedef void (IPhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual IJoint * createBallJoint_vf15(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) = 0;
-	inline IJoint * createBallJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) { return createBallJoint_vf15( _arg0,  _arg1,  _arg2); }
+	inline IJoint * createBallJoint(IRigidBody *  _arg0, IRigidBody *  _arg1, const vec3f &  _arg2) { typedef IJoint * (IPhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)( _arg0,  _arg1,  _arg2); }
 	virtual IJoint * createFixedJoint_vf16(IRigidBody *  _arg0, IRigidBody *  _arg1) = 0;
-	inline IJoint * createFixedJoint(IRigidBody *  _arg0, IRigidBody *  _arg1) { return createFixedJoint_vf16( _arg0,  _arg1); }
+	inline IJoint * createFixedJoint(IRigidBody *  _arg0, IRigidBody *  _arg1) { typedef IJoint * (IPhysicsCore::*_fpt)(IRigidBody *, IRigidBody *); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)( _arg0,  _arg1); }
 	virtual IRayCaster * createRayCaster_vf17(float  _arg0) = 0;
-	inline IRayCaster * createRayCaster(float  _arg0) { return createRayCaster_vf17( _arg0); }
+	inline IRayCaster * createRayCaster(float  _arg0) { typedef IRayCaster * (IPhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)( _arg0); }
 	virtual CoreCPUTimes getCoreCPUTimes_vf18() = 0;
-	inline CoreCPUTimes getCoreCPUTimes() { return getCoreCPUTimes_vf18(); }
+	inline CoreCPUTimes getCoreCPUTimes() { typedef CoreCPUTimes (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void setNoCollisionSteps_vf19(int  _arg0) = 0;
-	inline void setNoCollisionSteps(int  _arg0) { return setNoCollisionSteps_vf19( _arg0); }
+	inline void setNoCollisionSteps(int  _arg0) { typedef void (IPhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)( _arg0); }
 	virtual ~IPhysicsCore();
-	inline void dtor() { typedef void (*_fpt)(IPhysicsCore *pthis); _fpt _f=(_fpt)_drva(2931728); _f(this); }
+	inline void dtor() { typedef void (IPhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2931728)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(IPhysicsCore)==8),"bad size");
 	};
@@ -12104,19 +12104,19 @@ public:
 	inline CinematicFreeCamera() { }
 	inline CinematicFreeCamera(const CinematicFreeCamera& other) = default;
 	inline CinematicFreeCamera& operator=(const CinematicFreeCamera& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * aCamera, Game * aGame) { typedef void (*_fpt)(CinematicFreeCamera *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Game *); _fpt _f=(_fpt)_drva(442384); _f(this, name, aCamera, aGame); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * aCamera, Game * aGame) { typedef void (CinematicFreeCamera::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Game *); auto _f=xcast<_fpt>(_drva(442384)); (this->*_f)(name, aCamera, aGame); }
 	virtual ~CinematicFreeCamera();
-	inline void dtor() { typedef void (*_fpt)(CinematicFreeCamera *pthis); _fpt _f=(_fpt)_drva(442768); _f(this); }
+	inline void dtor() { typedef void (CinematicFreeCamera::*_fpt)(); auto _f=xcast<_fpt>(_drva(442768)); (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(CinematicFreeCamera *pthis, float); _fpt _f=(_fpt)_drva(448896); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void setAudioDistanceScale() { typedef void (*_fpt)(CinematicFreeCamera *pthis); _fpt _f=(_fpt)_drva(448112); return _f(this); }
-	inline void setMatrixMovementFromUserInput(mat44f & inputMatrix, float dt) { typedef void (*_fpt)(CinematicFreeCamera *pthis, mat44f &, float); _fpt _f=(_fpt)_drva(448336); return _f(this, inputMatrix, dt); }
-	inline void setCameraParameterFromUserInput(float & aFov, float & aDofFactor, float deltaT) { typedef void (*_fpt)(CinematicFreeCamera *pthis, float &, float &, float); _fpt _f=(_fpt)_drva(448144); return _f(this, aFov, aDofFactor, deltaT); }
-	inline void loadSettingsFromINI() { typedef void (*_fpt)(CinematicFreeCamera *pthis); _fpt _f=(_fpt)_drva(446304); return _f(this); }
-	inline void getKeyboardMovement(mat44f & matrix, float dt, float msp) { typedef void (*_fpt)(CinematicFreeCamera *pthis, mat44f &, float, float); _fpt _f=(_fpt)_drva(443776); return _f(this, matrix, dt, msp); }
-	inline void getMouseLook(mat44f & matrix, float dt, float speed) { typedef void (*_fpt)(CinematicFreeCamera *pthis, mat44f &, float, float); _fpt _f=(_fpt)_drva(445024); return _f(this, matrix, dt, speed); }
-	inline void standardMouseLook(float dt, float speed) { typedef void (*_fpt)(CinematicFreeCamera *pthis, float, float); _fpt _f=(_fpt)_drva(448544); return _f(this, dt, speed); }
+	inline void update_impl(float deltaT) { typedef void (CinematicFreeCamera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(448896)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (CinematicFreeCamera::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void setAudioDistanceScale() { typedef void (CinematicFreeCamera::*_fpt)(); auto _f=xcast<_fpt>(_drva(448112)); return (this->*_f)(); }
+	inline void setMatrixMovementFromUserInput(mat44f & inputMatrix, float dt) { typedef void (CinematicFreeCamera::*_fpt)(mat44f &, float); auto _f=xcast<_fpt>(_drva(448336)); return (this->*_f)(inputMatrix, dt); }
+	inline void setCameraParameterFromUserInput(float & aFov, float & aDofFactor, float deltaT) { typedef void (CinematicFreeCamera::*_fpt)(float &, float &, float); auto _f=xcast<_fpt>(_drva(448144)); return (this->*_f)(aFov, aDofFactor, deltaT); }
+	inline void loadSettingsFromINI() { typedef void (CinematicFreeCamera::*_fpt)(); auto _f=xcast<_fpt>(_drva(446304)); return (this->*_f)(); }
+	inline void getKeyboardMovement(mat44f & matrix, float dt, float msp) { typedef void (CinematicFreeCamera::*_fpt)(mat44f &, float, float); auto _f=xcast<_fpt>(_drva(443776)); return (this->*_f)(matrix, dt, msp); }
+	inline void getMouseLook(mat44f & matrix, float dt, float speed) { typedef void (CinematicFreeCamera::*_fpt)(mat44f &, float, float); auto _f=xcast<_fpt>(_drva(445024)); return (this->*_f)(matrix, dt, speed); }
+	inline void standardMouseLook(float dt, float speed) { typedef void (CinematicFreeCamera::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(448544)); return (this->*_f)(dt, speed); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CinematicFreeCamera)==304),"bad size");
 		static_assert((offsetof(CinematicFreeCamera,fov)==0x58),"bad off");
@@ -12335,9 +12335,9 @@ public:
 	inline CarPhysicsState() { }
 	inline CarPhysicsState(const CarPhysicsState& other) = default;
 	inline CarPhysicsState& operator=(const CarPhysicsState& other) = default;
-	inline void ctor(const CarPhysicsState & __that) { typedef void (*_fpt)(CarPhysicsState *pthis, const CarPhysicsState &); _fpt _f=(_fpt)_drva(1179376); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(CarPhysicsState *pthis); _fpt _f=(_fpt)_drva(781920); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(CarPhysicsState *pthis); _fpt _f=(_fpt)_drva(783504); _f(this); }
+	inline void ctor(const CarPhysicsState & __that) { typedef void (CarPhysicsState::*_fpt)(const CarPhysicsState &); auto _f=xcast<_fpt>(_drva(1179376)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (CarPhysicsState::*_fpt)(); auto _f=xcast<_fpt>(_drva(781920)); (this->*_f)(); }
+	inline void dtor() { typedef void (CarPhysicsState::*_fpt)(); auto _f=xcast<_fpt>(_drva(783504)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarPhysicsState)==2928),"bad size");
 		static_assert((offsetof(CarPhysicsState,physicsGUID)==0x0),"bad off");
@@ -12491,47 +12491,47 @@ public:
 	inline Node() { }
 	inline Node(const Node& other) = default;
 	inline Node& operator=(const Node& other) = default;
-	inline void ctor(const Node & node) { typedef void (*_fpt)(Node *pthis, const Node &); _fpt _f=(_fpt)_drva(2152896); _f(this, node); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & n) { typedef void (*_fpt)(Node *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2153232); _f(this, n); }
+	inline void ctor(const Node & node) { typedef void (Node::*_fpt)(const Node &); auto _f=xcast<_fpt>(_drva(2152896)); (this->*_f)(node); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & n) { typedef void (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2153232)); (this->*_f)(n); }
 	virtual ~Node();
-	inline void dtor() { typedef void (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2153568); _f(this); }
-	inline vec3f worldToLocal(const vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2156336); return _f(this, pos); }
-	inline vec3f worldToLocalNormal(const vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2156752); return _f(this, pos); }
-	inline vec3f localToWorld(const vec3f & pos) { typedef vec3f (*_fpt)(Node *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2155056); return _f(this, pos); }
-	inline Node * getParent() { typedef Node * (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2154880); return _f(this); }
+	inline void dtor() { typedef void (Node::*_fpt)(); auto _f=xcast<_fpt>(_drva(2153568)); (this->*_f)(); }
+	inline vec3f worldToLocal(const vec3f & pos) { typedef vec3f (Node::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2156336)); return (this->*_f)(pos); }
+	inline vec3f worldToLocalNormal(const vec3f & pos) { typedef vec3f (Node::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2156752)); return (this->*_f)(pos); }
+	inline vec3f localToWorld(const vec3f & pos) { typedef vec3f (Node::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2155056)); return (this->*_f)(pos); }
+	inline Node * getParent() { typedef Node * (Node::*_fpt)(); auto _f=xcast<_fpt>(_drva(2154880)); return (this->*_f)(); }
 	virtual void addChild_vf1(Node * n);
-	inline void addChild_impl(Node * n) { typedef void (*_fpt)(Node *pthis, Node *); _fpt _f=(_fpt)_drva(2153856); return _f(this, n); }
-	inline void addChild(Node * n) { return addChild_vf1(n); }
+	inline void addChild_impl(Node * n) { typedef void (Node::*_fpt)(Node *); auto _f=xcast<_fpt>(_drva(2153856)); return (this->*_f)(n); }
+	inline void addChild(Node * n) { typedef void (Node::*_fpt)(Node *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(n); }
 	virtual void compile_vf2(CompileContext * cc);
-	inline void compile_impl(CompileContext * cc) { typedef void (*_fpt)(Node *pthis, CompileContext *); _fpt _f=(_fpt)_drva(2153936); return _f(this, cc); }
-	inline void compile(CompileContext * cc) { return compile_vf2(cc); }
+	inline void compile_impl(CompileContext * cc) { typedef void (Node::*_fpt)(CompileContext *); auto _f=xcast<_fpt>(_drva(2153936)); return (this->*_f)(cc); }
+	inline void compile(CompileContext * cc) { typedef void (Node::*_fpt)(CompileContext *); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(cc); }
 	virtual void render_vf3(RenderContext * rc);
-	inline void render_impl(RenderContext * rc) { typedef void (*_fpt)(Node *pthis, RenderContext *); _fpt _f=(_fpt)_drva(2155792); return _f(this, rc); }
-	inline void render(RenderContext * rc) { return render_vf3(rc); }
+	inline void render_impl(RenderContext * rc) { typedef void (Node::*_fpt)(RenderContext *); auto _f=xcast<_fpt>(_drva(2155792)); return (this->*_f)(rc); }
+	inline void render(RenderContext * rc) { typedef void (Node::*_fpt)(RenderContext *); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(rc); }
 	virtual void removeChild_vf4(Node * n);
-	inline void removeChild_impl(Node * n) { typedef void (*_fpt)(Node *pthis, Node *); _fpt _f=(_fpt)_drva(2155680); return _f(this, n); }
-	inline void removeChild(Node * n) { return removeChild_vf4(n); }
+	inline void removeChild_impl(Node * n) { typedef void (Node::*_fpt)(Node *); auto _f=xcast<_fpt>(_drva(2155680)); return (this->*_f)(n); }
+	inline void removeChild(Node * n) { typedef void (Node::*_fpt)(Node *); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(n); }
 	virtual Node * findChildByName_vf5(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive);
-	inline Node * findChildByName_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { typedef Node * (*_fpt)(Node *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); _fpt _f=(_fpt)_drva(2154048); return _f(this, sname, recursive); }
-	inline Node * findChildByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { return findChildByName_vf5(sname, recursive); }
+	inline Node * findChildByName_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { typedef Node * (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); auto _f=xcast<_fpt>(_drva(2154048)); return (this->*_f)(sname, recursive); }
+	inline Node * findChildByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & sname, bool recursive) { typedef Node * (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, bool); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(sname, recursive); }
 	virtual void findChildrenByName_vf6(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result);
-	inline void findChildrenByName_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (*_fpt)(Node *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); _fpt _f=(_fpt)_drva(2154320); return _f(this, nname, result); }
-	inline void findChildrenByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { return findChildrenByName_vf6(nname, result); }
+	inline void findChildrenByName_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); auto _f=xcast<_fpt>(_drva(2154320)); return (this->*_f)(nname, result); }
+	inline void findChildrenByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nname, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(nname, result); }
 	virtual void findChildrenByPrefix_vf7(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result);
-	inline void findChildrenByPrefix_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (*_fpt)(Node *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); _fpt _f=(_fpt)_drva(2154576); return _f(this, prefix, result); }
-	inline void findChildrenByPrefix(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { return findChildrenByPrefix_vf7(prefix, result); }
+	inline void findChildrenByPrefix_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); auto _f=xcast<_fpt>(_drva(2154576)); return (this->*_f)(prefix, result); }
+	inline void findChildrenByPrefix(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & prefix, std::vector<Node *,std::allocator<Node *> > & result) { typedef void (Node::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::vector<Node *,std::allocator<Node *> > &); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(prefix, result); }
 	virtual mat44f getWorldMatrix_vf8();
-	inline mat44f getWorldMatrix_impl() { typedef mat44f (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2154896); return _f(this); }
-	inline mat44f getWorldMatrix() { return getWorldMatrix_vf8(); }
+	inline mat44f getWorldMatrix_impl() { typedef mat44f (Node::*_fpt)(); auto _f=xcast<_fpt>(_drva(2154896)); return (this->*_f)(); }
+	inline mat44f getWorldMatrix() { typedef mat44f (Node::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual void printTree_vf9(int ident);
-	inline void printTree_impl(int ident) { typedef void (*_fpt)(Node *pthis, int); _fpt _f=(_fpt)_drva(2155120); return _f(this, ident); }
-	inline void printTree(int ident) { return printTree_vf9(ident); }
-	inline void visit(std::function<bool __cdecl(Node *)> * onVisit, std::function<void __cdecl(Node *)> * onPostVisit) { typedef void (*_fpt)(Node *pthis, std::function<bool __cdecl(Node *)> *, std::function<void __cdecl(Node *)> *); _fpt _f=(_fpt)_drva(2156048); return _f(this, onVisit, onPostVisit); }
+	inline void printTree_impl(int ident) { typedef void (Node::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2155120)); return (this->*_f)(ident); }
+	inline void printTree(int ident) { typedef void (Node::*_fpt)(int); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(ident); }
+	inline void visit(std::function<bool __cdecl(Node *)> * onVisit, std::function<void __cdecl(Node *)> * onPostVisit) { typedef void (Node::*_fpt)(std::function<bool __cdecl(Node *)> *, std::function<void __cdecl(Node *)> *); auto _f=xcast<_fpt>(_drva(2156048)); return (this->*_f)(onVisit, onPostVisit); }
 	virtual void renderAudio_vf10();
-	inline void renderAudio_impl() { typedef void (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(2155936); return _f(this); }
-	inline void renderAudio() { return renderAudio_vf10(); }
-	inline void setActive(bool a) { typedef void (*_fpt)(Node *pthis, bool); _fpt _f=(_fpt)_drva(673008); return _f(this, a); }
-	inline bool getActive() { typedef bool (*_fpt)(Node *pthis); _fpt _f=(_fpt)_drva(418752); return _f(this); }
+	inline void renderAudio_impl() { typedef void (Node::*_fpt)(); auto _f=xcast<_fpt>(_drva(2155936)); return (this->*_f)(); }
+	inline void renderAudio() { typedef void (Node::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
+	inline void setActive(bool a) { typedef void (Node::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(673008)); return (this->*_f)(a); }
+	inline bool getActive() { typedef bool (Node::*_fpt)(); auto _f=xcast<_fpt>(_drva(418752)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Node)==224),"bad size");
 		static_assert((offsetof(Node,matrix)==0x8),"bad off");
@@ -12597,37 +12597,37 @@ public:
 	inline RaceTimingServices() { }
 	inline RaceTimingServices(const RaceTimingServices& other) = default;
 	inline RaceTimingServices& operator=(const RaceTimingServices& other) = default;
-	inline void ctor(Sim * asim) { typedef void (*_fpt)(RaceTimingServices *pthis, Sim *); _fpt _f=(_fpt)_drva(1326176); _f(this, asim); }
+	inline void ctor(Sim * asim) { typedef void (RaceTimingServices::*_fpt)(Sim *); auto _f=xcast<_fpt>(_drva(1326176)); (this->*_f)(asim); }
 	virtual ~RaceTimingServices();
-	inline void dtor() { typedef void (*_fpt)(RaceTimingServices *pthis); _fpt _f=(_fpt)_drva(1326912); _f(this); }
-	inline void onLapCompleted(const OnLapCompletedEvent & event) { typedef void (*_fpt)(RaceTimingServices *pthis, const OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(1331968); return _f(this, event); }
-	inline void onSectorSplit(const OnSectorSplitEvent & event) { typedef void (*_fpt)(RaceTimingServices *pthis, const OnSectorSplitEvent &); _fpt _f=(_fpt)_drva(1333568); return _f(this, event); }
-	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1331024); return _f(this, car); }
-	inline Lap getBestLap(CarAvatar * car) { typedef Lap (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330128); return _f(this, car); }
-	inline int getLapCount(CarAvatar * car) { typedef int (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330560); return _f(this, car); }
-	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(RaceTimingServices *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(1331728); return _f(this, car, sector); }
-	inline int getSplit(CarAvatar * car) { typedef int (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1331792); return _f(this, car); }
-	inline void getCurrentLapSplits(CarAvatar * car, std::vector<unsigned int,std::allocator<unsigned int> > & currentSplits) { typedef void (*_fpt)(RaceTimingServices *pthis, CarAvatar *, std::vector<unsigned int,std::allocator<unsigned int> > &); _fpt _f=(_fpt)_drva(1330448); return _f(this, car, currentSplits); }
-	inline std::vector<Lap,std::allocator<Lap> > getLaps(CarAvatar * car) { typedef std::vector<Lap,std::allocator<Lap> > (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330976); return _f(this, car); }
-	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(RaceTimingServices *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(1331152); return _f(this, car, sector); }
-	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(RaceTimingServices *pthis, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(1330176); return _f(this, sector, isGlobal, car); }
-	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(RaceTimingServices *pthis, const int &, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(1331856); return _f(this, sector, t, isGlobal, car); }
-	inline void resetCurrentLaps() { typedef void (*_fpt)(RaceTimingServices *pthis); _fpt _f=(_fpt)_drva(1334576); return _f(this); }
-	inline double getTotalTime(CarAvatar * car) { typedef double (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1331824); return _f(this, car); }
+	inline void dtor() { typedef void (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(_drva(1326912)); (this->*_f)(); }
+	inline void onLapCompleted(const OnLapCompletedEvent & event) { typedef void (RaceTimingServices::*_fpt)(const OnLapCompletedEvent &); auto _f=xcast<_fpt>(_drva(1331968)); return (this->*_f)(event); }
+	inline void onSectorSplit(const OnSectorSplitEvent & event) { typedef void (RaceTimingServices::*_fpt)(const OnSectorSplitEvent &); auto _f=xcast<_fpt>(_drva(1333568)); return (this->*_f)(event); }
+	inline Lap getLastLap(CarAvatar * car) { typedef Lap (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1331024)); return (this->*_f)(car); }
+	inline Lap getBestLap(CarAvatar * car) { typedef Lap (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330128)); return (this->*_f)(car); }
+	inline int getLapCount(CarAvatar * car) { typedef int (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330560)); return (this->*_f)(car); }
+	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (RaceTimingServices::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(1331728)); return (this->*_f)(car, sector); }
+	inline int getSplit(CarAvatar * car) { typedef int (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1331792)); return (this->*_f)(car); }
+	inline void getCurrentLapSplits(CarAvatar * car, std::vector<unsigned int,std::allocator<unsigned int> > & currentSplits) { typedef void (RaceTimingServices::*_fpt)(CarAvatar *, std::vector<unsigned int,std::allocator<unsigned int> > &); auto _f=xcast<_fpt>(_drva(1330448)); return (this->*_f)(car, currentSplits); }
+	inline std::vector<Lap,std::allocator<Lap> > getLaps(CarAvatar * car) { typedef std::vector<Lap,std::allocator<Lap> > (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330976)); return (this->*_f)(car); }
+	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (RaceTimingServices::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(1331152)); return (this->*_f)(car, sector); }
+	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (RaceTimingServices::*_fpt)(const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(1330176)); return (this->*_f)(sector, isGlobal, car); }
+	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (RaceTimingServices::*_fpt)(const int &, const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(1331856)); return (this->*_f)(sector, t, isGlobal, car); }
+	inline void resetCurrentLaps() { typedef void (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(_drva(1334576)); return (this->*_f)(); }
+	inline double getTotalTime(CarAvatar * car) { typedef double (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1331824)); return (this->*_f)(car); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(RaceTimingServices *pthis); _fpt _f=(_fpt)_drva(1335120); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboard() { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (*_fpt)(RaceTimingServices *pthis); _fpt _f=(_fpt)_drva(1331680); return _f(this); }
-	inline int getCarLeaderboardPosition(CarAvatar * car) { typedef int (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330400); return _f(this, car); }
-	inline int getInstanceBestTime(CarAvatar * car) { typedef int (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330512); return _f(this, car); }
-	inline void setHasCompletedFlag(CarAvatar * car, bool flag) { typedef void (*_fpt)(RaceTimingServices *pthis, CarAvatar *, bool); _fpt _f=(_fpt)_drva(1335088); return _f(this, car, flag); }
-	inline bool getHasCompletedFlag(CarAvatar * car) { typedef bool (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330480); return _f(this, car); }
+	inline void shutdown_impl() { typedef void (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(_drva(1335120)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboard() { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(_drva(1331680)); return (this->*_f)(); }
+	inline int getCarLeaderboardPosition(CarAvatar * car) { typedef int (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330400)); return (this->*_f)(car); }
+	inline int getInstanceBestTime(CarAvatar * car) { typedef int (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330512)); return (this->*_f)(car); }
+	inline void setHasCompletedFlag(CarAvatar * car, bool flag) { typedef void (RaceTimingServices::*_fpt)(CarAvatar *, bool); auto _f=xcast<_fpt>(_drva(1335088)); return (this->*_f)(car, flag); }
+	inline bool getHasCompletedFlag(CarAvatar * car) { typedef bool (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330480)); return (this->*_f)(car); }
 	virtual void update_vf1(float dt);
-	inline void update_impl(float dt) { typedef void (*_fpt)(RaceTimingServices *pthis, float); _fpt _f=(_fpt)_drva(1336912); return _f(this, dt); }
-	inline void update(float dt) { return update_vf1(dt); }
-	inline LapDB * getLapDB(CarAvatar * car) { typedef LapDB * (*_fpt)(RaceTimingServices *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1330624); return _f(this, car); }
-	inline void updateLeaderboard() { typedef void (*_fpt)(RaceTimingServices *pthis); _fpt _f=(_fpt)_drva(1336928); return _f(this); }
-	inline void onNewSession(const OnNewSessionEvent & message) { typedef void (*_fpt)(RaceTimingServices *pthis, const OnNewSessionEvent &); _fpt _f=(_fpt)_drva(1333360); return _f(this, message); }
+	inline void update_impl(float dt) { typedef void (RaceTimingServices::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1336912)); return (this->*_f)(dt); }
+	inline void update(float dt) { typedef void (RaceTimingServices::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
+	inline LapDB * getLapDB(CarAvatar * car) { typedef LapDB * (RaceTimingServices::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1330624)); return (this->*_f)(car); }
+	inline void updateLeaderboard() { typedef void (RaceTimingServices::*_fpt)(); auto _f=xcast<_fpt>(_drva(1336928)); return (this->*_f)(); }
+	inline void onNewSession(const OnNewSessionEvent & message) { typedef void (RaceTimingServices::*_fpt)(const OnNewSessionEvent &); auto _f=xcast<_fpt>(_drva(1333360)); return (this->*_f)(message); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RaceTimingServices)==192),"bad size");
 		static_assert((offsetof(RaceTimingServices,lapDBs)==0x58),"bad off");
@@ -12697,33 +12697,33 @@ public:
 	inline Console() { }
 	inline Console(const Console& other) = default;
 	inline Console& operator=(const Console& other) = default;
-	inline void ctor(Sim * isim) { typedef void (*_fpt)(Console *pthis, Sim *); _fpt _f=(_fpt)_drva(1607872); _f(this, isim); }
+	inline void ctor(Sim * isim) { typedef void (Console::*_fpt)(Sim *); auto _f=xcast<_fpt>(_drva(1607872)); (this->*_f)(isim); }
 	virtual ~Console();
-	inline void dtor() { typedef void (*_fpt)(Console *pthis); _fpt _f=(_fpt)_drva(1608752); _f(this); }
-	inline static Console & singleton() { typedef Console & (*_fpt)(); _fpt _f=(_fpt)_drva(1624096); return _f(); }
+	inline void dtor() { typedef void (Console::*_fpt)(); auto _f=xcast<_fpt>(_drva(1608752)); (this->*_f)(); }
+	inline static Console & singleton() { typedef Console & (*_fpt)(); auto _f=(_fpt)_drva(1624096); return _f(); }
 	virtual void renderHUD_vf3(float dt);
-	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(Console *pthis, float); _fpt _f=(_fpt)_drva(1623376); return _f(this, dt); }
-	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
+	inline void renderHUD_impl(float dt) { typedef void (Console::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1623376)); return (this->*_f)(dt); }
+	inline void renderHUD(float dt) { typedef void (Console::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void onSetVar_vf0(SVar * var, float value);
-	inline void onSetVar_impl(SVar * var, float value) { typedef void (*_fpt)(Console *pthis, SVar *, float); _fpt _f=(_fpt)_drva(1619680); return _f(this, var, value); }
-	inline void onSetVar(SVar * var, float value) { return onSetVar_vf0(var, value); }
-	inline void addVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, float * var, IVarCallback * callback, bool readOnly, float multiplier) { typedef void (*_fpt)(Console *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float *, IVarCallback *, bool, float); _fpt _f=(_fpt)_drva(1615552); return _f(this, name, var, callback, readOnly, multiplier); }
-	inline void addVarLambda(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, std::function<void __cdecl(SVar *,float)> * lambda, bool readyonly, float multiplier) { typedef void (*_fpt)(Console *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::function<void __cdecl(SVar *,float)> *, bool, float); _fpt _f=(_fpt)_drva(1615920); return _f(this, name, lambda, readyonly, multiplier); }
-	inline void show(bool mode) { typedef void (*_fpt)(Console *pthis, bool); _fpt _f=(_fpt)_drva(1624048); return _f(this, mode); }
-	inline bool isVisible() { typedef bool (*_fpt)(Console *pthis); _fpt _f=(_fpt)_drva(1680480); return _f(this); }
-	inline void addCommand(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, std::function<bool __cdecl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >)> * exeFun, std::function<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > __cdecl(void)> * helpFun) { typedef void (*_fpt)(Console *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::function<bool __cdecl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >)> *, std::function<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > __cdecl(void)> *); _fpt _f=(_fpt)_drva(1615152); return _f(this, name, exeFun, helpFun); }
+	inline void onSetVar_impl(SVar * var, float value) { typedef void (Console::*_fpt)(SVar *, float); auto _f=xcast<_fpt>(_drva(1619680)); return (this->*_f)(var, value); }
+	inline void onSetVar(SVar * var, float value) { typedef void (Console::*_fpt)(SVar *, float); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(var, value); }
+	inline void addVar(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, float * var, IVarCallback * callback, bool readOnly, float multiplier) { typedef void (Console::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, float *, IVarCallback *, bool, float); auto _f=xcast<_fpt>(_drva(1615552)); return (this->*_f)(name, var, callback, readOnly, multiplier); }
+	inline void addVarLambda(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, std::function<void __cdecl(SVar *,float)> * lambda, bool readyonly, float multiplier) { typedef void (Console::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::function<void __cdecl(SVar *,float)> *, bool, float); auto _f=xcast<_fpt>(_drva(1615920)); return (this->*_f)(name, lambda, readyonly, multiplier); }
+	inline void show(bool mode) { typedef void (Console::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(1624048)); return (this->*_f)(mode); }
+	inline bool isVisible() { typedef bool (Console::*_fpt)(); auto _f=xcast<_fpt>(_drva(1680480)); return (this->*_f)(); }
+	inline void addCommand(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, std::function<bool __cdecl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >)> * exeFun, std::function<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > __cdecl(void)> * helpFun) { typedef void (Console::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, std::function<bool __cdecl(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >)> *, std::function<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > __cdecl(void)> *); auto _f=xcast<_fpt>(_drva(1615152)); return (this->*_f)(name, exeFun, helpFun); }
 	virtual void onKeyChar_vf1(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(Console *pthis, unsigned int); _fpt _f=(_fpt)_drva(1619072); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf1(key); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (Console::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1619072)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (Console::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(key); }
 	virtual void onKeyDown_vf0(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(Console *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(1619488); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf0(message); }
-	inline Console & operator<<(const float & v) { typedef Console & (*_fpt)(Console *pthis, const float &); _fpt _f=(_fpt)_drva(1609952); return _f(this, v); }
-	inline Console & operator<<(const int & v) { typedef Console & (*_fpt)(Console *pthis, const int &); _fpt _f=(_fpt)_drva(1609536); return _f(this, v); }
-	inline Console & operator<<(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * s) { typedef Console & (*_fpt)(Console *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1610928); return _f(this, s); }
-	inline Console & operator<<(std::basic_string<char,std::char_traits<char>,std::allocator<char> > * s) { typedef Console & (*_fpt)(Console *pthis, std::basic_string<char,std::char_traits<char>,std::allocator<char> > *); _fpt _f=(_fpt)_drva(1610368); return _f(this, s); }
-	inline void parse(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * c) { typedef void (*_fpt)(Console *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1621840); return _f(this, c); }
-	inline void initCommands() { typedef void (*_fpt)(Console *pthis); _fpt _f=(_fpt)_drva(1616512); return _f(this); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (Console::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(1619488)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (Console::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(message); }
+	inline Console & operator<<(const float & v) { typedef Console & (Console::*_fpt)(const float &); auto _f=xcast<_fpt>(_drva(1609952)); return (this->*_f)(v); }
+	inline Console & operator<<(const int & v) { typedef Console & (Console::*_fpt)(const int &); auto _f=xcast<_fpt>(_drva(1609536)); return (this->*_f)(v); }
+	inline Console & operator<<(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * s) { typedef Console & (Console::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1610928)); return (this->*_f)(s); }
+	inline Console & operator<<(std::basic_string<char,std::char_traits<char>,std::allocator<char> > * s) { typedef Console & (Console::*_fpt)(std::basic_string<char,std::char_traits<char>,std::allocator<char> > *); auto _f=xcast<_fpt>(_drva(1610368)); return (this->*_f)(s); }
+	inline void parse(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * c) { typedef void (Console::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1621840)); return (this->*_f)(c); }
+	inline void initCommands() { typedef void (Console::*_fpt)(); auto _f=xcast<_fpt>(_drva(1616512)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Console)==296),"bad size");
 		static_assert((offsetof(Console,sim)==0x68),"bad off");
@@ -12840,76 +12840,76 @@ public:
 	inline ksgui_Control() { }
 	inline ksgui_Control(const ksgui_Control& other) = default;
 	inline ksgui_Control& operator=(const ksgui_Control& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Control *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *); _fpt _f=(_fpt)_drva(2376016); _f(this, iname, igui); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui) { typedef void (ksgui_Control::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2376016)); (this->*_f)(iname, igui); }
 	virtual ~ksgui_Control();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(2376960); _f(this); }
-	inline void setVisible(bool value) { typedef void (*_fpt)(ksgui_Control *pthis, bool); _fpt _f=(_fpt)_drva(2380192); return _f(this, value); }
-	inline bool isVisible() { typedef bool (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(349312); return _f(this); }
+	inline void dtor() { typedef void (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(2376960)); (this->*_f)(); }
+	inline void setVisible(bool value) { typedef void (ksgui_Control::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2380192)); return (this->*_f)(value); }
+	inline bool isVisible() { typedef bool (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(349312)); return (this->*_f)(); }
 	virtual bool hitTest_vf1(int x, int y);
-	inline bool hitTest_impl(int x, int y) { typedef bool (*_fpt)(ksgui_Control *pthis, int, int); _fpt _f=(_fpt)_drva(2377520); return _f(this, x, y); }
-	inline bool hitTest(int x, int y) { return hitTest_vf1(x, y); }
+	inline bool hitTest_impl(int x, int y) { typedef bool (ksgui_Control::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2377520)); return (this->*_f)(x, y); }
+	inline bool hitTest(int x, int y) { typedef bool (ksgui_Control::*_fpt)(int, int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(x, y); }
 	virtual void addControl_vf2(ksgui_Control * c);
-	inline void addControl_impl(ksgui_Control * c) { typedef void (*_fpt)(ksgui_Control *pthis, ksgui_Control *); _fpt _f=(_fpt)_drva(2377360); return _f(this, c); }
-	inline void addControl(ksgui_Control * c) { return addControl_vf2(c); }
+	inline void addControl_impl(ksgui_Control * c) { typedef void (ksgui_Control::*_fpt)(ksgui_Control *); auto _f=xcast<_fpt>(_drva(2377360)); return (this->*_f)(c); }
+	inline void addControl(ksgui_Control * c) { typedef void (ksgui_Control::*_fpt)(ksgui_Control *); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(c); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Control *pthis, float); _fpt _f=(_fpt)_drva(2378624); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2378624)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual vec2f localToWorld_vf4(const vec2f & pos);
-	inline vec2f localToWorld_impl(const vec2f & pos) { typedef vec2f (*_fpt)(ksgui_Control *pthis, const vec2f &); _fpt _f=(_fpt)_drva(2377584); return _f(this, pos); }
-	inline vec2f localToWorld(const vec2f & pos) { return localToWorld_vf4(pos); }
+	inline vec2f localToWorld_impl(const vec2f & pos) { typedef vec2f (ksgui_Control::*_fpt)(const vec2f &); auto _f=xcast<_fpt>(_drva(2377584)); return (this->*_f)(pos); }
+	inline vec2f localToWorld(const vec2f & pos) { typedef vec2f (ksgui_Control::*_fpt)(const vec2f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(pos); }
 	virtual vec2f worldToLocal_vf5(const vec2f & pos);
-	inline vec2f worldToLocal_impl(const vec2f & pos) { typedef vec2f (*_fpt)(ksgui_Control *pthis, const vec2f &); _fpt _f=(_fpt)_drva(2380464); return _f(this, pos); }
-	inline vec2f worldToLocal(const vec2f & pos) { return worldToLocal_vf5(pos); }
+	inline vec2f worldToLocal_impl(const vec2f & pos) { typedef vec2f (ksgui_Control::*_fpt)(const vec2f &); auto _f=xcast<_fpt>(_drva(2380464)); return (this->*_f)(pos); }
+	inline vec2f worldToLocal(const vec2f & pos) { typedef vec2f (ksgui_Control::*_fpt)(const vec2f &); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(pos); }
 	virtual void getWorldRect_vf6(ksgui_ksRect & irect);
-	inline void getWorldRect_impl(ksgui_ksRect & irect) { typedef void (*_fpt)(ksgui_Control *pthis, ksgui_ksRect &); _fpt _f=(_fpt)_drva(2377408); return _f(this, irect); }
-	inline void getWorldRect(ksgui_ksRect & irect) { return getWorldRect_vf6(irect); }
-	inline float getWidth() { typedef float (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(220128); return _f(this); }
-	inline float getHeight() { typedef float (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(220080); return _f(this); }
-	inline void setPosition(float x, float y) { typedef void (*_fpt)(ksgui_Control *pthis, float, float); _fpt _f=(_fpt)_drva(2379936); return _f(this, x, y); }
+	inline void getWorldRect_impl(ksgui_ksRect & irect) { typedef void (ksgui_Control::*_fpt)(ksgui_ksRect &); auto _f=xcast<_fpt>(_drva(2377408)); return (this->*_f)(irect); }
+	inline void getWorldRect(ksgui_ksRect & irect) { typedef void (ksgui_Control::*_fpt)(ksgui_ksRect &); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(irect); }
+	inline float getWidth() { typedef float (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(220128)); return (this->*_f)(); }
+	inline float getHeight() { typedef float (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(220080)); return (this->*_f)(); }
+	inline void setPosition(float x, float y) { typedef void (ksgui_Control::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2379936)); return (this->*_f)(x, y); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Control *pthis, float, float); _fpt _f=(_fpt)_drva(2380064); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_Control::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2380064)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_Control::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
 	virtual void onVisibleChanged_vf8(bool newValue);
-	inline void onVisibleChanged_impl(bool newValue) { typedef void (*_fpt)(ksgui_Control *pthis, bool); _fpt _f=(_fpt)_drva(221168); return _f(this, newValue); }
-	inline void onVisibleChanged(bool newValue) { return onVisibleChanged_vf8(newValue); }
+	inline void onVisibleChanged_impl(bool newValue) { typedef void (ksgui_Control::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(221168)); return (this->*_f)(newValue); }
+	inline void onVisibleChanged(bool newValue) { typedef void (ksgui_Control::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(newValue); }
 	virtual bool isMousePressing_vf9();
-	inline bool isMousePressing_impl() { typedef bool (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(220144); return _f(this); }
-	inline bool isMousePressing() { return isMousePressing_vf9(); }
+	inline bool isMousePressing_impl() { typedef bool (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(220144)); return (this->*_f)(); }
+	inline bool isMousePressing() { typedef bool (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Control *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2377872); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_Control::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2377872)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_Control::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseUp_vf11(const OnMouseUpEvent & message);
-	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Control *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2378384); return _f(this, message); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2378384)); return (this->*_f)(message); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Control *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2378160); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2378160)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onMouseWheelMovedEvent_vf13(const OnMouseWheelMovedEvent & message);
-	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_Control *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2378512); return _f(this, message); }
-	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { return onMouseWheelMovedEvent_vf13(message); }
+	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2378512)); return (this->*_f)(message); }
+	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(message); }
 	virtual void onKeyChar_vf14(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(ksgui_Control *pthis, unsigned int); _fpt _f=(_fpt)_drva(2377680); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf14(key); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (ksgui_Control::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2377680)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (ksgui_Control::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(key); }
 	virtual void onKeyDown_vf15(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(ksgui_Control *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(2377776); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf15(message); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(2377776)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (ksgui_Control::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(message); }
 	virtual void setRepeatInterval_vf16(float i);
-	inline void setRepeatInterval_impl(float i) { typedef void (*_fpt)(ksgui_Control *pthis, float); _fpt _f=(_fpt)_drva(2380048); return _f(this, i); }
-	inline void setRepeatInterval(float i) { return setRepeatInterval_vf16(i); }
+	inline void setRepeatInterval_impl(float i) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2380048)); return (this->*_f)(i); }
+	inline void setRepeatInterval(float i) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(i); }
 	virtual void setText_vf17(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText);
-	inline void setText_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (*_fpt)(ksgui_Control *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2011536); return _f(this, aText); }
-	inline void setText(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { return setText_vf17(aText); }
+	inline void setText_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (ksgui_Control::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2011536)); return (this->*_f)(aText); }
+	inline void setText(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (ksgui_Control::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(aText); }
 	virtual const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & getText_vf18();
-	inline const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & getText_impl() { typedef const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(220112); return _f(this); }
-	inline const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & getText() { return getText_vf18(); }
+	inline const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & getText_impl() { typedef const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(220112)); return (this->*_f)(); }
+	inline const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & getText() { typedef const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_Control *pthis, float); _fpt _f=(_fpt)_drva(2379600); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
+	inline void scaleByMult_impl(float value) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2379600)); return (this->*_f)(value); }
+	inline void scaleByMult(float value) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(value); }
 	virtual void scaleByMult_vf20();
-	inline void scaleByMult_impl() { typedef void (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(2386448); return _f(this); }
-	inline void scaleByMult() { return scaleByMult_vf20(); }
-	inline void resetBaseRect() { typedef void (*_fpt)(ksgui_Control *pthis); _fpt _f=(_fpt)_drva(2379472); return _f(this); }
-	inline void stepRepeatInterval(float dt) { typedef void (*_fpt)(ksgui_Control *pthis, float); _fpt _f=(_fpt)_drva(2380224); return _f(this, dt); }
+	inline void scaleByMult_impl() { typedef void (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(2386448)); return (this->*_f)(); }
+	inline void scaleByMult() { typedef void (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
+	inline void resetBaseRect() { typedef void (ksgui_Control::*_fpt)(); auto _f=xcast<_fpt>(_drva(2379472)); return (this->*_f)(); }
+	inline void stepRepeatInterval(float dt) { typedef void (ksgui_Control::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2380224)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Control)==376),"bad size");
 		static_assert((offsetof(ksgui_Control,name)==0x8),"bad off");
@@ -12962,11 +12962,11 @@ public:
 	inline ICarPhysicsStateProvider(const ICarPhysicsStateProvider& other) = default;
 	inline ICarPhysicsStateProvider& operator=(const ICarPhysicsStateProvider& other) = default;
 	virtual ~ICarPhysicsStateProvider();
-	inline void dtor() { typedef void (*_fpt)(ICarPhysicsStateProvider *pthis); _fpt _f=(_fpt)_drva(783520); _f(this); }
+	inline void dtor() { typedef void (ICarPhysicsStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(783520)); (this->*_f)(); }
 	virtual void getPhysicsState_vf1(CarPhysicsState &  _arg0) = 0;
-	inline void getPhysicsState(CarPhysicsState &  _arg0) { return getPhysicsState_vf1( _arg0); }
+	inline void getPhysicsState(CarPhysicsState &  _arg0) { typedef void (ICarPhysicsStateProvider::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0); }
 	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > &  _arg0) = 0;
-	inline void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0) { return getWingState_vf2( _arg0); }
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > &  _arg0) { typedef void (ICarPhysicsStateProvider::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ICarPhysicsStateProvider)==8),"bad size");
 	};
@@ -12989,9 +12989,9 @@ public:
 	inline INIReaderDocuments() { }
 	inline INIReaderDocuments(const INIReaderDocuments& other) = default;
 	inline INIReaderDocuments& operator=(const INIReaderDocuments& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iniName, bool createFile) { typedef void (*_fpt)(INIReaderDocuments *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool); _fpt _f=(_fpt)_drva(2327376); _f(this, iniName, createFile); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iniName, bool createFile) { typedef void (INIReaderDocuments::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, bool); auto _f=xcast<_fpt>(_drva(2327376)); (this->*_f)(iniName, createFile); }
 	virtual ~INIReaderDocuments();
-	inline void dtor() { typedef void (*_fpt)(INIReaderDocuments *pthis); _fpt _f=(_fpt)_drva(2329024); _f(this); }
+	inline void dtor() { typedef void (INIReaderDocuments::*_fpt)(); auto _f=xcast<_fpt>(_drva(2329024)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(INIReaderDocuments)==104),"bad size");
 	};
@@ -13016,7 +13016,7 @@ public:
 	inline ACClient_ClientSessionTransition() { }
 	inline ACClient_ClientSessionTransition(const ACClient_ClientSessionTransition& other) = default;
 	inline ACClient_ClientSessionTransition& operator=(const ACClient_ClientSessionTransition& other) = default;
-	inline void dtor() { typedef void (*_fpt)(ACClient_ClientSessionTransition *pthis); _fpt _f=(_fpt)_drva(246384); _f(this); }
+	inline void dtor() { typedef void (ACClient_ClientSessionTransition::*_fpt)(); auto _f=xcast<_fpt>(_drva(246384)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ACClient_ClientSessionTransition)==216),"bad size");
 		static_assert((offsetof(ACClient_ClientSessionTransition,isTransitioning)==0x0),"bad off");
@@ -13043,14 +13043,14 @@ public:
 	inline ksgui_Label() { }
 	inline ksgui_Label(const ksgui_Label& other) = default;
 	inline ksgui_Label& operator=(const ksgui_Label& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Label *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2403696); _f(this, iname, igui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (ksgui_Label::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2403696)); (this->*_f)(iname, igui); }
 	virtual ~ksgui_Label();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Label *pthis, float); _fpt _f=(_fpt)_drva(2404288); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_Label::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2404288)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Label::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_Label *pthis, float); _fpt _f=(_fpt)_drva(2404688); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
+	inline void scaleByMult_impl(float value) { typedef void (ksgui_Label::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2404688)); return (this->*_f)(value); }
+	inline void scaleByMult(float value) { typedef void (ksgui_Label::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Label)==384),"bad size");
 		static_assert((offsetof(ksgui_Label,maxNumberOfCharDisplayed)==0x178),"bad off");
@@ -13084,13 +13084,13 @@ public:
 	inline ksgui_ProgressBar() { }
 	inline ksgui_ProgressBar(const ksgui_ProgressBar& other) = default;
 	inline ksgui_ProgressBar& operator=(const ksgui_ProgressBar& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_ProgressBar *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2416368); _f(this, iname, igui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (ksgui_ProgressBar::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2416368)); (this->*_f)(iname, igui); }
 	virtual ~ksgui_ProgressBar();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ProgressBar *pthis, float); _fpt _f=(_fpt)_drva(2416624); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void renderVertical(float dt) { typedef void (*_fpt)(ksgui_ProgressBar *pthis, float); _fpt _f=(_fpt)_drva(2417120); return _f(this, dt); }
-	inline void renderHorizontal(float dt) { typedef void (*_fpt)(ksgui_ProgressBar *pthis, float); _fpt _f=(_fpt)_drva(2416688); return _f(this, dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_ProgressBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2416624)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ProgressBar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void renderVertical(float dt) { typedef void (ksgui_ProgressBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2417120)); return (this->*_f)(dt); }
+	inline void renderHorizontal(float dt) { typedef void (ksgui_ProgressBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2416688)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ProgressBar)==392),"bad size");
 		static_assert((offsetof(ksgui_ProgressBar,maxValue)==0x178),"bad off");
@@ -13126,14 +13126,14 @@ public:
 	inline DynamicController() { }
 	inline DynamicController(const DynamicController& other) = default;
 	inline DynamicController& operator=(const DynamicController& other) = default;
-	inline void ctor() { typedef void (*_fpt)(DynamicController *pthis); _fpt _f=(_fpt)_drva(2819936); _f(this); }
-	inline void ctor(Car * car, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(DynamicController *pthis, Car *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2814768); _f(this, car, filename); }
-	inline void dtor() { typedef void (*_fpt)(DynamicController *pthis); _fpt _f=(_fpt)_drva(2820032); _f(this); }
-	inline float eval() { typedef float (*_fpt)(DynamicController *pthis); _fpt _f=(_fpt)_drva(2821120); return _f(this); }
-	inline static float getOversteerFactor(Car * car) { typedef float (*_fpt)(Car *); _fpt _f=(_fpt)_drva(2822608); return _f(car); }
-	inline static float getRearSpeedRatio(Car * car) { typedef float (*_fpt)(Car *); _fpt _f=(_fpt)_drva(2822704); return _f(car); }
-	inline float getInput(DynamicControllerInput input) { typedef float (*_fpt)(DynamicController *pthis, DynamicControllerInput); _fpt _f=(_fpt)_drva(2821488); return _f(this, input); }
-	inline bool isReady() { typedef bool (*_fpt)(DynamicController *pthis); _fpt _f=(_fpt)_drva(2864688); return _f(this); }
+	inline void ctor() { typedef void (DynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2819936)); (this->*_f)(); }
+	inline void ctor(Car * car, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (DynamicController::*_fpt)(Car *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2814768)); (this->*_f)(car, filename); }
+	inline void dtor() { typedef void (DynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2820032)); (this->*_f)(); }
+	inline float eval() { typedef float (DynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2821120)); return (this->*_f)(); }
+	inline static float getOversteerFactor(Car * car) { typedef float (*_fpt)(Car *); auto _f=(_fpt)_drva(2822608); return _f(car); }
+	inline static float getRearSpeedRatio(Car * car) { typedef float (*_fpt)(Car *); auto _f=(_fpt)_drva(2822704); return _f(car); }
+	inline float getInput(DynamicControllerInput input) { typedef float (DynamicController::*_fpt)(DynamicControllerInput); auto _f=xcast<_fpt>(_drva(2821488)); return (this->*_f)(input); }
+	inline bool isReady() { typedef bool (DynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2864688)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DynamicController)==40),"bad size");
 		static_assert((offsetof(DynamicController,car)==0x0),"bad off");
@@ -13171,14 +13171,14 @@ public:
 	inline ksgui_ConnectedLabel() { }
 	inline ksgui_ConnectedLabel(const ksgui_ConnectedLabel& other) = default;
 	inline ksgui_ConnectedLabel& operator=(const ksgui_ConnectedLabel& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, int * var) { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, int *); _fpt _f=(_fpt)_drva(4515840); _f(this, iname, igui, var); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, float * var) { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, float *); _fpt _f=(_fpt)_drva(4516000); _f(this, iname, igui, var); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, int * var) { typedef void (ksgui_ConnectedLabel::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, int *); auto _f=xcast<_fpt>(_drva(4515840)); (this->*_f)(iname, igui, var); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, float * var) { typedef void (ksgui_ConnectedLabel::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, float *); auto _f=xcast<_fpt>(_drva(4516000)); (this->*_f)(iname, igui, var); }
 	virtual ~ksgui_ConnectedLabel();
-	inline void dtor() { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis); _fpt _f=(_fpt)_drva(4516160); _f(this); }
+	inline void dtor() { typedef void (ksgui_ConnectedLabel::*_fpt)(); auto _f=xcast<_fpt>(_drva(4516160)); (this->*_f)(); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis, float); _fpt _f=(_fpt)_drva(4516784); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void init() { typedef void (*_fpt)(ksgui_ConnectedLabel *pthis); _fpt _f=(_fpt)_drva(4516352); return _f(this); }
+	inline void render_impl(float dt) { typedef void (ksgui_ConnectedLabel::*_fpt)(float); auto _f=xcast<_fpt>(_drva(4516784)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ConnectedLabel::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void init() { typedef void (ksgui_ConnectedLabel::*_fpt)(); auto _f=xcast<_fpt>(_drva(4516352)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ConnectedLabel)==472),"bad size");
 		static_assert((offsetof(ksgui_ConnectedLabel,variableConnection)==0x178),"bad off");
@@ -13213,12 +13213,12 @@ public:
 	inline BoundingFrustum() { }
 	inline BoundingFrustum(const BoundingFrustum& other) = default;
 	inline BoundingFrustum& operator=(const BoundingFrustum& other) = default;
-	inline void ctor(const mat44f & iviewProj) { typedef void (*_fpt)(BoundingFrustum *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2263488); _f(this, iviewProj); }
+	inline void ctor(const mat44f & iviewProj) { typedef void (BoundingFrustum::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2263488)); (this->*_f)(iviewProj); }
 	virtual ~BoundingFrustum();
-	inline void dtor() { typedef void (*_fpt)(BoundingFrustum *pthis); _fpt _f=(_fpt)_drva(2263680); _f(this); }
-	inline void getCorners(std::vector<vec3f,std::allocator<vec3f> > & corners) { typedef void (*_fpt)(BoundingFrustum *pthis, std::vector<vec3f,std::allocator<vec3f> > &); _fpt _f=(_fpt)_drva(2263744); return _f(this, corners); }
-	inline void setMatrix(const mat44f & value) { typedef void (*_fpt)(BoundingFrustum *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2265744); return _f(this, value); }
-	inline bool intersect(const sphere & s) { typedef bool (*_fpt)(BoundingFrustum *pthis, const sphere &); _fpt _f=(_fpt)_drva(2265632); return _f(this, s); }
+	inline void dtor() { typedef void (BoundingFrustum::*_fpt)(); auto _f=xcast<_fpt>(_drva(2263680)); (this->*_f)(); }
+	inline void getCorners(std::vector<vec3f,std::allocator<vec3f> > & corners) { typedef void (BoundingFrustum::*_fpt)(std::vector<vec3f,std::allocator<vec3f> > &); auto _f=xcast<_fpt>(_drva(2263744)); return (this->*_f)(corners); }
+	inline void setMatrix(const mat44f & value) { typedef void (BoundingFrustum::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2265744)); return (this->*_f)(value); }
+	inline bool intersect(const sphere & s) { typedef bool (BoundingFrustum::*_fpt)(const sphere &); auto _f=xcast<_fpt>(_drva(2265632)); return (this->*_f)(s); }
 	inline void _guard_obj() {
 		static_assert((sizeof(BoundingFrustum)==232),"bad size");
 		static_assert((offsetof(BoundingFrustum,matViewProj)==0x8),"bad off");
@@ -13314,8 +13314,8 @@ public:
 	inline CarPhysicsInfo() { }
 	inline CarPhysicsInfo(const CarPhysicsInfo& other) = default;
 	inline CarPhysicsInfo& operator=(const CarPhysicsInfo& other) = default;
-	inline void ctor() { typedef void (*_fpt)(CarPhysicsInfo *pthis); _fpt _f=(_fpt)_drva(844768); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(CarPhysicsInfo *pthis); _fpt _f=(_fpt)_drva(847488); _f(this); }
+	inline void ctor() { typedef void (CarPhysicsInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(844768)); (this->*_f)(); }
+	inline void dtor() { typedef void (CarPhysicsInfo::*_fpt)(); auto _f=xcast<_fpt>(_drva(847488)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarPhysicsInfo)==320),"bad size");
 		static_assert((offsetof(CarPhysicsInfo,steerLock)==0x0),"bad off");
@@ -13383,13 +13383,13 @@ public:
 	inline DIControlInput() { }
 	inline DIControlInput(const DIControlInput& other) = default;
 	inline DIControlInput& operator=(const DIControlInput& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (*_fpt)(DIControlInput *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); _fpt _f=(_fpt)_drva(532208); _f(this, iname, di); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (DIControlInput::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); auto _f=xcast<_fpt>(_drva(532208)); (this->*_f)(iname, di); }
 	virtual ~DIControlInput();
-	inline void dtor() { typedef void (*_fpt)(DIControlInput *pthis); _fpt _f=(_fpt)_drva(532400); _f(this); }
+	inline void dtor() { typedef void (DIControlInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(532400)); (this->*_f)(); }
 	virtual void load_vf1(INIReader &  _arg0, bool  _arg1) = 0;
-	inline void load(INIReader &  _arg0, bool  _arg1) { return load_vf1( _arg0,  _arg1); }
+	inline void load(INIReader &  _arg0, bool  _arg1) { typedef void (DIControlInput::*_fpt)(INIReader &, bool); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)( _arg0,  _arg1); }
 	virtual float getValue_vf2(bool  _arg0) = 0;
-	inline float getValue(bool  _arg0) { return getValue_vf2( _arg0); }
+	inline float getValue(bool  _arg0) { typedef float (DIControlInput::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)( _arg0); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DIControlInput)==72),"bad size");
 		static_assert((offsetof(DIControlInput,name)==0x8),"bad off");
@@ -13419,15 +13419,15 @@ public:
 	inline ksgui_TextBox() { }
 	inline ksgui_TextBox(const ksgui_TextBox& other) = default;
 	inline ksgui_TextBox& operator=(const ksgui_TextBox& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui, eFontType fontType) { typedef void (*_fpt)(ksgui_TextBox *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, eFontType); _fpt _f=(_fpt)_drva(2417456); _f(this, name, gui, fontType); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui, eFontType fontType) { typedef void (ksgui_TextBox::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, eFontType); auto _f=xcast<_fpt>(_drva(2417456)); (this->*_f)(name, gui, fontType); }
 	virtual ~ksgui_TextBox();
-	inline void setFormattedText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (*_fpt)(ksgui_TextBox *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2418400); return _f(this, aText); }
+	inline void setFormattedText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (ksgui_TextBox::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2418400)); return (this->*_f)(aText); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_TextBox *pthis, float); _fpt _f=(_fpt)_drva(2418080); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_TextBox::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2418080)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_TextBox::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_TextBox *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2418064); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_TextBox::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2418064)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_TextBox::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_TextBox)==400),"bad size");
 		static_assert((offsetof(ksgui_TextBox,textLines)==0x178),"bad off");
@@ -13477,15 +13477,15 @@ public:
 	inline Autoclutch() { }
 	inline Autoclutch(const Autoclutch& other) = default;
 	inline Autoclutch& operator=(const Autoclutch& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Autoclutch *pthis); _fpt _f=(_fpt)_drva(2851776); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(Autoclutch *pthis, Car *); _fpt _f=(_fpt)_drva(2852816); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(Autoclutch *pthis, float); _fpt _f=(_fpt)_drva(2856336); return _f(this, dt); }
-	inline void onGearRequest(const OnGearRequestEvent & ev) { typedef void (*_fpt)(Autoclutch *pthis, const OnGearRequestEvent &); _fpt _f=(_fpt)_drva(2855760); return _f(this, ev); }
-	inline void setDownshiftProfile(Curve & dp) { typedef void (*_fpt)(Autoclutch *pthis, Curve &); _fpt _f=(_fpt)_drva(2750528); return _f(this, dp); }
-	inline float getDownshiftSequenceDuration() { typedef float (*_fpt)(Autoclutch *pthis); _fpt _f=(_fpt)_drva(2741152); return _f(this); }
-	inline void stepSequence(float dt) { typedef void (*_fpt)(Autoclutch *pthis, float); _fpt _f=(_fpt)_drva(2856864); return _f(this, dt); }
-	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (*_fpt)(Autoclutch *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2853008); return _f(this, carModel); }
-	inline void ctor() { typedef void (*_fpt)(Autoclutch *pthis); _fpt _f=(_fpt)_drva(2538848); _f(this); }
+	inline void dtor() { typedef void (Autoclutch::*_fpt)(); auto _f=xcast<_fpt>(_drva(2851776)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (Autoclutch::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2852816)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (Autoclutch::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2856336)); return (this->*_f)(dt); }
+	inline void onGearRequest(const OnGearRequestEvent & ev) { typedef void (Autoclutch::*_fpt)(const OnGearRequestEvent &); auto _f=xcast<_fpt>(_drva(2855760)); return (this->*_f)(ev); }
+	inline void setDownshiftProfile(Curve & dp) { typedef void (Autoclutch::*_fpt)(Curve &); auto _f=xcast<_fpt>(_drva(2750528)); return (this->*_f)(dp); }
+	inline float getDownshiftSequenceDuration() { typedef float (Autoclutch::*_fpt)(); auto _f=xcast<_fpt>(_drva(2741152)); return (this->*_f)(); }
+	inline void stepSequence(float dt) { typedef void (Autoclutch::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2856864)); return (this->*_f)(dt); }
+	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * carModel) { typedef void (Autoclutch::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2853008)); return (this->*_f)(carModel); }
+	inline void ctor() { typedef void (Autoclutch::*_fpt)(); auto _f=xcast<_fpt>(_drva(2538848)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Autoclutch)==424),"bad size");
 		static_assert((offsetof(Autoclutch,rpmMin)==0x0),"bad off");
@@ -13524,14 +13524,14 @@ public:
 	inline ksgui_PopOver() { }
 	inline ksgui_PopOver(const ksgui_PopOver& other) = default;
 	inline ksgui_PopOver& operator=(const ksgui_PopOver& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2447104); _f(this, name, aGui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui) { typedef void (ksgui_PopOver::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2447104)); (this->*_f)(name, aGui); }
 	virtual ~ksgui_PopOver();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447904); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void renderPopOver(float dt) { typedef void (*_fpt)(ksgui_PopOver *pthis, float); _fpt _f=(_fpt)_drva(2447984); return _f(this, dt); }
-	inline void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448672); return _f(this, aText); }
-	inline void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle) { typedef void (*_fpt)(ksgui_PopOver *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2448560); return _f(this, aTitle); }
+	inline void render_impl(float dt) { typedef void (ksgui_PopOver::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2447904)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_PopOver::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void renderPopOver(float dt) { typedef void (ksgui_PopOver::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2447984)); return (this->*_f)(dt); }
+	inline void setText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aText) { typedef void (ksgui_PopOver::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2448672)); return (this->*_f)(aText); }
+	inline void setLabelTitle(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aTitle) { typedef void (ksgui_PopOver::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2448560)); return (this->*_f)(aTitle); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_PopOver)==392),"bad size");
 		static_assert((offsetof(ksgui_PopOver,textBox)==0x178),"bad off");
@@ -13570,9 +13570,9 @@ public:
 	inline TyreCompoundDef() { }
 	inline TyreCompoundDef(const TyreCompoundDef& other) = default;
 	inline TyreCompoundDef& operator=(const TyreCompoundDef& other) = default;
-	inline void ctor(const TyreCompoundDef & __that) { typedef void (*_fpt)(TyreCompoundDef *pthis, const TyreCompoundDef &); _fpt _f=(_fpt)_drva(2608864); _f(this, __that); }
-	inline void ctor() { typedef void (*_fpt)(TyreCompoundDef *pthis); _fpt _f=(_fpt)_drva(2609248); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TyreCompoundDef *pthis); _fpt _f=(_fpt)_drva(2549984); _f(this); }
+	inline void ctor(const TyreCompoundDef & __that) { typedef void (TyreCompoundDef::*_fpt)(const TyreCompoundDef &); auto _f=xcast<_fpt>(_drva(2608864)); (this->*_f)(__that); }
+	inline void ctor() { typedef void (TyreCompoundDef::*_fpt)(); auto _f=xcast<_fpt>(_drva(2609248)); (this->*_f)(); }
+	inline void dtor() { typedef void (TyreCompoundDef::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549984)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TyreCompoundDef)==1008),"bad size");
 		static_assert((offsetof(TyreCompoundDef,index)==0x0),"bad off");
@@ -13612,12 +13612,12 @@ public:
 	inline ksgui_CheckBox() { }
 	inline ksgui_CheckBox(const ksgui_CheckBox& other) = default;
 	inline ksgui_CheckBox& operator=(const ksgui_CheckBox& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (*_fpt)(ksgui_CheckBox *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2402416); _f(this, name, gui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (ksgui_CheckBox::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2402416)); (this->*_f)(name, gui); }
 	virtual ~ksgui_CheckBox();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_CheckBox *pthis, float); _fpt _f=(_fpt)_drva(2403312); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void setCheck(bool aCheck) { typedef void (*_fpt)(ksgui_CheckBox *pthis, bool); _fpt _f=(_fpt)_drva(2403648); return _f(this, aCheck); }
+	inline void render_impl(float dt) { typedef void (ksgui_CheckBox::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2403312)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_CheckBox::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void setCheck(bool aCheck) { typedef void (ksgui_CheckBox::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2403648)); return (this->*_f)(aCheck); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_CheckBox)==424),"bad size");
 		static_assert((offsetof(ksgui_CheckBox,evOnCheckBoxChanged)==0x178),"bad off");
@@ -13663,18 +13663,18 @@ public:
 	inline ksgui_CustomSpinner() { }
 	inline ksgui_CustomSpinner(const ksgui_CustomSpinner& other) = default;
 	inline ksgui_CustomSpinner& operator=(const ksgui_CustomSpinner& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui, CustomSpinnerMode aMode) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, CustomSpinnerMode); _fpt _f=(_fpt)_drva(2419408); _f(this, name, aGui, aMode); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * aGui, CustomSpinnerMode aMode) { typedef void (ksgui_CustomSpinner::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, CustomSpinnerMode); auto _f=xcast<_fpt>(_drva(2419408)); (this->*_f)(name, aGui, aMode); }
 	virtual ~ksgui_CustomSpinner();
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float, float); _fpt _f=(_fpt)_drva(2422512); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_CustomSpinner::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2422512)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_CustomSpinner::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2420928); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_CustomSpinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2420928)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_CustomSpinner::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2422464); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
-	inline void resize(float value) { typedef void (*_fpt)(ksgui_CustomSpinner *pthis, float); _fpt _f=(_fpt)_drva(2421696); return _f(this, value); }
+	inline void scaleByMult_impl(float value) { typedef void (ksgui_CustomSpinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2422464)); return (this->*_f)(value); }
+	inline void scaleByMult(float value) { typedef void (ksgui_CustomSpinner::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(value); }
+	inline void resize(float value) { typedef void (ksgui_CustomSpinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2421696)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_CustomSpinner)==472),"bad size");
 		static_assert((offsetof(ksgui_CustomSpinner,pressToIncrement)==0x178),"bad off");
@@ -13722,21 +13722,21 @@ public:
 	inline ksgui_TextInput() { }
 	inline ksgui_TextInput(const ksgui_TextInput& other) = default;
 	inline ksgui_TextInput& operator=(const ksgui_TextInput& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (*_fpt)(ksgui_TextInput *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2380560); _f(this, name, gui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (ksgui_TextInput::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2380560)); (this->*_f)(name, gui); }
 	virtual ~ksgui_TextInput();
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_TextInput *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2381536); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_TextInput::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2381536)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_TextInput::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_TextInput *pthis, float); _fpt _f=(_fpt)_drva(2381568); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_TextInput::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2381568)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_TextInput::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void onKeyChar_vf14(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(ksgui_TextInput *pthis, unsigned int); _fpt _f=(_fpt)_drva(2381264); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf14(key); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (ksgui_TextInput::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2381264)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (ksgui_TextInput::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(key); }
 	virtual void onKeyDown_vf15(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(ksgui_TextInput *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(96368); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf15(message); }
-	inline void validateText() { typedef void (*_fpt)(ksgui_TextInput *pthis); _fpt _f=(_fpt)_drva(2381856); return _f(this); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (ksgui_TextInput::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (ksgui_TextInput::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(message); }
+	inline void validateText() { typedef void (ksgui_TextInput::*_fpt)(); auto _f=xcast<_fpt>(_drva(2381856)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_TextInput)==464),"bad size");
 		static_assert((offsetof(ksgui_TextInput,backColorFocus)==0x178),"bad off");
@@ -13791,15 +13791,15 @@ public:
 	inline CameraOnBoardFree() { }
 	inline CameraOnBoardFree(const CameraOnBoardFree& other) = default;
 	inline CameraOnBoardFree& operator=(const CameraOnBoardFree& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * a_camera, Sim * a_sim) { typedef void (*_fpt)(CameraOnBoardFree *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Sim *); _fpt _f=(_fpt)_drva(1134848); _f(this, name, a_camera, a_sim); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, Camera * a_camera, Sim * a_sim) { typedef void (CameraOnBoardFree::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, Camera *, Sim *); auto _f=xcast<_fpt>(_drva(1134848)); (this->*_f)(name, a_camera, a_sim); }
 	virtual ~CameraOnBoardFree();
 	virtual void update_vf1(float dt);
-	inline void update_impl(float dt) { typedef void (*_fpt)(CameraOnBoardFree *pthis, float); _fpt _f=(_fpt)_drva(1138096); return _f(this, dt); }
-	inline void update(float dt) { return update_vf1(dt); }
-	inline void setIntroMode(bool value) { typedef void (*_fpt)(CameraOnBoardFree *pthis, bool); _fpt _f=(_fpt)_drva(1137792); return _f(this, value); }
-	inline void setPosition(const vec3f & pos) { typedef void (*_fpt)(CameraOnBoardFree *pthis, const vec3f &); _fpt _f=(_fpt)_drva(1697728); return _f(this, pos); }
-	inline vec3f updateSphericalCoord(float deltaT) { typedef vec3f (*_fpt)(CameraOnBoardFree *pthis, float); _fpt _f=(_fpt)_drva(1140704); return _f(this, deltaT); }
-	inline void forceThetaPhi(float aTheta, float aPhi, float aRadius) { typedef void (*_fpt)(CameraOnBoardFree *pthis, float, float, float); _fpt _f=(_fpt)_drva(1137552); return _f(this, aTheta, aPhi, aRadius); }
+	inline void update_impl(float dt) { typedef void (CameraOnBoardFree::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1138096)); return (this->*_f)(dt); }
+	inline void update(float dt) { typedef void (CameraOnBoardFree::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
+	inline void setIntroMode(bool value) { typedef void (CameraOnBoardFree::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(1137792)); return (this->*_f)(value); }
+	inline void setPosition(const vec3f & pos) { typedef void (CameraOnBoardFree::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(1697728)); return (this->*_f)(pos); }
+	inline vec3f updateSphericalCoord(float deltaT) { typedef vec3f (CameraOnBoardFree::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1140704)); return (this->*_f)(deltaT); }
+	inline void forceThetaPhi(float aTheta, float aPhi, float aRadius) { typedef void (CameraOnBoardFree::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(1137552)); return (this->*_f)(aTheta, aPhi, aRadius); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraOnBoardFree)==432),"bad size");
 		static_assert((offsetof(CameraOnBoardFree,lockCamera)==0x130),"bad off");
@@ -13854,13 +13854,13 @@ public:
 	inline DynamicWingController() { }
 	inline DynamicWingController(const DynamicWingController& other) = default;
 	inline DynamicWingController& operator=(const DynamicWingController& other) = default;
-	inline void ctor(const DynamicWingController & __that) { typedef void (*_fpt)(DynamicWingController *pthis, const DynamicWingController &); _fpt _f=(_fpt)_drva(2839024); _f(this, __that); }
-	inline void ctor(const CarPhysicsState * state, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (*_fpt)(DynamicWingController *pthis, const CarPhysicsState *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2793072); _f(this, state, carUnixName, ini, section); }
-	inline void ctor(Car * car, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (*_fpt)(DynamicWingController *pthis, Car *, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2792944); _f(this, car, ini, section); }
-	inline void dtor() { typedef void (*_fpt)(DynamicWingController *pthis); _fpt _f=(_fpt)_drva(1147056); _f(this); }
-	inline void step() { typedef void (*_fpt)(DynamicWingController *pthis); _fpt _f=(_fpt)_drva(2796144); return _f(this); }
-	inline float getInput() { typedef float (*_fpt)(DynamicWingController *pthis); _fpt _f=(_fpt)_drva(2793200); return _f(this); }
-	inline void initCommon(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (*_fpt)(DynamicWingController *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2793680); return _f(this, carUnixName, ini, section); }
+	inline void ctor(const DynamicWingController & __that) { typedef void (DynamicWingController::*_fpt)(const DynamicWingController &); auto _f=xcast<_fpt>(_drva(2839024)); (this->*_f)(__that); }
+	inline void ctor(const CarPhysicsState * state, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (DynamicWingController::*_fpt)(const CarPhysicsState *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2793072)); (this->*_f)(state, carUnixName, ini, section); }
+	inline void ctor(Car * car, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (DynamicWingController::*_fpt)(Car *, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2792944)); (this->*_f)(car, ini, section); }
+	inline void dtor() { typedef void (DynamicWingController::*_fpt)(); auto _f=xcast<_fpt>(_drva(1147056)); (this->*_f)(); }
+	inline void step() { typedef void (DynamicWingController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2796144)); return (this->*_f)(); }
+	inline float getInput() { typedef float (DynamicWingController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2793200)); return (this->*_f)(); }
+	inline void initCommon(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName, INIReader & ini, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (DynamicWingController::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2793680)); return (this->*_f)(carUnixName, ini, section); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DynamicWingController)==176),"bad size");
 		static_assert((offsetof(DynamicWingController,outputAngle)==0x0),"bad off");
@@ -13909,19 +13909,19 @@ public:
 	inline ksgui_ListBoxRow() { }
 	inline ksgui_ListBoxRow(const ksgui_ListBoxRow& other) = default;
 	inline ksgui_ListBoxRow& operator=(const ksgui_ListBoxRow& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, unsigned int numberOfColumns, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, unsigned int, ksgui_GUI *); _fpt _f=(_fpt)_drva(2448848); _f(this, name, numberOfColumns, aGui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, unsigned int numberOfColumns, ksgui_GUI * aGui) { typedef void (ksgui_ListBoxRow::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, unsigned int, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2448848)); (this->*_f)(name, numberOfColumns, aGui); }
 	virtual ~ksgui_ListBoxRow();
 	virtual void setSize_vf7(float width, float height);
-	inline void setSize_impl(float width, float height) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, float, float); _fpt _f=(_fpt)_drva(2451392); return _f(this, width, height); }
-	inline void setSize(float width, float height) { return setSize_vf7(width, height); }
-	inline void setPosition(float x, float y) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, float, float); _fpt _f=(_fpt)_drva(2450864); return _f(this, x, y); }
-	inline void setRow(ksgui_ListBoxRowData * data) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, ksgui_ListBoxRowData *); _fpt _f=(_fpt)_drva(2451072); return _f(this, data); }
-	inline void setFontSize(float size) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, float); _fpt _f=(_fpt)_drva(2450784); return _f(this, size); }
-	inline void clear() { typedef void (*_fpt)(ksgui_ListBoxRow *pthis); _fpt _f=(_fpt)_drva(2449984); return _f(this); }
-	inline void setFontAlignment(eFontAlign alignment) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, eFontAlign); _fpt _f=(_fpt)_drva(2450704); return _f(this, alignment); }
+	inline void setSize_impl(float width, float height) { typedef void (ksgui_ListBoxRow::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2451392)); return (this->*_f)(width, height); }
+	inline void setSize(float width, float height) { typedef void (ksgui_ListBoxRow::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(width, height); }
+	inline void setPosition(float x, float y) { typedef void (ksgui_ListBoxRow::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2450864)); return (this->*_f)(x, y); }
+	inline void setRow(ksgui_ListBoxRowData * data) { typedef void (ksgui_ListBoxRow::*_fpt)(ksgui_ListBoxRowData *); auto _f=xcast<_fpt>(_drva(2451072)); return (this->*_f)(data); }
+	inline void setFontSize(float size) { typedef void (ksgui_ListBoxRow::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2450784)); return (this->*_f)(size); }
+	inline void clear() { typedef void (ksgui_ListBoxRow::*_fpt)(); auto _f=xcast<_fpt>(_drva(2449984)); return (this->*_f)(); }
+	inline void setFontAlignment(eFontAlign alignment) { typedef void (ksgui_ListBoxRow::*_fpt)(eFontAlign); auto _f=xcast<_fpt>(_drva(2450704)); return (this->*_f)(alignment); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ListBoxRow *pthis, float); _fpt _f=(_fpt)_drva(2450368); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_ListBoxRow::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2450368)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ListBoxRow::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ListBoxRow)==424),"bad size");
 		static_assert((offsetof(ksgui_ListBoxRow,rowBackground)==0x178),"bad off");
@@ -13994,132 +13994,132 @@ public:
 	inline RigidBodyODE() { }
 	inline RigidBodyODE(const RigidBodyODE& other) = default;
 	inline RigidBodyODE& operator=(const RigidBodyODE& other) = default;
-	inline void ctor(PhysicsCore * core) { typedef void (*_fpt)(RigidBodyODE *pthis, PhysicsCore *); _fpt _f=(_fpt)_drva(2938880); _f(this, core); }
+	inline void ctor(PhysicsCore * core) { typedef void (RigidBodyODE::*_fpt)(PhysicsCore *); auto _f=xcast<_fpt>(_drva(2938880)); (this->*_f)(core); }
 	virtual ~RigidBodyODE();
-	inline void dtor() { typedef void (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2939104); _f(this); }
+	inline void dtor() { typedef void (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2939104)); (this->*_f)(); }
 	virtual void setAutoDisable_vf3(bool mode);
-	inline void setAutoDisable_impl(bool mode) { typedef void (*_fpt)(RigidBodyODE *pthis, bool); _fpt _f=(_fpt)_drva(2943040); return _f(this, mode); }
-	inline void setAutoDisable(bool mode) { return setAutoDisable_vf3(mode); }
+	inline void setAutoDisable_impl(bool mode) { typedef void (RigidBodyODE::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2943040)); return (this->*_f)(mode); }
+	inline void setAutoDisable(bool mode) { typedef void (RigidBodyODE::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(mode); }
 	virtual void setAngularVelocity_vf17(const vec3f & vel);
-	inline void setAngularVelocity_impl(const vec3f & vel) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2943008); return _f(this, vel); }
-	inline void setAngularVelocity(const vec3f & vel) { return setAngularVelocity_vf17(vel); }
+	inline void setAngularVelocity_impl(const vec3f & vel) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2943008)); return (this->*_f)(vel); }
+	inline void setAngularVelocity(const vec3f & vel) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(vel); }
 	virtual void removeCollisionObjects_vf4();
-	inline void removeCollisionObjects_impl() { typedef void (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void removeCollisionObjects() { return removeCollisionObjects_vf4(); }
+	inline void removeCollisionObjects_impl() { typedef void (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void removeCollisionObjects() { typedef void (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual float getMass_vf5();
-	inline float getMass_impl() { typedef float (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942320); return _f(this); }
-	inline float getMass() { return getMass_vf5(); }
+	inline float getMass_impl() { typedef float (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942320)); return (this->*_f)(); }
+	inline float getMass() { typedef float (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
 	virtual void release_vf6();
-	inline void release_impl() { typedef void (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942976); return _f(this); }
-	inline void release() { return release_vf6(); }
+	inline void release_impl() { typedef void (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942976)); return (this->*_f)(); }
+	inline void release() { typedef void (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual void setMassExplicitInertia_vf0(float totalMass, float x, float y, float z);
-	inline void setMassExplicitInertia_impl(float totalMass, float x, float y, float z) { typedef void (*_fpt)(RigidBodyODE *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2943248); return _f(this, totalMass, x, y, z); }
-	inline void setMassExplicitInertia(float totalMass, float x, float y, float z) { return setMassExplicitInertia_vf0(totalMass, x, y, z); }
+	inline void setMassExplicitInertia_impl(float totalMass, float x, float y, float z) { typedef void (RigidBodyODE::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2943248)); return (this->*_f)(totalMass, x, y, z); }
+	inline void setMassExplicitInertia(float totalMass, float x, float y, float z) { typedef void (RigidBodyODE::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(totalMass, x, y, z); }
 	virtual void setMassBox_vf7(float m, float x, float y, float z);
-	inline void setMassBox_impl(float m, float x, float y, float z) { typedef void (*_fpt)(RigidBodyODE *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2943120); return _f(this, m, x, y, z); }
-	inline void setMassBox(float m, float x, float y, float z) { return setMassBox_vf7(m, x, y, z); }
+	inline void setMassBox_impl(float m, float x, float y, float z) { typedef void (RigidBodyODE::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2943120)); return (this->*_f)(m, x, y, z); }
+	inline void setMassBox(float m, float x, float y, float z) { typedef void (RigidBodyODE::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(m, x, y, z); }
 	virtual vec3f getLocalInertia_vf8();
-	inline vec3f getLocalInertia_impl() { typedef vec3f (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942080); return _f(this); }
-	inline vec3f getLocalInertia() { return getLocalInertia_vf8(); }
+	inline vec3f getLocalInertia_impl() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942080)); return (this->*_f)(); }
+	inline vec3f getLocalInertia() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual mat44f getWorldMatrix_vf9(float interpolationT);
-	inline mat44f getWorldMatrix_impl(float interpolationT) { typedef mat44f (*_fpt)(RigidBodyODE *pthis, float); _fpt _f=(_fpt)_drva(2942656); return _f(this, interpolationT); }
-	inline mat44f getWorldMatrix(float interpolationT) { return getWorldMatrix_vf9(interpolationT); }
+	inline mat44f getWorldMatrix_impl(float interpolationT) { typedef mat44f (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2942656)); return (this->*_f)(interpolationT); }
+	inline mat44f getWorldMatrix(float interpolationT) { typedef mat44f (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(interpolationT); }
 	virtual vec3f localToWorld_vf10(const vec3f & p);
-	inline vec3f localToWorld_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2942848); return _f(this, p); }
-	inline vec3f localToWorld(const vec3f & p) { return localToWorld_vf10(p); }
+	inline vec3f localToWorld_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2942848)); return (this->*_f)(p); }
+	inline vec3f localToWorld(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(p); }
 	virtual vec3f worldToLocal_vf11(const vec3f & p);
-	inline vec3f worldToLocal_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2943792); return _f(this, p); }
-	inline vec3f worldToLocal(const vec3f & p) { return worldToLocal_vf11(p); }
+	inline vec3f worldToLocal_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2943792)); return (this->*_f)(p); }
+	inline vec3f worldToLocal(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(p); }
 	virtual vec3f localToWorldNormal_vf12(const vec3f & p);
-	inline vec3f localToWorldNormal_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2942912); return _f(this, p); }
-	inline vec3f localToWorldNormal(const vec3f & p) { return localToWorldNormal_vf12(p); }
+	inline vec3f localToWorldNormal_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2942912)); return (this->*_f)(p); }
+	inline vec3f localToWorldNormal(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(p); }
 	virtual vec3f worldToLocalNormal_vf13(const vec3f & p);
-	inline vec3f worldToLocalNormal_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2943856); return _f(this, p); }
-	inline vec3f worldToLocalNormal(const vec3f & p) { return worldToLocalNormal_vf13(p); }
+	inline vec3f worldToLocalNormal_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2943856)); return (this->*_f)(p); }
+	inline vec3f worldToLocalNormal(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(p); }
 	virtual void stop_vf14(float amount);
-	inline void stop_impl(float amount) { typedef void (*_fpt)(RigidBodyODE *pthis, float); _fpt _f=(_fpt)_drva(2943696); return _f(this, amount); }
-	inline void stop(float amount) { return stop_vf14(amount); }
+	inline void stop_impl(float amount) { typedef void (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2943696)); return (this->*_f)(amount); }
+	inline void stop(float amount) { typedef void (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(amount); }
 	virtual vec3f getVelocity_vf15();
-	inline vec3f getVelocity_impl() { typedef vec3f (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942592); return _f(this); }
-	inline vec3f getVelocity() { return getVelocity_vf15(); }
+	inline vec3f getVelocity_impl() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942592)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(); }
 	virtual void setVelocity_vf16(const vec3f & vel);
-	inline void setVelocity_impl(const vec3f & vel) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2943664); return _f(this, vel); }
-	inline void setVelocity(const vec3f & vel) { return setVelocity_vf16(vel); }
+	inline void setVelocity_impl(const vec3f & vel) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2943664)); return (this->*_f)(vel); }
+	inline void setVelocity(const vec3f & vel) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(vel); }
 	virtual void setPosition_vf18(const vec3f & pos);
-	inline void setPosition_impl(const vec3f & pos) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2943456); return _f(this, pos); }
-	inline void setPosition(const vec3f & pos) { return setPosition_vf18(pos); }
+	inline void setPosition_impl(const vec3f & pos) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2943456)); return (this->*_f)(pos); }
+	inline void setPosition(const vec3f & pos) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(pos); }
 	virtual void setRotation_vf19(const mat44f & mat);
-	inline void setRotation_impl(const mat44f & mat) { typedef void (*_fpt)(RigidBodyODE *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2943488); return _f(this, mat); }
-	inline void setRotation(const mat44f & mat) { return setRotation_vf19(mat); }
+	inline void setRotation_impl(const mat44f & mat) { typedef void (RigidBodyODE::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2943488)); return (this->*_f)(mat); }
+	inline void setRotation(const mat44f & mat) { typedef void (RigidBodyODE::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(mat); }
 	virtual vec3f getPosition_vf20(float interpolationT);
-	inline vec3f getPosition_impl(float interpolationT) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, float); _fpt _f=(_fpt)_drva(2942528); return _f(this, interpolationT); }
-	inline vec3f getPosition(float interpolationT) { return getPosition_vf20(interpolationT); }
+	inline vec3f getPosition_impl(float interpolationT) { typedef vec3f (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2942528)); return (this->*_f)(interpolationT); }
+	inline vec3f getPosition(float interpolationT) { typedef vec3f (RigidBodyODE::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(interpolationT); }
 	virtual vec3f getAngularVelocity_vf21();
-	inline vec3f getAngularVelocity_impl() { typedef vec3f (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2941936); return _f(this); }
-	inline vec3f getAngularVelocity() { return getAngularVelocity_vf21(); }
+	inline vec3f getAngularVelocity_impl() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2941936)); return (this->*_f)(); }
+	inline vec3f getAngularVelocity() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(); }
 	virtual vec3f getLocalAngularVelocity_vf22();
-	inline vec3f getLocalAngularVelocity_impl() { typedef vec3f (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942000); return _f(this); }
-	inline vec3f getLocalAngularVelocity() { return getLocalAngularVelocity_vf22(); }
+	inline vec3f getLocalAngularVelocity_impl() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942000)); return (this->*_f)(); }
+	inline vec3f getLocalAngularVelocity() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(); }
 	virtual vec3f getLocalVelocity_vf23();
-	inline vec3f getLocalVelocity_impl() { typedef vec3f (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942240); return _f(this); }
-	inline vec3f getLocalVelocity() { return getLocalVelocity_vf23(); }
+	inline vec3f getLocalVelocity_impl() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942240)); return (this->*_f)(); }
+	inline vec3f getLocalVelocity() { typedef vec3f (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(); }
 	virtual void setBoxColliderMask_vf24(unsigned __int64 box, unsigned long mask);
-	inline void setBoxColliderMask_impl(unsigned __int64 box, unsigned long mask) { typedef void (*_fpt)(RigidBodyODE *pthis, unsigned __int64, unsigned long); _fpt _f=(_fpt)_drva(2943072); return _f(this, box, mask); }
-	inline void setBoxColliderMask(unsigned __int64 box, unsigned long mask) { return setBoxColliderMask_vf24(box, mask); }
+	inline void setBoxColliderMask_impl(unsigned __int64 box, unsigned long mask) { typedef void (RigidBodyODE::*_fpt)(unsigned __int64, unsigned long); auto _f=xcast<_fpt>(_drva(2943072)); return (this->*_f)(box, mask); }
+	inline void setBoxColliderMask(unsigned __int64 box, unsigned long mask) { typedef void (RigidBodyODE::*_fpt)(unsigned __int64, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)(box, mask); }
 	virtual unsigned __int64 addBoxCollider_vf25(const vec3f & pos, const vec3f & size, unsigned int category, unsigned long mask, unsigned int spaceId);
-	inline unsigned __int64 addBoxCollider_impl(const vec3f & pos, const vec3f & size, unsigned int category, unsigned long mask, unsigned int spaceId) { typedef unsigned __int64 (*_fpt)(RigidBodyODE *pthis, const vec3f &, const vec3f &, unsigned int, unsigned long, unsigned int); _fpt _f=(_fpt)_drva(2940336); return _f(this, pos, size, category, mask, spaceId); }
-	inline unsigned __int64 addBoxCollider(const vec3f & pos, const vec3f & size, unsigned int category, unsigned long mask, unsigned int spaceId) { return addBoxCollider_vf25(pos, size, category, mask, spaceId); }
+	inline unsigned __int64 addBoxCollider_impl(const vec3f & pos, const vec3f & size, unsigned int category, unsigned long mask, unsigned int spaceId) { typedef unsigned __int64 (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &, unsigned int, unsigned long, unsigned int); auto _f=xcast<_fpt>(_drva(2940336)); return (this->*_f)(pos, size, category, mask, spaceId); }
+	inline unsigned __int64 addBoxCollider(const vec3f & pos, const vec3f & size, unsigned int category, unsigned long mask, unsigned int spaceId) { typedef unsigned __int64 (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &, unsigned int, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 25)); return (this->*_f)(pos, size, category, mask, spaceId); }
 	virtual void addSphereCollider_vf26(const vec3f & pos, float radius, unsigned int group, ISphereCollisionCallback * callback);
-	inline void addSphereCollider_impl(const vec3f & pos, float radius, unsigned int group, ISphereCollisionCallback * callback) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &, float, unsigned int, ISphereCollisionCallback *); _fpt _f=(_fpt)_drva(96368); return _f(this, pos, radius, group, callback); }
-	inline void addSphereCollider(const vec3f & pos, float radius, unsigned int group, ISphereCollisionCallback * callback) { return addSphereCollider_vf26(pos, radius, group, callback); }
+	inline void addSphereCollider_impl(const vec3f & pos, float radius, unsigned int group, ISphereCollisionCallback * callback) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, float, unsigned int, ISphereCollisionCallback *); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(pos, radius, group, callback); }
+	inline void addSphereCollider(const vec3f & pos, float radius, unsigned int group, ISphereCollisionCallback * callback) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, float, unsigned int, ISphereCollisionCallback *); auto _f=xcast<_fpt>(get_vfp(this, 26)); return (this->*_f)(pos, radius, group, callback); }
 	virtual void addLocalForce_vf27(const vec3f & f);
-	inline void addLocalForce_impl(const vec3f & f) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2940800); return _f(this, f); }
-	inline void addLocalForce(const vec3f & f) { return addLocalForce_vf27(f); }
+	inline void addLocalForce_impl(const vec3f & f) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2940800)); return (this->*_f)(f); }
+	inline void addLocalForce(const vec3f & f) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 27)); return (this->*_f)(f); }
 	virtual void addLocalTorque_vf28(const vec3f & t);
-	inline void addLocalTorque_impl(const vec3f & t) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2941024); return _f(this, t); }
-	inline void addLocalTorque(const vec3f & t) { return addLocalTorque_vf28(t); }
+	inline void addLocalTorque_impl(const vec3f & t) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2941024)); return (this->*_f)(t); }
+	inline void addLocalTorque(const vec3f & t) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 28)); return (this->*_f)(t); }
 	virtual void addLocalForceAtPos_vf29(const vec3f & f, const vec3f & p);
-	inline void addLocalForceAtPos_impl(const vec3f & f, const vec3f & p) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2940944); return _f(this, f, p); }
-	inline void addLocalForceAtPos(const vec3f & f, const vec3f & p) { return addLocalForceAtPos_vf29(f, p); }
+	inline void addLocalForceAtPos_impl(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2940944)); return (this->*_f)(f, p); }
+	inline void addLocalForceAtPos(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 29)); return (this->*_f)(f, p); }
 	virtual void addLocalForceAtLocalPos_vf30(const vec3f & f, const vec3f & p);
-	inline void addLocalForceAtLocalPos_impl(const vec3f & f, const vec3f & p) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2940864); return _f(this, f, p); }
-	inline void addLocalForceAtLocalPos(const vec3f & f, const vec3f & p) { return addLocalForceAtLocalPos_vf30(f, p); }
+	inline void addLocalForceAtLocalPos_impl(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2940864)); return (this->*_f)(f, p); }
+	inline void addLocalForceAtLocalPos(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 30)); return (this->*_f)(f, p); }
 	virtual void addForceAtLocalPos_vf31(const vec3f & f, const vec3f & p);
-	inline void addForceAtLocalPos_impl(const vec3f & f, const vec3f & p) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2940640); return _f(this, f, p); }
-	inline void addForceAtLocalPos(const vec3f & f, const vec3f & p) { return addForceAtLocalPos_vf31(f, p); }
+	inline void addForceAtLocalPos_impl(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2940640)); return (this->*_f)(f, p); }
+	inline void addForceAtLocalPos(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 31)); return (this->*_f)(f, p); }
 	virtual vec3f getLocalPointVelocity_vf32(const vec3f & p);
-	inline vec3f getLocalPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2942176); return _f(this, p); }
-	inline vec3f getLocalPointVelocity(const vec3f & p) { return getLocalPointVelocity_vf32(p); }
+	inline vec3f getLocalPointVelocity_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2942176)); return (this->*_f)(p); }
+	inline vec3f getLocalPointVelocity(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 32)); return (this->*_f)(p); }
 	virtual vec3f getPointVelocity_vf33(const vec3f & p);
-	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2942464); return _f(this, p); }
-	inline vec3f getPointVelocity(const vec3f & p) { return getPointVelocity_vf33(p); }
+	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2942464)); return (this->*_f)(p); }
+	inline vec3f getPointVelocity(const vec3f & p) { typedef vec3f (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 33)); return (this->*_f)(p); }
 	virtual void addForceAtPos_vf34(const vec3f & f, const vec3f & p);
-	inline void addForceAtPos_impl(const vec3f & f, const vec3f & p) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2940720); return _f(this, f, p); }
-	inline void addForceAtPos(const vec3f & f, const vec3f & p) { return addForceAtPos_vf34(f, p); }
+	inline void addForceAtPos_impl(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2940720)); return (this->*_f)(f, p); }
+	inline void addForceAtPos(const vec3f & f, const vec3f & p) { typedef void (RigidBodyODE::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 34)); return (this->*_f)(f, p); }
 	virtual void addTorque_vf35(const vec3f & t);
-	inline void addTorque_impl(const vec3f & t) { typedef void (*_fpt)(RigidBodyODE *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2941904); return _f(this, t); }
-	inline void addTorque(const vec3f & t) { return addTorque_vf35(t); }
+	inline void addTorque_impl(const vec3f & t) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2941904)); return (this->*_f)(t); }
+	inline void addTorque(const vec3f & t) { typedef void (RigidBodyODE::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 35)); return (this->*_f)(t); }
 	virtual void addMeshCollider_vf0(float * vertices, unsigned int verticesCount, unsigned short * indices, unsigned int indicesCount, mat44f * mat, unsigned long category, unsigned long collideMask, unsigned int spaceId);
-	inline void addMeshCollider_impl(float * vertices, unsigned int verticesCount, unsigned short * indices, unsigned int indicesCount, mat44f * mat, unsigned long category, unsigned long collideMask, unsigned int spaceId) { typedef void (*_fpt)(RigidBodyODE *pthis, float *, unsigned int, unsigned short *, unsigned int, mat44f *, unsigned long, unsigned long, unsigned int); _fpt _f=(_fpt)_drva(2941056); return _f(this, vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId); }
-	inline void addMeshCollider(float * vertices, unsigned int verticesCount, unsigned short * indices, unsigned int indicesCount, mat44f * mat, unsigned long category, unsigned long collideMask, unsigned int spaceId) { return addMeshCollider_vf0(vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId); }
+	inline void addMeshCollider_impl(float * vertices, unsigned int verticesCount, unsigned short * indices, unsigned int indicesCount, mat44f * mat, unsigned long category, unsigned long collideMask, unsigned int spaceId) { typedef void (RigidBodyODE::*_fpt)(float *, unsigned int, unsigned short *, unsigned int, mat44f *, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(_drva(2941056)); return (this->*_f)(vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId); }
+	inline void addMeshCollider(float * vertices, unsigned int verticesCount, unsigned short * indices, unsigned int indicesCount, mat44f * mat, unsigned long category, unsigned long collideMask, unsigned int spaceId) { typedef void (RigidBodyODE::*_fpt)(float *, unsigned int, unsigned short *, unsigned int, mat44f *, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId); }
 	virtual void setMeshCollideCategory_vf37(unsigned int meshIndex, unsigned long category);
-	inline void setMeshCollideCategory_impl(unsigned int meshIndex, unsigned long category) { typedef void (*_fpt)(RigidBodyODE *pthis, unsigned int, unsigned long); _fpt _f=(_fpt)_drva(2943392); return _f(this, meshIndex, category); }
-	inline void setMeshCollideCategory(unsigned int meshIndex, unsigned long category) { return setMeshCollideCategory_vf37(meshIndex, category); }
+	inline void setMeshCollideCategory_impl(unsigned int meshIndex, unsigned long category) { typedef void (RigidBodyODE::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(_drva(2943392)); return (this->*_f)(meshIndex, category); }
+	inline void setMeshCollideCategory(unsigned int meshIndex, unsigned long category) { typedef void (RigidBodyODE::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 37)); return (this->*_f)(meshIndex, category); }
 	virtual void setMeshCollideMask_vf38(unsigned int meshIndex, unsigned long mask);
-	inline void setMeshCollideMask_impl(unsigned int meshIndex, unsigned long mask) { typedef void (*_fpt)(RigidBodyODE *pthis, unsigned int, unsigned long); _fpt _f=(_fpt)_drva(2943424); return _f(this, meshIndex, mask); }
-	inline void setMeshCollideMask(unsigned int meshIndex, unsigned long mask) { return setMeshCollideMask_vf38(meshIndex, mask); }
+	inline void setMeshCollideMask_impl(unsigned int meshIndex, unsigned long mask) { typedef void (RigidBodyODE::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(_drva(2943424)); return (this->*_f)(meshIndex, mask); }
+	inline void setMeshCollideMask(unsigned int meshIndex, unsigned long mask) { typedef void (RigidBodyODE::*_fpt)(unsigned int, unsigned long); auto _f=xcast<_fpt>(get_vfp(this, 38)); return (this->*_f)(meshIndex, mask); }
 	virtual unsigned long getMeshCollideCategory_vf39(unsigned int meshIndex);
-	inline unsigned long getMeshCollideCategory_impl(unsigned int meshIndex) { typedef unsigned long (*_fpt)(RigidBodyODE *pthis, unsigned int); _fpt _f=(_fpt)_drva(2942368); return _f(this, meshIndex); }
-	inline unsigned long getMeshCollideCategory(unsigned int meshIndex) { return getMeshCollideCategory_vf39(meshIndex); }
+	inline unsigned long getMeshCollideCategory_impl(unsigned int meshIndex) { typedef unsigned long (RigidBodyODE::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2942368)); return (this->*_f)(meshIndex); }
+	inline unsigned long getMeshCollideCategory(unsigned int meshIndex) { typedef unsigned long (RigidBodyODE::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 39)); return (this->*_f)(meshIndex); }
 	virtual unsigned long getMeshCollideMask_vf40(unsigned int meshIndex);
-	inline unsigned long getMeshCollideMask_impl(unsigned int meshIndex) { typedef unsigned long (*_fpt)(RigidBodyODE *pthis, unsigned int); _fpt _f=(_fpt)_drva(2942416); return _f(this, meshIndex); }
-	inline unsigned long getMeshCollideMask(unsigned int meshIndex) { return getMeshCollideMask_vf40(meshIndex); }
+	inline unsigned long getMeshCollideMask_impl(unsigned int meshIndex) { typedef unsigned long (RigidBodyODE::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2942416)); return (this->*_f)(meshIndex); }
+	inline unsigned long getMeshCollideMask(unsigned int meshIndex) { typedef unsigned long (RigidBodyODE::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 40)); return (this->*_f)(meshIndex); }
 	virtual bool isEnabled_vf1();
-	inline bool isEnabled_impl() { typedef bool (*_fpt)(RigidBodyODE *pthis); _fpt _f=(_fpt)_drva(2942816); return _f(this); }
-	inline bool isEnabled() { return isEnabled_vf1(); }
+	inline bool isEnabled_impl() { typedef bool (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(_drva(2942816)); return (this->*_f)(); }
+	inline bool isEnabled() { typedef bool (RigidBodyODE::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void setEnabled_vf2(bool value);
-	inline void setEnabled_impl(bool value) { typedef void (*_fpt)(RigidBodyODE *pthis, bool); _fpt _f=(_fpt)_drva(2943088); return _f(this, value); }
-	inline void setEnabled(bool value) { return setEnabled_vf2(value); }
+	inline void setEnabled_impl(bool value) { typedef void (RigidBodyODE::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2943088)); return (this->*_f)(value); }
+	inline void setEnabled(bool value) { typedef void (RigidBodyODE::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RigidBodyODE)==72),"bad size");
 		static_assert((offsetof(RigidBodyODE,id)==0x8),"bad off");
@@ -14183,23 +14183,23 @@ public:
 	inline ksgui_ActiveButton() { }
 	inline ksgui_ActiveButton(const ksgui_ActiveButton& other) = default;
 	inline ksgui_ActiveButton& operator=(const ksgui_ActiveButton& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2404704); _f(this, name, gui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * gui) { typedef void (ksgui_ActiveButton::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2404704)); (this->*_f)(name, gui); }
 	virtual ~ksgui_ActiveButton();
-	inline void dtor() { typedef void (*_fpt)(ksgui_ActiveButton *pthis); _fpt _f=(_fpt)_drva(2405312); _f(this); }
-	inline void setMultipleTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2406144); return _f(this, filename); }
+	inline void dtor() { typedef void (ksgui_ActiveButton::*_fpt)(); auto _f=xcast<_fpt>(_drva(2405312)); (this->*_f)(); }
+	inline void setMultipleTexture(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (ksgui_ActiveButton::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2406144)); return (this->*_f)(filename); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, float); _fpt _f=(_fpt)_drva(2405648); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_ActiveButton::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2405648)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ActiveButton::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2405488); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	inline void setSelected(bool value) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, bool); _fpt _f=(_fpt)_drva(2407040); return _f(this, value); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_ActiveButton::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2405488)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_ActiveButton::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
+	inline void setSelected(bool value) { typedef void (ksgui_ActiveButton::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2407040)); return (this->*_f)(value); }
 	virtual void onVisibleChanged_vf8(bool newValue);
-	inline void onVisibleChanged_impl(bool newValue) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, bool); _fpt _f=(_fpt)_drva(2405632); return _f(this, newValue); }
-	inline void onVisibleChanged(bool newValue) { return onVisibleChanged_vf8(newValue); }
+	inline void onVisibleChanged_impl(bool newValue) { typedef void (ksgui_ActiveButton::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2405632)); return (this->*_f)(newValue); }
+	inline void onVisibleChanged(bool newValue) { typedef void (ksgui_ActiveButton::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(newValue); }
 	virtual void setText_vf17(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText);
-	inline void setText_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (*_fpt)(ksgui_ActiveButton *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2407072); return _f(this, aText); }
-	inline void setText(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { return setText_vf17(aText); }
+	inline void setText_impl(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (ksgui_ActiveButton::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2407072)); return (this->*_f)(aText); }
+	inline void setText(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aText) { typedef void (ksgui_ActiveButton::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(aText); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ActiveButton)==576),"bad size");
 		static_assert((offsetof(ksgui_ActiveButton,textCoord)==0x178),"bad off");
@@ -14249,20 +14249,20 @@ public:
 	inline ksgui_MovingBar() { }
 	inline ksgui_MovingBar(const ksgui_MovingBar& other) = default;
 	inline ksgui_MovingBar& operator=(const ksgui_MovingBar& other) = default;
-	inline void ctor(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui) { typedef void (*_fpt)(ksgui_MovingBar *pthis, ksgui_ScrollBar *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2468704); _f(this, scrollBar, aGui); }
+	inline void ctor(ksgui_ScrollBar * scrollBar, ksgui_GUI * aGui) { typedef void (ksgui_MovingBar::*_fpt)(ksgui_ScrollBar *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2468704)); (this->*_f)(scrollBar, aGui); }
 	virtual ~ksgui_MovingBar();
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_MovingBar *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2471936); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_MovingBar::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2471936)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_MovingBar::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2472112); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_MovingBar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2472112)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_MovingBar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onMouseUp_vf11(const OnMouseUpEvent & message);
-	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_MovingBar *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2472640); return _f(this, message); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (ksgui_MovingBar::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2472640)); return (this->*_f)(message); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_MovingBar::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(message); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_MovingBar *pthis, float); _fpt _f=(_fpt)_drva(2472912); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_MovingBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2472912)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_MovingBar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_MovingBar)==512),"bad size");
 		static_assert((offsetof(ksgui_MovingBar,sb)==0x178),"bad off");
@@ -14338,51 +14338,51 @@ public:
 	inline ksgui_Form() { }
 	inline ksgui_Form(const ksgui_Form& other) = default;
 	inline ksgui_Form& operator=(const ksgui_Form& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui, bool icanBeScaled) { typedef void (*_fpt)(ksgui_Form *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2381968); _f(this, iname, igui, icanBeScaled); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui, bool icanBeScaled) { typedef void (ksgui_Form::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); auto _f=xcast<_fpt>(_drva(2381968)); (this->*_f)(iname, igui, icanBeScaled); }
 	virtual ~ksgui_Form();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Form *pthis); _fpt _f=(_fpt)_drva(2384832); _f(this); }
-	inline void setAutoHideMode(bool mode) { typedef void (*_fpt)(ksgui_Form *pthis, bool); _fpt _f=(_fpt)_drva(2386480); return _f(this, mode); }
+	inline void dtor() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(_drva(2384832)); (this->*_f)(); }
+	inline void setAutoHideMode(bool mode) { typedef void (ksgui_Form::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2386480)); return (this->*_f)(mode); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Form *pthis, float); _fpt _f=(_fpt)_drva(2386144); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_Form::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2386144)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Form::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Form *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2385696); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_Form::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2385696)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_Form::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onTitleClicked_vf21(const ksgui_OnControlClicked & message);
-	inline void onTitleClicked_impl(const ksgui_OnControlClicked & message) { typedef void (*_fpt)(ksgui_Form *pthis, const ksgui_OnControlClicked &); _fpt _f=(_fpt)_drva(2385968); return _f(this, message); }
-	inline void onTitleClicked(const ksgui_OnControlClicked & message) { return onTitleClicked_vf21(message); }
+	inline void onTitleClicked_impl(const ksgui_OnControlClicked & message) { typedef void (ksgui_Form::*_fpt)(const ksgui_OnControlClicked &); auto _f=xcast<_fpt>(_drva(2385968)); return (this->*_f)(message); }
+	inline void onTitleClicked(const ksgui_OnControlClicked & message) { typedef void (ksgui_Form::*_fpt)(const ksgui_OnControlClicked &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(message); }
 	virtual void onKeyChar_vf14(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(ksgui_Form *pthis, unsigned int); _fpt _f=(_fpt)_drva(2385664); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf14(key); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (ksgui_Form::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2385664)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (ksgui_Form::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(key); }
 	virtual void onKeyDown_vf15(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(ksgui_Form *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(2385680); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf15(message); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (ksgui_Form::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(2385680)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (ksgui_Form::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(message); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Form *pthis, float, float); _fpt _f=(_fpt)_drva(2387296); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline void setIcon(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * fileName) { typedef void (*_fpt)(ksgui_Form *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2386704); return _f(this, fileName); }
-	inline void setPosition(float left, float top) { typedef void (*_fpt)(ksgui_Form *pthis, float, float); _fpt _f=(_fpt)_drva(2387280); return _f(this, left, top); }
-	inline void setIconVisible(bool visible) { typedef void (*_fpt)(ksgui_Form *pthis, bool); _fpt _f=(_fpt)_drva(2387136); return _f(this, visible); }
-	inline void setIconPosition(float x, float y) { typedef void (*_fpt)(ksgui_Form *pthis, float, float); _fpt _f=(_fpt)_drva(2387104); return _f(this, x, y); }
-	inline void setIconSize(float width, float height) { typedef void (*_fpt)(ksgui_Form *pthis, float, float); _fpt _f=(_fpt)_drva(2387120); return _f(this, width, height); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_Form::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2387296)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_Form::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
+	inline void setIcon(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * fileName) { typedef void (ksgui_Form::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2386704)); return (this->*_f)(fileName); }
+	inline void setPosition(float left, float top) { typedef void (ksgui_Form::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2387280)); return (this->*_f)(left, top); }
+	inline void setIconVisible(bool visible) { typedef void (ksgui_Form::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2387136)); return (this->*_f)(visible); }
+	inline void setIconPosition(float x, float y) { typedef void (ksgui_Form::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2387104)); return (this->*_f)(x, y); }
+	inline void setIconSize(float width, float height) { typedef void (ksgui_Form::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2387120)); return (this->*_f)(width, height); }
 	virtual void onVisibleChanged_vf8(bool newValue);
-	inline void onVisibleChanged_impl(bool newValue) { typedef void (*_fpt)(ksgui_Form *pthis, bool); _fpt _f=(_fpt)_drva(2386016); return _f(this, newValue); }
-	inline void onVisibleChanged(bool newValue) { return onVisibleChanged_vf8(newValue); }
+	inline void onVisibleChanged_impl(bool newValue) { typedef void (ksgui_Form::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2386016)); return (this->*_f)(newValue); }
+	inline void onVisibleChanged(bool newValue) { typedef void (ksgui_Form::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(newValue); }
 	virtual void shutdown_vf22();
-	inline void shutdown_impl() { typedef void (*_fpt)(ksgui_Form *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void shutdown() { return shutdown_vf22(); }
-	inline void setBlocked(bool value) { typedef void (*_fpt)(ksgui_Form *pthis, bool); _fpt _f=(_fpt)_drva(2386656); return _f(this, value); }
+	inline void shutdown_impl() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(); }
+	inline void setBlocked(bool value) { typedef void (ksgui_Form::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2386656)); return (this->*_f)(value); }
 	virtual bool hitTest_vf1(int x, int y);
-	inline bool hitTest_impl(int x, int y) { typedef bool (*_fpt)(ksgui_Form *pthis, int, int); _fpt _f=(_fpt)_drva(2385568); return _f(this, x, y); }
-	inline bool hitTest(int x, int y) { return hitTest_vf1(x, y); }
-	inline void updateScaleByMult() { typedef void (*_fpt)(ksgui_Form *pthis); _fpt _f=(_fpt)_drva(2387440); return _f(this); }
-	inline float getHeaderHeight() { typedef float (*_fpt)(ksgui_Form *pthis); _fpt _f=(_fpt)_drva(3194240); return _f(this); }
+	inline bool hitTest_impl(int x, int y) { typedef bool (ksgui_Form::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2385568)); return (this->*_f)(x, y); }
+	inline bool hitTest(int x, int y) { typedef bool (ksgui_Form::*_fpt)(int, int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(x, y); }
+	inline void updateScaleByMult() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(_drva(2387440)); return (this->*_f)(); }
+	inline float getHeaderHeight() { typedef float (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(_drva(3194240)); return (this->*_f)(); }
 	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_Form *pthis, float); _fpt _f=(_fpt)_drva(2386160); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
+	inline void scaleByMult_impl(float value) { typedef void (ksgui_Form::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2386160)); return (this->*_f)(value); }
+	inline void scaleByMult(float value) { typedef void (ksgui_Form::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(value); }
 	virtual void scaleByMult_vf20();
-	inline void scaleByMult_impl() { typedef void (*_fpt)(ksgui_Form *pthis); _fpt _f=(_fpt)_drva(2386448); return _f(this); }
-	inline void scaleByMult() { return scaleByMult_vf20(); }
+	inline void scaleByMult_impl() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(_drva(2386448)); return (this->*_f)(); }
+	inline void scaleByMult() { typedef void (ksgui_Form::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Form)==440),"bad size");
 		static_assert((offsetof(ksgui_Form,formTitle)==0x178),"bad off");
@@ -14457,38 +14457,38 @@ public:
 	inline InterpolatingSpline() { }
 	inline InterpolatingSpline(const InterpolatingSpline& other) = default;
 	inline InterpolatingSpline& operator=(const InterpolatingSpline& other) = default;
-	inline void ctor() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2026704); _f(this); }
+	inline void ctor() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2026704)); (this->*_f)(); }
 	virtual ~InterpolatingSpline();
-	inline void dtor() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2026816); _f(this); }
-	inline float worldToSpline(const vec3f & pos, int closestIndex) { typedef float (*_fpt)(InterpolatingSpline *pthis, const vec3f &, int); _fpt _f=(_fpt)_drva(2046960); return _f(this, pos, closestIndex); }
-	inline vec3f splineToWorld(float pos) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2046496); return _f(this, pos); }
-	inline float getNormalizedPosition(unsigned int index) { typedef float (*_fpt)(InterpolatingSpline *pthis, unsigned int); _fpt _f=(_fpt)_drva(2043264); return _f(this, index); }
-	inline unsigned int getLastIndexFromNorm(float t, float * blendToNext) { typedef unsigned int (*_fpt)(InterpolatingSpline *pthis, float, float *); _fpt _f=(_fpt)_drva(2042768); return _f(this, t, blendToNext); }
-	inline void bezierEndopoint() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2029344); return _f(this); }
-	inline float wrapPosition(float pos) { typedef float (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2048480); return _f(this, pos); }
-	inline void addPoint(const vec3f & p, int tag) { typedef void (*_fpt)(InterpolatingSpline *pthis, const vec3f &, int); _fpt _f=(_fpt)_drva(2029312); return _f(this, p, tag); }
-	inline void addSplinePoint(const SplinePoint & p) { typedef void (*_fpt)(InterpolatingSpline *pthis, const SplinePoint &); _fpt _f=(_fpt)_drva(2029328); return _f(this, p); }
-	inline float getSignedDistanceFromSpline(const vec3f & p, float splinePosition) { typedef float (*_fpt)(InterpolatingSpline *pthis, const vec3f &, float); _fpt _f=(_fpt)_drva(2043376); return _f(this, p, splinePosition); }
-	inline void computeSplineCoefficients() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2038048); return _f(this); }
-	inline void filterPointsTooClose(float minDistance) { typedef void (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2041856); return _f(this, minDistance); }
+	inline void dtor() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2026816)); (this->*_f)(); }
+	inline float worldToSpline(const vec3f & pos, int closestIndex) { typedef float (InterpolatingSpline::*_fpt)(const vec3f &, int); auto _f=xcast<_fpt>(_drva(2046960)); return (this->*_f)(pos, closestIndex); }
+	inline vec3f splineToWorld(float pos) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2046496)); return (this->*_f)(pos); }
+	inline float getNormalizedPosition(unsigned int index) { typedef float (InterpolatingSpline::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2043264)); return (this->*_f)(index); }
+	inline unsigned int getLastIndexFromNorm(float t, float * blendToNext) { typedef unsigned int (InterpolatingSpline::*_fpt)(float, float *); auto _f=xcast<_fpt>(_drva(2042768)); return (this->*_f)(t, blendToNext); }
+	inline void bezierEndopoint() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2029344)); return (this->*_f)(); }
+	inline float wrapPosition(float pos) { typedef float (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2048480)); return (this->*_f)(pos); }
+	inline void addPoint(const vec3f & p, int tag) { typedef void (InterpolatingSpline::*_fpt)(const vec3f &, int); auto _f=xcast<_fpt>(_drva(2029312)); return (this->*_f)(p, tag); }
+	inline void addSplinePoint(const SplinePoint & p) { typedef void (InterpolatingSpline::*_fpt)(const SplinePoint &); auto _f=xcast<_fpt>(_drva(2029328)); return (this->*_f)(p); }
+	inline float getSignedDistanceFromSpline(const vec3f & p, float splinePosition) { typedef float (InterpolatingSpline::*_fpt)(const vec3f &, float); auto _f=xcast<_fpt>(_drva(2043376)); return (this->*_f)(p, splinePosition); }
+	inline void computeSplineCoefficients() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2038048)); return (this->*_f)(); }
+	inline void filterPointsTooClose(float minDistance) { typedef void (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2041856)); return (this->*_f)(minDistance); }
 	virtual void clear_vf1();
-	inline void clear_impl() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2035008); return _f(this); }
-	inline void clear() { return clear_vf1(); }
-	inline void buildGrid() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2029952); return _f(this); }
-	inline void saveGrid(std::basic_ofstream<char,std::char_traits<char> > & out) { typedef void (*_fpt)(InterpolatingSpline *pthis, std::basic_ofstream<char,std::char_traits<char> > &); _fpt _f=(_fpt)_drva(2045776); return _f(this, out); }
-	inline void loadGrid(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (*_fpt)(InterpolatingSpline *pthis, std::basic_ifstream<char,std::char_traits<char> > &); _fpt _f=(_fpt)_drva(2044320); return _f(this, in); }
-	inline bool isGridOn() { typedef bool (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2043952); return _f(this); }
-	inline unsigned int closestPointIndex(const vec3f & point, float * distance) { typedef unsigned int (*_fpt)(InterpolatingSpline *pthis, const vec3f &, float *); _fpt _f=(_fpt)_drva(2035072); return _f(this, point, distance); }
-	inline void computeSplineLength() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2039216); return _f(this); }
-	inline vec3f linearProjection(const vec3f & point, int closestIndex) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, const vec3f &, int); _fpt _f=(_fpt)_drva(2043968); return _f(this, point, closestIndex); }
-	inline void popBack() { typedef void (*_fpt)(InterpolatingSpline *pthis); _fpt _f=(_fpt)_drva(2045024); return _f(this); }
-	inline vec3f calculateNthBezier(float t) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2033408); return _f(this, t); }
-	inline vec3f calculateCubicBezier(float t) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2032192); return _f(this, t); }
-	inline vec3f calculateCatmullRom(float t) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2031072); return _f(this, t); }
-	inline vec3f calculateUniformBSpline(float t) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2033968); return _f(this, t); }
-	inline vec3f calculateCubicSpline(float pos) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2032960); return _f(this, pos); }
-	inline vec3f calculateLinear(float pos) { typedef vec3f (*_fpt)(InterpolatingSpline *pthis, float); _fpt _f=(_fpt)_drva(2033024); return _f(this, pos); }
-	inline unsigned int closestPointIndexGrid(const vec3f & position, float * distance) { typedef unsigned int (*_fpt)(InterpolatingSpline *pthis, const vec3f &, float *); _fpt _f=(_fpt)_drva(2035104); return _f(this, position, distance); }
+	inline void clear_impl() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2035008)); return (this->*_f)(); }
+	inline void clear() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
+	inline void buildGrid() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2029952)); return (this->*_f)(); }
+	inline void saveGrid(std::basic_ofstream<char,std::char_traits<char> > & out) { typedef void (InterpolatingSpline::*_fpt)(std::basic_ofstream<char,std::char_traits<char> > &); auto _f=xcast<_fpt>(_drva(2045776)); return (this->*_f)(out); }
+	inline void loadGrid(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (InterpolatingSpline::*_fpt)(std::basic_ifstream<char,std::char_traits<char> > &); auto _f=xcast<_fpt>(_drva(2044320)); return (this->*_f)(in); }
+	inline bool isGridOn() { typedef bool (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2043952)); return (this->*_f)(); }
+	inline unsigned int closestPointIndex(const vec3f & point, float * distance) { typedef unsigned int (InterpolatingSpline::*_fpt)(const vec3f &, float *); auto _f=xcast<_fpt>(_drva(2035072)); return (this->*_f)(point, distance); }
+	inline void computeSplineLength() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2039216)); return (this->*_f)(); }
+	inline vec3f linearProjection(const vec3f & point, int closestIndex) { typedef vec3f (InterpolatingSpline::*_fpt)(const vec3f &, int); auto _f=xcast<_fpt>(_drva(2043968)); return (this->*_f)(point, closestIndex); }
+	inline void popBack() { typedef void (InterpolatingSpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2045024)); return (this->*_f)(); }
+	inline vec3f calculateNthBezier(float t) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2033408)); return (this->*_f)(t); }
+	inline vec3f calculateCubicBezier(float t) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2032192)); return (this->*_f)(t); }
+	inline vec3f calculateCatmullRom(float t) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2031072)); return (this->*_f)(t); }
+	inline vec3f calculateUniformBSpline(float t) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2033968)); return (this->*_f)(t); }
+	inline vec3f calculateCubicSpline(float pos) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2032960)); return (this->*_f)(pos); }
+	inline vec3f calculateLinear(float pos) { typedef vec3f (InterpolatingSpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2033024)); return (this->*_f)(pos); }
+	inline unsigned int closestPointIndexGrid(const vec3f & position, float * distance) { typedef unsigned int (InterpolatingSpline::*_fpt)(const vec3f &, float *); auto _f=xcast<_fpt>(_drva(2035104)); return (this->*_f)(position, distance); }
 	inline void _guard_obj() {
 		static_assert((sizeof(InterpolatingSpline)==112),"bad size");
 		static_assert((offsetof(InterpolatingSpline,grid)==0x28),"bad off");
@@ -14538,17 +14538,17 @@ public:
 	inline ksgui_TaskBarIcon() { }
 	inline ksgui_TaskBarIcon(const ksgui_TaskBarIcon& other) = default;
 	inline ksgui_TaskBarIcon& operator=(const ksgui_TaskBarIcon& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, std::shared_ptr<Font> * appFont, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::shared_ptr<Font> *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2474464); _f(this, name, appFont, igui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, std::shared_ptr<Font> * appFont, ksgui_GUI * igui) { typedef void (ksgui_TaskBarIcon::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::shared_ptr<Font> *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2474464)); (this->*_f)(name, appFont, igui); }
 	virtual ~ksgui_TaskBarIcon();
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2475968); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_TaskBarIcon::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2475968)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_TaskBarIcon::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, float); _fpt _f=(_fpt)_drva(2476240); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void setDescriptionText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2476608); return _f(this, text); }
-	inline void hide(bool value) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, bool); _fpt _f=(_fpt)_drva(2475808); return _f(this, value); }
-	inline void setIcon(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(ksgui_TaskBarIcon *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2476896); return _f(this, filename); }
+	inline void render_impl(float dt) { typedef void (ksgui_TaskBarIcon::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2476240)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_TaskBarIcon::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void setDescriptionText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (ksgui_TaskBarIcon::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2476608)); return (this->*_f)(text); }
+	inline void hide(bool value) { typedef void (ksgui_TaskBarIcon::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2475808)); return (this->*_f)(value); }
+	inline void setIcon(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (ksgui_TaskBarIcon::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2476896)); return (this->*_f)(filename); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_TaskBarIcon)==536),"bad size");
 		static_assert((offsetof(ksgui_TaskBarIcon,status)==0x178),"bad off");
@@ -14629,16 +14629,16 @@ public:
 	inline CameraOnBoard() { }
 	inline CameraOnBoard(const CameraOnBoard& other) = default;
 	inline CameraOnBoard& operator=(const CameraOnBoard& other) = default;
-	inline void ctor(Game * igame, CameraForward * cam, Sim * aSim) { typedef void (*_fpt)(CameraOnBoard *pthis, Game *, CameraForward *, Sim *); _fpt _f=(_fpt)_drva(820448); _f(this, igame, cam, aSim); }
+	inline void ctor(Game * igame, CameraForward * cam, Sim * aSim) { typedef void (CameraOnBoard::*_fpt)(Game *, CameraForward *, Sim *); auto _f=xcast<_fpt>(_drva(820448)); (this->*_f)(igame, cam, aSim); }
 	virtual ~CameraOnBoard();
-	inline void dtor() { typedef void (*_fpt)(CameraOnBoard *pthis); _fpt _f=(_fpt)_drva(824816); _f(this); }
+	inline void dtor() { typedef void (CameraOnBoard::*_fpt)(); auto _f=xcast<_fpt>(_drva(824816)); (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(CameraOnBoard *pthis, float); _fpt _f=(_fpt)_drva(827040); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void setPlayerFov(float aFov) { typedef void (*_fpt)(CameraOnBoard *pthis, float); _fpt _f=(_fpt)_drva(1697712); return _f(this, aFov); }
-	inline float getPlayerFov() { typedef float (*_fpt)(CameraOnBoard *pthis); _fpt _f=(_fpt)_drva(811440); return _f(this); }
-	inline void lookLeftRight(float dt) { typedef void (*_fpt)(CameraOnBoard *pthis, float); _fpt _f=(_fpt)_drva(826240); return _f(this, dt); }
-	inline void lookBack() { typedef void (*_fpt)(CameraOnBoard *pthis); _fpt _f=(_fpt)_drva(825952); return _f(this); }
+	inline void update_impl(float deltaT) { typedef void (CameraOnBoard::*_fpt)(float); auto _f=xcast<_fpt>(_drva(827040)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (CameraOnBoard::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void setPlayerFov(float aFov) { typedef void (CameraOnBoard::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1697712)); return (this->*_f)(aFov); }
+	inline float getPlayerFov() { typedef float (CameraOnBoard::*_fpt)(); auto _f=xcast<_fpt>(_drva(811440)); return (this->*_f)(); }
+	inline void lookLeftRight(float dt) { typedef void (CameraOnBoard::*_fpt)(float); auto _f=xcast<_fpt>(_drva(826240)); return (this->*_f)(dt); }
+	inline void lookBack() { typedef void (CameraOnBoard::*_fpt)(); auto _f=xcast<_fpt>(_drva(825952)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraOnBoard)==368),"bad size");
 		static_assert((offsetof(CameraOnBoard,camera)==0x58),"bad off");
@@ -14694,29 +14694,29 @@ public:
 	inline ksgui_GameScreen() { }
 	inline ksgui_GameScreen(const ksgui_GameScreen& other) = default;
 	inline ksgui_GameScreen& operator=(const ksgui_GameScreen& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_GameScreen *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2427856); _f(this, iname, igui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (ksgui_GameScreen::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2427856)); (this->*_f)(iname, igui); }
 	virtual ~ksgui_GameScreen();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_GameScreen *pthis, float); _fpt _f=(_fpt)_drva(2428384); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_GameScreen::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2428384)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_GameScreen::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void addControl_vf21(ksgui_Control * c, bool addToTaskBar);
-	inline void addControl_impl(ksgui_Control * c, bool addToTaskBar) { typedef void (*_fpt)(ksgui_GameScreen *pthis, ksgui_Control *, bool); _fpt _f=(_fpt)_drva(2428176); return _f(this, c, addToTaskBar); }
-	inline void addControl(ksgui_Control * c, bool addToTaskBar) { return addControl_vf21(c, addToTaskBar); }
-	inline void showDesktop() { typedef void (*_fpt)(ksgui_GameScreen *pthis); _fpt _f=(_fpt)_drva(2428528); return _f(this); }
-	inline int getOldAppsCount() { typedef int (*_fpt)(ksgui_GameScreen *pthis); _fpt _f=(_fpt)_drva(2428288); return _f(this); }
-	inline void shutdown() { typedef void (*_fpt)(ksgui_GameScreen *pthis); _fpt _f=(_fpt)_drva(2429120); return _f(this); }
+	inline void addControl_impl(ksgui_Control * c, bool addToTaskBar) { typedef void (ksgui_GameScreen::*_fpt)(ksgui_Control *, bool); auto _f=xcast<_fpt>(_drva(2428176)); return (this->*_f)(c, addToTaskBar); }
+	inline void addControl(ksgui_Control * c, bool addToTaskBar) { typedef void (ksgui_GameScreen::*_fpt)(ksgui_Control *, bool); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(c, addToTaskBar); }
+	inline void showDesktop() { typedef void (ksgui_GameScreen::*_fpt)(); auto _f=xcast<_fpt>(_drva(2428528)); return (this->*_f)(); }
+	inline int getOldAppsCount() { typedef int (ksgui_GameScreen::*_fpt)(); auto _f=xcast<_fpt>(_drva(2428288)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (ksgui_GameScreen::*_fpt)(); auto _f=xcast<_fpt>(_drva(2429120)); return (this->*_f)(); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_GameScreen *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2428320); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_GameScreen::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2428320)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_GameScreen::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseUp_vf11(const OnMouseUpEvent & message);
-	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_GameScreen *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2428352); return _f(this, message); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2428352)); return (this->*_f)(message); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_GameScreen *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2428336); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2428336)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onMouseWheelMovedEvent_vf13(const OnMouseWheelMovedEvent & message);
-	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_GameScreen *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2428368); return _f(this, message); }
-	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { return onMouseWheelMovedEvent_vf13(message); }
+	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2428368)); return (this->*_f)(message); }
+	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_GameScreen::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(message); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_GameScreen)==432),"bad size");
 		static_assert((offsetof(ksgui_GameScreen,appInteractionEnabled)==0x178),"bad off");
@@ -14788,83 +14788,83 @@ public:
 	inline SuspensionML() { }
 	inline SuspensionML(const SuspensionML& other) = default;
 	inline SuspensionML& operator=(const SuspensionML& other) = default;
-	inline void ctor(Car * car, int index) { typedef void (*_fpt)(SuspensionML *pthis, Car *, int); _fpt _f=(_fpt)_drva(2919968); _f(this, car, index); }
+	inline void ctor(Car * car, int index) { typedef void (SuspensionML::*_fpt)(Car *, int); auto _f=xcast<_fpt>(_drva(2919968)); (this->*_f)(car, index); }
 	virtual ~SuspensionML();
-	inline void dtor() { typedef void (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2920272); _f(this); }
+	inline void dtor() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2920272)); (this->*_f)(); }
 	virtual vec3f getBasePosition_vf10();
-	inline vec3f getBasePosition_impl() { typedef vec3f (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2921520); return _f(this); }
-	inline vec3f getBasePosition() { return getBasePosition_vf10(); }
+	inline vec3f getBasePosition_impl() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2921520)); return (this->*_f)(); }
+	inline vec3f getBasePosition() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
 	virtual SuspensionStatus & getStatus_vf9();
-	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922448); return _f(this); }
-	inline SuspensionStatus & getStatus() { return getStatus_vf9(); }
+	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922448)); return (this->*_f)(); }
+	inline SuspensionStatus & getStatus() { typedef SuspensionStatus & (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual void attach_vf8();
-	inline void attach_impl() { typedef void (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2921504); return _f(this); }
-	inline void attach() { return attach_vf8(); }
+	inline void attach_impl() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2921504)); return (this->*_f)(); }
+	inline void attach() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual void step_vf22(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SuspensionML *pthis, float); _fpt _f=(_fpt)_drva(2927360); return _f(this, dt); }
-	inline void step(float dt) { return step_vf22(dt); }
+	inline void step_impl(float dt) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2927360)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(dt); }
 	virtual mat44f getHubWorldMatrix_vf1();
-	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922176); return _f(this); }
-	inline mat44f getHubWorldMatrix() { return getHubWorldMatrix_vf1(); }
+	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922176)); return (this->*_f)(); }
+	inline mat44f getHubWorldMatrix() { typedef mat44f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec3f getPointVelocity_vf2(const vec3f & p);
-	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(SuspensionML *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2922416); return _f(this, p); }
-	inline vec3f getPointVelocity(const vec3f & p) { return getPointVelocity_vf2(p); }
+	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (SuspensionML::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2922416)); return (this->*_f)(p); }
+	inline vec3f getPointVelocity(const vec3f & p) { typedef vec3f (SuspensionML::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(p); }
 	virtual void addForceAtPos_vf3(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque);
-	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (*_fpt)(SuspensionML *pthis, const vec3f &, const vec3f &, bool, bool); _fpt _f=(_fpt)_drva(2920912); return _f(this, force, pos, driven, addToSteerTorque); }
-	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { return addForceAtPos_vf3(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionML::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(_drva(2920912)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionML::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
 	virtual void addTorque_vf4(const vec3f & torque);
-	inline void addTorque_impl(const vec3f & torque) { typedef void (*_fpt)(SuspensionML *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2921344); return _f(this, torque); }
-	inline void addTorque(const vec3f & torque) { return addTorque_vf4(torque); }
+	inline void addTorque_impl(const vec3f & torque) { typedef void (SuspensionML::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2921344)); return (this->*_f)(torque); }
+	inline void addTorque(const vec3f & torque) { typedef void (SuspensionML::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(torque); }
 	virtual void setSteerLengthOffset_vf5(float o);
-	inline void setSteerLengthOffset_impl(float o) { typedef void (*_fpt)(SuspensionML *pthis, float); _fpt _f=(_fpt)_drva(2927168); return _f(this, o); }
-	inline void setSteerLengthOffset(float o) { return setSteerLengthOffset_vf5(o); }
+	inline void setSteerLengthOffset_impl(float o) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2927168)); return (this->*_f)(o); }
+	inline void setSteerLengthOffset(float o) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(o); }
 	virtual void getSteerBasis_vf21(vec3f & center, vec3f & axis);
-	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (*_fpt)(SuspensionML *pthis, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2922464); return _f(this, center, axis); }
-	inline void getSteerBasis(vec3f & center, vec3f & axis) { return getSteerBasis_vf21(center, axis); }
+	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (SuspensionML::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(_drva(2922464)); return (this->*_f)(center, axis); }
+	inline void getSteerBasis(vec3f & center, vec3f & axis) { typedef void (SuspensionML::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(center, axis); }
 	virtual float getSteerTorque_vf6();
-	inline float getSteerTorque_impl() { typedef float (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922816); return _f(this); }
-	inline float getSteerTorque() { return getSteerTorque_vf6(); }
+	inline float getSteerTorque_impl() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922816)); return (this->*_f)(); }
+	inline float getSteerTorque() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual vec3f getHubAngularVelocity_vf7();
-	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922144); return _f(this); }
-	inline vec3f getHubAngularVelocity() { return getHubAngularVelocity_vf7(); }
+	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922144)); return (this->*_f)(); }
+	inline vec3f getHubAngularVelocity() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(); }
 	virtual float getK_vf11();
-	inline float getK_impl() { typedef float (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2890720); return _f(this); }
-	inline float getK() { return getK_vf11(); }
+	inline float getK_impl() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890720)); return (this->*_f)(); }
+	inline float getK() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	virtual Damper * getDamper_vf12();
-	inline Damper * getDamper_impl() { typedef Damper * (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2921584); return _f(this); }
-	inline Damper * getDamper() { return getDamper_vf12(); }
+	inline Damper * getDamper_impl() { typedef Damper * (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2921584)); return (this->*_f)(); }
+	inline Damper * getDamper() { typedef Damper * (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(); }
 	virtual float getPackerRange_vf13();
-	inline float getPackerRange_impl() { typedef float (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2740064); return _f(this); }
-	inline float getPackerRange() { return getPackerRange_vf13(); }
+	inline float getPackerRange_impl() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2740064)); return (this->*_f)(); }
+	inline float getPackerRange() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(); }
 	virtual std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_vf14(const mat44f & bodyMatrix, const mat44f & hubMatrix);
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (*_fpt)(SuspensionML *pthis, const mat44f &, const mat44f &); _fpt _f=(_fpt)_drva(2921600); return _f(this, bodyMatrix, hubMatrix); }
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { return getDebugLines_vf14(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionML::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(_drva(2921600)); return (this->*_f)(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionML::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(bodyMatrix, hubMatrix); }
 	virtual void setDamage_vf15(float amount);
-	inline void setDamage_impl(float amount) { typedef void (*_fpt)(SuspensionML *pthis, float); _fpt _f=(_fpt)_drva(2926976); return _f(this, amount); }
-	inline void setDamage(float amount) { return setDamage_vf15(amount); }
+	inline void setDamage_impl(float amount) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2926976)); return (this->*_f)(amount); }
+	inline void setDamage(float amount) { typedef void (SuspensionML::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(amount); }
 	virtual void resetDamage_vf16();
-	inline void resetDamage_impl() { typedef void (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2926960); return _f(this); }
-	inline void resetDamage() { return resetDamage_vf16(); }
+	inline void resetDamage_impl() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2926960)); return (this->*_f)(); }
+	inline void resetDamage() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(); }
 	virtual float getDamage_vf17();
-	inline float getDamage_impl() { typedef float (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2921552); return _f(this); }
-	inline float getDamage() { return getDamage_vf17(); }
+	inline float getDamage_impl() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2921552)); return (this->*_f)(); }
+	inline float getDamage() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(); }
 	virtual float getMass_vf18();
-	inline float getMass_impl() { typedef float (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922400); return _f(this); }
-	inline float getMass() { return getMass_vf18(); }
+	inline float getMass_impl() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922400)); return (this->*_f)(); }
+	inline float getMass() { typedef float (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void stop_vf19();
-	inline void stop_impl() { typedef void (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2928016); return _f(this); }
-	inline void stop() { return stop_vf19(); }
+	inline void stop_impl() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2928016)); return (this->*_f)(); }
+	inline void stop() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(); }
 	virtual vec3f getVelocity_vf20();
-	inline vec3f getVelocity_impl() { typedef vec3f (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2922832); return _f(this); }
-	inline vec3f getVelocity() { return getVelocity_vf20(); }
+	inline vec3f getVelocity_impl() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2922832)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	virtual void setERPCFM_vf23(float erp, float cfm);
-	inline void setERPCFM_impl(float erp, float cfm) { typedef void (*_fpt)(SuspensionML *pthis, float, float); _fpt _f=(_fpt)_drva(96368); return _f(this, erp, cfm); }
-	inline void setERPCFM(float erp, float cfm) { return setERPCFM_vf23(erp, cfm); }
+	inline void setERPCFM_impl(float erp, float cfm) { typedef void (SuspensionML::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(erp, cfm); }
+	inline void setERPCFM(float erp, float cfm) { typedef void (SuspensionML::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(erp, cfm); }
 	virtual void addLocalForceAndTorque_vf24(const vec3f & force, const vec3f & torque, const vec3f & driveTorque);
-	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (*_fpt)(SuspensionML *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2921200); return _f(this, force, torque, driveTorque); }
-	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { return addLocalForceAndTorque_vf24(force, torque, driveTorque); }
-	inline void loadINI(int index) { typedef void (*_fpt)(SuspensionML *pthis, int); _fpt _f=(_fpt)_drva(2922864); return _f(this, index); }
-	inline void setPositions() { typedef void (*_fpt)(SuspensionML *pthis); _fpt _f=(_fpt)_drva(2927056); return _f(this); }
+	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionML::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2921200)); return (this->*_f)(force, torque, driveTorque); }
+	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionML::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)(force, torque, driveTorque); }
+	inline void loadINI(int index) { typedef void (SuspensionML::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2922864)); return (this->*_f)(index); }
+	inline void setPositions() { typedef void (SuspensionML::*_fpt)(); auto _f=xcast<_fpt>(_drva(2927056)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SuspensionML)==200),"bad size");
 		static_assert((offsetof(SuspensionML,hub)==0x38),"bad off");
@@ -14918,27 +14918,27 @@ public:
 	inline ksgui_Slider() { }
 	inline ksgui_Slider(const ksgui_Slider& other) = default;
 	inline ksgui_Slider& operator=(const ksgui_Slider& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (*_fpt)(ksgui_Slider *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2423280); _f(this, name, myGui, dressed); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, ksgui_GUI * myGui, bool dressed) { typedef void (ksgui_Slider::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); auto _f=xcast<_fpt>(_drva(2423280)); (this->*_f)(name, myGui, dressed); }
 	virtual ~ksgui_Slider();
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2426240); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_Slider::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2426240)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Slider::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Slider *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2425280); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_Slider::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2425280)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_Slider::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2425616); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_Slider::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2425616)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_Slider::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onMouseUp_vf11(const OnMouseUpEvent & message);
-	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_Slider *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2426016); return _f(this, message); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (ksgui_Slider::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2426016)); return (this->*_f)(message); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_Slider::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(message); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Slider *pthis, float, float); _fpt _f=(_fpt)_drva(2427504); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline void updateMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2427536); return _f(this); }
-	inline void resetMarkers() { typedef void (*_fpt)(ksgui_Slider *pthis); _fpt _f=(_fpt)_drva(2426896); return _f(this); }
-	inline void setMarkerLeftPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427200); return _f(this, perc); }
-	inline void setMarkerRightPosition(float perc) { typedef void (*_fpt)(ksgui_Slider *pthis, float); _fpt _f=(_fpt)_drva(2427360); return _f(this, perc); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_Slider::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2427504)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_Slider::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
+	inline void updateMarkers() { typedef void (ksgui_Slider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2427536)); return (this->*_f)(); }
+	inline void resetMarkers() { typedef void (ksgui_Slider::*_fpt)(); auto _f=xcast<_fpt>(_drva(2426896)); return (this->*_f)(); }
+	inline void setMarkerLeftPosition(float perc) { typedef void (ksgui_Slider::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2427200)); return (this->*_f)(perc); }
+	inline void setMarkerRightPosition(float perc) { typedef void (ksgui_Slider::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2427360)); return (this->*_f)(perc); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Slider)==456),"bad size");
 		static_assert((offsetof(ksgui_Slider,evOnSliderInteraction)==0x178),"bad off");
@@ -15001,34 +15001,34 @@ public:
 	inline ksgui_ScrollBar() { }
 	inline ksgui_ScrollBar(const ksgui_ScrollBar& other) = default;
 	inline ksgui_ScrollBar& operator=(const ksgui_ScrollBar& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui, bool isDressed) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2469472); _f(this, iname, igui, isDressed); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui, bool isDressed) { typedef void (ksgui_ScrollBar::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *, bool); auto _f=xcast<_fpt>(_drva(2469472)); (this->*_f)(iname, igui, isDressed); }
 	virtual ~ksgui_ScrollBar();
-	inline void setItemsPerPage(unsigned int v) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, unsigned int); _fpt _f=(_fpt)_drva(2474160); return _f(this, v); }
+	inline void setItemsPerPage(unsigned int v) { typedef void (ksgui_ScrollBar::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2474160)); return (this->*_f)(v); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, float, float); _fpt _f=(_fpt)_drva(2474224); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline unsigned int getItemsPerPage() { typedef unsigned int (*_fpt)(ksgui_ScrollBar *pthis); _fpt _f=(_fpt)_drva(2471920); return _f(this); }
-	inline void setItemsNumber(unsigned int v) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, unsigned int); _fpt _f=(_fpt)_drva(2474144); return _f(this, v); }
-	inline void setValue(unsigned int v) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, unsigned int); _fpt _f=(_fpt)_drva(2474320); return _f(this, v); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_ScrollBar::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2474224)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_ScrollBar::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
+	inline unsigned int getItemsPerPage() { typedef unsigned int (ksgui_ScrollBar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2471920)); return (this->*_f)(); }
+	inline void setItemsNumber(unsigned int v) { typedef void (ksgui_ScrollBar::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2474144)); return (this->*_f)(v); }
+	inline void setValue(unsigned int v) { typedef void (ksgui_ScrollBar::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2474320)); return (this->*_f)(v); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, float); _fpt _f=(_fpt)_drva(2473312); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_ScrollBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2473312)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ScrollBar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void setRepeatInterval_vf16(float i);
-	inline void setRepeatInterval_impl(float i) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, float); _fpt _f=(_fpt)_drva(2474192); return _f(this, i); }
-	inline void setRepeatInterval(float i) { return setRepeatInterval_vf16(i); }
+	inline void setRepeatInterval_impl(float i) { typedef void (ksgui_ScrollBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2474192)); return (this->*_f)(i); }
+	inline void setRepeatInterval(float i) { typedef void (ksgui_ScrollBar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(i); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_ScrollBar *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2472096); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_ScrollBar::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2472096)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_ScrollBar::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseUp_vf11(const OnMouseUpEvent & message);
-	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2472656); return _f(this, message); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { return onMouseUp_vf11(message); }
+	inline void onMouseUp_impl(const OnMouseUpEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2472656)); return (this->*_f)(message); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2472496); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2472496)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
 	virtual void onMouseWheelMovedEvent_vf13(const OnMouseWheelMovedEvent & message);
-	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2472672); return _f(this, message); }
-	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { return onMouseWheelMovedEvent_vf13(message); }
-	inline void drawArrow(ksgui_Control * button, ksgui_eArrowsDirection direction) { typedef void (*_fpt)(ksgui_ScrollBar *pthis, ksgui_Control *, ksgui_eArrowsDirection); _fpt _f=(_fpt)_drva(2471376); return _f(this, button, direction); }
+	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2472672)); return (this->*_f)(message); }
+	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_ScrollBar::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(message); }
+	inline void drawArrow(ksgui_Control * button, ksgui_eArrowsDirection direction) { typedef void (ksgui_ScrollBar::*_fpt)(ksgui_Control *, ksgui_eArrowsDirection); auto _f=xcast<_fpt>(_drva(2471376)); return (this->*_f)(button, direction); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ScrollBar)==448),"bad size");
 		static_assert((offsetof(ksgui_ScrollBar,evOnValueChanged)==0x178),"bad off");
@@ -15105,83 +15105,83 @@ public:
 	inline SuspensionAxle() { }
 	inline SuspensionAxle(const SuspensionAxle& other) = default;
 	inline SuspensionAxle& operator=(const SuspensionAxle& other) = default;
-	inline void ctor(Car * car, RigidAxleSide side, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carDataPath) { typedef void (*_fpt)(SuspensionAxle *pthis, Car *, RigidAxleSide, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2911120); _f(this, car, side, carDataPath); }
+	inline void ctor(Car * car, RigidAxleSide side, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carDataPath) { typedef void (SuspensionAxle::*_fpt)(Car *, RigidAxleSide, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2911120)); (this->*_f)(car, side, carDataPath); }
 	virtual ~SuspensionAxle();
-	inline void dtor() { typedef void (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2915584); _f(this); }
+	inline void dtor() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2915584)); (this->*_f)(); }
 	virtual mat44f getHubWorldMatrix_vf1();
-	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2917440); return _f(this); }
-	inline mat44f getHubWorldMatrix() { return getHubWorldMatrix_vf1(); }
+	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2917440)); return (this->*_f)(); }
+	inline mat44f getHubWorldMatrix() { typedef mat44f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec3f getPointVelocity_vf2(const vec3f & p);
-	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(SuspensionAxle *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2917600); return _f(this, p); }
-	inline vec3f getPointVelocity(const vec3f & p) { return getPointVelocity_vf2(p); }
+	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (SuspensionAxle::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2917600)); return (this->*_f)(p); }
+	inline vec3f getPointVelocity(const vec3f & p) { typedef vec3f (SuspensionAxle::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(p); }
 	virtual void addForceAtPos_vf3(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque);
-	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (*_fpt)(SuspensionAxle *pthis, const vec3f &, const vec3f &, bool, bool); _fpt _f=(_fpt)_drva(2916096); return _f(this, force, pos, driven, addToSteerTorque); }
-	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { return addForceAtPos_vf3(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(_drva(2916096)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
 	virtual void addTorque_vf4(const vec3f & torque);
-	inline void addTorque_impl(const vec3f & torque) { typedef void (*_fpt)(SuspensionAxle *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2916256); return _f(this, torque); }
-	inline void addTorque(const vec3f & torque) { return addTorque_vf4(torque); }
+	inline void addTorque_impl(const vec3f & torque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2916256)); return (this->*_f)(torque); }
+	inline void addTorque(const vec3f & torque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(torque); }
 	virtual void setSteerLengthOffset_vf5(float o);
-	inline void setSteerLengthOffset_impl(float o) { typedef void (*_fpt)(SuspensionAxle *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, o); }
-	inline void setSteerLengthOffset(float o) { return setSteerLengthOffset_vf5(o); }
+	inline void setSteerLengthOffset_impl(float o) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(o); }
+	inline void setSteerLengthOffset(float o) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(o); }
 	virtual float getSteerTorque_vf6();
-	inline float getSteerTorque_impl() { typedef float (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(4518448); return _f(this); }
-	inline float getSteerTorque() { return getSteerTorque_vf6(); }
+	inline float getSteerTorque_impl() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(4518448)); return (this->*_f)(); }
+	inline float getSteerTorque() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual vec3f getHubAngularVelocity_vf7();
-	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2917408); return _f(this); }
-	inline vec3f getHubAngularVelocity() { return getHubAngularVelocity_vf7(); }
+	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2917408)); return (this->*_f)(); }
+	inline vec3f getHubAngularVelocity() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(); }
 	virtual void attach_vf8();
-	inline void attach_impl() { typedef void (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2916272); return _f(this); }
-	inline void attach() { return attach_vf8(); }
+	inline void attach_impl() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2916272)); return (this->*_f)(); }
+	inline void attach() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual SuspensionStatus & getStatus_vf9();
-	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2917632); return _f(this); }
-	inline SuspensionStatus & getStatus() { return getStatus_vf9(); }
+	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2917632)); return (this->*_f)(); }
+	inline SuspensionStatus & getStatus() { typedef SuspensionStatus & (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual vec3f getBasePosition_vf10();
-	inline vec3f getBasePosition_impl() { typedef vec3f (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2916288); return _f(this); }
-	inline vec3f getBasePosition() { return getBasePosition_vf10(); }
+	inline vec3f getBasePosition_impl() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2916288)); return (this->*_f)(); }
+	inline vec3f getBasePosition() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
 	virtual float getK_vf11();
-	inline float getK_impl() { typedef float (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2890720); return _f(this); }
-	inline float getK() { return getK_vf11(); }
+	inline float getK_impl() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890720)); return (this->*_f)(); }
+	inline float getK() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	virtual Damper * getDamper_vf12();
-	inline Damper * getDamper_impl() { typedef Damper * (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2916352); return _f(this); }
-	inline Damper * getDamper() { return getDamper_vf12(); }
+	inline Damper * getDamper_impl() { typedef Damper * (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2916352)); return (this->*_f)(); }
+	inline Damper * getDamper() { typedef Damper * (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(); }
 	virtual float getPackerRange_vf13();
-	inline float getPackerRange_impl() { typedef float (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(4518448); return _f(this); }
-	inline float getPackerRange() { return getPackerRange_vf13(); }
+	inline float getPackerRange_impl() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(4518448)); return (this->*_f)(); }
+	inline float getPackerRange() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(); }
 	virtual std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_vf14(const mat44f & bodyMatrix, const mat44f & hubMatrix);
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (*_fpt)(SuspensionAxle *pthis, const mat44f &, const mat44f &); _fpt _f=(_fpt)_drva(2916368); return _f(this, bodyMatrix, hubMatrix); }
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { return getDebugLines_vf14(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionAxle::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(_drva(2916368)); return (this->*_f)(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionAxle::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(bodyMatrix, hubMatrix); }
 	virtual void setDamage_vf15(float amount);
-	inline void setDamage_impl(float amount) { typedef void (*_fpt)(SuspensionAxle *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, amount); }
-	inline void setDamage(float amount) { return setDamage_vf15(amount); }
+	inline void setDamage_impl(float amount) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(amount); }
+	inline void setDamage(float amount) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(amount); }
 	virtual void resetDamage_vf16();
-	inline void resetDamage_impl() { typedef void (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void resetDamage() { return resetDamage_vf16(); }
+	inline void resetDamage_impl() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void resetDamage() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(); }
 	virtual float getDamage_vf17();
-	inline float getDamage_impl() { typedef float (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(4518448); return _f(this); }
-	inline float getDamage() { return getDamage_vf17(); }
+	inline float getDamage_impl() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(4518448)); return (this->*_f)(); }
+	inline float getDamage() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(); }
 	virtual float getMass_vf18();
-	inline float getMass_impl() { typedef float (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2917568); return _f(this); }
-	inline float getMass() { return getMass_vf18(); }
+	inline float getMass_impl() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2917568)); return (this->*_f)(); }
+	inline float getMass() { typedef float (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void stop_vf19();
-	inline void stop_impl() { typedef void (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2919856); return _f(this); }
-	inline void stop() { return stop_vf19(); }
+	inline void stop_impl() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2919856)); return (this->*_f)(); }
+	inline void stop() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(); }
 	virtual vec3f getVelocity_vf20();
-	inline vec3f getVelocity_impl() { typedef vec3f (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2917792); return _f(this); }
-	inline vec3f getVelocity() { return getVelocity_vf20(); }
+	inline vec3f getVelocity_impl() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2917792)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	virtual void step_vf22(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SuspensionAxle *pthis, float); _fpt _f=(_fpt)_drva(2918256); return _f(this, dt); }
-	inline void step(float dt) { return step_vf22(dt); }
-	inline void printRollCenter(float tyreRadius) { typedef void (*_fpt)(SuspensionAxle *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, tyreRadius); }
+	inline void step_impl(float dt) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2918256)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(dt); }
+	inline void printRollCenter(float tyreRadius) { typedef void (SuspensionAxle::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(tyreRadius); }
 	virtual void getSteerBasis_vf21(vec3f & center, vec3f & axis);
-	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (*_fpt)(SuspensionAxle *pthis, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2917648); return _f(this, center, axis); }
-	inline void getSteerBasis(vec3f & center, vec3f & axis) { return getSteerBasis_vf21(center, axis); }
+	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (SuspensionAxle::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(_drva(2917648)); return (this->*_f)(center, axis); }
+	inline void getSteerBasis(vec3f & center, vec3f & axis) { typedef void (SuspensionAxle::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(center, axis); }
 	virtual void setERPCFM_vf23(float erp, float cfm);
-	inline void setERPCFM_impl(float erp, float cfm) { typedef void (*_fpt)(SuspensionAxle *pthis, float, float); _fpt _f=(_fpt)_drva(2918016); return _f(this, erp, cfm); }
-	inline void setERPCFM(float erp, float cfm) { return setERPCFM_vf23(erp, cfm); }
+	inline void setERPCFM_impl(float erp, float cfm) { typedef void (SuspensionAxle::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2918016)); return (this->*_f)(erp, cfm); }
+	inline void setERPCFM(float erp, float cfm) { typedef void (SuspensionAxle::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(erp, cfm); }
 	virtual void addLocalForceAndTorque_vf24(const vec3f & force, const vec3f & torque, const vec3f & driveTorque);
-	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (*_fpt)(SuspensionAxle *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2916112); return _f(this, force, torque, driveTorque); }
-	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { return addLocalForceAndTorque_vf24(force, torque, driveTorque); }
-	inline void setPositions() { typedef void (*_fpt)(SuspensionAxle *pthis); _fpt _f=(_fpt)_drva(2918112); return _f(this); }
+	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2916112)); return (this->*_f)(force, torque, driveTorque); }
+	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionAxle::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)(force, torque, driveTorque); }
+	inline void setPositions() { typedef void (SuspensionAxle::*_fpt)(); auto _f=xcast<_fpt>(_drva(2918112)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SuspensionAxle)==176),"bad size");
 		static_assert((offsetof(SuspensionAxle,side)==0x38),"bad off");
@@ -15280,82 +15280,82 @@ public:
 	inline SuspensionStrut() { }
 	inline SuspensionStrut(const SuspensionStrut& other) = default;
 	inline SuspensionStrut& operator=(const SuspensionStrut& other) = default;
-	inline void ctor(Car * car, int index) { typedef void (*_fpt)(SuspensionStrut *pthis, Car *, int); _fpt _f=(_fpt)_drva(2898128); _f(this, car, index); }
+	inline void ctor(Car * car, int index) { typedef void (SuspensionStrut::*_fpt)(Car *, int); auto _f=xcast<_fpt>(_drva(2898128)); (this->*_f)(car, index); }
 	virtual ~SuspensionStrut();
 	virtual vec3f getBasePosition_vf10();
-	inline vec3f getBasePosition_impl() { typedef vec3f (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2901648); return _f(this); }
-	inline vec3f getBasePosition() { return getBasePosition_vf10(); }
+	inline vec3f getBasePosition_impl() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2901648)); return (this->*_f)(); }
+	inline vec3f getBasePosition() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
 	virtual SuspensionStatus & getStatus_vf9();
-	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2903392); return _f(this); }
-	inline SuspensionStatus & getStatus() { return getStatus_vf9(); }
+	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903392)); return (this->*_f)(); }
+	inline SuspensionStatus & getStatus() { typedef SuspensionStatus & (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual void attach_vf8();
-	inline void attach_impl() { typedef void (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2900224); return _f(this); }
-	inline void attach() { return attach_vf8(); }
-	inline void setPositions() { typedef void (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2908688); return _f(this); }
+	inline void attach_impl() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2900224)); return (this->*_f)(); }
+	inline void attach() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
+	inline void setPositions() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2908688)); return (this->*_f)(); }
 	virtual void step_vf22(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(SuspensionStrut *pthis, float); _fpt _f=(_fpt)_drva(2909696); return _f(this, dt); }
-	inline void step(float dt) { return step_vf22(dt); }
+	inline void step_impl(float dt) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2909696)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(dt); }
 	virtual void addForceAtPos_vf3(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque);
-	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (*_fpt)(SuspensionStrut *pthis, const vec3f &, const vec3f &, bool, bool); _fpt _f=(_fpt)_drva(2899296); return _f(this, force, pos, driven, addToSteerTorque); }
-	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { return addForceAtPos_vf3(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(_drva(2899296)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
 	virtual void getSteerBasis_vf21(vec3f & center, vec3f & axis);
-	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (*_fpt)(SuspensionStrut *pthis, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2903408); return _f(this, center, axis); }
-	inline void getSteerBasis(vec3f & center, vec3f & axis) { return getSteerBasis_vf21(center, axis); }
+	inline void getSteerBasis_impl(vec3f & center, vec3f & axis) { typedef void (SuspensionStrut::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(_drva(2903408)); return (this->*_f)(center, axis); }
+	inline void getSteerBasis(vec3f & center, vec3f & axis) { typedef void (SuspensionStrut::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(center, axis); }
 	virtual mat44f getHubWorldMatrix_vf1();
-	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2903120); return _f(this); }
-	inline mat44f getHubWorldMatrix() { return getHubWorldMatrix_vf1(); }
+	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903120)); return (this->*_f)(); }
+	inline mat44f getHubWorldMatrix() { typedef mat44f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec3f getPointVelocity_vf2(const vec3f & p);
-	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(SuspensionStrut *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2903360); return _f(this, p); }
-	inline vec3f getPointVelocity(const vec3f & p) { return getPointVelocity_vf2(p); }
+	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (SuspensionStrut::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2903360)); return (this->*_f)(p); }
+	inline vec3f getPointVelocity(const vec3f & p) { typedef vec3f (SuspensionStrut::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(p); }
 	virtual void addTorque_vf4(const vec3f & torque);
-	inline void addTorque_impl(const vec3f & torque) { typedef void (*_fpt)(SuspensionStrut *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2900064); return _f(this, torque); }
-	inline void addTorque(const vec3f & torque) { return addTorque_vf4(torque); }
+	inline void addTorque_impl(const vec3f & torque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2900064)); return (this->*_f)(torque); }
+	inline void addTorque(const vec3f & torque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(torque); }
 	virtual void setSteerLengthOffset_vf5(float o);
-	inline void setSteerLengthOffset_impl(float o) { typedef void (*_fpt)(SuspensionStrut *pthis, float); _fpt _f=(_fpt)_drva(2909504); return _f(this, o); }
-	inline void setSteerLengthOffset(float o) { return setSteerLengthOffset_vf5(o); }
+	inline void setSteerLengthOffset_impl(float o) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2909504)); return (this->*_f)(o); }
+	inline void setSteerLengthOffset(float o) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(o); }
 	virtual float getSteerTorque_vf6();
-	inline float getSteerTorque_impl() { typedef float (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2903760); return _f(this); }
-	inline float getSteerTorque() { return getSteerTorque_vf6(); }
+	inline float getSteerTorque_impl() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903760)); return (this->*_f)(); }
+	inline float getSteerTorque() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual vec3f getHubAngularVelocity_vf7();
-	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2890688); return _f(this); }
-	inline vec3f getHubAngularVelocity() { return getHubAngularVelocity_vf7(); }
+	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890688)); return (this->*_f)(); }
+	inline vec3f getHubAngularVelocity() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(); }
 	virtual float getK_vf11();
-	inline float getK_impl() { typedef float (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2890720); return _f(this); }
-	inline float getK() { return getK_vf11(); }
+	inline float getK_impl() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890720)); return (this->*_f)(); }
+	inline float getK() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	virtual Damper * getDamper_vf12();
-	inline Damper * getDamper_impl() { typedef Damper * (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2901712); return _f(this); }
-	inline Damper * getDamper() { return getDamper_vf12(); }
+	inline Damper * getDamper_impl() { typedef Damper * (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2901712)); return (this->*_f)(); }
+	inline Damper * getDamper() { typedef Damper * (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(); }
 	virtual float getPackerRange_vf13();
-	inline float getPackerRange_impl() { typedef float (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2740064); return _f(this); }
-	inline float getPackerRange() { return getPackerRange_vf13(); }
+	inline float getPackerRange_impl() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2740064)); return (this->*_f)(); }
+	inline float getPackerRange() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(); }
 	virtual std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_vf14(const mat44f & bodyMatrix, const mat44f & hubMatrix);
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (*_fpt)(SuspensionStrut *pthis, const mat44f &, const mat44f &); _fpt _f=(_fpt)_drva(2901728); return _f(this, bodyMatrix, hubMatrix); }
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { return getDebugLines_vf14(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionStrut::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(_drva(2901728)); return (this->*_f)(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (SuspensionStrut::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(bodyMatrix, hubMatrix); }
 	virtual void setDamage_vf15(float amount);
-	inline void setDamage_impl(float amount) { typedef void (*_fpt)(SuspensionStrut *pthis, float); _fpt _f=(_fpt)_drva(2908512); return _f(this, amount); }
-	inline void setDamage(float amount) { return setDamage_vf15(amount); }
+	inline void setDamage_impl(float amount) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2908512)); return (this->*_f)(amount); }
+	inline void setDamage(float amount) { typedef void (SuspensionStrut::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(amount); }
 	virtual float getDamage_vf17();
-	inline float getDamage_impl() { typedef float (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2901680); return _f(this); }
-	inline float getDamage() { return getDamage_vf17(); }
+	inline float getDamage_impl() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2901680)); return (this->*_f)(); }
+	inline float getDamage() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(); }
 	virtual void resetDamage_vf16();
-	inline void resetDamage_impl() { typedef void (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2908496); return _f(this); }
-	inline void resetDamage() { return resetDamage_vf16(); }
+	inline void resetDamage_impl() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2908496)); return (this->*_f)(); }
+	inline void resetDamage() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(); }
 	virtual float getMass_vf18();
-	inline float getMass_impl() { typedef float (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2903344); return _f(this); }
-	inline float getMass() { return getMass_vf18(); }
+	inline float getMass_impl() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903344)); return (this->*_f)(); }
+	inline float getMass() { typedef float (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void stop_vf19();
-	inline void stop_impl() { typedef void (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2911008); return _f(this); }
-	inline void stop() { return stop_vf19(); }
+	inline void stop_impl() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2911008)); return (this->*_f)(); }
+	inline void stop() { typedef void (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(); }
 	virtual vec3f getVelocity_vf20();
-	inline vec3f getVelocity_impl() { typedef vec3f (*_fpt)(SuspensionStrut *pthis); _fpt _f=(_fpt)_drva(2891120); return _f(this); }
-	inline vec3f getVelocity() { return getVelocity_vf20(); }
+	inline vec3f getVelocity_impl() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(_drva(2891120)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (SuspensionStrut::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	virtual void setERPCFM_vf23(float erp, float cfm);
-	inline void setERPCFM_impl(float erp, float cfm) { typedef void (*_fpt)(SuspensionStrut *pthis, float, float); _fpt _f=(_fpt)_drva(2908592); return _f(this, erp, cfm); }
-	inline void setERPCFM(float erp, float cfm) { return setERPCFM_vf23(erp, cfm); }
+	inline void setERPCFM_impl(float erp, float cfm) { typedef void (SuspensionStrut::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2908592)); return (this->*_f)(erp, cfm); }
+	inline void setERPCFM(float erp, float cfm) { typedef void (SuspensionStrut::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(erp, cfm); }
 	virtual void addLocalForceAndTorque_vf24(const vec3f & force, const vec3f & torque, const vec3f & driveTorque);
-	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (*_fpt)(SuspensionStrut *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2899584); return _f(this, force, torque, driveTorque); }
-	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { return addLocalForceAndTorque_vf24(force, torque, driveTorque); }
-	inline void loadINI(int index) { typedef void (*_fpt)(SuspensionStrut *pthis, int); _fpt _f=(_fpt)_drva(2903776); return _f(this, index); }
+	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2899584)); return (this->*_f)(force, torque, driveTorque); }
+	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (SuspensionStrut::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)(force, torque, driveTorque); }
+	inline void loadINI(int index) { typedef void (SuspensionStrut::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2903776)); return (this->*_f)(index); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SuspensionStrut)==488),"bad size");
 		static_assert((offsetof(SuspensionStrut,carBody)==0x38),"bad off");
@@ -15470,37 +15470,37 @@ public:
 	inline ksgui_Spinner() { }
 	inline ksgui_Spinner(const ksgui_Spinner& other) = default;
 	inline ksgui_Spinner& operator=(const ksgui_Spinner& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, bool isDressed, bool mirrored) { typedef void (*_fpt)(ksgui_Spinner *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, bool, bool); _fpt _f=(_fpt)_drva(2407104); _f(this, iname, igui, isDressed, mirrored); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, ksgui_GUI * igui, bool isDressed, bool mirrored) { typedef void (ksgui_Spinner::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ksgui_GUI *, bool, bool); auto _f=xcast<_fpt>(_drva(2407104)); (this->*_f)(iname, igui, isDressed, mirrored); }
 	virtual ~ksgui_Spinner();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Spinner *pthis); _fpt _f=(_fpt)_drva(2410368); _f(this); }
-	inline void setValue(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & itemName) { typedef void (*_fpt)(ksgui_Spinner *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2415920); return _f(this, itemName); }
-	inline void setValue(int v) { typedef void (*_fpt)(ksgui_Spinner *pthis, int); _fpt _f=(_fpt)_drva(2416224); return _f(this, v); }
+	inline void dtor() { typedef void (ksgui_Spinner::*_fpt)(); auto _f=xcast<_fpt>(_drva(2410368)); (this->*_f)(); }
+	inline void setValue(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & itemName) { typedef void (ksgui_Spinner::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2415920)); return (this->*_f)(itemName); }
+	inline void setValue(int v) { typedef void (ksgui_Spinner::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2416224)); return (this->*_f)(v); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Spinner *pthis, float); _fpt _f=(_fpt)_drva(2411984); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline int getValue() { typedef int (*_fpt)(ksgui_Spinner *pthis); _fpt _f=(_fpt)_drva(2411712); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getItemAt(unsigned int index) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_Spinner *pthis, unsigned int); _fpt _f=(_fpt)_drva(3316640); return _f(this, index); }
+	inline void render_impl(float dt) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2411984)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline int getValue() { typedef int (ksgui_Spinner::*_fpt)(); auto _f=xcast<_fpt>(_drva(2411712)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getItemAt(unsigned int index) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (ksgui_Spinner::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(3316640)); return (this->*_f)(index); }
 	virtual void setRepeatInterval_vf16(float i);
-	inline void setRepeatInterval_impl(float i) { typedef void (*_fpt)(ksgui_Spinner *pthis, float); _fpt _f=(_fpt)_drva(2415552); return _f(this, i); }
-	inline void setRepeatInterval(float i) { return setRepeatInterval_vf16(i); }
-	inline void addItem(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * item) { typedef void (*_fpt)(ksgui_Spinner *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2411392); return _f(this, item); }
-	inline void setLabelText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (*_fpt)(ksgui_Spinner *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2415296); return _f(this, text); }
+	inline void setRepeatInterval_impl(float i) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2415552)); return (this->*_f)(i); }
+	inline void setRepeatInterval(float i) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(i); }
+	inline void addItem(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * item) { typedef void (ksgui_Spinner::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2411392)); return (this->*_f)(item); }
+	inline void setLabelText(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * text) { typedef void (ksgui_Spinner::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2415296)); return (this->*_f)(text); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_Spinner *pthis, float, float); _fpt _f=(_fpt)_drva(2415584); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
-	inline void setPosition(float x, float y) { typedef void (*_fpt)(ksgui_Spinner *pthis, float, float); _fpt _f=(_fpt)_drva(2415408); return _f(this, x, y); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentItem() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(ksgui_Spinner *pthis); _fpt _f=(_fpt)_drva(2411552); return _f(this); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_Spinner::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2415584)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_Spinner::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
+	inline void setPosition(float x, float y) { typedef void (ksgui_Spinner::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2415408)); return (this->*_f)(x, y); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentItem() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (ksgui_Spinner::*_fpt)(); auto _f=xcast<_fpt>(_drva(2411552)); return (this->*_f)(); }
 	virtual bool onMouseDown_vf10(const OnMouseDownEvent & message);
-	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (*_fpt)(ksgui_Spinner *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2411728); return _f(this, message); }
-	inline bool onMouseDown(const OnMouseDownEvent & message) { return onMouseDown_vf10(message); }
+	inline bool onMouseDown_impl(const OnMouseDownEvent & message) { typedef bool (ksgui_Spinner::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2411728)); return (this->*_f)(message); }
+	inline bool onMouseDown(const OnMouseDownEvent & message) { typedef bool (ksgui_Spinner::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(message); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Spinner *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2411792); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	inline void setDrawArrows(bool draw) { typedef void (*_fpt)(ksgui_Spinner *pthis, bool); _fpt _f=(_fpt)_drva(2414640); return _f(this, draw); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_Spinner::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2411792)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_Spinner::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
+	inline void setDrawArrows(bool draw) { typedef void (ksgui_Spinner::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2414640)); return (this->*_f)(draw); }
 	virtual void scaleByMult_vf19(float value);
-	inline void scaleByMult_impl(float value) { typedef void (*_fpt)(ksgui_Spinner *pthis, float); _fpt _f=(_fpt)_drva(2414592); return _f(this, value); }
-	inline void scaleByMult(float value) { return scaleByMult_vf19(value); }
-	inline void resize(float value) { typedef void (*_fpt)(ksgui_Spinner *pthis, float); _fpt _f=(_fpt)_drva(2414256); return _f(this, value); }
+	inline void scaleByMult_impl(float value) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2414592)); return (this->*_f)(value); }
+	inline void scaleByMult(float value) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(value); }
+	inline void resize(float value) { typedef void (ksgui_Spinner::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2414256)); return (this->*_f)(value); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Spinner)==624),"bad size");
 		static_assert((offsetof(ksgui_Spinner,homogeneousPressingDelay)==0x178),"bad off");
@@ -15596,21 +15596,21 @@ public:
 	inline ksgui_Taskbar() { }
 	inline ksgui_Taskbar(const ksgui_Taskbar& other) = default;
 	inline ksgui_Taskbar& operator=(const ksgui_Taskbar& other) = default;
-	inline void ctor(ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_GUI *); _fpt _f=(_fpt)_drva(2460192); _f(this, igui); }
+	inline void ctor(ksgui_GUI * igui) { typedef void (ksgui_Taskbar::*_fpt)(ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2460192)); (this->*_f)(igui); }
 	virtual ~ksgui_Taskbar();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2462304); _f(this); }
+	inline void dtor() { typedef void (ksgui_Taskbar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2462304)); (this->*_f)(); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Taskbar *pthis, float); _fpt _f=(_fpt)_drva(2465872); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void addForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_Taskbar *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2464784); return _f(this, form); }
+	inline void render_impl(float dt) { typedef void (ksgui_Taskbar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2465872)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Taskbar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void addForm(ksgui_Form * form) { typedef void (ksgui_Taskbar::*_fpt)(ksgui_Form *); auto _f=xcast<_fpt>(_drva(2464784)); return (this->*_f)(form); }
 	virtual void onMouseMove_vf12(const OnMouseMoveEvent & message);
-	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2465648); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { return onMouseMove_vf12(message); }
-	inline void mouseWheelMoved(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_Taskbar *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2465456); return _f(this, message); }
-	inline void selectVirtualDesktop(int id) { typedef void (*_fpt)(ksgui_Taskbar *pthis, int); _fpt _f=(_fpt)_drva(2466480); return _f(this, id); }
-	inline short cycleDekstop() { typedef short (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2465264); return _f(this); }
-	inline void updateAppIconsPosition() { typedef void (*_fpt)(ksgui_Taskbar *pthis); _fpt _f=(_fpt)_drva(2466656); return _f(this); }
-	inline ksgui_Control * addDesktop(int id, int x, int y) { typedef ksgui_Control * (*_fpt)(ksgui_Taskbar *pthis, int, int, int); _fpt _f=(_fpt)_drva(2464240); return _f(this, id, x, y); }
+	inline void onMouseMove_impl(const OnMouseMoveEvent & message) { typedef void (ksgui_Taskbar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2465648)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_Taskbar::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(message); }
+	inline void mouseWheelMoved(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_Taskbar::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2465456)); return (this->*_f)(message); }
+	inline void selectVirtualDesktop(int id) { typedef void (ksgui_Taskbar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2466480)); return (this->*_f)(id); }
+	inline short cycleDekstop() { typedef short (ksgui_Taskbar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2465264)); return (this->*_f)(); }
+	inline void updateAppIconsPosition() { typedef void (ksgui_Taskbar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2466656)); return (this->*_f)(); }
+	inline ksgui_Control * addDesktop(int id, int x, int y) { typedef ksgui_Control * (ksgui_Taskbar::*_fpt)(int, int, int); auto _f=xcast<_fpt>(_drva(2464240)); return (this->*_f)(id, x, y); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Taskbar)==616),"bad size");
 		static_assert((offsetof(ksgui_Taskbar,targetX)==0x178),"bad off");
@@ -15698,23 +15698,23 @@ public:
 	inline GLRenderer(const GLRenderer& other) = default;
 	inline GLRenderer& operator=(const GLRenderer& other) = default;
 	virtual ~GLRenderer();
-	inline void dtor() { typedef void (*_fpt)(GLRenderer *pthis); _fpt _f=(_fpt)_drva(2089920); _f(this); }
-	inline void begin(eGLPrimitiveType type, Shader * ishader) { typedef void (*_fpt)(GLRenderer *pthis, eGLPrimitiveType, Shader *); _fpt _f=(_fpt)_drva(2091008); return _f(this, type, ishader); }
-	inline void vertex3f(const vec3f & v) { typedef void (*_fpt)(GLRenderer *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2096128); return _f(this, v); }
-	inline void vertex3f(float x, float y, float z) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float); _fpt _f=(_fpt)_drva(2096160); return _f(this, x, y, z); }
-	inline void vertex3fv(const float * v) { typedef void (*_fpt)(GLRenderer *pthis, const float *); _fpt _f=(_fpt)_drva(2096128); return _f(this, v); }
-	inline void end() { typedef void (*_fpt)(GLRenderer *pthis); _fpt _f=(_fpt)_drva(2091120); return _f(this); }
-	inline void color3f(float r, float g, float b) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float); _fpt _f=(_fpt)_drva(2091040); return _f(this, r, g, b); }
-	inline void color4f(const vec4f & v) { typedef void (*_fpt)(GLRenderer *pthis, const vec4f &); _fpt _f=(_fpt)_drva(2091072); return _f(this, v); }
-	inline void color4f(float r, float g, float b, float a) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2091088); return _f(this, r, g, b, a); }
-	inline void texCoord2f(float u, float v) { typedef void (*_fpt)(GLRenderer *pthis, float, float); _fpt _f=(_fpt)_drva(2096112); return _f(this, u, v); }
-	inline void fullScreenQuad(Shader * ishader) { typedef void (*_fpt)(GLRenderer *pthis, Shader *); _fpt _f=(_fpt)_drva(2091680); return _f(this, ishader); }
-	inline void quad(float x, float y, float width, float height, bool textured, Shader * shader) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float, float, bool, Shader *); _fpt _f=(_fpt)_drva(2094112); return _f(this, x, y, width, height, textured, shader); }
-	inline void quadCentred(float x, float y, float width, float height, bool textured, Shader * shader) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float, float, bool, Shader *); _fpt _f=(_fpt)_drva(2094400); return _f(this, x, y, width, height, textured, shader); }
-	inline void quadCentredRotated(float x, float y, float width, float height, float rotationRAD, bool textured, Shader * shader) { typedef void (*_fpt)(GLRenderer *pthis, float, float, float, float, float, bool, Shader *); _fpt _f=(_fpt)_drva(2094768); return _f(this, x, y, width, height, rotationRAD, textured, shader); }
-	inline void spline(const Spline & spline) { typedef void (*_fpt)(GLRenderer *pthis, const Spline &); _fpt _f=(_fpt)_drva(2095424); return _f(this, spline); }
-	inline void ctor(GraphicsManager * r, unsigned int maxVertices, bool withFullScreenQuad) { typedef void (*_fpt)(GLRenderer *pthis, GraphicsManager *, unsigned int, bool); _fpt _f=(_fpt)_drva(2088928); _f(this, r, maxVertices, withFullScreenQuad); }
-	inline void initFullScreenQuad() { typedef void (*_fpt)(GLRenderer *pthis); _fpt _f=(_fpt)_drva(2091824); return _f(this); }
+	inline void dtor() { typedef void (GLRenderer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2089920)); (this->*_f)(); }
+	inline void begin(eGLPrimitiveType type, Shader * ishader) { typedef void (GLRenderer::*_fpt)(eGLPrimitiveType, Shader *); auto _f=xcast<_fpt>(_drva(2091008)); return (this->*_f)(type, ishader); }
+	inline void vertex3f(const vec3f & v) { typedef void (GLRenderer::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2096128)); return (this->*_f)(v); }
+	inline void vertex3f(float x, float y, float z) { typedef void (GLRenderer::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2096160)); return (this->*_f)(x, y, z); }
+	inline void vertex3fv(const float * v) { typedef void (GLRenderer::*_fpt)(const float *); auto _f=xcast<_fpt>(_drva(2096128)); return (this->*_f)(v); }
+	inline void end() { typedef void (GLRenderer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2091120)); return (this->*_f)(); }
+	inline void color3f(float r, float g, float b) { typedef void (GLRenderer::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2091040)); return (this->*_f)(r, g, b); }
+	inline void color4f(const vec4f & v) { typedef void (GLRenderer::*_fpt)(const vec4f &); auto _f=xcast<_fpt>(_drva(2091072)); return (this->*_f)(v); }
+	inline void color4f(float r, float g, float b, float a) { typedef void (GLRenderer::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2091088)); return (this->*_f)(r, g, b, a); }
+	inline void texCoord2f(float u, float v) { typedef void (GLRenderer::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2096112)); return (this->*_f)(u, v); }
+	inline void fullScreenQuad(Shader * ishader) { typedef void (GLRenderer::*_fpt)(Shader *); auto _f=xcast<_fpt>(_drva(2091680)); return (this->*_f)(ishader); }
+	inline void quad(float x, float y, float width, float height, bool textured, Shader * shader) { typedef void (GLRenderer::*_fpt)(float, float, float, float, bool, Shader *); auto _f=xcast<_fpt>(_drva(2094112)); return (this->*_f)(x, y, width, height, textured, shader); }
+	inline void quadCentred(float x, float y, float width, float height, bool textured, Shader * shader) { typedef void (GLRenderer::*_fpt)(float, float, float, float, bool, Shader *); auto _f=xcast<_fpt>(_drva(2094400)); return (this->*_f)(x, y, width, height, textured, shader); }
+	inline void quadCentredRotated(float x, float y, float width, float height, float rotationRAD, bool textured, Shader * shader) { typedef void (GLRenderer::*_fpt)(float, float, float, float, float, bool, Shader *); auto _f=xcast<_fpt>(_drva(2094768)); return (this->*_f)(x, y, width, height, rotationRAD, textured, shader); }
+	inline void spline(const Spline & spline) { typedef void (GLRenderer::*_fpt)(const Spline &); auto _f=xcast<_fpt>(_drva(2095424)); return (this->*_f)(spline); }
+	inline void ctor(GraphicsManager * r, unsigned int maxVertices, bool withFullScreenQuad) { typedef void (GLRenderer::*_fpt)(GraphicsManager *, unsigned int, bool); auto _f=xcast<_fpt>(_drva(2088928)); (this->*_f)(r, maxVertices, withFullScreenQuad); }
+	inline void initFullScreenQuad() { typedef void (GLRenderer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2091824)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GLRenderer)==272),"bad size");
 		static_assert((offsetof(GLRenderer,buffers)==0x8),"bad off");
@@ -15817,81 +15817,81 @@ public:
 	inline Suspension() { }
 	inline Suspension(const Suspension& other) = default;
 	inline Suspension& operator=(const Suspension& other) = default;
-	inline void ctor(Car * car, int index) { typedef void (*_fpt)(Suspension *pthis, Car *, int); _fpt _f=(_fpt)_drva(2885408); _f(this, car, index); }
+	inline void ctor(Car * car, int index) { typedef void (Suspension::*_fpt)(Car *, int); auto _f=xcast<_fpt>(_drva(2885408)); (this->*_f)(car, index); }
 	virtual ~Suspension();
 	virtual vec3f getBasePosition_vf10();
-	inline vec3f getBasePosition_impl() { typedef vec3f (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2901648); return _f(this); }
-	inline vec3f getBasePosition() { return getBasePosition_vf10(); }
+	inline vec3f getBasePosition_impl() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2901648)); return (this->*_f)(); }
+	inline vec3f getBasePosition() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
 	virtual SuspensionStatus & getStatus_vf9();
-	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2890736); return _f(this); }
-	inline SuspensionStatus & getStatus() { return getStatus_vf9(); }
+	inline SuspensionStatus & getStatus_impl() { typedef SuspensionStatus & (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890736)); return (this->*_f)(); }
+	inline SuspensionStatus & getStatus() { typedef SuspensionStatus & (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(); }
 	virtual void attach_vf8();
-	inline void attach_impl() { typedef void (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2887600); return _f(this); }
-	inline void attach() { return attach_vf8(); }
+	inline void attach_impl() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2887600)); return (this->*_f)(); }
+	inline void attach() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
 	virtual void step_vf22(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(Suspension *pthis, float); _fpt _f=(_fpt)_drva(2896784); return _f(this, dt); }
-	inline void step(float dt) { return step_vf22(dt); }
+	inline void step_impl(float dt) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2896784)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 22)); return (this->*_f)(dt); }
 	virtual mat44f getHubWorldMatrix_vf1();
-	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2903120); return _f(this); }
-	inline mat44f getHubWorldMatrix() { return getHubWorldMatrix_vf1(); }
+	inline mat44f getHubWorldMatrix_impl() { typedef mat44f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903120)); return (this->*_f)(); }
+	inline mat44f getHubWorldMatrix() { typedef mat44f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual vec3f getPointVelocity_vf2(const vec3f & p);
-	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (*_fpt)(Suspension *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2903360); return _f(this, p); }
-	inline vec3f getPointVelocity(const vec3f & p) { return getPointVelocity_vf2(p); }
+	inline vec3f getPointVelocity_impl(const vec3f & p) { typedef vec3f (Suspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2903360)); return (this->*_f)(p); }
+	inline vec3f getPointVelocity(const vec3f & p) { typedef vec3f (Suspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(p); }
 	virtual void addForceAtPos_vf3(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque);
-	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (*_fpt)(Suspension *pthis, const vec3f &, const vec3f &, bool, bool); _fpt _f=(_fpt)_drva(2886640); return _f(this, force, pos, driven, addToSteerTorque); }
-	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { return addForceAtPos_vf3(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos_impl(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (Suspension::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(_drva(2886640)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
+	inline void addForceAtPos(const vec3f & force, const vec3f & pos, bool driven, bool addToSteerTorque) { typedef void (Suspension::*_fpt)(const vec3f &, const vec3f &, bool, bool); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(force, pos, driven, addToSteerTorque); }
 	virtual void addTorque_vf4(const vec3f & torque);
-	inline void addTorque_impl(const vec3f & torque) { typedef void (*_fpt)(Suspension *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2887440); return _f(this, torque); }
-	inline void addTorque(const vec3f & torque) { return addTorque_vf4(torque); }
+	inline void addTorque_impl(const vec3f & torque) { typedef void (Suspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2887440)); return (this->*_f)(torque); }
+	inline void addTorque(const vec3f & torque) { typedef void (Suspension::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(torque); }
 	virtual void setSteerLengthOffset_vf5(float o);
-	inline void setSteerLengthOffset_impl(float o) { typedef void (*_fpt)(Suspension *pthis, float); _fpt _f=(_fpt)_drva(2896528); return _f(this, o); }
-	inline void setSteerLengthOffset(float o) { return setSteerLengthOffset_vf5(o); }
+	inline void setSteerLengthOffset_impl(float o) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2896528)); return (this->*_f)(o); }
+	inline void setSteerLengthOffset(float o) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(o); }
 	virtual void getSteerBasis_vf21(vec3f & centre, vec3f & axis);
-	inline void getSteerBasis_impl(vec3f & centre, vec3f & axis) { typedef void (*_fpt)(Suspension *pthis, vec3f &, vec3f &); _fpt _f=(_fpt)_drva(2890752); return _f(this, centre, axis); }
-	inline void getSteerBasis(vec3f & centre, vec3f & axis) { return getSteerBasis_vf21(centre, axis); }
+	inline void getSteerBasis_impl(vec3f & centre, vec3f & axis) { typedef void (Suspension::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(_drva(2890752)); return (this->*_f)(centre, axis); }
+	inline void getSteerBasis(vec3f & centre, vec3f & axis) { typedef void (Suspension::*_fpt)(vec3f &, vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 21)); return (this->*_f)(centre, axis); }
 	virtual float getSteerTorque_vf6();
-	inline float getSteerTorque_impl() { typedef float (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2891104); return _f(this); }
-	inline float getSteerTorque() { return getSteerTorque_vf6(); }
+	inline float getSteerTorque_impl() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2891104)); return (this->*_f)(); }
+	inline float getSteerTorque() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
 	virtual vec3f getHubAngularVelocity_vf7();
-	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2890688); return _f(this); }
-	inline vec3f getHubAngularVelocity() { return getHubAngularVelocity_vf7(); }
+	inline vec3f getHubAngularVelocity_impl() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890688)); return (this->*_f)(); }
+	inline vec3f getHubAngularVelocity() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(); }
 	virtual float getK_vf11();
-	inline float getK_impl() { typedef float (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2890720); return _f(this); }
-	inline float getK() { return getK_vf11(); }
+	inline float getK_impl() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2890720)); return (this->*_f)(); }
+	inline float getK() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(); }
 	virtual Damper * getDamper_vf12();
-	inline Damper * getDamper_impl() { typedef Damper * (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2888992); return _f(this); }
-	inline Damper * getDamper() { return getDamper_vf12(); }
+	inline Damper * getDamper_impl() { typedef Damper * (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2888992)); return (this->*_f)(); }
+	inline Damper * getDamper() { typedef Damper * (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(); }
 	virtual float getPackerRange_vf13();
-	inline float getPackerRange_impl() { typedef float (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2740064); return _f(this); }
-	inline float getPackerRange() { return getPackerRange_vf13(); }
+	inline float getPackerRange_impl() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2740064)); return (this->*_f)(); }
+	inline float getPackerRange() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(); }
 	virtual std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_vf14(const mat44f & bodyMatrix, const mat44f & hubMatrix);
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (*_fpt)(Suspension *pthis, const mat44f &, const mat44f &); _fpt _f=(_fpt)_drva(2889008); return _f(this, bodyMatrix, hubMatrix); }
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { return getDebugLines_vf14(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines_impl(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (Suspension::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(_drva(2889008)); return (this->*_f)(bodyMatrix, hubMatrix); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getDebugLines(const mat44f & bodyMatrix, const mat44f & hubMatrix) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (Suspension::*_fpt)(const mat44f &, const mat44f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(bodyMatrix, hubMatrix); }
 	virtual void setDamage_vf15(float amount);
-	inline void setDamage_impl(float amount) { typedef void (*_fpt)(Suspension *pthis, float); _fpt _f=(_fpt)_drva(2896352); return _f(this, amount); }
-	inline void setDamage(float amount) { return setDamage_vf15(amount); }
+	inline void setDamage_impl(float amount) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2896352)); return (this->*_f)(amount); }
+	inline void setDamage(float amount) { typedef void (Suspension::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(amount); }
 	virtual void resetDamage_vf16();
-	inline void resetDamage_impl() { typedef void (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2896336); return _f(this); }
-	inline void resetDamage() { return resetDamage_vf16(); }
+	inline void resetDamage_impl() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2896336)); return (this->*_f)(); }
+	inline void resetDamage() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(); }
 	virtual float getDamage_vf17();
-	inline float getDamage_impl() { typedef float (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2888960); return _f(this); }
-	inline float getDamage() { return getDamage_vf17(); }
+	inline float getDamage_impl() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2888960)); return (this->*_f)(); }
+	inline float getDamage() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(); }
 	virtual float getMass_vf18();
-	inline float getMass_impl() { typedef float (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2903344); return _f(this); }
-	inline float getMass() { return getMass_vf18(); }
+	inline float getMass_impl() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2903344)); return (this->*_f)(); }
+	inline float getMass() { typedef float (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void stop_vf19();
-	inline void stop_impl() { typedef void (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2911008); return _f(this); }
-	inline void stop() { return stop_vf19(); }
+	inline void stop_impl() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2911008)); return (this->*_f)(); }
+	inline void stop() { typedef void (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(); }
 	virtual vec3f getVelocity_vf20();
-	inline vec3f getVelocity_impl() { typedef vec3f (*_fpt)(Suspension *pthis); _fpt _f=(_fpt)_drva(2891120); return _f(this); }
-	inline vec3f getVelocity() { return getVelocity_vf20(); }
+	inline vec3f getVelocity_impl() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(_drva(2891120)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (Suspension::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 20)); return (this->*_f)(); }
 	virtual void setERPCFM_vf23(float erp, float cfm);
-	inline void setERPCFM_impl(float erp, float cfm) { typedef void (*_fpt)(Suspension *pthis, float, float); _fpt _f=(_fpt)_drva(2896432); return _f(this, erp, cfm); }
-	inline void setERPCFM(float erp, float cfm) { return setERPCFM_vf23(erp, cfm); }
+	inline void setERPCFM_impl(float erp, float cfm) { typedef void (Suspension::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2896432)); return (this->*_f)(erp, cfm); }
+	inline void setERPCFM(float erp, float cfm) { typedef void (Suspension::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 23)); return (this->*_f)(erp, cfm); }
 	virtual void addLocalForceAndTorque_vf24(const vec3f & force, const vec3f & torque, const vec3f & driveTorque);
-	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (*_fpt)(Suspension *pthis, const vec3f &, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2886976); return _f(this, force, torque, driveTorque); }
-	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { return addLocalForceAndTorque_vf24(force, torque, driveTorque); }
-	inline void loadINI(int index) { typedef void (*_fpt)(Suspension *pthis, int); _fpt _f=(_fpt)_drva(2891152); return _f(this, index); }
+	inline void addLocalForceAndTorque_impl(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (Suspension::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2886976)); return (this->*_f)(force, torque, driveTorque); }
+	inline void addLocalForceAndTorque(const vec3f & force, const vec3f & torque, const vec3f & driveTorque) { typedef void (Suspension::*_fpt)(const vec3f &, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 24)); return (this->*_f)(force, torque, driveTorque); }
+	inline void loadINI(int index) { typedef void (Suspension::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2891152)); return (this->*_f)(index); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Suspension)==528),"bad size");
 		static_assert((offsetof(Suspension,carBody)==0x38),"bad off");
@@ -15985,29 +15985,29 @@ public:
 	inline ksgui_ListBox() { }
 	inline ksgui_ListBox(const ksgui_ListBox& other) = default;
 	inline ksgui_ListBox& operator=(const ksgui_ListBox& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, unsigned int rowNumber, unsigned int colNumber, ksgui_GUI * aGui, bool isDressed) { typedef void (*_fpt)(ksgui_ListBox *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, unsigned int, unsigned int, ksgui_GUI *, bool); _fpt _f=(_fpt)_drva(2392896); _f(this, name, rowNumber, colNumber, aGui, isDressed); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, unsigned int rowNumber, unsigned int colNumber, ksgui_GUI * aGui, bool isDressed) { typedef void (ksgui_ListBox::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, unsigned int, unsigned int, ksgui_GUI *, bool); auto _f=xcast<_fpt>(_drva(2392896)); (this->*_f)(name, rowNumber, colNumber, aGui, isDressed); }
 	virtual ~ksgui_ListBox();
-	inline void dtor() { typedef void (*_fpt)(ksgui_ListBox *pthis); _fpt _f=(_fpt)_drva(2395296); _f(this); }
-	inline void addItem(const ksgui_ListBoxRowData & item) { typedef void (*_fpt)(ksgui_ListBox *pthis, const ksgui_ListBoxRowData &); _fpt _f=(_fpt)_drva(2397680); return _f(this, item); }
-	inline void clear() { typedef void (*_fpt)(ksgui_ListBox *pthis); _fpt _f=(_fpt)_drva(2397936); return _f(this); }
-	inline ksgui_ListBoxRowData * getSelectedItem() { typedef ksgui_ListBoxRowData * (*_fpt)(ksgui_ListBox *pthis); _fpt _f=(_fpt)_drva(2398592); return _f(this); }
-	inline void scrollToTop() { typedef void (*_fpt)(ksgui_ListBox *pthis); _fpt _f=(_fpt)_drva(2400848); return _f(this); }
-	inline void scrollToCenterOnSelected() { typedef void (*_fpt)(ksgui_ListBox *pthis); _fpt _f=(_fpt)_drva(2400704); return _f(this); }
-	inline void setItemsFontSize(float size) { typedef void (*_fpt)(ksgui_ListBox *pthis, float); _fpt _f=(_fpt)_drva(2401696); return _f(this, size); }
+	inline void dtor() { typedef void (ksgui_ListBox::*_fpt)(); auto _f=xcast<_fpt>(_drva(2395296)); (this->*_f)(); }
+	inline void addItem(const ksgui_ListBoxRowData & item) { typedef void (ksgui_ListBox::*_fpt)(const ksgui_ListBoxRowData &); auto _f=xcast<_fpt>(_drva(2397680)); return (this->*_f)(item); }
+	inline void clear() { typedef void (ksgui_ListBox::*_fpt)(); auto _f=xcast<_fpt>(_drva(2397936)); return (this->*_f)(); }
+	inline ksgui_ListBoxRowData * getSelectedItem() { typedef ksgui_ListBoxRowData * (ksgui_ListBox::*_fpt)(); auto _f=xcast<_fpt>(_drva(2398592)); return (this->*_f)(); }
+	inline void scrollToTop() { typedef void (ksgui_ListBox::*_fpt)(); auto _f=xcast<_fpt>(_drva(2400848)); return (this->*_f)(); }
+	inline void scrollToCenterOnSelected() { typedef void (ksgui_ListBox::*_fpt)(); auto _f=xcast<_fpt>(_drva(2400704)); return (this->*_f)(); }
+	inline void setItemsFontSize(float size) { typedef void (ksgui_ListBox::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2401696)); return (this->*_f)(size); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_ListBox *pthis, float); _fpt _f=(_fpt)_drva(2399280); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
+	inline void render_impl(float dt) { typedef void (ksgui_ListBox::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2399280)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_ListBox::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void setSize_vf7(float w, float h);
-	inline void setSize_impl(float w, float h) { typedef void (*_fpt)(ksgui_ListBox *pthis, float, float); _fpt _f=(_fpt)_drva(2401808); return _f(this, w, h); }
-	inline void setSize(float w, float h) { return setSize_vf7(w, h); }
+	inline void setSize_impl(float w, float h) { typedef void (ksgui_ListBox::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2401808)); return (this->*_f)(w, h); }
+	inline void setSize(float w, float h) { typedef void (ksgui_ListBox::*_fpt)(float, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(w, h); }
 	virtual void onMouseWheelMovedEvent_vf13(const OnMouseWheelMovedEvent & message);
-	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_ListBox *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2398640); return _f(this, message); }
-	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { return onMouseWheelMovedEvent_vf13(message); }
-	inline void selectItem(int itemIndex) { typedef void (*_fpt)(ksgui_ListBox *pthis, int); _fpt _f=(_fpt)_drva(2400912); return _f(this, itemIndex); }
-	inline void selectItemByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & itemText) { typedef void (*_fpt)(ksgui_ListBox *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2401216); return _f(this, itemText); }
-	inline int getItemIdFromName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aName) { typedef int (*_fpt)(ksgui_ListBox *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2398288); return _f(this, aName); }
-	inline void drawCellsBackgrounds(bool value) { typedef void (*_fpt)(ksgui_ListBox *pthis, bool); _fpt _f=(_fpt)_drva(2398128); return _f(this, value); }
-	inline void scrollListBoxToItem(int itemId) { typedef void (*_fpt)(ksgui_ListBox *pthis, int); _fpt _f=(_fpt)_drva(2400304); return _f(this, itemId); }
+	inline void onMouseWheelMovedEvent_impl(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_ListBox::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2398640)); return (this->*_f)(message); }
+	inline void onMouseWheelMovedEvent(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_ListBox::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(message); }
+	inline void selectItem(int itemIndex) { typedef void (ksgui_ListBox::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2400912)); return (this->*_f)(itemIndex); }
+	inline void selectItemByName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & itemText) { typedef void (ksgui_ListBox::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2401216)); return (this->*_f)(itemText); }
+	inline int getItemIdFromName(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & aName) { typedef int (ksgui_ListBox::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2398288)); return (this->*_f)(aName); }
+	inline void drawCellsBackgrounds(bool value) { typedef void (ksgui_ListBox::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2398128)); return (this->*_f)(value); }
+	inline void scrollListBoxToItem(int itemId) { typedef void (ksgui_ListBox::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2400304)); return (this->*_f)(itemId); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_ListBox)==536),"bad size");
 		static_assert((offsetof(ksgui_ListBox,allowDeselection)==0x178),"bad off");
@@ -16087,20 +16087,20 @@ public:
 	inline Material() { }
 	inline Material(const Material& other) = default;
 	inline Material& operator=(const Material& other) = default;
-	inline void ctor(const Material * mat) { typedef void (*_fpt)(Material *pthis, const Material *); _fpt _f=(_fpt)_drva(2136640); _f(this, mat); }
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); _fpt _f=(_fpt)_drva(2136432); _f(this, iname, graphics); }
-	inline void dtor() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2137440); _f(this); }
-	inline void apply(RenderContext * rc) { typedef void (*_fpt)(Material *pthis, RenderContext *); _fpt _f=(_fpt)_drva(2139872); return _f(this, rc); }
-	inline void setShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2144000); return _f(this, name); }
-	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, const vec4f & value) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const vec4f &); _fpt _f=(_fpt)_drva(2144528); return _f(this, name, value); }
-	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, const vec3f & value) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const vec3f &); _fpt _f=(_fpt)_drva(2144368); return _f(this, name, value); }
-	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, float value) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float); _fpt _f=(_fpt)_drva(2144688); return _f(this, name, value); }
-	inline MaterialVar * getVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & vname) { typedef MaterialVar * (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140976); return _f(this, vname); }
-	inline void setTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & rname, const Texture & tex) { typedef void (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const Texture &); _fpt _f=(_fpt)_drva(2144064); return _f(this, rname, tex); }
-	inline int getResourceIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef int (*_fpt)(Material *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2140736); return _f(this, name); }
-	inline void resetVars() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2143552); return _f(this); }
-	inline void initShaderVars(bool updateOptions) { typedef void (*_fpt)(Material *pthis, bool); _fpt _f=(_fpt)_drva(2141232); return _f(this, updateOptions); }
-	inline void createCBuffers() { typedef void (*_fpt)(Material *pthis); _fpt _f=(_fpt)_drva(2140480); return _f(this); }
+	inline void ctor(const Material * mat) { typedef void (Material::*_fpt)(const Material *); auto _f=xcast<_fpt>(_drva(2136640)); (this->*_f)(mat); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); auto _f=xcast<_fpt>(_drva(2136432)); (this->*_f)(iname, graphics); }
+	inline void dtor() { typedef void (Material::*_fpt)(); auto _f=xcast<_fpt>(_drva(2137440)); (this->*_f)(); }
+	inline void apply(RenderContext * rc) { typedef void (Material::*_fpt)(RenderContext *); auto _f=xcast<_fpt>(_drva(2139872)); return (this->*_f)(rc); }
+	inline void setShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2144000)); return (this->*_f)(name); }
+	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, const vec4f & value) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const vec4f &); auto _f=xcast<_fpt>(_drva(2144528)); return (this->*_f)(name, value); }
+	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, const vec3f & value) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const vec3f &); auto _f=xcast<_fpt>(_drva(2144368)); return (this->*_f)(name, value); }
+	inline void setVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name, float value) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float); auto _f=xcast<_fpt>(_drva(2144688)); return (this->*_f)(name, value); }
+	inline MaterialVar * getVar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & vname) { typedef MaterialVar * (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2140976)); return (this->*_f)(vname); }
+	inline void setTexture(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & rname, const Texture & tex) { typedef void (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const Texture &); auto _f=xcast<_fpt>(_drva(2144064)); return (this->*_f)(rname, tex); }
+	inline int getResourceIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef int (Material::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2140736)); return (this->*_f)(name); }
+	inline void resetVars() { typedef void (Material::*_fpt)(); auto _f=xcast<_fpt>(_drva(2143552)); return (this->*_f)(); }
+	inline void initShaderVars(bool updateOptions) { typedef void (Material::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2141232)); return (this->*_f)(updateOptions); }
+	inline void createCBuffers() { typedef void (Material::*_fpt)(); auto _f=xcast<_fpt>(_drva(2140480)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Material)==176),"bad size");
 		static_assert((offsetof(Material,name)==0x0),"bad off");
@@ -16159,12 +16159,12 @@ public:
 	inline RenderWindow() { }
 	inline RenderWindow(const RenderWindow& other) = default;
 	inline RenderWindow& operator=(const RenderWindow& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, VideoSettings & videoSettings) { typedef void (*_fpt)(RenderWindow *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, VideoSettings &); _fpt _f=(_fpt)_drva(2086464); _f(this, name, videoSettings); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, VideoSettings & videoSettings) { typedef void (RenderWindow::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, VideoSettings &); auto _f=xcast<_fpt>(_drva(2086464)); (this->*_f)(name, videoSettings); }
 	virtual ~RenderWindow();
-	inline void dtor() { typedef void (*_fpt)(RenderWindow *pthis); _fpt _f=(_fpt)_drva(2086880); _f(this); }
-	inline bool step() { typedef bool (*_fpt)(RenderWindow *pthis); _fpt _f=(_fpt)_drva(2088352); return _f(this); }
-	inline bool hasFocus() { typedef bool (*_fpt)(RenderWindow *pthis); _fpt _f=(_fpt)_drva(2087216); return _f(this); }
-	inline void setFocus() { typedef void (*_fpt)(RenderWindow *pthis); _fpt _f=(_fpt)_drva(2088336); return _f(this); }
+	inline void dtor() { typedef void (RenderWindow::*_fpt)(); auto _f=xcast<_fpt>(_drva(2086880)); (this->*_f)(); }
+	inline bool step() { typedef bool (RenderWindow::*_fpt)(); auto _f=xcast<_fpt>(_drva(2088352)); return (this->*_f)(); }
+	inline bool hasFocus() { typedef bool (RenderWindow::*_fpt)(); auto _f=xcast<_fpt>(_drva(2087216)); return (this->*_f)(); }
+	inline void setFocus() { typedef void (RenderWindow::*_fpt)(); auto _f=xcast<_fpt>(_drva(2088336)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RenderWindow)==240),"bad size");
 		static_assert((offsetof(RenderWindow,hWnd)==0x8),"bad off");
@@ -16254,74 +16254,74 @@ public:
 	inline PhysicsCore() { }
 	inline PhysicsCore(const PhysicsCore& other) = default;
 	inline PhysicsCore& operator=(const PhysicsCore& other) = default;
-	inline void ctor() { typedef void (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2931328); _f(this); }
+	inline void ctor() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2931328)); (this->*_f)(); }
 	virtual ~PhysicsCore();
-	inline void dtor() { typedef void (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2931744); _f(this); }
+	inline void dtor() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2931744)); (this->*_f)(); }
 	virtual void resetCollisions_vf0();
-	inline void resetCollisions_impl() { typedef void (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2938224); return _f(this); }
-	inline void resetCollisions() { return resetCollisions_vf0(); }
+	inline void resetCollisions_impl() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2938224)); return (this->*_f)(); }
+	inline void resetCollisions() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(); }
 	virtual void initMultithreading_vf1();
-	inline void initMultithreading_impl() { typedef void (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2935904); return _f(this); }
-	inline void initMultithreading() { return initMultithreading_vf1(); }
+	inline void initMultithreading_impl() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2935904)); return (this->*_f)(); }
+	inline void initMultithreading() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual void step_vf2(float dt);
-	inline void step_impl(float dt) { typedef void (*_fpt)(PhysicsCore *pthis, float); _fpt _f=(_fpt)_drva(2938512); return _f(this, dt); }
-	inline void step(float dt) { return step_vf2(dt); }
+	inline void step_impl(float dt) { typedef void (PhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2938512)); return (this->*_f)(dt); }
+	inline void step(float dt) { typedef void (PhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(dt); }
 	virtual IRigidBody * createRigidBody_vf3();
-	inline IRigidBody * createRigidBody_impl() { typedef IRigidBody * (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2933680); return _f(this); }
-	inline IRigidBody * createRigidBody() { return createRigidBody_vf3(); }
+	inline IRigidBody * createRigidBody_impl() { typedef IRigidBody * (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2933680)); return (this->*_f)(); }
+	inline IRigidBody * createRigidBody() { typedef IRigidBody * (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
 	virtual void release_vf4();
-	inline void release_impl() { typedef void (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2937952); return _f(this); }
-	inline void release() { return release_vf4(); }
+	inline void release_impl() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2937952)); return (this->*_f)(); }
+	inline void release() { typedef void (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual IJoint * createDistanceJoint_vf5(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2);
-	inline IJoint * createDistanceJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2) { typedef IJoint * (*_fpt)(PhysicsCore *pthis, IRigidBody *, IRigidBody *, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2933136); return _f(this, rb1, rb2, p1, p2); }
-	inline IJoint * createDistanceJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2) { return createDistanceJoint_vf5(rb1, rb2, p1, p2); }
+	inline IJoint * createDistanceJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2933136)); return (this->*_f)(rb1, rb2, p1, p2); }
+	inline IJoint * createDistanceJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(rb1, rb2, p1, p2); }
 	virtual void reseatDistanceJointLocal_vf10(IJoint * joint, const vec3f & p1, const vec3f & p2);
-	inline void reseatDistanceJointLocal_impl(IJoint * joint, const vec3f & p1, const vec3f & p2) { typedef void (*_fpt)(PhysicsCore *pthis, IJoint *, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2937984); return _f(this, joint, p1, p2); }
-	inline void reseatDistanceJointLocal(IJoint * joint, const vec3f & p1, const vec3f & p2) { return reseatDistanceJointLocal_vf10(joint, p1, p2); }
+	inline void reseatDistanceJointLocal_impl(IJoint * joint, const vec3f & p1, const vec3f & p2) { typedef void (PhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2937984)); return (this->*_f)(joint, p1, p2); }
+	inline void reseatDistanceJointLocal(IJoint * joint, const vec3f & p1, const vec3f & p2) { typedef void (PhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(joint, p1, p2); }
 	virtual void reseatDistanceJointLength_vf11(IJoint * joint, float newLength);
-	inline void reseatDistanceJointLength_impl(IJoint * joint, float newLength) { typedef void (*_fpt)(PhysicsCore *pthis, IJoint *, float); _fpt _f=(_fpt)_drva(96368); return _f(this, joint, newLength); }
-	inline void reseatDistanceJointLength(IJoint * joint, float newLength) { return reseatDistanceJointLength_vf11(joint, newLength); }
+	inline void reseatDistanceJointLength_impl(IJoint * joint, float newLength) { typedef void (PhysicsCore::*_fpt)(IJoint *, float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(joint, newLength); }
+	inline void reseatDistanceJointLength(IJoint * joint, float newLength) { typedef void (PhysicsCore::*_fpt)(IJoint *, float); auto _f=xcast<_fpt>(get_vfp(this, 11)); return (this->*_f)(joint, newLength); }
 	virtual IJoint * createBumpJoint_vf6(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn);
-	inline IJoint * createBumpJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn) { typedef IJoint * (*_fpt)(PhysicsCore *pthis, IRigidBody *, IRigidBody *, const vec3f &, float, float); _fpt _f=(_fpt)_drva(3776688); return _f(this, rb1, rb2, p1, rangeUp, rangeDn); }
-	inline IJoint * createBumpJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn) { return createBumpJoint_vf6(rb1, rb2, p1, rangeUp, rangeDn); }
+	inline IJoint * createBumpJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, float, float); auto _f=xcast<_fpt>(_drva(3776688)); return (this->*_f)(rb1, rb2, p1, rangeUp, rangeDn); }
+	inline IJoint * createBumpJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &, float, float); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(rb1, rb2, p1, rangeUp, rangeDn); }
 	virtual IJoint * createSliderJoint_vf13(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis);
-	inline IJoint * createSliderJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis) { typedef IJoint * (*_fpt)(PhysicsCore *pthis, IRigidBody *, IRigidBody *, const vec3f &); _fpt _f=(_fpt)_drva(2933744); return _f(this, rb1, rb2, axis); }
-	inline IJoint * createSliderJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis) { return createSliderJoint_vf13(rb1, rb2, axis); }
+	inline IJoint * createSliderJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(_drva(2933744)); return (this->*_f)(rb1, rb2, axis); }
+	inline IJoint * createSliderJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 13)); return (this->*_f)(rb1, rb2, axis); }
 	virtual void setSliderAxis_vf14(IJoint * joint, const vec3f & axis, const vec3f & anchor);
-	inline void setSliderAxis_impl(IJoint * joint, const vec3f & axis, const vec3f & anchor) { typedef void (*_fpt)(PhysicsCore *pthis, IJoint *, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2938480); return _f(this, joint, axis, anchor); }
-	inline void setSliderAxis(IJoint * joint, const vec3f & axis, const vec3f & anchor) { return setSliderAxis_vf14(joint, axis, anchor); }
+	inline void setSliderAxis_impl(IJoint * joint, const vec3f & axis, const vec3f & anchor) { typedef void (PhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2938480)); return (this->*_f)(joint, axis, anchor); }
+	inline void setSliderAxis(IJoint * joint, const vec3f & axis, const vec3f & anchor) { typedef void (PhysicsCore::*_fpt)(IJoint *, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 14)); return (this->*_f)(joint, axis, anchor); }
 	virtual ICollisionObject * createCollisionMesh_vf7(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id);
-	inline ICollisionObject * createCollisionMesh_impl(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id) { typedef ICollisionObject * (*_fpt)(PhysicsCore *pthis, float *, unsigned int, unsigned short *, int, const mat44f &, IRigidBody *, unsigned long, unsigned long, unsigned int); _fpt _f=(_fpt)_drva(2932976); return _f(this, vertices, numVertices, indices, indexCount, worldMatrix, body, group, mask, space_id); }
-	inline ICollisionObject * createCollisionMesh(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id) { return createCollisionMesh_vf7(vertices, numVertices, indices, indexCount, worldMatrix, body, group, mask, space_id); }
-	inline RayCastHit rayCast(const vec3f & pos, const vec3f & dir, dxGeom * rayc) { typedef RayCastHit (*_fpt)(PhysicsCore *pthis, const vec3f &, const vec3f &, dxGeom *); _fpt _f=(_fpt)_drva(2936944); return _f(this, pos, dir, rayc); }
+	inline ICollisionObject * createCollisionMesh_impl(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id) { typedef ICollisionObject * (PhysicsCore::*_fpt)(float *, unsigned int, unsigned short *, int, const mat44f &, IRigidBody *, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(_drva(2932976)); return (this->*_f)(vertices, numVertices, indices, indexCount, worldMatrix, body, group, mask, space_id); }
+	inline ICollisionObject * createCollisionMesh(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id) { typedef ICollisionObject * (PhysicsCore::*_fpt)(float *, unsigned int, unsigned short *, int, const mat44f &, IRigidBody *, unsigned long, unsigned long, unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(vertices, numVertices, indices, indexCount, worldMatrix, body, group, mask, space_id); }
+	inline RayCastHit rayCast(const vec3f & pos, const vec3f & dir, dxGeom * rayc) { typedef RayCastHit (PhysicsCore::*_fpt)(const vec3f &, const vec3f &, dxGeom *); auto _f=xcast<_fpt>(_drva(2936944)); return (this->*_f)(pos, dir, rayc); }
 	virtual RayCastHit rayCast_vf8(const vec3f & pos, const vec3f & dir, float length);
-	inline RayCastHit rayCast_impl(const vec3f & pos, const vec3f & dir, float length) { typedef RayCastHit (*_fpt)(PhysicsCore *pthis, const vec3f &, const vec3f &, float); _fpt _f=(_fpt)_drva(2937248); return _f(this, pos, dir, length); }
-	inline RayCastHit rayCast(const vec3f & pos, const vec3f & dir, float length) { return rayCast_vf8(pos, dir, length); }
+	inline RayCastHit rayCast_impl(const vec3f & pos, const vec3f & dir, float length) { typedef RayCastHit (PhysicsCore::*_fpt)(const vec3f &, const vec3f &, float); auto _f=xcast<_fpt>(_drva(2937248)); return (this->*_f)(pos, dir, length); }
+	inline RayCastHit rayCast(const vec3f & pos, const vec3f & dir, float length) { typedef RayCastHit (PhysicsCore::*_fpt)(const vec3f &, const vec3f &, float); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(pos, dir, length); }
 	virtual void setCollisionCallback_vf9(ICollisionCallback * callback);
-	inline void setCollisionCallback_impl(ICollisionCallback * callback) { typedef void (*_fpt)(PhysicsCore *pthis, ICollisionCallback *); _fpt _f=(_fpt)_drva(2938256); return _f(this, callback); }
-	inline void setCollisionCallback(ICollisionCallback * callback) { return setCollisionCallback_vf9(callback); }
+	inline void setCollisionCallback_impl(ICollisionCallback * callback) { typedef void (PhysicsCore::*_fpt)(ICollisionCallback *); auto _f=xcast<_fpt>(_drva(2938256)); return (this->*_f)(callback); }
+	inline void setCollisionCallback(ICollisionCallback * callback) { typedef void (PhysicsCore::*_fpt)(ICollisionCallback *); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(callback); }
 	virtual void setRigidBodyIterations_vf12(int count);
-	inline void setRigidBodyIterations_impl(int count) { typedef void (*_fpt)(PhysicsCore *pthis, int); _fpt _f=(_fpt)_drva(96368); return _f(this, count); }
-	inline void setRigidBodyIterations(int count) { return setRigidBodyIterations_vf12(count); }
-	inline void onCollision(dContactGeom * contacts, int numContacts, dxGeom * g0, dxGeom * g1) { typedef void (*_fpt)(PhysicsCore *pthis, dContactGeom *, int, dxGeom *, dxGeom *); _fpt _f=(_fpt)_drva(2936224); return _f(this, contacts, numContacts, g0, g1); }
+	inline void setRigidBodyIterations_impl(int count) { typedef void (PhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(count); }
+	inline void setRigidBodyIterations(int count) { typedef void (PhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(get_vfp(this, 12)); return (this->*_f)(count); }
+	inline void onCollision(dContactGeom * contacts, int numContacts, dxGeom * g0, dxGeom * g1) { typedef void (PhysicsCore::*_fpt)(dContactGeom *, int, dxGeom *, dxGeom *); auto _f=xcast<_fpt>(_drva(2936224)); return (this->*_f)(contacts, numContacts, g0, g1); }
 	virtual IJoint * createBallJoint_vf15(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos);
-	inline IJoint * createBallJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos) { typedef IJoint * (*_fpt)(PhysicsCore *pthis, IRigidBody *, IRigidBody *, const vec3f &); _fpt _f=(_fpt)_drva(2932752); return _f(this, rb1, rb2, pos); }
-	inline IJoint * createBallJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos) { return createBallJoint_vf15(rb1, rb2, pos); }
+	inline IJoint * createBallJoint_impl(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(_drva(2932752)); return (this->*_f)(rb1, rb2, pos); }
+	inline IJoint * createBallJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *, const vec3f &); auto _f=xcast<_fpt>(get_vfp(this, 15)); return (this->*_f)(rb1, rb2, pos); }
 	virtual IJoint * createFixedJoint_vf16(IRigidBody * rb1, IRigidBody * rb2);
-	inline IJoint * createFixedJoint_impl(IRigidBody * rb1, IRigidBody * rb2) { typedef IJoint * (*_fpt)(PhysicsCore *pthis, IRigidBody *, IRigidBody *); _fpt _f=(_fpt)_drva(2933408); return _f(this, rb1, rb2); }
-	inline IJoint * createFixedJoint(IRigidBody * rb1, IRigidBody * rb2) { return createFixedJoint_vf16(rb1, rb2); }
+	inline IJoint * createFixedJoint_impl(IRigidBody * rb1, IRigidBody * rb2) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *); auto _f=xcast<_fpt>(_drva(2933408)); return (this->*_f)(rb1, rb2); }
+	inline IJoint * createFixedJoint(IRigidBody * rb1, IRigidBody * rb2) { typedef IJoint * (PhysicsCore::*_fpt)(IRigidBody *, IRigidBody *); auto _f=xcast<_fpt>(get_vfp(this, 16)); return (this->*_f)(rb1, rb2); }
 	virtual IRayCaster * createRayCaster_vf17(float length);
-	inline IRayCaster * createRayCaster_impl(float length) { typedef IRayCaster * (*_fpt)(PhysicsCore *pthis, float); _fpt _f=(_fpt)_drva(2933600); return _f(this, length); }
-	inline IRayCaster * createRayCaster(float length) { return createRayCaster_vf17(length); }
+	inline IRayCaster * createRayCaster_impl(float length) { typedef IRayCaster * (PhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2933600)); return (this->*_f)(length); }
+	inline IRayCaster * createRayCaster(float length) { typedef IRayCaster * (PhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 17)); return (this->*_f)(length); }
 	virtual CoreCPUTimes getCoreCPUTimes_vf18();
-	inline CoreCPUTimes getCoreCPUTimes_impl() { typedef CoreCPUTimes (*_fpt)(PhysicsCore *pthis); _fpt _f=(_fpt)_drva(2935040); return _f(this); }
-	inline CoreCPUTimes getCoreCPUTimes() { return getCoreCPUTimes_vf18(); }
+	inline CoreCPUTimes getCoreCPUTimes_impl() { typedef CoreCPUTimes (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(_drva(2935040)); return (this->*_f)(); }
+	inline CoreCPUTimes getCoreCPUTimes() { typedef CoreCPUTimes (PhysicsCore::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 18)); return (this->*_f)(); }
 	virtual void setNoCollisionSteps_vf19(int steps);
-	inline void setNoCollisionSteps_impl(int steps) { typedef void (*_fpt)(PhysicsCore *pthis, int); _fpt _f=(_fpt)_drva(2938464); return _f(this, steps); }
-	inline void setNoCollisionSteps(int steps) { return setNoCollisionSteps_vf19(steps); }
-	inline dxSpace * getStaticSubSpace(unsigned int index) { typedef dxSpace * (*_fpt)(PhysicsCore *pthis, unsigned int); _fpt _f=(_fpt)_drva(2935488); return _f(this, index); }
-	inline dxSpace * getDynamicSubSpace(unsigned int index) { typedef dxSpace * (*_fpt)(PhysicsCore *pthis, unsigned int); _fpt _f=(_fpt)_drva(2935072); return _f(this, index); }
-	inline void collisionStep(float dt) { typedef void (*_fpt)(PhysicsCore *pthis, float); _fpt _f=(_fpt)_drva(2932624); return _f(this, dt); }
+	inline void setNoCollisionSteps_impl(int steps) { typedef void (PhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2938464)); return (this->*_f)(steps); }
+	inline void setNoCollisionSteps(int steps) { typedef void (PhysicsCore::*_fpt)(int); auto _f=xcast<_fpt>(get_vfp(this, 19)); return (this->*_f)(steps); }
+	inline dxSpace * getStaticSubSpace(unsigned int index) { typedef dxSpace * (PhysicsCore::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2935488)); return (this->*_f)(index); }
+	inline dxSpace * getDynamicSubSpace(unsigned int index) { typedef dxSpace * (PhysicsCore::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2935072)); return (this->*_f)(index); }
+	inline void collisionStep(float dt) { typedef void (PhysicsCore::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2932624)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PhysicsCore)==168),"bad size");
 		static_assert((offsetof(PhysicsCore,id)==0x8),"bad off");
@@ -16437,25 +16437,25 @@ public:
 	inline ACCameraManager() { }
 	inline ACCameraManager(const ACCameraManager& other) = default;
 	inline ACCameraManager& operator=(const ACCameraManager& other) = default;
-	inline void ctor(Sim * isim, CameraForward * icamera) { typedef void (*_fpt)(ACCameraManager *pthis, Sim *, CameraForward *); _fpt _f=(_fpt)_drva(201328); _f(this, isim, icamera); }
+	inline void ctor(Sim * isim, CameraForward * icamera) { typedef void (ACCameraManager::*_fpt)(Sim *, CameraForward *); auto _f=xcast<_fpt>(_drva(201328)); (this->*_f)(isim, icamera); }
 	virtual ~ACCameraManager();
-	inline void dtor() { typedef void (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(205584); _f(this); }
+	inline void dtor() { typedef void (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(205584)); (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(ACCameraManager *pthis, float); _fpt _f=(_fpt)_drva(214496); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void setMode(CameraMode imode, bool force, bool pIsRandom) { typedef void (*_fpt)(ACCameraManager *pthis, CameraMode, bool, bool); _fpt _f=(_fpt)_drva(213200); return _f(this, imode, force, pIsRandom); }
-	inline bool isCameraOnBoard(CarAvatar * car) { typedef bool (*_fpt)(ACCameraManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(210672); return _f(this, car); }
-	inline CameraMode getMode() { typedef CameraMode (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(377008); return _f(this); }
-	inline bool isVirtualMirrorOn() { typedef bool (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(210784); return _f(this); }
-	inline void loadPreviousSessionUserCamera() { typedef void (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(210912); return _f(this); }
-	inline void fadeIn(FadeModeDef aFadeMode) { typedef void (*_fpt)(ACCameraManager *pthis, FadeModeDef); _fpt _f=(_fpt)_drva(210576); return _f(this, aFadeMode); }
-	inline void registerToFadeInEvent(std::function<void __cdecl(bool const &)> * f, void * sender) { typedef void (*_fpt)(ACCameraManager *pthis, std::function<void __cdecl(bool const &)> *, void *); _fpt _f=(_fpt)_drva(212192); return _f(this, f, sender); }
-	inline void setKeyboardInputEnabled(bool value) { typedef void (*_fpt)(ACCameraManager *pthis, bool); _fpt _f=(_fpt)_drva(673008); return _f(this, value); }
-	inline void setCameraCarIndex(int index) { typedef void (*_fpt)(ACCameraManager *pthis, int); _fpt _f=(_fpt)_drva(212912); return _f(this, index); }
-	inline void setDrivableCarIndex(int index) { typedef void (*_fpt)(ACCameraManager *pthis, int); _fpt _f=(_fpt)_drva(212944); return _f(this, index); }
-	inline unsigned int onFadeInFinishedListenersCount() { typedef unsigned int (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(553136); return _f(this); }
-	inline void stepCameraRandom(int lastCarIndex) { typedef void (*_fpt)(ACCameraManager *pthis, int); _fpt _f=(_fpt)_drva(213760); return _f(this, lastCarIndex); }
-	inline void setAudioDistanceScale() { typedef void (*_fpt)(ACCameraManager *pthis); _fpt _f=(_fpt)_drva(212512); return _f(this); }
+	inline void update_impl(float deltaT) { typedef void (ACCameraManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(214496)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (ACCameraManager::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void setMode(CameraMode imode, bool force, bool pIsRandom) { typedef void (ACCameraManager::*_fpt)(CameraMode, bool, bool); auto _f=xcast<_fpt>(_drva(213200)); return (this->*_f)(imode, force, pIsRandom); }
+	inline bool isCameraOnBoard(CarAvatar * car) { typedef bool (ACCameraManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(210672)); return (this->*_f)(car); }
+	inline CameraMode getMode() { typedef CameraMode (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(377008)); return (this->*_f)(); }
+	inline bool isVirtualMirrorOn() { typedef bool (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(210784)); return (this->*_f)(); }
+	inline void loadPreviousSessionUserCamera() { typedef void (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(210912)); return (this->*_f)(); }
+	inline void fadeIn(FadeModeDef aFadeMode) { typedef void (ACCameraManager::*_fpt)(FadeModeDef); auto _f=xcast<_fpt>(_drva(210576)); return (this->*_f)(aFadeMode); }
+	inline void registerToFadeInEvent(std::function<void __cdecl(bool const &)> * f, void * sender) { typedef void (ACCameraManager::*_fpt)(std::function<void __cdecl(bool const &)> *, void *); auto _f=xcast<_fpt>(_drva(212192)); return (this->*_f)(f, sender); }
+	inline void setKeyboardInputEnabled(bool value) { typedef void (ACCameraManager::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(673008)); return (this->*_f)(value); }
+	inline void setCameraCarIndex(int index) { typedef void (ACCameraManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(212912)); return (this->*_f)(index); }
+	inline void setDrivableCarIndex(int index) { typedef void (ACCameraManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(212944)); return (this->*_f)(index); }
+	inline unsigned int onFadeInFinishedListenersCount() { typedef unsigned int (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(553136)); return (this->*_f)(); }
+	inline void stepCameraRandom(int lastCarIndex) { typedef void (ACCameraManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(213760)); return (this->*_f)(lastCarIndex); }
+	inline void setAudioDistanceScale() { typedef void (ACCameraManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(212512)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ACCameraManager)==408),"bad size");
 		static_assert((offsetof(ACCameraManager,evOnCameraSelectedIndex)==0x58),"bad off");
@@ -16614,31 +16614,31 @@ public:
 	inline PhysicsEngine() { }
 	inline PhysicsEngine(const PhysicsEngine& other) = default;
 	inline PhysicsEngine& operator=(const PhysicsEngine& other) = default;
-	inline void ctor() { typedef void (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2499632); _f(this); }
+	inline void ctor() { typedef void (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2499632)); (this->*_f)(); }
 	virtual ~PhysicsEngine();
-	inline void dtor() { typedef void (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2501872); _f(this); }
-	inline void setWind(Speed speed, float directionDEG) { typedef void (*_fpt)(PhysicsEngine *pthis, Speed, float); _fpt _f=(_fpt)_drva(2508192); return _f(this, speed, directionDEG); }
-	inline void setCurrentSessionStartTime(double st) { typedef void (*_fpt)(PhysicsEngine *pthis, double); _fpt _f=(_fpt)_drva(2508176); return _f(this, st); }
-	inline void removeCar(Car * c) { typedef void (*_fpt)(PhysicsEngine *pthis, Car *); _fpt _f=(_fpt)_drva(2507328); return _f(this, c); }
-	inline void step(float dt, double currentTime, double gt) { typedef void (*_fpt)(PhysicsEngine *pthis, float, double, double); _fpt _f=(_fpt)_drva(2508640); return _f(this, dt, currentTime, gt); }
-	inline void stepPaused() { typedef void (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2511648); return _f(this); }
-	inline IPhysicsCore * getCore() { typedef IPhysicsCore * (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2505344); return _f(this); }
+	inline void dtor() { typedef void (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2501872)); (this->*_f)(); }
+	inline void setWind(Speed speed, float directionDEG) { typedef void (PhysicsEngine::*_fpt)(Speed, float); auto _f=xcast<_fpt>(_drva(2508192)); return (this->*_f)(speed, directionDEG); }
+	inline void setCurrentSessionStartTime(double st) { typedef void (PhysicsEngine::*_fpt)(double); auto _f=xcast<_fpt>(_drva(2508176)); return (this->*_f)(st); }
+	inline void removeCar(Car * c) { typedef void (PhysicsEngine::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2507328)); return (this->*_f)(c); }
+	inline void step(float dt, double currentTime, double gt) { typedef void (PhysicsEngine::*_fpt)(float, double, double); auto _f=xcast<_fpt>(_drva(2508640)); return (this->*_f)(dt, currentTime, gt); }
+	inline void stepPaused() { typedef void (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2511648)); return (this->*_f)(); }
+	inline IPhysicsCore * getCore() { typedef IPhysicsCore * (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2505344)); return (this->*_f)(); }
 	virtual void onCollisionCallBack_vf1(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth);
-	inline void onCollisionCallBack_impl(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { typedef void (*_fpt)(PhysicsEngine *pthis, void *, void *, void *, void *, vec3f, vec3f, float); _fpt _f=(_fpt)_drva(2506784); return _f(this, userData0, shape0, userData1, shape1, normal, pos, depth); }
-	inline void onCollisionCallBack(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { return onCollisionCallBack_vf1(userData0, shape0, userData1, shape1, normal, pos, depth); }
-	inline bool hasSessionStarted(double lag) { typedef bool (*_fpt)(PhysicsEngine *pthis, double); _fpt _f=(_fpt)_drva(2505840); return _f(this, lag); }
-	inline double getOddTimeOffset() { typedef double (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2505360); return _f(this); }
-	inline void addAdditionalPhysicsProvider(ICarPhysicsStateProvider * p) { typedef void (*_fpt)(PhysicsEngine *pthis, ICarPhysicsStateProvider *); _fpt _f=(_fpt)_drva(2505216); return _f(this, p); }
-	inline void setSessionInfo(const SessionInfo & info) { typedef void (*_fpt)(PhysicsEngine *pthis, const SessionInfo &); _fpt _f=(_fpt)_drva(2508128); return _f(this, info); }
-	inline void setSessionStartTimeMS(double new_start_time) { typedef void (*_fpt)(PhysicsEngine *pthis, double); _fpt _f=(_fpt)_drva(2508176); return _f(this, new_start_time); }
-	inline void addLegalTyre(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & short_name) { typedef void (*_fpt)(PhysicsEngine *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2505248); return _f(this, short_name); }
-	inline bool isTyreLegal(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & short_name) { typedef bool (*_fpt)(PhysicsEngine *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2506544); return _f(this, short_name); }
-	inline float getAirDensity() { typedef float (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2505312); return _f(this); }
-	inline void writeTestResult(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & result) { typedef void (*_fpt)(PhysicsEngine *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2512176); return _f(this, result); }
-	inline void getPhysicsStates(std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > & states, std::vector<std::vector<WingState,std::allocator<WingState> >,std::allocator<std::vector<WingState,std::allocator<WingState> > > > & wingStates) { typedef void (*_fpt)(PhysicsEngine *pthis, std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > &, std::vector<std::vector<WingState,std::allocator<WingState> >,std::allocator<std::vector<WingState,std::allocator<WingState> > > > &); _fpt _f=(_fpt)_drva(2505408); return _f(this, states, wingStates); }
-	inline void setDynamicTempData(DynamicTempData & data) { typedef void (*_fpt)(PhysicsEngine *pthis, DynamicTempData &); _fpt _f=(_fpt)_drva(1315344); return _f(this, data); }
-	inline void initLowSpeedFF() { typedef void (*_fpt)(PhysicsEngine *pthis); _fpt _f=(_fpt)_drva(2505872); return _f(this); }
-	inline void stepWind(float dt) { typedef void (*_fpt)(PhysicsEngine *pthis, float); _fpt _f=(_fpt)_drva(2511744); return _f(this, dt); }
+	inline void onCollisionCallBack_impl(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { typedef void (PhysicsEngine::*_fpt)(void *, void *, void *, void *, vec3f, vec3f, float); auto _f=xcast<_fpt>(_drva(2506784)); return (this->*_f)(userData0, shape0, userData1, shape1, normal, pos, depth); }
+	inline void onCollisionCallBack(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { typedef void (PhysicsEngine::*_fpt)(void *, void *, void *, void *, vec3f, vec3f, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(userData0, shape0, userData1, shape1, normal, pos, depth); }
+	inline bool hasSessionStarted(double lag) { typedef bool (PhysicsEngine::*_fpt)(double); auto _f=xcast<_fpt>(_drva(2505840)); return (this->*_f)(lag); }
+	inline double getOddTimeOffset() { typedef double (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2505360)); return (this->*_f)(); }
+	inline void addAdditionalPhysicsProvider(ICarPhysicsStateProvider * p) { typedef void (PhysicsEngine::*_fpt)(ICarPhysicsStateProvider *); auto _f=xcast<_fpt>(_drva(2505216)); return (this->*_f)(p); }
+	inline void setSessionInfo(const SessionInfo & info) { typedef void (PhysicsEngine::*_fpt)(const SessionInfo &); auto _f=xcast<_fpt>(_drva(2508128)); return (this->*_f)(info); }
+	inline void setSessionStartTimeMS(double new_start_time) { typedef void (PhysicsEngine::*_fpt)(double); auto _f=xcast<_fpt>(_drva(2508176)); return (this->*_f)(new_start_time); }
+	inline void addLegalTyre(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & short_name) { typedef void (PhysicsEngine::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2505248)); return (this->*_f)(short_name); }
+	inline bool isTyreLegal(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & short_name) { typedef bool (PhysicsEngine::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2506544)); return (this->*_f)(short_name); }
+	inline float getAirDensity() { typedef float (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2505312)); return (this->*_f)(); }
+	inline void writeTestResult(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & result) { typedef void (PhysicsEngine::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2512176)); return (this->*_f)(result); }
+	inline void getPhysicsStates(std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > & states, std::vector<std::vector<WingState,std::allocator<WingState> >,std::allocator<std::vector<WingState,std::allocator<WingState> > > > & wingStates) { typedef void (PhysicsEngine::*_fpt)(std::vector<CarPhysicsState,std::allocator<CarPhysicsState> > &, std::vector<std::vector<WingState,std::allocator<WingState> >,std::allocator<std::vector<WingState,std::allocator<WingState> > > > &); auto _f=xcast<_fpt>(_drva(2505408)); return (this->*_f)(states, wingStates); }
+	inline void setDynamicTempData(DynamicTempData & data) { typedef void (PhysicsEngine::*_fpt)(DynamicTempData &); auto _f=xcast<_fpt>(_drva(1315344)); return (this->*_f)(data); }
+	inline void initLowSpeedFF() { typedef void (PhysicsEngine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2505872)); return (this->*_f)(); }
+	inline void stepWind(float dt) { typedef void (PhysicsEngine::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2511744)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PhysicsEngine)==632),"bad size");
 		static_assert((offsetof(PhysicsEngine,cars)==0x8),"bad off");
@@ -16699,7 +16699,7 @@ public:
 	inline SteerBrake() { }
 	inline SteerBrake(const SteerBrake& other) = default;
 	inline SteerBrake& operator=(const SteerBrake& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SteerBrake *pthis); _fpt _f=(_fpt)_drva(2549856); _f(this); }
+	inline void dtor() { typedef void (SteerBrake::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549856)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SteerBrake)==48),"bad size");
 		static_assert((offsetof(SteerBrake,isActive)==0x0),"bad off");
@@ -16728,7 +16728,7 @@ public:
 	inline DrivetrainControllers() { }
 	inline DrivetrainControllers(const DrivetrainControllers& other) = default;
 	inline DrivetrainControllers& operator=(const DrivetrainControllers& other) = default;
-	inline void dtor() { typedef void (*_fpt)(DrivetrainControllers *pthis); _fpt _f=(_fpt)_drva(2515184); _f(this); }
+	inline void dtor() { typedef void (DrivetrainControllers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2515184)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DrivetrainControllers)==32),"bad size");
 		static_assert((offsetof(DrivetrainControllers,awdFrontShare)==0x0),"bad off");
@@ -16755,8 +16755,8 @@ public:
 	inline ERSPowerController() { }
 	inline ERSPowerController(const ERSPowerController& other) = default;
 	inline ERSPowerController& operator=(const ERSPowerController& other) = default;
-	inline void ctor(const ERSPowerController & __that) { typedef void (*_fpt)(ERSPowerController *pthis, const ERSPowerController &); _fpt _f=(_fpt)_drva(2692640); _f(this, __that); }
-	inline void dtor() { typedef void (*_fpt)(ERSPowerController *pthis); _fpt _f=(_fpt)_drva(2693104); _f(this); }
+	inline void ctor(const ERSPowerController & __that) { typedef void (ERSPowerController::*_fpt)(const ERSPowerController &); auto _f=xcast<_fpt>(_drva(2692640)); (this->*_f)(__that); }
+	inline void dtor() { typedef void (ERSPowerController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2693104)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ERSPowerController)==72),"bad size");
 		static_assert((offsetof(ERSPowerController,name)==0x0),"bad off");
@@ -16787,9 +16787,9 @@ public:
 	inline SteeringSystem() { }
 	inline SteeringSystem(const SteeringSystem& other) = default;
 	inline SteeringSystem& operator=(const SteeringSystem& other) = default;
-	inline void dtor() { typedef void (*_fpt)(SteeringSystem *pthis); _fpt _f=(_fpt)_drva(2864640); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(SteeringSystem *pthis, Car *); _fpt _f=(_fpt)_drva(2851024); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(SteeringSystem *pthis, float); _fpt _f=(_fpt)_drva(2851248); return _f(this, dt); }
+	inline void dtor() { typedef void (SteeringSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2864640)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (SteeringSystem::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2851024)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (SteeringSystem::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2851248)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SteeringSystem)==64),"bad size");
 		static_assert((offsetof(SteeringSystem,linearRatio)==0x0),"bad off");
@@ -16818,8 +16818,8 @@ public:
 	inline TurboDynamicController() { }
 	inline TurboDynamicController(const TurboDynamicController& other) = default;
 	inline TurboDynamicController& operator=(const TurboDynamicController& other) = default;
-	inline void ctor() { typedef void (*_fpt)(TurboDynamicController *pthis); _fpt _f=(_fpt)_drva(2643056); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(TurboDynamicController *pthis); _fpt _f=(_fpt)_drva(2549856); _f(this); }
+	inline void ctor() { typedef void (TurboDynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2643056)); (this->*_f)(); }
+	inline void dtor() { typedef void (TurboDynamicController::*_fpt)(); auto _f=xcast<_fpt>(_drva(2549856)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TurboDynamicController)==56),"bad size");
 		static_assert((offsetof(TurboDynamicController,turbo)==0x0),"bad off");
@@ -16847,13 +16847,13 @@ public:
 	inline MaterialFilter() { }
 	inline MaterialFilter(const MaterialFilter& other) = default;
 	inline MaterialFilter& operator=(const MaterialFilter& other) = default;
-	inline void ctor() { typedef void (*_fpt)(MaterialFilter *pthis); _fpt _f=(_fpt)_drva(2202928); _f(this); }
+	inline void ctor() { typedef void (MaterialFilter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2202928)); (this->*_f)(); }
 	virtual ~MaterialFilter();
-	inline void dtor() { typedef void (*_fpt)(MaterialFilter *pthis); _fpt _f=(_fpt)_drva(2202960); _f(this); }
+	inline void dtor() { typedef void (MaterialFilter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2202960)); (this->*_f)(); }
 	virtual void apply_vf1(const std::shared_ptr<Material> & material, RenderContext * rc);
-	inline void apply_impl(const std::shared_ptr<Material> & material, RenderContext * rc) { typedef void (*_fpt)(MaterialFilter *pthis, const std::shared_ptr<Material> &, RenderContext *); _fpt _f=(_fpt)_drva(2203024); return _f(this, material, rc); }
-	inline void apply(const std::shared_ptr<Material> & material, RenderContext * rc) { return apply_vf1(material, rc); }
-	inline void resetMaterialCache() { typedef void (*_fpt)(MaterialFilter *pthis); _fpt _f=(_fpt)_drva(2203088); return _f(this); }
+	inline void apply_impl(const std::shared_ptr<Material> & material, RenderContext * rc) { typedef void (MaterialFilter::*_fpt)(const std::shared_ptr<Material> &, RenderContext *); auto _f=xcast<_fpt>(_drva(2203024)); return (this->*_f)(material, rc); }
+	inline void apply(const std::shared_ptr<Material> & material, RenderContext * rc) { typedef void (MaterialFilter::*_fpt)(const std::shared_ptr<Material> &, RenderContext *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(material, rc); }
+	inline void resetMaterialCache() { typedef void (MaterialFilter::*_fpt)(); auto _f=xcast<_fpt>(_drva(2203088)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(MaterialFilter)==16),"bad size");
 		static_assert((offsetof(MaterialFilter,lastMaterial)==0x8),"bad off");
@@ -16883,10 +16883,10 @@ public:
 	inline AntirollBar() { }
 	inline AntirollBar(const AntirollBar& other) = default;
 	inline AntirollBar& operator=(const AntirollBar& other) = default;
-	inline void dtor() { typedef void (*_fpt)(AntirollBar *pthis); _fpt _f=(_fpt)_drva(2864640); _f(this); }
-	inline void init(IRigidBody * cb, ISuspension * * sus) { typedef void (*_fpt)(AntirollBar *pthis, IRigidBody *, ISuspension * *); _fpt _f=(_fpt)_drva(2864656); return _f(this, cb, sus); }
-	inline void step(float dt) { typedef void (*_fpt)(AntirollBar *pthis, float); _fpt _f=(_fpt)_drva(2864704); return _f(this, dt); }
-	inline void ctor() { typedef void (*_fpt)(AntirollBar *pthis); _fpt _f=(_fpt)_drva(2538800); _f(this); }
+	inline void dtor() { typedef void (AntirollBar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2864640)); (this->*_f)(); }
+	inline void init(IRigidBody * cb, ISuspension * * sus) { typedef void (AntirollBar::*_fpt)(IRigidBody *, ISuspension * *); auto _f=xcast<_fpt>(_drva(2864656)); return (this->*_f)(cb, sus); }
+	inline void step(float dt) { typedef void (AntirollBar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2864704)); return (this->*_f)(dt); }
+	inline void ctor() { typedef void (AntirollBar::*_fpt)(); auto _f=xcast<_fpt>(_drva(2538800)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AntirollBar)==72),"bad size");
 		static_assert((offsetof(AntirollBar,carBody)==0x0),"bad off");
@@ -16914,15 +16914,15 @@ public:
 	inline DIControlAxis() { }
 	inline DIControlAxis(const DIControlAxis& other) = default;
 	inline DIControlAxis& operator=(const DIControlAxis& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (*_fpt)(DIControlAxis *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); _fpt _f=(_fpt)_drva(530432); _f(this, iname, di); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (DIControlAxis::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); auto _f=xcast<_fpt>(_drva(530432)); (this->*_f)(iname, di); }
 	virtual ~DIControlAxis();
-	inline void dtor() { typedef void (*_fpt)(DIControlAxis *pthis); _fpt _f=(_fpt)_drva(530624); _f(this); }
+	inline void dtor() { typedef void (DIControlAxis::*_fpt)(); auto _f=xcast<_fpt>(_drva(530624)); (this->*_f)(); }
 	virtual void load_vf1(INIReader & reader, bool loadRange);
-	inline void load_impl(INIReader & reader, bool loadRange) { typedef void (*_fpt)(DIControlAxis *pthis, INIReader &, bool); _fpt _f=(_fpt)_drva(530832); return _f(this, reader, loadRange); }
-	inline void load(INIReader & reader, bool loadRange) { return load_vf1(reader, loadRange); }
+	inline void load_impl(INIReader & reader, bool loadRange) { typedef void (DIControlAxis::*_fpt)(INIReader &, bool); auto _f=xcast<_fpt>(_drva(530832)); return (this->*_f)(reader, loadRange); }
+	inline void load(INIReader & reader, bool loadRange) { typedef void (DIControlAxis::*_fpt)(INIReader &, bool); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(reader, loadRange); }
 	virtual float getValue_vf2(bool useRange);
-	inline float getValue_impl(bool useRange) { typedef float (*_fpt)(DIControlAxis *pthis, bool); _fpt _f=(_fpt)_drva(530704); return _f(this, useRange); }
-	inline float getValue(bool useRange) { return getValue_vf2(useRange); }
+	inline float getValue_impl(bool useRange) { typedef float (DIControlAxis::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(530704)); return (this->*_f)(useRange); }
+	inline float getValue(bool useRange) { typedef float (DIControlAxis::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(useRange); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DIControlAxis)==80),"bad size");
 		static_assert((offsetof(DIControlAxis,hasMoved)==0x48),"bad off");
@@ -16950,16 +16950,16 @@ public:
 	inline DIControlButton() { }
 	inline DIControlButton(const DIControlButton& other) = default;
 	inline DIControlButton& operator=(const DIControlButton& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (*_fpt)(DIControlButton *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); _fpt _f=(_fpt)_drva(531264); _f(this, iname, di); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, DirectInput * di) { typedef void (DIControlButton::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, DirectInput *); auto _f=xcast<_fpt>(_drva(531264)); (this->*_f)(iname, di); }
 	virtual ~DIControlButton();
-	inline void dtor() { typedef void (*_fpt)(DIControlButton *pthis); _fpt _f=(_fpt)_drva(531456); _f(this); }
+	inline void dtor() { typedef void (DIControlButton::*_fpt)(); auto _f=xcast<_fpt>(_drva(531456)); (this->*_f)(); }
 	virtual void load_vf1(INIReader & reader, bool loadRange);
-	inline void load_impl(INIReader & reader, bool loadRange) { typedef void (*_fpt)(DIControlButton *pthis, INIReader &, bool); _fpt _f=(_fpt)_drva(531648); return _f(this, reader, loadRange); }
-	inline void load(INIReader & reader, bool loadRange) { return load_vf1(reader, loadRange); }
+	inline void load_impl(INIReader & reader, bool loadRange) { typedef void (DIControlButton::*_fpt)(INIReader &, bool); auto _f=xcast<_fpt>(_drva(531648)); return (this->*_f)(reader, loadRange); }
+	inline void load(INIReader & reader, bool loadRange) { typedef void (DIControlButton::*_fpt)(INIReader &, bool); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(reader, loadRange); }
 	virtual float getValue_vf2(bool useRange);
-	inline float getValue_impl(bool useRange) { typedef float (*_fpt)(DIControlButton *pthis, bool); _fpt _f=(_fpt)_drva(531600); return _f(this, useRange); }
-	inline float getValue(bool useRange) { return getValue_vf2(useRange); }
-	inline float getKeyboardValue(bool isKeyboardEnabled) { typedef float (*_fpt)(DIControlButton *pthis, bool); _fpt _f=(_fpt)_drva(531536); return _f(this, isKeyboardEnabled); }
+	inline float getValue_impl(bool useRange) { typedef float (DIControlButton::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(531600)); return (this->*_f)(useRange); }
+	inline float getValue(bool useRange) { typedef float (DIControlButton::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(useRange); }
+	inline float getKeyboardValue(bool isKeyboardEnabled) { typedef float (DIControlButton::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(531536)); return (this->*_f)(isKeyboardEnabled); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DIControlButton)==80),"bad size");
 		static_assert((offsetof(DIControlButton,combineWithKeyboard)==0x48),"bad off");
@@ -16994,15 +16994,15 @@ public:
 	inline KeyboardManager() : renderWindow(*((RenderWindow*)NULL)) { }
 	inline KeyboardManager(const KeyboardManager& other) = default;
 	inline KeyboardManager& operator=(const KeyboardManager& other) = default;
-	inline void ctor(RenderWindow & arenderWindow) { typedef void (*_fpt)(KeyboardManager *pthis, RenderWindow &); _fpt _f=(_fpt)_drva(2372096); _f(this, arenderWindow); }
+	inline void ctor(RenderWindow & arenderWindow) { typedef void (KeyboardManager::*_fpt)(RenderWindow &); auto _f=xcast<_fpt>(_drva(2372096)); (this->*_f)(arenderWindow); }
 	virtual ~KeyboardManager();
-	inline void dtor() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2372176); _f(this); }
-	inline void registerEventHandlers() { typedef void (*_fpt)(KeyboardManager *pthis); _fpt _f=(_fpt)_drva(2375440); return _f(this); }
-	inline void onKeyDownEvent(const OnKeyEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(2374432); return _f(this, message); }
-	inline void onKeyPressEvent(const OnKeyCharEvent & message) { typedef void (*_fpt)(KeyboardManager *pthis, const OnKeyCharEvent &); _fpt _f=(_fpt)_drva(2374560); return _f(this, message); }
-	inline void addGodListener(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2373984); return _f(this, l); }
-	inline void getFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2944432); return _f(this, l); }
-	inline void releaseFocus(IKeyEventListener * l) { typedef void (*_fpt)(KeyboardManager *pthis, IKeyEventListener *); _fpt _f=(_fpt)_drva(2375568); return _f(this, l); }
+	inline void dtor() { typedef void (KeyboardManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2372176)); (this->*_f)(); }
+	inline void registerEventHandlers() { typedef void (KeyboardManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2375440)); return (this->*_f)(); }
+	inline void onKeyDownEvent(const OnKeyEvent & message) { typedef void (KeyboardManager::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(2374432)); return (this->*_f)(message); }
+	inline void onKeyPressEvent(const OnKeyCharEvent & message) { typedef void (KeyboardManager::*_fpt)(const OnKeyCharEvent &); auto _f=xcast<_fpt>(_drva(2374560)); return (this->*_f)(message); }
+	inline void addGodListener(IKeyEventListener * l) { typedef void (KeyboardManager::*_fpt)(IKeyEventListener *); auto _f=xcast<_fpt>(_drva(2373984)); return (this->*_f)(l); }
+	inline void getFocus(IKeyEventListener * l) { typedef void (KeyboardManager::*_fpt)(IKeyEventListener *); auto _f=xcast<_fpt>(_drva(2944432)); return (this->*_f)(l); }
+	inline void releaseFocus(IKeyEventListener * l) { typedef void (KeyboardManager::*_fpt)(IKeyEventListener *); auto _f=xcast<_fpt>(_drva(2375568)); return (this->*_f)(l); }
 	inline void _guard_obj() {
 		static_assert((sizeof(KeyboardManager)==48),"bad size");
 		static_assert((offsetof(KeyboardManager,listeners)==0x10),"bad off");
@@ -17031,14 +17031,14 @@ public:
 	inline PhysicsCarStateProvider() { }
 	inline PhysicsCarStateProvider(const PhysicsCarStateProvider& other) = default;
 	inline PhysicsCarStateProvider& operator=(const PhysicsCarStateProvider& other) = default;
-	inline void ctor(Car * car) { typedef void (*_fpt)(PhysicsCarStateProvider *pthis, Car *); _fpt _f=(_fpt)_drva(1190384); _f(this, car); }
+	inline void ctor(Car * car) { typedef void (PhysicsCarStateProvider::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(1190384)); (this->*_f)(car); }
 	virtual ~PhysicsCarStateProvider();
 	virtual void getPhysicsState_vf1(CarPhysicsState & physicsState);
-	inline void getPhysicsState_impl(CarPhysicsState & physicsState) { typedef void (*_fpt)(PhysicsCarStateProvider *pthis, CarPhysicsState &); _fpt _f=(_fpt)_drva(1190464); return _f(this, physicsState); }
-	inline void getPhysicsState(CarPhysicsState & physicsState) { return getPhysicsState_vf1(physicsState); }
+	inline void getPhysicsState_impl(CarPhysicsState & physicsState) { typedef void (PhysicsCarStateProvider::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(_drva(1190464)); return (this->*_f)(physicsState); }
+	inline void getPhysicsState(CarPhysicsState & physicsState) { typedef void (PhysicsCarStateProvider::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(physicsState); }
 	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > & wingStatus);
-	inline void getWingState_impl(std::vector<WingState,std::allocator<WingState> > & wingStatus) { typedef void (*_fpt)(PhysicsCarStateProvider *pthis, std::vector<WingState,std::allocator<WingState> > &); _fpt _f=(_fpt)_drva(1190480); return _f(this, wingStatus); }
-	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & wingStatus) { return getWingState_vf2(wingStatus); }
+	inline void getWingState_impl(std::vector<WingState,std::allocator<WingState> > & wingStatus) { typedef void (PhysicsCarStateProvider::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(_drva(1190480)); return (this->*_f)(wingStatus); }
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & wingStatus) { typedef void (PhysicsCarStateProvider::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(wingStatus); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PhysicsCarStateProvider)==16),"bad size");
 		static_assert((offsetof(PhysicsCarStateProvider,car)==0x8),"bad off");
@@ -17103,15 +17103,15 @@ public:
 	inline Kers(const Kers& other) = default;
 	inline Kers& operator=(const Kers& other) = default;
 	virtual ~Kers();
-	inline void dtor() { typedef void (*_fpt)(Kers *pthis); _fpt _f=(_fpt)_drva(2847200); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(Kers *pthis, Car *); _fpt _f=(_fpt)_drva(2847584); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(Kers *pthis, float); _fpt _f=(_fpt)_drva(2850320); return _f(this, dt); }
+	inline void dtor() { typedef void (Kers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2847200)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (Kers::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2847584)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (Kers::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2850320)); return (this->*_f)(dt); }
 	virtual float getOutputTorque_vf1();
-	inline float getOutputTorque_impl() { typedef float (*_fpt)(Kers *pthis); _fpt _f=(_fpt)_drva(2847408); return _f(this); }
-	inline float getOutputTorque() { return getOutputTorque_vf1(); }
-	inline bool isPresent() { typedef bool (*_fpt)(Kers *pthis); _fpt _f=(_fpt)_drva(888160); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(Kers *pthis); _fpt _f=(_fpt)_drva(2850304); return _f(this); }
-	inline float getDischargeTimeS() { typedef float (*_fpt)(Kers *pthis); _fpt _f=(_fpt)_drva(2847376); return _f(this); }
+	inline float getOutputTorque_impl() { typedef float (Kers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2847408)); return (this->*_f)(); }
+	inline float getOutputTorque() { typedef float (Kers::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
+	inline bool isPresent() { typedef bool (Kers::*_fpt)(); auto _f=xcast<_fpt>(_drva(888160)); return (this->*_f)(); }
+	inline void reset() { typedef void (Kers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2850304)); return (this->*_f)(); }
+	inline float getDischargeTimeS() { typedef float (Kers::*_fpt)(); auto _f=xcast<_fpt>(_drva(2847376)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Kers)==248),"bad size");
 		static_assert((offsetof(Kers,attachment)==0x8),"bad off");
@@ -17171,19 +17171,19 @@ public:
 	inline ksgui_Graph() { }
 	inline ksgui_Graph(const ksgui_Graph& other) = default;
 	inline ksgui_Graph& operator=(const ksgui_Graph& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (*_fpt)(ksgui_Graph *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); _fpt _f=(_fpt)_drva(2388336); _f(this, iname, igui); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * iname, ksgui_GUI * igui) { typedef void (ksgui_Graph::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, ksgui_GUI *); auto _f=xcast<_fpt>(_drva(2388336)); (this->*_f)(iname, igui); }
 	virtual ~ksgui_Graph();
-	inline void dtor() { typedef void (*_fpt)(ksgui_Graph *pthis); _fpt _f=(_fpt)_drva(2388544); _f(this); }
+	inline void dtor() { typedef void (ksgui_Graph::*_fpt)(); auto _f=xcast<_fpt>(_drva(2388544)); (this->*_f)(); }
 	virtual void render_vf3(float dt);
-	inline void render_impl(float dt) { typedef void (*_fpt)(ksgui_Graph *pthis, float); _fpt _f=(_fpt)_drva(2390240); return _f(this, dt); }
-	inline void render(float dt) { return render_vf3(dt); }
-	inline void addSerie(vec3f color) { typedef void (*_fpt)(ksgui_Graph *pthis, vec3f); _fpt _f=(_fpt)_drva(2389536); return _f(this, color); }
-	inline void addValue(unsigned int serieIndex, float v) { typedef void (*_fpt)(ksgui_Graph *pthis, unsigned int, float); _fpt _f=(_fpt)_drva(2389760); return _f(this, serieIndex, v); }
-	inline void clearSerie(unsigned int serieIndex) { typedef void (*_fpt)(ksgui_Graph *pthis, unsigned int); _fpt _f=(_fpt)_drva(2389856); return _f(this, serieIndex); }
-	inline void addReferenceAxis(const ksgui_GraphReferenceAxis & axis) { typedef void (*_fpt)(ksgui_Graph *pthis, const ksgui_GraphReferenceAxis &); _fpt _f=(_fpt)_drva(2389520); return _f(this, axis); }
-	inline int getSeriesCount() { typedef int (*_fpt)(ksgui_Graph *pthis); _fpt _f=(_fpt)_drva(2389936); return _f(this); }
-	inline float getValuesAtPercentage(int serieIndex, float perc) { typedef float (*_fpt)(ksgui_Graph *pthis, int, float); _fpt _f=(_fpt)_drva(2389968); return _f(this, serieIndex, perc); }
-	inline void renderAxes(GLRenderer & gl) { typedef void (*_fpt)(ksgui_Graph *pthis, GLRenderer &); _fpt _f=(_fpt)_drva(2390944); return _f(this, gl); }
+	inline void render_impl(float dt) { typedef void (ksgui_Graph::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2390240)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_Graph::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline void addSerie(vec3f color) { typedef void (ksgui_Graph::*_fpt)(vec3f); auto _f=xcast<_fpt>(_drva(2389536)); return (this->*_f)(color); }
+	inline void addValue(unsigned int serieIndex, float v) { typedef void (ksgui_Graph::*_fpt)(unsigned int, float); auto _f=xcast<_fpt>(_drva(2389760)); return (this->*_f)(serieIndex, v); }
+	inline void clearSerie(unsigned int serieIndex) { typedef void (ksgui_Graph::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2389856)); return (this->*_f)(serieIndex); }
+	inline void addReferenceAxis(const ksgui_GraphReferenceAxis & axis) { typedef void (ksgui_Graph::*_fpt)(const ksgui_GraphReferenceAxis &); auto _f=xcast<_fpt>(_drva(2389520)); return (this->*_f)(axis); }
+	inline int getSeriesCount() { typedef int (ksgui_Graph::*_fpt)(); auto _f=xcast<_fpt>(_drva(2389936)); return (this->*_f)(); }
+	inline float getValuesAtPercentage(int serieIndex, float perc) { typedef float (ksgui_Graph::*_fpt)(int, float); auto _f=xcast<_fpt>(_drva(2389968)); return (this->*_f)(serieIndex, perc); }
+	inline void renderAxes(GLRenderer & gl) { typedef void (ksgui_Graph::*_fpt)(GLRenderer &); auto _f=xcast<_fpt>(_drva(2390944)); return (this->*_f)(gl); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_Graph)==440),"bad size");
 		static_assert((offsetof(ksgui_Graph,minY)==0x178),"bad off");
@@ -17264,42 +17264,42 @@ public:
 	inline AISpline() { }
 	inline AISpline(const AISpline& other) = default;
 	inline AISpline& operator=(const AISpline& other) = default;
-	inline void ctor() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2772336); _f(this); }
+	inline void ctor() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2772336)); (this->*_f)(); }
 	virtual ~AISpline();
-	inline void dtor() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2772480); _f(this); }
-	inline InterpolatingSpline & getBaseSpline() { typedef InterpolatingSpline & (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(460272); return _f(this); }
-	inline void addPoint(const vec3f & point, const AISplinePayload & payload) { typedef void (*_fpt)(AISpline *pthis, const vec3f &, const AISplinePayload &); _fpt _f=(_fpt)_drva(2773712); return _f(this, point, payload); }
-	inline unsigned int pointsCount() { typedef unsigned int (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2791152); return _f(this); }
-	inline vec3f getLastPoint() { typedef vec3f (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2782192); return _f(this); }
-	inline void clear() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2779984); return _f(this); }
-	inline AISplinePayload payloadAtSplineIndex(unsigned int index) { typedef AISplinePayload (*_fpt)(AISpline *pthis, unsigned int); _fpt _f=(_fpt)_drva(2790832); return _f(this, index); }
-	inline AISplinePayload payloadAtPosition(float pos) { typedef AISplinePayload (*_fpt)(AISpline *pthis, float); _fpt _f=(_fpt)_drva(2789536); return _f(this, pos); }
-	inline void setPayloadAtSplineIndex(unsigned int index, AISplinePayload pl) { typedef void (*_fpt)(AISpline *pthis, unsigned int, AISplinePayload); _fpt _f=(_fpt)_drva(2792816); return _f(this, index, pl); }
-	inline void save(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filen) { typedef void (*_fpt)(AISpline *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2791632); return _f(this, filen); }
-	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (*_fpt)(AISpline *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2786192); return _f(this, a_filename); }
-	inline void loadFast(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (*_fpt)(AISpline *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2786240); return _f(this, a_filename); }
-	inline void buildSides(IRayTrackCollisionProvider * track) { typedef void (*_fpt)(AISpline *pthis, IRayTrackCollisionProvider *); _fpt _f=(_fpt)_drva(2774576); return _f(this, track); }
-	inline void calculateRadius(int range) { typedef void (*_fpt)(AISpline *pthis, int); _fpt _f=(_fpt)_drva(2778144); return _f(this, range); }
-	inline void closeSmooth() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2780032); return _f(this); }
-	inline void adjustPayloadEndpoint(int numberOfPoints) { typedef void (*_fpt)(AISpline *pthis, int); _fpt _f=(_fpt)_drva(2773808); return _f(this, numberOfPoints); }
-	inline void buildGrid() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2774560); return _f(this); }
-	inline void cleanSpline() { typedef void (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2779680); return _f(this); }
-	inline void calculateNormals(IRayTrackCollisionProvider * track) { typedef void (*_fpt)(AISpline *pthis, IRayTrackCollisionProvider *); _fpt _f=(_fpt)_drva(2776592); return _f(this, track); }
-	inline vec3f getPointWithOffset(float pos, float lateralOffset, float carHalfWidth) { typedef vec3f (*_fpt)(AISpline *pthis, float, float, float); _fpt _f=(_fpt)_drva(2782560); return _f(this, pos, lateralOffset, carHalfWidth); }
-	inline vec3f getPointWithOffset(float pos, float lateralOffset, float carHalfWidth, const AISplinePayload & pl) { typedef vec3f (*_fpt)(AISpline *pthis, float, float, float, const AISplinePayload &); _fpt _f=(_fpt)_drva(2783488); return _f(this, pos, lateralOffset, carHalfWidth, pl); }
-	inline float getCornerRadiusAt(float normalizedPosition, float distance, float lateralOffset, float carWidth) { typedef float (*_fpt)(AISpline *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2780080); return _f(this, normalizedPosition, distance, lateralOffset, carWidth); }
-	inline void getSlimPayloadAt(float pos, AISplineSlimPayload & pl) { typedef void (*_fpt)(AISpline *pthis, float, AISplineSlimPayload &); _fpt _f=(_fpt)_drva(2783984); return _f(this, pos, pl); }
-	inline float getDistToCornerFwd(float thresholdRadius, float normalizedSplinePosition, float resolution) { typedef float (*_fpt)(AISpline *pthis, float, float, float); _fpt _f=(_fpt)_drva(2780656); return _f(this, thresholdRadius, normalizedSplinePosition, resolution); }
-	inline float getDistToCornerRev(float thresholdRadius, float normalizedSplinePosition, float resolution) { typedef float (*_fpt)(AISpline *pthis, float, float, float); _fpt _f=(_fpt)_drva(2781424); return _f(this, thresholdRadius, normalizedSplinePosition, resolution); }
-	inline void initPitlane(IRayTrackCollisionProvider * track) { typedef void (*_fpt)(AISpline *pthis, IRayTrackCollisionProvider *); _fpt _f=(_fpt)_drva(2785136); return _f(this, track); }
-	inline void getSidesAtPos(float pos, float * sides, bool use_blend) { typedef void (*_fpt)(AISpline *pthis, float, float *, bool); _fpt _f=(_fpt)_drva(2783776); return _f(this, pos, sides, use_blend); }
-	inline float getStraightFactor() { typedef float (*_fpt)(AISpline *pthis); _fpt _f=(_fpt)_drva(2784864); return _f(this); }
-	inline int isInStraight(float normalizedPos) { typedef int (*_fpt)(AISpline *pthis, float); _fpt _f=(_fpt)_drva(2786032); return _f(this, normalizedPos); }
-	inline void loadVersion6(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (*_fpt)(AISpline *pthis, std::basic_ifstream<char,std::char_traits<char> > &); _fpt _f=(_fpt)_drva(2786736); return _f(this, in); }
-	inline void loadVersion7(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (*_fpt)(AISpline *pthis, std::basic_ifstream<char,std::char_traits<char> > &); _fpt _f=(_fpt)_drva(2788224); return _f(this, in); }
-	inline void getPayloadIndices(float pos, unsigned int * i0, unsigned int * i1, float * blend) { typedef void (*_fpt)(AISpline *pthis, float, unsigned int *, unsigned int *, float *); _fpt _f=(_fpt)_drva(2782256); return _f(this, pos, i0, i1, blend); }
-	inline void initStraights(float radiusThreshold) { typedef void (*_fpt)(AISpline *pthis, float); _fpt _f=(_fpt)_drva(2785584); return _f(this, radiusThreshold); }
-	inline bool getStraightDataFromIndex(int index, AIStraightData & data, float radiusThreshold) { typedef bool (*_fpt)(AISpline *pthis, int, AIStraightData &, float); _fpt _f=(_fpt)_drva(2784432); return _f(this, index, data, radiusThreshold); }
+	inline void dtor() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2772480)); (this->*_f)(); }
+	inline InterpolatingSpline & getBaseSpline() { typedef InterpolatingSpline & (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(460272)); return (this->*_f)(); }
+	inline void addPoint(const vec3f & point, const AISplinePayload & payload) { typedef void (AISpline::*_fpt)(const vec3f &, const AISplinePayload &); auto _f=xcast<_fpt>(_drva(2773712)); return (this->*_f)(point, payload); }
+	inline unsigned int pointsCount() { typedef unsigned int (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2791152)); return (this->*_f)(); }
+	inline vec3f getLastPoint() { typedef vec3f (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2782192)); return (this->*_f)(); }
+	inline void clear() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2779984)); return (this->*_f)(); }
+	inline AISplinePayload payloadAtSplineIndex(unsigned int index) { typedef AISplinePayload (AISpline::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2790832)); return (this->*_f)(index); }
+	inline AISplinePayload payloadAtPosition(float pos) { typedef AISplinePayload (AISpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2789536)); return (this->*_f)(pos); }
+	inline void setPayloadAtSplineIndex(unsigned int index, AISplinePayload pl) { typedef void (AISpline::*_fpt)(unsigned int, AISplinePayload); auto _f=xcast<_fpt>(_drva(2792816)); return (this->*_f)(index, pl); }
+	inline void save(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filen) { typedef void (AISpline::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2791632)); return (this->*_f)(filen); }
+	inline void load(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (AISpline::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2786192)); return (this->*_f)(a_filename); }
+	inline void loadFast(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & a_filename) { typedef void (AISpline::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2786240)); return (this->*_f)(a_filename); }
+	inline void buildSides(IRayTrackCollisionProvider * track) { typedef void (AISpline::*_fpt)(IRayTrackCollisionProvider *); auto _f=xcast<_fpt>(_drva(2774576)); return (this->*_f)(track); }
+	inline void calculateRadius(int range) { typedef void (AISpline::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2778144)); return (this->*_f)(range); }
+	inline void closeSmooth() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2780032)); return (this->*_f)(); }
+	inline void adjustPayloadEndpoint(int numberOfPoints) { typedef void (AISpline::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2773808)); return (this->*_f)(numberOfPoints); }
+	inline void buildGrid() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2774560)); return (this->*_f)(); }
+	inline void cleanSpline() { typedef void (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2779680)); return (this->*_f)(); }
+	inline void calculateNormals(IRayTrackCollisionProvider * track) { typedef void (AISpline::*_fpt)(IRayTrackCollisionProvider *); auto _f=xcast<_fpt>(_drva(2776592)); return (this->*_f)(track); }
+	inline vec3f getPointWithOffset(float pos, float lateralOffset, float carHalfWidth) { typedef vec3f (AISpline::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2782560)); return (this->*_f)(pos, lateralOffset, carHalfWidth); }
+	inline vec3f getPointWithOffset(float pos, float lateralOffset, float carHalfWidth, const AISplinePayload & pl) { typedef vec3f (AISpline::*_fpt)(float, float, float, const AISplinePayload &); auto _f=xcast<_fpt>(_drva(2783488)); return (this->*_f)(pos, lateralOffset, carHalfWidth, pl); }
+	inline float getCornerRadiusAt(float normalizedPosition, float distance, float lateralOffset, float carWidth) { typedef float (AISpline::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2780080)); return (this->*_f)(normalizedPosition, distance, lateralOffset, carWidth); }
+	inline void getSlimPayloadAt(float pos, AISplineSlimPayload & pl) { typedef void (AISpline::*_fpt)(float, AISplineSlimPayload &); auto _f=xcast<_fpt>(_drva(2783984)); return (this->*_f)(pos, pl); }
+	inline float getDistToCornerFwd(float thresholdRadius, float normalizedSplinePosition, float resolution) { typedef float (AISpline::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2780656)); return (this->*_f)(thresholdRadius, normalizedSplinePosition, resolution); }
+	inline float getDistToCornerRev(float thresholdRadius, float normalizedSplinePosition, float resolution) { typedef float (AISpline::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2781424)); return (this->*_f)(thresholdRadius, normalizedSplinePosition, resolution); }
+	inline void initPitlane(IRayTrackCollisionProvider * track) { typedef void (AISpline::*_fpt)(IRayTrackCollisionProvider *); auto _f=xcast<_fpt>(_drva(2785136)); return (this->*_f)(track); }
+	inline void getSidesAtPos(float pos, float * sides, bool use_blend) { typedef void (AISpline::*_fpt)(float, float *, bool); auto _f=xcast<_fpt>(_drva(2783776)); return (this->*_f)(pos, sides, use_blend); }
+	inline float getStraightFactor() { typedef float (AISpline::*_fpt)(); auto _f=xcast<_fpt>(_drva(2784864)); return (this->*_f)(); }
+	inline int isInStraight(float normalizedPos) { typedef int (AISpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2786032)); return (this->*_f)(normalizedPos); }
+	inline void loadVersion6(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (AISpline::*_fpt)(std::basic_ifstream<char,std::char_traits<char> > &); auto _f=xcast<_fpt>(_drva(2786736)); return (this->*_f)(in); }
+	inline void loadVersion7(std::basic_ifstream<char,std::char_traits<char> > & in) { typedef void (AISpline::*_fpt)(std::basic_ifstream<char,std::char_traits<char> > &); auto _f=xcast<_fpt>(_drva(2788224)); return (this->*_f)(in); }
+	inline void getPayloadIndices(float pos, unsigned int * i0, unsigned int * i1, float * blend) { typedef void (AISpline::*_fpt)(float, unsigned int *, unsigned int *, float *); auto _f=xcast<_fpt>(_drva(2782256)); return (this->*_f)(pos, i0, i1, blend); }
+	inline void initStraights(float radiusThreshold) { typedef void (AISpline::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2785584)); return (this->*_f)(radiusThreshold); }
+	inline bool getStraightDataFromIndex(int index, AIStraightData & data, float radiusThreshold) { typedef bool (AISpline::*_fpt)(int, AIStraightData &, float); auto _f=xcast<_fpt>(_drva(2784432)); return (this->*_f)(index, data, radiusThreshold); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AISpline)==224),"bad size");
 		static_assert((offsetof(AISpline,lapTime)==0x8),"bad off");
@@ -17398,33 +17398,33 @@ public:
 	inline Camera() { }
 	inline Camera(const Camera& other) = default;
 	inline Camera& operator=(const Camera& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * rm) { typedef void (*_fpt)(Camera *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); _fpt _f=(_fpt)_drva(2157120); _f(this, iname, rm); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * rm) { typedef void (Camera::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); auto _f=xcast<_fpt>(_drva(2157120)); (this->*_f)(iname, rm); }
 	virtual ~Camera();
-	inline void dtor() { typedef void (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2157648); _f(this); }
+	inline void dtor() { typedef void (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2157648)); (this->*_f)(); }
 	virtual void render_vf1(Node * root, float dt);
-	inline void render_impl(Node * root, float dt) { typedef void (*_fpt)(Camera *pthis, Node *, float); _fpt _f=(_fpt)_drva(2158944); return _f(this, root, dt); }
-	inline void render(Node * root, float dt) { return render_vf1(root, dt); }
-	inline void setClearColor(float r, float g, float b, float a) { typedef void (*_fpt)(Camera *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2161632); return _f(this, r, g, b, a); }
-	inline void moveForward(float d) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2158752); return _f(this, d); }
-	inline void moveRight(float d) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2158832); return _f(this, d); }
-	inline void rotatePitch(float rads) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2161280); return _f(this, rads); }
-	inline void rotateHeading(float rads) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2160960); return _f(this, rads); }
-	inline void rotateRoll(float rads) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2161456); return _f(this, rads); }
-	inline void rotateOnAxis(const vec3f & axis, float rads) { typedef void (*_fpt)(Camera *pthis, const vec3f &, float); _fpt _f=(_fpt)_drva(2161136); return _f(this, axis, rads); }
-	inline void renderCamera() { typedef void (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2160080); return _f(this); }
-	inline void renderCameraCustomPerspective(float left, float right, float top, float bottom) { typedef void (*_fpt)(Camera *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2160416); return _f(this, left, right, top, bottom); }
+	inline void render_impl(Node * root, float dt) { typedef void (Camera::*_fpt)(Node *, float); auto _f=xcast<_fpt>(_drva(2158944)); return (this->*_f)(root, dt); }
+	inline void render(Node * root, float dt) { typedef void (Camera::*_fpt)(Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(root, dt); }
+	inline void setClearColor(float r, float g, float b, float a) { typedef void (Camera::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2161632)); return (this->*_f)(r, g, b, a); }
+	inline void moveForward(float d) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2158752)); return (this->*_f)(d); }
+	inline void moveRight(float d) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2158832)); return (this->*_f)(d); }
+	inline void rotatePitch(float rads) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2161280)); return (this->*_f)(rads); }
+	inline void rotateHeading(float rads) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2160960)); return (this->*_f)(rads); }
+	inline void rotateRoll(float rads) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2161456)); return (this->*_f)(rads); }
+	inline void rotateOnAxis(const vec3f & axis, float rads) { typedef void (Camera::*_fpt)(const vec3f &, float); auto _f=xcast<_fpt>(_drva(2161136)); return (this->*_f)(axis, rads); }
+	inline void renderCamera() { typedef void (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2160080)); return (this->*_f)(); }
+	inline void renderCameraCustomPerspective(float left, float right, float top, float bottom) { typedef void (Camera::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2160416)); return (this->*_f)(left, right, top, bottom); }
 	virtual mat44f getPerspectiveMatrix_vf2();
-	inline mat44f getPerspectiveMatrix_impl() { typedef mat44f (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2158336); return _f(this); }
-	inline mat44f getPerspectiveMatrix() { return getPerspectiveMatrix_vf2(); }
+	inline mat44f getPerspectiveMatrix_impl() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2158336)); return (this->*_f)(); }
+	inline mat44f getPerspectiveMatrix() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
 	virtual mat44f getViewMatrix_vf3();
-	inline mat44f getViewMatrix_impl() { typedef mat44f (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2158576); return _f(this); }
-	inline mat44f getViewMatrix() { return getViewMatrix_vf3(); }
-	inline void moveUpWorld(float d) { typedef void (*_fpt)(Camera *pthis, float); _fpt _f=(_fpt)_drva(2158896); return _f(this, d); }
+	inline mat44f getViewMatrix_impl() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2158576)); return (this->*_f)(); }
+	inline mat44f getViewMatrix() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(); }
+	inline void moveUpWorld(float d) { typedef void (Camera::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2158896)); return (this->*_f)(d); }
 	virtual mat44f getFinalWorldMatrix_vf4();
-	inline mat44f getFinalWorldMatrix_impl() { typedef mat44f (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2158288); return _f(this); }
-	inline mat44f getFinalWorldMatrix() { return getFinalWorldMatrix_vf4(); }
-	inline void clearBuffers() { typedef void (*_fpt)(Camera *pthis); _fpt _f=(_fpt)_drva(2158176); return _f(this); }
-	inline void renderAxis(bool useZBuffer) { typedef void (*_fpt)(Camera *pthis, bool); _fpt _f=(_fpt)_drva(2159456); return _f(this, useZBuffer); }
+	inline mat44f getFinalWorldMatrix_impl() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2158288)); return (this->*_f)(); }
+	inline mat44f getFinalWorldMatrix() { typedef mat44f (Camera::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
+	inline void clearBuffers() { typedef void (Camera::*_fpt)(); auto _f=xcast<_fpt>(_drva(2158176)); return (this->*_f)(); }
+	inline void renderAxis(bool useZBuffer) { typedef void (Camera::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2159456)); return (this->*_f)(useZBuffer); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Camera)==528),"bad size");
 		static_assert((offsetof(Camera,fov)==0x8),"bad off");
@@ -17529,47 +17529,47 @@ public:
 	inline RaceEngineer() { }
 	inline RaceEngineer(const RaceEngineer& other) = default;
 	inline RaceEngineer& operator=(const RaceEngineer& other) = default;
-	inline void ctor(Car * icar) { typedef void (*_fpt)(RaceEngineer *pthis, Car *); _fpt _f=(_fpt)_drva(2595824); _f(this, icar); }
+	inline void ctor(Car * icar) { typedef void (RaceEngineer::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2595824)); (this->*_f)(icar); }
 	virtual ~RaceEngineer();
-	inline void dtor() { typedef void (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2595856); _f(this); }
-	inline static float getCompoundDY(const TyreCompoundDef & def, float load) { typedef float (*_fpt)(const TyreCompoundDef &, float); _fpt _f=(_fpt)_drva(2604016); return _f(def, load); }
-	inline float projectCarForwardForceAtGas(float gas) { typedef float (*_fpt)(RaceEngineer *pthis, float); _fpt _f=(_fpt)_drva(2608160); return _f(this, gas); }
-	inline AccelerationProfile getAccelerationProfile() { typedef AccelerationProfile (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2602320); return _f(this); }
-	inline Car * getCar() { typedef Car * (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(100256); return _f(this); }
-	inline float getBetaRAD() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2603664); return _f(this); }
-	inline float getFrontCasterRAD() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2604352); return _f(this); }
-	inline float getCasterRAD(ISuspension * isus) { typedef float (*_fpt)(RaceEngineer *pthis, ISuspension *); _fpt _f=(_fpt)_drva(2603808); return _f(this, isus); }
-	inline float getFrontNaturalFrequencyHZ() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2604832); return _f(this); }
-	inline float getRearNaturalFrequencyHZ() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2607344); return _f(this); }
-	inline float getWeightDistribution() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2608016); return _f(this); }
-	inline std::tuple<float,float> getFrontDampingRatio() { typedef std::tuple<float,float> (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2604384); return _f(this); }
-	inline std::tuple<float,float> getRearDampingRatio() { typedef std::tuple<float,float> (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2606800); return _f(this); }
-	inline float evalLateralGrip(float speed, float mass, float aeroModifier, float * in_loads, float current_lift_kg) { typedef float (*_fpt)(RaceEngineer *pthis, float, float, float, float *, float); _fpt _f=(_fpt)_drva(2598160); return _f(this, speed, mass, aeroModifier, in_loads, current_lift_kg); }
-	inline float getPointGroundHeight(const vec3f & p) { typedef float (*_fpt)(RaceEngineer *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2606416); return _f(this, p); }
-	inline float getPointFrontShare(vec3f & p) { typedef float (*_fpt)(RaceEngineer *pthis, vec3f &); _fpt _f=(_fpt)_drva(2606288); return _f(this, p); }
-	inline float projectWingsLift(float speed) { typedef float (*_fpt)(RaceEngineer *pthis, float); _fpt _f=(_fpt)_drva(2608576); return _f(this, speed); }
-	inline float projectWingsDrag(float speed) { typedef float (*_fpt)(RaceEngineer *pthis, float); _fpt _f=(_fpt)_drva(2608368); return _f(this, speed); }
-	inline float getTorqueToGripRatio() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2607712); return _f(this); }
-	inline Tyre * getLeftDrivenTyre() { typedef Tyre * (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2605504); return _f(this); }
-	inline Tyre * getRightDrivenTyre() { typedef Tyre * (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2607664); return _f(this); }
-	inline float getFrontTrack() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2605072); return _f(this); }
-	inline float getRearTrack() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2607584); return _f(this); }
-	inline float getDynamicIndex() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2604128); return _f(this); }
-	inline float getOptimalBrake() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2605856); return _f(this); }
-	inline float getDrivingTyresSlip() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2604064); return _f(this); }
-	inline float getMaxBrakingForce() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2605552); return _f(this); }
-	inline float getBaseCarHeight() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2603520); return _f(this); }
-	inline Speed getMaxSpeedFromGear(unsigned int relativeCarIndex) { typedef Speed (*_fpt)(RaceEngineer *pthis, unsigned int); _fpt _f=(_fpt)_drva(2605632); return _f(this, relativeCarIndex); }
-	inline float evalAvailableBrake(float speed, float latg, float weight) { typedef float (*_fpt)(RaceEngineer *pthis, float, float, float); _fpt _f=(_fpt)_drva(2596688); return _f(this, speed, latg, weight); }
-	inline float evalFrontRideHeight() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2597104); return _f(this); }
-	inline float evalRearRideHeight() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2598992); return _f(this); }
-	inline float evalRideHeight(int index) { typedef float (*_fpt)(RaceEngineer *pthis, int); _fpt _f=(_fpt)_drva(2599376); return _f(this, index); }
-	inline float evaluateFuelPerLapFromTrackSpline() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2600032); return _f(this); }
-	inline int findTyreCompound(FindTyreCompoundLogic logic) { typedef int (*_fpt)(RaceEngineer *pthis, FindTyreCompoundLogic); _fpt _f=(_fpt)_drva(2601888); return _f(this, logic); }
-	inline WheelValues evalTyreLoad(float speedMS, float latg, float longg) { typedef WheelValues (*_fpt)(RaceEngineer *pthis, float, float, float); _fpt _f=(_fpt)_drva(2599392); return _f(this, speedMS, latg, longg); }
-	inline KPI getKPI_RAD(int index) { typedef KPI (*_fpt)(RaceEngineer *pthis, int); _fpt _f=(_fpt)_drva(2605152); return _f(this, index); }
-	inline float getAntiSquat() { typedef float (*_fpt)(RaceEngineer *pthis); _fpt _f=(_fpt)_drva(2602768); return _f(this); }
-	inline float evalLateralGFromLoads(float speed, float aeroRatio, float mass, const float * loads) { typedef float (*_fpt)(RaceEngineer *pthis, float, float, float, const float *); _fpt _f=(_fpt)_drva(2597472); return _f(this, speed, aeroRatio, mass, loads); }
+	inline void dtor() { typedef void (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2595856)); (this->*_f)(); }
+	inline static float getCompoundDY(const TyreCompoundDef & def, float load) { typedef float (*_fpt)(const TyreCompoundDef &, float); auto _f=(_fpt)_drva(2604016); return _f(def, load); }
+	inline float projectCarForwardForceAtGas(float gas) { typedef float (RaceEngineer::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2608160)); return (this->*_f)(gas); }
+	inline AccelerationProfile getAccelerationProfile() { typedef AccelerationProfile (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2602320)); return (this->*_f)(); }
+	inline Car * getCar() { typedef Car * (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(100256)); return (this->*_f)(); }
+	inline float getBetaRAD() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2603664)); return (this->*_f)(); }
+	inline float getFrontCasterRAD() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2604352)); return (this->*_f)(); }
+	inline float getCasterRAD(ISuspension * isus) { typedef float (RaceEngineer::*_fpt)(ISuspension *); auto _f=xcast<_fpt>(_drva(2603808)); return (this->*_f)(isus); }
+	inline float getFrontNaturalFrequencyHZ() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2604832)); return (this->*_f)(); }
+	inline float getRearNaturalFrequencyHZ() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2607344)); return (this->*_f)(); }
+	inline float getWeightDistribution() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2608016)); return (this->*_f)(); }
+	inline std::tuple<float,float> getFrontDampingRatio() { typedef std::tuple<float,float> (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2604384)); return (this->*_f)(); }
+	inline std::tuple<float,float> getRearDampingRatio() { typedef std::tuple<float,float> (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2606800)); return (this->*_f)(); }
+	inline float evalLateralGrip(float speed, float mass, float aeroModifier, float * in_loads, float current_lift_kg) { typedef float (RaceEngineer::*_fpt)(float, float, float, float *, float); auto _f=xcast<_fpt>(_drva(2598160)); return (this->*_f)(speed, mass, aeroModifier, in_loads, current_lift_kg); }
+	inline float getPointGroundHeight(const vec3f & p) { typedef float (RaceEngineer::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2606416)); return (this->*_f)(p); }
+	inline float getPointFrontShare(vec3f & p) { typedef float (RaceEngineer::*_fpt)(vec3f &); auto _f=xcast<_fpt>(_drva(2606288)); return (this->*_f)(p); }
+	inline float projectWingsLift(float speed) { typedef float (RaceEngineer::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2608576)); return (this->*_f)(speed); }
+	inline float projectWingsDrag(float speed) { typedef float (RaceEngineer::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2608368)); return (this->*_f)(speed); }
+	inline float getTorqueToGripRatio() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2607712)); return (this->*_f)(); }
+	inline Tyre * getLeftDrivenTyre() { typedef Tyre * (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2605504)); return (this->*_f)(); }
+	inline Tyre * getRightDrivenTyre() { typedef Tyre * (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2607664)); return (this->*_f)(); }
+	inline float getFrontTrack() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2605072)); return (this->*_f)(); }
+	inline float getRearTrack() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2607584)); return (this->*_f)(); }
+	inline float getDynamicIndex() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2604128)); return (this->*_f)(); }
+	inline float getOptimalBrake() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2605856)); return (this->*_f)(); }
+	inline float getDrivingTyresSlip() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2604064)); return (this->*_f)(); }
+	inline float getMaxBrakingForce() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2605552)); return (this->*_f)(); }
+	inline float getBaseCarHeight() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2603520)); return (this->*_f)(); }
+	inline Speed getMaxSpeedFromGear(unsigned int relativeCarIndex) { typedef Speed (RaceEngineer::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2605632)); return (this->*_f)(relativeCarIndex); }
+	inline float evalAvailableBrake(float speed, float latg, float weight) { typedef float (RaceEngineer::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2596688)); return (this->*_f)(speed, latg, weight); }
+	inline float evalFrontRideHeight() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2597104)); return (this->*_f)(); }
+	inline float evalRearRideHeight() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2598992)); return (this->*_f)(); }
+	inline float evalRideHeight(int index) { typedef float (RaceEngineer::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2599376)); return (this->*_f)(index); }
+	inline float evaluateFuelPerLapFromTrackSpline() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2600032)); return (this->*_f)(); }
+	inline int findTyreCompound(FindTyreCompoundLogic logic) { typedef int (RaceEngineer::*_fpt)(FindTyreCompoundLogic); auto _f=xcast<_fpt>(_drva(2601888)); return (this->*_f)(logic); }
+	inline WheelValues evalTyreLoad(float speedMS, float latg, float longg) { typedef WheelValues (RaceEngineer::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2599392)); return (this->*_f)(speedMS, latg, longg); }
+	inline KPI getKPI_RAD(int index) { typedef KPI (RaceEngineer::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2605152)); return (this->*_f)(index); }
+	inline float getAntiSquat() { typedef float (RaceEngineer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2602768)); return (this->*_f)(); }
+	inline float evalLateralGFromLoads(float speed, float aeroRatio, float mass, const float * loads) { typedef float (RaceEngineer::*_fpt)(float, float, float, const float *); auto _f=xcast<_fpt>(_drva(2597472)); return (this->*_f)(speed, aeroRatio, mass, loads); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RaceEngineer)==24),"bad size");
 		static_assert((offsetof(RaceEngineer,car)==0x8),"bad off");
@@ -17721,37 +17721,37 @@ public:
 	inline Tyre() { }
 	inline Tyre(const Tyre& other) = default;
 	inline Tyre& operator=(const Tyre& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2609952); _f(this); }
-	inline static float loadSensLinearD(float d0, float d1, float load) { typedef float (*_fpt)(float, float, float); _fpt _f=(_fpt)_drva(2634368); return _f(d0, d1, load); }
-	inline static float loadSensExpD(float exp, float mult, float load) { typedef float (*_fpt)(float, float, float); _fpt _f=(_fpt)_drva(2634304); return _f(exp, mult, load); }
-	inline void init(ISuspension * ihub, IRayTrackCollisionProvider * rcp, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath, int index, int carID, Car * car) { typedef void (*_fpt)(Tyre *pthis, ISuspension *, IRayTrackCollisionProvider *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, int, int, Car *); _fpt _f=(_fpt)_drva(2623056); return _f(this, ihub, rcp, dataPath, index, carID, car); }
-	inline void step(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2635776); return _f(this, dt); }
-	inline mat44f getFinalTyreRotation() { typedef mat44f (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2622864); return _f(this); }
-	inline void stepRotationMatrix(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2640768); return _f(this, dt); }
-	inline void reset() { typedef void (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2634624); return _f(this); }
-	inline vec3f getWorldPosition() { typedef vec3f (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2623024); return _f(this); }
-	inline float getDY(float load) { typedef float (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2622416); return _f(this, load); }
-	inline float getDX(float load) { typedef float (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2622016); return _f(this, load); }
-	inline bool setCompound(int cindex) { typedef bool (*_fpt)(Tyre *pthis, int); _fpt _f=(_fpt)_drva(2634976); return _f(this, cindex); }
-	inline float getDynamicK() { typedef float (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2622816); return _f(this); }
-	inline float getCorrectedD(float d, float * wear_mult) { typedef float (*_fpt)(Tyre *pthis, float, float *); _fpt _f=(_fpt)_drva(2621840); return _f(this, d, wear_mult); }
-	inline float getCamberedDy(float camberRAD, float dy) { typedef float (*_fpt)(Tyre *pthis, float, float); _fpt _f=(_fpt)_drva(2621568); return _f(this, camberRAD, dy); }
-	inline void addGroundContact(const vec3f & pos, const vec3f & normal) { typedef void (*_fpt)(Tyre *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2611584); return _f(this, pos, normal); }
-	inline void addTyreForces(const vec3f & pos, const vec3f & normal, SurfaceDef * surfaceDef, float dt) { typedef void (*_fpt)(Tyre *pthis, const vec3f &, const vec3f &, SurfaceDef *, float); _fpt _f=(_fpt)_drva(2613664); return _f(this, pos, normal, surfaceDef, dt); }
-	inline void addTyreForcesV10(const vec3f & pos, const vec3f & normal, SurfaceDef * surfaceDef, float dt) { typedef void (*_fpt)(Tyre *pthis, const vec3f &, const vec3f &, SurfaceDef *, float); _fpt _f=(_fpt)_drva(2616672); return _f(this, pos, normal, surfaceDef, dt); }
-	inline void updateAngularSpeed(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2641824); return _f(this, dt); }
-	inline void updateLockedState(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2642032); return _f(this, dt); }
-	inline void stepRelaxationLength(float svx, float svy, float hubVelocity, float dt) { typedef void (*_fpt)(Tyre *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2640448); return _f(this, svx, svy, hubVelocity, dt); }
-	inline void stepDirtyLevel(float dt, float hubSpeed) { typedef void (*_fpt)(Tyre *pthis, float, float); _fpt _f=(_fpt)_drva(2638800); return _f(this, dt, hubSpeed); }
-	inline void stepThermalModel(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2641056); return _f(this, dt); }
-	inline void initCompounds(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath, int index) { typedef void (*_fpt)(Tyre *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); _fpt _f=(_fpt)_drva(2623488); return _f(this, dataPath, index); }
-	inline void stepGrainBlister(float dt, float hubVelocity) { typedef void (*_fpt)(Tyre *pthis, float, float); _fpt _f=(_fpt)_drva(2639360); return _f(this, dt, hubVelocity); }
-	inline void stepPuncture(float dt, float hubSpeed) { typedef void (*_fpt)(Tyre *pthis, float, float); _fpt _f=(_fpt)_drva(2640304); return _f(this, dt, hubSpeed); }
-	inline void stepTyreBlankets(float dt) { typedef void (*_fpt)(Tyre *pthis, float); _fpt _f=(_fpt)_drva(2641680); return _f(this, dt); }
-	inline void stepFlatSpot(float dt, float hubVelocity) { typedef void (*_fpt)(Tyre *pthis, float, float); _fpt _f=(_fpt)_drva(2639104); return _f(this, dt, hubVelocity); }
-	inline bool generateCompoundNames() { typedef bool (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2619296); return _f(this); }
-	inline void addTyreForceToHub(const vec3f & pos, const vec3f & force) { typedef void (*_fpt)(Tyre *pthis, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(2612224); return _f(this, pos, force); }
-	inline void ctor() { typedef void (*_fpt)(Tyre *pthis); _fpt _f=(_fpt)_drva(2546640); _f(this); }
+	inline void dtor() { typedef void (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2609952)); (this->*_f)(); }
+	inline static float loadSensLinearD(float d0, float d1, float load) { typedef float (*_fpt)(float, float, float); auto _f=(_fpt)_drva(2634368); return _f(d0, d1, load); }
+	inline static float loadSensExpD(float exp, float mult, float load) { typedef float (*_fpt)(float, float, float); auto _f=(_fpt)_drva(2634304); return _f(exp, mult, load); }
+	inline void init(ISuspension * ihub, IRayTrackCollisionProvider * rcp, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath, int index, int carID, Car * car) { typedef void (Tyre::*_fpt)(ISuspension *, IRayTrackCollisionProvider *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, int, int, Car *); auto _f=xcast<_fpt>(_drva(2623056)); return (this->*_f)(ihub, rcp, dataPath, index, carID, car); }
+	inline void step(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2635776)); return (this->*_f)(dt); }
+	inline mat44f getFinalTyreRotation() { typedef mat44f (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2622864)); return (this->*_f)(); }
+	inline void stepRotationMatrix(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2640768)); return (this->*_f)(dt); }
+	inline void reset() { typedef void (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2634624)); return (this->*_f)(); }
+	inline vec3f getWorldPosition() { typedef vec3f (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2623024)); return (this->*_f)(); }
+	inline float getDY(float load) { typedef float (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2622416)); return (this->*_f)(load); }
+	inline float getDX(float load) { typedef float (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2622016)); return (this->*_f)(load); }
+	inline bool setCompound(int cindex) { typedef bool (Tyre::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2634976)); return (this->*_f)(cindex); }
+	inline float getDynamicK() { typedef float (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2622816)); return (this->*_f)(); }
+	inline float getCorrectedD(float d, float * wear_mult) { typedef float (Tyre::*_fpt)(float, float *); auto _f=xcast<_fpt>(_drva(2621840)); return (this->*_f)(d, wear_mult); }
+	inline float getCamberedDy(float camberRAD, float dy) { typedef float (Tyre::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2621568)); return (this->*_f)(camberRAD, dy); }
+	inline void addGroundContact(const vec3f & pos, const vec3f & normal) { typedef void (Tyre::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2611584)); return (this->*_f)(pos, normal); }
+	inline void addTyreForces(const vec3f & pos, const vec3f & normal, SurfaceDef * surfaceDef, float dt) { typedef void (Tyre::*_fpt)(const vec3f &, const vec3f &, SurfaceDef *, float); auto _f=xcast<_fpt>(_drva(2613664)); return (this->*_f)(pos, normal, surfaceDef, dt); }
+	inline void addTyreForcesV10(const vec3f & pos, const vec3f & normal, SurfaceDef * surfaceDef, float dt) { typedef void (Tyre::*_fpt)(const vec3f &, const vec3f &, SurfaceDef *, float); auto _f=xcast<_fpt>(_drva(2616672)); return (this->*_f)(pos, normal, surfaceDef, dt); }
+	inline void updateAngularSpeed(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2641824)); return (this->*_f)(dt); }
+	inline void updateLockedState(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2642032)); return (this->*_f)(dt); }
+	inline void stepRelaxationLength(float svx, float svy, float hubVelocity, float dt) { typedef void (Tyre::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2640448)); return (this->*_f)(svx, svy, hubVelocity, dt); }
+	inline void stepDirtyLevel(float dt, float hubSpeed) { typedef void (Tyre::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2638800)); return (this->*_f)(dt, hubSpeed); }
+	inline void stepThermalModel(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2641056)); return (this->*_f)(dt); }
+	inline void initCompounds(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath, int index) { typedef void (Tyre::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); auto _f=xcast<_fpt>(_drva(2623488)); return (this->*_f)(dataPath, index); }
+	inline void stepGrainBlister(float dt, float hubVelocity) { typedef void (Tyre::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2639360)); return (this->*_f)(dt, hubVelocity); }
+	inline void stepPuncture(float dt, float hubSpeed) { typedef void (Tyre::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2640304)); return (this->*_f)(dt, hubSpeed); }
+	inline void stepTyreBlankets(float dt) { typedef void (Tyre::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2641680)); return (this->*_f)(dt); }
+	inline void stepFlatSpot(float dt, float hubVelocity) { typedef void (Tyre::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2639104)); return (this->*_f)(dt, hubVelocity); }
+	inline bool generateCompoundNames() { typedef bool (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2619296)); return (this->*_f)(); }
+	inline void addTyreForceToHub(const vec3f & pos, const vec3f & force) { typedef void (Tyre::*_fpt)(const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(2612224)); return (this->*_f)(pos, force); }
+	inline void ctor() { typedef void (Tyre::*_fpt)(); auto _f=xcast<_fpt>(_drva(2546640)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Tyre)==2136),"bad size");
 		static_assert((offsetof(Tyre,inputs)==0x0),"bad off");
@@ -17945,78 +17945,78 @@ public:
 	inline RaceManager() { }
 	inline RaceManager(const RaceManager& other) = default;
 	inline RaceManager& operator=(const RaceManager& other) = default;
-	inline void ctor(Sim * isim) { typedef void (*_fpt)(RaceManager *pthis, Sim *); _fpt _f=(_fpt)_drva(1256880); _f(this, isim); }
+	inline void ctor(Sim * isim) { typedef void (RaceManager::*_fpt)(Sim *); auto _f=xcast<_fpt>(_drva(1256880)); (this->*_f)(isim); }
 	virtual ~RaceManager();
-	inline void dtor() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1258224); _f(this); }
-	inline bool isOfficialSpecialEvent() { typedef bool (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1680464); return _f(this); }
+	inline void dtor() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1258224)); (this->*_f)(); }
+	inline bool isOfficialSpecialEvent() { typedef bool (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1680464)); return (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1316176); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void startRace(float millisecondsToStart) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1315952); return _f(this, millisecondsToStart); }
-	inline bool isRaceOver(unsigned int carIndex) { typedef bool (*_fpt)(RaceManager *pthis, unsigned int); _fpt _f=(_fpt)_drva(1305312); return _f(this, carIndex); }
+	inline void update_impl(float deltaT) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1316176)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void startRace(float millisecondsToStart) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1315952)); return (this->*_f)(millisecondsToStart); }
+	inline bool isRaceOver(unsigned int carIndex) { typedef bool (RaceManager::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1305312)); return (this->*_f)(carIndex); }
 	virtual void renderHUD_vf3(float dt);
-	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1309024); return _f(this, dt); }
-	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
+	inline void renderHUD_impl(float dt) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1309024)); return (this->*_f)(dt); }
+	inline void renderHUD(float dt) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1315616); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline bool skipCurrentSession() { typedef bool (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1315664); return _f(this); }
-	inline int getCurrentSessionIndex() { typedef int (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1278672); return _f(this); }
-	inline SessionType getCurrentSessionType() { typedef SessionType (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1278720); return _f(this); }
-	inline Session getCurrentSession() { typedef Session (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1278496); return _f(this); }
-	inline Session getSessionInfo(int sessionIndex) { typedef Session (*_fpt)(RaceManager *pthis, int); _fpt _f=(_fpt)_drva(1285488); return _f(this, sessionIndex); }
-	inline void restartCurrentSession() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1314048); return _f(this); }
-	inline bool loadSessions() { typedef bool (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1305776); return _f(this); }
-	inline bool hasSessionStarted() { typedef bool (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1286512); return _f(this); }
-	inline double getTimeToSessionStart() { typedef double (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1286304); return _f(this); }
-	inline unsigned int getSessionCount() { typedef unsigned int (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1285280); return _f(this); }
-	inline double getSessionTimeLeft() { typedef double (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1285728); return _f(this); }
-	inline bool hasExtraLap() { typedef bool (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1286480); return _f(this); }
-	inline unsigned short getPitWindowStart() { typedef unsigned short (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1281376); return _f(this); }
-	inline unsigned short getPitWindowEnd() { typedef unsigned short (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1281344); return _f(this); }
-	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboard() { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1280688); return _f(this); }
-	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboardFromSession(int sessionID) { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (*_fpt)(RaceManager *pthis, int); _fpt _f=(_fpt)_drva(1280912); return _f(this, sessionID); }
-	inline int getCarLeaderboardPosition(CarAvatar * car) { typedef int (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1277664); return _f(this, car); }
-	inline int getCarRealTimePosition(CarAvatar * car) { typedef int (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1277840); return _f(this, car); }
-	inline int getSessionTotalTime(unsigned int carIndex) { typedef int (*_fpt)(RaceManager *pthis, unsigned int); _fpt _f=(_fpt)_drva(1285856); return _f(this, carIndex); }
-	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1279936); return _f(this, car); }
-	inline unsigned int getBestLap() { typedef unsigned int (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1277568); return _f(this); }
-	inline Lap getBestLap(CarAvatar * car) { typedef Lap (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1276928); return _f(this, car); }
-	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1279344); return _f(this, car); }
-	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(RaceManager *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(1286256); return _f(this, car, sector); }
-	inline int getSplit(CarAvatar * car) { typedef int (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1286160); return _f(this, car); }
-	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1278128); return _f(this, car); }
-	inline std::vector<Lap,std::allocator<Lap> > getLaps(CarAvatar * car, bool readReplayModeIfActive) { typedef std::vector<Lap,std::allocator<Lap> > (*_fpt)(RaceManager *pthis, CarAvatar *, bool); _fpt _f=(_fpt)_drva(1279664); return _f(this, car, readReplayModeIfActive); }
-	inline int getInstanceBestLap(CarAvatar * car) { typedef int (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1278976); return _f(this, car); }
-	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(RaceManager *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(1280464); return _f(this, car, sector); }
-	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(RaceManager *pthis, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(1277616); return _f(this, sector, isGlobal, car); }
-	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(RaceManager *pthis, const int &, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(1305248); return _f(this, sector, t, isGlobal, car); }
-	inline unsigned int getLeaderLapCount() { typedef unsigned int (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1280512); return _f(this); }
-	inline OnSessionEndEvent getSessionHistory(const int & sessionID) { typedef OnSessionEndEvent (*_fpt)(RaceManager *pthis, const int &); _fpt _f=(_fpt)_drva(1285360); return _f(this, sessionID); }
-	inline double getTimetoWait() { typedef double (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1286448); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getPracticeQualifyText() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1281408); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getRaceText() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1282384); return _f(this); }
-	inline bool getHasCompletedFlag(CarAvatar * car) { typedef bool (*_fpt)(RaceManager *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1278864); return _f(this, car); }
-	inline int getInvertedGridPositions() { typedef int (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1279312); return _f(this); }
-	inline void checkMandatoryPit(int carIndex, float entry, float exit) { typedef void (*_fpt)(RaceManager *pthis, int, float, float); _fpt _f=(_fpt)_drva(1271856); return _f(this, carIndex, entry, exit); }
-	inline std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > getModelSkins(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model) { typedef std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > (*_fpt)(RaceManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1281056); return _f(this, model); }
-	inline void initLighting(INIReaderDocuments & ini) { typedef void (*_fpt)(RaceManager *pthis, INIReaderDocuments &); _fpt _f=(_fpt)_drva(1287120); return _f(this, ini); }
-	inline void initGhostcar(INIReaderDocuments & ini) { typedef void (*_fpt)(RaceManager *pthis, INIReaderDocuments &); _fpt _f=(_fpt)_drva(1286672); return _f(this, ini); }
-	inline bool initOnline(INIReaderDocuments & ini) { typedef bool (*_fpt)(RaceManager *pthis, INIReaderDocuments &); _fpt _f=(_fpt)_drva(1298784); return _f(this, ini); }
-	inline bool initOffline(INIReaderDocuments & anIniReader) { typedef bool (*_fpt)(RaceManager *pthis, INIReaderDocuments &); _fpt _f=(_fpt)_drva(1287872); return _f(this, anIniReader); }
-	inline bool initReplay(INIReaderDocuments & r) { typedef bool (*_fpt)(RaceManager *pthis, INIReaderDocuments &); _fpt _f=(_fpt)_drva(1304608); return _f(this, r); }
-	inline void updateCarsRealTimePositions(float dt) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1321136); return _f(this, dt); }
-	inline void finalizeCurrentSession() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1272624); return _f(this); }
-	inline void updateCarsEndRace(float dt) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1320528); return _f(this, dt); }
-	inline void setCurrentSession(unsigned int index) { typedef void (*_fpt)(RaceManager *pthis, unsigned int); _fpt _f=(_fpt)_drva(1314288); return _f(this, index); }
-	inline void onLapCompleted(const OnLapCompletedEvent & message) { typedef void (*_fpt)(RaceManager *pthis, const OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(1307520); return _f(this, message); }
-	inline void resetInvalidStateCarsToPits(float dt) { typedef void (*_fpt)(RaceManager *pthis, float); _fpt _f=(_fpt)_drva(1311552); return _f(this, dt); }
-	inline void resetCurrentLaps() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1311488); return _f(this); }
-	inline void resetMandatoryPit() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1312256); return _f(this); }
-	inline Session convertRemoteSession(const RemoteSession & rs) { typedef Session (*_fpt)(RaceManager *pthis, const RemoteSession &); _fpt _f=(_fpt)_drva(1272400); return _f(this, rs); }
-	inline bool isSkinAvailable(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef bool (*_fpt)(RaceManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1305536); return _f(this, model, skin); }
-	inline void setHasCompletedFlag(CarAvatar * car, bool value) { typedef void (*_fpt)(RaceManager *pthis, CarAvatar *, bool); _fpt _f=(_fpt)_drva(1315440); return _f(this, car, value); }
-	inline void generateWind() { typedef void (*_fpt)(RaceManager *pthis); _fpt _f=(_fpt)_drva(1276832); return _f(this); }
+	inline void shutdown_impl() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1315616)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline bool skipCurrentSession() { typedef bool (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1315664)); return (this->*_f)(); }
+	inline int getCurrentSessionIndex() { typedef int (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1278672)); return (this->*_f)(); }
+	inline SessionType getCurrentSessionType() { typedef SessionType (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1278720)); return (this->*_f)(); }
+	inline Session getCurrentSession() { typedef Session (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1278496)); return (this->*_f)(); }
+	inline Session getSessionInfo(int sessionIndex) { typedef Session (RaceManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(1285488)); return (this->*_f)(sessionIndex); }
+	inline void restartCurrentSession() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1314048)); return (this->*_f)(); }
+	inline bool loadSessions() { typedef bool (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1305776)); return (this->*_f)(); }
+	inline bool hasSessionStarted() { typedef bool (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1286512)); return (this->*_f)(); }
+	inline double getTimeToSessionStart() { typedef double (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1286304)); return (this->*_f)(); }
+	inline unsigned int getSessionCount() { typedef unsigned int (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1285280)); return (this->*_f)(); }
+	inline double getSessionTimeLeft() { typedef double (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1285728)); return (this->*_f)(); }
+	inline bool hasExtraLap() { typedef bool (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1286480)); return (this->*_f)(); }
+	inline unsigned short getPitWindowStart() { typedef unsigned short (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1281376)); return (this->*_f)(); }
+	inline unsigned short getPitWindowEnd() { typedef unsigned short (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1281344)); return (this->*_f)(); }
+	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboard() { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1280688)); return (this->*_f)(); }
+	inline std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > getLeaderboardFromSession(int sessionID) { typedef std::vector<LeaderboardEntry,std::allocator<LeaderboardEntry> > (RaceManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(1280912)); return (this->*_f)(sessionID); }
+	inline int getCarLeaderboardPosition(CarAvatar * car) { typedef int (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1277664)); return (this->*_f)(car); }
+	inline int getCarRealTimePosition(CarAvatar * car) { typedef int (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1277840)); return (this->*_f)(car); }
+	inline int getSessionTotalTime(unsigned int carIndex) { typedef int (RaceManager::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1285856)); return (this->*_f)(carIndex); }
+	inline Lap getLastLap(CarAvatar * car) { typedef Lap (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1279936)); return (this->*_f)(car); }
+	inline unsigned int getBestLap() { typedef unsigned int (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1277568)); return (this->*_f)(); }
+	inline Lap getBestLap(CarAvatar * car) { typedef Lap (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1276928)); return (this->*_f)(car); }
+	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1279344)); return (this->*_f)(car); }
+	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (RaceManager::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(1286256)); return (this->*_f)(car, sector); }
+	inline int getSplit(CarAvatar * car) { typedef int (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1286160)); return (this->*_f)(car); }
+	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1278128)); return (this->*_f)(car); }
+	inline std::vector<Lap,std::allocator<Lap> > getLaps(CarAvatar * car, bool readReplayModeIfActive) { typedef std::vector<Lap,std::allocator<Lap> > (RaceManager::*_fpt)(CarAvatar *, bool); auto _f=xcast<_fpt>(_drva(1279664)); return (this->*_f)(car, readReplayModeIfActive); }
+	inline int getInstanceBestLap(CarAvatar * car) { typedef int (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1278976)); return (this->*_f)(car); }
+	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (RaceManager::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(1280464)); return (this->*_f)(car, sector); }
+	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (RaceManager::*_fpt)(const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(1277616)); return (this->*_f)(sector, isGlobal, car); }
+	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (RaceManager::*_fpt)(const int &, const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(1305248)); return (this->*_f)(sector, t, isGlobal, car); }
+	inline unsigned int getLeaderLapCount() { typedef unsigned int (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1280512)); return (this->*_f)(); }
+	inline OnSessionEndEvent getSessionHistory(const int & sessionID) { typedef OnSessionEndEvent (RaceManager::*_fpt)(const int &); auto _f=xcast<_fpt>(_drva(1285360)); return (this->*_f)(sessionID); }
+	inline double getTimetoWait() { typedef double (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1286448)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getPracticeQualifyText() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1281408)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getRaceText() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1282384)); return (this->*_f)(); }
+	inline bool getHasCompletedFlag(CarAvatar * car) { typedef bool (RaceManager::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1278864)); return (this->*_f)(car); }
+	inline int getInvertedGridPositions() { typedef int (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1279312)); return (this->*_f)(); }
+	inline void checkMandatoryPit(int carIndex, float entry, float exit) { typedef void (RaceManager::*_fpt)(int, float, float); auto _f=xcast<_fpt>(_drva(1271856)); return (this->*_f)(carIndex, entry, exit); }
+	inline std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > getModelSkins(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model) { typedef std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > (RaceManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1281056)); return (this->*_f)(model); }
+	inline void initLighting(INIReaderDocuments & ini) { typedef void (RaceManager::*_fpt)(INIReaderDocuments &); auto _f=xcast<_fpt>(_drva(1287120)); return (this->*_f)(ini); }
+	inline void initGhostcar(INIReaderDocuments & ini) { typedef void (RaceManager::*_fpt)(INIReaderDocuments &); auto _f=xcast<_fpt>(_drva(1286672)); return (this->*_f)(ini); }
+	inline bool initOnline(INIReaderDocuments & ini) { typedef bool (RaceManager::*_fpt)(INIReaderDocuments &); auto _f=xcast<_fpt>(_drva(1298784)); return (this->*_f)(ini); }
+	inline bool initOffline(INIReaderDocuments & anIniReader) { typedef bool (RaceManager::*_fpt)(INIReaderDocuments &); auto _f=xcast<_fpt>(_drva(1287872)); return (this->*_f)(anIniReader); }
+	inline bool initReplay(INIReaderDocuments & r) { typedef bool (RaceManager::*_fpt)(INIReaderDocuments &); auto _f=xcast<_fpt>(_drva(1304608)); return (this->*_f)(r); }
+	inline void updateCarsRealTimePositions(float dt) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1321136)); return (this->*_f)(dt); }
+	inline void finalizeCurrentSession() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1272624)); return (this->*_f)(); }
+	inline void updateCarsEndRace(float dt) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1320528)); return (this->*_f)(dt); }
+	inline void setCurrentSession(unsigned int index) { typedef void (RaceManager::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1314288)); return (this->*_f)(index); }
+	inline void onLapCompleted(const OnLapCompletedEvent & message) { typedef void (RaceManager::*_fpt)(const OnLapCompletedEvent &); auto _f=xcast<_fpt>(_drva(1307520)); return (this->*_f)(message); }
+	inline void resetInvalidStateCarsToPits(float dt) { typedef void (RaceManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1311552)); return (this->*_f)(dt); }
+	inline void resetCurrentLaps() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1311488)); return (this->*_f)(); }
+	inline void resetMandatoryPit() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1312256)); return (this->*_f)(); }
+	inline Session convertRemoteSession(const RemoteSession & rs) { typedef Session (RaceManager::*_fpt)(const RemoteSession &); auto _f=xcast<_fpt>(_drva(1272400)); return (this->*_f)(rs); }
+	inline bool isSkinAvailable(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef bool (RaceManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1305536)); return (this->*_f)(model, skin); }
+	inline void setHasCompletedFlag(CarAvatar * car, bool value) { typedef void (RaceManager::*_fpt)(CarAvatar *, bool); auto _f=xcast<_fpt>(_drva(1315440)); return (this->*_f)(car, value); }
+	inline void generateWind() { typedef void (RaceManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1276832)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(RaceManager)==536),"bad size");
 		static_assert((offsetof(RaceManager,evOnRaceInit)==0x58),"bad off");
@@ -18218,34 +18218,34 @@ public:
 	inline NetCarStateProvider() { }
 	inline NetCarStateProvider(const NetCarStateProvider& other) = default;
 	inline NetCarStateProvider& operator=(const NetCarStateProvider& other) = default;
-	inline void ctor(const NetCarStateProviderDef & def) { typedef void (*_fpt)(NetCarStateProvider *pthis, const NetCarStateProviderDef &); _fpt _f=(_fpt)_drva(1141872); _f(this, def); }
+	inline void ctor(const NetCarStateProviderDef & def) { typedef void (NetCarStateProvider::*_fpt)(const NetCarStateProviderDef &); auto _f=xcast<_fpt>(_drva(1141872)); (this->*_f)(def); }
 	virtual ~NetCarStateProvider();
-	inline void dtor() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1147072); _f(this); }
+	inline void dtor() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1147072)); (this->*_f)(); }
 	virtual void update_vf1(float dt);
-	inline void update_impl(float dt) { typedef void (*_fpt)(NetCarStateProvider *pthis, float); _fpt _f=(_fpt)_drva(1169744); return _f(this, dt); }
-	inline void update(float dt) { return update_vf1(dt); }
+	inline void update_impl(float dt) { typedef void (NetCarStateProvider::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1169744)); return (this->*_f)(dt); }
+	inline void update(float dt) { typedef void (NetCarStateProvider::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
 	virtual void getPhysicsState_vf1(CarPhysicsState & physicsState);
-	inline void getPhysicsState_impl(CarPhysicsState & physicsState) { typedef void (*_fpt)(NetCarStateProvider *pthis, CarPhysicsState &); _fpt _f=(_fpt)_drva(1151520); return _f(this, physicsState); }
-	inline void getPhysicsState(CarPhysicsState & physicsState) { return getPhysicsState_vf1(physicsState); }
+	inline void getPhysicsState_impl(CarPhysicsState & physicsState) { typedef void (NetCarStateProvider::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(_drva(1151520)); return (this->*_f)(physicsState); }
+	inline void getPhysicsState(CarPhysicsState & physicsState) { typedef void (NetCarStateProvider::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(physicsState); }
 	virtual void getWingState_vf2(std::vector<WingState,std::allocator<WingState> > & ws);
-	inline void getWingState_impl(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (*_fpt)(NetCarStateProvider *pthis, std::vector<WingState,std::allocator<WingState> > &); _fpt _f=(_fpt)_drva(1153600); return _f(this, ws); }
-	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & ws) { return getWingState_vf2(ws); }
-	inline void onRemoteStateReceived(NetCarState & s) { typedef void (*_fpt)(NetCarStateProvider *pthis, NetCarState &); _fpt _f=(_fpt)_drva(1159648); return _f(this, s); }
-	inline void setCarAvatar(CarAvatar * av) { typedef void (*_fpt)(NetCarStateProvider *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(1162368); return _f(this, av); }
-	inline void resetDamage() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1162048); return _f(this); }
-	inline void setDamageZoneLevel(float * zones) { typedef void (*_fpt)(NetCarStateProvider *pthis, float *); _fpt _f=(_fpt)_drva(1162464); return _f(this, zones); }
-	inline void activateP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1150672); return _f(this); }
-	inline mat44f getSmoothBodyMatrix(double physics_time, CarPhysicsState & state) { typedef mat44f (*_fpt)(NetCarStateProvider *pthis, double, CarPhysicsState &); _fpt _f=(_fpt)_drva(1151760); return _f(this, physics_time, state); }
-	inline vec3f projectNetStatePos(int ti, double t) { typedef vec3f (*_fpt)(NetCarStateProvider *pthis, int, double); _fpt _f=(_fpt)_drva(1161472); return _f(this, ti, t); }
-	inline void initPhysicsValues() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1155040); return _f(this); }
-	inline void step(double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, double); _fpt _f=(_fpt)_drva(1162496); return _f(this, physics_time); }
-	inline void stepLagging(double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, double); _fpt _f=(_fpt)_drva(1167200); return _f(this, physics_time); }
-	inline void debugLag(bool isLagging, double physics_time) { typedef void (*_fpt)(NetCarStateProvider *pthis, bool, double); _fpt _f=(_fpt)_drva(1151312); return _f(this, isLagging, physics_time); }
-	inline void initWings() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1157760); return _f(this); }
-	inline void stepWings() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1169344); return _f(this); }
-	inline void initP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1154352); return _f(this); }
-	inline void stepP2P() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1169232); return _f(this); }
-	inline void initDRS() { typedef void (*_fpt)(NetCarStateProvider *pthis); _fpt _f=(_fpt)_drva(1153632); return _f(this); }
+	inline void getWingState_impl(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (NetCarStateProvider::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(_drva(1153600)); return (this->*_f)(ws); }
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (NetCarStateProvider::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(ws); }
+	inline void onRemoteStateReceived(NetCarState & s) { typedef void (NetCarStateProvider::*_fpt)(NetCarState &); auto _f=xcast<_fpt>(_drva(1159648)); return (this->*_f)(s); }
+	inline void setCarAvatar(CarAvatar * av) { typedef void (NetCarStateProvider::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(1162368)); return (this->*_f)(av); }
+	inline void resetDamage() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1162048)); return (this->*_f)(); }
+	inline void setDamageZoneLevel(float * zones) { typedef void (NetCarStateProvider::*_fpt)(float *); auto _f=xcast<_fpt>(_drva(1162464)); return (this->*_f)(zones); }
+	inline void activateP2P() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1150672)); return (this->*_f)(); }
+	inline mat44f getSmoothBodyMatrix(double physics_time, CarPhysicsState & state) { typedef mat44f (NetCarStateProvider::*_fpt)(double, CarPhysicsState &); auto _f=xcast<_fpt>(_drva(1151760)); return (this->*_f)(physics_time, state); }
+	inline vec3f projectNetStatePos(int ti, double t) { typedef vec3f (NetCarStateProvider::*_fpt)(int, double); auto _f=xcast<_fpt>(_drva(1161472)); return (this->*_f)(ti, t); }
+	inline void initPhysicsValues() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1155040)); return (this->*_f)(); }
+	inline void step(double physics_time) { typedef void (NetCarStateProvider::*_fpt)(double); auto _f=xcast<_fpt>(_drva(1162496)); return (this->*_f)(physics_time); }
+	inline void stepLagging(double physics_time) { typedef void (NetCarStateProvider::*_fpt)(double); auto _f=xcast<_fpt>(_drva(1167200)); return (this->*_f)(physics_time); }
+	inline void debugLag(bool isLagging, double physics_time) { typedef void (NetCarStateProvider::*_fpt)(bool, double); auto _f=xcast<_fpt>(_drva(1151312)); return (this->*_f)(isLagging, physics_time); }
+	inline void initWings() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1157760)); return (this->*_f)(); }
+	inline void stepWings() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1169344)); return (this->*_f)(); }
+	inline void initP2P() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1154352)); return (this->*_f)(); }
+	inline void stepP2P() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1169232)); return (this->*_f)(); }
+	inline void initDRS() { typedef void (NetCarStateProvider::*_fpt)(); auto _f=xcast<_fpt>(_drva(1153632)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(NetCarStateProvider)==5560),"bad size");
 		static_assert((offsetof(NetCarStateProvider,evOnSectorSplit)==0x60),"bad off");
@@ -18409,37 +18409,37 @@ public:
 	inline ksgui_GUI() { }
 	inline ksgui_GUI(const ksgui_GUI& other) = default;
 	inline ksgui_GUI& operator=(const ksgui_GUI& other) = default;
-	inline void ctor(GraphicsManager * graphics, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aapplicationName, KeyboardManager * keyManager) { typedef void (*_fpt)(ksgui_GUI *pthis, GraphicsManager *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, KeyboardManager *); _fpt _f=(_fpt)_drva(2431680); _f(this, graphics, aapplicationName, keyManager); }
+	inline void ctor(GraphicsManager * graphics, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * aapplicationName, KeyboardManager * keyManager) { typedef void (ksgui_GUI::*_fpt)(GraphicsManager *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, KeyboardManager *); auto _f=xcast<_fpt>(_drva(2431680)); (this->*_f)(graphics, aapplicationName, keyManager); }
 	virtual ~ksgui_GUI();
-	inline void dtor() { typedef void (*_fpt)(ksgui_GUI *pthis); _fpt _f=(_fpt)_drva(2433760); _f(this); }
-	inline void preRender3D(float dt) { typedef void (*_fpt)(ksgui_GUI *pthis, float); _fpt _f=(_fpt)_drva(2443200); return _f(this, dt); }
-	inline void render3D(float dt) { typedef void (*_fpt)(ksgui_GUI *pthis, float); _fpt _f=(_fpt)_drva(2443520); return _f(this, dt); }
-	inline void render(float dt) { typedef void (*_fpt)(ksgui_GUI *pthis, float); _fpt _f=(_fpt)_drva(2444304); return _f(this, dt); }
-	inline void addControl(ksgui_Control * c) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Control *); _fpt _f=(_fpt)_drva(2436688); return _f(this, c); }
-	inline vec4f getSkinColor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * key, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * value) { typedef vec4f (*_fpt)(ksgui_GUI *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2440800); return _f(this, key, value); }
-	inline void setCapturedForm(ksgui_Form * form, int wx, int wy) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Form *, int, int); _fpt _f=(_fpt)_drva(2447040); return _f(this, form, wx, wy); }
-	inline void serializeForms(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(ksgui_GUI *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2444640); return _f(this, filename); }
-	inline void deserializeForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2437008); return _f(this, form); }
-	inline void attachToRenderWindowEvents(RenderWindow & window) { typedef void (*_fpt)(ksgui_GUI *pthis, RenderWindow &); _fpt _f=(_fpt)_drva(2436784); return _f(this, window); }
-	inline void setAudioEngine(AudioEngine * engine) { typedef void (*_fpt)(ksgui_GUI *pthis, AudioEngine *); _fpt _f=(_fpt)_drva(2447024); return _f(this, engine); }
-	inline void playClick() { typedef void (*_fpt)(ksgui_GUI *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void init3DMode(unsigned int width, unsigned int height, Node * referenceFrame, Camera * camera, vec3f posOffset) { typedef void (*_fpt)(ksgui_GUI *pthis, unsigned int, unsigned int, Node *, Camera *, vec3f); _fpt _f=(_fpt)_drva(2440976); return _f(this, width, height, referenceFrame, camera, posOffset); }
-	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (*_fpt)(ksgui_GUI *pthis, const OnMouseUpEvent &); _fpt _f=(_fpt)_drva(2442688); return _f(this, message); }
-	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (*_fpt)(ksgui_GUI *pthis, const OnMouseMoveEvent &); _fpt _f=(_fpt)_drva(2442016); return _f(this, message); }
-	inline void onMouseDown(const OnMouseDownEvent & message) { typedef void (*_fpt)(ksgui_GUI *pthis, const OnMouseDownEvent &); _fpt _f=(_fpt)_drva(2441872); return _f(this, message); }
-	inline void onMouseWheelMoved(const OnMouseWheelMovedEvent & message) { typedef void (*_fpt)(ksgui_GUI *pthis, const OnMouseWheelMovedEvent &); _fpt _f=(_fpt)_drva(2443040); return _f(this, message); }
+	inline void dtor() { typedef void (ksgui_GUI::*_fpt)(); auto _f=xcast<_fpt>(_drva(2433760)); (this->*_f)(); }
+	inline void preRender3D(float dt) { typedef void (ksgui_GUI::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2443200)); return (this->*_f)(dt); }
+	inline void render3D(float dt) { typedef void (ksgui_GUI::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2443520)); return (this->*_f)(dt); }
+	inline void render(float dt) { typedef void (ksgui_GUI::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2444304)); return (this->*_f)(dt); }
+	inline void addControl(ksgui_Control * c) { typedef void (ksgui_GUI::*_fpt)(ksgui_Control *); auto _f=xcast<_fpt>(_drva(2436688)); return (this->*_f)(c); }
+	inline vec4f getSkinColor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * key, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * value) { typedef vec4f (ksgui_GUI::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2440800)); return (this->*_f)(key, value); }
+	inline void setCapturedForm(ksgui_Form * form, int wx, int wy) { typedef void (ksgui_GUI::*_fpt)(ksgui_Form *, int, int); auto _f=xcast<_fpt>(_drva(2447040)); return (this->*_f)(form, wx, wy); }
+	inline void serializeForms(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (ksgui_GUI::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2444640)); return (this->*_f)(filename); }
+	inline void deserializeForm(ksgui_Form * form) { typedef void (ksgui_GUI::*_fpt)(ksgui_Form *); auto _f=xcast<_fpt>(_drva(2437008)); return (this->*_f)(form); }
+	inline void attachToRenderWindowEvents(RenderWindow & window) { typedef void (ksgui_GUI::*_fpt)(RenderWindow &); auto _f=xcast<_fpt>(_drva(2436784)); return (this->*_f)(window); }
+	inline void setAudioEngine(AudioEngine * engine) { typedef void (ksgui_GUI::*_fpt)(AudioEngine *); auto _f=xcast<_fpt>(_drva(2447024)); return (this->*_f)(engine); }
+	inline void playClick() { typedef void (ksgui_GUI::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void init3DMode(unsigned int width, unsigned int height, Node * referenceFrame, Camera * camera, vec3f posOffset) { typedef void (ksgui_GUI::*_fpt)(unsigned int, unsigned int, Node *, Camera *, vec3f); auto _f=xcast<_fpt>(_drva(2440976)); return (this->*_f)(width, height, referenceFrame, camera, posOffset); }
+	inline void onMouseUp(const OnMouseUpEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnMouseUpEvent &); auto _f=xcast<_fpt>(_drva(2442688)); return (this->*_f)(message); }
+	inline void onMouseMove(const OnMouseMoveEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnMouseMoveEvent &); auto _f=xcast<_fpt>(_drva(2442016)); return (this->*_f)(message); }
+	inline void onMouseDown(const OnMouseDownEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnMouseDownEvent &); auto _f=xcast<_fpt>(_drva(2441872)); return (this->*_f)(message); }
+	inline void onMouseWheelMoved(const OnMouseWheelMovedEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnMouseWheelMovedEvent &); auto _f=xcast<_fpt>(_drva(2443040)); return (this->*_f)(message); }
 	virtual void onKeyChar_vf1(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(ksgui_GUI *pthis, unsigned int); _fpt _f=(_fpt)_drva(2441696); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf1(key); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (ksgui_GUI::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2441696)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (ksgui_GUI::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(key); }
 	virtual void onKeyDown_vf0(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(ksgui_GUI *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(2441776); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf0(message); }
-	inline void renderVPointer() { typedef void (*_fpt)(ksgui_GUI *pthis); _fpt _f=(_fpt)_drva(2444336); return _f(this); }
-	inline void doRender2D(float dt) { typedef void (*_fpt)(ksgui_GUI *pthis, float); _fpt _f=(_fpt)_drva(2439632); return _f(this, dt); }
-	inline void deserializeOldForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2439312); return _f(this, form); }
-	inline void deserializeFormDesktop(ksgui_Form * form, int idDesktop) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Form *, int); _fpt _f=(_fpt)_drva(2438048); return _f(this, form, idDesktop); }
-	inline void serializeMemoryForm(ksgui_Form * form) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_Form *); _fpt _f=(_fpt)_drva(2446304); return _f(this, form); }
-	inline void fromIni(ksgui_GUI_FormData & data, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (*_fpt)(ksgui_GUI *pthis, ksgui_GUI_FormData &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2439968); return _f(this, data, section); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(2441776)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (ksgui_GUI::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(message); }
+	inline void renderVPointer() { typedef void (ksgui_GUI::*_fpt)(); auto _f=xcast<_fpt>(_drva(2444336)); return (this->*_f)(); }
+	inline void doRender2D(float dt) { typedef void (ksgui_GUI::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2439632)); return (this->*_f)(dt); }
+	inline void deserializeOldForm(ksgui_Form * form) { typedef void (ksgui_GUI::*_fpt)(ksgui_Form *); auto _f=xcast<_fpt>(_drva(2439312)); return (this->*_f)(form); }
+	inline void deserializeFormDesktop(ksgui_Form * form, int idDesktop) { typedef void (ksgui_GUI::*_fpt)(ksgui_Form *, int); auto _f=xcast<_fpt>(_drva(2438048)); return (this->*_f)(form, idDesktop); }
+	inline void serializeMemoryForm(ksgui_Form * form) { typedef void (ksgui_GUI::*_fpt)(ksgui_Form *); auto _f=xcast<_fpt>(_drva(2446304)); return (this->*_f)(form); }
+	inline void fromIni(ksgui_GUI_FormData & data, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef void (ksgui_GUI::*_fpt)(ksgui_GUI_FormData &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2439968)); return (this->*_f)(data, section); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ksgui_GUI)==400),"bad size");
 		static_assert((offsetof(ksgui_GUI,isActive)==0x8),"bad off");
@@ -18591,60 +18591,60 @@ public:
 	inline GraphicsManager() { }
 	inline GraphicsManager(const GraphicsManager& other) = default;
 	inline GraphicsManager& operator=(const GraphicsManager& other) = default;
-	inline void ctor(const VideoSettings & ivideoSettings) { typedef void (*_fpt)(GraphicsManager *pthis, const VideoSettings &); _fpt _f=(_fpt)_drva(2102816); _f(this, ivideoSettings); }
+	inline void ctor(const VideoSettings & ivideoSettings) { typedef void (GraphicsManager::*_fpt)(const VideoSettings &); auto _f=xcast<_fpt>(_drva(2102816)); (this->*_f)(ivideoSettings); }
 	virtual ~GraphicsManager();
-	inline void dtor() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2105552); _f(this); }
-	inline std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > getErrorStrings() { typedef std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2107968); return _f(this); }
-	inline void beginMainRenderPass() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2106736); return _f(this); }
-	inline void endMainRenderPass() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2107456); return _f(this); }
-	inline GLRenderer & getGL() { typedef GLRenderer & (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(148688); return _f(this); }
-	inline GLRenderer * createGLRenderer(unsigned int maxVertices) { typedef GLRenderer * (*_fpt)(GraphicsManager *pthis, unsigned int); _fpt _f=(_fpt)_drva(2107152); return _f(this, maxVertices); }
-	inline void clearRenderTarget(const vec4f & color) { typedef void (*_fpt)(GraphicsManager *pthis, const vec4f &); _fpt _f=(_fpt)_drva(2106944); return _f(this, color); }
-	inline void clearRenderTargetDepth(float value) { typedef void (*_fpt)(GraphicsManager *pthis, float); _fpt _f=(_fpt)_drva(2106960); return _f(this, value); }
-	inline void beginScene() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2106752); return _f(this); }
-	inline void endScene() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2107472); return _f(this); }
-	inline void setViewport(int left, int top, int width, int height) { typedef void (*_fpt)(GraphicsManager *pthis, int, int, int, int); _fpt _f=(_fpt)_drva(2117616); return _f(this, left, top, width, height); }
-	inline void drawPrimitive(unsigned int indicesCount, unsigned int baseIndex, unsigned int baseVertex, unsigned int numVertices) { typedef void (*_fpt)(GraphicsManager *pthis, unsigned int, unsigned int, unsigned int, unsigned int); _fpt _f=(_fpt)_drva(2107376); return _f(this, indicesCount, baseIndex, baseVertex, numVertices); }
-	inline void compile(Node * root) { typedef void (*_fpt)(GraphicsManager *pthis, Node *); _fpt _f=(_fpt)_drva(2107104); return _f(this, root); }
-	inline void setScreenSpaceMode() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2115808); return _f(this); }
-	inline void onResize(int width, int height) { typedef void (*_fpt)(GraphicsManager *pthis, int, int); _fpt _f=(_fpt)_drva(2114352); return _f(this, width, height); }
-	inline void updateLightingSetttings() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2118032); return _f(this); }
-	inline void loadLightingSettings(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (*_fpt)(GraphicsManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2110032); return _f(this, filename); }
-	inline void loadLightingSettings() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2114224); return _f(this); }
-	inline void resetRenderStates() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2114624); return _f(this); }
-	inline void overrideSamplerState(SamplerState sampler) { typedef void (*_fpt)(GraphicsManager *pthis, SamplerState); _fpt _f=(_fpt)_drva(2114576); return _f(this, sampler); }
-	inline Shader * getShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef Shader * (*_fpt)(GraphicsManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2108512); return _f(this, name); }
-	inline void setShader(Shader * sh) { typedef void (*_fpt)(GraphicsManager *pthis, Shader *); _fpt _f=(_fpt)_drva(2116096); return _f(this, sh); }
-	inline void setBlendMode(BlendMode mode) { typedef void (*_fpt)(GraphicsManager *pthis, BlendMode); _fpt _f=(_fpt)_drva(2114784); return _f(this, mode); }
-	inline void commitShaderChanges() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2107040); return _f(this); }
-	inline void setDepthMode(DepthMode mode) { typedef void (*_fpt)(GraphicsManager *pthis, DepthMode); _fpt _f=(_fpt)_drva(2114944); return _f(this, mode); }
-	inline void setCullMode(CullMode mode) { typedef void (*_fpt)(GraphicsManager *pthis, CullMode); _fpt _f=(_fpt)_drva(2114832); return _f(this, mode); }
-	inline void setShadowMapBias(float b0, float b1, float b2) { typedef void (*_fpt)(GraphicsManager *pthis, float, float, float); _fpt _f=(_fpt)_drva(2116160); return _f(this, b0, b1, b2); }
-	inline vec3f getShadowMapBias() { typedef vec3f (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108560); return _f(this); }
-	inline void setProjectionMatrix(const mat44f & matrix) { typedef void (*_fpt)(GraphicsManager *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2115168); return _f(this, matrix); }
-	inline void setViewMatrix(const mat44f & matrix, Camera * camera) { typedef void (*_fpt)(GraphicsManager *pthis, const mat44f &, Camera *); _fpt _f=(_fpt)_drva(2116864); return _f(this, matrix, camera); }
-	inline void setWorldMatrix(const mat44f & matrix) { typedef void (*_fpt)(GraphicsManager *pthis, const mat44f &); _fpt _f=(_fpt)_drva(2117792); return _f(this, matrix); }
-	inline mat44f getWorldMatrix() { typedef mat44f (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108656); return _f(this); }
-	inline mat44f getProjectionMatrix() { typedef mat44f (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108464); return _f(this); }
-	inline mat44f getViewMatrix() { typedef mat44f (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108608); return _f(this); }
-	inline void setVB(IVertexBuffer * vb) { typedef void (*_fpt)(GraphicsManager *pthis, IVertexBuffer *); _fpt _f=(_fpt)_drva(2116848); return _f(this, vb); }
-	inline void setIB(IndexBuffer * ib) { typedef void (*_fpt)(GraphicsManager *pthis, IndexBuffer *); _fpt _f=(_fpt)_drva(2115152); return _f(this, ib); }
-	inline CBuffer * getCBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef CBuffer * (*_fpt)(GraphicsManager *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2107632); return _f(this, name); }
-	inline void setRenderTarget(RenderTarget * rt) { typedef void (*_fpt)(GraphicsManager *pthis, RenderTarget *); _fpt _f=(_fpt)_drva(2115424); return _f(this, rt); }
-	inline void setTextureRT(unsigned int slot, RenderTarget * rt) { typedef void (*_fpt)(GraphicsManager *pthis, unsigned int, RenderTarget *); _fpt _f=(_fpt)_drva(2116816); return _f(this, slot, rt); }
-	inline void setDepthTextureRT(unsigned int slot, RenderTarget * rt) { typedef void (*_fpt)(GraphicsManager *pthis, unsigned int, RenderTarget *); _fpt _f=(_fpt)_drva(2115120); return _f(this, slot, rt); }
-	inline void setScreenRenderTargets() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2115712); return _f(this); }
-	inline void setTexture(int slot, const Texture & tex) { typedef void (*_fpt)(GraphicsManager *pthis, int, const Texture &); _fpt _f=(_fpt)_drva(2116720); return _f(this, slot, tex); }
-	inline void setShadowMapTexture(int level, RenderTarget * rt) { typedef void (*_fpt)(GraphicsManager *pthis, int, RenderTarget *); _fpt _f=(_fpt)_drva(2116592); return _f(this, level, rt); }
-	inline void setShadowMapMatrix(int level, const mat44f & matrix) { typedef void (*_fpt)(GraphicsManager *pthis, int, const mat44f &); _fpt _f=(_fpt)_drva(2116336); return _f(this, level, matrix); }
-	inline void setCustomSunDirection(vec3f sunDirection) { typedef void (*_fpt)(GraphicsManager *pthis, vec3f); _fpt _f=(_fpt)_drva(2114912); return _f(this, sunDirection); }
-	inline void setSamplerState() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2115584); return _f(this); }
-	inline void clearTextureSlot(int slot) { typedef void (*_fpt)(GraphicsManager *pthis, int); _fpt _f=(_fpt)_drva(2106976); return _f(this, slot); }
-	inline vec3f getLDRColor(const vec3f & c) { typedef vec3f (*_fpt)(GraphicsManager *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2108016); return _f(this, c); }
-	inline float getLDRScale(const vec3f & c) { typedef float (*_fpt)(GraphicsManager *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2108336); return _f(this, c); }
-	inline void initRenderFlags() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2109280); return _f(this); }
-	inline void initSamplerStates() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2109824); return _f(this); }
-	inline void initCBuffers() { typedef void (*_fpt)(GraphicsManager *pthis); _fpt _f=(_fpt)_drva(2108704); return _f(this); }
+	inline void dtor() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2105552)); (this->*_f)(); }
+	inline std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > getErrorStrings() { typedef std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2107968)); return (this->*_f)(); }
+	inline void beginMainRenderPass() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2106736)); return (this->*_f)(); }
+	inline void endMainRenderPass() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2107456)); return (this->*_f)(); }
+	inline GLRenderer & getGL() { typedef GLRenderer & (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(148688)); return (this->*_f)(); }
+	inline GLRenderer * createGLRenderer(unsigned int maxVertices) { typedef GLRenderer * (GraphicsManager::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2107152)); return (this->*_f)(maxVertices); }
+	inline void clearRenderTarget(const vec4f & color) { typedef void (GraphicsManager::*_fpt)(const vec4f &); auto _f=xcast<_fpt>(_drva(2106944)); return (this->*_f)(color); }
+	inline void clearRenderTargetDepth(float value) { typedef void (GraphicsManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2106960)); return (this->*_f)(value); }
+	inline void beginScene() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2106752)); return (this->*_f)(); }
+	inline void endScene() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2107472)); return (this->*_f)(); }
+	inline void setViewport(int left, int top, int width, int height) { typedef void (GraphicsManager::*_fpt)(int, int, int, int); auto _f=xcast<_fpt>(_drva(2117616)); return (this->*_f)(left, top, width, height); }
+	inline void drawPrimitive(unsigned int indicesCount, unsigned int baseIndex, unsigned int baseVertex, unsigned int numVertices) { typedef void (GraphicsManager::*_fpt)(unsigned int, unsigned int, unsigned int, unsigned int); auto _f=xcast<_fpt>(_drva(2107376)); return (this->*_f)(indicesCount, baseIndex, baseVertex, numVertices); }
+	inline void compile(Node * root) { typedef void (GraphicsManager::*_fpt)(Node *); auto _f=xcast<_fpt>(_drva(2107104)); return (this->*_f)(root); }
+	inline void setScreenSpaceMode() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2115808)); return (this->*_f)(); }
+	inline void onResize(int width, int height) { typedef void (GraphicsManager::*_fpt)(int, int); auto _f=xcast<_fpt>(_drva(2114352)); return (this->*_f)(width, height); }
+	inline void updateLightingSetttings() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2118032)); return (this->*_f)(); }
+	inline void loadLightingSettings(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef void (GraphicsManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2110032)); return (this->*_f)(filename); }
+	inline void loadLightingSettings() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2114224)); return (this->*_f)(); }
+	inline void resetRenderStates() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2114624)); return (this->*_f)(); }
+	inline void overrideSamplerState(SamplerState sampler) { typedef void (GraphicsManager::*_fpt)(SamplerState); auto _f=xcast<_fpt>(_drva(2114576)); return (this->*_f)(sampler); }
+	inline Shader * getShader(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef Shader * (GraphicsManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2108512)); return (this->*_f)(name); }
+	inline void setShader(Shader * sh) { typedef void (GraphicsManager::*_fpt)(Shader *); auto _f=xcast<_fpt>(_drva(2116096)); return (this->*_f)(sh); }
+	inline void setBlendMode(BlendMode mode) { typedef void (GraphicsManager::*_fpt)(BlendMode); auto _f=xcast<_fpt>(_drva(2114784)); return (this->*_f)(mode); }
+	inline void commitShaderChanges() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2107040)); return (this->*_f)(); }
+	inline void setDepthMode(DepthMode mode) { typedef void (GraphicsManager::*_fpt)(DepthMode); auto _f=xcast<_fpt>(_drva(2114944)); return (this->*_f)(mode); }
+	inline void setCullMode(CullMode mode) { typedef void (GraphicsManager::*_fpt)(CullMode); auto _f=xcast<_fpt>(_drva(2114832)); return (this->*_f)(mode); }
+	inline void setShadowMapBias(float b0, float b1, float b2) { typedef void (GraphicsManager::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(2116160)); return (this->*_f)(b0, b1, b2); }
+	inline vec3f getShadowMapBias() { typedef vec3f (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2108560)); return (this->*_f)(); }
+	inline void setProjectionMatrix(const mat44f & matrix) { typedef void (GraphicsManager::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2115168)); return (this->*_f)(matrix); }
+	inline void setViewMatrix(const mat44f & matrix, Camera * camera) { typedef void (GraphicsManager::*_fpt)(const mat44f &, Camera *); auto _f=xcast<_fpt>(_drva(2116864)); return (this->*_f)(matrix, camera); }
+	inline void setWorldMatrix(const mat44f & matrix) { typedef void (GraphicsManager::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(2117792)); return (this->*_f)(matrix); }
+	inline mat44f getWorldMatrix() { typedef mat44f (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2108656)); return (this->*_f)(); }
+	inline mat44f getProjectionMatrix() { typedef mat44f (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2108464)); return (this->*_f)(); }
+	inline mat44f getViewMatrix() { typedef mat44f (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2108608)); return (this->*_f)(); }
+	inline void setVB(IVertexBuffer * vb) { typedef void (GraphicsManager::*_fpt)(IVertexBuffer *); auto _f=xcast<_fpt>(_drva(2116848)); return (this->*_f)(vb); }
+	inline void setIB(IndexBuffer * ib) { typedef void (GraphicsManager::*_fpt)(IndexBuffer *); auto _f=xcast<_fpt>(_drva(2115152)); return (this->*_f)(ib); }
+	inline CBuffer * getCBuffer(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef CBuffer * (GraphicsManager::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2107632)); return (this->*_f)(name); }
+	inline void setRenderTarget(RenderTarget * rt) { typedef void (GraphicsManager::*_fpt)(RenderTarget *); auto _f=xcast<_fpt>(_drva(2115424)); return (this->*_f)(rt); }
+	inline void setTextureRT(unsigned int slot, RenderTarget * rt) { typedef void (GraphicsManager::*_fpt)(unsigned int, RenderTarget *); auto _f=xcast<_fpt>(_drva(2116816)); return (this->*_f)(slot, rt); }
+	inline void setDepthTextureRT(unsigned int slot, RenderTarget * rt) { typedef void (GraphicsManager::*_fpt)(unsigned int, RenderTarget *); auto _f=xcast<_fpt>(_drva(2115120)); return (this->*_f)(slot, rt); }
+	inline void setScreenRenderTargets() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2115712)); return (this->*_f)(); }
+	inline void setTexture(int slot, const Texture & tex) { typedef void (GraphicsManager::*_fpt)(int, const Texture &); auto _f=xcast<_fpt>(_drva(2116720)); return (this->*_f)(slot, tex); }
+	inline void setShadowMapTexture(int level, RenderTarget * rt) { typedef void (GraphicsManager::*_fpt)(int, RenderTarget *); auto _f=xcast<_fpt>(_drva(2116592)); return (this->*_f)(level, rt); }
+	inline void setShadowMapMatrix(int level, const mat44f & matrix) { typedef void (GraphicsManager::*_fpt)(int, const mat44f &); auto _f=xcast<_fpt>(_drva(2116336)); return (this->*_f)(level, matrix); }
+	inline void setCustomSunDirection(vec3f sunDirection) { typedef void (GraphicsManager::*_fpt)(vec3f); auto _f=xcast<_fpt>(_drva(2114912)); return (this->*_f)(sunDirection); }
+	inline void setSamplerState() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2115584)); return (this->*_f)(); }
+	inline void clearTextureSlot(int slot) { typedef void (GraphicsManager::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2106976)); return (this->*_f)(slot); }
+	inline vec3f getLDRColor(const vec3f & c) { typedef vec3f (GraphicsManager::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2108016)); return (this->*_f)(c); }
+	inline float getLDRScale(const vec3f & c) { typedef float (GraphicsManager::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2108336)); return (this->*_f)(c); }
+	inline void initRenderFlags() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2109280)); return (this->*_f)(); }
+	inline void initSamplerStates() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2109824)); return (this->*_f)(); }
+	inline void initCBuffers() { typedef void (GraphicsManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2108704)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(GraphicsManager)==1248),"bad size");
 		static_assert((offsetof(GraphicsManager,useCustomSunDirection)==0x8),"bad off");
@@ -18931,83 +18931,83 @@ public:
 	inline ACClient() { }
 	inline ACClient(const ACClient& other) = default;
 	inline ACClient& operator=(const ACClient& other) = default;
-	inline void ctor(Sim * isim) { typedef void (*_fpt)(ACClient *pthis, Sim *); _fpt _f=(_fpt)_drva(238272); _f(this, isim); }
+	inline void ctor(Sim * isim) { typedef void (ACClient::*_fpt)(Sim *); auto _f=xcast<_fpt>(_drva(238272)); (this->*_f)(isim); }
 	virtual ~ACClient();
-	inline void dtor() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(244880); _f(this); }
+	inline void dtor() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(244880)); (this->*_f)(); }
 	virtual void renderHUD_vf3(float dt);
-	inline void renderHUD_impl(float dt) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(333392); return _f(this, dt); }
-	inline void renderHUD(float dt) { return renderHUD_vf3(dt); }
-	inline ClientHandshakeResult handshakeTCP() { typedef ClientHandshakeResult (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(297808); return _f(this); }
-	inline bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars) { typedef bool (*_fpt)(ACClient *pthis, std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > &); _fpt _f=(_fpt)_drva(290688); return _f(this, remoteCars); }
-	inline void beginUpdateMode() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280288); return _f(this); }
-	inline void sendChat(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(338576); return _f(this, message); }
-	inline void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID) { typedef void (*_fpt)(ACClient *pthis, VoteType, bool, int); _fpt _f=(_fpt)_drva(338848); return _f(this, aVote, aVoteValue, targetAvatarGUID); }
-	inline bool hasVoted() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(306432); return _f(this); }
-	inline CarAvatar * getCurrentVotingTarget() { typedef CarAvatar * (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287824); return _f(this); }
-	inline float getVotingTimeLeft() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296512); return _f(this); }
-	inline VoteType getCurrentVoteType() { typedef VoteType (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287808); return _f(this); }
-	inline float getVotingMaxTime() { typedef float (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296496); return _f(this); }
-	inline void addNetCar(NetCarStateProvider * nc) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *); _fpt _f=(_fpt)_drva(279232); return _f(this, nc); }
-	inline NetCarStateProvider * getNetCarFromSessionID(unsigned char id) { typedef NetCarStateProvider * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(290528); return _f(this, id); }
+	inline void renderHUD_impl(float dt) { typedef void (ACClient::*_fpt)(float); auto _f=xcast<_fpt>(_drva(333392)); return (this->*_f)(dt); }
+	inline void renderHUD(float dt) { typedef void (ACClient::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(dt); }
+	inline ClientHandshakeResult handshakeTCP() { typedef ClientHandshakeResult (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(297808)); return (this->*_f)(); }
+	inline bool getRemoteCarList(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > & remoteCars) { typedef bool (ACClient::*_fpt)(std::vector<ClientRemoteCarDef,std::allocator<ClientRemoteCarDef> > &); auto _f=xcast<_fpt>(_drva(290688)); return (this->*_f)(remoteCars); }
+	inline void beginUpdateMode() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(280288)); return (this->*_f)(); }
+	inline void sendChat(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (ACClient::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(338576)); return (this->*_f)(message); }
+	inline void sendVote(VoteType aVote, bool aVoteValue, int targetAvatarGUID) { typedef void (ACClient::*_fpt)(VoteType, bool, int); auto _f=xcast<_fpt>(_drva(338848)); return (this->*_f)(aVote, aVoteValue, targetAvatarGUID); }
+	inline bool hasVoted() { typedef bool (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(306432)); return (this->*_f)(); }
+	inline CarAvatar * getCurrentVotingTarget() { typedef CarAvatar * (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(287824)); return (this->*_f)(); }
+	inline float getVotingTimeLeft() { typedef float (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(296512)); return (this->*_f)(); }
+	inline VoteType getCurrentVoteType() { typedef VoteType (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(287808)); return (this->*_f)(); }
+	inline float getVotingMaxTime() { typedef float (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(296496)); return (this->*_f)(); }
+	inline void addNetCar(NetCarStateProvider * nc) { typedef void (ACClient::*_fpt)(NetCarStateProvider *); auto _f=xcast<_fpt>(_drva(279232)); return (this->*_f)(nc); }
+	inline NetCarStateProvider * getNetCarFromSessionID(unsigned char id) { typedef NetCarStateProvider * (ACClient::*_fpt)(unsigned char); auto _f=xcast<_fpt>(_drva(290528)); return (this->*_f)(id); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(342832); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline double getPhysicsTime() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(290576); return _f(this); }
-	inline bool isAllowedToSendChatMessage() { typedef bool (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(307616); return _f(this); }
-	inline int getPing(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290608); return _f(this, anAvatar); }
-	inline RemoteSession getCurrentSession() { typedef RemoteSession (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287648); return _f(this); }
-	inline const RemoteSessionResult & getCurrentSessionResults() { typedef const RemoteSessionResult & (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287792); return _f(this); }
-	inline CarAvatar * getCarAvatarFromSessionID(unsigned char sesid) { typedef CarAvatar * (*_fpt)(ACClient *pthis, unsigned char); _fpt _f=(_fpt)_drva(286720); return _f(this, sesid); }
-	inline int getSessionIDFromCarAvatar(CarAvatar * anAvatar) { typedef int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(295696); return _f(this, anAvatar); }
-	inline int getSessionCount() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(295664); return _f(this); }
-	inline int getCurrentSessionIndex() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(287696); return _f(this); }
-	inline RemoteSession getSessionInfo(int index) { typedef RemoteSession (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295936); return _f(this, index); }
+	inline void update_impl(float deltaT) { typedef void (ACClient::*_fpt)(float); auto _f=xcast<_fpt>(_drva(342832)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (ACClient::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline double getPhysicsTime() { typedef double (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(290576)); return (this->*_f)(); }
+	inline bool isAllowedToSendChatMessage() { typedef bool (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(307616)); return (this->*_f)(); }
+	inline int getPing(CarAvatar * anAvatar) { typedef int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(290608)); return (this->*_f)(anAvatar); }
+	inline RemoteSession getCurrentSession() { typedef RemoteSession (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(287648)); return (this->*_f)(); }
+	inline const RemoteSessionResult & getCurrentSessionResults() { typedef const RemoteSessionResult & (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(287792)); return (this->*_f)(); }
+	inline CarAvatar * getCarAvatarFromSessionID(unsigned char sesid) { typedef CarAvatar * (ACClient::*_fpt)(unsigned char); auto _f=xcast<_fpt>(_drva(286720)); return (this->*_f)(sesid); }
+	inline int getSessionIDFromCarAvatar(CarAvatar * anAvatar) { typedef int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(295696)); return (this->*_f)(anAvatar); }
+	inline int getSessionCount() { typedef int (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(295664)); return (this->*_f)(); }
+	inline int getCurrentSessionIndex() { typedef int (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(287696)); return (this->*_f)(); }
+	inline RemoteSession getSessionInfo(int index) { typedef RemoteSession (ACClient::*_fpt)(int); auto _f=xcast<_fpt>(_drva(295936)); return (this->*_f)(index); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(339248); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline double getSessionTimeLeft() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296096); return _f(this); }
-	inline int getHandshakeCarPosition() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1278848); return _f(this); }
-	inline unsigned int getCarPosition(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287168); return _f(this, car); }
-	inline unsigned int getBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(286272); return _f(this, car); }
-	inline unsigned int getInstanceBestLap(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287856); return _f(this, car); }
-	inline Lap getLastLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(290000); return _f(this, car); }
-	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287968); return _f(this, car); }
-	inline void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps) { typedef void (*_fpt)(ACClient *pthis, CarAvatar *, std::vector<Lap,std::allocator<Lap> > &); _fpt _f=(_fpt)_drva(288160); return _f(this, car, laps); }
-	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (*_fpt)(ACClient *pthis, const int &, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(307648); return _f(this, sector, t, isGlobal, car); }
-	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (*_fpt)(ACClient *pthis, const int &, const bool &, CarAvatar *); _fpt _f=(_fpt)_drva(286384); return _f(this, sector, isGlobal, car); }
-	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(290336); return _f(this, car, sector); }
-	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (*_fpt)(ACClient *pthis, CarAvatar *, const int &); _fpt _f=(_fpt)_drva(296160); return _f(this, car, sector); }
-	inline void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, const unsigned int & sector, const unsigned int & time, const unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, const unsigned int &, const unsigned int &, const unsigned int &); _fpt _f=(_fpt)_drva(279264); return _f(this, splits, personalSplits, sector, time, cuts); }
-	inline void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, const unsigned int & laptime, const unsigned int & cuts) { typedef void (*_fpt)(ACClient *pthis, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<Lap,std::allocator<Lap> > &, const unsigned int &, const unsigned int &); _fpt _f=(_fpt)_drva(339488); return _f(this, splits, personalSplits, laps, laptime, cuts); }
-	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (*_fpt)(ACClient *pthis, CarAvatar *); _fpt _f=(_fpt)_drva(287360); return _f(this, car); }
-	inline void resetCurrentLaps() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(334128); return _f(this); }
-	inline std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name) { typedef std::vector<unsigned char,std::allocator<unsigned char> > (*_fpt)(ACClient *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(286832); return _f(this, unix_name); }
-	inline double getTimetoWait() { typedef double (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(296448); return _f(this); }
-	inline void setInvertedGridPositions(int pos) { typedef void (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(1315584); return _f(this, pos); }
-	inline int getInvertedGridPositions() { typedef int (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(1279296); return _f(this); }
-	inline void askForP2Pvalue() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(279664); return _f(this); }
-	inline void sendCarPosition() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(336432); return _f(this); }
-	inline void onMessage(const UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, const UDPMessage &); _fpt _f=(_fpt)_drva(309712); return _f(this, msg); }
-	inline void onLapCompleted(const OnLapCompletedEvent & ev) { typedef void (*_fpt)(ACClient *pthis, const OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(309296); return _f(this, ev); }
-	inline void onNewSession(UDPPacket & pak, bool isHandShake) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &, bool); _fpt _f=(_fpt)_drva(320672); return _f(this, pak, isHandShake); }
-	inline void onRemoteLapCompleted(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(324720); return _f(this, pak); }
-	inline void onRemoteSectorSplit(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327104); return _f(this, pak); }
-	inline void onPhysicsStep(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(324048); return _f(this, pt); }
-	inline void logMessage(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (*_fpt)(ACClient *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(307872); return _f(this, message); }
-	inline unsigned char getSessionIdFromCarAvatarID(int carAvatarID) { typedef unsigned char (*_fpt)(ACClient *pthis, int); _fpt _f=(_fpt)_drva(295776); return _f(this, carAvatarID); }
-	inline void updateQOS(double pt) { typedef void (*_fpt)(ACClient *pthis, double); _fpt _f=(_fpt)_drva(344528); return _f(this, pt); }
-	inline void associate() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(280128); return _f(this); }
-	inline void onMessageTCP(const UDPMessage & msg) { typedef void (*_fpt)(ACClient *pthis, const UDPMessage &); _fpt _f=(_fpt)_drva(313408); return _f(this, msg); }
-	inline bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg) { typedef bool (*_fpt)(ACClient *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(296560); return _f(this, msg); }
-	inline void onTyreCompoundChanged(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName) { typedef void (*_fpt)(ACClient *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(328656); return _f(this, shortName); }
-	inline void addCollisionEvent(NetCarStateProvider * netCar, float speed, const vec3f & worldPos, const vec3f & relPos) { typedef void (*_fpt)(ACClient *pthis, NetCarStateProvider *, float, const vec3f &, const vec3f &); _fpt _f=(_fpt)_drva(277152); return _f(this, netCar, speed, worldPos, relPos); }
-	inline void onWelcomeMessageReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(328800); return _f(this, pak); }
-	inline void onSetupReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(327824); return _f(this, pak); }
-	inline void onDRSZoneReceived(UDPPacket & pak) { typedef void (*_fpt)(ACClient *pthis, UDPPacket &); _fpt _f=(_fpt)_drva(308512); return _f(this, pak); }
-	inline void onRemoteSunAngleReceived(float angle) { typedef void (*_fpt)(ACClient *pthis, float); _fpt _f=(_fpt)_drva(327408); return _f(this, angle); }
-	inline void updateDamageReport() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(344160); return _f(this); }
-	inline void onSectorSplit(const OnSectorSplitEvent & ev) { typedef void (*_fpt)(ACClient *pthis, const OnSectorSplitEvent &); _fpt _f=(_fpt)_drva(327536); return _f(this, ev); }
-	inline void onCollisionWithCar() { typedef void (*_fpt)(ACClient *pthis); _fpt _f=(_fpt)_drva(308080); return _f(this); }
+	inline void shutdown_impl() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(339248)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline double getSessionTimeLeft() { typedef double (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(296096)); return (this->*_f)(); }
+	inline int getHandshakeCarPosition() { typedef int (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(1278848)); return (this->*_f)(); }
+	inline unsigned int getCarPosition(CarAvatar * car) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(287168)); return (this->*_f)(car); }
+	inline unsigned int getBestLap(CarAvatar * car) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(286272)); return (this->*_f)(car); }
+	inline unsigned int getInstanceBestLap(CarAvatar * car) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(287856)); return (this->*_f)(car); }
+	inline Lap getLastLap(CarAvatar * car) { typedef Lap (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(290000)); return (this->*_f)(car); }
+	inline unsigned int getLapCount(CarAvatar * car) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(287968)); return (this->*_f)(car); }
+	inline void getLaps(CarAvatar * car, std::vector<Lap,std::allocator<Lap> > & laps) { typedef void (ACClient::*_fpt)(CarAvatar *, std::vector<Lap,std::allocator<Lap> > &); auto _f=xcast<_fpt>(_drva(288160)); return (this->*_f)(car, laps); }
+	inline bool isBestSplit(const int & sector, const int & t, const bool & isGlobal, CarAvatar * car) { typedef bool (ACClient::*_fpt)(const int &, const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(307648)); return (this->*_f)(sector, t, isGlobal, car); }
+	inline unsigned int getBestSplit(const int & sector, const bool & isGlobal, CarAvatar * car) { typedef unsigned int (ACClient::*_fpt)(const int &, const bool &, CarAvatar *); auto _f=xcast<_fpt>(_drva(286384)); return (this->*_f)(sector, isGlobal, car); }
+	inline unsigned int getLastSplit(CarAvatar * car, const int & sector) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(290336)); return (this->*_f)(car, sector); }
+	inline unsigned int getSplit(CarAvatar * car, const int & sector) { typedef unsigned int (ACClient::*_fpt)(CarAvatar *, const int &); auto _f=xcast<_fpt>(_drva(296160)); return (this->*_f)(car, sector); }
+	inline void addSplitToBest(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, const unsigned int & sector, const unsigned int & time, const unsigned int & cuts) { typedef void (ACClient::*_fpt)(std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, const unsigned int &, const unsigned int &, const unsigned int &); auto _f=xcast<_fpt>(_drva(279264)); return (this->*_f)(splits, personalSplits, sector, time, cuts); }
+	inline void storeSplitToLap(std::vector<unsigned int,std::allocator<unsigned int> > & splits, std::vector<unsigned int,std::allocator<unsigned int> > & personalSplits, std::vector<Lap,std::allocator<Lap> > & laps, const unsigned int & laptime, const unsigned int & cuts) { typedef void (ACClient::*_fpt)(std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<unsigned int,std::allocator<unsigned int> > &, std::vector<Lap,std::allocator<Lap> > &, const unsigned int &, const unsigned int &); auto _f=xcast<_fpt>(_drva(339488)); return (this->*_f)(splits, personalSplits, laps, laptime, cuts); }
+	inline Lap getCurrentLap(CarAvatar * car) { typedef Lap (ACClient::*_fpt)(CarAvatar *); auto _f=xcast<_fpt>(_drva(287360)); return (this->*_f)(car); }
+	inline void resetCurrentLaps() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(334128)); return (this->*_f)(); }
+	inline std::vector<unsigned char,std::allocator<unsigned char> > getCarMD5(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unix_name) { typedef std::vector<unsigned char,std::allocator<unsigned char> > (ACClient::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(286832)); return (this->*_f)(unix_name); }
+	inline double getTimetoWait() { typedef double (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(296448)); return (this->*_f)(); }
+	inline void setInvertedGridPositions(int pos) { typedef void (ACClient::*_fpt)(int); auto _f=xcast<_fpt>(_drva(1315584)); return (this->*_f)(pos); }
+	inline int getInvertedGridPositions() { typedef int (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(1279296)); return (this->*_f)(); }
+	inline void askForP2Pvalue() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(279664)); return (this->*_f)(); }
+	inline void sendCarPosition() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(336432)); return (this->*_f)(); }
+	inline void onMessage(const UDPMessage & msg) { typedef void (ACClient::*_fpt)(const UDPMessage &); auto _f=xcast<_fpt>(_drva(309712)); return (this->*_f)(msg); }
+	inline void onLapCompleted(const OnLapCompletedEvent & ev) { typedef void (ACClient::*_fpt)(const OnLapCompletedEvent &); auto _f=xcast<_fpt>(_drva(309296)); return (this->*_f)(ev); }
+	inline void onNewSession(UDPPacket & pak, bool isHandShake) { typedef void (ACClient::*_fpt)(UDPPacket &, bool); auto _f=xcast<_fpt>(_drva(320672)); return (this->*_f)(pak, isHandShake); }
+	inline void onRemoteLapCompleted(UDPPacket & pak) { typedef void (ACClient::*_fpt)(UDPPacket &); auto _f=xcast<_fpt>(_drva(324720)); return (this->*_f)(pak); }
+	inline void onRemoteSectorSplit(UDPPacket & pak) { typedef void (ACClient::*_fpt)(UDPPacket &); auto _f=xcast<_fpt>(_drva(327104)); return (this->*_f)(pak); }
+	inline void onPhysicsStep(double pt) { typedef void (ACClient::*_fpt)(double); auto _f=xcast<_fpt>(_drva(324048)); return (this->*_f)(pt); }
+	inline void logMessage(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & message) { typedef void (ACClient::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(307872)); return (this->*_f)(message); }
+	inline unsigned char getSessionIdFromCarAvatarID(int carAvatarID) { typedef unsigned char (ACClient::*_fpt)(int); auto _f=xcast<_fpt>(_drva(295776)); return (this->*_f)(carAvatarID); }
+	inline void updateQOS(double pt) { typedef void (ACClient::*_fpt)(double); auto _f=xcast<_fpt>(_drva(344528)); return (this->*_f)(pt); }
+	inline void associate() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(280128)); return (this->*_f)(); }
+	inline void onMessageTCP(const UDPMessage & msg) { typedef void (ACClient::*_fpt)(const UDPMessage &); auto _f=xcast<_fpt>(_drva(313408)); return (this->*_f)(msg); }
+	inline bool handleLocalAdminMessages(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * msg) { typedef bool (ACClient::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(296560)); return (this->*_f)(msg); }
+	inline void onTyreCompoundChanged(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & shortName) { typedef void (ACClient::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(328656)); return (this->*_f)(shortName); }
+	inline void addCollisionEvent(NetCarStateProvider * netCar, float speed, const vec3f & worldPos, const vec3f & relPos) { typedef void (ACClient::*_fpt)(NetCarStateProvider *, float, const vec3f &, const vec3f &); auto _f=xcast<_fpt>(_drva(277152)); return (this->*_f)(netCar, speed, worldPos, relPos); }
+	inline void onWelcomeMessageReceived(UDPPacket & pak) { typedef void (ACClient::*_fpt)(UDPPacket &); auto _f=xcast<_fpt>(_drva(328800)); return (this->*_f)(pak); }
+	inline void onSetupReceived(UDPPacket & pak) { typedef void (ACClient::*_fpt)(UDPPacket &); auto _f=xcast<_fpt>(_drva(327824)); return (this->*_f)(pak); }
+	inline void onDRSZoneReceived(UDPPacket & pak) { typedef void (ACClient::*_fpt)(UDPPacket &); auto _f=xcast<_fpt>(_drva(308512)); return (this->*_f)(pak); }
+	inline void onRemoteSunAngleReceived(float angle) { typedef void (ACClient::*_fpt)(float); auto _f=xcast<_fpt>(_drva(327408)); return (this->*_f)(angle); }
+	inline void updateDamageReport() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(344160)); return (this->*_f)(); }
+	inline void onSectorSplit(const OnSectorSplitEvent & ev) { typedef void (ACClient::*_fpt)(const OnSectorSplitEvent &); auto _f=xcast<_fpt>(_drva(327536)); return (this->*_f)(ev); }
+	inline void onCollisionWithCar() { typedef void (ACClient::*_fpt)(); auto _f=xcast<_fpt>(_drva(308080)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ACClient)==67608),"bad size");
 		static_assert((offsetof(ACClient,evOnChatMessage)==0x58),"bad off");
@@ -19290,65 +19290,65 @@ public:
 	inline Sim() { }
 	inline Sim(const Sim& other) = default;
 	inline Sim& operator=(const Sim& other) = default;
-	inline void ctor(Game * igame) { typedef void (*_fpt)(Sim *pthis, Game *); _fpt _f=(_fpt)_drva(1646704); _f(this, igame); }
+	inline void ctor(Game * igame) { typedef void (Sim::*_fpt)(Game *); auto _f=xcast<_fpt>(_drva(1646704)); (this->*_f)(igame); }
 	virtual ~Sim();
-	inline void dtor() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1660624); _f(this); }
-	inline void applyCustomWeather(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1671184); return _f(this, name); }
-	inline void startGame() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1698560); return _f(this); }
-	inline Camera * getSceneCamera() { typedef Camera * (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1676848); return _f(this); }
+	inline void dtor() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1660624)); (this->*_f)(); }
+	inline void applyCustomWeather(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1671184)); return (this->*_f)(name); }
+	inline void startGame() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1698560)); return (this->*_f)(); }
+	inline Camera * getSceneCamera() { typedef Camera * (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1676848)); return (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(Sim *pthis, float); _fpt _f=(_fpt)_drva(1699728); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
+	inline void update_impl(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1699728)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
 	virtual void render_vf2(float deltaT);
-	inline void render_impl(float deltaT) { typedef void (*_fpt)(Sim *pthis, float); _fpt _f=(_fpt)_drva(1696944); return _f(this, deltaT); }
-	inline void render(float deltaT) { return render_vf2(deltaT); }
+	inline void render_impl(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1696944)); return (this->*_f)(deltaT); }
+	inline void render(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(deltaT); }
 	virtual void renderHUD_vf3(float deltaT);
-	inline void renderHUD_impl(float deltaT) { typedef void (*_fpt)(Sim *pthis, float); _fpt _f=(_fpt)_drva(1697008); return _f(this, deltaT); }
-	inline void renderHUD(float deltaT) { return renderHUD_vf3(deltaT); }
-	inline CarAvatar * addCar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef CarAvatar * (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1669280); return _f(this, model, config, skin); }
-	inline CarAvatar * addNetCar(ClientRemoteCarDef & desc, ACClient * client) { typedef CarAvatar * (*_fpt)(Sim *pthis, ClientRemoteCarDef &, ACClient *); _fpt _f=(_fpt)_drva(1670192); return _f(this, desc, client); }
-	inline void renderScene(float deltaT) { typedef void (*_fpt)(Sim *pthis, float); _fpt _f=(_fpt)_drva(1697136); return _f(this, deltaT); }
-	inline void loadTrack(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & tname, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, int playerPitPosition) { typedef void (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); _fpt _f=(_fpt)_drva(1680576); return _f(this, tname, config, playerPitPosition); }
-	inline CarAvatar * getCar(unsigned int index) { typedef CarAvatar * (*_fpt)(Sim *pthis, unsigned int); _fpt _f=(_fpt)_drva(1676000); return _f(this, index); }
-	inline unsigned int getCarsCount() { typedef unsigned int (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(210640); return _f(this); }
-	inline void onPostLoad() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1695776); return _f(this); }
-	inline CameraForward * createCamera(INIReaderDocuments & videoIni, float useBlur) { typedef CameraForward * (*_fpt)(Sim *pthis, INIReaderDocuments &, float); _fpt _f=(_fpt)_drva(1671904); return _f(this, videoIni, useBlur); }
-	inline void setSplashMessage(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & msg) { typedef void (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1697888); return _f(this, msg); }
-	inline void setSplashLoadingCar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName) { typedef void (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1697760); return _f(this, carUnixName); }
+	inline void renderHUD_impl(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1697008)); return (this->*_f)(deltaT); }
+	inline void renderHUD(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(deltaT); }
+	inline CarAvatar * addCar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & model, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef CarAvatar * (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1669280)); return (this->*_f)(model, config, skin); }
+	inline CarAvatar * addNetCar(ClientRemoteCarDef & desc, ACClient * client) { typedef CarAvatar * (Sim::*_fpt)(ClientRemoteCarDef &, ACClient *); auto _f=xcast<_fpt>(_drva(1670192)); return (this->*_f)(desc, client); }
+	inline void renderScene(float deltaT) { typedef void (Sim::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1697136)); return (this->*_f)(deltaT); }
+	inline void loadTrack(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & tname, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, int playerPitPosition) { typedef void (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); auto _f=xcast<_fpt>(_drva(1680576)); return (this->*_f)(tname, config, playerPitPosition); }
+	inline CarAvatar * getCar(unsigned int index) { typedef CarAvatar * (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1676000)); return (this->*_f)(index); }
+	inline unsigned int getCarsCount() { typedef unsigned int (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(210640)); return (this->*_f)(); }
+	inline void onPostLoad() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1695776)); return (this->*_f)(); }
+	inline CameraForward * createCamera(INIReaderDocuments & videoIni, float useBlur) { typedef CameraForward * (Sim::*_fpt)(INIReaderDocuments &, float); auto _f=xcast<_fpt>(_drva(1671904)); return (this->*_f)(videoIni, useBlur); }
+	inline void setSplashMessage(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & msg) { typedef void (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1697888)); return (this->*_f)(msg); }
+	inline void setSplashLoadingCar(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & carUnixName) { typedef void (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1697760)); return (this->*_f)(carUnixName); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1698272); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline bool isInTripleScreenMode() { typedef bool (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1680448); return _f(this); }
-	inline unsigned int nextCar(unsigned int anIndex) { typedef unsigned int (*_fpt)(Sim *pthis, unsigned int); _fpt _f=(_fpt)_drva(1681216); return _f(this, anIndex); }
-	inline unsigned int previousCar(unsigned int anIndex) { typedef unsigned int (*_fpt)(Sim *pthis, unsigned int); _fpt _f=(_fpt)_drva(1696128); return _f(this, anIndex); }
-	inline void writeOutputJson() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1702224); return _f(this); }
-	inline bool isDisplayingResults() { typedef bool (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(503088); return _f(this); }
-	inline void displayLeaderboard(bool value) { typedef void (*_fpt)(Sim *pthis, bool); _fpt _f=(_fpt)_drva(280848); return _f(this, value); }
+	inline void shutdown_impl() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1698272)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline bool isInTripleScreenMode() { typedef bool (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1680448)); return (this->*_f)(); }
+	inline unsigned int nextCar(unsigned int anIndex) { typedef unsigned int (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1681216)); return (this->*_f)(anIndex); }
+	inline unsigned int previousCar(unsigned int anIndex) { typedef unsigned int (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1696128)); return (this->*_f)(anIndex); }
+	inline void writeOutputJson() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1702224)); return (this->*_f)(); }
+	inline bool isDisplayingResults() { typedef bool (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(503088)); return (this->*_f)(); }
+	inline void displayLeaderboard(bool value) { typedef void (Sim::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(280848)); return (this->*_f)(value); }
 	virtual void onKeyDown_vf0(const OnKeyEvent & message);
-	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (*_fpt)(Sim *pthis, const OnKeyEvent &); _fpt _f=(_fpt)_drva(1681728); return _f(this, message); }
-	inline void onKeyDown(const OnKeyEvent & message) { return onKeyDown_vf0(message); }
+	inline void onKeyDown_impl(const OnKeyEvent & message) { typedef void (Sim::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(_drva(1681728)); return (this->*_f)(message); }
+	inline void onKeyDown(const OnKeyEvent & message) { typedef void (Sim::*_fpt)(const OnKeyEvent &); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(message); }
 	virtual void onKeyChar_vf1(unsigned int key);
-	inline void onKeyChar_impl(unsigned int key) { typedef void (*_fpt)(Sim *pthis, unsigned int); _fpt _f=(_fpt)_drva(96368); return _f(this, key); }
-	inline void onKeyChar(unsigned int key) { return onKeyChar_vf1(key); }
-	inline void onReplayModeChanged(const OnReplayStatusChanged & message) { typedef void (*_fpt)(Sim *pthis, const OnReplayStatusChanged &); _fpt _f=(_fpt)_drva(1695936); return _f(this, message); }
-	inline Console & getConsole() { typedef Console & (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1676048); return _f(this); }
-	inline TrackData getTrackData() { typedef TrackData (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1676864); return _f(this); }
-	inline void setPauseMode(bool mode) { typedef void (*_fpt)(Sim *pthis, bool); _fpt _f=(_fpt)_drva(1697488); return _f(this, mode); }
-	inline void activateGameGui() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1669088); return _f(this); }
-	inline void activatePauseMenu() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1669184); return _f(this); }
-	inline void activateEscMenu() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1668992); return _f(this); }
-	inline void setFocusedCarIndex(unsigned int aCarIndex) { typedef void (*_fpt)(Sim *pthis, unsigned int); _fpt _f=(_fpt)_drva(1697456); return _f(this, aCarIndex); }
-	inline unsigned int getFocusedCarIndex() { typedef unsigned int (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1676080); return _f(this); }
-	inline void executeOnMainThread(std::function<void __cdecl(void)> * f) { typedef void (*_fpt)(Sim *pthis, std::function<void __cdecl(void)> *); _fpt _f=(_fpt)_drva(1675840); return _f(this, f); }
-	inline void unloadMeshResources(Node * node) { typedef void (*_fpt)(Sim *pthis, Node *); _fpt _f=(_fpt)_drva(1699280); return _f(this, node); }
-	inline Texture * getNationFlag(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nationCode) { typedef Texture * (*_fpt)(Sim *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1676112); return _f(this, nationCode); }
-	inline bool isVrRoom() { typedef bool (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(888336); return _f(this); }
-	inline void initSceneGraph() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1678704); return _f(this); }
-	inline void stepPhysicsEvent() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1698768); return _f(this); }
-	inline void initCubemaps() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1677216); return _f(this); }
-	inline void initHDRLevels() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1678080); return _f(this); }
-	inline void addForm(ksgui_Form * aForm, bool isInDevMode) { typedef void (*_fpt)(Sim *pthis, ksgui_Form *, bool); _fpt _f=(_fpt)_drva(1669856); return _f(this, aForm, isInDevMode); }
-	inline void initStaticCubemap() { typedef void (*_fpt)(Sim *pthis); _fpt _f=(_fpt)_drva(1680032); return _f(this); }
+	inline void onKeyChar_impl(unsigned int key) { typedef void (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(key); }
+	inline void onKeyChar(unsigned int key) { typedef void (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(key); }
+	inline void onReplayModeChanged(const OnReplayStatusChanged & message) { typedef void (Sim::*_fpt)(const OnReplayStatusChanged &); auto _f=xcast<_fpt>(_drva(1695936)); return (this->*_f)(message); }
+	inline Console & getConsole() { typedef Console & (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1676048)); return (this->*_f)(); }
+	inline TrackData getTrackData() { typedef TrackData (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1676864)); return (this->*_f)(); }
+	inline void setPauseMode(bool mode) { typedef void (Sim::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(1697488)); return (this->*_f)(mode); }
+	inline void activateGameGui() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1669088)); return (this->*_f)(); }
+	inline void activatePauseMenu() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1669184)); return (this->*_f)(); }
+	inline void activateEscMenu() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1668992)); return (this->*_f)(); }
+	inline void setFocusedCarIndex(unsigned int aCarIndex) { typedef void (Sim::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(1697456)); return (this->*_f)(aCarIndex); }
+	inline unsigned int getFocusedCarIndex() { typedef unsigned int (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1676080)); return (this->*_f)(); }
+	inline void executeOnMainThread(std::function<void __cdecl(void)> * f) { typedef void (Sim::*_fpt)(std::function<void __cdecl(void)> *); auto _f=xcast<_fpt>(_drva(1675840)); return (this->*_f)(f); }
+	inline void unloadMeshResources(Node * node) { typedef void (Sim::*_fpt)(Node *); auto _f=xcast<_fpt>(_drva(1699280)); return (this->*_f)(node); }
+	inline Texture * getNationFlag(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & nationCode) { typedef Texture * (Sim::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1676112)); return (this->*_f)(nationCode); }
+	inline bool isVrRoom() { typedef bool (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(888336)); return (this->*_f)(); }
+	inline void initSceneGraph() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1678704)); return (this->*_f)(); }
+	inline void stepPhysicsEvent() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1698768)); return (this->*_f)(); }
+	inline void initCubemaps() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1677216)); return (this->*_f)(); }
+	inline void initHDRLevels() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1678080)); return (this->*_f)(); }
+	inline void addForm(ksgui_Form * aForm, bool isInDevMode) { typedef void (Sim::*_fpt)(ksgui_Form *, bool); auto _f=xcast<_fpt>(_drva(1669856)); return (this->*_f)(aForm, isInDevMode); }
+	inline void initStaticCubemap() { typedef void (Sim::*_fpt)(); auto _f=xcast<_fpt>(_drva(1680032)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Sim)==720),"bad size");
 		static_assert((offsetof(Sim,evNewCarLoaded)==0x60),"bad off");
@@ -19508,19 +19508,19 @@ public:
 	inline BrakeSystem() { }
 	inline BrakeSystem(const BrakeSystem& other) = default;
 	inline BrakeSystem& operator=(const BrakeSystem& other) = default;
-	inline void init(Car * car) { typedef void (*_fpt)(BrakeSystem *pthis, Car *); _fpt _f=(_fpt)_drva(2676368); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(BrakeSystem *pthis, float); _fpt _f=(_fpt)_drva(2680384); return _f(this, dt); }
-	inline float getBrakePower() { typedef float (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2676256); return _f(this); }
-	inline void setManualFrontBias(int value) { typedef void (*_fpt)(BrakeSystem *pthis, int); _fpt _f=(_fpt)_drva(2680272); return _f(this, value); }
-	inline float getFrontBias() { typedef float (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2676272); return _f(this); }
-	inline void reset() { typedef void (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2679952); return _f(this); }
-	inline bool isUsingEBB() { typedef bool (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2879392); return _f(this); }
-	inline void activateTempRunFile(bool mode) { typedef void (*_fpt)(BrakeSystem *pthis, bool); _fpt _f=(_fpt)_drva(2675712); return _f(this, mode); }
-	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath) { typedef void (*_fpt)(BrakeSystem *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2676848); return _f(this, dataPath); }
-	inline void stepTemps(float dt) { typedef void (*_fpt)(BrakeSystem *pthis, float); _fpt _f=(_fpt)_drva(2681120); return _f(this, dt); }
-	inline void saveTempsRunFame() { typedef void (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2680032); return _f(this); }
-	inline void ctor() { typedef void (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2539040); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(BrakeSystem *pthis); _fpt _f=(_fpt)_drva(2547824); _f(this); }
+	inline void init(Car * car) { typedef void (BrakeSystem::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2676368)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (BrakeSystem::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2680384)); return (this->*_f)(dt); }
+	inline float getBrakePower() { typedef float (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2676256)); return (this->*_f)(); }
+	inline void setManualFrontBias(int value) { typedef void (BrakeSystem::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2680272)); return (this->*_f)(value); }
+	inline float getFrontBias() { typedef float (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2676272)); return (this->*_f)(); }
+	inline void reset() { typedef void (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2679952)); return (this->*_f)(); }
+	inline bool isUsingEBB() { typedef bool (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2879392)); return (this->*_f)(); }
+	inline void activateTempRunFile(bool mode) { typedef void (BrakeSystem::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2675712)); return (this->*_f)(mode); }
+	inline void loadINI(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath) { typedef void (BrakeSystem::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2676848)); return (this->*_f)(dataPath); }
+	inline void stepTemps(float dt) { typedef void (BrakeSystem::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2681120)); return (this->*_f)(dt); }
+	inline void saveTempsRunFame() { typedef void (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2680032)); return (this->*_f)(); }
+	inline void ctor() { typedef void (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2539040)); (this->*_f)(); }
+	inline void dtor() { typedef void (BrakeSystem::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547824)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(BrakeSystem)==1008),"bad size");
 		static_assert((offsetof(BrakeSystem,frontBias)==0x0),"bad off");
@@ -19577,11 +19577,11 @@ public:
 	inline CubeMapRenderer() { }
 	inline CubeMapRenderer(const CubeMapRenderer& other) = default;
 	inline CubeMapRenderer& operator=(const CubeMapRenderer& other) = default;
-	inline void ctor(GraphicsManager * graphics) { typedef void (*_fpt)(CubeMapRenderer *pthis, GraphicsManager *); _fpt _f=(_fpt)_drva(2221648); _f(this, graphics); }
+	inline void ctor(GraphicsManager * graphics) { typedef void (CubeMapRenderer::*_fpt)(GraphicsManager *); auto _f=xcast<_fpt>(_drva(2221648)); (this->*_f)(graphics); }
 	virtual ~CubeMapRenderer();
-	inline void dtor() { typedef void (*_fpt)(CubeMapRenderer *pthis); _fpt _f=(_fpt)_drva(2223344); _f(this); }
-	inline void render(CubeMap * cubeMap, Node * root, Camera & sceneCamera) { typedef void (*_fpt)(CubeMapRenderer *pthis, CubeMap *, Node *, Camera &); _fpt _f=(_fpt)_drva(2223536); return _f(this, cubeMap, root, sceneCamera); }
-	inline void setCameraNearFarPlanes(float nearp, float farp) { typedef void (*_fpt)(CubeMapRenderer *pthis, float, float); _fpt _f=(_fpt)_drva(2224400); return _f(this, nearp, farp); }
+	inline void dtor() { typedef void (CubeMapRenderer::*_fpt)(); auto _f=xcast<_fpt>(_drva(2223344)); (this->*_f)(); }
+	inline void render(CubeMap * cubeMap, Node * root, Camera & sceneCamera) { typedef void (CubeMapRenderer::*_fpt)(CubeMap *, Node *, Camera &); auto _f=xcast<_fpt>(_drva(2223536)); return (this->*_f)(cubeMap, root, sceneCamera); }
+	inline void setCameraNearFarPlanes(float nearp, float farp) { typedef void (CubeMapRenderer::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2224400)); return (this->*_f)(nearp, farp); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CubeMapRenderer)==992),"bad size");
 		static_assert((offsetof(CubeMapRenderer,facesPerFrame)==0x8),"bad off");
@@ -19676,19 +19676,19 @@ public:
 	inline ERS() { }
 	inline ERS(const ERS& other) = default;
 	inline ERS& operator=(const ERS& other) = default;
-	inline void ctor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692352); _f(this); }
+	inline void ctor() { typedef void (ERS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2692352)); (this->*_f)(); }
 	virtual ~ERS();
-	inline void dtor() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2692816); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(ERS *pthis, Car *); _fpt _f=(_fpt)_drva(2694192); return _f(this, car); }
-	inline void step(float dt) { typedef void (*_fpt)(ERS *pthis, float); _fpt _f=(_fpt)_drva(2699488); return _f(this, dt); }
+	inline void dtor() { typedef void (ERS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2692816)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (ERS::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2694192)); return (this->*_f)(car); }
+	inline void step(float dt) { typedef void (ERS::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2699488)); return (this->*_f)(dt); }
 	virtual float getOutputTorque_vf1();
-	inline float getOutputTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2694096); return _f(this); }
-	inline float getOutputTorque() { return getOutputTorque_vf1(); }
+	inline float getOutputTorque_impl() { typedef float (ERS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2694096)); return (this->*_f)(); }
+	inline float getOutputTorque() { typedef float (ERS::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual float getCoastTorque_vf1();
-	inline float getCoastTorque_impl() { typedef float (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2693952); return _f(this); }
-	inline float getCoastTorque() { return getCoastTorque_vf1(); }
-	inline void reset() { typedef void (*_fpt)(ERS *pthis); _fpt _f=(_fpt)_drva(2699168); return _f(this); }
-	inline void setPowerController(int index) { typedef void (*_fpt)(ERS *pthis, int); _fpt _f=(_fpt)_drva(2699200); return _f(this, index); }
+	inline float getCoastTorque_impl() { typedef float (ERS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2693952)); return (this->*_f)(); }
+	inline float getCoastTorque() { typedef float (ERS::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
+	inline void reset() { typedef void (ERS::*_fpt)(); auto _f=xcast<_fpt>(_drva(2699168)); return (this->*_f)(); }
+	inline void setPowerController(int index) { typedef void (ERS::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2699200)); return (this->*_f)(index); }
 	inline void _guard_obj() {
 		static_assert((sizeof(ERS)==688),"bad size");
 		static_assert((offsetof(ERS,present)==0x10),"bad off");
@@ -19763,16 +19763,16 @@ public:
 	inline Wing() { }
 	inline Wing(const Wing& other) = default;
 	inline Wing& operator=(const Wing& other) = default;
-	inline void ctor(const Wing & __that) { typedef void (*_fpt)(Wing *pthis, const Wing &); _fpt _f=(_fpt)_drva(2839136); _f(this, __that); }
-	inline void ctor(Car * a_car, INIReader & ini, int index, bool isVertical) { typedef void (*_fpt)(Wing *pthis, Car *, INIReader &, int, bool); _fpt _f=(_fpt)_drva(2822976); _f(this, a_car, ini, index, isVertical); }
-	inline void dtor() { typedef void (*_fpt)(Wing *pthis); _fpt _f=(_fpt)_drva(2827120); _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(Wing *pthis, float); _fpt _f=(_fpt)_drva(2829248); return _f(this, dt); }
-	inline void setOverrideAngle(float iangle) { typedef void (*_fpt)(Wing *pthis, float); _fpt _f=(_fpt)_drva(2829232); return _f(this, iangle); }
-	inline void clearOverrides() { typedef void (*_fpt)(Wing *pthis); _fpt _f=(_fpt)_drva(2829168); return _f(this); }
-	inline float getCurrentModifiedAngle() { typedef float (*_fpt)(Wing *pthis); _fpt _f=(_fpt)_drva(2829184); return _f(this); }
-	inline void stepDynamicControllers(float dt) { typedef void (*_fpt)(Wing *pthis, float); _fpt _f=(_fpt)_drva(2829776); return _f(this, dt); }
-	inline void addDrag(vec3f & lv) { typedef void (*_fpt)(Wing *pthis, vec3f &); _fpt _f=(_fpt)_drva(2827296); return _f(this, lv); }
-	inline void addLift(vec3f & lv) { typedef void (*_fpt)(Wing *pthis, vec3f &); _fpt _f=(_fpt)_drva(2828080); return _f(this, lv); }
+	inline void ctor(const Wing & __that) { typedef void (Wing::*_fpt)(const Wing &); auto _f=xcast<_fpt>(_drva(2839136)); (this->*_f)(__that); }
+	inline void ctor(Car * a_car, INIReader & ini, int index, bool isVertical) { typedef void (Wing::*_fpt)(Car *, INIReader &, int, bool); auto _f=xcast<_fpt>(_drva(2822976)); (this->*_f)(a_car, ini, index, isVertical); }
+	inline void dtor() { typedef void (Wing::*_fpt)(); auto _f=xcast<_fpt>(_drva(2827120)); (this->*_f)(); }
+	inline void step(float dt) { typedef void (Wing::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2829248)); return (this->*_f)(dt); }
+	inline void setOverrideAngle(float iangle) { typedef void (Wing::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2829232)); return (this->*_f)(iangle); }
+	inline void clearOverrides() { typedef void (Wing::*_fpt)(); auto _f=xcast<_fpt>(_drva(2829168)); return (this->*_f)(); }
+	inline float getCurrentModifiedAngle() { typedef float (Wing::*_fpt)(); auto _f=xcast<_fpt>(_drva(2829184)); return (this->*_f)(); }
+	inline void stepDynamicControllers(float dt) { typedef void (Wing::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2829776)); return (this->*_f)(dt); }
+	inline void addDrag(vec3f & lv) { typedef void (Wing::*_fpt)(vec3f &); auto _f=xcast<_fpt>(_drva(2827296)); return (this->*_f)(lv); }
+	inline void addLift(vec3f & lv) { typedef void (Wing::*_fpt)(vec3f &); auto _f=xcast<_fpt>(_drva(2828080)); return (this->*_f)(lv); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Wing)==784),"bad size");
 		static_assert((offsetof(Wing,data)==0x0),"bad off");
@@ -19824,21 +19824,21 @@ public:
 	inline CameraShadowMapped() { }
 	inline CameraShadowMapped(const CameraShadowMapped& other) = default;
 	inline CameraShadowMapped& operator=(const CameraShadowMapped& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * gm) { typedef void (*_fpt)(CameraShadowMapped *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); _fpt _f=(_fpt)_drva(2145744); _f(this, iname, gm); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * gm) { typedef void (CameraShadowMapped::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *); auto _f=xcast<_fpt>(_drva(2145744)); (this->*_f)(iname, gm); }
 	virtual ~CameraShadowMapped();
-	inline void dtor() { typedef void (*_fpt)(CameraShadowMapped *pthis); _fpt _f=(_fpt)_drva(2146784); _f(this); }
-	inline void setShadowMapsSplits(float s1, float s2, float s3, float s4) { typedef void (*_fpt)(CameraShadowMapped *pthis, float, float, float, float); _fpt _f=(_fpt)_drva(2151920); return _f(this, s1, s2, s3, s4); }
+	inline void dtor() { typedef void (CameraShadowMapped::*_fpt)(); auto _f=xcast<_fpt>(_drva(2146784)); (this->*_f)(); }
+	inline void setShadowMapsSplits(float s1, float s2, float s3, float s4) { typedef void (CameraShadowMapped::*_fpt)(float, float, float, float); auto _f=xcast<_fpt>(_drva(2151920)); return (this->*_f)(s1, s2, s3, s4); }
 	virtual void render_vf1(Node * root, float dt);
-	inline void render_impl(Node * root, float dt) { typedef void (*_fpt)(CameraShadowMapped *pthis, Node *, float); _fpt _f=(_fpt)_drva(2150080); return _f(this, root, dt); }
-	inline void render(Node * root, float dt) { return render_vf1(root, dt); }
-	inline void beginShadowMapPass(int level, RenderContext * rc, const mat44f & cameraMatrix) { typedef void (*_fpt)(CameraShadowMapped *pthis, int, RenderContext *, const mat44f &); _fpt _f=(_fpt)_drva(2147568); return _f(this, level, rc, cameraMatrix); }
+	inline void render_impl(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(_drva(2150080)); return (this->*_f)(root, dt); }
+	inline void render(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(root, dt); }
+	inline void beginShadowMapPass(int level, RenderContext * rc, const mat44f & cameraMatrix) { typedef void (CameraShadowMapped::*_fpt)(int, RenderContext *, const mat44f &); auto _f=xcast<_fpt>(_drva(2147568)); return (this->*_f)(level, rc, cameraMatrix); }
 	virtual void shadowMapPass_vf5(Node * root, float dt);
-	inline void shadowMapPass_impl(Node * root, float dt) { typedef void (*_fpt)(CameraShadowMapped *pthis, Node *, float); _fpt _f=(_fpt)_drva(2152096); return _f(this, root, dt); }
-	inline void shadowMapPass(Node * root, float dt) { return shadowMapPass_vf5(root, dt); }
+	inline void shadowMapPass_impl(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(_drva(2152096)); return (this->*_f)(root, dt); }
+	inline void shadowMapPass(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(root, dt); }
 	virtual void renderPass_vf6(Node * root, float dt);
-	inline void renderPass_impl(Node * root, float dt) { typedef void (*_fpt)(CameraShadowMapped *pthis, Node *, float); _fpt _f=(_fpt)_drva(2150176); return _f(this, root, dt); }
-	inline void renderPass(Node * root, float dt) { return renderPass_vf6(root, dt); }
-	inline void createShadowMapMatrix(const mat44f & cameraMatrix, float nearp, float farp, vec3f lightDir, float cameraHeight, mat44f & view, mat44f & proj) { typedef void (*_fpt)(CameraShadowMapped *pthis, const mat44f &, float, float, vec3f, float, mat44f &, mat44f &); _fpt _f=(_fpt)_drva(2148240); return _f(this, cameraMatrix, nearp, farp, lightDir, cameraHeight, view, proj); }
+	inline void renderPass_impl(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(_drva(2150176)); return (this->*_f)(root, dt); }
+	inline void renderPass(Node * root, float dt) { typedef void (CameraShadowMapped::*_fpt)(Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(root, dt); }
+	inline void createShadowMapMatrix(const mat44f & cameraMatrix, float nearp, float farp, vec3f lightDir, float cameraHeight, mat44f & view, mat44f & proj) { typedef void (CameraShadowMapped::*_fpt)(const mat44f &, float, float, vec3f, float, mat44f &, mat44f &); auto _f=xcast<_fpt>(_drva(2148240)); return (this->*_f)(cameraMatrix, nearp, farp, lightDir, cameraHeight, view, proj); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraShadowMapped)==672),"bad size");
 		static_assert((offsetof(CameraShadowMapped,shadowMapSettings)==0x210),"bad off");
@@ -19981,39 +19981,39 @@ public:
 	inline Engine() { }
 	inline Engine(const Engine& other) = default;
 	inline Engine& operator=(const Engine& other) = default;
-	inline void ctor() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2642608); _f(this); }
-	inline void dtor() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2643264); _f(this); }
+	inline void ctor() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2642608)); (this->*_f)(); }
+	inline void dtor() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2643264)); (this->*_f)(); }
 	virtual bool init_vf0(const char * carModel);
-	inline bool init_impl(const char * carModel) { typedef bool (*_fpt)(Engine *pthis, const char *); _fpt _f=(_fpt)_drva(706688); return _f(this, carModel); }
-	inline bool init(const char * carModel) { return init_vf0(carModel); }
-	inline void init(Car * car) { typedef void (*_fpt)(Engine *pthis, Car *); _fpt _f=(_fpt)_drva(2645520); return _f(this, car); }
-	inline void addTorqueGenerator(ITorqueGenerator * generator) { typedef void (*_fpt)(Engine *pthis, ITorqueGenerator *); _fpt _f=(_fpt)_drva(2644496); return _f(this, generator); }
-	inline void addCoastGenerator(ICoastGenerator * generator) { typedef void (*_fpt)(Engine *pthis, ICoastGenerator *); _fpt _f=(_fpt)_drva(2644464); return _f(this, generator); }
-	inline void setTurboBoostLevel(float value) { typedef void (*_fpt)(Engine *pthis, float); _fpt _f=(_fpt)_drva(2654352); return _f(this, value); }
-	inline float getTurboBoostLevel() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2645440); return _f(this); }
-	inline void step(SACEngineInput & input, float dt) { typedef void (*_fpt)(Engine *pthis, SACEngineInput &, float); _fpt _f=(_fpt)_drva(2654432); return _f(this, input, dt); }
+	inline bool init_impl(const char * carModel) { typedef bool (Engine::*_fpt)(const char *); auto _f=xcast<_fpt>(_drva(706688)); return (this->*_f)(carModel); }
+	inline bool init(const char * carModel) { typedef bool (Engine::*_fpt)(const char *); auto _f=xcast<_fpt>(get_vfp(this, 0)); return (this->*_f)(carModel); }
+	inline void init(Car * car) { typedef void (Engine::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2645520)); return (this->*_f)(car); }
+	inline void addTorqueGenerator(ITorqueGenerator * generator) { typedef void (Engine::*_fpt)(ITorqueGenerator *); auto _f=xcast<_fpt>(_drva(2644496)); return (this->*_f)(generator); }
+	inline void addCoastGenerator(ICoastGenerator * generator) { typedef void (Engine::*_fpt)(ICoastGenerator *); auto _f=xcast<_fpt>(_drva(2644464)); return (this->*_f)(generator); }
+	inline void setTurboBoostLevel(float value) { typedef void (Engine::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2654352)); return (this->*_f)(value); }
+	inline float getTurboBoostLevel() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2645440)); return (this->*_f)(); }
+	inline void step(SACEngineInput & input, float dt) { typedef void (Engine::*_fpt)(SACEngineInput &, float); auto _f=xcast<_fpt>(_drva(2654432)); return (this->*_f)(input, dt); }
 	virtual int getLimiterRPM_vf1();
-	inline int getLimiterRPM_impl() { typedef int (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644560); return _f(this); }
-	inline int getLimiterRPM() { return getLimiterRPM_vf1(); }
+	inline int getLimiterRPM_impl() { typedef int (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644560)); return (this->*_f)(); }
+	inline int getLimiterRPM() { typedef int (Engine::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
 	virtual bool isLimiterOn_vf2();
-	inline bool isLimiterOn_impl() { typedef bool (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2645648); return _f(this); }
-	inline bool isLimiterOn() { return isLimiterOn_vf2(); }
-	inline float getMaxPowerW() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644608); return _f(this); }
-	inline float getMaxTorqueNM() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644688); return _f(this); }
-	inline float getMaxPowerRPM() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644592); return _f(this); }
-	inline float getMaxTorqueRPM() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644704); return _f(this); }
-	inline float getTorqueAtRPM(float rpm, float gas) { typedef float (*_fpt)(Engine *pthis, float, float); _fpt _f=(_fpt)_drva(2645264); return _f(this, rpm, gas); }
-	inline void reset() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2654096); return _f(this); }
-	inline float getMaxTurboBoost(bool with_wastegate) { typedef float (*_fpt)(Engine *pthis, bool); _fpt _f=(_fpt)_drva(2644720); return _f(this, with_wastegate); }
-	inline float getSafeTurboLevel() { typedef float (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644816); return _f(this); }
-	inline void blowUp() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2644528); return _f(this); }
-	inline float getThrottleResponseGas(float gas, float rpm) { typedef float (*_fpt)(Engine *pthis, float, float); _fpt _f=(_fpt)_drva(2644880); return _f(this, gas, rpm); }
-	inline void setCoastSettings(int s) { typedef void (*_fpt)(Engine *pthis, int); _fpt _f=(_fpt)_drva(2654224); return _f(this, s); }
-	inline void stepP2P(float dt) { typedef void (*_fpt)(Engine *pthis, float); _fpt _f=(_fpt)_drva(2656080); return _f(this, dt); }
-	inline void loadINI() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2646272); return _f(this); }
-	inline void precalculatePowerAndTorque() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2653456); return _f(this); }
-	inline void stepTurbos() { typedef void (*_fpt)(Engine *pthis); _fpt _f=(_fpt)_drva(2656512); return _f(this); }
-	inline CoastSettings loadCoastSettings(INIReader & r, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef CoastSettings (*_fpt)(Engine *pthis, INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2645664); return _f(this, r, section); }
+	inline bool isLimiterOn_impl() { typedef bool (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2645648)); return (this->*_f)(); }
+	inline bool isLimiterOn() { typedef bool (Engine::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(); }
+	inline float getMaxPowerW() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644608)); return (this->*_f)(); }
+	inline float getMaxTorqueNM() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644688)); return (this->*_f)(); }
+	inline float getMaxPowerRPM() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644592)); return (this->*_f)(); }
+	inline float getMaxTorqueRPM() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644704)); return (this->*_f)(); }
+	inline float getTorqueAtRPM(float rpm, float gas) { typedef float (Engine::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2645264)); return (this->*_f)(rpm, gas); }
+	inline void reset() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2654096)); return (this->*_f)(); }
+	inline float getMaxTurboBoost(bool with_wastegate) { typedef float (Engine::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2644720)); return (this->*_f)(with_wastegate); }
+	inline float getSafeTurboLevel() { typedef float (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644816)); return (this->*_f)(); }
+	inline void blowUp() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2644528)); return (this->*_f)(); }
+	inline float getThrottleResponseGas(float gas, float rpm) { typedef float (Engine::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2644880)); return (this->*_f)(gas, rpm); }
+	inline void setCoastSettings(int s) { typedef void (Engine::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2654224)); return (this->*_f)(s); }
+	inline void stepP2P(float dt) { typedef void (Engine::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2656080)); return (this->*_f)(dt); }
+	inline void loadINI() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2646272)); return (this->*_f)(); }
+	inline void precalculatePowerAndTorque() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2653456)); return (this->*_f)(); }
+	inline void stepTurbos() { typedef void (Engine::*_fpt)(); auto _f=xcast<_fpt>(_drva(2656512)); return (this->*_f)(); }
+	inline CoastSettings loadCoastSettings(INIReader & r, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & section) { typedef CoastSettings (Engine::*_fpt)(INIReader &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2645664)); return (this->*_f)(r, section); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Engine)==1000),"bad size");
 		static_assert((offsetof(Engine,data)==0x8),"bad off");
@@ -20196,38 +20196,38 @@ public:
 	inline DICarControl() { }
 	inline DICarControl(const DICarControl& other) = default;
 	inline DICarControl& operator=(const DICarControl& other) = default;
-	inline void ctor() { typedef void (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(515536); _f(this); }
+	inline void ctor() { typedef void (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(515536)); (this->*_f)(); }
 	virtual ~DICarControl();
-	inline void dtor() { typedef void (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(523232); _f(this); }
+	inline void dtor() { typedef void (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(523232)); (this->*_f)(); }
 	virtual void acquireControls_vf1(CarControls * controls, float dt, CarControlsInput * input);
-	inline void acquireControls_impl(CarControls * controls, float dt, CarControlsInput * input) { typedef void (*_fpt)(DICarControl *pthis, CarControls *, float, CarControlsInput *); _fpt _f=(_fpt)_drva(523888); return _f(this, controls, dt, input); }
-	inline void acquireControls(CarControls * controls, float dt, CarControlsInput * input) { return acquireControls_vf1(controls, dt, input); }
+	inline void acquireControls_impl(CarControls * controls, float dt, CarControlsInput * input) { typedef void (DICarControl::*_fpt)(CarControls *, float, CarControlsInput *); auto _f=xcast<_fpt>(_drva(523888)); return (this->*_f)(controls, dt, input); }
+	inline void acquireControls(CarControls * controls, float dt, CarControlsInput * input) { typedef void (DICarControl::*_fpt)(CarControls *, float, CarControlsInput *); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(controls, dt, input); }
 	virtual void sendFF_vf3(float ff, float damper, float userGain);
-	inline void sendFF_impl(float ff, float damper, float userGain) { typedef void (*_fpt)(DICarControl *pthis, float, float, float); _fpt _f=(_fpt)_drva(527936); return _f(this, ff, damper, userGain); }
-	inline void sendFF(float ff, float damper, float userGain) { return sendFF_vf3(ff, damper, userGain); }
+	inline void sendFF_impl(float ff, float damper, float userGain) { typedef void (DICarControl::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(527936)); return (this->*_f)(ff, damper, userGain); }
+	inline void sendFF(float ff, float damper, float userGain) { typedef void (DICarControl::*_fpt)(float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(ff, damper, userGain); }
 	virtual const char * getName_vf4();
-	inline const char * getName_impl() { typedef const char * (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(526240); return _f(this); }
-	inline const char * getName() { return getName_vf4(); }
+	inline const char * getName_impl() { typedef const char * (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(526240)); return (this->*_f)(); }
+	inline const char * getName() { typedef const char * (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 4)); return (this->*_f)(); }
 	virtual float getFFGlobalGain_vf5();
-	inline float getFFGlobalGain_impl() { typedef float (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(526224); return _f(this); }
-	inline float getFFGlobalGain() { return getFFGlobalGain_vf5(); }
+	inline float getFFGlobalGain_impl() { typedef float (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(526224)); return (this->*_f)(); }
+	inline float getFFGlobalGain() { typedef float (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
 	virtual void setEngineRPM_vf10(float rpm, float minRpm, float maxRpm);
-	inline void setEngineRPM_impl(float rpm, float minRpm, float maxRpm) { typedef void (*_fpt)(DICarControl *pthis, float, float, float); _fpt _f=(_fpt)_drva(528384); return _f(this, rpm, minRpm, maxRpm); }
-	inline void setEngineRPM(float rpm, float minRpm, float maxRpm) { return setEngineRPM_vf10(rpm, minRpm, maxRpm); }
+	inline void setEngineRPM_impl(float rpm, float minRpm, float maxRpm) { typedef void (DICarControl::*_fpt)(float, float, float); auto _f=xcast<_fpt>(_drva(528384)); return (this->*_f)(rpm, minRpm, maxRpm); }
+	inline void setEngineRPM(float rpm, float minRpm, float maxRpm) { typedef void (DICarControl::*_fpt)(float, float, float); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(rpm, minRpm, maxRpm); }
 	virtual bool getAction_vf2(DriverActions anAction);
-	inline bool getAction_impl(DriverActions anAction) { typedef bool (*_fpt)(DICarControl *pthis, DriverActions); _fpt _f=(_fpt)_drva(525776); return _f(this, anAction); }
-	inline bool getAction(DriverActions anAction) { return getAction_vf2(anAction); }
+	inline bool getAction_impl(DriverActions anAction) { typedef bool (DICarControl::*_fpt)(DriverActions); auto _f=xcast<_fpt>(_drva(525776)); return (this->*_f)(anAction); }
+	inline bool getAction(DriverActions anAction) { typedef bool (DICarControl::*_fpt)(DriverActions); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(anAction); }
 	virtual void setVibrations_vf9(const VibrationDef & vibrations);
-	inline void setVibrations_impl(const VibrationDef & vibrations) { typedef void (*_fpt)(DICarControl *pthis, const VibrationDef &); _fpt _f=(_fpt)_drva(528400); return _f(this, vibrations); }
-	inline void setVibrations(const VibrationDef & vibrations) { return setVibrations_vf9(vibrations); }
+	inline void setVibrations_impl(const VibrationDef & vibrations) { typedef void (DICarControl::*_fpt)(const VibrationDef &); auto _f=xcast<_fpt>(_drva(528400)); return (this->*_f)(vibrations); }
+	inline void setVibrations(const VibrationDef & vibrations) { typedef void (DICarControl::*_fpt)(const VibrationDef &); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(vibrations); }
 	virtual void onAutoShifterChanged_vf7(bool newmode);
-	inline void onAutoShifterChanged_impl(bool newmode) { typedef void (*_fpt)(DICarControl *pthis, bool); _fpt _f=(_fpt)_drva(527904); return _f(this, newmode); }
-	inline void onAutoShifterChanged(bool newmode) { return onAutoShifterChanged_vf7(newmode); }
+	inline void onAutoShifterChanged_impl(bool newmode) { typedef void (DICarControl::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(527904)); return (this->*_f)(newmode); }
+	inline void onAutoShifterChanged(bool newmode) { typedef void (DICarControl::*_fpt)(bool); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(newmode); }
 	virtual bool isDeviceConnected_vf6();
-	inline bool isDeviceConnected_impl() { typedef bool (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(140928); return _f(this); }
-	inline bool isDeviceConnected() { return isDeviceConnected_vf6(); }
-	inline void validate() { typedef void (*_fpt)(DICarControl *pthis); _fpt _f=(_fpt)_drva(528528); return _f(this); }
-	inline void initShifter(INIReader & ini) { typedef void (*_fpt)(DICarControl *pthis, INIReader &); _fpt _f=(_fpt)_drva(526320); return _f(this, ini); }
+	inline bool isDeviceConnected_impl() { typedef bool (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(140928)); return (this->*_f)(); }
+	inline bool isDeviceConnected() { typedef bool (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 6)); return (this->*_f)(); }
+	inline void validate() { typedef void (DICarControl::*_fpt)(); auto _f=xcast<_fpt>(_drva(528528)); return (this->*_f)(); }
+	inline void initShifter(INIReader & ini) { typedef void (DICarControl::*_fpt)(INIReader &); auto _f=xcast<_fpt>(_drva(526320)); return (this->*_f)(ini); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DICarControl)==2896),"bad size");
 		static_assert((offsetof(DICarControl,directInput)==0x18),"bad off");
@@ -20360,21 +20360,21 @@ public:
 	inline Game() { }
 	inline Game(const Game& other) = default;
 	inline Game& operator=(const Game& other) = default;
-	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, VideoSettings & videoSettings) { typedef void (*_fpt)(Game *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, VideoSettings &); _fpt _f=(_fpt)_drva(2365568); _f(this, name, videoSettings); }
+	inline void ctor(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, VideoSettings & videoSettings) { typedef void (Game::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, VideoSettings &); auto _f=xcast<_fpt>(_drva(2365568)); (this->*_f)(name, videoSettings); }
 	virtual ~Game();
-	inline void dtor() { typedef void (*_fpt)(Game *pthis); _fpt _f=(_fpt)_drva(2367152); _f(this); }
-	inline void onIdle() { typedef void (*_fpt)(Game *pthis); _fpt _f=(_fpt)_drva(2369328); return _f(this); }
-	inline void run() { typedef void (*_fpt)(Game *pthis); _fpt _f=(_fpt)_drva(2371248); return _f(this); }
+	inline void dtor() { typedef void (Game::*_fpt)(); auto _f=xcast<_fpt>(_drva(2367152)); (this->*_f)(); }
+	inline void onIdle() { typedef void (Game::*_fpt)(); auto _f=xcast<_fpt>(_drva(2369328)); return (this->*_f)(); }
+	inline void run() { typedef void (Game::*_fpt)(); auto _f=xcast<_fpt>(_drva(2371248)); return (this->*_f)(); }
 	virtual void shutdown_vf1();
-	inline void shutdown_impl() { typedef void (*_fpt)(Game *pthis); _fpt _f=(_fpt)_drva(2371504); return _f(this); }
-	inline void shutdown() { return shutdown_vf1(); }
-	inline void shutdownObject(GameObject * o) { typedef void (*_fpt)(Game *pthis, GameObject *); _fpt _f=(_fpt)_drva(2371520); return _f(this, o); }
-	inline void renderHUDOnDemand(float dt) { typedef void (*_fpt)(Game *pthis, float); _fpt _f=(_fpt)_drva(2371232); return _f(this, dt); }
-	inline void update(GameObject * o, float dt) { typedef void (*_fpt)(Game *pthis, GameObject *, float); _fpt _f=(_fpt)_drva(2371600); return _f(this, o, dt); }
-	inline void render(GameObject * o, float dt) { typedef void (*_fpt)(Game *pthis, GameObject *, float); _fpt _f=(_fpt)_drva(2370896); return _f(this, o, dt); }
-	inline void renderHUD(GameObject * o, float dt) { typedef void (*_fpt)(Game *pthis, GameObject *, float); _fpt _f=(_fpt)_drva(2371120); return _f(this, o, dt); }
-	inline void renderAudio(GameObject * o, float dt) { typedef void (*_fpt)(Game *pthis, GameObject *, float); _fpt _f=(_fpt)_drva(2371008); return _f(this, o, dt); }
-	inline void deleteGameObjectRec(GameObject * go) { typedef void (*_fpt)(Game *pthis, GameObject *); _fpt _f=(_fpt)_drva(2369200); return _f(this, go); }
+	inline void shutdown_impl() { typedef void (Game::*_fpt)(); auto _f=xcast<_fpt>(_drva(2371504)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (Game::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(); }
+	inline void shutdownObject(GameObject * o) { typedef void (Game::*_fpt)(GameObject *); auto _f=xcast<_fpt>(_drva(2371520)); return (this->*_f)(o); }
+	inline void renderHUDOnDemand(float dt) { typedef void (Game::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2371232)); return (this->*_f)(dt); }
+	inline void update(GameObject * o, float dt) { typedef void (Game::*_fpt)(GameObject *, float); auto _f=xcast<_fpt>(_drva(2371600)); return (this->*_f)(o, dt); }
+	inline void render(GameObject * o, float dt) { typedef void (Game::*_fpt)(GameObject *, float); auto _f=xcast<_fpt>(_drva(2370896)); return (this->*_f)(o, dt); }
+	inline void renderHUD(GameObject * o, float dt) { typedef void (Game::*_fpt)(GameObject *, float); auto _f=xcast<_fpt>(_drva(2371120)); return (this->*_f)(o, dt); }
+	inline void renderAudio(GameObject * o, float dt) { typedef void (Game::*_fpt)(GameObject *, float); auto _f=xcast<_fpt>(_drva(2371008)); return (this->*_f)(o, dt); }
+	inline void deleteGameObjectRec(GameObject * go) { typedef void (Game::*_fpt)(GameObject *); auto _f=xcast<_fpt>(_drva(2369200)); return (this->*_f)(go); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Game)==632),"bad size");
 		static_assert((offsetof(Game,isRenderingGui)==0x8),"bad off");
@@ -20726,131 +20726,131 @@ public:
 	inline CarAvatar() { }
 	inline CarAvatar(const CarAvatar& other) = default;
 	inline CarAvatar& operator=(const CarAvatar& other) = default;
-	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef void (*_fpt)(CarAvatar *pthis, Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(840096); _f(this, isim, unixName, config, skin); }
-	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin, ICarPhysicsStateProvider * physicsStateProvider) { typedef void (*_fpt)(CarAvatar *pthis, Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ICarPhysicsStateProvider *); _fpt _f=(_fpt)_drva(843200); _f(this, isim, unixName, config, skin, physicsStateProvider); }
+	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin) { typedef void (CarAvatar::*_fpt)(Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(840096)); (this->*_f)(isim, unixName, config, skin); }
+	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & unixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & skin, ICarPhysicsStateProvider * physicsStateProvider) { typedef void (CarAvatar::*_fpt)(Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, ICarPhysicsStateProvider *); auto _f=xcast<_fpt>(_drva(843200)); (this->*_f)(isim, unixName, config, skin, physicsStateProvider); }
 	virtual ~CarAvatar();
-	inline void dtor() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(846608); _f(this); }
-	inline void setP2PActivations(int activations) { typedef void (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(894352); return _f(this, activations); }
-	inline void setP2PStartingActivations(int pos) { typedef void (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(894496); return _f(this, pos); }
-	inline void setRestrictor(float v) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(894640); return _f(this, v); }
-	inline float getRestrictor() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865792); return _f(this); }
-	inline void makeBodyMatrix(const mat44f & bm, mat44f & res) { typedef void (*_fpt)(CarAvatar *pthis, const mat44f &, mat44f &); _fpt _f=(_fpt)_drva(888512); return _f(this, bm, res); }
-	inline void setNewPhysicsState(CarPhysicsState & ps, float dt) { typedef void (*_fpt)(CarAvatar *pthis, CarPhysicsState &, float); _fpt _f=(_fpt)_drva(893984); return _f(this, ps, dt); }
-	inline DriverModel * getActiveDriverModel() { typedef DriverModel * (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864432); return _f(this); }
-	inline int getAILapsToComplete() { typedef int (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864400); return _f(this); }
-	inline PitStopTime getPitstopTime(float fuel_requested, bool changeTyres, bool repairBody, bool repairEngine, bool repairSus, bool useRandomizer) { typedef PitStopTime (*_fpt)(CarAvatar *pthis, float, bool, bool, bool, bool, bool); _fpt _f=(_fpt)_drva(865648); return _f(this, fuel_requested, changeTyres, repairBody, repairEngine, repairSus, useRandomizer); }
-	inline bool isRequestingPitStop() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888176); return _f(this); }
-	inline float modifyUserFFGain(float offset) { typedef float (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(889072); return _f(this, offset); }
-	inline void setUserFFGain(float gain) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(896336); return _f(this, gain); }
-	inline float getUserFFGain() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(866960); return _f(this); }
-	inline bool isCurrentLapValid() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887632); return _f(this); }
-	inline void setFFMult(float mult) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(893280); return _f(this, mult); }
-	inline float getFFMult() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865424); return _f(this); }
-	inline void setTurboBoost(float value) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(895456); return _f(this, value); }
-	inline std::pair<unsigned int,unsigned int> getTCMode() { typedef std::pair<unsigned int,unsigned int> (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(866336); return _f(this); }
-	inline std::pair<unsigned int,unsigned int> getABSMode() { typedef std::pair<unsigned int,unsigned int> (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864336); return _f(this); }
-	inline bool isConnected() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887616); return _f(this); }
-	inline bool isInPit() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887760); return _f(this); }
-	inline void armFirstLap() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(860928); return _f(this); }
-	inline void setTyreCompound(unsigned int index, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (*_fpt)(CarAvatar *pthis, unsigned int, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(895952); return _f(this, index, name); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getTyreCompound(unsigned int index, bool fullname) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(CarAvatar *pthis, unsigned int, bool); _fpt _f=(_fpt)_drva(866688); return _f(this, index, fullname); }
-	inline unsigned int getTyreCompoundIndex(unsigned int tyre_index) { typedef unsigned int (*_fpt)(CarAvatar *pthis, unsigned int); _fpt _f=(_fpt)_drva(866944); return _f(this, tyre_index); }
-	inline float getWingAngle(int wingIndex) { typedef float (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(866976); return _f(this, wingIndex); }
-	inline CarColliderManager * getColliderManager() { typedef CarColliderManager * (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864576); return _f(this); }
-	inline void setDamageLevel(float lvl) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(892960); return _f(this, lvl); }
-	inline int getGuid() { typedef int (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865536); return _f(this); }
+	inline void dtor() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(846608)); (this->*_f)(); }
+	inline void setP2PActivations(int activations) { typedef void (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(894352)); return (this->*_f)(activations); }
+	inline void setP2PStartingActivations(int pos) { typedef void (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(894496)); return (this->*_f)(pos); }
+	inline void setRestrictor(float v) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(894640)); return (this->*_f)(v); }
+	inline float getRestrictor() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865792)); return (this->*_f)(); }
+	inline void makeBodyMatrix(const mat44f & bm, mat44f & res) { typedef void (CarAvatar::*_fpt)(const mat44f &, mat44f &); auto _f=xcast<_fpt>(_drva(888512)); return (this->*_f)(bm, res); }
+	inline void setNewPhysicsState(CarPhysicsState & ps, float dt) { typedef void (CarAvatar::*_fpt)(CarPhysicsState &, float); auto _f=xcast<_fpt>(_drva(893984)); return (this->*_f)(ps, dt); }
+	inline DriverModel * getActiveDriverModel() { typedef DriverModel * (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864432)); return (this->*_f)(); }
+	inline int getAILapsToComplete() { typedef int (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864400)); return (this->*_f)(); }
+	inline PitStopTime getPitstopTime(float fuel_requested, bool changeTyres, bool repairBody, bool repairEngine, bool repairSus, bool useRandomizer) { typedef PitStopTime (CarAvatar::*_fpt)(float, bool, bool, bool, bool, bool); auto _f=xcast<_fpt>(_drva(865648)); return (this->*_f)(fuel_requested, changeTyres, repairBody, repairEngine, repairSus, useRandomizer); }
+	inline bool isRequestingPitStop() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888176)); return (this->*_f)(); }
+	inline float modifyUserFFGain(float offset) { typedef float (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(889072)); return (this->*_f)(offset); }
+	inline void setUserFFGain(float gain) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(896336)); return (this->*_f)(gain); }
+	inline float getUserFFGain() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(866960)); return (this->*_f)(); }
+	inline bool isCurrentLapValid() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887632)); return (this->*_f)(); }
+	inline void setFFMult(float mult) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(893280)); return (this->*_f)(mult); }
+	inline float getFFMult() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865424)); return (this->*_f)(); }
+	inline void setTurboBoost(float value) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(895456)); return (this->*_f)(value); }
+	inline std::pair<unsigned int,unsigned int> getTCMode() { typedef std::pair<unsigned int,unsigned int> (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(866336)); return (this->*_f)(); }
+	inline std::pair<unsigned int,unsigned int> getABSMode() { typedef std::pair<unsigned int,unsigned int> (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864336)); return (this->*_f)(); }
+	inline bool isConnected() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887616)); return (this->*_f)(); }
+	inline bool isInPit() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887760)); return (this->*_f)(); }
+	inline void armFirstLap() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(860928)); return (this->*_f)(); }
+	inline void setTyreCompound(unsigned int index, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & name) { typedef void (CarAvatar::*_fpt)(unsigned int, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(895952)); return (this->*_f)(index, name); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getTyreCompound(unsigned int index, bool fullname) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (CarAvatar::*_fpt)(unsigned int, bool); auto _f=xcast<_fpt>(_drva(866688)); return (this->*_f)(index, fullname); }
+	inline unsigned int getTyreCompoundIndex(unsigned int tyre_index) { typedef unsigned int (CarAvatar::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(866944)); return (this->*_f)(tyre_index); }
+	inline float getWingAngle(int wingIndex) { typedef float (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(866976)); return (this->*_f)(wingIndex); }
+	inline CarColliderManager * getColliderManager() { typedef CarColliderManager * (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864576)); return (this->*_f)(); }
+	inline void setDamageLevel(float lvl) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(892960)); return (this->*_f)(lvl); }
+	inline int getGuid() { typedef int (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865536)); return (this->*_f)(); }
 	virtual void update_vf1(float deltaT);
-	inline void update_impl(float deltaT) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(899120); return _f(this, deltaT); }
-	inline void update(float deltaT) { return update_vf1(deltaT); }
-	inline void goToSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef void (*_fpt)(CarAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(867040); return _f(this, setName); }
-	inline bool isInSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef bool (*_fpt)(CarAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(887872); return _f(this, setName); }
-	inline void setSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, int index) { typedef void (*_fpt)(CarAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); _fpt _f=(_fpt)_drva(894816); return _f(this, setName, index); }
-	inline void setControlsProvider(ICarControlsProvider * controls) { typedef void (*_fpt)(CarAvatar *pthis, ICarControlsProvider *); _fpt _f=(_fpt)_drva(892816); return _f(this, controls); }
-	inline vec3f getGraphicsOffset() { typedef vec3f (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865504); return _f(this); }
-	inline void setGraphicsPitchRotation(float v) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(893744); return _f(this, v); }
-	inline void setGraphicsOffset(vec3f np) { typedef void (*_fpt)(CarAvatar *pthis, vec3f); _fpt _f=(_fpt)_drva(893712); return _f(this, np); }
-	inline ICarControlsProvider * getControlsProvider() { typedef ICarControlsProvider * (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864608); return _f(this); }
-	inline std::vector<DebugLine,std::allocator<DebugLine> > getSuspensionDebugLines(int index) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(866256); return _f(this, index); }
-	inline vec3f getRoadDirection() { typedef vec3f (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865840); return _f(this); }
-	inline SetupManager * getSetupManager() { typedef SetupManager * (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(866064); return _f(this); }
-	inline void onPostLoad() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(889520); return _f(this); }
-	inline void onStartReplay(const bool & mode) { typedef void (*_fpt)(CarAvatar *pthis, const bool &); _fpt _f=(_fpt)_drva(889856); return _f(this, mode); }
-	inline void onStopReplay(const bool & mode) { typedef void (*_fpt)(CarAvatar *pthis, const bool &); _fpt _f=(_fpt)_drva(890144); return _f(this, mode); }
-	inline bool isAbsInAction() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887520); return _f(this); }
-	inline void setAbsEnabled(bool mode, bool force) { typedef void (*_fpt)(CarAvatar *pthis, bool, bool); _fpt _f=(_fpt)_drva(891840); return _f(this, mode, force); }
-	inline void cycleAbsMode(int value) { typedef void (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(862288); return _f(this, value); }
-	inline bool isAbsAvailable() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887440); return _f(this); }
-	inline bool isAbsEnabled() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887472); return _f(this); }
-	inline bool isTcInAction() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888288); return _f(this); }
-	inline void setTcEnabled(bool mode, bool force) { typedef void (*_fpt)(CarAvatar *pthis, bool, bool); _fpt _f=(_fpt)_drva(895312); return _f(this, mode, force); }
-	inline void cycleTcMode(int value) { typedef void (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(863584); return _f(this, value); }
-	inline bool isTcEnabled() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888240); return _f(this); }
-	inline bool isTcAvailable() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888208); return _f(this); }
-	inline bool isEdlEnabled() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887712); return _f(this); }
-	inline float getEdlOutLevel() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865392); return _f(this); }
-	inline void setAutoBlip(bool mode) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(891984); return _f(this, mode); }
-	inline bool getAutoBlip() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864464); return _f(this); }
-	inline float getStabilityControl() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(866224); return _f(this); }
-	inline void setStabilityControl(float gain) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(895168); return _f(this, gain); }
-	inline void setFrontBias(int value) { typedef void (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(893424); return _f(this, value); }
-	inline void setAutoShifter(bool mode) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(892240); return _f(this, mode); }
-	inline bool getAutoShifter() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864496); return _f(this); }
-	inline void setVisible(bool vis) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(896480); return _f(this, vis); }
-	inline bool isVisible() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888320); return _f(this); }
-	inline void updateERSCharge() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(906032); return _f(this); }
-	inline void setHeadlights(bool value) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(893760); return _f(this, value); }
-	inline void resetPenalty(bool isTotalReset) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(891616); return _f(this, isTotalReset); }
-	inline TimeTransponder * getTimeTransponder() { typedef TimeTransponder * (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(866656); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getScreenName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865952); return _f(this); }
-	inline void setAutoClutchEnabled(bool mode) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(892128); return _f(this, mode); }
-	inline float getPackerRange(int index) { typedef float (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(865600); return _f(this, index); }
-	inline void initGhostCar(bool isRecording, bool isPlaying) { typedef void (*_fpt)(CarAvatar *pthis, bool, bool); _fpt _f=(_fpt)_drva(881936); return _f(this, isRecording, isPlaying); }
-	inline void setControlsLock(bool value) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(892672); return _f(this, value); }
-	inline void setGentleStop(bool mode) { typedef void (*_fpt)(CarAvatar *pthis, bool); _fpt _f=(_fpt)_drva(893568); return _f(this, mode); }
-	inline double hasPenalty() { typedef double (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(867184); return _f(this); }
-	inline bool isMinSpeedPenaltyClearDisabled() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(888128); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentSkin() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(618160); return _f(this); }
-	inline void resetTimeTransponder() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(891760); return _f(this); }
-	inline void resetFlames() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(891440); return _f(this); }
-	inline void setDriverInfo(const DriverInfo & info) { typedef void (*_fpt)(CarAvatar *pthis, const DriverInfo &); _fpt _f=(_fpt)_drva(893104); return _f(this, info); }
-	inline const DriverInfo & getDriverInfo() { typedef const DriverInfo & (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(287840); return _f(this); }
-	inline float getGraphicSteerDeg() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865456); return _f(this); }
-	inline int getSpawnPositionIndex(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * setName) { typedef int (*_fpt)(CarAvatar *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(866096); return _f(this, setName); }
-	inline void setSlipStreamEffects(float receive, float generationSpeedFactor) { typedef void (*_fpt)(CarAvatar *pthis, float, float); _fpt _f=(_fpt)_drva(894784); return _f(this, receive, generationSpeedFactor); }
-	inline double getKmPerLiter() { typedef double (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865552); return _f(this); }
-	inline void setBlackFlag(PenaltyDescription descr) { typedef void (*_fpt)(CarAvatar *pthis, PenaltyDescription); _fpt _f=(_fpt)_drva(892528); return _f(this, descr); }
-	inline void lockControlsUntilTime(double time, double start, bool forceToPits) { typedef void (*_fpt)(CarAvatar *pthis, double, double, bool); _fpt _f=(_fpt)_drva(888352); return _f(this, time, start, forceToPits); }
-	inline bool isInPitlane() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(887856); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentCompoundShortName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864768); return _f(this); }
-	inline int getCurrentCompoundIdealPressure(unsigned short tyreIndex) { typedef int (*_fpt)(CarAvatar *pthis, unsigned short); _fpt _f=(_fpt)_drva(864640); return _f(this, tyreIndex); }
-	inline int getCurrentCompoundStaticPressure(unsigned short tyreIndex) { typedef int (*_fpt)(CarAvatar *pthis, unsigned short); _fpt _f=(_fpt)_drva(864944); return _f(this, tyreIndex); }
-	inline void getDistancesOnSpline(CarAvatar & car, float * frontDistance, float * backDistance) { typedef void (*_fpt)(CarAvatar *pthis, CarAvatar &, float *, float *); _fpt _f=(_fpt)_drva(865072); return _f(this, car, frontDistance, backDistance); }
-	inline double getTimeDifferenceOnSpline(CarAvatar & car) { typedef double (*_fpt)(CarAvatar *pthis, CarAvatar &); _fpt _f=(_fpt)_drva(866400); return _f(this, car); }
-	inline float getBallastKG() { typedef float (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(864528); return _f(this); }
-	inline void setBallastKG(float ballast) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(892384); return _f(this, ballast); }
-	inline void setMultVolume(int value, bool active) { typedef void (*_fpt)(CarAvatar *pthis, int, bool); _fpt _f=(_fpt)_drva(893904); return _f(this, value, active); }
-	inline void resetMultVolume() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(891568); return _f(this); }
-	inline INIReader openINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef INIReader (*_fpt)(CarAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(890416); return _f(this, filename); }
-	inline int cycleEngineBrake(int value) { typedef int (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(863376); return _f(this, value); }
-	inline bool cycleERSHeatCharging() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(862688); return _f(this); }
-	inline std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > cycleERSPower(int value) { typedef std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(862848); return _f(this, value); }
-	inline int cycleERSRecovery(int value) { typedef int (*_fpt)(CarAvatar *pthis, int); _fpt _f=(_fpt)_drva(863168); return _f(this, value); }
-	inline std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > getERSPower() { typedef std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(865248); return _f(this); }
-	inline bool getERSHeatCharging() { typedef bool (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(1243840); return _f(this); }
-	inline void forcePosition(const mat44f & matrix) { typedef void (*_fpt)(CarAvatar *pthis, const mat44f &); _fpt _f=(_fpt)_drva(864048); return _f(this, matrix); }
-	inline void initCommon() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(874208); return _f(this); }
-	inline void initCommonPostPhysics() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(876944); return _f(this); }
-	inline void init3D(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * skin) { typedef void (*_fpt)(CarAvatar *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(867216); return _f(this, skin); }
-	inline void initPhysics() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(882272); return _f(this); }
-	inline void updateSkidMarks(float dt) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(907136); return _f(this, dt); }
-	inline void initDriver() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(881536); return _f(this); }
-	inline void initCameraCar() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(870336); return _f(this); }
-	inline void initMirrorMaterials() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(882160); return _f(this); }
-	inline void initControls() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(880432); return _f(this); }
-	inline void onNewSession() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(889280); return _f(this); }
-	inline void updateFromChannels(float dt) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(906128); return _f(this, dt); }
-	inline void checkACD() { typedef void (*_fpt)(CarAvatar *pthis); _fpt _f=(_fpt)_drva(861184); return _f(this); }
-	inline void updateInPitlaneState(float dt) { typedef void (*_fpt)(CarAvatar *pthis, float); _fpt _f=(_fpt)_drva(906960); return _f(this, dt); }
+	inline void update_impl(float deltaT) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(899120)); return (this->*_f)(deltaT); }
+	inline void update(float deltaT) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(deltaT); }
+	inline void goToSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef void (CarAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(867040)); return (this->*_f)(setName); }
+	inline bool isInSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef bool (CarAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(887872)); return (this->*_f)(setName); }
+	inline void setSpawnPositionIndex(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, int index) { typedef void (CarAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, int); auto _f=xcast<_fpt>(_drva(894816)); return (this->*_f)(setName, index); }
+	inline void setControlsProvider(ICarControlsProvider * controls) { typedef void (CarAvatar::*_fpt)(ICarControlsProvider *); auto _f=xcast<_fpt>(_drva(892816)); return (this->*_f)(controls); }
+	inline vec3f getGraphicsOffset() { typedef vec3f (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865504)); return (this->*_f)(); }
+	inline void setGraphicsPitchRotation(float v) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(893744)); return (this->*_f)(v); }
+	inline void setGraphicsOffset(vec3f np) { typedef void (CarAvatar::*_fpt)(vec3f); auto _f=xcast<_fpt>(_drva(893712)); return (this->*_f)(np); }
+	inline ICarControlsProvider * getControlsProvider() { typedef ICarControlsProvider * (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864608)); return (this->*_f)(); }
+	inline std::vector<DebugLine,std::allocator<DebugLine> > getSuspensionDebugLines(int index) { typedef std::vector<DebugLine,std::allocator<DebugLine> > (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(866256)); return (this->*_f)(index); }
+	inline vec3f getRoadDirection() { typedef vec3f (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865840)); return (this->*_f)(); }
+	inline SetupManager * getSetupManager() { typedef SetupManager * (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(866064)); return (this->*_f)(); }
+	inline void onPostLoad() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(889520)); return (this->*_f)(); }
+	inline void onStartReplay(const bool & mode) { typedef void (CarAvatar::*_fpt)(const bool &); auto _f=xcast<_fpt>(_drva(889856)); return (this->*_f)(mode); }
+	inline void onStopReplay(const bool & mode) { typedef void (CarAvatar::*_fpt)(const bool &); auto _f=xcast<_fpt>(_drva(890144)); return (this->*_f)(mode); }
+	inline bool isAbsInAction() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887520)); return (this->*_f)(); }
+	inline void setAbsEnabled(bool mode, bool force) { typedef void (CarAvatar::*_fpt)(bool, bool); auto _f=xcast<_fpt>(_drva(891840)); return (this->*_f)(mode, force); }
+	inline void cycleAbsMode(int value) { typedef void (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(862288)); return (this->*_f)(value); }
+	inline bool isAbsAvailable() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887440)); return (this->*_f)(); }
+	inline bool isAbsEnabled() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887472)); return (this->*_f)(); }
+	inline bool isTcInAction() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888288)); return (this->*_f)(); }
+	inline void setTcEnabled(bool mode, bool force) { typedef void (CarAvatar::*_fpt)(bool, bool); auto _f=xcast<_fpt>(_drva(895312)); return (this->*_f)(mode, force); }
+	inline void cycleTcMode(int value) { typedef void (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(863584)); return (this->*_f)(value); }
+	inline bool isTcEnabled() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888240)); return (this->*_f)(); }
+	inline bool isTcAvailable() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888208)); return (this->*_f)(); }
+	inline bool isEdlEnabled() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887712)); return (this->*_f)(); }
+	inline float getEdlOutLevel() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865392)); return (this->*_f)(); }
+	inline void setAutoBlip(bool mode) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(891984)); return (this->*_f)(mode); }
+	inline bool getAutoBlip() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864464)); return (this->*_f)(); }
+	inline float getStabilityControl() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(866224)); return (this->*_f)(); }
+	inline void setStabilityControl(float gain) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(895168)); return (this->*_f)(gain); }
+	inline void setFrontBias(int value) { typedef void (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(893424)); return (this->*_f)(value); }
+	inline void setAutoShifter(bool mode) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(892240)); return (this->*_f)(mode); }
+	inline bool getAutoShifter() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864496)); return (this->*_f)(); }
+	inline void setVisible(bool vis) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(896480)); return (this->*_f)(vis); }
+	inline bool isVisible() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888320)); return (this->*_f)(); }
+	inline void updateERSCharge() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(906032)); return (this->*_f)(); }
+	inline void setHeadlights(bool value) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(893760)); return (this->*_f)(value); }
+	inline void resetPenalty(bool isTotalReset) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(891616)); return (this->*_f)(isTotalReset); }
+	inline TimeTransponder * getTimeTransponder() { typedef TimeTransponder * (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(866656)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getScreenName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865952)); return (this->*_f)(); }
+	inline void setAutoClutchEnabled(bool mode) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(892128)); return (this->*_f)(mode); }
+	inline float getPackerRange(int index) { typedef float (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(865600)); return (this->*_f)(index); }
+	inline void initGhostCar(bool isRecording, bool isPlaying) { typedef void (CarAvatar::*_fpt)(bool, bool); auto _f=xcast<_fpt>(_drva(881936)); return (this->*_f)(isRecording, isPlaying); }
+	inline void setControlsLock(bool value) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(892672)); return (this->*_f)(value); }
+	inline void setGentleStop(bool mode) { typedef void (CarAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(893568)); return (this->*_f)(mode); }
+	inline double hasPenalty() { typedef double (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(867184)); return (this->*_f)(); }
+	inline bool isMinSpeedPenaltyClearDisabled() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(888128)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentSkin() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(618160)); return (this->*_f)(); }
+	inline void resetTimeTransponder() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(891760)); return (this->*_f)(); }
+	inline void resetFlames() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(891440)); return (this->*_f)(); }
+	inline void setDriverInfo(const DriverInfo & info) { typedef void (CarAvatar::*_fpt)(const DriverInfo &); auto _f=xcast<_fpt>(_drva(893104)); return (this->*_f)(info); }
+	inline const DriverInfo & getDriverInfo() { typedef const DriverInfo & (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(287840)); return (this->*_f)(); }
+	inline float getGraphicSteerDeg() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865456)); return (this->*_f)(); }
+	inline int getSpawnPositionIndex(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * setName) { typedef int (CarAvatar::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(866096)); return (this->*_f)(setName); }
+	inline void setSlipStreamEffects(float receive, float generationSpeedFactor) { typedef void (CarAvatar::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(894784)); return (this->*_f)(receive, generationSpeedFactor); }
+	inline double getKmPerLiter() { typedef double (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865552)); return (this->*_f)(); }
+	inline void setBlackFlag(PenaltyDescription descr) { typedef void (CarAvatar::*_fpt)(PenaltyDescription); auto _f=xcast<_fpt>(_drva(892528)); return (this->*_f)(descr); }
+	inline void lockControlsUntilTime(double time, double start, bool forceToPits) { typedef void (CarAvatar::*_fpt)(double, double, bool); auto _f=xcast<_fpt>(_drva(888352)); return (this->*_f)(time, start, forceToPits); }
+	inline bool isInPitlane() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(887856)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getCurrentCompoundShortName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864768)); return (this->*_f)(); }
+	inline int getCurrentCompoundIdealPressure(unsigned short tyreIndex) { typedef int (CarAvatar::*_fpt)(unsigned short); auto _f=xcast<_fpt>(_drva(864640)); return (this->*_f)(tyreIndex); }
+	inline int getCurrentCompoundStaticPressure(unsigned short tyreIndex) { typedef int (CarAvatar::*_fpt)(unsigned short); auto _f=xcast<_fpt>(_drva(864944)); return (this->*_f)(tyreIndex); }
+	inline void getDistancesOnSpline(CarAvatar & car, float * frontDistance, float * backDistance) { typedef void (CarAvatar::*_fpt)(CarAvatar &, float *, float *); auto _f=xcast<_fpt>(_drva(865072)); return (this->*_f)(car, frontDistance, backDistance); }
+	inline double getTimeDifferenceOnSpline(CarAvatar & car) { typedef double (CarAvatar::*_fpt)(CarAvatar &); auto _f=xcast<_fpt>(_drva(866400)); return (this->*_f)(car); }
+	inline float getBallastKG() { typedef float (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(864528)); return (this->*_f)(); }
+	inline void setBallastKG(float ballast) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(892384)); return (this->*_f)(ballast); }
+	inline void setMultVolume(int value, bool active) { typedef void (CarAvatar::*_fpt)(int, bool); auto _f=xcast<_fpt>(_drva(893904)); return (this->*_f)(value, active); }
+	inline void resetMultVolume() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(891568)); return (this->*_f)(); }
+	inline INIReader openINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef INIReader (CarAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(890416)); return (this->*_f)(filename); }
+	inline int cycleEngineBrake(int value) { typedef int (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(863376)); return (this->*_f)(value); }
+	inline bool cycleERSHeatCharging() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(862688)); return (this->*_f)(); }
+	inline std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > cycleERSPower(int value) { typedef std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(862848)); return (this->*_f)(value); }
+	inline int cycleERSRecovery(int value) { typedef int (CarAvatar::*_fpt)(int); auto _f=xcast<_fpt>(_drva(863168)); return (this->*_f)(value); }
+	inline std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > getERSPower() { typedef std::pair<int,std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(865248)); return (this->*_f)(); }
+	inline bool getERSHeatCharging() { typedef bool (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1243840)); return (this->*_f)(); }
+	inline void forcePosition(const mat44f & matrix) { typedef void (CarAvatar::*_fpt)(const mat44f &); auto _f=xcast<_fpt>(_drva(864048)); return (this->*_f)(matrix); }
+	inline void initCommon() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(874208)); return (this->*_f)(); }
+	inline void initCommonPostPhysics() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(876944)); return (this->*_f)(); }
+	inline void init3D(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * skin) { typedef void (CarAvatar::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(867216)); return (this->*_f)(skin); }
+	inline void initPhysics() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(882272)); return (this->*_f)(); }
+	inline void updateSkidMarks(float dt) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(907136)); return (this->*_f)(dt); }
+	inline void initDriver() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(881536)); return (this->*_f)(); }
+	inline void initCameraCar() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(870336)); return (this->*_f)(); }
+	inline void initMirrorMaterials() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(882160)); return (this->*_f)(); }
+	inline void initControls() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(880432)); return (this->*_f)(); }
+	inline void onNewSession() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(889280)); return (this->*_f)(); }
+	inline void updateFromChannels(float dt) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(906128)); return (this->*_f)(dt); }
+	inline void checkACD() { typedef void (CarAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(861184)); return (this->*_f)(); }
+	inline void updateInPitlaneState(float dt) { typedef void (CarAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(906960)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CarAvatar)==4776),"bad size");
 		static_assert((offsetof(CarAvatar,evOnGearChanged)==0x58),"bad off");
@@ -20958,9 +20958,9 @@ public:
 	inline DICommandManager() : game(*((Game*)NULL)) { }
 	inline DICommandManager(const DICommandManager& other) = default;
 	inline DICommandManager& operator=(const DICommandManager& other) = default;
-	inline void ctor(Game & game) { typedef void (*_fpt)(DICommandManager *pthis, Game &); _fpt _f=(_fpt)_drva(528720); _f(this, game); }
-	inline void dtor() { typedef void (*_fpt)(DICommandManager *pthis); _fpt _f=(_fpt)_drva(650384); _f(this); }
-	inline void step() { typedef void (*_fpt)(DICommandManager *pthis); _fpt _f=(_fpt)_drva(530224); return _f(this); }
+	inline void ctor(Game & game) { typedef void (DICommandManager::*_fpt)(Game &); auto _f=xcast<_fpt>(_drva(528720)); (this->*_f)(game); }
+	inline void dtor() { typedef void (DICommandManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(650384)); (this->*_f)(); }
+	inline void step() { typedef void (DICommandManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(530224)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DICommandManager)==40),"bad size");
 		static_assert((offsetof(DICommandManager,directInput)==0x0),"bad off");
@@ -21019,15 +21019,15 @@ public:
 	inline AeroMap() { }
 	inline AeroMap(const AeroMap& other) = default;
 	inline AeroMap& operator=(const AeroMap& other) = default;
-	inline void dtor() { typedef void (*_fpt)(AeroMap *pthis); _fpt _f=(_fpt)_drva(2839440); _f(this); }
-	inline void init(Car * a_car, const vec3f & frontAP, const vec3f & rearAP, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath) { typedef void (*_fpt)(AeroMap *pthis, Car *, const vec3f &, const vec3f &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2841760); return _f(this, a_car, frontAP, rearAP, dataPath); }
-	inline void step(float dt) { typedef void (*_fpt)(AeroMap *pthis, float); _fpt _f=(_fpt)_drva(2847056); return _f(this, dt); }
-	inline std::vector<WingState,std::allocator<WingState> > getWingStatus() { typedef std::vector<WingState,std::allocator<WingState> > (*_fpt)(AeroMap *pthis); _fpt _f=(_fpt)_drva(2841536); return _f(this); }
-	inline float getCurrentLiftKG() { typedef float (*_fpt)(AeroMap *pthis); _fpt _f=(_fpt)_drva(2841488); return _f(this); }
-	inline float getCurrentDragKG() { typedef float (*_fpt)(AeroMap *pthis); _fpt _f=(_fpt)_drva(2841440); return _f(this); }
-	inline void addDrag(const vec3f & lv) { typedef void (*_fpt)(AeroMap *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2840672); return _f(this, lv); }
-	inline void addLift(const vec3f & localVelocity) { typedef void (*_fpt)(AeroMap *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2841232); return _f(this, localVelocity); }
-	inline void loadINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath) { typedef void (*_fpt)(AeroMap *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2841936); return _f(this, dataPath); }
+	inline void dtor() { typedef void (AeroMap::*_fpt)(); auto _f=xcast<_fpt>(_drva(2839440)); (this->*_f)(); }
+	inline void init(Car * a_car, const vec3f & frontAP, const vec3f & rearAP, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * dataPath) { typedef void (AeroMap::*_fpt)(Car *, const vec3f &, const vec3f &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2841760)); return (this->*_f)(a_car, frontAP, rearAP, dataPath); }
+	inline void step(float dt) { typedef void (AeroMap::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2847056)); return (this->*_f)(dt); }
+	inline std::vector<WingState,std::allocator<WingState> > getWingStatus() { typedef std::vector<WingState,std::allocator<WingState> > (AeroMap::*_fpt)(); auto _f=xcast<_fpt>(_drva(2841536)); return (this->*_f)(); }
+	inline float getCurrentLiftKG() { typedef float (AeroMap::*_fpt)(); auto _f=xcast<_fpt>(_drva(2841488)); return (this->*_f)(); }
+	inline float getCurrentDragKG() { typedef float (AeroMap::*_fpt)(); auto _f=xcast<_fpt>(_drva(2841440)); return (this->*_f)(); }
+	inline void addDrag(const vec3f & lv) { typedef void (AeroMap::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2840672)); return (this->*_f)(lv); }
+	inline void addLift(const vec3f & localVelocity) { typedef void (AeroMap::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2841232)); return (this->*_f)(localVelocity); }
+	inline void loadINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath) { typedef void (AeroMap::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2841936)); return (this->*_f)(dataPath); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AeroMap)==112),"bad size");
 		static_assert((offsetof(AeroMap,referenceArea)==0x0),"bad off");
@@ -21137,31 +21137,31 @@ public:
 	inline CameraForward() { }
 	inline CameraForward(const CameraForward& other) = default;
 	inline CameraForward& operator=(const CameraForward& other) = default;
-	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics, bool auseBlur) { typedef void (*_fpt)(CameraForward *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *, bool); _fpt _f=(_fpt)_drva(2224688); _f(this, iname, graphics, auseBlur); }
+	inline void ctor(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, GraphicsManager * graphics, bool auseBlur) { typedef void (CameraForward::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, GraphicsManager *, bool); auto _f=xcast<_fpt>(_drva(2224688)); (this->*_f)(iname, graphics, auseBlur); }
 	virtual ~CameraForward();
-	inline void dtor() { typedef void (*_fpt)(CameraForward *pthis); _fpt _f=(_fpt)_drva(2226032); _f(this); }
+	inline void dtor() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(_drva(2226032)); (this->*_f)(); }
 	virtual void render_vf1(Node * node, float dt);
-	inline void render_impl(Node * node, float dt) { typedef void (*_fpt)(CameraForward *pthis, Node *, float); _fpt _f=(_fpt)_drva(96368); return _f(this, node, dt); }
-	inline void render(Node * node, float dt) { return render_vf1(node, dt); }
+	inline void render_impl(Node * node, float dt) { typedef void (CameraForward::*_fpt)(Node *, float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(node, dt); }
+	inline void render(Node * node, float dt) { typedef void (CameraForward::*_fpt)(Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(node, dt); }
 	virtual void render_vf7(Node * blurred, Node * unblurred, Node * shadow, float dt);
-	inline void render_impl(Node * blurred, Node * unblurred, Node * shadow, float dt) { typedef void (*_fpt)(CameraForward *pthis, Node *, Node *, Node *, float); _fpt _f=(_fpt)_drva(2227264); return _f(this, blurred, unblurred, shadow, dt); }
-	inline void render(Node * blurred, Node * unblurred, Node * shadow, float dt) { return render_vf7(blurred, unblurred, shadow, dt); }
+	inline void render_impl(Node * blurred, Node * unblurred, Node * shadow, float dt) { typedef void (CameraForward::*_fpt)(Node *, Node *, Node *, float); auto _f=xcast<_fpt>(_drva(2227264)); return (this->*_f)(blurred, unblurred, shadow, dt); }
+	inline void render(Node * blurred, Node * unblurred, Node * shadow, float dt) { typedef void (CameraForward::*_fpt)(Node *, Node *, Node *, float); auto _f=xcast<_fpt>(get_vfp(this, 7)); return (this->*_f)(blurred, unblurred, shadow, dt); }
 	virtual void resetHDR_vf8();
-	inline void resetHDR_impl() { typedef void (*_fpt)(CameraForward *pthis); _fpt _f=(_fpt)_drva(2228560); return _f(this); }
-	inline void resetHDR() { return resetHDR_vf8(); }
-	inline void setHighPassThreshold(float t) { typedef void (*_fpt)(CameraForward *pthis, float); _fpt _f=(_fpt)_drva(2228784); return _f(this, t); }
-	inline void setBloomLevel(float bl) { typedef void (*_fpt)(CameraForward *pthis, float); _fpt _f=(_fpt)_drva(2228624); return _f(this, bl); }
-	inline void setBloomBaseLevel(float bl) { typedef void (*_fpt)(CameraForward *pthis, float); _fpt _f=(_fpt)_drva(2228592); return _f(this, bl); }
-	inline void setCubemapSize(unsigned int size) { typedef void (*_fpt)(CameraForward *pthis, unsigned int); _fpt _f=(_fpt)_drva(2228656); return _f(this, size); }
-	inline void renderBlurred(Node * blurred, Node * unblurred, Node * transparent, float dt) { typedef void (*_fpt)(CameraForward *pthis, Node *, Node *, Node *, float); _fpt _f=(_fpt)_drva(2227680); return _f(this, blurred, unblurred, transparent, dt); }
-	inline void preparePostRenderTargets() { typedef void (*_fpt)(CameraForward *pthis); _fpt _f=(_fpt)_drva(2226880); return _f(this); }
+	inline void resetHDR_impl() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(_drva(2228560)); return (this->*_f)(); }
+	inline void resetHDR() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 8)); return (this->*_f)(); }
+	inline void setHighPassThreshold(float t) { typedef void (CameraForward::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2228784)); return (this->*_f)(t); }
+	inline void setBloomLevel(float bl) { typedef void (CameraForward::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2228624)); return (this->*_f)(bl); }
+	inline void setBloomBaseLevel(float bl) { typedef void (CameraForward::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2228592)); return (this->*_f)(bl); }
+	inline void setCubemapSize(unsigned int size) { typedef void (CameraForward::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2228656)); return (this->*_f)(size); }
+	inline void renderBlurred(Node * blurred, Node * unblurred, Node * transparent, float dt) { typedef void (CameraForward::*_fpt)(Node *, Node *, Node *, float); auto _f=xcast<_fpt>(_drva(2227680)); return (this->*_f)(blurred, unblurred, transparent, dt); }
+	inline void preparePostRenderTargets() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(_drva(2226880)); return (this->*_f)(); }
 	virtual void onResize_vf9(const OnWindowResize & message);
-	inline void onResize_impl(const OnWindowResize & message) { typedef void (*_fpt)(CameraForward *pthis, const OnWindowResize &); _fpt _f=(_fpt)_drva(2226576); return _f(this, message); }
-	inline void onResize(const OnWindowResize & message) { return onResize_vf9(message); }
+	inline void onResize_impl(const OnWindowResize & message) { typedef void (CameraForward::*_fpt)(const OnWindowResize &); auto _f=xcast<_fpt>(_drva(2226576)); return (this->*_f)(message); }
+	inline void onResize(const OnWindowResize & message) { typedef void (CameraForward::*_fpt)(const OnWindowResize &); auto _f=xcast<_fpt>(get_vfp(this, 9)); return (this->*_f)(message); }
 	virtual void setSolveBlurRenderTarget_vf10();
-	inline void setSolveBlurRenderTarget_impl() { typedef void (*_fpt)(CameraForward *pthis); _fpt _f=(_fpt)_drva(2228816); return _f(this); }
-	inline void setSolveBlurRenderTarget() { return setSolveBlurRenderTarget_vf10(); }
-	inline void solveBlur(float dt) { typedef void (*_fpt)(CameraForward *pthis, float); _fpt _f=(_fpt)_drva(2228864); return _f(this, dt); }
+	inline void setSolveBlurRenderTarget_impl() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(_drva(2228816)); return (this->*_f)(); }
+	inline void setSolveBlurRenderTarget() { typedef void (CameraForward::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 10)); return (this->*_f)(); }
+	inline void solveBlur(float dt) { typedef void (CameraForward::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2228864)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(CameraForward)==1928),"bad size");
 		static_assert((offsetof(CameraForward,blurQuality)==0x2A0),"bad off");
@@ -21345,37 +21345,37 @@ public:
 	inline Drivetrain() { }
 	inline Drivetrain(const Drivetrain& other) = default;
 	inline Drivetrain& operator=(const Drivetrain& other) = default;
-	inline void dtor() { typedef void (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2514976); _f(this); }
-	inline void init(Car * car) { typedef void (*_fpt)(Drivetrain *pthis, Car *); _fpt _f=(_fpt)_drva(2518464); return _f(this, car); }
-	inline void reset() { typedef void (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2527872); return _f(this); }
-	inline void addGear(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, double ratio) { typedef void (*_fpt)(Drivetrain *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); _fpt _f=(_fpt)_drva(2516336); return _f(this, name, ratio); }
-	inline void step(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2535728); return _f(this, dt); }
-	inline bool hasDynamicControllers() { typedef bool (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2518416); return _f(this); }
-	inline SGearRatio getCurrentGear() { typedef SGearRatio (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2517776); return _f(this); }
-	inline void setCurrentGear(int index, bool force) { typedef void (*_fpt)(Drivetrain *pthis, int, bool); _fpt _f=(_fpt)_drva(2527968); return _f(this, index, force); }
-	inline bool gearUp() { typedef bool (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2517488); return _f(this); }
-	inline bool gearDown() { typedef bool (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2516576); return _f(this); }
-	inline bool isChangingGear() { typedef bool (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2519984); return _f(this); }
-	inline TractionType getTractionType() { typedef TractionType (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2608000); return _f(this); }
-	inline float getEngineRPM() { typedef float (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2517888); return _f(this); }
-	inline float getDrivetrainSpeed() { typedef float (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2517872); return _f(this); }
-	inline void setGearRatio(int index, float value) { typedef void (*_fpt)(Drivetrain *pthis, int, float); _fpt _f=(_fpt)_drva(2528368); return _f(this, index, value); }
-	inline void forceAutoCutoffTime(double value) { typedef void (*_fpt)(Drivetrain *pthis, double); _fpt _f=(_fpt)_drva(864032); return _f(this, value); }
-	inline float getRpmWindowStatus() { typedef float (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2518384); return _f(this); }
-	inline double getGearDnTime() { typedef double (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2741824); return _f(this); }
-	inline float projectRPMAtDownshift() { typedef float (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2526944); return _f(this); }
-	inline double getInertiaFromEngine() { typedef double (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2517920); return _f(this); }
-	inline double getInertiaFromWheels() { typedef double (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2518048); return _f(this); }
-	inline void reallignSpeeds(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2527488); return _f(this, dt); }
-	inline void loadINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath) { typedef void (*_fpt)(Drivetrain *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2520128); return _f(this, dataPath); }
-	inline bool isGearboxLocked() { typedef bool (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2520000); return _f(this); }
-	inline void accelerateDrivetrainBlock(double acc, bool fromEngine) { typedef void (*_fpt)(Drivetrain *pthis, double, bool); _fpt _f=(_fpt)_drva(2516160); return _f(this, acc, fromEngine); }
-	inline void step2WD(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2528480); return _f(this, dt); }
-	inline void step4WD(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2531872); return _f(this, dt); }
-	inline void step4WD_new(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2534784); return _f(this, dt); }
-	inline void initControllers() { typedef void (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2519152); return _f(this); }
-	inline void stepControllers(float dt) { typedef void (*_fpt)(Drivetrain *pthis, float); _fpt _f=(_fpt)_drva(2535936); return _f(this, dt); }
-	inline void ctor() { typedef void (*_fpt)(Drivetrain *pthis); _fpt _f=(_fpt)_drva(2545776); _f(this); }
+	inline void dtor() { typedef void (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2514976)); (this->*_f)(); }
+	inline void init(Car * car) { typedef void (Drivetrain::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2518464)); return (this->*_f)(car); }
+	inline void reset() { typedef void (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2527872)); return (this->*_f)(); }
+	inline void addGear(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name, double ratio) { typedef void (Drivetrain::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *, double); auto _f=xcast<_fpt>(_drva(2516336)); return (this->*_f)(name, ratio); }
+	inline void step(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2535728)); return (this->*_f)(dt); }
+	inline bool hasDynamicControllers() { typedef bool (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2518416)); return (this->*_f)(); }
+	inline SGearRatio getCurrentGear() { typedef SGearRatio (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2517776)); return (this->*_f)(); }
+	inline void setCurrentGear(int index, bool force) { typedef void (Drivetrain::*_fpt)(int, bool); auto _f=xcast<_fpt>(_drva(2527968)); return (this->*_f)(index, force); }
+	inline bool gearUp() { typedef bool (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2517488)); return (this->*_f)(); }
+	inline bool gearDown() { typedef bool (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2516576)); return (this->*_f)(); }
+	inline bool isChangingGear() { typedef bool (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2519984)); return (this->*_f)(); }
+	inline TractionType getTractionType() { typedef TractionType (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2608000)); return (this->*_f)(); }
+	inline float getEngineRPM() { typedef float (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2517888)); return (this->*_f)(); }
+	inline float getDrivetrainSpeed() { typedef float (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2517872)); return (this->*_f)(); }
+	inline void setGearRatio(int index, float value) { typedef void (Drivetrain::*_fpt)(int, float); auto _f=xcast<_fpt>(_drva(2528368)); return (this->*_f)(index, value); }
+	inline void forceAutoCutoffTime(double value) { typedef void (Drivetrain::*_fpt)(double); auto _f=xcast<_fpt>(_drva(864032)); return (this->*_f)(value); }
+	inline float getRpmWindowStatus() { typedef float (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2518384)); return (this->*_f)(); }
+	inline double getGearDnTime() { typedef double (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2741824)); return (this->*_f)(); }
+	inline float projectRPMAtDownshift() { typedef float (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2526944)); return (this->*_f)(); }
+	inline double getInertiaFromEngine() { typedef double (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2517920)); return (this->*_f)(); }
+	inline double getInertiaFromWheels() { typedef double (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2518048)); return (this->*_f)(); }
+	inline void reallignSpeeds(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2527488)); return (this->*_f)(dt); }
+	inline void loadINI(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & dataPath) { typedef void (Drivetrain::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2520128)); return (this->*_f)(dataPath); }
+	inline bool isGearboxLocked() { typedef bool (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2520000)); return (this->*_f)(); }
+	inline void accelerateDrivetrainBlock(double acc, bool fromEngine) { typedef void (Drivetrain::*_fpt)(double, bool); auto _f=xcast<_fpt>(_drva(2516160)); return (this->*_f)(acc, fromEngine); }
+	inline void step2WD(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2528480)); return (this->*_f)(dt); }
+	inline void step4WD(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2531872)); return (this->*_f)(dt); }
+	inline void step4WD_new(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2534784)); return (this->*_f)(dt); }
+	inline void initControllers() { typedef void (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2519152)); return (this->*_f)(); }
+	inline void stepControllers(float dt) { typedef void (Drivetrain::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2535936)); return (this->*_f)(dt); }
+	inline void ctor() { typedef void (Drivetrain::*_fpt)(); auto _f=xcast<_fpt>(_drva(2545776)); (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Drivetrain)==1608),"bad size");
 		static_assert((offsetof(Drivetrain,isGearGrinding)==0x0),"bad off");
@@ -21490,13 +21490,13 @@ public:
 	inline PhysicsDriveThread() : engine(*((PhysicsEngine*)NULL)) { }
 	inline PhysicsDriveThread(const PhysicsDriveThread& other) = default;
 	inline PhysicsDriveThread& operator=(const PhysicsDriveThread& other) = default;
-	inline void ctor(PhysicsEngine & aphysicsEngine, Game & agame) { typedef void (*_fpt)(PhysicsDriveThread *pthis, PhysicsEngine &, Game &); _fpt _f=(_fpt)_drva(1190496); _f(this, aphysicsEngine, agame); }
-	inline void dtor() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1191856); _f(this); }
-	inline void start() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1193088); return _f(this); }
-	inline void pause() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1192256); return _f(this); }
-	inline void stop() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1194016); return _f(this); }
-	inline void run() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1192272); return _f(this); }
-	inline void step() { typedef void (*_fpt)(PhysicsDriveThread *pthis); _fpt _f=(_fpt)_drva(1193312); return _f(this); }
+	inline void ctor(PhysicsEngine & aphysicsEngine, Game & agame) { typedef void (PhysicsDriveThread::*_fpt)(PhysicsEngine &, Game &); auto _f=xcast<_fpt>(_drva(1190496)); (this->*_f)(aphysicsEngine, agame); }
+	inline void dtor() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1191856)); (this->*_f)(); }
+	inline void start() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1193088)); return (this->*_f)(); }
+	inline void pause() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1192256)); return (this->*_f)(); }
+	inline void stop() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1194016)); return (this->*_f)(); }
+	inline void run() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1192272)); return (this->*_f)(); }
+	inline void step() { typedef void (PhysicsDriveThread::*_fpt)(); auto _f=xcast<_fpt>(_drva(1193312)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(PhysicsDriveThread)==184),"bad size");
 		static_assert((offsetof(PhysicsDriveThread,hasStarted)==0x0),"bad off");
@@ -21871,79 +21871,79 @@ public:
 	inline Car() { }
 	inline Car(const Car& other) = default;
 	inline Car& operator=(const Car& other) = default;
-	inline void ctor(PhysicsEngine * iengine, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iunixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (*_fpt)(Car *pthis, PhysicsEngine *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2539264); _f(this, iengine, iunixName, config); }
+	inline void ctor(PhysicsEngine * iengine, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iunixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (Car::*_fpt)(PhysicsEngine *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2539264)); (this->*_f)(iengine, iunixName, config); }
 	virtual ~Car();
-	inline void dtor() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2547920); _f(this); }
-	inline void stepPreCacheValues(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2582720); return _f(this, dt); }
-	inline void setBlackFlag(bool isflagged, PenaltyDescription type) { typedef void (*_fpt)(Car *pthis, bool, PenaltyDescription); _fpt _f=(_fpt)_drva(2578928); return _f(this, isflagged, type); }
-	inline int setFuelForLaps(int laps, float mult) { typedef int (*_fpt)(Car *pthis, int, float); _fpt _f=(_fpt)_drva(2579296); return _f(this, laps, mult); }
-	inline float getFuelPerLap() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2558928); return _f(this); }
-	inline float getBackDistanceFromCar(Car * car) { typedef float (*_fpt)(Car *pthis, Car *); _fpt _f=(_fpt)_drva(2556768); return _f(this, car); }
-	inline bool isInPitLane() { typedef bool (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2573536); return _f(this); }
-	inline bool isInPits() { typedef bool (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2573616); return _f(this); }
-	inline void setDamageLevel(float v, int index) { typedef void (*_fpt)(Car *pthis, float, int); _fpt _f=(_fpt)_drva(2579280); return _f(this, v, index); }
-	inline void setDamageLevel(float v) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2579232); return _f(this, v); }
-	inline void resetSuspensionDamageLevel() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2578800); return _f(this); }
-	inline void onCollisionCallBack(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { typedef void (*_fpt)(Car *pthis, void *, void *, void *, void *, vec3f, vec3f, float); _fpt _f=(_fpt)_drva(2573904); return _f(this, userData0, shape0, userData1, shape1, normal, pos, depth); }
-	inline void reset() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2578656); return _f(this); }
-	inline void getTyreThermalState(int index, TyreThermalState * state) { typedef void (*_fpt)(Car *pthis, int, TyreThermalState *); _fpt _f=(_fpt)_drva(2566064); return _f(this, index, state); }
-	inline bool isSleeping() { typedef bool (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2573792); return _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2579872); return _f(this, dt); }
-	inline void postStep(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2577456); return _f(this, dt); }
-	inline void getPhysicsState(CarPhysicsState & state) { typedef void (*_fpt)(Car *pthis, CarPhysicsState &); _fpt _f=(_fpt)_drva(2559344); return _f(this, state); }
-	inline void getAIState(AIState * state) { typedef void (*_fpt)(Car *pthis, AIState *); _fpt _f=(_fpt)_drva(2556480); return _f(this, state); }
-	inline void setControllerProvider(ICarControlsProvider * cp) { typedef void (*_fpt)(Car *pthis, ICarControlsProvider *); _fpt _f=(_fpt)_drva(2579056); return _f(this, cp); }
-	inline Speed getSpeed() { typedef Speed (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2564448); return _f(this); }
-	inline float getCGHeight() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2556848); return _f(this); }
-	inline vec3f getVelocity() { typedef vec3f (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2566464); return _f(this); }
-	inline vec3f getLocalVelocity() { typedef vec3f (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2559264); return _f(this); }
-	inline float getSteerFF() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2564480); return _f(this); }
-	inline vec3f getLocalAngularVelocity() { typedef vec3f (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2559216); return _f(this); }
-	inline ICarControlsProvider * getControlsProvider() { typedef ICarControlsProvider * (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2557520); return _f(this); }
-	inline float getTotalMass(bool withFuel) { typedef float (*_fpt)(Car *pthis, bool); _fpt _f=(_fpt)_drva(2565488); return _f(this, withFuel); }
-	inline mat44f getTyreMatrix(int index) { typedef mat44f (*_fpt)(Car *pthis, int); _fpt _f=(_fpt)_drva(2565792); return _f(this, index); }
-	inline mat44f getSuspensionMatrix(unsigned int index) { typedef mat44f (*_fpt)(Car *pthis, unsigned int); _fpt _f=(_fpt)_drva(2565360); return _f(this, index); }
-	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (*_fpt)(Car *pthis, std::vector<WingState,std::allocator<WingState> > &); _fpt _f=(_fpt)_drva(2566688); return _f(this, ws); }
-	inline void forcePosition(const vec3f & pos, bool invalidateTransponder) { typedef void (*_fpt)(Car *pthis, const vec3f &, bool); _fpt _f=(_fpt)_drva(2555408); return _f(this, pos, invalidateTransponder); }
-	inline void forceRotation(const vec3f & ihed) { typedef void (*_fpt)(Car *pthis, const vec3f &); _fpt _f=(_fpt)_drva(2555968); return _f(this, ihed); }
-	inline void setRequestedFuel(float value, bool changeValue) { typedef void (*_fpt)(Car *pthis, float, bool); _fpt _f=(_fpt)_drva(2579632); return _f(this, value, changeValue); }
-	inline void initColliderMesh(Mesh * mesh, mat44f & bodyMatrix) { typedef void (*_fpt)(Car *pthis, Mesh *, mat44f &); _fpt _f=(_fpt)_drva(2571040); return _f(this, mesh, bodyMatrix); }
-	inline float computeRideHeight(int zone, const plane4f & groundPlane) { typedef float (*_fpt)(Car *pthis, int, const plane4f &); _fpt _f=(_fpt)_drva(2555024); return _f(this, zone, groundPlane); }
-	inline void setSlipStreamEffects(float receive, float generationSpeedFactor) { typedef void (*_fpt)(Car *pthis, float, float); _fpt _f=(_fpt)_drva(2579776); return _f(this, receive, generationSpeedFactor); }
-	inline float getFrontWheelAngle() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2558352); return _f(this); }
-	inline void addPenalty(double ptime) { typedef void (*_fpt)(Car *pthis, double); _fpt _f=(_fpt)_drva(2553504); return _f(this, ptime); }
-	inline void clearPenalty() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2554960); return _f(this); }
-	inline bool isMinSpeedPenaltyClearDisabled() { typedef bool (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2573776); return _f(this); }
-	inline double getPenaltyTime() { typedef double (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2559312); return _f(this); }
-	inline void lockControlsUntil(double time, double start) { typedef void (*_fpt)(Car *pthis, double, double); _fpt _f=(_fpt)_drva(2573824); return _f(this, time, start); }
-	inline void lockControls(bool lock) { typedef void (*_fpt)(Car *pthis, bool); _fpt _f=(_fpt)_drva(2573808); return _f(this, lock); }
-	inline void setBallastKG(float kg) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2578912); return _f(this, kg); }
-	inline float getRestrictor() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2564416); return _f(this); }
-	inline void setRestrictor(float value) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2579728); return _f(this, value); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getConfigPath(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(Car *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2556960); return _f(this, filename); }
-	inline PitStopTime getPitstopTime(float fuel_to_add, bool changeTyres, bool repairBody, bool repairEngine, bool repairSus, bool useRandomizer) { typedef PitStopTime (*_fpt)(Car *pthis, float, bool, bool, bool, bool, bool); _fpt _f=(_fpt)_drva(2563680); return _f(this, fuel_to_add, changeTyres, repairBody, repairEngine, repairSus, useRandomizer); }
-	inline float getWheelSterAngleDEG(int index) { typedef float (*_fpt)(Car *pthis, int); _fpt _f=(_fpt)_drva(2566496); return _f(this, index); }
-	inline float getFinalFF() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2558304); return _f(this); }
-	inline void getEngagement(float engagement_length, float * left, float * right) { typedef void (*_fpt)(Car *pthis, float, float *, float *); _fpt _f=(_fpt)_drva(2557536); return _f(this, engagement_length, left, right); }
-	inline void resetSplineLocator() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2578784); return _f(this); }
-	inline float getTotalKM() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2565456); return _f(this); }
-	inline vec3f getGroundWindVector() { typedef vec3f (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2558976); return _f(this); }
-	inline void pollControls(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2575984); return _f(this, dt); }
-	inline void initCarData() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2566960); return _f(this); }
-	inline void initCarDataPath() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2570688); return _f(this); }
-	inline void buildARBS() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2553680); return _f(this); }
-	inline void initAeroMap() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2566784); return _f(this); }
-	inline float calcBodyMass() { typedef float (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2554736); return _f(this); }
-	inline void updateBodyMass() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2583664); return _f(this); }
-	inline void updateAirPressure() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2583264); return _f(this); }
-	inline void initHeaveSprings() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2572096); return _f(this); }
-	inline void onTyresStepCompleted() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2575568); return _f(this); }
-	inline void onNewSession(const SessionInfo & si) { typedef void (*_fpt)(Car *pthis, const SessionInfo &); _fpt _f=(_fpt)_drva(2575408); return _f(this, si); }
-	inline void stepThermalObjects(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2583024); return _f(this, dt); }
-	inline void stepComponents(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2581712); return _f(this, dt); }
-	inline void updateColliderStatus(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2584048); return _f(this, dt); }
-	inline void initPitstopTimings() { typedef void (*_fpt)(Car *pthis); _fpt _f=(_fpt)_drva(2572320); return _f(this); }
-	inline void stepJumpStart(float dt) { typedef void (*_fpt)(Car *pthis, float); _fpt _f=(_fpt)_drva(2582400); return _f(this, dt); }
+	inline void dtor() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2547920)); (this->*_f)(); }
+	inline void stepPreCacheValues(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2582720)); return (this->*_f)(dt); }
+	inline void setBlackFlag(bool isflagged, PenaltyDescription type) { typedef void (Car::*_fpt)(bool, PenaltyDescription); auto _f=xcast<_fpt>(_drva(2578928)); return (this->*_f)(isflagged, type); }
+	inline int setFuelForLaps(int laps, float mult) { typedef int (Car::*_fpt)(int, float); auto _f=xcast<_fpt>(_drva(2579296)); return (this->*_f)(laps, mult); }
+	inline float getFuelPerLap() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2558928)); return (this->*_f)(); }
+	inline float getBackDistanceFromCar(Car * car) { typedef float (Car::*_fpt)(Car *); auto _f=xcast<_fpt>(_drva(2556768)); return (this->*_f)(car); }
+	inline bool isInPitLane() { typedef bool (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2573536)); return (this->*_f)(); }
+	inline bool isInPits() { typedef bool (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2573616)); return (this->*_f)(); }
+	inline void setDamageLevel(float v, int index) { typedef void (Car::*_fpt)(float, int); auto _f=xcast<_fpt>(_drva(2579280)); return (this->*_f)(v, index); }
+	inline void setDamageLevel(float v) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2579232)); return (this->*_f)(v); }
+	inline void resetSuspensionDamageLevel() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2578800)); return (this->*_f)(); }
+	inline void onCollisionCallBack(void * userData0, void * shape0, void * userData1, void * shape1, vec3f normal, vec3f pos, float depth) { typedef void (Car::*_fpt)(void *, void *, void *, void *, vec3f, vec3f, float); auto _f=xcast<_fpt>(_drva(2573904)); return (this->*_f)(userData0, shape0, userData1, shape1, normal, pos, depth); }
+	inline void reset() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2578656)); return (this->*_f)(); }
+	inline void getTyreThermalState(int index, TyreThermalState * state) { typedef void (Car::*_fpt)(int, TyreThermalState *); auto _f=xcast<_fpt>(_drva(2566064)); return (this->*_f)(index, state); }
+	inline bool isSleeping() { typedef bool (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2573792)); return (this->*_f)(); }
+	inline void step(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2579872)); return (this->*_f)(dt); }
+	inline void postStep(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2577456)); return (this->*_f)(dt); }
+	inline void getPhysicsState(CarPhysicsState & state) { typedef void (Car::*_fpt)(CarPhysicsState &); auto _f=xcast<_fpt>(_drva(2559344)); return (this->*_f)(state); }
+	inline void getAIState(AIState * state) { typedef void (Car::*_fpt)(AIState *); auto _f=xcast<_fpt>(_drva(2556480)); return (this->*_f)(state); }
+	inline void setControllerProvider(ICarControlsProvider * cp) { typedef void (Car::*_fpt)(ICarControlsProvider *); auto _f=xcast<_fpt>(_drva(2579056)); return (this->*_f)(cp); }
+	inline Speed getSpeed() { typedef Speed (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2564448)); return (this->*_f)(); }
+	inline float getCGHeight() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2556848)); return (this->*_f)(); }
+	inline vec3f getVelocity() { typedef vec3f (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2566464)); return (this->*_f)(); }
+	inline vec3f getLocalVelocity() { typedef vec3f (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2559264)); return (this->*_f)(); }
+	inline float getSteerFF() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2564480)); return (this->*_f)(); }
+	inline vec3f getLocalAngularVelocity() { typedef vec3f (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2559216)); return (this->*_f)(); }
+	inline ICarControlsProvider * getControlsProvider() { typedef ICarControlsProvider * (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2557520)); return (this->*_f)(); }
+	inline float getTotalMass(bool withFuel) { typedef float (Car::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2565488)); return (this->*_f)(withFuel); }
+	inline mat44f getTyreMatrix(int index) { typedef mat44f (Car::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2565792)); return (this->*_f)(index); }
+	inline mat44f getSuspensionMatrix(unsigned int index) { typedef mat44f (Car::*_fpt)(unsigned int); auto _f=xcast<_fpt>(_drva(2565360)); return (this->*_f)(index); }
+	inline void getWingState(std::vector<WingState,std::allocator<WingState> > & ws) { typedef void (Car::*_fpt)(std::vector<WingState,std::allocator<WingState> > &); auto _f=xcast<_fpt>(_drva(2566688)); return (this->*_f)(ws); }
+	inline void forcePosition(const vec3f & pos, bool invalidateTransponder) { typedef void (Car::*_fpt)(const vec3f &, bool); auto _f=xcast<_fpt>(_drva(2555408)); return (this->*_f)(pos, invalidateTransponder); }
+	inline void forceRotation(const vec3f & ihed) { typedef void (Car::*_fpt)(const vec3f &); auto _f=xcast<_fpt>(_drva(2555968)); return (this->*_f)(ihed); }
+	inline void setRequestedFuel(float value, bool changeValue) { typedef void (Car::*_fpt)(float, bool); auto _f=xcast<_fpt>(_drva(2579632)); return (this->*_f)(value, changeValue); }
+	inline void initColliderMesh(Mesh * mesh, mat44f & bodyMatrix) { typedef void (Car::*_fpt)(Mesh *, mat44f &); auto _f=xcast<_fpt>(_drva(2571040)); return (this->*_f)(mesh, bodyMatrix); }
+	inline float computeRideHeight(int zone, const plane4f & groundPlane) { typedef float (Car::*_fpt)(int, const plane4f &); auto _f=xcast<_fpt>(_drva(2555024)); return (this->*_f)(zone, groundPlane); }
+	inline void setSlipStreamEffects(float receive, float generationSpeedFactor) { typedef void (Car::*_fpt)(float, float); auto _f=xcast<_fpt>(_drva(2579776)); return (this->*_f)(receive, generationSpeedFactor); }
+	inline float getFrontWheelAngle() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2558352)); return (this->*_f)(); }
+	inline void addPenalty(double ptime) { typedef void (Car::*_fpt)(double); auto _f=xcast<_fpt>(_drva(2553504)); return (this->*_f)(ptime); }
+	inline void clearPenalty() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2554960)); return (this->*_f)(); }
+	inline bool isMinSpeedPenaltyClearDisabled() { typedef bool (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2573776)); return (this->*_f)(); }
+	inline double getPenaltyTime() { typedef double (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2559312)); return (this->*_f)(); }
+	inline void lockControlsUntil(double time, double start) { typedef void (Car::*_fpt)(double, double); auto _f=xcast<_fpt>(_drva(2573824)); return (this->*_f)(time, start); }
+	inline void lockControls(bool lock) { typedef void (Car::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2573808)); return (this->*_f)(lock); }
+	inline void setBallastKG(float kg) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2578912)); return (this->*_f)(kg); }
+	inline float getRestrictor() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2564416)); return (this->*_f)(); }
+	inline void setRestrictor(float value) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2579728)); return (this->*_f)(value); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getConfigPath(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & filename) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (Car::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2556960)); return (this->*_f)(filename); }
+	inline PitStopTime getPitstopTime(float fuel_to_add, bool changeTyres, bool repairBody, bool repairEngine, bool repairSus, bool useRandomizer) { typedef PitStopTime (Car::*_fpt)(float, bool, bool, bool, bool, bool); auto _f=xcast<_fpt>(_drva(2563680)); return (this->*_f)(fuel_to_add, changeTyres, repairBody, repairEngine, repairSus, useRandomizer); }
+	inline float getWheelSterAngleDEG(int index) { typedef float (Car::*_fpt)(int); auto _f=xcast<_fpt>(_drva(2566496)); return (this->*_f)(index); }
+	inline float getFinalFF() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2558304)); return (this->*_f)(); }
+	inline void getEngagement(float engagement_length, float * left, float * right) { typedef void (Car::*_fpt)(float, float *, float *); auto _f=xcast<_fpt>(_drva(2557536)); return (this->*_f)(engagement_length, left, right); }
+	inline void resetSplineLocator() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2578784)); return (this->*_f)(); }
+	inline float getTotalKM() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2565456)); return (this->*_f)(); }
+	inline vec3f getGroundWindVector() { typedef vec3f (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2558976)); return (this->*_f)(); }
+	inline void pollControls(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2575984)); return (this->*_f)(dt); }
+	inline void initCarData() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2566960)); return (this->*_f)(); }
+	inline void initCarDataPath() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2570688)); return (this->*_f)(); }
+	inline void buildARBS() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2553680)); return (this->*_f)(); }
+	inline void initAeroMap() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2566784)); return (this->*_f)(); }
+	inline float calcBodyMass() { typedef float (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2554736)); return (this->*_f)(); }
+	inline void updateBodyMass() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2583664)); return (this->*_f)(); }
+	inline void updateAirPressure() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2583264)); return (this->*_f)(); }
+	inline void initHeaveSprings() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2572096)); return (this->*_f)(); }
+	inline void onTyresStepCompleted() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2575568)); return (this->*_f)(); }
+	inline void onNewSession(const SessionInfo & si) { typedef void (Car::*_fpt)(const SessionInfo &); auto _f=xcast<_fpt>(_drva(2575408)); return (this->*_f)(si); }
+	inline void stepThermalObjects(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2583024)); return (this->*_f)(dt); }
+	inline void stepComponents(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2581712)); return (this->*_f)(dt); }
+	inline void updateColliderStatus(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2584048)); return (this->*_f)(dt); }
+	inline void initPitstopTimings() { typedef void (Car::*_fpt)(); auto _f=xcast<_fpt>(_drva(2572320)); return (this->*_f)(); }
+	inline void stepJumpStart(float dt) { typedef void (Car::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2582400)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Car)==16032),"bad size");
 		static_assert((offsetof(Car,finalSteerAngleSignal)==0x8),"bad off");
@@ -22094,12 +22094,12 @@ public:
 	inline DRSManager() : engine(*((PhysicsEngine*)NULL)) { }
 	inline DRSManager(const DRSManager& other) = default;
 	inline DRSManager& operator=(const DRSManager& other) = default;
-	inline void ctor(PhysicsEngine & engine) { typedef void (*_fpt)(DRSManager *pthis, PhysicsEngine &); _fpt _f=(_fpt)_drva(2592416); _f(this, engine); }
-	inline void dtor() { typedef void (*_fpt)(DRSManager *pthis); _fpt _f=(_fpt)_drva(2593264); _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(DRSManager *pthis, float); _fpt _f=(_fpt)_drva(96368); return _f(this, dt); }
-	inline void setZones(std::vector<DRSZone,std::allocator<DRSZone> > & zv) { typedef void (*_fpt)(DRSManager *pthis, std::vector<DRSZone,std::allocator<DRSZone> > &); _fpt _f=(_fpt)_drva(2594048); return _f(this, zv); }
-	inline bool isDRSAvailable(const Car & car) { typedef bool (*_fpt)(DRSManager *pthis, const Car &); _fpt _f=(_fpt)_drva(2593936); return _f(this, car); }
-	inline bool wasRaceSwitchedOn(const Car & car) { typedef bool (*_fpt)(DRSManager *pthis, const Car &); _fpt _f=(_fpt)_drva(2594064); return _f(this, car); }
+	inline void ctor(PhysicsEngine & engine) { typedef void (DRSManager::*_fpt)(PhysicsEngine &); auto _f=xcast<_fpt>(_drva(2592416)); (this->*_f)(engine); }
+	inline void dtor() { typedef void (DRSManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(2593264)); (this->*_f)(); }
+	inline void step(float dt) { typedef void (DRSManager::*_fpt)(float); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(dt); }
+	inline void setZones(std::vector<DRSZone,std::allocator<DRSZone> > & zv) { typedef void (DRSManager::*_fpt)(std::vector<DRSZone,std::allocator<DRSZone> > &); auto _f=xcast<_fpt>(_drva(2594048)); return (this->*_f)(zv); }
+	inline bool isDRSAvailable(const Car & car) { typedef bool (DRSManager::*_fpt)(const Car &); auto _f=xcast<_fpt>(_drva(2593936)); return (this->*_f)(car); }
+	inline bool wasRaceSwitchedOn(const Car & car) { typedef bool (DRSManager::*_fpt)(const Car &); auto _f=xcast<_fpt>(_drva(2594064)); return (this->*_f)(car); }
 	inline void _guard_obj() {
 		static_assert((sizeof(DRSManager)==56),"bad size");
 		static_assert((offsetof(DRSManager,detections)==0x0),"bad off");
@@ -22128,11 +22128,11 @@ public:
 	inline SurfacesManager() { }
 	inline SurfacesManager(const SurfacesManager& other) = default;
 	inline SurfacesManager& operator=(const SurfacesManager& other) = default;
-	inline void ctor(TrackAvatar & track) { typedef void (*_fpt)(SurfacesManager *pthis, TrackAvatar &); _fpt _f=(_fpt)_drva(1763760); _f(this, track); }
+	inline void ctor(TrackAvatar & track) { typedef void (SurfacesManager::*_fpt)(TrackAvatar &); auto _f=xcast<_fpt>(_drva(1763760)); (this->*_f)(track); }
 	virtual ~SurfacesManager();
-	inline void dtor() { typedef void (*_fpt)(SurfacesManager *pthis); _fpt _f=(_fpt)_drva(1765248); _f(this); }
-	inline SurfaceDef getSurface(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name) { typedef SurfaceDef (*_fpt)(SurfacesManager *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1766208); return _f(this, name); }
-	inline void loadSurfaceDefinitions(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(SurfacesManager *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1768144); return _f(this, filename); }
+	inline void dtor() { typedef void (SurfacesManager::*_fpt)(); auto _f=xcast<_fpt>(_drva(1765248)); (this->*_f)(); }
+	inline SurfaceDef getSurface(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * name) { typedef SurfaceDef (SurfacesManager::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1766208)); return (this->*_f)(name); }
+	inline void loadSurfaceDefinitions(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (SurfacesManager::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1768144)); return (this->*_f)(filename); }
 	inline void _guard_obj() {
 		static_assert((sizeof(SurfacesManager)==32),"bad size");
 		static_assert((offsetof(SurfacesManager,surfaces)==0x8),"bad off");
@@ -22210,28 +22210,28 @@ public:
 	inline AISplineRecorder() : track(*((Track*)NULL)) { }
 	inline AISplineRecorder(const AISplineRecorder& other) = default;
 	inline AISplineRecorder& operator=(const AISplineRecorder& other) = default;
-	inline void ctor(PhysicsEngine * pe, Track & track) { typedef void (*_fpt)(AISplineRecorder *pthis, PhysicsEngine *, Track &); _fpt _f=(_fpt)_drva(2702320); _f(this, pe, track); }
+	inline void ctor(PhysicsEngine * pe, Track & track) { typedef void (AISplineRecorder::*_fpt)(PhysicsEngine *, Track &); auto _f=xcast<_fpt>(_drva(2702320)); (this->*_f)(pe, track); }
 	virtual ~AISplineRecorder();
-	inline void dtor() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2702624); _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(AISplineRecorder *pthis, float); _fpt _f=(_fpt)_drva(2715488); return _f(this, dt); }
-	inline AISpline * getBestLapSpline() { typedef AISpline * (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2707872); return _f(this); }
-	inline AISpline * getPitLaneSpline() { typedef AISpline * (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2708144); return _f(this); }
-	inline const InterpolatingSpline & getLeftSpline() { typedef const InterpolatingSpline & (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(3019440); return _f(this); }
-	inline const InterpolatingSpline & getRightSpline() { typedef const InterpolatingSpline & (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(3019456); return _f(this); }
-	inline void save(bool updateFile) { typedef void (*_fpt)(AISplineRecorder *pthis, bool); _fpt _f=(_fpt)_drva(2714336); return _f(this, updateFile); }
-	inline void beginPitLaneSpline() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2707488); return _f(this); }
-	inline void endPitLaneSpline() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2707728); return _f(this); }
-	inline void startRecording() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2715392); return _f(this); }
-	inline void onLapCompleted(const OnLapCompletedEvent & message) { typedef void (*_fpt)(AISplineRecorder *pthis, const OnLapCompletedEvent &); _fpt _f=(_fpt)_drva(2713440); return _f(this, message); }
-	inline float getHintAtSplinePos(float normalizedPos) { typedef float (*_fpt)(AISplineRecorder *pthis, float); _fpt _f=(_fpt)_drva(2708016); return _f(this, normalizedPos); }
-	inline float getBrakeHintAtSplinePos(float normalizedPos) { typedef float (*_fpt)(AISplineRecorder *pthis, float); _fpt _f=(_fpt)_drva(2707888); return _f(this, normalizedPos); }
-	inline bool getDangerAtSplinePos(float normalizedPos, float * left, float * right) { typedef bool (*_fpt)(AISplineRecorder *pthis, float, float *, float *); _fpt _f=(_fpt)_drva(2707952); return _f(this, normalizedPos, left, right); }
-	inline float getMaxSpeedHintAtSplinePos(float normalizedPos) { typedef float (*_fpt)(AISplineRecorder *pthis, float); _fpt _f=(_fpt)_drva(2708080); return _f(this, normalizedPos); }
-	inline void load() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2708160); return _f(this); }
-	inline void loadPitLaneSpline() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2712064); return _f(this); }
-	inline void recomputeSidesFromCsv() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2713712); return _f(this); }
-	inline void loadSideSpline(InterpolatingSpline & is, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (*_fpt)(AISplineRecorder *pthis, InterpolatingSpline &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(2712704); return _f(this, is, filename); }
-	inline void loadHints() { typedef void (*_fpt)(AISplineRecorder *pthis); _fpt _f=(_fpt)_drva(2709104); return _f(this); }
+	inline void dtor() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2702624)); (this->*_f)(); }
+	inline void step(float dt) { typedef void (AISplineRecorder::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2715488)); return (this->*_f)(dt); }
+	inline AISpline * getBestLapSpline() { typedef AISpline * (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2707872)); return (this->*_f)(); }
+	inline AISpline * getPitLaneSpline() { typedef AISpline * (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2708144)); return (this->*_f)(); }
+	inline const InterpolatingSpline & getLeftSpline() { typedef const InterpolatingSpline & (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(3019440)); return (this->*_f)(); }
+	inline const InterpolatingSpline & getRightSpline() { typedef const InterpolatingSpline & (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(3019456)); return (this->*_f)(); }
+	inline void save(bool updateFile) { typedef void (AISplineRecorder::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(2714336)); return (this->*_f)(updateFile); }
+	inline void beginPitLaneSpline() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2707488)); return (this->*_f)(); }
+	inline void endPitLaneSpline() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2707728)); return (this->*_f)(); }
+	inline void startRecording() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2715392)); return (this->*_f)(); }
+	inline void onLapCompleted(const OnLapCompletedEvent & message) { typedef void (AISplineRecorder::*_fpt)(const OnLapCompletedEvent &); auto _f=xcast<_fpt>(_drva(2713440)); return (this->*_f)(message); }
+	inline float getHintAtSplinePos(float normalizedPos) { typedef float (AISplineRecorder::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2708016)); return (this->*_f)(normalizedPos); }
+	inline float getBrakeHintAtSplinePos(float normalizedPos) { typedef float (AISplineRecorder::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2707888)); return (this->*_f)(normalizedPos); }
+	inline bool getDangerAtSplinePos(float normalizedPos, float * left, float * right) { typedef bool (AISplineRecorder::*_fpt)(float, float *, float *); auto _f=xcast<_fpt>(_drva(2707952)); return (this->*_f)(normalizedPos, left, right); }
+	inline float getMaxSpeedHintAtSplinePos(float normalizedPos) { typedef float (AISplineRecorder::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2708080)); return (this->*_f)(normalizedPos); }
+	inline void load() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2708160)); return (this->*_f)(); }
+	inline void loadPitLaneSpline() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2712064)); return (this->*_f)(); }
+	inline void recomputeSidesFromCsv() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2713712)); return (this->*_f)(); }
+	inline void loadSideSpline(InterpolatingSpline & is, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * filename) { typedef void (AISplineRecorder::*_fpt)(InterpolatingSpline &, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(2712704)); return (this->*_f)(is, filename); }
+	inline void loadHints() { typedef void (AISplineRecorder::*_fpt)(); auto _f=xcast<_fpt>(_drva(2709104)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(AISplineRecorder)==1096),"bad size");
 		static_assert((offsetof(AISplineRecorder,isActive)==0x8),"bad off");
@@ -22314,28 +22314,28 @@ public:
 	inline Track() { }
 	inline Track(const Track& other) = default;
 	inline Track& operator=(const Track& other) = default;
-	inline void ctor(PhysicsEngine * pe, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (*_fpt)(Track *pthis, PhysicsEngine *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(2584832); _f(this, pe, iname, config); }
+	inline void ctor(PhysicsEngine * pe, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (Track::*_fpt)(PhysicsEngine *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(2584832)); (this->*_f)(pe, iname, config); }
 	virtual ~Track();
-	inline void dtor() { typedef void (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(2585856); _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getDataFolder() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(1817456); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(2676304); return _f(this); }
-	inline unsigned __int64 addSurface(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, float * vertices, int numVertices, unsigned short * indices, int indexCount, const SurfaceDef & surfaceDef, unsigned int sector_id) { typedef unsigned __int64 (*_fpt)(Track *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float *, int, unsigned short *, int, const SurfaceDef &, unsigned int); _fpt _f=(_fpt)_drva(2588240); return _f(this, iname, vertices, numVertices, indices, indexCount, surfaceDef, sector_id); }
+	inline void dtor() { typedef void (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(2585856)); (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getDataFolder() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(1817456)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getName() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(2676304)); return (this->*_f)(); }
+	inline unsigned __int64 addSurface(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iname, float * vertices, int numVertices, unsigned short * indices, int indexCount, const SurfaceDef & surfaceDef, unsigned int sector_id) { typedef unsigned __int64 (Track::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, float *, int, unsigned short *, int, const SurfaceDef &, unsigned int); auto _f=xcast<_fpt>(_drva(2588240)); return (this->*_f)(iname, vertices, numVertices, indices, indexCount, surfaceDef, sector_id); }
 	virtual bool rayCast_vf1(const vec3f & org, const vec3f & dir, RayCastResult * result, float length);
-	inline bool rayCast_impl(const vec3f & org, const vec3f & dir, RayCastResult * result, float length) { typedef bool (*_fpt)(Track *pthis, const vec3f &, const vec3f &, RayCastResult *, float); _fpt _f=(_fpt)_drva(2591664); return _f(this, org, dir, result, length); }
-	inline bool rayCast(const vec3f & org, const vec3f & dir, RayCastResult * result, float length) { return rayCast_vf1(org, dir, result, length); }
+	inline bool rayCast_impl(const vec3f & org, const vec3f & dir, RayCastResult * result, float length) { typedef bool (Track::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float); auto _f=xcast<_fpt>(_drva(2591664)); return (this->*_f)(org, dir, result, length); }
+	inline bool rayCast(const vec3f & org, const vec3f & dir, RayCastResult * result, float length) { typedef bool (Track::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(org, dir, result, length); }
 	virtual bool rayCastWithRayCaster_vf2(const vec3f & org, const vec3f & dir, RayCastResult * result, float length, IRayCaster * rayCaster);
-	inline bool rayCastWithRayCaster_impl(const vec3f & org, const vec3f & dir, RayCastResult * result, float length, IRayCaster * rayCaster) { typedef bool (*_fpt)(Track *pthis, const vec3f &, const vec3f &, RayCastResult *, float, IRayCaster *); _fpt _f=(_fpt)_drva(2591872); return _f(this, org, dir, result, length, rayCaster); }
-	inline bool rayCastWithRayCaster(const vec3f & org, const vec3f & dir, RayCastResult * result, float length, IRayCaster * rayCaster) { return rayCastWithRayCaster_vf2(org, dir, result, length, rayCaster); }
+	inline bool rayCastWithRayCaster_impl(const vec3f & org, const vec3f & dir, RayCastResult * result, float length, IRayCaster * rayCaster) { typedef bool (Track::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float, IRayCaster *); auto _f=xcast<_fpt>(_drva(2591872)); return (this->*_f)(org, dir, result, length, rayCaster); }
+	inline bool rayCastWithRayCaster(const vec3f & org, const vec3f & dir, RayCastResult * result, float length, IRayCaster * rayCaster) { typedef bool (Track::*_fpt)(const vec3f &, const vec3f &, RayCastResult *, float, IRayCaster *); auto _f=xcast<_fpt>(get_vfp(this, 2)); return (this->*_f)(org, dir, result, length, rayCaster); }
 	virtual IRayCaster * createRayCaster_vf3(float length);
-	inline IRayCaster * createRayCaster_impl(float length) { typedef IRayCaster * (*_fpt)(Track *pthis, float); _fpt _f=(_fpt)_drva(2589168); return _f(this, length); }
-	inline IRayCaster * createRayCaster(float length) { return createRayCaster_vf3(length); }
-	inline void addTimeLine(const vec3f & p1, const vec3f & p2, TimeLineType type) { typedef void (*_fpt)(Track *pthis, const vec3f &, const vec3f &, TimeLineType); _fpt _f=(_fpt)_drva(2588736); return _f(this, p1, p2, type); }
-	inline void initAISpline() { typedef void (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(2589344); return _f(this); }
-	inline void step(float dt) { typedef void (*_fpt)(Track *pthis, float); _fpt _f=(_fpt)_drva(2592032); return _f(this, dt); }
-	inline void setGripLevelExternal(float grip) { typedef void (*_fpt)(Track *pthis, float); _fpt _f=(_fpt)_drva(2592000); return _f(this, grip); }
-	inline int getSector(float normalizedPosition) { typedef int (*_fpt)(Track *pthis, float); _fpt _f=(_fpt)_drva(2589216); return _f(this, normalizedPosition); }
-	inline void initDynamicTrack() { typedef void (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(2589440); return _f(this); }
-	inline void initStartingBounds() { typedef void (*_fpt)(Track *pthis); _fpt _f=(_fpt)_drva(2590608); return _f(this); }
+	inline IRayCaster * createRayCaster_impl(float length) { typedef IRayCaster * (Track::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2589168)); return (this->*_f)(length); }
+	inline IRayCaster * createRayCaster(float length) { typedef IRayCaster * (Track::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 3)); return (this->*_f)(length); }
+	inline void addTimeLine(const vec3f & p1, const vec3f & p2, TimeLineType type) { typedef void (Track::*_fpt)(const vec3f &, const vec3f &, TimeLineType); auto _f=xcast<_fpt>(_drva(2588736)); return (this->*_f)(p1, p2, type); }
+	inline void initAISpline() { typedef void (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(2589344)); return (this->*_f)(); }
+	inline void step(float dt) { typedef void (Track::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2592032)); return (this->*_f)(dt); }
+	inline void setGripLevelExternal(float grip) { typedef void (Track::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2592000)); return (this->*_f)(grip); }
+	inline int getSector(float normalizedPosition) { typedef int (Track::*_fpt)(float); auto _f=xcast<_fpt>(_drva(2589216)); return (this->*_f)(normalizedPosition); }
+	inline void initDynamicTrack() { typedef void (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(2589440)); return (this->*_f)(); }
+	inline void initStartingBounds() { typedef void (Track::*_fpt)(); auto _f=xcast<_fpt>(_drva(2590608)); return (this->*_f)(); }
 	inline void _guard_obj() {
 		static_assert((sizeof(Track)==328),"bad size");
 		static_assert((offsetof(Track,ksPhysics)==0x8),"bad off");
@@ -22439,33 +22439,33 @@ public:
 	inline TrackAvatar() { }
 	inline TrackAvatar(const TrackAvatar& other) = default;
 	inline TrackAvatar& operator=(const TrackAvatar& other) = default;
-	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iunixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (*_fpt)(TrackAvatar *pthis, Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1856080); _f(this, isim, iunixName, config); }
+	inline void ctor(Sim * isim, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & iunixName, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & config) { typedef void (TrackAvatar::*_fpt)(Sim *, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1856080)); (this->*_f)(isim, iunixName, config); }
 	virtual ~TrackAvatar();
-	inline void dtor() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1861680); _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getDataFolder() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1867872); return _f(this); }
+	inline void dtor() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1861680)); (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getDataFolder() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1867872)); return (this->*_f)(); }
 	virtual void shutdown_vf5();
-	inline void shutdown_impl() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(96368); return _f(this); }
-	inline void shutdown() { return shutdown_vf5(); }
-	inline mat44f getSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, unsigned int index) { typedef mat44f (*_fpt)(TrackAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned int); _fpt _f=(_fpt)_drva(1868288); return _f(this, setName, index); }
-	inline int getMaxSlotsAvailable(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef int (*_fpt)(TrackAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1867920); return _f(this, setName); }
-	inline AISpline * getAISpline() { typedef AISpline * (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1867792); return _f(this); }
-	inline AISplineRecorder * getSplineRecorder() { typedef AISplineRecorder * (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1868528); return _f(this); }
-	inline void initRespawnPositionSet(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef void (*_fpt)(TrackAvatar *pthis, const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); _fpt _f=(_fpt)_drva(1882304); return _f(this, setName); }
-	inline void initPitCrew() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1877552); return _f(this); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getSectorDescription(float normalizedPosition) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(TrackAvatar *pthis, float); _fpt _f=(_fpt)_drva(1867968); return _f(this, normalizedPosition); }
+	inline void shutdown_impl() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(96368)); return (this->*_f)(); }
+	inline void shutdown() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(get_vfp(this, 5)); return (this->*_f)(); }
+	inline mat44f getSpawnPosition(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName, unsigned int index) { typedef mat44f (TrackAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &, unsigned int); auto _f=xcast<_fpt>(_drva(1868288)); return (this->*_f)(setName, index); }
+	inline int getMaxSlotsAvailable(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef int (TrackAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1867920)); return (this->*_f)(setName); }
+	inline AISpline * getAISpline() { typedef AISpline * (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1867792)); return (this->*_f)(); }
+	inline AISplineRecorder * getSplineRecorder() { typedef AISplineRecorder * (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1868528)); return (this->*_f)(); }
+	inline void initRespawnPositionSet(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > & setName) { typedef void (TrackAvatar::*_fpt)(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > &); auto _f=xcast<_fpt>(_drva(1882304)); return (this->*_f)(setName); }
+	inline void initPitCrew() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1877552)); return (this->*_f)(); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getSectorDescription(float normalizedPosition) { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (TrackAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1867968)); return (this->*_f)(normalizedPosition); }
 	virtual void update_vf1(float dt);
-	inline void update_impl(float dt) { typedef void (*_fpt)(TrackAvatar *pthis, float); _fpt _f=(_fpt)_drva(1886736); return _f(this, dt); }
-	inline void update(float dt) { return update_vf1(dt); }
-	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getConfig() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1867808); return _f(this); }
-	inline void setDynamicGrooveVisibility(bool visibility) { typedef void (*_fpt)(TrackAvatar *pthis, bool); _fpt _f=(_fpt)_drva(1886720); return _f(this, visibility); }
-	inline void init3D() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1869632); return _f(this); }
-	inline void initPhysics() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1877056); return _f(this); }
-	inline void processPhysicsNode(Node * node) { typedef void (*_fpt)(TrackAvatar *pthis, Node *); _fpt _f=(_fpt)_drva(1885664); return _f(this, node); }
-	inline void addPhysicsMesh(Mesh * mesh, unsigned int sector_id) { typedef void (*_fpt)(TrackAvatar *pthis, Mesh *, unsigned int); _fpt _f=(_fpt)_drva(1865952); return _f(this, mesh, sector_id); }
-	inline SurfaceDef getSurfaceDescFromMeshName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * meshname) { typedef SurfaceDef (*_fpt)(TrackAvatar *pthis, std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); _fpt _f=(_fpt)_drva(1868544); return _f(this, meshname); }
-	inline void initTimeLines() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1883280); return _f(this); }
-	inline void initDynamicObjects() { typedef void (*_fpt)(TrackAvatar *pthis); _fpt _f=(_fpt)_drva(1873984); return _f(this); }
-	inline void updateDynamicObjects(float dt) { typedef void (*_fpt)(TrackAvatar *pthis, float); _fpt _f=(_fpt)_drva(1887024); return _f(this, dt); }
+	inline void update_impl(float dt) { typedef void (TrackAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1886736)); return (this->*_f)(dt); }
+	inline void update(float dt) { typedef void (TrackAvatar::*_fpt)(float); auto _f=xcast<_fpt>(get_vfp(this, 1)); return (this->*_f)(dt); }
+	inline std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > getConfig() { typedef std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1867808)); return (this->*_f)(); }
+	inline void setDynamicGrooveVisibility(bool visibility) { typedef void (TrackAvatar::*_fpt)(bool); auto _f=xcast<_fpt>(_drva(1886720)); return (this->*_f)(visibility); }
+	inline void init3D() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1869632)); return (this->*_f)(); }
+	inline void initPhysics() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1877056)); return (this->*_f)(); }
+	inline void processPhysicsNode(Node * node) { typedef void (TrackAvatar::*_fpt)(Node *); auto _f=xcast<_fpt>(_drva(1885664)); return (this->*_f)(node); }
+	inline void addPhysicsMesh(Mesh * mesh, unsigned int sector_id) { typedef void (TrackAvatar::*_fpt)(Mesh *, unsigned int); auto _f=xcast<_fpt>(_drva(1865952)); return (this->*_f)(mesh, sector_id); }
+	inline SurfaceDef getSurfaceDescFromMeshName(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > * meshname) { typedef SurfaceDef (TrackAvatar::*_fpt)(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > *); auto _f=xcast<_fpt>(_drva(1868544)); return (this->*_f)(meshname); }
+	inline void initTimeLines() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1883280)); return (this->*_f)(); }
+	inline void initDynamicObjects() { typedef void (TrackAvatar::*_fpt)(); auto _f=xcast<_fpt>(_drva(1873984)); return (this->*_f)(); }
+	inline void updateDynamicObjects(float dt) { typedef void (TrackAvatar::*_fpt)(float); auto _f=xcast<_fpt>(_drva(1887024)); return (this->*_f)(dt); }
 	inline void _guard_obj() {
 		static_assert((sizeof(TrackAvatar)==776),"bad size");
 		static_assert((offsetof(TrackAvatar,idealLine)==0x58),"bad off");

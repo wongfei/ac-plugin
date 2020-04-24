@@ -1,40 +1,53 @@
 #pragma once
 
-#define RVA_Drivetrain_step 2535728
-#define RVA_Drivetrain_stepControllers 2535936
-#define RVA_Drivetrain_step2WD 2528480
-#define RVA_Drivetrain_getInertiaFromWheels 2518048
-#define RVA_Drivetrain_getInertiaFromEngine 2517920
-#define RVA_Drivetrain_reallignSpeeds 2527488
-#define RVA_Drivetrain_accelerateDrivetrainBlock 2516160
-#define RVA_Drivetrain_getEngineRPM 2517888
+BEGIN_HOOK_OBJ(Drivetrain)
 
-void Drivetrain_step(Drivetrain* pThis, float dt)
+	#define RVA_Drivetrain_step 2535728
+	#define RVA_Drivetrain_stepControllers 2535936
+	#define RVA_Drivetrain_step2WD 2528480
+	#define RVA_Drivetrain_getInertiaFromWheels 2518048
+	#define RVA_Drivetrain_getInertiaFromEngine 2517920
+	#define RVA_Drivetrain_reallignSpeeds 2527488
+	#define RVA_Drivetrain_accelerateDrivetrainBlock 2516160
+	#define RVA_Drivetrain_getEngineRPM 2517888
+
+	void _step(float dt);
+	void _stepControllers(float dt);
+	void _step2WD(float dt);
+	double _getInertiaFromWheels();
+	double _getInertiaFromEngine();
+	void _reallignSpeeds(float dt);
+	void _accelerateDrivetrainBlock(double acc, bool fromEngine);
+	float _getEngineRPM();
+
+END_HOOK_OBJ()
+
+void _Drivetrain::_step(float dt)
 {
-	pThis->outShaftLF.oldVelocity = pThis->outShaftLF.velocity;
-	pThis->outShaftRF.oldVelocity = pThis->outShaftRF.velocity;
-	pThis->outShaftL.oldVelocity = pThis->outShaftL.velocity;
-	pThis->outShaftR.oldVelocity = pThis->outShaftR.velocity;
+	this->outShaftLF.oldVelocity = this->outShaftLF.velocity;
+	this->outShaftRF.oldVelocity = this->outShaftRF.velocity;
+	this->outShaftL.oldVelocity = this->outShaftL.velocity;
+	this->outShaftR.oldVelocity = this->outShaftR.velocity;
 
-	pThis->locClutch = powf(pThis->car->controls.clutch, 1.5f);
-	pThis->currentClutchTorque = 0.0f;
+	this->locClutch = powf(this->car->controls.clutch, 1.5f);
+	this->currentClutchTorque = 0.0f;
 
-	pThis->stepControllers(dt);
+	this->stepControllers(dt);
 
-	switch (pThis->tractionType)
+	switch (this->tractionType)
 	{
 		case TractionType::RWD:
 		case TractionType::FWD:
-			pThis->step2WD(dt);
+			this->step2WD(dt);
 			break;
 
 		case TractionType::AWD:
-			pThis->step4WD(dt); // TODO
+			this->step4WD(dt); // TODO
 			//NOT_IMPLEMENTED;
 			break;
 
 		case TractionType::AWD_NEW:
-			pThis->step4WD_new(dt); // TODO
+			this->step4WD_new(dt); // TODO
 			//NOT_IMPLEMENTED;
 			break;
 
@@ -44,63 +57,63 @@ void Drivetrain_step(Drivetrain* pThis, float dt)
 	}
 }
 
-void Drivetrain_stepControllers(Drivetrain* pThis, float dt)
+void _Drivetrain::_stepControllers(float dt)
 {
-	if (pThis->controllers.awdFrontShare.get())
+	if (this->controllers.awdFrontShare.get())
 	{
-		pThis->awdFrontShare = pThis->controllers.awdFrontShare->eval();
+		this->awdFrontShare = this->controllers.awdFrontShare->eval();
 	}
 
-	if (pThis->controllers.awdCenterLock.get())
+	if (this->controllers.awdCenterLock.get())
 	{
-		float fScale = ((Car_getSpeedValue(pThis->car) * 3.6f) - 5.0f) * 0.05f;
+		float fScale = ((Car_getSpeedValue(this->car) * 3.6f) - 5.0f) * 0.05f;
 		fScale = tclamp(fScale, 0.0f, 1.0f);
 
-		pThis->awdCenterDiff.preload = ((pThis->controllers.awdCenterLock->eval() - 20.0f) * fScale) + 20.0f;
-		pThis->awdCenterDiff.power = 0.0f;
+		this->awdCenterDiff.preload = ((this->controllers.awdCenterLock->eval() - 20.0f) * fScale) + 20.0f;
+		this->awdCenterDiff.power = 0.0f;
 	}
 
-	if (pThis->controllers.singleDiffLock.get())
+	if (this->controllers.singleDiffLock.get())
 	{
-		pThis->diffPreLoad = pThis->controllers.singleDiffLock->eval();
-		pThis->diffPowerRamp = 0.0f;
+		this->diffPreLoad = this->controllers.singleDiffLock->eval();
+		this->diffPowerRamp = 0.0f;
 	}
 }
 
-double Drivetrain_getInertiaFromWheels(Drivetrain* pThis)
+double _Drivetrain::_getInertiaFromWheels()
 {
-	switch (pThis->tractionType)
+	switch (this->tractionType)
 	{
 		case TractionType::RWD:
 		case TractionType::FWD:
 		case TractionType::AWD_NEW: // TODO: why not with AWD?
 		{
-			double fRatio = pThis->ratio;
+			double fRatio = this->ratio;
 
 			if (fRatio == 0.0)
-				return pThis->outShaftL.inertia + pThis->drive.inertia + pThis->outShaftR.inertia;
+				return this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia;
 
 			double fRatioSq = fRatio * fRatio;
 
-			if (pThis->clutchOpenState)
-				return fRatioSq * pThis->clutchInertia + pThis->drive.inertia + pThis->outShaftL.inertia + pThis->outShaftR.inertia;
+			if (this->clutchOpenState)
+				return fRatioSq * this->clutchInertia + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia;
 			else
-				return fRatioSq * (pThis->clutchInertia + pThis->engine.inertia) + pThis->drive.inertia + pThis->outShaftL.inertia + pThis->outShaftR.inertia;
+				return fRatioSq * (this->clutchInertia + this->engine.inertia) + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia;
 		}
 
 		case TractionType::AWD:
 		{
-			double fRatio = pThis->ratio;
+			double fRatio = this->ratio;
 
 			if (fRatio == 0.0)
-				return pThis->outShaftL.inertia + pThis->drive.inertia + pThis->outShaftR.inertia + (pThis->outShaftLF.inertia + pThis->outShaftRF.inertia);
+				return this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
 
 			double fRatioSq = fRatio * fRatio;
 
-			if (pThis->clutchOpenState)
-				return fRatioSq * pThis->clutchInertia + pThis->drive.inertia + pThis->outShaftL.inertia + pThis->outShaftR.inertia + (pThis->outShaftLF.inertia + pThis->outShaftRF.inertia);
+			if (this->clutchOpenState)
+				return fRatioSq * this->clutchInertia + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
 			else
-				return fRatioSq * (pThis->clutchInertia + pThis->engine.inertia) + pThis->drive.inertia + pThis->outShaftL.inertia + pThis->outShaftR.inertia + (pThis->outShaftLF.inertia + pThis->outShaftRF.inertia);
+				return fRatioSq * (this->clutchInertia + this->engine.inertia) + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
 		}
 	}
 
@@ -108,26 +121,26 @@ double Drivetrain_getInertiaFromWheels(Drivetrain* pThis)
 	return 0;
 }
 
-double Drivetrain_getInertiaFromEngine(Drivetrain* pThis)
+double _Drivetrain::_getInertiaFromEngine()
 {
-	double fRatio = pThis->ratio;
+	double fRatio = this->ratio;
 	if (fRatio == 0.0)
-		return pThis->engine.inertia;
+		return this->engine.inertia;
 
-	switch (pThis->tractionType)
+	switch (this->tractionType)
 	{
 		case TractionType::RWD:
 		case TractionType::FWD:
 		case TractionType::AWD_NEW: // TODO: why not with AWD?
 		{
-			double fOutInertia = pThis->outShaftL.inertia + pThis->drive.inertia + pThis->outShaftR.inertia;
-			return fOutInertia / (fRatio * fRatio) + pThis->clutchInertia + pThis->engine.inertia;
+			double fOutInertia = this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia;
+			return fOutInertia / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
 		}
 
 		case TractionType::AWD:
 		{
-			double fOutInertia = pThis->outShaftL.inertia + pThis->drive.inertia + pThis->outShaftR.inertia + pThis->outShaftLF.inertia + pThis->outShaftRF.inertia;
-			return fOutInertia / (fRatio * fRatio) + pThis->clutchInertia + pThis->engine.inertia;
+			double fOutInertia = this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia + this->outShaftLF.inertia + this->outShaftRF.inertia;
+			return fOutInertia / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
 		}
 	}
 
@@ -135,57 +148,57 @@ double Drivetrain_getInertiaFromEngine(Drivetrain* pThis)
 	return 0;
 }
 
-void Drivetrain_reallignSpeeds(Drivetrain* pThis, float dt)
+void _Drivetrain::_reallignSpeeds(float dt)
 {
-	double fRatio = pThis->ratio;
+	double fRatio = this->ratio;
 	if (fRatio != 0.0)
 	{
-		double fDriveVel = pThis->drive.velocity;
-		if (pThis->locClutch <= 0.9)
+		double fDriveVel = this->drive.velocity;
+		if (this->locClutch <= 0.9)
 		{
-			pThis->rootVelocity = fDriveVel * fRatio;
+			this->rootVelocity = fDriveVel * fRatio;
 		}
 		else
 		{
-			double fRootVelocity = pThis->rootVelocity;
-			pThis->rootVelocity = fRootVelocity - (1.0 - pThis->engine.inertia / pThis->getInertiaFromEngine()) * (fRootVelocity / fRatio - fDriveVel) * fabs(fRatio);
+			double fRootVelocity = this->rootVelocity;
+			this->rootVelocity = fRootVelocity - (1.0 - this->engine.inertia / this->getInertiaFromEngine()) * (fRootVelocity / fRatio - fDriveVel) * fabs(fRatio);
 		}
 
-		pThis->accelerateDrivetrainBlock((pThis->rootVelocity / fRatio - fDriveVel), false);
+		this->accelerateDrivetrainBlock((this->rootVelocity / fRatio - fDriveVel), false);
 
-		if (!pThis->clutchOpenState)
-			pThis->engine.velocity = pThis->rootVelocity;
+		if (!this->clutchOpenState)
+			this->engine.velocity = this->rootVelocity;
 
-		DEBUG_ASSERT((fabs(pThis->drive.velocity - (pThis->rootVelocity / fRatio)) <= 0.5));
+		DEBUG_ASSERT((fabs(this->drive.velocity - (this->rootVelocity / fRatio)) <= 0.5));
 	}
 }
 
-void Drivetrain_accelerateDrivetrainBlock(Drivetrain* pThis, double acc, bool fromEngine) // TODO: check, weird logic
+void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check, weird logic
 {
-	pThis->drive.velocity += acc;
+	this->drive.velocity += acc;
 
-	if (pThis->tractionType == TractionType::AWD)
+	if (this->tractionType == TractionType::AWD)
 	{
 		double fShare = 0.5;
 		if (fromEngine)
-			fShare = pThis->awdFrontShare;
+			fShare = this->awdFrontShare;
 
 		double fDeltaVel = fShare * acc * 2.0;
-		pThis->outShaftRF.velocity += fDeltaVel;
-		pThis->outShaftLF.velocity += fDeltaVel;
+		this->outShaftRF.velocity += fDeltaVel;
+		this->outShaftLF.velocity += fDeltaVel;
 
 		fDeltaVel = (1.0 - fShare) * acc * 2.0;
-		pThis->outShaftR.velocity += fDeltaVel;
-		pThis->outShaftL.velocity += fDeltaVel;
+		this->outShaftR.velocity += fDeltaVel;
+		this->outShaftL.velocity += fDeltaVel;
 	}
-	else if (pThis->diffType == DifferentialType::LSD || pThis->diffType == DifferentialType::Spool)
+	else if (this->diffType == DifferentialType::LSD || this->diffType == DifferentialType::Spool)
 	{
-		pThis->outShaftR.velocity = acc + pThis->outShaftR.velocity;
-		pThis->outShaftL.velocity = acc + pThis->outShaftL.velocity;
+		this->outShaftR.velocity = acc + this->outShaftR.velocity;
+		this->outShaftL.velocity = acc + this->outShaftL.velocity;
 	}
 }
 
-float Drivetrain_getEngineRPM(Drivetrain* pThis)
+float _Drivetrain::_getEngineRPM()
 {
-	return (float)((pThis->engine.velocity * 0.15915507) * 60.0);
+	return (float)((this->engine.velocity * 0.15915507) * 60.0);
 }

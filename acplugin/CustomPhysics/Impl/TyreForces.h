@@ -1,18 +1,12 @@
 #pragma once
 
-#define RVA_Tyre_addTyreForcesV10 2616672
-#define RVA_Tyre_getCorrectedD 2621840
-#define RVA_Tyre_stepDirtyLevel 2638800
-#define RVA_Tyre_stepPuncture 2640304
-#define RVA_Tyre_addTyreForceToHub 2612224
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, SurfaceDef* pSurface, float dt)
+void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef* pSurface, float dt)
 {
-	mat44f& worldRotation = pThis->worldRotation;
-	vec3f& roadHeading = pThis->roadHeading;
-	vec3f& roadRight = pThis->roadRight;
+	mat44f& worldRotation = this->worldRotation;
+	vec3f& roadHeading = this->roadHeading;
+	vec3f& roadRight = this->roadRight;
 
 	float fTmp = ((-worldRotation.M31 * normal.x) + (-worldRotation.M32 * normal.y)) + (-worldRotation.M33 * normal.z);
 	roadHeading.x = -worldRotation.M31 - fTmp * normal.x;
@@ -26,49 +20,49 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 	roadRight.z = worldRotation.M13 - fTmp * normal.z;
 	roadRight = vnorm(roadRight);
 
-	vec3f hubAngVel = pThis->hub->getHubAngularVelocity();
-	vec3f hubPointVel = pThis->hub->getPointVelocity(pos);
+	vec3f hubAngVel = this->hub->getHubAngularVelocity();
+	vec3f hubPointVel = this->hub->getPointVelocity(pos);
 
-	pThis->slidingVelocityY = ((hubPointVel.y * roadRight.y) + (hubPointVel.x * roadRight.x)) + (hubPointVel.z * roadRight.z);
-	pThis->roadVelocityX = -(((hubPointVel.y * roadHeading.y) + (hubPointVel.x * roadHeading.x)) + (hubPointVel.z * roadHeading.z));
-	float fSlipAngleTmp = calcSlipAngleRAD(pThis->slidingVelocityY, pThis->roadVelocityX);
+	this->slidingVelocityY = ((hubPointVel.y * roadRight.y) + (hubPointVel.x * roadRight.x)) + (hubPointVel.z * roadRight.z);
+	this->roadVelocityX = -(((hubPointVel.y * roadHeading.y) + (hubPointVel.x * roadHeading.x)) + (hubPointVel.z * roadHeading.z));
+	float fSlipAngleTmp = calcSlipAngleRAD(this->slidingVelocityY, this->roadVelocityX);
 
-	fTmp = (((hubAngVel.y * worldRotation.M12) + (hubAngVel.x * worldRotation.M11)) + (hubAngVel.z * worldRotation.M13)) + pThis->status.angularVelocity;
-	pThis->slidingVelocityX = (fTmp * pThis->status.effectiveRadius) - pThis->roadVelocityX;
-	float fRoadVelocityXAbs = fabsf(pThis->roadVelocityX);
-	float fSlipRatioTmp = ((fRoadVelocityXAbs == 0.0f) ? 0.0f : (pThis->slidingVelocityX / fRoadVelocityXAbs));
+	fTmp = (((hubAngVel.y * worldRotation.M12) + (hubAngVel.x * worldRotation.M11)) + (hubAngVel.z * worldRotation.M13)) + this->status.angularVelocity;
+	this->slidingVelocityX = (fTmp * this->status.effectiveRadius) - this->roadVelocityX;
+	float fRoadVelocityXAbs = fabsf(this->roadVelocityX);
+	float fSlipRatioTmp = ((fRoadVelocityXAbs == 0.0f) ? 0.0f : (this->slidingVelocityX / fRoadVelocityXAbs));
 
-	if (pThis->externalInputs.isActive)
+	if (this->externalInputs.isActive)
 	{
-		fSlipAngleTmp = pThis->externalInputs.slipAngle;
-		fSlipRatioTmp = pThis->externalInputs.slipRatio;
+		fSlipAngleTmp = this->externalInputs.slipAngle;
+		fSlipRatioTmp = this->externalInputs.slipRatio;
 	}
 
-	pThis->status.camberRAD = calcCamberRAD(pThis->contactNormal, worldRotation);
-	pThis->totalHubVelocity = sqrtf((pThis->roadVelocityX * pThis->roadVelocityX) + (pThis->slidingVelocityY * pThis->slidingVelocityY));
+	this->status.camberRAD = calcCamberRAD(this->contactNormal, worldRotation);
+	this->totalHubVelocity = sqrtf((this->roadVelocityX * this->roadVelocityX) + (this->slidingVelocityY * this->slidingVelocityY));
 
-	float fNdSlip = tclamp(pThis->status.ndSlip, 0.0f, 1.0f);
-	float fLoadDivFz0 = pThis->status.load / pThis->modelData.Fz0;
-	float fRelaxLen = pThis->modelData.relaxationLength;
+	float fNdSlip = tclamp(this->status.ndSlip, 0.0f, 1.0f);
+	float fLoadDivFz0 = this->status.load / this->modelData.Fz0;
+	float fRelaxLen = this->modelData.relaxationLength;
 	float fRelax1 = (((fLoadDivFz0 * fRelaxLen) - fRelaxLen) * 0.3f) + fRelaxLen;
 	float fRelax2 = ((fRelaxLen - (fRelax1 * 2.0f)) * fNdSlip) + (fRelax1 * 2.0f);
 
-	if (pThis->totalHubVelocity < 1.0f)
+	if (this->totalHubVelocity < 1.0f)
 	{
-		fSlipRatioTmp = pThis->slidingVelocityX * 0.5f;
+		fSlipRatioTmp = this->slidingVelocityX * 0.5f;
 		fSlipRatioTmp = tclamp(fSlipRatioTmp, -1.0f, 1.0f);
 
-		fSlipAngleTmp = pThis->slidingVelocityY * -5.5f;
+		fSlipAngleTmp = this->slidingVelocityY * -5.5f;
 		fSlipAngleTmp = tclamp(fSlipAngleTmp, -1.0f, 1.0f);
 	}
 
-	float fSlipRatio = pThis->status.slipRatio;
+	float fSlipRatio = this->status.slipRatio;
 	float fSlipRatioDelta = fSlipRatioTmp - fSlipRatio;
 	float fNewSlipRatio = fSlipRatioTmp;
 
 	if (fRelax2 != 0.0f)
 	{
-		float fSlipRatioScale = (pThis->totalHubVelocity * dt) / fRelax2;
+		float fSlipRatioScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipRatioScale <= 1.0f)
 		{
 			if (fSlipRatioScale < 0.04f)
@@ -78,13 +72,13 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 		}
 	}
 
-	float fSlipAngle = pThis->status.slipAngleRAD;
+	float fSlipAngle = this->status.slipAngleRAD;
 	float fSlipAngleDelta = fSlipAngleTmp - fSlipAngle;
 	float fNewSlipAngle = fSlipAngleTmp;
 
 	if (fRelax2 != 0.0f)
 	{
-		float fSlipAngleScale = (pThis->totalHubVelocity * dt) / fRelax2;
+		float fSlipAngleScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipAngleScale <= 1.0f)
 		{
 			if (fSlipAngleScale < 0.04f)
@@ -94,50 +88,50 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 		}
 	}
 
-	pThis->status.slipAngleRAD = fNewSlipAngle;
-	pThis->status.slipRatio = fNewSlipRatio;
+	this->status.slipAngleRAD = fNewSlipAngle;
+	this->status.slipRatio = fNewSlipRatio;
 
-	if (pThis->status.load <= 0.0f)
+	if (this->status.load <= 0.0f)
 	{
-		pThis->status.slipAngleRAD = 0;
-		pThis->status.slipRatio = 0;
+		this->status.slipAngleRAD = 0;
+		this->status.slipRatio = 0;
 	}
 
-	float fCorrectedD = pThis->getCorrectedD(1.0, &pThis->status.wearMult);
-	float fDynamicGripLevel = pThis->car ? pThis->car->ksPhysics->track->dynamicGripLevel : 1.0f;
+	float fCorrectedD = this->getCorrectedD(1.0, &this->status.wearMult);
+	float fDynamicGripLevel = this->car ? this->car->ksPhysics->track->dynamicGripLevel : 1.0f;
 
 	TyreModelInput tmi;
-	tmi.load = pThis->status.load;
-	tmi.slipAngleRAD = pThis->status.slipAngleRAD;
-	tmi.slipRatio = pThis->status.slipRatio;
-	tmi.camberRAD = pThis->status.camberRAD;
-	tmi.speed = pThis->totalHubVelocity;
+	tmi.load = this->status.load;
+	tmi.slipAngleRAD = this->status.slipAngleRAD;
+	tmi.slipRatio = this->status.slipRatio;
+	tmi.camberRAD = this->status.camberRAD;
+	tmi.speed = this->totalHubVelocity;
 	tmi.u = (fCorrectedD * pSurface->gripMod) * fDynamicGripLevel;
-	tmi.tyreIndex = pThis->index;
-	tmi.cpLength = calcContactPatchLength(pThis->status.liveRadius, pThis->status.depth);
-	tmi.grain = (float)pThis->status.grain;
-	tmi.blister = (float)pThis->status.blister;
-	tmi.pressureRatio = (pThis->status.pressureDynamic / pThis->modelData.idealPressure) - 1.0f;
-	tmi.useSimpleModel = 1.0f < pThis->aiMult;
+	tmi.tyreIndex = this->index;
+	tmi.cpLength = calcContactPatchLength(this->status.liveRadius, this->status.depth);
+	tmi.grain = (float)this->status.grain;
+	tmi.blister = (float)this->status.blister;
+	tmi.pressureRatio = (this->status.pressureDynamic / this->modelData.idealPressure) - 1.0f;
+	tmi.useSimpleModel = 1.0f < this->aiMult;
 
-	// TODO: ITyreModel::solve crashes
-	TyreModelOutput tmo = ((SCTM*)(pThis->tyreModel))->solve_impl(tmi);
+	TyreModelOutput tmo = this->tyreModel->solve(tmi);
+	//TyreModelOutput tmo = ((SCTM*)(this->tyreModel))->solve_impl(tmi);
 
-	pThis->status.Fy = tmo.Fy * pThis->aiMult;
-	pThis->status.Fx = -tmo.Fx;
-	pThis->status.Dy = tmo.Dy;
-	pThis->status.Dx = tmo.Dx;
+	this->status.Fy = tmo.Fy * this->aiMult;
+	this->status.Fx = -tmo.Fx;
+	this->status.Dy = tmo.Dy;
+	this->status.Dx = tmo.Dx;
 
-	float fHubSpeed = pThis->status.effectiveRadius * pThis->status.angularVelocity;
+	float fHubSpeed = this->status.effectiveRadius * this->status.angularVelocity;
 
-	pThis->stepDirtyLevel(dt, fabsf(fHubSpeed));
-	pThis->stepPuncture(dt, pThis->totalHubVelocity);
-	pThis->status.Mz = tmo.Mz;
+	this->stepDirtyLevel(dt, fabsf(fHubSpeed));
+	this->stepPuncture(dt, this->totalHubVelocity);
+	this->status.Mz = tmo.Mz;
 
 	vec3f force(
-		pThis->status.Fy * roadRight.x + pThis->status.Fx * roadHeading.x,
-		pThis->status.Fy * roadRight.y + pThis->status.Fx * roadHeading.y,
-		pThis->status.Fy * roadRight.z + pThis->status.Fx * roadHeading.z);
+		this->status.Fy * roadRight.x + this->status.Fx * roadHeading.x,
+		this->status.Fy * roadRight.y + this->status.Fx * roadHeading.y,
+		this->status.Fy * roadRight.z + this->status.Fx * roadHeading.z);
 
 	if (!(isfinite(force.x) && isfinite(force.y) && isfinite(force.z)))
 	{
@@ -145,88 +139,88 @@ void Tyre_addTyreForcesV10(Tyre* pThis, const vec3f& pos, const vec3f& normal, S
 		force = vec3f(0, 0, 0);
 	}
 
-	if (pThis->car && pThis->car->torqueModeEx != TorqueModeEX::original)
+	if (this->car && this->car->torqueModeEx != TorqueModeEX::original)
 	{
 		DEBUG_BREAK; // TODO: what car uses this code?
 
-		pThis->addTyreForceToHub(pos, force);
+		this->addTyreForceToHub(pos, force);
 	}
 	else
 	{
-		pThis->hub->addForceAtPos(force, pos, pThis->driven, true);
-		pThis->localMX = -(pThis->status.loadedRadius * pThis->status.Fx);
+		this->hub->addForceAtPos(force, pos, this->driven, true);
+		this->localMX = -(this->status.loadedRadius * this->status.Fx);
 	}
 
 	vec3f torq = vmul(normal, tmo.Mz);
-	pThis->hub->addTorque(torq);
+	this->hub->addTorque(torq);
 
-	float fAngularVelocityAbs = fabsf(pThis->status.angularVelocity);
+	float fAngularVelocityAbs = fabsf(this->status.angularVelocity);
 	if (fAngularVelocityAbs > 1.0f)
 	{
-		fHubSpeed = pThis->status.effectiveRadius * pThis->status.angularVelocity;
+		fHubSpeed = this->status.effectiveRadius * this->status.angularVelocity;
 		float fHubSpeedSign = signf(fHubSpeed);
 
-		float fPressureDynamic = pThis->status.pressureDynamic;
-		float fPressureUnk = (((pThis->modelData.idealPressure / fPressureDynamic) - 1.0f) * pThis->modelData.pressureRRGain) + 1.0f;
+		float fPressureDynamic = this->status.pressureDynamic;
+		float fPressureUnk = (((this->modelData.idealPressure / fPressureDynamic) - 1.0f) * this->modelData.pressureRRGain) + 1.0f;
 
 		if (fPressureDynamic <= 0.0f)
 			fPressureUnk = 0.0f;
 
-		float fRrUnk = ((((fHubSpeed * fHubSpeed) * pThis->modelData.rr1) + pThis->modelData.rr0) * fHubSpeedSign) * fPressureUnk;
+		float fRrUnk = ((((fHubSpeed * fHubSpeed) * this->modelData.rr1) + this->modelData.rr0) * fHubSpeedSign) * fPressureUnk;
 
 		if (fAngularVelocityAbs > 20.0f)
 		{
 			float fSlipUnk = 0;
-			if (pThis->modelData.version < 2)
+			if (this->modelData.version < 2)
 			{
-				float fRrSrUnk = fPressureUnk * pThis->modelData.rr_sr;
-				float fRrSaUnk = fabsf(pThis->status.slipAngleRAD * 57.29578f) * (fPressureUnk * pThis->modelData.rr_sa);
+				float fRrSrUnk = fPressureUnk * this->modelData.rr_sr;
+				float fRrSaUnk = fabsf(this->status.slipAngleRAD * 57.29578f) * (fPressureUnk * this->modelData.rr_sa);
 
-				float fSlipRatioAbs = fabsf(pThis->status.slipRatio);
+				float fSlipRatioAbs = fabsf(this->status.slipRatio);
 				float fSlipRatioNorm = tclamp(fSlipRatioAbs, 0.0f, 1.0f);
 
 				fSlipUnk = (fSlipRatioNorm * fRrSrUnk) + fRrSaUnk;
 			}
 			else
 			{
-				float fNdSlipNorm = tclamp(pThis->status.ndSlip, 0.0f, 1.0f);
-				fSlipUnk = (fNdSlipNorm * pThis->modelData.rr_slip) * fPressureUnk;
+				float fNdSlipNorm = tclamp(this->status.ndSlip, 0.0f, 1.0f);
+				fSlipUnk = (fNdSlipNorm * this->modelData.rr_slip) * fPressureUnk;
 			}
 
 			fRrUnk = fRrUnk * ((fSlipUnk * 0.001f) + 1.0f);
 		}
 
-		pThis->status.rollingResistence = -(((pThis->status.load * 0.001f) * fRrUnk) * pThis->status.effectiveRadius);
+		this->status.rollingResistence = -(((this->status.load * 0.001f) * fRrUnk) * this->status.effectiveRadius);
 	}
 
-	if (pThis->car)
+	if (this->car)
 	{
-		float svx = pThis->slidingVelocityX;
-		float svy = pThis->slidingVelocityY;
+		float svx = this->slidingVelocityX;
+		float svy = this->slidingVelocityY;
 		float fSlidingVelocity = sqrtf(svx * svx + svy * svy);
 
 		float fLoadVKM = 1.0f;
-		if (pThis->useLoadForVKM)
-			fLoadVKM = pThis->status.load / pThis->modelData.Fz0;
+		if (this->useLoadForVKM)
+			fLoadVKM = this->status.load / this->modelData.Fz0;
 
-		pThis->status.virtualKM = (((fSlidingVelocity * dt) * pThis->car->ksPhysics->tyreConsumptionRate) * fLoadVKM) * 0.001 + pThis->status.virtualKM;
+		this->status.virtualKM = (((fSlidingVelocity * dt) * this->car->ksPhysics->tyreConsumptionRate) * fLoadVKM) * 0.001 + this->status.virtualKM;
 	}
 
-	float fStaticDy = pThis->scTM.getStaticDY(pThis->status.load);
+	float fStaticDy = this->scTM.getStaticDY(this->status.load);
 
-	pThis->status.ndSlip = tmo.ndSlip;
-	pThis->status.D = fStaticDy;
+	this->status.ndSlip = tmo.ndSlip;
+	this->status.D = fStaticDy;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-float Tyre_getCorrectedD(Tyre* pThis, float d, float* outWearMult)
+float _Tyre::_getCorrectedD(float d, float* outWearMult)
 {
-	float fD = pThis->thermalModel.getCorrectedD(d, pThis->status.camberRAD) / ((fabsf(pThis->status.pressureDynamic - pThis->modelData.idealPressure) * pThis->modelData.pressureGainD) + 1.0f);
+	float fD = this->thermalModel.getCorrectedD(d, this->status.camberRAD) / ((fabsf(this->status.pressureDynamic - this->modelData.idealPressure) * this->modelData.pressureGainD) + 1.0f);
 
-	if (pThis->modelData.wearCurve.getCount())
+	if (this->modelData.wearCurve.getCount())
 	{
-		float fWearMult = pThis->modelData.wearCurve.getValue((float)pThis->status.virtualKM);
+		float fWearMult = this->modelData.wearCurve.getValue((float)this->status.virtualKM);
 		fD *= fWearMult;
 
 		if (outWearMult)
@@ -238,57 +232,57 @@ float Tyre_getCorrectedD(Tyre* pThis, float d, float* outWearMult)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Tyre_stepDirtyLevel(Tyre* pThis, float dt, float hubSpeed)
+void _Tyre::_stepDirtyLevel(float dt, float hubSpeed)
 {
-	if (pThis->status.dirtyLevel < 5.0f)
-		pThis->status.dirtyLevel = (((hubSpeed * pThis->surfaceDef->dirtAdditiveK) * 0.03f) * dt) + pThis->status.dirtyLevel;
+	if (this->status.dirtyLevel < 5.0f)
+		this->status.dirtyLevel = (((hubSpeed * this->surfaceDef->dirtAdditiveK) * 0.03f) * dt) + this->status.dirtyLevel;
 
-	if (pThis->surfaceDef->dirtAdditiveK == 0.0f)
+	if (this->surfaceDef->dirtAdditiveK == 0.0f)
 	{
-		if (pThis->status.dirtyLevel > 0.0f)
-			pThis->status.dirtyLevel = pThis->status.dirtyLevel - ((hubSpeed * 0.015f) * dt);
+		if (this->status.dirtyLevel > 0.0f)
+			this->status.dirtyLevel = this->status.dirtyLevel - ((hubSpeed * 0.015f) * dt);
 
-		if (pThis->status.dirtyLevel < 0.0f)
-			pThis->status.dirtyLevel = 0.0f;
+		if (this->status.dirtyLevel < 0.0f)
+			this->status.dirtyLevel = 0.0f;
 	}
 
-	if (pThis->aiMult == 1.0f)
+	if (this->aiMult == 1.0f)
 	{
-		float fDirty = 1.0f - tclamp((pThis->status.dirtyLevel * 0.05f), 0.0f, 1.0f);
+		float fDirty = 1.0f - tclamp((this->status.dirtyLevel * 0.05f), 0.0f, 1.0f);
 		float fScale = tmax(0.8f, fDirty);
 
-		pThis->status.Mz = fScale * pThis->status.Mz;
-		pThis->status.Fx = fScale * pThis->status.Fx;
-		pThis->status.Fy = fScale * pThis->status.Fy;
+		this->status.Mz = fScale * this->status.Mz;
+		this->status.Fx = fScale * this->status.Fx;
+		this->status.Fy = fScale * this->status.Fy;
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Tyre_stepPuncture(Tyre* pThis, float dt, float hubSpeed)
+void _Tyre::_stepPuncture(float dt, float hubSpeed)
 {
-	if (pThis->car && pThis->car->ksPhysics->mechanicalDamageRate > 0.0f)
+	if (this->car && this->car->ksPhysics->mechanicalDamageRate > 0.0f)
 	{
 		float imo[3];
-		pThis->thermalModel.getIMO(imo);
+		this->thermalModel.getIMO(imo);
 
-		float fTemp = pThis->explosionTemperature;
+		float fTemp = this->explosionTemperature;
 
 		if (imo[0] > fTemp || imo[1] > fTemp || imo[2] > fTemp)
-			pThis->status.inflation = 0.0f;
+			this->status.inflation = 0.0f;
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Tyre_addTyreForceToHub(Tyre* pThis, const vec3f& pos, const vec3f& force) // TODO: epic shit
+void _Tyre::_addTyreForceToHub(const vec3f& pos, const vec3f& force) // TODO: epic shit
 {
-	vec3f vWP = pThis->worldPosition;
-	float fWorldX = pThis->worldPosition.x;
-	float fWorldY = pThis->worldPosition.y;
-	float fWorldZ = pThis->worldPosition.z;
+	vec3f vWP = this->worldPosition;
+	float fWorldX = this->worldPosition.x;
+	float fWorldY = this->worldPosition.y;
+	float fWorldZ = this->worldPosition.z;
 
-	mat44f mxWR = pThis->worldRotation;
+	mat44f mxWR = this->worldRotation;
 	float* M1 = &mxWR.M11;
 	float* M2 = &mxWR.M21;
 	float* M3 = &mxWR.M31;
@@ -316,15 +310,15 @@ void Tyre_addTyreForceToHub(Tyre* pThis, const vec3f& pos, const vec3f& force) /
 	vec3f vTorq(0, 0, 0);
 	vec3f vDriveTorq(0, 0, 0);
 
-	if (pThis->car->torqueModeEx == TorqueModeEX::reactionTorques) // (torqueModeEx - 1) == 0
+	if (this->car->torqueModeEx == TorqueModeEX::reactionTorques) // (torqueModeEx - 1) == 0
 	{
 		vTorq.x = ((M2[0] * fXZ) + (M1[0] * 0.0f)) + (M3[0] * fYX);
 		vTorq.y = ((M2[1] * fXZ) + (M1[1] * 0.0f)) + (M3[1] * fYX);
 		vTorq.z = ((M2[2] * fXZ) + (M1[2] * 0.0f)) + (M3[2] * fYX);
 	}
-	else if (pThis->car->torqueModeEx == TorqueModeEX::driveTorques) // (torqueModeEx - 1) == 1
+	else if (this->car->torqueModeEx == TorqueModeEX::driveTorques) // (torqueModeEx - 1) == 1
 	{
-		if (pThis->driven)
+		if (this->driven)
 		{
 			vDriveTorq.x = ((M1[0] * fZY) + (M2[0] * 0.0f)) + (M3[0] * 0.0f);
 			vDriveTorq.y = ((M1[1] * fZY) + (M2[1] * 0.0f)) + (M3[1] * 0.0f);
@@ -342,8 +336,8 @@ void Tyre_addTyreForceToHub(Tyre* pThis, const vec3f& pos, const vec3f& force) /
 		}
 	}
 
-	pThis->hub->addLocalForceAndTorque(force, vTorq, vDriveTorq);
-	pThis->localMX = fabsf(fZY); // TODO: wtf?
+	this->hub->addLocalForceAndTorque(force, vTorq, vDriveTorq);
+	this->localMX = fabsf(fZY); // TODO: wtf?
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

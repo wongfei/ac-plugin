@@ -1,11 +1,19 @@
 #pragma once
 
-void SuspensionStrut_step(SuspensionStrut* pThis, float dt)
-{
-	pThis->steerTorque = 0.0f;
+BEGIN_HOOK_OBJ(SuspensionStrut)
 
-	vec3f vCarStrut = pThis->carBody->localToWorld(pThis->dataRelToBody.carStrut);
-	vec3f vTyreStrut = pThis->hub->localToWorld(pThis->dataRelToWheel.tyreStrut);
+	#define RVA_SuspensionStrut_step 2909696
+
+	void _step(float dt);
+
+END_HOOK_OBJ()
+
+void _SuspensionStrut::_step(float dt)
+{
+	this->steerTorque = 0.0f;
+
+	vec3f vCarStrut = this->carBody->localToWorld(this->dataRelToBody.carStrut);
+	vec3f vTyreStrut = this->hub->localToWorld(this->dataRelToWheel.tyreStrut);
 	vec3f vDelta = vsub(vTyreStrut, vCarStrut);
 	float fDelta = vlen(vDelta);
 
@@ -13,66 +21,66 @@ void SuspensionStrut_step(SuspensionStrut* pThis, float dt)
 		vDelta = vmul(vDelta, 1.0f / fDelta);
 	}
 
-	float fDefaultLength = pThis->strutBaseLength + pThis->rodLength;
+	float fDefaultLength = this->strutBaseLength + this->rodLength;
 	float fTravel = fDefaultLength - fDelta;
-	pThis->status.travel = fTravel;
+	this->status.travel = fTravel;
 
-	float fForce = ((fTravel * pThis->progressiveK) + pThis->k) * fTravel;
+	float fForce = ((fTravel * this->progressiveK) + this->k) * fTravel;
 	if (fForce < 0) fForce = 0;
 
-	if (pThis->packerRange != 0.0f && fTravel > pThis->packerRange)
-		fForce += ((fTravel - pThis->packerRange) * pThis->bumpStopRate);
+	if (this->packerRange != 0.0f && fTravel > this->packerRange)
+		fForce += ((fTravel - this->packerRange) * this->bumpStopRate);
 
 	if (fForce > 0)
 	{
 		vec3f vForce = vmul(vDelta, fForce);
-		pThis->addForceAtPos(vForce, vTyreStrut, false, false);
+		this->addForceAtPos(vForce, vTyreStrut, false, false);
 
 		vForce = vmul(vForce, -1.0f);
-		pThis->carBody->addForceAtPos(vForce, vCarStrut);
+		this->carBody->addForceAtPos(vForce, vCarStrut);
 	}
 
-	vec3f vHubWorld = pThis->hub->getPosition(0.0f);
-	vec3f vHubLocal = pThis->carBody->worldToLocal(vHubWorld);
-	mat44f mxCarWorld = pThis->carBody->getWorldMatrix(0.0f);
+	vec3f vHubWorld = this->hub->getPosition(0.0f);
+	vec3f vHubLocal = this->carBody->worldToLocal(vHubWorld);
+	mat44f mxCarWorld = this->carBody->getWorldMatrix(0.0f);
 
-	float fHubDelta = vHubLocal.y - pThis->dataRelToWheel.refPoint.y;
+	float fHubDelta = vHubLocal.y - this->dataRelToWheel.refPoint.y;
 
-	if (fHubDelta > pThis->bumpStopUp)
+	if (fHubDelta > this->bumpStopUp)
 	{
-		fForce = (fHubDelta - pThis->bumpStopUp) * 500000.0f;
+		fForce = (fHubDelta - this->bumpStopUp) * 500000.0f;
 
 		vec3f vForce = vmul(vec3f(mxCarWorld.M21, mxCarWorld.M22, mxCarWorld.M23), -fForce);
-		vec3f vPos = pThis->hub->getPosition(0.0f);
-		pThis->addForceAtPos(vForce, vPos, false, false);
+		vec3f vPos = this->hub->getPosition(0.0f);
+		this->addForceAtPos(vForce, vPos, false, false);
 
 		vForce = vec3f(0, fForce, 0);
-		pThis->carBody->addLocalForceAtLocalPos(vForce, vHubLocal);
+		this->carBody->addLocalForceAtLocalPos(vForce, vHubLocal);
 	}
 
-	if (fHubDelta < pThis->bumpStopDn)
+	if (fHubDelta < this->bumpStopDn)
 	{
-		fForce = (fHubDelta - pThis->bumpStopDn) * 500000.0f;
+		fForce = (fHubDelta - this->bumpStopDn) * 500000.0f;
 
 		vec3f vForce = vmul(vec3f(mxCarWorld.M21, mxCarWorld.M22, mxCarWorld.M23), -fForce);
-		vec3f vPos = pThis->hub->getPosition(0.0f);
-		pThis->addForceAtPos(vForce, vPos, false, false);
+		vec3f vPos = this->hub->getPosition(0.0f);
+		this->addForceAtPos(vForce, vPos, false, false);
 
 		vForce = vec3f(0, fForce, 0);
-		pThis->carBody->addLocalForceAtLocalPos(vForce, vHubLocal);
+		this->carBody->addLocalForceAtLocalPos(vForce, vHubLocal);
 	}
 
-	vec3f vTyreStrutVel = pThis->hub->getLocalPointVelocity(pThis->dataRelToWheel.tyreStrut);
-	vec3f vCarStrutVel = pThis->carBody->getLocalPointVelocity(pThis->dataRelToBody.carStrut);
+	vec3f vTyreStrutVel = this->hub->getLocalPointVelocity(this->dataRelToWheel.tyreStrut);
+	vec3f vCarStrutVel = this->carBody->getLocalPointVelocity(this->dataRelToBody.carStrut);
 	vec3f vDamperDelta = vsub(vTyreStrutVel, vCarStrutVel);
 
 	float fDamperSpeed = vdot(vDamperDelta, vDelta);
-	float fDamperForce = pThis->damper.getForce(fDamperSpeed);
-	pThis->status.damperSpeedMS = fDamperSpeed;
+	float fDamperForce = this->damper.getForce(fDamperSpeed);
+	this->status.damperSpeedMS = fDamperSpeed;
 
 	vec3f vDamperForce = vmul(vDelta, fDamperForce);
-	pThis->addForceAtPos(vDamperForce, vTyreStrut, false, false);
+	this->addForceAtPos(vDamperForce, vTyreStrut, false, false);
 
 	vDamperForce = vmul(vDamperForce, -1.0f);
-	pThis->carBody->addForceAtPos(vDamperForce, vCarStrut);
+	this->carBody->addForceAtPos(vDamperForce, vCarStrut);
 }
