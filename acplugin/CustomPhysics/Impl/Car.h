@@ -3,20 +3,22 @@
 BEGIN_HOOK_OBJ(Car)
 
 	#define RVA_Car_step 2579872
-	#define RVA_Car_stepComponents 2581712
-	#define RVA_Car_stepThermalObjects 2583024
 	#define RVA_Car_updateAirPressure 2583264
 	#define RVA_Car_updateBodyMass 2583664
 	#define RVA_Car_calcBodyMass 2554736
+	#define RVA_Car_stepThermalObjects 2583024
+	#define RVA_Car_stepComponents 2581712
 
 	void _step(float dt);
-	void _stepComponents(float dt);
-	void _stepThermalObjects(float dt);
 	void _updateAirPressure();
 	void _updateBodyMass();
 	float _calcBodyMass();
+	void _stepThermalObjects(float dt);
+	void _stepComponents(float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _Car::_step(float dt)
 {
@@ -176,6 +178,89 @@ void _Car::_step(float dt)
 		this->stepJumpStart(dt);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_updateAirPressure() // TODO: check this
+{
+	float fAirDensity = this->ksPhysics->getAirDensity();
+
+	if (this->slipStreamEffectGain > 0.0f)
+	{
+		vec3f vPos = this->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
+		float fMinSlip = 1.0f;
+
+		for (auto iterSS = this->ksPhysics->slipStreams.begin(); iterSS != this->ksPhysics->slipStreams.end(); ++iterSS)
+		{
+			SlipStream* pSS = *iterSS;
+			if (pSS != &this->slipStream) // TODO: skip self?
+			{
+				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain);
+				fSlip = tclamp(fSlip, 0.0f, 1.0f);
+
+				if (fMinSlip > fSlip)
+				{
+					fMinSlip = fSlip;
+				}
+			}
+		}
+
+		fAirDensity = ((fAirDensity - (fMinSlip * fAirDensity)) * (0.75f / this->slipStreamEffectGain)) + (fMinSlip * fAirDensity);
+	}
+
+	this->aeroMap.airDensity = fAirDensity;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_updateBodyMass()
+{
+	if (this->ksPhysics->physicsTime - this->lastBodyMassUpdateTime > 1000.0)
+	{
+		if (this->bodyInertia.x != 0.0f || this->bodyInertia.y != 0.0f || this->bodyInertia.z != 0.0f)
+		{
+			float fBodyMass = this->calcBodyMass();
+			this->body->setMassBox(fBodyMass, this->bodyInertia.x, this->bodyInertia.y, this->bodyInertia.z);
+		}
+		else
+		{
+			this->body->setMassExplicitInertia(this->mass, this->explicitInertia.x, this->explicitInertia.y, this->explicitInertia.z);
+			log_printf(L"setMassExplicitInertia");
+		}
+
+		float fFuelMass = tmax(0.1f, (this->fuelKG * (float)this->fuel));
+		this->fuelTankBody->setMassBox(fFuelMass, 0.5f, 0.5f, 0.5f); // TODO: not sure
+
+		this->lastBodyMassUpdateTime = this->ksPhysics->physicsTime;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float _Car::_calcBodyMass()
+{
+	float fSuspMass = 0;
+	for (int i = 0; i < 4; ++i)
+		fSuspMass += this->suspensions[i]->getMass();
+
+	return (this->mass - fSuspMass) + this->ballastKG;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_stepThermalObjects(float dt)
+{
+	float fRpm = this->drivetrain.getEngineRPM();
+	if (fRpm > (this->drivetrain.acEngine.data.minimum * 0.8f))
+	{
+		float fLimiter = (float)this->drivetrain.acEngine.getLimiterRPM();
+		this->water.addHeadSource((((fRpm / fLimiter) * 20.0f) * this->controls.gas) + 85.0f);
+	}
+
+	this->water.step(dt, this->ksPhysics->ambientTemperature, this->valueCache.speed);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Car::_stepComponents(float dt)
 {
 	this->brakeSystem.step(dt);
@@ -238,74 +323,4 @@ void _Car::_stepComponents(float dt)
 	this->fuelLapEvaluator.step(dt);
 }
 
-void _Car::_stepThermalObjects(float dt)
-{
-	float fRpm = this->drivetrain.getEngineRPM();
-	if (fRpm > (this->drivetrain.acEngine.data.minimum * 0.8f))
-	{
-		float fLimiter = (float)this->drivetrain.acEngine.getLimiterRPM();
-		this->water.addHeadSource((((fRpm / fLimiter) * 20.0f) * this->controls.gas) + 85.0f);
-	}
-
-	this->water.step(dt, this->ksPhysics->ambientTemperature, this->valueCache.speed);
-}
-
-void _Car::_updateAirPressure() // TODO: check this
-{
-	float fAirDensity = this->ksPhysics->getAirDensity();
-
-	if (this->slipStreamEffectGain > 0.0f)
-	{
-		vec3f vPos = this->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
-		float fMinSlip = 1.0f;
-
-		for (auto iterSS = this->ksPhysics->slipStreams.begin(); iterSS != this->ksPhysics->slipStreams.end(); ++iterSS)
-		{
-			SlipStream* pSS = *iterSS;
-			if (pSS != &this->slipStream) // TODO: skip self?
-			{
-				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain);
-				fSlip = tclamp(fSlip, 0.0f, 1.0f);
-
-				if (fMinSlip > fSlip)
-				{
-					fMinSlip = fSlip;
-				}
-			}
-		}
-
-		fAirDensity = ((fAirDensity - (fMinSlip * fAirDensity)) * (0.75f / this->slipStreamEffectGain)) + (fMinSlip * fAirDensity);
-	}
-
-	this->aeroMap.airDensity = fAirDensity;
-}
-
-void _Car::_updateBodyMass()
-{
-	if (this->ksPhysics->physicsTime - this->lastBodyMassUpdateTime > 1000.0)
-	{
-		if (this->bodyInertia.x != 0.0f || this->bodyInertia.y != 0.0f || this->bodyInertia.z != 0.0f)
-		{
-			float fBodyMass = this->calcBodyMass();
-			this->body->setMassBox(fBodyMass, this->bodyInertia.x, this->bodyInertia.y, this->bodyInertia.z);
-		}
-		else
-		{
-			this->body->setMassExplicitInertia(this->mass, this->explicitInertia.x, this->explicitInertia.y, this->explicitInertia.z);
-		}
-
-		float fFuelMass = this->fuelKG * (float)this->fuel;
-		this->fuelTankBody->setMassBox(fFuelMass, tmax(0.1f, fFuelMass), 0.5f, 0.5f); // TODO: not sure
-
-		this->lastBodyMassUpdateTime = this->ksPhysics->physicsTime;
-	}
-}
-
-float _Car::_calcBodyMass()
-{
-	float fSuspMass = 0;
-	for (int i = 0; i < 4; ++i)
-		fSuspMass += this->suspensions[i]->getMass();
-
-	return (this->mass - fSuspMass) + this->ballastKG;
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////

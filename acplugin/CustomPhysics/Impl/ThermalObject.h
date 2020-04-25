@@ -3,8 +3,10 @@
 BEGIN_HOOK_OBJ(ThermalObject)
 
 	#define RVA_ThermalObject_step 2830080
+	#define RVA_ThermalObject_addHeadSource 2830064
 
 	void _step(float dt, float ambientTemp, const Speed &speed);
+	void _addHeadSource(float heat);
 
 END_HOOK_OBJ()
 
@@ -20,4 +22,9 @@ void _ThermalObject::_step(float dt, float ambientTemp, const Speed &speed)
 
 	if (fAccum != 0.0f)
 		this->t = ((((fAccum - fTemp) * fOneDivMass) * dt) * this->heatFactor) + fTemp;
+}
+
+void _ThermalObject::_addHeadSource(float heat)
+{
+	this->heatAccumulator += heat;
 }

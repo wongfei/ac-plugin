@@ -140,8 +140,12 @@
     <ClInclude Include="CustomPhysics\Impl\TyreForcesLegacy.h" />
     <ClInclude Include="CustomPhysics\Impl\Wing.h" />
     <ClInclude Include="CustomPhysics\Impl\BrushTyreModel.h" />
+    <ClInclude Include="CustomPhysics\Impl\AeroMap.h" />
+    <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
+    <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt" />
+    <Text Include="CustomPhysics\Impl\Cars.txt" />
   </ItemGroup>
 </Project>

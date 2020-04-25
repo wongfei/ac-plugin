@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CustomPhysics\Impl\AeroMap.h" />
     <ClInclude Include="CustomPhysics\Impl\AntirollBar.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -106,6 +107,8 @@
     </ClInclude>
     <ClCompile Include="CustomPhysics\Timer.cpp" />
     <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
+    <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h" />
+    <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
     <ClInclude Include="CustomPhysics\Impl\Suspension.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -178,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt" />
+    <Text Include="CustomPhysics\Impl\Cars.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

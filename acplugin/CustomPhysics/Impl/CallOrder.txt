@@ -2,12 +2,21 @@
 Car::step
 	Car::pollControls
 	Car::updateAirPressure
+		PhysicsEngine::getAirDensity
+		SlipStream::getSlipEffect
 	Car::updateBodyMass
+		Car::calcBodyMass
 	Autoclutch::step
 	Car::stepThermalObjects
+		ThermalObject::addHeadSource
+		ThermalObject::step
 	Car::stepComponents
 	Car::updateColliderStatus
 	Car::stepJumpStart
+
+Car::postStep
+	Car::evOnStepComplete
+	SlipStream::setPosition
 
 Car::stepComponents
 	BrakeSystem
@@ -42,32 +51,27 @@ Car::stepComponents
 
 Tyre::step
 	Tyre::addGroundContact
-	Tyre::addTyreForcesV10
-		Tyre::getCorrectedD
-			TyreThermalModel::getCorrectedD
-		SCTM::solve
-			SCTM::getStaticDY
-			SCTM::getStaticDX
-			SCTM::getPureFY
-		Tyre::stepDirtyLevel
-		Tyre::stepPuncture
-			TyreThermalModel::getIMO
-		Tyre::addTyreForceToHub
+	Tyre::addTyreForces / addTyreForcesV10
 	Tyre::updateLockedState
 	Tyre::updateAngularSpeed
 	Tyre::stepRotationMatrix
 	Tyre::stepThermalModel
-		TyreThermalModel::addThermalInput
-		TyreThermalModel::addThermalCoreInput
-		TyreThermalModel::step
-			TyreThermalModel::getCurrentCPTemp
-		Tyre::stepTyreBlankets
-			TyreThermalModel::setTemperature
 	Tyre::stepGrainBlister
 	Tyre::stepFlatSpot
 	Tyre::onStepCompleted
 
-// LEGACY
+Tyre::addTyreForcesV10
+	Tyre::getCorrectedD
+		TyreThermalModel::getCorrectedD
+	SCTM::solve
+		SCTM::getStaticDY
+		SCTM::getStaticDX
+		SCTM::getPureFY
+	Tyre::stepDirtyLevel
+	Tyre::stepPuncture
+		TyreThermalModel::getIMO
+	Tyre::addTyreForceToHub
+
 Tyre::addTyreForces
 	Tyre::stepRelaxationLength
 	Tyre::getDY
@@ -77,6 +81,14 @@ Tyre::addTyreForces
 	Tyre::stepDirtyLevel
 	Tyre::stepPuncture
 
+Tyre::stepThermalModel
+	TyreThermalModel::addThermalInput
+	TyreThermalModel::addThermalCoreInput
+	TyreThermalModel::step
+		TyreThermalModel::getCurrentCPTemp
+	Tyre::stepTyreBlankets
+		TyreThermalModel::setTemperature
+
 AeroMap::step
 	AeroMap::addDrag
 	AeroMap::addLift
@@ -84,3 +96,18 @@ AeroMap::step
 		Wing::stepDynamicControllers
 		Wing::addDrag
 		Wing::addLift
+
+Drivetrain::step
+	Drivetrain::stepControllers
+	Drivetrain::step2WD / step4WD / stepAWD_new
+	
+Drivetrain::step2WD
+	ITorqueGenerator::getOutputTorque
+	Drivetrain::reallignSpeeds
+	Engine::step
+	Drivetrain::getInertiaFromWheels
+	Drivetrain::accelerateDrivetrainBlock
+	Tyre::stepRotationMatrix
+	IRigidBody::addLocalTorque
+	ISuspension::getHubWorldMatrix
+	IRigidBody::addTorque

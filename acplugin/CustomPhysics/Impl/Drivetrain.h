@@ -5,19 +5,19 @@ BEGIN_HOOK_OBJ(Drivetrain)
 	#define RVA_Drivetrain_step 2535728
 	#define RVA_Drivetrain_stepControllers 2535936
 	#define RVA_Drivetrain_step2WD 2528480
-	#define RVA_Drivetrain_getInertiaFromWheels 2518048
-	#define RVA_Drivetrain_getInertiaFromEngine 2517920
 	#define RVA_Drivetrain_reallignSpeeds 2527488
 	#define RVA_Drivetrain_accelerateDrivetrainBlock 2516160
+	#define RVA_Drivetrain_getInertiaFromWheels 2518048
+	#define RVA_Drivetrain_getInertiaFromEngine 2517920
 	#define RVA_Drivetrain_getEngineRPM 2517888
 
 	void _step(float dt);
 	void _stepControllers(float dt);
 	void _step2WD(float dt);
-	double _getInertiaFromWheels();
-	double _getInertiaFromEngine();
 	void _reallignSpeeds(float dt);
 	void _accelerateDrivetrainBlock(double acc, bool fromEngine);
+	double _getInertiaFromWheels();
+	double _getInertiaFromEngine();
 	float _getEngineRPM();
 
 END_HOOK_OBJ()
@@ -77,6 +77,56 @@ void _Drivetrain::_stepControllers(float dt)
 	{
 		this->diffPreLoad = this->controllers.singleDiffLock->eval();
 		this->diffPowerRamp = 0.0f;
+	}
+}
+
+void _Drivetrain::_reallignSpeeds(float dt)
+{
+	double fRatio = this->ratio;
+	if (fRatio != 0.0)
+	{
+		double fDriveVel = this->drive.velocity;
+		if (this->locClutch <= 0.9)
+		{
+			this->rootVelocity = fDriveVel * fRatio;
+		}
+		else
+		{
+			double fRootVelocity = this->rootVelocity;
+			this->rootVelocity = fRootVelocity - (1.0 - this->engine.inertia / this->getInertiaFromEngine()) * (fRootVelocity / fRatio - fDriveVel) * fabs(fRatio);
+		}
+
+		this->accelerateDrivetrainBlock((this->rootVelocity / fRatio - fDriveVel), false);
+
+		if (!this->clutchOpenState)
+			this->engine.velocity = this->rootVelocity;
+
+		DEBUG_ASSERT((fabs(this->drive.velocity - (this->rootVelocity / fRatio)) <= 0.5));
+	}
+}
+
+void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check, weird logic
+{
+	this->drive.velocity += acc;
+
+	if (this->tractionType == TractionType::AWD)
+	{
+		double fShare = 0.5;
+		if (fromEngine)
+			fShare = this->awdFrontShare;
+
+		double fDeltaVel = fShare * acc * 2.0;
+		this->outShaftRF.velocity += fDeltaVel;
+		this->outShaftLF.velocity += fDeltaVel;
+
+		fDeltaVel = (1.0 - fShare) * acc * 2.0;
+		this->outShaftR.velocity += fDeltaVel;
+		this->outShaftL.velocity += fDeltaVel;
+	}
+	else if (this->diffType == DifferentialType::LSD || this->diffType == DifferentialType::Spool)
+	{
+		this->outShaftR.velocity = acc + this->outShaftR.velocity;
+		this->outShaftL.velocity = acc + this->outShaftL.velocity;
 	}
 }
 
@@ -146,56 +196,6 @@ double _Drivetrain::_getInertiaFromEngine()
 
 	SHOULD_NOT_REACH;
 	return 0;
-}
-
-void _Drivetrain::_reallignSpeeds(float dt)
-{
-	double fRatio = this->ratio;
-	if (fRatio != 0.0)
-	{
-		double fDriveVel = this->drive.velocity;
-		if (this->locClutch <= 0.9)
-		{
-			this->rootVelocity = fDriveVel * fRatio;
-		}
-		else
-		{
-			double fRootVelocity = this->rootVelocity;
-			this->rootVelocity = fRootVelocity - (1.0 - this->engine.inertia / this->getInertiaFromEngine()) * (fRootVelocity / fRatio - fDriveVel) * fabs(fRatio);
-		}
-
-		this->accelerateDrivetrainBlock((this->rootVelocity / fRatio - fDriveVel), false);
-
-		if (!this->clutchOpenState)
-			this->engine.velocity = this->rootVelocity;
-
-		DEBUG_ASSERT((fabs(this->drive.velocity - (this->rootVelocity / fRatio)) <= 0.5));
-	}
-}
-
-void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check, weird logic
-{
-	this->drive.velocity += acc;
-
-	if (this->tractionType == TractionType::AWD)
-	{
-		double fShare = 0.5;
-		if (fromEngine)
-			fShare = this->awdFrontShare;
-
-		double fDeltaVel = fShare * acc * 2.0;
-		this->outShaftRF.velocity += fDeltaVel;
-		this->outShaftLF.velocity += fDeltaVel;
-
-		fDeltaVel = (1.0 - fShare) * acc * 2.0;
-		this->outShaftR.velocity += fDeltaVel;
-		this->outShaftL.velocity += fDeltaVel;
-	}
-	else if (this->diffType == DifferentialType::LSD || this->diffType == DifferentialType::Spool)
-	{
-		this->outShaftR.velocity = acc + this->outShaftR.velocity;
-		this->outShaftL.velocity = acc + this->outShaftL.velocity;
-	}
 }
 
 float _Drivetrain::_getEngineRPM()

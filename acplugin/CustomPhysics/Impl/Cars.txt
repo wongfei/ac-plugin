@@ -1,0 +1,36 @@
+
+carName=TOYOTA AE86 Drift
+tyreVersion=10
+suspensionTypeF=1
+suspensionTypeR=2
+torqueModeEx=0
+tractionType=0
+diffType=0
+numWings=3
+
+carName=Mazda RX7 Tuned
+tyreVersion=10
+suspensionTypeF=0
+suspensionTypeR=0
+torqueModeEx=0
+tractionType=0
+diffType=0
+numWings=3
+
+carName=BMW Z4 GT3
+tyreVersion=10
+suspensionTypeF=1
+suspensionTypeR=0
+torqueModeEx=0
+tractionType=0
+diffType=0
+numWings=4
+
+carName=Ferrari F138
+tyreVersion=10
+suspensionTypeF=0
+suspensionTypeR=0
+torqueModeEx=0
+tractionType=0
+diffType=0
+numWings=8

@@ -1,0 +1,28 @@
+#pragma once
+
+BEGIN_HOOK_OBJ(SlipStream)
+
+	#define RVA_SlipStream_getSlipEffect 2796640
+	#define RVA_SlipStream_setPosition 2797184
+
+	float _getSlipEffect(const vec3f& p);
+	void _setPosition(const vec3f& pos, const vec3f& vel);
+
+END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float _SlipStream::_getSlipEffect(const vec3f& p)
+{
+	NOT_IMPLEMENTED; // TODO
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _SlipStream::_setPosition(const vec3f& pos, const vec3f& vel)
+{
+	NOT_IMPLEMENTED; // TODO
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

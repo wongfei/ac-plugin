@@ -11,13 +11,12 @@
 #define END_HOOK_OBJ() };
 
 #include "Impl/DynamicController.h"
+
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
 
-#include "Impl/Drivetrain.h"
-#include "Impl/Drivetrain2WD.h"
-#include "Impl/Engine.h"
-#include "Impl/Turbo.h"
+#include "Impl/ThermalObject.h"
+#include "Impl/BrakeSystem.h"
 
 #include "Impl/Suspension.h"
 #include "Impl/SuspensionAxle.h"
@@ -34,11 +33,18 @@
 #include "Impl/BrushTyreModel.h"
 #include "Impl/BrushSlipProvider.h"
 
-#include "Impl/AntirollBar.h"
-#include "Impl/BrakeSystem.h"
-#include "Impl/ThermalObject.h"
+#include "Impl/HeaveSpring.h"
 
+#include "Impl/SlipStream.h"
+#include "Impl/AeroMap.h"
 #include "Impl/Wing.h"
+
+#include "Impl/Drivetrain.h"
+#include "Impl/Drivetrain2WD.h"
+#include "Impl/Engine.h"
+#include "Impl/Turbo.h"
+
+#include "Impl/AntirollBar.h"
 
 //
 
@@ -74,11 +80,13 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	s_custom_physics = this;
 
 	log_printf(L"carName=%s", plugin->car->screenName.c_str());
+	log_printf(L"tyreVersion=%d", (int)plugin->car->tyres[0].modelData.version);
 	log_printf(L"suspensionTypeF=%d", (int)plugin->car->suspensionTypeF);
 	log_printf(L"suspensionTypeR=%d", (int)plugin->car->suspensionTypeR);
 	log_printf(L"torqueModeEx=%d", (int)plugin->car->torqueModeEx);
 	log_printf(L"tractionType=%d", (int)plugin->car->drivetrain.tractionType);
 	log_printf(L"diffType=%d", (int)plugin->car->drivetrain.diffType);
+	log_printf(L"numWings=%d", (int)plugin->car->aeroMap.wings.size());
 
 	#if 1
 	ksInitTimerVars();
@@ -91,107 +99,136 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 		_plugin->car->controlsProvider->ffEnabled = false;
 	#endif
 
+	// BEGIN HOOKS
 	#if 1
+
+	//
+	// Common
+	//
+
+	#if 0
+	HOOK_METHOD_RVA(DynamicController, eval);
+	HOOK_METHOD_RVA(DynamicController, getInput);
+	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
+	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
+	#endif
 
 	//
 	// Car
 	//
 
+	#if 1
 	HOOK_METHOD_RVA(Car, step);
-	HOOK_METHOD_RVA(Car, stepComponents);
 	HOOK_METHOD_RVA(Car, updateAirPressure);
 	HOOK_METHOD_RVA(Car, updateBodyMass);
 	HOOK_METHOD_RVA(Car, calcBodyMass);
+	HOOK_METHOD_RVA(Car, stepThermalObjects);
+	HOOK_METHOD_RVA(Car, stepComponents);
+	#endif
 
-	HOOK_METHOD_RVA(DynamicController, eval);
-	HOOK_METHOD_RVA(DynamicController, getInput);
-	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
-	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
-
-	//
-	// Suspension
-	//
-
-	HOOK_METHOD_RVA(Suspension, step);
+	// # ThermalObject
+	#if 1
+	HOOK_METHOD_RVA(ThermalObject, step);
+	HOOK_METHOD_RVA(ThermalObject, addHeadSource);
+	#endif
+	
+	// # BrakeSystem
+	#if 1
+	HOOK_METHOD_RVA(BrakeSystem, step);
+	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
+	#endif
+	
+	// # Suspension
+	#if 1
+	HOOK_METHOD_RVA(Suspension, step); // DoubleWishbone
 	HOOK_METHOD_RVA(SuspensionAxle, step);
 	HOOK_METHOD_RVA(SuspensionML, step);
 	HOOK_METHOD_RVA(SuspensionStrut, step);
 	HOOK_METHOD_RVA(Damper, getForce);
+	#endif
 
-	//
-	// Drivetrain
-	//
-
-	HOOK_METHOD_RVA(Drivetrain, step);
-	HOOK_METHOD_RVA(Drivetrain, step2WD);
-	HOOK_METHOD_RVA(Drivetrain, stepControllers);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
-	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
-	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
-	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
-
-	//
-	// Engine
-	//
-
-	HOOK_METHOD_RVA(Engine, step);
-	HOOK_METHOD_RVA(Engine, stepTurbos);
-	HOOK_METHOD_RVA(Turbo, step);
-
-	//
-	// Tyre
-	//
-
+	// # Tyre
+	#if 1
 	HOOK_METHOD_RVA(Tyre, step);
-		HOOK_METHOD_RVA(Tyre, addGroundContact);
-		HOOK_METHOD_RVA(Tyre, addTyreForcesV10);
-			HOOK_METHOD_RVA(Tyre, getCorrectedD);
-				HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
-			HOOK_METHOD_RVA(SCTM, solve);
-				HOOK_METHOD_RVA(SCTM, getStaticDY);
-				HOOK_METHOD_RVA(SCTM, getStaticDX);
-				HOOK_METHOD_RVA(SCTM, getPureFY);
-			HOOK_METHOD_RVA(Tyre, stepDirtyLevel);
-			HOOK_METHOD_RVA(Tyre, stepPuncture);
-				HOOK_METHOD_RVA(TyreThermalModel, getIMO);
-			HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
-		HOOK_METHOD_RVA(Tyre, updateLockedState);
-		HOOK_METHOD_RVA(Tyre, updateAngularSpeed);
-		HOOK_METHOD_RVA(Tyre, stepRotationMatrix);
-		HOOK_METHOD_RVA(Tyre, stepThermalModel);
-			HOOK_METHOD_RVA(TyreThermalModel, addThermalInput);
-			HOOK_METHOD_RVA(TyreThermalModel, addThermalCoreInput);
-			HOOK_METHOD_RVA(TyreThermalModel, step);
-				HOOK_METHOD_RVA(TyreThermalModel, getCurrentCPTemp);
-			HOOK_METHOD_RVA(Tyre, stepTyreBlankets);
-				HOOK_METHOD_RVA(TyreThermalModel, setTemperature);
-		HOOK_METHOD_RVA(Tyre, stepGrainBlister);
-		HOOK_METHOD_RVA(Tyre, stepFlatSpot);
+	HOOK_METHOD_RVA(Tyre, addGroundContact);
+	HOOK_METHOD_RVA(Tyre, addTyreForcesV10);
+	HOOK_METHOD_RVA(Tyre, updateLockedState);
+	HOOK_METHOD_RVA(Tyre, updateAngularSpeed);
+	HOOK_METHOD_RVA(Tyre, stepRotationMatrix);
+	HOOK_METHOD_RVA(Tyre, stepThermalModel);
+	HOOK_METHOD_RVA(Tyre, stepGrainBlister);
+	HOOK_METHOD_RVA(Tyre, stepFlatSpot);
+	// addTyreForcesV10..
+	HOOK_METHOD_RVA(Tyre, getCorrectedD);
+	HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
+	HOOK_METHOD_RVA(SCTM, solve);
+	HOOK_METHOD_RVA(SCTM, getStaticDY);
+	HOOK_METHOD_RVA(SCTM, getStaticDX);
+	HOOK_METHOD_RVA(SCTM, getPureFY);
+	HOOK_METHOD_RVA(Tyre, stepDirtyLevel);
+	HOOK_METHOD_RVA(Tyre, stepPuncture);
+	HOOK_METHOD_RVA(TyreThermalModel, getIMO);
+	HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
+	// stepThermalModel..
+	HOOK_METHOD_RVA(TyreThermalModel, addThermalInput);
+	HOOK_METHOD_RVA(TyreThermalModel, addThermalCoreInput);
+	HOOK_METHOD_RVA(TyreThermalModel, step);
+	HOOK_METHOD_RVA(TyreThermalModel, getCurrentCPTemp);
+	HOOK_METHOD_RVA(Tyre, stepTyreBlankets);
+	HOOK_METHOD_RVA(TyreThermalModel, setTemperature);
+	#endif
 
+	// # BrushSlipProvider
+	#if 1
+	HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
 	HOOK_METHOD_RVA(BrushTyreModel, solve);
 	HOOK_METHOD_RVA(BrushTyreModel, solveV5);
 	HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
-	HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
+	#endif
 
-	//
-	// Stuff
-	//
+	// # HeaveSpring
+	HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
 
-	HOOK_METHOD_RVA(BrakeSystem, step);
-	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
-	HOOK_METHOD_RVA(AntirollBar, step);
-	HOOK_METHOD_RVA(ThermalObject, step);
-
-	//
-	// Wing
-	//
-
+	// # Aero
+	#if 1
+	//HOOK_METHOD_RVA(SlipStream, getSlipEffect);
+	//HOOK_METHOD_RVA(SlipStream, setPosition);
+	HOOK_METHOD_RVA(AeroMap, step);
+	HOOK_METHOD_RVA(AeroMap, addDrag);
+	HOOK_METHOD_RVA(AeroMap, addLift);
+	HOOK_METHOD_RVA(AeroMap, getCurrentDragKG);
+	HOOK_METHOD_RVA(AeroMap, getCurrentLiftKG);
 	HOOK_METHOD_RVA(Wing, step);
 	HOOK_METHOD_RVA(Wing, addDrag);
 	HOOK_METHOD_RVA(Wing, addLift);
+	#endif
+
+	// # Drivetrain
+	#if 1
+	HOOK_METHOD_RVA(Drivetrain, step);
+	HOOK_METHOD_RVA(Drivetrain, stepControllers);
+	HOOK_METHOD_RVA(Drivetrain, step2WD);
+	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
+	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
+	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
+	#endif
+
+	// # Engine
+	#if 1
+	HOOK_METHOD_RVA(Engine, step);
+	HOOK_METHOD_RVA(Engine, stepTurbos);
+	HOOK_METHOD_RVA(Turbo, step);
+	#endif
+
+	// # AntirollBar
+	#if 1
+	HOOK_METHOD_RVA(AntirollBar, step);
+	#endif
 
 	#endif
+	// END HOOKS
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }

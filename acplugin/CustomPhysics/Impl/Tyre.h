@@ -550,9 +550,10 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 			if (pSurface)
 			{
 				float fTest = (hubVelocity * pSurface->gripMod) * fGrainGain * 0.00005f;
-				if (isfinite(fTest) && fTest > 0.0f)
+				if (isfinite(fTest))
 				{
-					this->status.grain -= fTest * fSlipGamma * this->car->ksPhysics->tyreConsumptionRate * dt;
+					if (fTest > 0.0f)
+						this->status.grain -= fTest * fSlipGamma * this->car->ksPhysics->tyreConsumptionRate * dt;
 				}
 				else
 				{

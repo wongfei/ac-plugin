@@ -95,12 +95,16 @@ TyreThermalPatch* _TyreThermalModel::_getPatchAt(int x, int y)
 	return &this->patches[0];
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _TyreThermalModel::_getCorrectedD(float d, float camberRAD)
 {
 	if (this->isActive)
 		return d * this->thermalMultD;
 	return d;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _TyreThermalModel::_getIMO(float* pfOut)
 {
@@ -116,10 +120,14 @@ void _TyreThermalModel::_getIMO(float* pfOut)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _TyreThermalModel::_addThermalCoreInput(float temp)
 {
 	this->coreTInput += temp;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _TyreThermalModel::_addThermalInput(float xpos, float pressureRel, float temp)
 {
@@ -142,6 +150,8 @@ void _TyreThermalModel::_addThermalInput(float xpos, float pressureRel, float te
 	patch2.inputT += ((((1.0f - fNormXcs) - (fPr1 * 0.5f)) * fPr2) * fT);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _TyreThermalModel::_getCurrentCPTemp(float camber)
 {
 	float fNormCsk = tclamp((camber * this->camberSpreadK), -1.0f, 1.0f);
@@ -156,10 +166,14 @@ float _TyreThermalModel::_getCurrentCPTemp(float camber)
 	return ((((fNormCsk + 1.0f) * patch0.T) + patch1.T) + ((1.0f - fNormCsk) * patch2.T)) * 0.33333334f;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _TyreThermalModel::_getPracticalTemp(float camberRAD)
 {
 	return ((this->getCurrentCPTemp(camberRAD) - this->coreTemp) * 0.25f) + this->coreTemp;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 float _TyreThermalModel::_getAvgSurfaceTemp(TyreThermalModel* pThis)
 {
@@ -171,6 +185,8 @@ float _TyreThermalModel::_getAvgSurfaceTemp(TyreThermalModel* pThis)
 	return fSum / 36.0f;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _TyreThermalModel::_setTemperature(float optimumTemp)
 {
 	this->coreTemp = optimumTemp;
@@ -179,6 +195,8 @@ void _TyreThermalModel::_setTemperature(float optimumTemp)
 		patch.T = optimumTemp;
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _TyreThermalModel::_reset(TyreThermalModel* pThis)
 {

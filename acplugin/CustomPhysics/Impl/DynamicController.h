@@ -9,8 +9,8 @@ BEGIN_HOOK_OBJ(DynamicController)
 
 	float _eval();
 	float _getInput(DynamicControllerInput input);
-	float _getOversteerFactor(Car *car);
-	float _getRearSpeedRatio(Car *car);
+	static float _getOversteerFactor(Car *car);
+	static float _getRearSpeedRatio(Car *car);
 
 END_HOOK_OBJ()
 
