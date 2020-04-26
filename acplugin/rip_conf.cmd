@@ -11,6 +11,6 @@ set "ac_car=CarAvatar; Car; Drivetrain; Engine; Suspension; SuspensionAxle; Susp
 set "ac_render=GraphicsManager; ShaderManager; GLRenderer; RenderWindow; RenderContext; RenderTarget; Shader; ShaderVariable; ShaderResource; MaterialResource; MaterialVar; MaterialOption; IndexBuffer"
 set "ac_kgl=KGLTexture; KGLRenderTarget; KGLShader; KGLShaderVar; KGLShaderTexture; KGLShaderCBuffer; KGLShaderVarDesc; KGLShaderCBufferDesc; KGLShaderTextureDesc; KGLVertexBuffer; KGLIndexBuffer"
 set "ac_gui=ksgui::GUI; ksgui::GameScreen; ksgui::Form; ksgui::ActiveButton; ksgui::CheckBox; ksgui::ConnectedLabel; ksgui::CustomSpinner; ksgui::Graph; ksgui::Label; ksgui::ListBox; ksgui::ListBoxRow; ksgui::TextBox; ksgui::MovingBar; ksgui::PopOver; ksgui::ProgressBar; ksgui::ScrollBar; ksgui::Slider; ksgui::Spinner; ksgui::Taskbar; ksgui::TaskBarIcon; ksgui::TextBox; ksgui::TextInput"
-set "ac_excl=-vec3f; -in_addr; -sockaddr_in; -IEventTrigger; -OnValueChanged; -IVertexBuffer; -VertexBuffer; -tagPOINT"
+set "ac_excl=-vec2f; -vec3f; -in_addr; -sockaddr_in; -IEventTrigger; -OnValueChanged; -IVertexBuffer; -VertexBuffer; -tagPOINT"
 
 set "ac_names=%ac_plugin%;%ac_game%;%ac_sim%;%ac_car%;%ac_render%;%ac_kgl%;%ac_gui%;%ac_excl%"

@@ -166,9 +166,9 @@ void _Tyre::_step(float dt)
 	}
 	else
 	{
-		vec3f vHitOff = vsub(vHitPos, this->worldPosition);
+		vec3f vHitOff = vHitPos - this->worldPosition;
 		float fDot = vdot(vHitNorm, vHitOff);
-		vHitPos = vadd(vmul(vHitNorm, fDot), this->worldPosition);
+		vHitPos = (vHitNorm * fDot) + this->worldPosition;
 	}
 
 	this->contactPoint = vHitPos;
@@ -220,13 +220,13 @@ void _Tyre::_step(float dt)
 		float fDamping = pSurface->damping;
 		if (fDamping > 0.0f)
 		{
-			auto bodyVel = this->car->body->getVelocity();
+			auto vBodyVel = this->car->body->getVelocity();
 			float fMass = this->car->body->getMass();
 
-			vec3f force(vmul(bodyVel, fMass * -fDamping));
-			vec3f pos(0, 0, 0);
+			vec3f vForce = vBodyVel * (fMass * -fDamping);
+			vec3f vPos(0, 0, 0);
 
-			this->car->body->addForceAtLocalPos(force, pos);
+			this->car->body->addForceAtLocalPos(vForce, vPos);
 		}
 	}
 
@@ -305,8 +305,8 @@ LB_COMPUTE_TORQ:
 
 void _Tyre::_addGroundContact(const vec3f& pos, const vec3f& normal)
 {
-	vec3f offset = vsub(this->worldPosition, pos);
-	float fDistToGround = vlen(offset);
+	vec3f vOffset = this->worldPosition - pos;
+	float fDistToGround = vlen(vOffset);
 	this->status.distToGround = fDistToGround;
 
 	float fRadius;
@@ -357,8 +357,7 @@ void _Tyre::_addGroundContact(const vec3f& pos, const vec3f& normal)
 		float fLoad = -(vdot(hubVel, normal) * this->data.d) + (fDepth * fMaybePressure);
 		this->status.load = fLoad;
 
-		vec3f force = vmul(normal, fLoad);
-		this->hub->addForceAtPos(force, pos, this->driven, false);
+		this->hub->addForceAtPos(normal * fLoad, pos, this->driven, false);
 
 		if (this->status.load < 0.0f)
 			this->status.load = 0.0f;
@@ -413,7 +412,7 @@ void _Tyre::_stepRotationMatrix(float dt)
 {
 	if (this->car && !this->car->isSleeping() && fabsf(this->status.angularVelocity) > 0.1)
 	{
-		vec3f vAxis = makev(1, 0, 0);
+		vec3f vAxis = vec3f(1, 0, 0);
 		float fAngle = dt * this->status.angularVelocity;
 		mat44f m = mat44f::createFromAxisAngle(vAxis, fAngle);
 

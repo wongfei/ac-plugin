@@ -17,7 +17,7 @@ inline void Car_forceRotationX(Car* pCar, mat44f& mat)
 inline void CarAvatar_teleport(CarAvatar* pCarAvatar, mat44f& mat)
 {
 	float height = pCarAvatar->raceEngineer->getBaseCarHeight();
-	vec3f pos = makev(mat.M41, mat.M42 - height, mat.M43);
+	vec3f pos = vec3f(mat.M41, mat.M42 - height, mat.M43);
 	pCarAvatar->physics->forcePosition(pos, true);
 	Car_forceRotationX(pCarAvatar->physics, mat);
 }

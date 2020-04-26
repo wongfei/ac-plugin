@@ -53,8 +53,8 @@ AppFaceTrack::AppFaceTrack(ACPlugin* plugin) : PluginApp(plugin, L"facetrack")
 
 	memset(&_ft_api, 0, sizeof(_ft_api));
 	_ft_handle = NULL;
-	_pos = makev(0, 0, 0);
-	_rot = makev(0, 0, 0);
+	_pos = vec3f(0, 0, 0);
+	_rot = vec3f(0, 0, 0);
 
 	loadFtLib();
 	//startTracking();
@@ -72,7 +72,7 @@ AppFaceTrack::~AppFaceTrack()
 bool AppFaceTrack::acpUpdate(ACCarState* carState, float deltaT)
 {
 	uint8_t tracking = false;
-	vec3f euler = makev(0, 0, 0);
+	vec3f euler = vec3f(0, 0, 0);
 
 	if (_ft_handle)
 	{

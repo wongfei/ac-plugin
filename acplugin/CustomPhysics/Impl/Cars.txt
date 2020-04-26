@@ -17,6 +17,24 @@ tractionType=0
 diffType=0
 numWings=3
 
+carName=Nissan GT-R R34 V-Spec
+tyreVersion=10
+suspensionTypeF=0
+suspensionTypeR=0
+torqueModeEx=0
+tractionType=3
+diffType=0
+numWings=4
+
+carName=Abarth 500 Assetto Corse
+tyreVersion=10
+suspensionTypeF=1
+suspensionTypeR=0
+torqueModeEx=0
+tractionType=1
+diffType=0
+numWings=3
+
 carName=BMW Z4 GT3
 tyreVersion=10
 suspensionTypeF=1
@@ -34,3 +52,12 @@ torqueModeEx=0
 tractionType=0
 diffType=0
 numWings=8
+
+carName=Alzen 996 Biturbo '05 (AWD)
+tyreVersion=10
+suspensionTypeF=1
+suspensionTypeR=3
+torqueModeEx=0
+tractionType=3
+diffType=0
+numWings=7

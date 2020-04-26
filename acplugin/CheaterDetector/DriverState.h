@@ -31,8 +31,8 @@ struct DriverState
 		perf.reset();
 		avg.reset();
 		datalog.clear();
-		vset(pos, 0, 0, 0);
-		vset(vel, 0, 0, 0);
+		pos = vec3f(0, 0, 0);
+		vel = vec3f(0, 0, 0);
 		complLapTime = 0;
 	}
 

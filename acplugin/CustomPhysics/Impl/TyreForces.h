@@ -151,7 +151,7 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 		this->localMX = -(this->status.loadedRadius * this->status.Fx);
 	}
 
-	vec3f torq = vmul(normal, tmo.Mz);
+	vec3f torq = normal * tmo.Mz;
 	this->hub->addTorque(torq);
 
 	float fAngularVelocityAbs = fabsf(this->status.angularVelocity);

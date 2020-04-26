@@ -1,17 +1,20 @@
 #pragma once
 
+#define DEBUG_BREAK __debugbreak()
+#define DEBUG_ASSERT assert
+
+#define NOT_IMPLEMENTED DEBUG_ASSERT(false)
+#define SHOULD_NOT_REACH DEBUG_ASSERT(false)
+
 // IDA types
+
 typedef uint8_t _BYTE;
 typedef uint16_t _WORD;
 typedef uint32_t _DWORD;
 typedef uint64_t _QWORD;
 typedef __m128 _OWORD;
 
-#define DEBUG_BREAK __debugbreak()
-#define DEBUG_ASSERT assert
-
-#define NOT_IMPLEMENTED DEBUG_ASSERT(false)
-#define SHOULD_NOT_REACH DEBUG_ASSERT(false)
+// Proxy hacks
 
 extern void* _ac_module;
 __forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
@@ -33,30 +36,47 @@ __forceinline TOUT xcast(TIN in)
     return u.out;
 }
 
+// Common
+
 struct _object {};
 
-//UDT: class vec3f @len=12
-//_Data: this+0x0, Member, Type: float, x
-//_Data: this+0x4, Member, Type: float, y
-//_Data: this+0x8, Member, Type: float, z
-//_Func: public void vec3f(double *  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void vec3f(float *  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void vec3f(float ix, float iy, float iz); @loc=static @len=18 @rva=147424
-//_Func: public void vec3f(float  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void vec3f(); @loc=optimized @len=0 @rva=0
-//_Func: public void normalize(); @loc=static @len=136 @rva=147456
-//_Func: public bool isZero(); @loc=optimized @len=0 @rva=0
-//_Func: public std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > toString(); @loc=static @len=322 @rva=340976
-//_Func: public float length(); @loc=optimized @len=0 @rva=0
-//_Func: public float lengthSquared(); @loc=optimized @len=0 @rva=0
-//_Func: public bool isFinite(); @loc=static @len=105 @rva=418800
-//_Func: public vec3f negate(); @loc=optimized @len=0 @rva=0
-//_Func: public void operator+=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void operator-=(vec3f &  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void operator*=(float  _arg0); @loc=optimized @len=0 @rva=0
-//_Func: public void operator/=(float m); @loc=static @len=47 @rva=908800
-//_Func: public void print(char * name); @loc=static @len=61 @rva=918176
-//UDT;
+template<typename T>
+class BufferedChannel
+{
+public:
+	Concurrency::concurrent_queue<T> queue;
+};
+
+// Math
+
+class vec2f {
+public:
+	float x;
+	float y;
+
+	inline vec2f() {}
+	inline vec2f(const vec2f& v) : x(v.x), y(v.y) {}
+	inline vec2f(float ix, float iy) : x(ix), y(iy) {}
+	inline explicit vec2f(const float* v) : x(v[0]), y(v[1]) {}
+
+	inline float& operator[](const int id) { return (&x)[id]; }
+	inline const float& operator[](const int id) const { return (&x)[id]; }
+
+	inline vec2f& operator=(const vec2f& v) { x = v.x, y = v.y; return *this; }
+
+	inline vec2f operator*(const float f) const { return vec2f(x * f, y * f); }
+	inline vec2f operator/(const float f) const { return vec2f(x / f, y / f); }
+
+	inline vec2f operator+(const vec2f& v) const { return vec2f(x + v.x, y + v.y); }
+	inline vec2f operator-(const vec2f& v) const { return vec2f(x - v.x, y - v.y); }
+	inline float operator*(const vec2f& v) const { return (x * v.x + y * v.y); }
+
+	inline vec2f& operator*=(const float f) { x *= f, y *= f; return *this; }
+	inline vec2f& operator/=(const float f) { x /= f, y /= f; return *this; }
+
+	inline vec2f& operator+=(const vec2f& v) { x += v.x, y += v.y; return *this; }
+	inline vec2f& operator-=(const vec2f& v) { x -= v.x, y -= v.y; return *this; }
+};
 
 class vec3f {
 public:
@@ -66,7 +86,11 @@ public:
 
 	inline vec3f() {}
 	inline vec3f(const vec3f& v) : x(v.x), y(v.y), z(v.z) {}
-	inline vec3f(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+	inline vec3f(float ix, float iy, float iz) : x(ix), y(iy), z(iz) {}
+	inline explicit vec3f(const float* v) : x(v[0]), y(v[1]), z(v[2]) {}
+
+	inline float& operator[](const int id) { return (&x)[id]; }
+	inline const float& operator[](const int id) const { return (&x)[id]; }
 
 	inline vec3f& operator=(const vec3f& v) { x = v.x, y = v.y, z = v.z; return *this; }
 
@@ -84,12 +108,36 @@ public:
 	inline vec3f& operator-=(const vec3f& v) { x -= v.x, y -= v.y, z -= v.z; return *this; }
 };
 
-template<typename T>
-class BufferedChannel
+template<typename T1, typename T2>
+class CubicSpline
 {
 public:
-	Concurrency::concurrent_queue<T> queue;
+	class Element
+	{
+		T1 x;
+		T2 a;
+		T2 b;
+		T2 c;
+		T2 d;
+	};
+	std::vector<Element> mElements;
+	virtual ~CubicSpline();
 };
+
+template<typename T>
+class SignalGenerator3D
+{
+public:
+	SignalGenerator3D() {}
+	virtual ~SignalGenerator3D() {}
+	vec3f freqScale;
+	vec3f scale;
+	float randomBlend;
+	T sins[3];
+	//uint8_t dummy[0x58];
+};
+
+// Event
 
 template<typename T>
 class Event
@@ -150,6 +198,8 @@ public:
 	Event<T>* srcEvent;
 };
 
+// VB
+
 class IVertexBuffer {
 public:
 	void* kid;
@@ -161,49 +211,19 @@ public:
 	virtual ~VertexBuffer();
 };
 
-template<typename T1, typename T2>
-class CubicSpline
-{
-public:
-	class Element
-	{
-		T1 x;
-		T2 a;
-		T2 b;
-		T2 c;
-		T2 d;
-	};
-	std::vector<Element> mElements;
-	virtual ~CubicSpline();
-};
-
-template<typename T>
-class SignalGenerator3D
-{
-public:
-	SignalGenerator3D() {}
-	virtual ~SignalGenerator3D() {}
-	vec3f freqScale;
-	vec3f scale;
-	float randomBlend;
-	T sins[3];
-	//uint8_t dummy[0x58];
-};
-
 #pragma warning(push)
 #pragma warning(disable: 4512) // warning C4512: assignment operator could not be generated
 #include "ac_gen.h"
 #pragma warning(pop)
 
-inline void vset(vec3f& v, float x, float y, float z) { v.x = x, v.y = y, v.z = z; }
-inline vec3f makev(float x, float y, float z) { vec3f r; r.x = x, r.y = y, r.z = z; return r; }
-inline vec3f vmul(const vec3f& a, float f) { return makev(a.x * f, a.y * f, a.z * f); }
-inline vec3f vdiv(const vec3f& a, float f) { return makev(a.x / f, a.y / f, a.z / f); }
-inline vec3f vadd(const vec3f& a, const vec3f& b) { return makev(a.x + b.x, a.y + b.y, a.z + b.z); }
-inline vec3f vsub(const vec3f& a, const vec3f& b) { return makev(a.x - b.x, a.y - b.y, a.z - b.z); }
+inline float vdot(const vec2f& a, const vec2f& b) { return (a.x * b.x + a.y * b.y); }
 inline float vdot(const vec3f& a, const vec3f& b) { return (a.x * b.x + a.y * b.y + a.z * b.z); }
-inline float vlen(const vec3f& v) { const float sqlen = vdot(v, v); return (sqlen != 0.0f ? sqrtf(sqlen) : 0.0f); }
-inline vec3f vnorm(const vec3f& v) { const float len = vlen(v); return (len != 0.0f ? vmul(v, 1.0f / len) : makev(0, 0, 0)); }
+inline float vlen(const vec2f& v) { return sqrtf(vdot(v, v)); }
+inline float vlen(const vec3f& v) { return sqrtf(vdot(v, v)); }
+inline vec2f vnorm(const vec2f& v) { const float len = vlen(v); return (len != 0.0f ? (v / len) : vec2f(0, 0)); }
+inline vec3f vnorm(const vec3f& v) { const float len = vlen(v); return (len != 0.0f ? (v / len) : vec3f(0, 0, 0)); }
+inline vec2f vnorm(const vec2f& v, float len) { return (len != 0.0f ? (v / len) : vec2f(0, 0)); }
+inline vec3f vnorm(const vec3f& v, float len) { return (len != 0.0f ? (v / len) : vec3f(0, 0, 0)); }
 
 inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) { 
 	const float s = 1 / 255.0f;

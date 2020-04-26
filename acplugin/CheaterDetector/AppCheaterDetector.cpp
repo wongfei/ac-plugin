@@ -5,7 +5,7 @@
 #define KW_TO_HP 1.34102f
 
 inline vec3f getTransform(const mat44f& m) {
-	return makev(m.M41, m.M42, m.M43);
+	return vec3f(m.M41, m.M42, m.M43);
 }
 
 inline std::wstring lapToStr(double lapTimeMs) {
@@ -215,8 +215,8 @@ void AppCheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* stat
 	perf[ePerfParam::Vel] = vlen(curVel);
 
 	const float dtinv = 1.0f / deltaT;
-	const vec3f dvel = vsub(curVel, driver->vel);
-	const vec3f accel = vmul(dvel, dtinv); // accel_avg = dv / dt
+	const vec3f dvel = curVel - driver->vel;
+	const vec3f accel = dvel * dtinv; // accel_avg = dv / dt
 
 	const float v1 = vlen(driver->vel);
 	const float v2 = vlen(curVel);

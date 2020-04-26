@@ -138,9 +138,9 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
 	#endif
 	
-	// # Suspension
+	// # Suspension (suspensions.ini)
 	#if 1
-	HOOK_METHOD_RVA(Suspension, step); // DoubleWishbone
+	HOOK_METHOD_RVA(Suspension, step); // DoubleWishbone "DWB"
 	HOOK_METHOD_RVA(SuspensionAxle, step);
 	HOOK_METHOD_RVA(SuspensionML, step);
 	HOOK_METHOD_RVA(SuspensionStrut, step);
@@ -191,8 +191,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 
 	// # Aero
 	#if 1
-	//HOOK_METHOD_RVA(SlipStream, getSlipEffect);
-	//HOOK_METHOD_RVA(SlipStream, setPosition);
+	HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
+	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	HOOK_METHOD_RVA(AeroMap, step);
 	HOOK_METHOD_RVA(AeroMap, addDrag);
 	HOOK_METHOD_RVA(AeroMap, addLift);
@@ -353,7 +353,7 @@ void AppCustomPhysics::stepNormal(PhysicsDriveThread* pThis)
 
 		if (iNumLoops > 1)
 		{
-			log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
+			//log_printf(L"HAD TO LOOP %u times", (unsigned int)iNumLoops);
 			if (fGt > 30000.0)
 				pThis->physicsLateLoops++;
 		}

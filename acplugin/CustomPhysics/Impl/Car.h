@@ -163,10 +163,9 @@ void _Car::_step(float dt)
 	}
 
 	vec3f bodyVel = this->body->getVelocity();
-	vec3f tmp = vsub(bodyVel, this->lastVelocity);
-	tmp = vmul(tmp, (1.0f / dt) * 0.10197838f);
 	this->lastVelocity = bodyVel;
 
+	vec3f tmp = (bodyVel - this->lastVelocity) * (1.0f / dt) * 0.10197838f;
 	vec3f accG = this->body->worldToLocalNormal(tmp);
 	this->accG = accG;
 
@@ -189,9 +188,8 @@ void _Car::_updateAirPressure() // TODO: check this
 		vec3f vPos = this->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
 		float fMinSlip = 1.0f;
 
-		for (auto iterSS = this->ksPhysics->slipStreams.begin(); iterSS != this->ksPhysics->slipStreams.end(); ++iterSS)
+		for (SlipStream* pSS : this->ksPhysics->slipStreams)
 		{
-			SlipStream* pSS = *iterSS;
 			if (pSS != &this->slipStream) // TODO: skip self?
 			{
 				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain);
