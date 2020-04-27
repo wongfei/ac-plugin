@@ -17,12 +17,12 @@ float _SlipStream::_getSlipEffect(const vec3f& p)
 	float fSlip = 0;
 
 	vec3f vDelta = (p - this->triangle.points[0]);
-	float fDeltaLen = vlen(vDelta);
+	float fDeltaLen = vDelta.len();
 
 	if (fDeltaLen < this->length)
 	{
-		vec3f vNorm = vnorm(vDelta, fDeltaLen);
-		float fDot = vdot(vNorm, this->dir);
+		vDelta.norm(fDeltaLen);
+		float fDot = vDelta * this->dir;
 
 		if (fDot <= 0.69999999f)
 			fSlip = 0.0f;
@@ -37,17 +37,18 @@ float _SlipStream::_getSlipEffect(const vec3f& p)
 
 void _SlipStream::_setPosition(const vec3f& pos, const vec3f& vel)
 {
+	// TODO: CHECK THIS!!!
+
 	this->triangle.points[0] = pos;
 
-	float fVelLen = vlen(vel);
-	vec3f vVelNorm = vnorm(vel, fVelLen);
-	this->dir = vVelNorm * -1.0f;
+	float fVelLen = vel.len();
+	this->dir = vel.get_norm(fVelLen) * -1.0f;
 
 	float fLen = (fVelLen * this->speedFactor) * this->speedFactorMult;
 	this->length = fLen;
 
-	vec2f vXZ = vec2f(vel.x, vel.z);
-	vec2f vNormXZ = vnorm(vXZ);
+	vec2f vNormXZ(vel.x, vel.z);
+	vNormXZ.norm();
 
 	/*
 	fOffX = (((fZero * 0.0) - vn_z) * fLength) * 0.25;

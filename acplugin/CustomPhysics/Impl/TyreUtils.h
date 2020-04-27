@@ -7,7 +7,7 @@ inline float calcSlipAngleRAD(float vy, float vx)
 	return 0;
 }
 
-inline float calcCamberRAD(vec3f& roadNormal, mat44f& susMatrix)
+inline float calcCamberRAD(const vec3f& roadNormal, const mat44f& susMatrix)
 {
 	float fTmp = ((susMatrix.M12 * roadNormal.y) + (susMatrix.M11 * roadNormal.x)) + (susMatrix.M13 * roadNormal.z);
 	if (fTmp <= -1.0f || fTmp >= 1.0f)

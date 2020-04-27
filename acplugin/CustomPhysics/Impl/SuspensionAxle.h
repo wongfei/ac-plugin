@@ -10,7 +10,7 @@ END_HOOK_OBJ()
 
 void _SuspensionAxle::_step(float dt)
 {
-	mat44f mxCarWorld = this->car->body->getWorldMatrix(0.0f);
+	mat44f mxBodyWorld = this->car->body->getWorldMatrix(0.0f);
 
 	mat44f mxAxle = this->axle->getWorldMatrix(0.0f);
 	vec3f vAxleM1(&mxAxle.M11);
@@ -26,8 +26,8 @@ void _SuspensionAxle::_step(float dt)
 	vec3f vBaseWorld = this->car->body->localToWorld(vBase);
 
 	vec3f vDelta = vBaseWorld - vAxleWorld;
-	float fDeltaLen = vlen(vDelta);
-	vDelta = vnorm(vDelta, fDeltaLen);
+	float fDeltaLen = vDelta.len();
+	vDelta.norm(fDeltaLen);
 
 	float fTravel = (0.2f - fDeltaLen) + this->rodLength;
 	this->status.travel = fTravel;
@@ -42,7 +42,7 @@ void _SuspensionAxle::_step(float dt)
 	if (this->leafSpringK.x != 0.0f)
 	{
 		fForce = (vAxleLocal.x - (this->attachRelativePos * this->getBasePosition().x)) * this->leafSpringK.x;
-		this->addForceAtPos(vec3f(&mxCarWorld.M11) * -fForce, vAxleWorld, false, false);
+		this->addForceAtPos(vec3f(&mxBodyWorld.M11) * -fForce, vAxleWorld, false, false);
 		this->car->body->addLocalForceAtLocalPos(vec3f(fForce, 0.0f, 0.0f), vAxleLocal);
 	}
 
@@ -51,7 +51,7 @@ void _SuspensionAxle::_step(float dt)
 	if (fBumpStopUp != 0.0f && fRefY > fBumpStopUp && 0.0f != this->k)
 	{
 		fForce = (fRefY - fBumpStopUp) * 500000.0f;
-		this->addForceAtPos(vec3f(&mxCarWorld.M21) * -fForce, vAxleWorld, false, false);
+		this->addForceAtPos(vec3f(&mxBodyWorld.M21) * -fForce, vAxleWorld, false, false);
 		this->car->body->addLocalForceAtLocalPos(vec3f(0.0f, fForce, 0.0f), vAxleLocal);
 	}
 
@@ -59,17 +59,17 @@ void _SuspensionAxle::_step(float dt)
 	if (fBumpStopDn != 0.0f && fRefY < fBumpStopDn && 0.0f != this->k)
 	{
 		fForce = (fRefY - fBumpStopDn) * 500000.0f;
-		this->addForceAtPos(vec3f(&mxCarWorld.M21) * -fForce, vAxleWorld, false, false);
+		this->addForceAtPos(vec3f(&mxBodyWorld.M21) * -fForce, vAxleWorld, false, false);
 		this->car->body->addLocalForceAtLocalPos(vec3f(0.0f, fForce, 0.0f), vAxleLocal);
 	}
 
 	vec3f vPointVel = this->car->body->getPointVelocity(vBaseWorld);
 	vec3f vDeltaVel = this->getVelocity() - vPointVel;
 
-	float fSpeed = vdot(vDeltaVel, vDelta);
-	this->status.damperSpeedMS = fSpeed;
+	float fDamperSpeed = vDeltaVel * vDelta;
+	this->status.damperSpeedMS = fDamperSpeed;
 
-	float fDamperForce = this->damper.getForce(fSpeed);
+	float fDamperForce = this->damper.getForce(fDamperSpeed);
 	vec3f vForce = vDelta * fDamperForce;
 	this->addForceAtPos(vForce, vAxleWorld, false, false);
 	this->car->body->addForceAtPos(vForce * -1.0f, vBaseWorld);

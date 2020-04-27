@@ -23,7 +23,7 @@ BrushOutput _BrushTyreModel::_solve(float slip, float friction, float load, floa
 	if (v8 <= v9)
 		v8 = v9;
 
-	float v10 = ((v8 * 2.0f) * 0.08f) * 0.08f;
+	float v10 = ((v8 * 2.0f) * 0.07999999f) * 0.07999999f;
 	float v11 = v10 / (friction * 3.0f);
 
 	float fNewSlip = slip / (1.0f / v11);
@@ -41,7 +41,7 @@ BrushOutput _BrushTyreModel::_solveV5(float slip, float load, float asy)
 {
 	BrushOutput result;
 
-	float v8 = ((((1.0f / ((((load - this->data.Fz0) / this->data.Fz0) * (this->data.maxSlip1 - this->data.maxSlip0)) + this->data.maxSlip0)) * 3.0f) * 78.125f) * 2.0f) * 0.0064f;
+	float v8 = ((((1.0f / ((((load - this->data.Fz0) / this->data.Fz0) * (this->data.maxSlip1 - this->data.maxSlip0)) + this->data.maxSlip0)) * 3.0f) * 78.125f) * 2.0f) * 0.006399999f;
 	float v9 = 1.0f / (v8 * 0.3333333f);
 
 	float fNewSlip = slip / v9;

@@ -56,7 +56,7 @@ void _Tyre::_step(float dt)
 	this->surfaceDef = nullptr;
 
 	mat44f mxWorld = this->hub->getHubWorldMatrix();
-	vec3f vWorldM2(mxWorld.M21, mxWorld.M22, mxWorld.M23);
+	vec3f vWorldM2(&mxWorld.M21);
 
 	this->worldPosition.x = mxWorld.M41;
 	this->worldPosition.y = mxWorld.M42;
@@ -78,8 +78,7 @@ void _Tyre::_step(float dt)
 		if (this->car && this->car->torqueModeEx == TorqueModeEX::reactionTorques)
 		{
 			float fTorq = this->inputs.electricTorque + this->inputs.brakeTorque + this->inputs.handBrakeTorque;
-			vec3f vTorq(mxWorld.M11 * fTorq, mxWorld.M12 * fTorq, mxWorld.M13 * fTorq);
-			this->hub->addTorque(vTorq);
+			this->hub->addTorque(vec3f(&mxWorld.M11) * fTorq);
 		}
 	}
 
@@ -128,7 +127,7 @@ void _Tyre::_step(float dt)
 
 	float fTest = 0;
 
-	if (!bHasContact || mxWorld.M22 <= 0.35f)
+	if (!bHasContact || mxWorld.M22 <= 0.34999999f)
 	{
 		this->status.ndSlip = 0.0f;
 		this->status.Fy = 0.0f;
@@ -138,8 +137,8 @@ void _Tyre::_step(float dt)
 	this->surfaceDef = pSurface;
 	this->unmodifiedContactPoint = vHitPos;
 
-	fTest = vdot(vHitNorm, vWorldM2);
-	if (fTest <= 0.96f)
+	fTest = vHitNorm * vWorldM2;
+	if (fTest <= 0.9599999f)
 	{
 		float fTestAcos;
 		if (fTest <= -1.0f || fTest >= 1.0f)
@@ -147,16 +146,16 @@ void _Tyre::_step(float dt)
 		else
 			fTestAcos = acosf(fTest);
 
-		float fAngle = fTestAcos - acosf(0.96f);
+		float fAngle = fTestAcos - acosf(0.9599999f);
 
+		// TODO: cross product?
 		vec3f vAxis(
 			(vWorldM2.z * vHitNorm.y) - (vWorldM2.y * vHitNorm.z),
 			(vWorldM2.x * vHitNorm.z) - (vWorldM2.z * vHitNorm.x),
 			(vWorldM2.y * vHitNorm.x) - (vWorldM2.x * vHitNorm.y)
 		);
 
-		vAxis = vnorm(vAxis);
-		mat44f mxHit = mat44f::createFromAxisAngle(vAxis, fAngle);
+		mat44f mxHit = mat44f::createFromAxisAngle(vAxis.get_norm(), fAngle);
 
 		vHitNorm = vec3f(
 			(((mxHit.M11 * vHitNorm.x) + (mxHit.M21 * vHitNorm.y)) + (mxHit.M31 * vHitNorm.z)) + mxHit.M41,
@@ -167,7 +166,7 @@ void _Tyre::_step(float dt)
 	else
 	{
 		vec3f vHitOff = vHitPos - this->worldPosition;
-		float fDot = vdot(vHitNorm, vHitOff);
+		float fDot = vHitNorm * vHitOff;
 		vHitPos = (vHitNorm * fDot) + this->worldPosition;
 	}
 
@@ -187,7 +186,7 @@ void _Tyre::_step(float dt)
 	if (pSurface->granularity != 0.0f)
 	{
 		float v1[3] = { 1.0f, 5.8f, 11.4f };
-		float v2[3] = { 0.005f, 0.005f, 0.01f };
+		float v2[3] = { 0.0049999999f, 0.0049999999f, 0.009999999f };
 
 		float cx = this->contactPoint.x;
 		float cy = this->contactPoint.y;
@@ -217,13 +216,12 @@ void _Tyre::_step(float dt)
 
 	if (pSurface)
 	{
-		float fDamping = pSurface->damping;
-		if (fDamping > 0.0f)
+		if (pSurface->damping > 0.0f)
 		{
 			auto vBodyVel = this->car->body->getVelocity();
 			float fMass = this->car->body->getMass();
 
-			vec3f vForce = vBodyVel * (fMass * -fDamping);
+			vec3f vForce = vBodyVel * -(fMass * pSurface->damping);
 			vec3f vPos(0, 0, 0);
 
 			this->car->body->addForceAtLocalPos(vForce, vPos);
@@ -270,11 +268,11 @@ LB_COMPUTE_TORQ:
 	{
 		this->updateLockedState(dt);
 
-		float fOldAngularVelocitySign = signf(this->oldAngularVelocity);
-		fAngularVelocitySign = signf(this->status.angularVelocity);
+		float fS0 = signf(this->oldAngularVelocity);
+		float fS1 = signf(this->status.angularVelocity);
 
-		if (fOldAngularVelocitySign != fAngularVelocitySign && this->totalHubVelocity < 1.0)
-			this->status.isLocked = 1;
+		if (fS0 != fS1 && this->totalHubVelocity < 1.0f)
+			this->status.isLocked = true;
 
 		this->oldAngularVelocity = this->status.angularVelocity;
 	}
@@ -284,9 +282,8 @@ LB_COMPUTE_TORQ:
 		this->stepRotationMatrix(dt);
 	}
 
-	float fTotalHubVelocity = this->totalHubVelocity;
-	if (fTotalHubVelocity < 10.0f)
-		this->status.slipFactor = fabsf(fTotalHubVelocity * 0.1f) * this->status.slipFactor;
+	if (this->totalHubVelocity < 10.0f)
+		this->status.slipFactor = fabsf(this->totalHubVelocity * 0.1f) * this->status.slipFactor;
 
 	this->stepThermalModel(dt);
 
@@ -306,7 +303,7 @@ LB_COMPUTE_TORQ:
 void _Tyre::_addGroundContact(const vec3f& pos, const vec3f& normal)
 {
 	vec3f vOffset = this->worldPosition - pos;
-	float fDistToGround = vlen(vOffset);
+	float fDistToGround = vOffset.len();
 	this->status.distToGround = fDistToGround;
 
 	float fRadius;
@@ -353,8 +350,8 @@ void _Tyre::_addGroundContact(const vec3f& pos, const vec3f& normal)
 				fMaybePressure = 0.0f;
 		}
 
-		vec3f hubVel = this->hub->getPointVelocity(pos);
-		float fLoad = -(vdot(hubVel, normal) * this->data.d) + (fDepth * fMaybePressure);
+		vec3f vHubVel = this->hub->getPointVelocity(pos);
+		float fLoad = -((vHubVel * normal) * this->data.d) + (fDepth * fMaybePressure);
 		this->status.load = fLoad;
 
 		this->hub->addForceAtPos(normal * fLoad, pos, this->driven, false);
@@ -373,9 +370,7 @@ void _Tyre::_updateLockedState(float dt)
 {
 	if (this->status.isLocked)
 	{
-		float fBrake = this->absOverride * this->inputs.brakeTorque;
-		if (fBrake <= this->inputs.handBrakeTorque)
-			fBrake = this->inputs.handBrakeTorque;
+		float fBrake = tmax(this->absOverride * this->inputs.brakeTorque, this->inputs.handBrakeTorque);
 
 		this->status.isLocked =
 			(fabsf(fBrake) >= fabsf(this->status.loadedRadius * this->status.Fx))
@@ -390,32 +385,25 @@ void _Tyre::_updateAngularSpeed(float dt)
 {
 	this->updateLockedState(dt);
 
-	float fAngVel = ((this->status.feedbackTorque / this->data.angularInertia) * dt) + this->status.angularVelocity;
-	float fOldAngVel = this->oldAngularVelocity;
+	float fAngVel = this->status.angularVelocity + ((this->status.feedbackTorque / this->data.angularInertia) * dt);
 
-	const float s1 = signf(fOldAngVel);
-	const float s2 = signf(fAngVel);
-
-	if (s1 != s2)
+	if (signf(fAngVel) != signf(this->oldAngularVelocity))
 		this->status.isLocked = true;
 
-	this->status.angularVelocity = this->status.isLocked ? 0.0f : fAngVel;
 	this->oldAngularVelocity = fAngVel;
+	this->status.angularVelocity = this->status.isLocked ? 0.0f : fAngVel;
 
 	if (fabsf(this->status.angularVelocity) < 1.0f)
-		this->status.angularVelocity = this->status.angularVelocity * 0.9f;
+		this->status.angularVelocity *= 0.8999999f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _Tyre::_stepRotationMatrix(float dt)
 {
-	if (this->car && !this->car->isSleeping() && fabsf(this->status.angularVelocity) > 0.1)
+	if (this->car && !this->car->isSleeping() && fabsf(this->status.angularVelocity) > 0.1f)
 	{
-		vec3f vAxis = vec3f(1, 0, 0);
-		float fAngle = dt * this->status.angularVelocity;
-		mat44f m = mat44f::createFromAxisAngle(vAxis, fAngle);
-
+		mat44f m = mat44f::createFromAxisAngle(vec3f(1, 0, 0), this->status.angularVelocity * dt);
 		auto xm = DirectX::XMMatrixMultiply(xmload(m), xmload(this->localWheelRotation));
 
 		this->localWheelRotation = xmstore(xm);
@@ -454,14 +442,14 @@ void _Tyre::_stepThermalModel(float dt)
 
 		float fScale = (((fIdealPressure / fPressureDynamic) - 1.0f) * this->modelData.pressureRRGain) + 1.0f;
 		if (fPressureDynamic >= 0.0)
-			fThermalRollingK = fThermalRollingK * fScale;
+			fThermalRollingK *= fScale;
 
 		int iVer = this->modelData.version;
 		if (iVer < 5)
-			this->status.thermalInput = (((fThermalRollingK * this->status.angularVelocity) * this->status.load) * 0.001f) + this->status.thermalInput;
+			this->status.thermalInput += (((fThermalRollingK * this->status.angularVelocity) * this->status.load) * 0.001f);
 
 		if (iVer >= 6)
-			this->status.thermalInput = ((((fScale * this->data.thermalRollingSurfaceK) * this->status.angularVelocity) * this->status.load) * 0.001f) + this->status.thermalInput;
+			this->status.thermalInput += ((((fScale * this->data.thermalRollingSurfaceK) * this->status.angularVelocity) * this->status.load) * 0.001f);
 
 		this->thermalModel.addThermalInput(this->status.camberRAD, (fPressureDynamic / fIdealPressure) - 1.0f, this->status.thermalInput);
 
@@ -488,13 +476,10 @@ void _Tyre::_stepTyreBlankets(float dt)
 {
 	if (this->tyreBlanketsOn)
 	{
-		if (Car_getSpeedValue(this->car) * 3.6f > 10.0f)
-			this->tyreBlanketsOn = 0.0f;
+		if (getSpeedKMH(this->car) > 10.0f)
+			this->tyreBlanketsOn = false;
 
-		float fTemp = this->blanketTemperature;
-		if (fTemp >= this->data.optimumTemp)
-			fTemp = this->data.optimumTemp;
-
+		float fTemp = tmin(this->blanketTemperature, this->data.optimumTemp);
 		this->thermalModel.setTemperature(fTemp);
 	}
 }
@@ -509,13 +494,9 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 	{
 		if (this->status.load > 0.0f)
 		{
-			float fNdSlip = this->status.ndSlip;
-			if (fNdSlip >= 2.5f)
-				fNdSlip = 2.5f;
-
-			float fCoreTemp = this->thermalModel.coreTemp;
 			float fGrainGain = this->data.grainGain;
-			float fSlipGamma = powf(fNdSlip, this->data.grainGamma);
+			float fCoreTemp = this->thermalModel.coreTemp;
+			float fNdSlip = tmin(this->status.ndSlip, 2.5f);
 
 			if (fGrainGain > 0.0f)
 			{
@@ -528,12 +509,12 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 						if (hubVelocity > 2.0f)
 						{
 							float fGripMod = pSurface->gripMod;
-							if (fGripMod >= 0.95f)
+							if (fGripMod >= 0.94999999f)
 							{
-								float fTest = ((hubVelocity * fGripMod) * fGrainGain) * ((fGrainThreshold - fCoreTemp) * 0.0001f);
+								float fTest = ((fGripMod * hubVelocity) * fGrainGain) * ((fGrainThreshold - fCoreTemp) * 0.0001f);
 								if (isfinite(fTest))
 								{
-									this->status.grain += fTest * fSlipGamma * this->car->ksPhysics->tyreConsumptionRate * dt;
+									this->status.grain += fTest * powf(fNdSlip, this->data.grainGamma) * this->car->ksPhysics->tyreConsumptionRate * dt;
 								}
 								else
 								{
@@ -548,11 +529,11 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 			auto pSurface = this->surfaceDef;
 			if (pSurface)
 			{
-				float fTest = (hubVelocity * pSurface->gripMod) * fGrainGain * 0.00005f;
+				float fTest = (pSurface->gripMod * hubVelocity) * fGrainGain * 0.00005f;
 				if (isfinite(fTest))
 				{
 					if (fTest > 0.0f)
-						this->status.grain -= fTest * fSlipGamma * this->car->ksPhysics->tyreConsumptionRate * dt;
+						this->status.grain -= fTest * powf(fNdSlip, this->data.grainGamma) * this->car->ksPhysics->tyreConsumptionRate * dt;
 				}
 				else
 				{
@@ -572,13 +553,12 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 						if (hubVelocity > 2.0f)
 						{
 							float fGripMod = pSurface->gripMod;
-							if (fGripMod >= 0.95f)
+							if (fGripMod >= 0.94999999f)
 							{
-								float fBlisterGamma = this->data.blisterGamma;
-								float fTest = ((this->totalHubVelocity * fGripMod) * fBlisterGain) * ((fCoreTemp - fBlisterThreshold) * 0.0001f);
+								float fTest = ((fGripMod * this->totalHubVelocity) * fBlisterGain) * ((fCoreTemp - fBlisterThreshold) * 0.0001f);
 								if (isfinite(fTest))
 								{
-									this->status.blister += fTest * powf(fNdSlip, fBlisterGamma) * this->car->ksPhysics->tyreConsumptionRate * dt;
+									this->status.blister += fTest * powf(fNdSlip, this->data.blisterGamma) * this->car->ksPhysics->tyreConsumptionRate * dt;
 								}
 								else
 								{
@@ -617,9 +597,9 @@ void _Tyre::_stepFlatSpot(float dt, float hubVelocity)
 					if (fDamage != 0.0f)
 					{
 						float fGrip = this->surfaceDef->gripMod;
-						if (fGrip >= 0.95f)
+						if (fGrip >= 0.94999999f)
 						{
-							this->status.flatSpot = (((hubVelocity * this->flatSpotK) * this->status.load) * fGrip) * 0.00001f * dt * fDamage * this->data.softnessIndex + this->status.flatSpot;
+							this->status.flatSpot += (((hubVelocity * this->flatSpotK) * this->status.load) * fGrip) * 0.00001f * dt * fDamage * this->data.softnessIndex;
 
 							if (this->status.flatSpot > 1.0f)
 								this->status.flatSpot = 1.0f;

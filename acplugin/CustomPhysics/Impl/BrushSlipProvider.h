@@ -10,13 +10,13 @@ END_HOOK_OBJ()
 
 TyreSlipOutput _BrushSlipProvider::_getSlipForce(TyreSlipInput &input, bool useasy)
 {
+	DEBUG_BREAK; // TODO: what car uses this code?
+
 	TyreSlipOutput tso;
 	BrushOutput bo;
 
 	if (this->version < 5)
 	{
-		DEBUG_BREAK; // TODO: what car uses this code?
-
 		// (float slip, float friction, float load, float cf1_mix, float asy)
 		bo = this->brushModel.solve(input.slip, 1.0f, input.load, 1.0f, 1.0f); // TODO: not sure
 	}

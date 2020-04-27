@@ -24,51 +24,45 @@ void _Car::_step(float dt)
 {
 	if (!this->physicsGUID)
 	{
-		vec3f bodyVelocity = this->body->getVelocity();
-		float fVelSq = vdot(bodyVelocity, bodyVelocity);
-		float ERP;
+		vec3f vBodyVelocity = this->body->getVelocity();
+		float fVelSq = vBodyVelocity.sqlen();
+		float fERP;
 
 		if (fVelSq >= 1.0f)
 		{
-			ERP = 0.3f;
-			for (auto& pSusp : this->suspensions)
+			fERP = 0.3f;
+			for (auto* pSusp : this->suspensions)
 			{
-				pSusp->setERPCFM(ERP, pSusp->baseCFM);
+				pSusp->setERPCFM(fERP, pSusp->baseCFM);
 			}
 		}
 		else
 		{
-			ERP = 0.9f;
-			for (auto& pSusp : this->suspensions)
+			fERP = 0.9f;
+			for (auto* pSusp : this->suspensions)
 			{
-				pSusp->setERPCFM(ERP, 0.0000001f);
+				pSusp->setERPCFM(fERP, 0.0000001f);
 			}
 		}
 
-		this->fuelTankJoint->setERPCFM(ERP, -1.0f);
+		this->fuelTankJoint->setERPCFM(fERP, -1.0f);
 	}
 
-	bool bControlsLocked = this->isControlsLocked || this->lockControlsTime > this->ksPhysics->physicsTime;
+	bool bControlsLocked = (this->isControlsLocked || (this->lockControlsTime > this->ksPhysics->physicsTime));
 
 	this->pollControls(dt);
 
 	bool bHeadlightsSwitch = this->controlsProvider->getAction(DriverActions::eHeadlightsSwitch);
 
 	if (this->controlsProvider && bHeadlightsSwitch && !this->lastLigthSwitchState)
-		this->lightsOn = this->lightsOn == 0;
+		this->lightsOn = !this->lightsOn;
 
 	this->lastLigthSwitchState = bHeadlightsSwitch;
 
 	if (this->blackFlagged && !this->isInPits())
 	{
-		// TODO: check
-		const float* M3 = &this->pitPosition.M31;
-		vec3f vRot(-M3[0], -M3[1], -M3[2]);
-		this->forceRotation(vRot);
-
-		const float* M4 = &this->pitPosition.M41;
-		vec3f vPos(M4[0], M4[1], M4[2]);
-		this->forcePosition(vPos, true);
+		this->forceRotation(vec3f(&this->pitPosition.M31) * -1.0f);
+		this->forcePosition(vec3f(&this->pitPosition.M41), true);
 	}
 
 	this->updateAirPressure();
@@ -133,22 +127,22 @@ void _Car::_step(float dt)
 
 	this->autoClutch.step(dt);
 
-	float fSpeed = Car_getSpeedValue(this);
+	float fSpeed = getSpeedMS(this);
 	vec3f fAngVel = this->body->getAngularVelocity();
-	float fAngVelMag = vdot(fAngVel, fAngVel);
+	float fAngVelSq = fAngVel.sqlen();
 
-	if (fSpeed >= 0.5f || fAngVelMag >= 1.0f)
+	if (fSpeed >= 0.5f || fAngVelSq >= 1.0f)
 	{
 		this->sleepingFrames = 0;
 	}
 	else
 	{
-		if ((this->controls.gas <= 0.01f
-			|| this->controls.clutch <= 0.01f
-			|| this->drivetrain.currentGear == 1)
-			&& bAllTyresLoaded)
+		if (bAllTyresLoaded 
+			&& (this->controls.gas <= 0.009999999f 
+				|| this->controls.clutch <= 0.009999999f 
+				|| this->drivetrain.currentGear == 1))
 		{
-			++this->sleepingFrames;
+			this->sleepingFrames++;
 		}
 		else
 		{
@@ -162,12 +156,10 @@ void _Car::_step(float dt)
 		}
 	}
 
-	vec3f bodyVel = this->body->getVelocity();
-	this->lastVelocity = bodyVel;
-
-	vec3f tmp = (bodyVel - this->lastVelocity) * (1.0f / dt) * 0.10197838f;
-	vec3f accG = this->body->worldToLocalNormal(tmp);
-	this->accG = accG;
+	vec3f vBodyVel = this->body->getVelocity();
+	vec3f vAccel = (vBodyVel - this->lastVelocity) * (1.0f / dt) * 0.10197838f;
+	this->lastVelocity = vBodyVel;
+	this->accG = this->body->worldToLocalNormal(vAccel);
 
 	this->stepThermalObjects(dt);
 	this->stepComponents(dt);
@@ -179,26 +171,23 @@ void _Car::_step(float dt)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _Car::_updateAirPressure() // TODO: check this
+void _Car::_updateAirPressure()
 {
 	float fAirDensity = this->ksPhysics->getAirDensity();
 
 	if (this->slipStreamEffectGain > 0.0f)
 	{
-		vec3f vPos = this->body->getPosition(0.0f); // TODO: not sure about param value -> interpolationT
+		vec3f vPos = this->body->getPosition(0.0f);
 		float fMinSlip = 1.0f;
 
 		for (SlipStream* pSS : this->ksPhysics->slipStreams)
 		{
-			if (pSS != &this->slipStream) // TODO: skip self?
+			if (pSS != &this->slipStream)
 			{
-				float fSlip = 1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain);
-				fSlip = tclamp(fSlip, 0.0f, 1.0f);
+				float fSlip = tclamp((1.0f - (pSS->getSlipEffect(vPos) * this->slipStreamEffectGain)), 0.0f, 1.0f);
 
 				if (fMinSlip > fSlip)
-				{
 					fMinSlip = fSlip;
-				}
 			}
 		}
 
@@ -253,8 +242,8 @@ void _Car::_stepThermalObjects(float dt)
 		float fLimiter = (float)this->drivetrain.acEngine.getLimiterRPM();
 		this->water.addHeadSource((((fRpm / fLimiter) * 20.0f) * this->controls.gas) + 85.0f);
 	}
-
-	this->water.step(dt, this->ksPhysics->ambientTemperature, this->valueCache.speed);
+	
+	this->water.step(dt, this->ksPhysics->ambientTemperature, this->getSpeed());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +253,7 @@ void _Car::_stepComponents(float dt)
 	this->brakeSystem.step(dt);
 	this->edl.step(dt);
 
-	for (auto& susp : this->suspensions)
+	for (auto* susp : this->suspensions)
 	{
 		susp->step(dt);
 	}

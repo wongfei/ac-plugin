@@ -37,26 +37,21 @@ void _AeroMap::_step(float dt)
 
 void _AeroMap::_addDrag(const vec3f& lv)
 {
-	float fDot = vdot(lv, lv);
+	float fDot = lv.sqlen();
 	if (fDot != 0.0f)
 	{
 		vec3f vNorm = lv / sqrtf(fDot);
+		this->dynamicCD = (((fabsf(vNorm.x) * this->CD) * this->CDX) + this->CD) + ((fabsf(vNorm.y) * this->CD) * this->CDY);
 
-		float fDynamicCD = (((fabsf(vNorm.x) * this->CD) * this->CDX) + this->CD) + ((fabsf(vNorm.y) * this->CD) * this->CDY);
-		this->dynamicCD = fDynamicCD;
-
-		float fDrag = ((fDynamicCD * fDot) * this->airDensity) * this->referenceArea;
-		vec3f vForce = vNorm * -(fDrag * 0.5f);
-		this->carBody->addLocalForce(vForce);
+		float fDrag = ((this->dynamicCD * fDot) * this->airDensity) * this->referenceArea;
+		this->carBody->addLocalForce(vNorm * -(fDrag * 0.5f));
 
 		vec3f vAngVel = this->carBody->getAngularVelocity();
-		fDot = vdot(vAngVel, vAngVel);
-
+		fDot = vAngVel.sqlen();
 		if (fDot != 0.0f)
 		{
 			vNorm = vAngVel / sqrtf(fDot);
-			vec3f vTorq = vNorm * -(fDot * this->CDA);
-			this->carBody->addLocalTorque(vTorq);
+			this->carBody->addLocalTorque(vNorm * -(fDot * this->CDA));
 		}
 	}
 }

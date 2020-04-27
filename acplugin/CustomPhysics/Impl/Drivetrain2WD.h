@@ -16,13 +16,13 @@ void _Drivetrain::_step2WD(float dt)
 		this->gearRequest.timeAccumulator += dt;
 	}
 
-	const SGearRatio& curGear = this->gears[this->currentGear]; // this->getCurrentGear()
+	const SGearRatio& curGear = this->gears[this->currentGear]; // getCurrentGear()
 	this->ratio = this->finalRatio * curGear.ratio;
 	this->engine.inertia = this->acEngine.inertia;
 
-	for (auto& TorqGen : this->wheelTorqueGenerators)
+	for (auto* pTorqGen : this->wheelTorqueGenerators)
 	{
-		float fTorq = TorqGen->getOutputTorque() * 0.5f;
+		float fTorq = pTorqGen->getOutputTorque() * 0.5f;
 		this->tyreLeft->status.feedbackTorque += fTorq;
 		this->tyreRight->status.feedbackTorque += fTorq;
 	}
@@ -173,7 +173,7 @@ void _Drivetrain::_step2WD(float dt)
 		if (fabs(this->outShaftL.velocity - this->drive.velocity) >= 0.1
 			|| fabs(this->tyreRight->status.feedbackTorque - this->tyreLeft->status.feedbackTorque) > fDiffTotalLoad)
 		{
-			double fUnk1 = -((this->outShaftL.velocity - this->outShaftR.velocity) / (fabs(this->outShaftL.velocity - this->outShaftR.velocity) + 0.01) * fDiffTotalLoad);
+			double fUnk1 = -((this->outShaftL.velocity - this->outShaftR.velocity) / (fabs(this->outShaftL.velocity - this->outShaftR.velocity) + 0.009999999) * fDiffTotalLoad);
 			double fDeltaV1 = dt * (fUnk1 / this->outShaftL.inertia * 0.5);
 			this->outShaftL.velocity += fDeltaV1;
 			this->outShaftR.velocity -= fDeltaV1;
@@ -202,7 +202,7 @@ void _Drivetrain::_step2WD(float dt)
 
 		if (fabs(this->ratio * this->acEngine.status.outTorque) <= (fTorqL + fTorqR))
 		{
-			if (Car_getSpeedValue(pCar) <= 1.0f)
+			if (getSpeedMS(pCar) <= 1.0f)
 				bFlag = false;
 		}
 
@@ -252,15 +252,12 @@ void _Drivetrain::_step2WD(float dt)
 	{
 		float fAxleTorq = fGearTorque * pCar->axleTorqueReaction;
 
-		vec3f vTorq = vec3f(0, 0, fAxleTorq);
-		pCar->body->addLocalTorque(vTorq);
-
-		vTorq = vec3f(0, 0, -fAxleTorq);
-		pCar->rigidAxle->addLocalTorque(vTorq);
+		pCar->body->addLocalTorque(vec3f(0, 0, fAxleTorq));
+		pCar->rigidAxle->addLocalTorque(vec3f(0, 0, -fAxleTorq));
 
 		if (pCar->torqueModeEx == TorqueModeEX::reactionTorques)
 		{
-			vTorq = vec3f(-fGearTorque, 0, 0);
+			vec3f vTorq = vec3f(-fGearTorque, 0, 0);
 
 			if (pCar->axleTorqueReaction == 0.0f)
 				pCar->body->addLocalTorque(vTorq);
@@ -282,18 +279,12 @@ void _Drivetrain::_step2WD(float dt)
 			suspId[1] = 3;
 		}
 
-		float fNegGearTorque = -fGearTorque;
-
 		for (int i = 0; i < 2; ++i)
 		{
 			ISuspension* pSusp = pCar->suspensions[suspId[i]];
 			mat44f mxHubWorld = pSusp->getHubWorldMatrix();
 
-			vec3f vTorq(
-				mxHubWorld.M11 * fNegGearTorque * 0.5f,
-				mxHubWorld.M12 * fNegGearTorque * 0.5f,
-				mxHubWorld.M13 * fNegGearTorque * 0.5f);
-
+			vec3f vTorq = vec3f(&mxHubWorld.M11) * -(fGearTorque * 0.5f);
 			pCar->body->addTorque(vTorq);
 		}
 	}

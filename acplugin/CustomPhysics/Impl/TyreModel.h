@@ -18,11 +18,13 @@ END_HOOK_OBJ()
 
 TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
 {
+	// TODO: MAD SHIT!!!
+
 	TyreModelOutput tmo;
+	memset(&tmo, 0, sizeof(tmo));
 
 	if (tmi.load <= 0.0 || tmi.slipAngleRAD == 0.0 && tmi.slipRatio == 0.0 && tmi.camberRAD == 0.0)
 	{
-		memset(&tmo, 0, sizeof(tmo));
 		return tmo;
 	}
 
@@ -75,7 +77,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
 
 	float fSlipRatio = tmi.slipRatio;
 	float fSlipAngleCos = cosf(tmi.slipAngleRAD);
-	float fSlipRatioClamped = (fSlipRatio > -0.99998999f ? fSlipRatio : -0.99999f); // ???
+	float fSlipRatioClamped = (fSlipRatio > -0.9999899f ? fSlipRatio : -0.9999899f); // ???
 
 	float fSpeed = tmi.speed;
 	float a = fSpeed * fSlipAngleSin;
@@ -88,6 +90,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
 
 	float fLoadSubFz0 = tmi.load - this->Fz0;
 	float fPCfGain = this->pressureCfGain;
+
 	float fCF = ((((1.0f / ((((fLoadSubFz0 / this->Fz0) * (this->maxSlip1 - this->maxSlip0)) + this->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.0099999998f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
 
 	float fUnk3 = fSlipRatio / (fSlipRatioClamped + 1.0f);
@@ -111,17 +114,14 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
 	tmo.Fy = ((fPureFyDy * fDy) * (fUnk4 / fSlip)) * tmi.load;
 	tmo.Fx = ((fUnk3 / fSlip) * fPureFyDx) * tmi.load;
 
-	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.0063999998f) / 3.0f));
+	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.006399999f) / 3.0f));
 	tmo.ndSlip = fNdSlip;
 
-	float fUnk5 = 1.0f - (fNdSlip * 0.80000001f);
-	fUnk5 = tclamp(fUnk5, 0.0f, 1.0f);
+	float fUnk5 = tclamp((1.0f - (fNdSlip * 0.8f)), 0.0f, 1.0f);
+	float fUnk6 = (((((3.0f - (fUnk5 * 2.0f)) * (fUnk5 * fUnk5)) * 1.1f) - 0.1f) * tmi.cpLength) * 0.12f;
 
-	float fTrail = (((((3.0f - (fUnk5 * 2.0f)) * (fUnk5 * fUnk5)) * 1.1f) - 0.1f) * tmi.cpLength) * 0.12f;
-	tmo.trail = fTrail * tclamp(tmi.speed, 0.0f, 1.0f);
-
-	tmo.Mz = -(fTrail * tmo.Fy);
-
+	tmo.Mz = -(fUnk6 * tmo.Fy);
+	tmo.trail = fUnk6 * tclamp(tmi.speed, 0.0f, 1.0f);
 	tmo.Dy = fDy;
 	tmo.Dx = fDx;
 
@@ -166,7 +166,7 @@ float _SCTM::_getStaticDY(float load)
 
 float _SCTM::_getPureFY(float D, float cf, float load, float slip)
 {
-	float v5 = (cf * 2.0f) * 0.0063999998f;
+	float v5 = (cf * 2.0f) * 0.006399999f;
 	float v6 = 1.0f / (v5 / 3.0f);
 	float fy;
 

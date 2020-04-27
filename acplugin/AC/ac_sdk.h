@@ -66,16 +66,25 @@ public:
 
 	inline vec2f operator*(const float f) const { return vec2f(x * f, y * f); }
 	inline vec2f operator/(const float f) const { return vec2f(x / f, y / f); }
-
 	inline vec2f operator+(const vec2f& v) const { return vec2f(x + v.x, y + v.y); }
 	inline vec2f operator-(const vec2f& v) const { return vec2f(x - v.x, y - v.y); }
 	inline float operator*(const vec2f& v) const { return (x * v.x + y * v.y); }
 
 	inline vec2f& operator*=(const float f) { x *= f, y *= f; return *this; }
 	inline vec2f& operator/=(const float f) { x /= f, y /= f; return *this; }
-
 	inline vec2f& operator+=(const vec2f& v) { x += v.x, y += v.y; return *this; }
 	inline vec2f& operator-=(const vec2f& v) { x -= v.x, y -= v.y; return *this; }
+
+	inline vec2f clone() const { return *this; }
+
+	inline float sqlen() const { return (x * x + y * y); }
+	inline float len() const { return sqrtf(sqlen()); }
+
+	inline vec2f& norm(float l) { if (l != 0.0f) { (*this) *= (1.0f / l); } return *this; }
+	inline vec2f& norm() { return norm(len()); }
+
+	inline vec2f get_norm(float l) const { return clone().norm(l); }
+	inline vec2f get_norm() const { return clone().norm(); }
 };
 
 class vec3f {
@@ -96,16 +105,25 @@ public:
 
 	inline vec3f operator*(const float f) const { return vec3f(x * f, y * f, z * f); }
 	inline vec3f operator/(const float f) const { return vec3f(x / f, y / f, z / f); }
-
 	inline vec3f operator+(const vec3f& v) const { return vec3f(x + v.x, y + v.y, z + v.z); }
 	inline vec3f operator-(const vec3f& v) const { return vec3f(x - v.x, y - v.y, z - v.z); }
 	inline float operator*(const vec3f& v) const { return (x * v.x + y * v.y + z * v.z); }
 
 	inline vec3f& operator*=(const float f) { x *= f, y *= f, z *= f; return *this; }
 	inline vec3f& operator/=(const float f) { x /= f, y /= f, z /= f; return *this; }
-
 	inline vec3f& operator+=(const vec3f& v) { x += v.x, y += v.y, z += v.z; return *this; }
 	inline vec3f& operator-=(const vec3f& v) { x -= v.x, y -= v.y, z -= v.z; return *this; }
+
+	inline vec3f clone() const { return *this; }
+
+	inline float sqlen() const { return (x * x + y * y + z * z); }
+	inline float len() const { return sqrtf(sqlen()); }
+
+	inline vec3f& norm(float l) { if (l != 0.0f) { (*this) *= (1.0f / l); } return *this; }
+	inline vec3f& norm() { return norm(len()); }
+
+	inline vec3f get_norm(float l) const { return clone().norm(l); }
+	inline vec3f get_norm() const { return clone().norm(); }
 };
 
 template<typename T1, typename T2>
@@ -134,7 +152,6 @@ public:
 	vec3f scale;
 	float randomBlend;
 	T sins[3];
-	//uint8_t dummy[0x58];
 };
 
 // Event
@@ -216,15 +233,6 @@ public:
 #include "ac_gen.h"
 #pragma warning(pop)
 
-inline float vdot(const vec2f& a, const vec2f& b) { return (a.x * b.x + a.y * b.y); }
-inline float vdot(const vec3f& a, const vec3f& b) { return (a.x * b.x + a.y * b.y + a.z * b.z); }
-inline float vlen(const vec2f& v) { return sqrtf(vdot(v, v)); }
-inline float vlen(const vec3f& v) { return sqrtf(vdot(v, v)); }
-inline vec2f vnorm(const vec2f& v) { const float len = vlen(v); return (len != 0.0f ? (v / len) : vec2f(0, 0)); }
-inline vec3f vnorm(const vec3f& v) { const float len = vlen(v); return (len != 0.0f ? (v / len) : vec3f(0, 0, 0)); }
-inline vec2f vnorm(const vec2f& v, float len) { return (len != 0.0f ? (v / len) : vec2f(0, 0)); }
-inline vec3f vnorm(const vec3f& v, float len) { return (len != 0.0f ? (v / len) : vec3f(0, 0, 0)); }
-
 inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) { 
 	const float s = 1 / 255.0f;
 	vec4f v; (v.x = r*s), (v.y = g*s), (v.z = b*s), (v.w = a);
@@ -234,5 +242,6 @@ inline vec4f rgba(uint8_t r, uint8_t g, uint8_t b, float a) {
 inline DirectX::XMMATRIX xmload(const mat44f& m) { return DirectX::XMMATRIX(&m.M11); }
 inline mat44f xmstore(const DirectX::XMMATRIX& m) { DirectX::XMFLOAT4X4 f44; DirectX::XMStoreFloat4x4(&f44, m); return *(mat44f*)&f44._11; }
 
-inline Speed Car_getSpeed(Car* pCar) { return pCar->valueCache.speed; }
-inline float Car_getSpeedValue(Car* pCar) { return pCar->valueCache.speed.value; }
+inline Speed getSpeed(Car* pCar) { return pCar->valueCache.speed; }
+inline float getSpeedMS(Car* pCar) { return pCar->valueCache.speed.value; }
+inline float getSpeedKMH(Car* pCar) { return getSpeedMS(pCar) * 3.6f; }

@@ -212,21 +212,21 @@ void AppCheaterDetector::updateDriver(DriverState* driver, CarPhysicsState* stat
 
 	auto& perf = driver->perf;
 	perf[ePerfParam::Rpm] = state->engineRPM;
-	perf[ePerfParam::Vel] = vlen(curVel);
+	perf[ePerfParam::Vel] = curVel.len();
 
 	const float dtinv = 1.0f / deltaT;
 	const vec3f dvel = curVel - driver->vel;
 	const vec3f accel = dvel * dtinv; // accel_avg = dv / dt
 
-	const float v1 = vlen(driver->vel);
-	const float v2 = vlen(curVel);
+	const float v1 = driver->vel.len();
+	const float v2 = curVel.len();
 
 	if (v1 < v2 && state->gas > 0) { // accel
 		const float e1 = driver->carIni->mass * v1 * v1 * 0.5f;
 		const float e2 = driver->carIni->mass * v2 * v2 * 0.5f;
 		const float e = fabsf(e2 - e1);
 		const float accPower = e * dtinv * 0.001f; // kW
-		perf[ePerfParam::Acc] = vlen(accel);
+		perf[ePerfParam::Acc] = accel.len();
 		perf[ePerfParam::AccP] = accPower;
 
 		/*

@@ -38,7 +38,7 @@ float _DynamicController::_eval()
 
 		if (fabsf(fNewValue - fCurValue) >= 0.001f)
 		{
-			float fFilter = tclamp<float>(pStage->filter * 0.003f, 0.0f, 1.0f);
+			float fFilter = tclamp(pStage->filter * 0.003f, 0.0f, 1.0f);
 			fNewValue = ((fNewValue - fCurValue) * fFilter) + fCurValue;
 		}
 
@@ -59,7 +59,7 @@ float _DynamicController::_eval()
 
 		if (pStage->downLimit != 0.0f || pStage->upLimit != 0.0f)
 		{
-			i = tclamp<float>(i, pStage->downLimit, pStage->upLimit);
+			i = tclamp(i, pStage->downLimit, pStage->upLimit);
 		}
 	}
 
@@ -86,7 +86,7 @@ float _DynamicController::_getInput(DynamicControllerInput input)
 			return this->car->controls.steer;
 
 		case DynamicControllerInput::Speed:
-			return (Car_getSpeedValue(this->car) * 3.6f);
+			return getSpeedKMH(this->car);
 
 		case DynamicControllerInput::Gear:
 			return (float)(this->car->drivetrain.currentGear - 1);
@@ -94,17 +94,17 @@ float _DynamicController::_getInput(DynamicControllerInput input)
 		case DynamicControllerInput::SlipRatioMAX:
 			if (this->car->drivetrain.tractionType == TractionType::RWD)
 			{
-				return tmax<float>(this->car->tyres[2].status.slipRatio, this->car->tyres[3].status.slipRatio);
+				return tmax(this->car->tyres[2].status.slipRatio, this->car->tyres[3].status.slipRatio);
 			}
 			else if (this->car->drivetrain.tractionType == TractionType::FWD)
 			{
-				return tmax<float>(this->car->tyres[0].status.slipRatio, this->car->tyres[1].status.slipRatio);
+				return tmax(this->car->tyres[0].status.slipRatio, this->car->tyres[1].status.slipRatio);
 			}
 			else
 			{
-				return tmax<float>(
-					tmax<float>(this->car->tyres[0].status.slipRatio, this->car->tyres[1].status.slipRatio),
-					tmax<float>(this->car->tyres[2].status.slipRatio, this->car->tyres[3].status.slipRatio));
+				return tmax(
+					tmax(this->car->tyres[0].status.slipRatio, this->car->tyres[1].status.slipRatio),
+					tmax(this->car->tyres[2].status.slipRatio, this->car->tyres[3].status.slipRatio));
 			}
 
 		case DynamicControllerInput::SlipRatioAVG:

@@ -106,7 +106,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	// Common
 	//
 
-	#if 0
+	#if 1
 	HOOK_METHOD_RVA(DynamicController, eval);
 	HOOK_METHOD_RVA(DynamicController, getInput);
 	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);

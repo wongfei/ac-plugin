@@ -13,6 +13,7 @@ END_HOOK_OBJ()
 void _BrakeSystem::_step(float dt)
 {
 	float fFrontBias = this->frontBias;
+
 	if (this->biasOverride != -1.0f)
 		fFrontBias = this->biasOverride;
 
@@ -29,15 +30,13 @@ void _BrakeSystem::_step(float dt)
 
 		if (fLoadAWD != 0.0f)
 		{
-			float fSpeed = Car_getSpeedValue(this->car);
-			if (fSpeed * 3.6f > 10.0f)
+			if (getSpeedKMH(this->car) > 10.0f)
 				bFlag = true;
 		}
 
 		if (bFlag)
 		{
-			float fEbbInstant = (fLoadFront / fLoadAWD) * this->ebbFrontMultiplier;
-			this->ebbInstant = tclamp(fEbbInstant, 0.0f, 1.0f);
+			this->ebbInstant = tclamp(((fLoadFront / fLoadAWD) * this->ebbFrontMultiplier), 0.0f, 1.0f);
 		}
 		else
 		{
@@ -49,11 +48,8 @@ void _BrakeSystem::_step(float dt)
 
 	fFrontBias = tclamp(fFrontBias, this->limitDown, this->limitUp);
 
-	float fOverride = this->electronicOverride;
-	if (fOverride <= this->car->controls.brake)
-		fOverride = this->car->controls.brake;
-
-	float fBrakeTorq = (this->brakePower * this->brakePowerMultiplier) * fOverride;
+	float fBrakeInput = tmax(this->car->controls.brake, this->electronicOverride);
+	float fBrakeTorq = (this->brakePower * this->brakePowerMultiplier) * fBrakeInput;
 
 	this->car->tyres[0].inputs.brakeTorque = fBrakeTorq * fFrontBias;
 	this->car->tyres[1].inputs.brakeTorque = fBrakeTorq * fFrontBias;
@@ -64,6 +60,7 @@ void _BrakeSystem::_step(float dt)
 
 	this->car->tyres[2].inputs.brakeTorque = fRearBrakeTorq;
 	this->car->tyres[3].inputs.brakeTorque = fRearBrakeTorq;
+
 	this->car->tyres[2].inputs.handBrakeTorque = this->car->controls.handBrake * this->handBrakeTorque;
 	this->car->tyres[3].inputs.handBrakeTorque = this->car->controls.handBrake * this->handBrakeTorque;
 
@@ -71,9 +68,9 @@ void _BrakeSystem::_step(float dt)
 	{
 		float fSteerBrake = this->steerBrake.controller.eval();
 		if (fSteerBrake >= 0.0f)
-			this->car->tyres[3].inputs.brakeTorque = this->car->tyres[3].inputs.brakeTorque + fSteerBrake;
+			this->car->tyres[3].inputs.brakeTorque += fSteerBrake;
 		else
-			this->car->tyres[2].inputs.brakeTorque = this->car->tyres[2].inputs.brakeTorque - fSteerBrake;
+			this->car->tyres[2].inputs.brakeTorque -= fSteerBrake;
 	}
 
 	if (this->hasBrakeTempsData && this->car->tyres[0].aiMult <= 1.0f)
@@ -84,6 +81,9 @@ void _BrakeSystem::_step(float dt)
 
 void _BrakeSystem::_stepTemps(float dt)
 {
+	float fAmbientTemp = this->car->ksPhysics->ambientTemperature;
+	float fSpeed = getSpeedKMH(this->car);
+
 	Tyre* pTyre = this->car->tyres;
 	BrakeDisc* pDisc = this->discs;
 
@@ -91,10 +91,9 @@ void _BrakeSystem::_stepTemps(float dt)
 	{
 		pTyre->inputs.brakeTorque = pDisc->perfCurve.getValue(pDisc->t) * pTyre->inputs.brakeTorque;
 
-		float fSpeed = Car_getSpeedValue(this->car);
-		float fCool = (((fSpeed * 3.6f) * pDisc->coolSpeedFactor) + 1.0f) * pDisc->coolTransfer;
+		float fCool = ((fSpeed * pDisc->coolSpeedFactor) + 1.0f) * pDisc->coolTransfer;
 
-		pDisc->t += (((this->car->ksPhysics->ambientTemperature - pDisc->t) * fCool) * dt);
+		pDisc->t += (((fAmbientTemp - pDisc->t) * fCool) * dt);
 		pDisc->t += (((fabsf(pTyre->status.angularVelocity) * (pTyre->inputs.brakeTorque * pDisc->torqueK)) * 0.001f) * dt);
 
 		pTyre++;

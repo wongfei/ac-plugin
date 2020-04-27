@@ -43,12 +43,10 @@ void _Drivetrain::_step(float dt)
 
 		case TractionType::AWD:
 			this->step4WD(dt); // TODO
-			//NOT_IMPLEMENTED;
 			break;
 
 		case TractionType::AWD_NEW:
 			this->step4WD_new(dt); // TODO
-			//NOT_IMPLEMENTED;
 			break;
 
 		default:
@@ -66,10 +64,10 @@ void _Drivetrain::_stepControllers(float dt)
 
 	if (this->controllers.awdCenterLock.get())
 	{
-		float fScale = ((Car_getSpeedValue(this->car) * 3.6f) - 5.0f) * 0.05f;
-		fScale = tclamp(fScale, 0.0f, 1.0f);
+		float fCenterLock = this->controllers.awdCenterLock->eval();
+		float fScale = tclamp(((getSpeedKMH(this->car) - 5.0f) * 0.05f), 0.0f, 1.0f);
 
-		this->awdCenterDiff.preload = ((this->controllers.awdCenterLock->eval() - 20.0f) * fScale) + 20.0f;
+		this->awdCenterDiff.preload = ((fCenterLock - 20.0f) * fScale) + 20.0f;
 		this->awdCenterDiff.power = 0.0f;
 	}
 
@@ -86,14 +84,16 @@ void _Drivetrain::_reallignSpeeds(float dt)
 	if (fRatio != 0.0)
 	{
 		double fDriveVel = this->drive.velocity;
-		if (this->locClutch <= 0.9)
+		if (this->locClutch <= 0.8999999)
 		{
 			this->rootVelocity = fDriveVel * fRatio;
 		}
 		else
 		{
-			double fRootVelocity = this->rootVelocity;
-			this->rootVelocity = fRootVelocity - (1.0 - this->engine.inertia / this->getInertiaFromEngine()) * (fRootVelocity / fRatio - fDriveVel) * fabs(fRatio);
+			this->rootVelocity -= 
+				(1.0 - this->engine.inertia / this->getInertiaFromEngine()) 
+				* (this->rootVelocity / fRatio - fDriveVel) 
+				* fabs(fRatio);
 		}
 
 		this->accelerateDrivetrainBlock((this->rootVelocity / fRatio - fDriveVel), false);
@@ -125,45 +125,43 @@ void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TOD
 	}
 	else if (this->diffType == DifferentialType::LSD || this->diffType == DifferentialType::Spool)
 	{
-		this->outShaftR.velocity = acc + this->outShaftR.velocity;
-		this->outShaftL.velocity = acc + this->outShaftL.velocity;
+		this->outShaftR.velocity += acc;
+		this->outShaftL.velocity += acc;
 	}
 }
 
 double _Drivetrain::_getInertiaFromWheels()
 {
+	double fRatio = this->ratio;
+	double fRatioSq = fRatio * fRatio;
+	double fRWD = this->drive.inertia + (this->outShaftL.inertia + this->outShaftR.inertia);
+
 	switch (this->tractionType)
 	{
 		case TractionType::RWD:
 		case TractionType::FWD:
 		case TractionType::AWD_NEW: // TODO: why not with AWD?
 		{
-			double fRatio = this->ratio;
-
 			if (fRatio == 0.0)
-				return this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia;
-
-			double fRatioSq = fRatio * fRatio;
+				return fRWD;
 
 			if (this->clutchOpenState)
-				return fRatioSq * this->clutchInertia + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia;
+				return fRWD + (this->clutchInertia * fRatioSq);
 			else
-				return fRatioSq * (this->clutchInertia + this->engine.inertia) + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia;
+				return fRWD + ((this->clutchInertia + this->engine.inertia) * fRatioSq);
 		}
 
 		case TractionType::AWD:
 		{
-			double fRatio = this->ratio;
+			double fAWD = fRWD + (this->outShaftLF.inertia + this->outShaftRF.inertia);
 
 			if (fRatio == 0.0)
-				return this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
-
-			double fRatioSq = fRatio * fRatio;
+				return fAWD;
 
 			if (this->clutchOpenState)
-				return fRatioSq * this->clutchInertia + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
+				return fAWD + (this->clutchInertia * fRatioSq);
 			else
-				return fRatioSq * (this->clutchInertia + this->engine.inertia) + this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia + (this->outShaftLF.inertia + this->outShaftRF.inertia);
+				return fAWD + ((this->clutchInertia + this->engine.inertia) * fRatioSq);
 		}
 	}
 
@@ -177,20 +175,21 @@ double _Drivetrain::_getInertiaFromEngine()
 	if (fRatio == 0.0)
 		return this->engine.inertia;
 
+	double fRWD = this->drive.inertia + this->outShaftL.inertia + this->outShaftR.inertia;
+
 	switch (this->tractionType)
 	{
 		case TractionType::RWD:
 		case TractionType::FWD:
 		case TractionType::AWD_NEW: // TODO: why not with AWD?
 		{
-			double fOutInertia = this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia;
-			return fOutInertia / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
+			return fRWD / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
 		}
 
 		case TractionType::AWD:
 		{
-			double fOutInertia = this->outShaftL.inertia + this->drive.inertia + this->outShaftR.inertia + this->outShaftLF.inertia + this->outShaftRF.inertia;
-			return fOutInertia / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
+			double fAWD = fRWD + (this->outShaftLF.inertia + this->outShaftRF.inertia);
+			return fAWD / (fRatio * fRatio) + this->clutchInertia + this->engine.inertia;
 		}
 	}
 

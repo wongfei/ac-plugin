@@ -44,7 +44,7 @@ void _TyreThermalModel::_step(float dt, float angularSpeed, float camberRAD)
 	this->coreTemp += ((fCoreTempInput - this->coreTemp) * (this->patchData.internalCoreTransfer * dt));
 	this->coreTInput = 0;
 
-	float fSpeed = pCar ? Car_getSpeedValue(pCar) : 17.32f; // sqrt(300)
+	float fSpeed = pCar ? getSpeedMS(pCar) : 17.32f; // sqrt(300)
 	float fAmbientFactor = ((((fSpeed * fSpeed) * this->patchData.coolFactorGain) + 1.0f) * this->patchData.surfaceTransfer) * dt;
 	float fPctDt = this->patchData.patchCoreTransfer * dt;
 

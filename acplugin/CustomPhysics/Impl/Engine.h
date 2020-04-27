@@ -5,29 +5,27 @@ BEGIN_HOOK_OBJ(Engine)
 	#define RVA_Engine_step 2654432
 	#define RVA_Engine_stepTurbos 2656512
 
-	void _step(SACEngineInput* pInput, float dt);
+	void _step(const SACEngineInput& input, float dt);
 	void _stepTurbos();
 
 END_HOOK_OBJ()
 
-void _Engine::_step(SACEngineInput* pInput, float dt)
+void _Engine::_step(const SACEngineInput& input, float dt)
 {
-	this->lastInput = *pInput;
-	float fGas = this->getThrottleResponseGas(this->lastInput.gasInput, pInput->rpm);
-	this->lastInput.gasInput = fGas;
+	this->lastInput = input;
+	this->lastInput.gasInput = this->getThrottleResponseGas(input.gasInput, input.rpm);
 
 	if (this->p2p.enabled)
 	{
 		this->stepP2P(dt);
 	}
 
-	float fCoastOffset = this->gasCoastOffset;
-	if (fCoastOffset > 0.0f)
+	if (this->gasCoastOffset > 0.0f)
 	{
-		float fGas1 = (pInput->rpm - (float)this->data.minimum) / (float)this->coastEntryRpm;
+		float fGas1 = (input.rpm - (float)this->data.minimum) / (float)this->coastEntryRpm;
 		fGas1 = tclamp(fGas1, 0.0f, 1.0f);
 
-		float fGas2 = ((1.0f - (fCoastOffset * fGas1)) * this->lastInput.gasInput) + (fCoastOffset * fGas1);
+		float fGas2 = ((1.0f - (this->gasCoastOffset * fGas1)) * this->lastInput.gasInput) + (this->gasCoastOffset * fGas1);
 		fGas2 = tclamp(fGas2, 0.0f, 1.0f);
 
 		this->lastInput.gasInput = fGas2;
@@ -39,11 +37,10 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		this->limiterOn = this->data.limiterCycles;
 	}
 
-	int iLimiterOn = this->limiterOn;
-	if (iLimiterOn > 0)
+	if (this->limiterOn > 0)
 	{
 		this->lastInput.gasInput = 0.0f;
-		this->limiterOn = iLimiterOn - 1;
+		this->limiterOn--;
 	}
 
 	if (this->lifeLeft <= 0.0f)
@@ -51,50 +48,35 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		this->fuelPressure = 0.0f;
 	}
 
-	float fGasOverride = this->electronicOverride * this->lastInput.gasInput;
-	this->lastInput.gasInput = fGasOverride;
-	this->gasUsage = fGasOverride;
+	float fGas = this->lastInput.gasInput * this->electronicOverride;
+	this->lastInput.gasInput = fGas;
+	this->gasUsage = fGas;
 
 	float fPower = this->data.powerCurve.getValue(this->lastInput.rpm);
 	float fCoastTorq = 0.0f;
 
-	float fCoast1 = this->data.coast1;
-	if (fCoast1 != 0.0f)
+	if (this->data.coast1 != 0.0f)
 	{
-		fCoastTorq = (this->lastInput.rpm - (float)this->data.minimum) * fCoast1;
+		fCoastTorq = (this->lastInput.rpm - (float)this->data.minimum) * this->data.coast1;
 	}
 
 	this->stepTurbos();
 
-	float fTurboBoost = this->status.turboBoost;
-	if (fTurboBoost != 0.0f)
+	if (this->status.turboBoost != 0.0f)
 	{
-		fTurboBoost += 1.0f;
-		fPower *= fTurboBoost;
+		fPower *= (this->status.turboBoost + 1.0f);
 	}
 
-	float fCoast2 = this->data.coast2;
-	if (fCoast2 != 0.0f)
+	if (this->data.coast2 != 0.0f)
 	{
-		if (this->lastInput.rpm <= 0.0f)
-		{
-			if (this->lastInput.rpm >= 0.0f)
-				fTurboBoost = 0.0f;
-			else
-				fTurboBoost = -1.0f;
-		}
-		else
-		{
-			fTurboBoost = 1.0f;
-		}
 		float fRpmDelta = this->lastInput.rpm - (float)this->data.minimum;
-		fCoastTorq -= (((fRpmDelta * fRpmDelta) * fCoast2) * fTurboBoost);
+		fCoastTorq -= (((fRpmDelta * fRpmDelta) * this->data.coast2) * signf(this->lastInput.rpm));
 	}
 
 	this->status.externalCoastTorque = 0.0f;
-	for (auto& iter : this->coastGenerators)
+	for (auto* pCoastGen : this->coastGenerators)
 	{
-		this->status.externalCoastTorque += iter->getCoastTorque();
+		this->status.externalCoastTorque += pCoastGen->getCoastTorque();
 	}
 	fCoastTorq += (float)this->status.externalCoastTorque;
 
@@ -104,16 +86,16 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		fCoastTorq = 0.0f;
 	}
 
-	float fTurboBoost2 = this->status.turboBoost;
-	if (((1.0f - this->lastInput.gasInput) * fTurboBoost2) <= this->bovThreshold)
+	float fTurboBoost = this->status.turboBoost;
+	if (((1.0f - this->lastInput.gasInput) * fTurboBoost) <= this->bovThreshold)
 		this->bov = 0.0f;
 	else
 		this->bov = 1.0f;
 
 	float fTbDamageThresh = this->turboBoostDamageThreshold;
-	if (fTbDamageThresh != 0.0f && fTurboBoost2 > fTbDamageThresh)
+	if (fTbDamageThresh != 0.0f && fTurboBoost > fTbDamageThresh)
 	{
-		this->lifeLeft -= ((((fTurboBoost2 - fTbDamageThresh) * this->turboBoostDamageK) * 0.003f) * this->physicsEngine->mechanicalDamageRate);
+		this->lifeLeft -= ((((fTurboBoost - fTbDamageThresh) * this->turboBoostDamageK) * 0.003f) * this->physicsEngine->mechanicalDamageRate);
 	}
 
 	float fRpmDamageThresh = this->rpmDamageThreshold;
@@ -122,17 +104,16 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		this->lifeLeft -= ((((this->lastInput.rpm - fRpmDamageThresh) * this->rpmDamageK) * 0.003f) * this->physicsEngine->mechanicalDamageRate);
 	}
 
-	float fAirDens = this->physicsEngine->getAirDensity();
-	float fAirAmount = fAirDens * 0.82630974f;
+	float fAirAmount = this->physicsEngine->getAirDensity() * 0.82630974f;
 	float fRestrictor = this->restrictor;
 	if (fRestrictor > 0.0f)
 	{
-		fAirAmount -= (((fRestrictor * pInput->rpm) * 0.0001f) * fGasOverride);
+		fAirAmount -= (((fRestrictor * input.rpm) * 0.00009999999f) * fGas);
 		if (fAirAmount < 0.0f)
 			fAirAmount = 0.0f;
 	}
 
-	float fOutTorq = ((((fPower - fCoastTorq) * fGasOverride) + fCoastTorq) * fAirAmount);
+	float fOutTorq = ((((fPower - fCoastTorq) * fGas) + fCoastTorq) * fAirAmount);
 	this->status.outTorque = fOutTorq;
 
 	bool bHasFuelPressure = (this->fuelPressure > 0.0f);
@@ -150,8 +131,10 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		}
 		else if (this->isEngineStallEnabled)
 		{
-			float fStallTorq = fRpm * -0.01f;
-			//if (GetAsyncKeyState(8)) fStallTorq = this->starterTorque; // TODO: WTF?
+			float fStallTorq = fRpm * -0.009999999f;
+			if (GetAsyncKeyState(8)) // LOL
+				fStallTorq = this->starterTorque;
+
 			this->status.outTorque = fStallTorq;
 		}
 		else
@@ -160,15 +143,14 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 		}
 	}
 
-	float fFuelPressure = this->fuelPressure;
-	if (fFuelPressure < 1.0f)
+	if (this->fuelPressure < 1.0f)
 	{
-		this->status.outTorque = (this->status.outTorque - this->lastInput.rpm * -0.01f) * fFuelPressure + this->lastInput.rpm * -0.01f;
+		this->status.outTorque = (this->status.outTorque - this->lastInput.rpm * -0.01f) * this->fuelPressure + this->lastInput.rpm * -0.01f;
 	}
 
-	for (auto& iter : this->torqueGenerators)
+	for (auto* pTorqGen : this->torqueGenerators)
 	{
-		this->status.outTorque += iter->getOutputTorque();
+		this->status.outTorque += pTorqGen->getOutputTorque();
 	}
 
 	bool bLimiterOn = (this->limiterOn != 0);
@@ -176,7 +158,7 @@ void _Engine::_step(SACEngineInput* pInput, float dt)
 	this->electronicOverride = 1.0f;
 
 	float fMaxPowerDyn = this->maxPowerW_Dynamic;
-	float fCurPower = pInput->rpm * (float)this->status.outTorque * 0.1047f;
+	float fCurPower = input.rpm * (float)this->status.outTorque * 0.104699999f;
 	if (fCurPower > fMaxPowerDyn)
 	{
 		this->maxPowerW_Dynamic = fCurPower;
@@ -196,9 +178,7 @@ void _Engine::_stepTurbos()
 	this->status.turboBoost = 0.0;
 	for (auto& turbo : this->turbos)
 	{
-		float fRpm = this->lastInput.rpm > 0.0f ? this->lastInput.rpm : 0.0f;
-		turbo.step(this->lastInput.gasInput, fRpm, 0.003f);
-		float fBoost = turbo.getBoost();
-		this->status.turboBoost += (fBoost * this->fuelPressure);
+		turbo.step(this->lastInput.gasInput, this->lastInput.rpm, 0.003f); // TODO: check
+		this->status.turboBoost += (turbo.getBoost() * this->fuelPressure);
 	}
 }

@@ -20,21 +20,12 @@ void _Wing::_step(float dt)
 		this->stepDynamicControllers(dt);
 
 	vec3f vGroundWind = this->car->getGroundWindVector();
-
-	// getLocalPointVelocity -> dBodyGetRelPointVel -> Get velocity vector in global coords of a relative point on body
 	vec3f vWorldVel = this->car->body->getLocalPointVelocity(this->data.position);
-
-	// worldToLocalNormal -> dBodyVectorFromWorld -> Convert from world to local coordinates
 	vec3f vLocalVel = this->car->body->worldToLocalNormal(vWorldVel + vGroundWind);
-
-	// localToWorld -> dBodyGetRelPointPos -> Get world position of a relative point on body
 	vec3f vWingWorld = this->car->body->localToWorld(this->data.position);
-
-	float fHeight = this->engineer.getPointGroundHeight(vWingWorld);
-
-	float fAngle = this->status.angle;
-	this->status.groundHeight = fHeight;
+	this->status.groundHeight = this->engineer.getPointGroundHeight(vWingWorld);
   
+	float fAngle = this->status.angle;
 	if (this->overrideStatus.isActive)
 		this->status.angle = this->overrideStatus.overrideAngle;
 	
@@ -62,7 +53,6 @@ void _Wing::_step(float dt)
 void _Wing::_addDrag(const vec3f& lv)
 {
 	float fAngleOff = this->data.isVertical ? this->status.yawAngle : this->status.aoa;
-
 	this->status.cd = this->data.lutAOA_CD.getValue((this->status.angleMult * this->status.angle) + fAngleOff) * this->data.cdGain;
 
 	if (this->hasDamage)
@@ -72,20 +62,18 @@ void _Wing::_addDrag(const vec3f& lv)
 
 	if (this->data.lutGH_CD.getCount())
 	{
-		float fGhCd = this->data.lutGH_CD.getValue(this->status.groundHeight);
-		this->status.groundEffectDrag = fGhCd;
-		this->status.cd = fGhCd * this->status.cd;
+		float fLut = this->data.lutGH_CD.getValue(this->status.groundHeight);
+		this->status.groundEffectDrag = fLut;
+		this->status.cd *= fLut;
 	}
 
-	float fLvDot = vdot(lv, lv);
-	float fDrag = (((fLvDot * this->status.cd) * this->car->aeroMap.airDensity) * this->data.area) * 0.5f;
+	float fDot = lv.sqlen();
+	float fDrag = (((fDot * this->status.cd) * this->car->aeroMap.airDensity) * this->data.area) * 0.5f;
 	this->status.dragKG = fDrag * 0.10197838f;
 
-	if (fLvDot != 0.0f)
+	if (fDot != 0.0f)
 	{
-		vec3f vNorm = lv / sqrtf(fLvDot);
-		vec3f vForce = vNorm * -fDrag;
-		this->car->body->addLocalForceAtLocalPos(vForce, this->data.position);
+		this->car->body->addLocalForceAtLocalPos(lv.get_norm() * -fDrag, this->data.position);
 	}
 }
 
@@ -113,15 +101,15 @@ void _Wing::_addLift(const vec3f& lv)
 
 	if (!this->data.isVertical && this->data.yawGain != 0.0f)
 	{
-		float v8 = tclamp(((sinf(fabsf(this->status.yawAngle) * 0.017453f) * this->data.yawGain) + 1.0f), 0.0f, 1.0f);
-		this->status.cl = v8 * this->status.cl;
+		float v8 = (sinf(fabsf(this->status.yawAngle) * 0.017453f) * this->data.yawGain) + 1.0f;
+		this->status.cl *= tclamp(v8, 0.0f, 1.0f);
 	}
   
 	if (this->data.lutGH_CL.getCount())
 	{
-		float fGhCl = this->data.lutGH_CL.getValue(this->status.groundHeight);
-		this->status.groundEffectLift = fGhCl;
-		this->status.cl = fGhCl * this->status.cl;
+		float fLut = this->data.lutGH_CL.getValue(this->status.groundHeight);
+		this->status.groundEffectLift = fLut;
+		this->status.cl *= fLut;
 	}
   
 	if (this->hasDamage)
@@ -129,15 +117,15 @@ void _Wing::_addLift(const vec3f& lv)
 		// TODO
 	}
 
-	float fLvDot = (fAxis * fAxis) + (lv.z * lv.z);
-	float fLift = (((fLvDot * this->status.cl) * this->car->aeroMap.airDensity) * this->data.area) * 0.5f;
+	float fDot = (fAxis * fAxis) + (lv.z * lv.z);
+	float fLift = (((fDot * this->status.cl) * this->car->aeroMap.airDensity) * this->data.area) * 0.5f;
 	this->status.liftKG = fLift * 0.10197838f;
   
-	if (fLvDot != 0.0f)
+	if (fDot != 0.0f)
 	{
 		// TODO: CHECK THIS!!!
 
-		vec3f vNorm = vnorm(lv);
+		vec3f vNorm = lv.get_norm();
 		vec3f vOut = this->data.isVertical ? vec3f(-vNorm.z, 0, vNorm.x) : vec3f(0, vNorm.z, -vNorm.y);
 		vec3f vForce = vOut * -fLift;
 

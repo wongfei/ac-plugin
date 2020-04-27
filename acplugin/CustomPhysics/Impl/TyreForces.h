@@ -4,31 +4,31 @@
 
 void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef* pSurface, float dt)
 {
+	// TODO: MAD SHIT!!!
+
 	mat44f& worldRotation = this->worldRotation;
 	vec3f& roadHeading = this->roadHeading;
 	vec3f& roadRight = this->roadRight;
 
-	float fTmp = ((-worldRotation.M31 * normal.x) + (-worldRotation.M32 * normal.y)) + (-worldRotation.M33 * normal.z);
-	roadHeading.x = -worldRotation.M31 - fTmp * normal.x;
-	roadHeading.y = -worldRotation.M32 - fTmp * normal.y;
-	roadHeading.z = -worldRotation.M33 - fTmp * normal.z;
-	roadHeading = vnorm(roadHeading);
+	vec3f vNegM3(&worldRotation.M31);
+	vNegM3 *= -1.0f;
+	roadHeading = vNegM3 - normal * (vNegM3 * normal);
+	roadHeading.norm();
 
-	fTmp = ((worldRotation.M11 * normal.x) + (worldRotation.M12 * normal.y)) + (worldRotation.M13 * normal.z);
-	roadRight.x = worldRotation.M11 - fTmp * normal.x;
-	roadRight.y = worldRotation.M12 - fTmp * normal.y;
-	roadRight.z = worldRotation.M13 - fTmp * normal.z;
-	roadRight = vnorm(roadRight);
+	vec3f vM1(&worldRotation.M11);
+	roadRight = vM1 - normal * (vM1 * normal);
+	roadRight.norm();
 
 	vec3f hubAngVel = this->hub->getHubAngularVelocity();
 	vec3f hubPointVel = this->hub->getPointVelocity(pos);
 
-	this->slidingVelocityY = ((hubPointVel.y * roadRight.y) + (hubPointVel.x * roadRight.x)) + (hubPointVel.z * roadRight.z);
-	this->roadVelocityX = -(((hubPointVel.y * roadHeading.y) + (hubPointVel.x * roadHeading.x)) + (hubPointVel.z * roadHeading.z));
+	this->slidingVelocityY = hubPointVel * roadRight;
+	this->roadVelocityX = -(hubPointVel * roadHeading);
 	float fSlipAngleTmp = calcSlipAngleRAD(this->slidingVelocityY, this->roadVelocityX);
 
-	fTmp = (((hubAngVel.y * worldRotation.M12) + (hubAngVel.x * worldRotation.M11)) + (hubAngVel.z * worldRotation.M13)) + this->status.angularVelocity;
+	float fTmp = (hubAngVel * vM1) + this->status.angularVelocity;
 	this->slidingVelocityX = (fTmp * this->status.effectiveRadius) - this->roadVelocityX;
+	
 	float fRoadVelocityXAbs = fabsf(this->roadVelocityX);
 	float fSlipRatioTmp = ((fRoadVelocityXAbs == 0.0f) ? 0.0f : (this->slidingVelocityX / fRoadVelocityXAbs));
 
@@ -65,8 +65,8 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 		float fSlipRatioScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipRatioScale <= 1.0f)
 		{
-			if (fSlipRatioScale < 0.04f)
-				fNewSlipRatio = (0.04f * fSlipRatioDelta) + fSlipRatio;
+			if (fSlipRatioScale < 0.039999999f)
+				fNewSlipRatio = (0.039999999f * fSlipRatioDelta) + fSlipRatio;
 			else
 				fNewSlipRatio = (fSlipRatioScale * fSlipRatioDelta) + fSlipRatio;
 		}
@@ -81,8 +81,8 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 		float fSlipAngleScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipAngleScale <= 1.0f)
 		{
-			if (fSlipAngleScale < 0.04f)
-				fNewSlipAngle = (0.04f * fSlipAngleDelta) + fSlipAngle;
+			if (fSlipAngleScale < 0.039999999f)
+				fNewSlipAngle = (0.039999999f * fSlipAngleDelta) + fSlipAngle;
 			else
 				fNewSlipAngle = (fSlipAngleScale * fSlipAngleDelta) + fSlipAngle;
 		}
@@ -128,31 +128,27 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 	this->stepPuncture(dt, this->totalHubVelocity);
 	this->status.Mz = tmo.Mz;
 
-	vec3f force(
-		this->status.Fy * roadRight.x + this->status.Fx * roadHeading.x,
-		this->status.Fy * roadRight.y + this->status.Fx * roadHeading.y,
-		this->status.Fy * roadRight.z + this->status.Fx * roadHeading.z);
+	vec3f vForce = (roadHeading * this->status.Fx) + (roadRight * this->status.Fy);
 
-	if (!(isfinite(force.x) && isfinite(force.y) && isfinite(force.z)))
+	if (!(isfinite(vForce.x) && isfinite(vForce.y) && isfinite(vForce.z)))
 	{
 		log_printf(L"INF vTyreForce");
-		force = vec3f(0, 0, 0);
+		vForce = vec3f(0, 0, 0);
 	}
 
 	if (this->car && this->car->torqueModeEx != TorqueModeEX::original)
 	{
 		DEBUG_BREAK; // TODO: what car uses this code?
 
-		this->addTyreForceToHub(pos, force);
+		this->addTyreForceToHub(pos, vForce);
 	}
 	else
 	{
-		this->hub->addForceAtPos(force, pos, this->driven, true);
+		this->hub->addForceAtPos(vForce, pos, this->driven, true);
 		this->localMX = -(this->status.loadedRadius * this->status.Fx);
 	}
 
-	vec3f torq = normal * tmo.Mz;
-	this->hub->addTorque(torq);
+	this->hub->addTorque(normal * tmo.Mz);
 
 	float fAngularVelocityAbs = fabsf(this->status.angularVelocity);
 	if (fAngularVelocityAbs > 1.0f)
@@ -173,18 +169,18 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 			float fSlipUnk = 0;
 			if (this->modelData.version < 2)
 			{
+				float fSlipRatioNorm = tclamp(fabsf(this->status.slipRatio), 0.0f, 1.0f);
 				float fRrSrUnk = fPressureUnk * this->modelData.rr_sr;
 				float fRrSaUnk = fabsf(this->status.slipAngleRAD * 57.29578f) * (fPressureUnk * this->modelData.rr_sa);
-
-				float fSlipRatioAbs = fabsf(this->status.slipRatio);
-				float fSlipRatioNorm = tclamp(fSlipRatioAbs, 0.0f, 1.0f);
 
 				fSlipUnk = (fSlipRatioNorm * fRrSrUnk) + fRrSaUnk;
 			}
 			else
 			{
 				float fNdSlipNorm = tclamp(this->status.ndSlip, 0.0f, 1.0f);
-				fSlipUnk = (fNdSlipNorm * this->modelData.rr_slip) * fPressureUnk;
+				float fRrSlipUnk = fPressureUnk * this->modelData.rr_slip;
+
+				fSlipUnk = fNdSlipNorm * fRrSlipUnk;
 			}
 
 			fRrUnk = fRrUnk * ((fSlipUnk * 0.001f) + 1.0f);
@@ -235,12 +231,12 @@ float _Tyre::_getCorrectedD(float d, float* outWearMult)
 void _Tyre::_stepDirtyLevel(float dt, float hubSpeed)
 {
 	if (this->status.dirtyLevel < 5.0f)
-		this->status.dirtyLevel = (((hubSpeed * this->surfaceDef->dirtAdditiveK) * 0.03f) * dt) + this->status.dirtyLevel;
+		this->status.dirtyLevel += (((hubSpeed * this->surfaceDef->dirtAdditiveK) * 0.029999999f) * dt);
 
 	if (this->surfaceDef->dirtAdditiveK == 0.0f)
 	{
 		if (this->status.dirtyLevel > 0.0f)
-			this->status.dirtyLevel = this->status.dirtyLevel - ((hubSpeed * 0.015f) * dt);
+			this->status.dirtyLevel -= ((hubSpeed * 0.015f) * dt);
 
 		if (this->status.dirtyLevel < 0.0f)
 			this->status.dirtyLevel = 0.0f;
@@ -248,12 +244,10 @@ void _Tyre::_stepDirtyLevel(float dt, float hubSpeed)
 
 	if (this->aiMult == 1.0f)
 	{
-		float fDirty = 1.0f - tclamp((this->status.dirtyLevel * 0.05f), 0.0f, 1.0f);
-		float fScale = tmax(0.8f, fDirty);
-
-		this->status.Mz = fScale * this->status.Mz;
-		this->status.Fx = fScale * this->status.Fx;
-		this->status.Fy = fScale * this->status.Fy;
+		float fM = tmax(0.8f, (1.0f - tclamp(this->status.dirtyLevel * 0.05f, 0.0f, 1.0f)));
+		this->status.Fy *= fM;
+		this->status.Fx *= fM;
+		this->status.Mz *= fM;
 	}
 }
 
@@ -275,8 +269,10 @@ void _Tyre::_stepPuncture(float dt, float hubSpeed)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _Tyre::_addTyreForceToHub(const vec3f& pos, const vec3f& force) // TODO: epic shit
+void _Tyre::_addTyreForceToHub(const vec3f& pos, const vec3f& force)
 {
+	// TODO: MAD SHIT!!! NOT TESTED!!!
+
 	vec3f vWP = this->worldPosition;
 	float fWorldX = this->worldPosition.x;
 	float fWorldY = this->worldPosition.y;

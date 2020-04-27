@@ -13,17 +13,16 @@ END_HOOK_OBJ()
 void _HeaveSpring::_step(float dt)
 {
 	mat44f mxBodyWorld = this->car->body->getWorldMatrix(0.0f);
-	vec3f vM2 = vec3f(mxBodyWorld.M21, mxBodyWorld.M22, mxBodyWorld.M23);
+	vec3f vM2 = vec3f(&mxBodyWorld.M21);
 
 	auto* pSusp0 = this->suspensions[0];
-	auto* pSusp1 = this->suspensions[1];
-
 	vec3f vRefPoint0 = pSusp0->dataRelToWheel.refPoint;
-	vec3f vRefPoint1 = pSusp1->dataRelToWheel.refPoint;
-
 	vec3f vHubPos0 = pSusp0->hub->getPosition(0.0f);
-	vec3f vHubPos1 = pSusp1->hub->getPosition(0.0f);
 	vec3f vHubLoc0 = this->car->body->worldToLocal(vHubPos0);
+
+	auto* pSusp1 = this->suspensions[1];
+	vec3f vRefPoint1 = pSusp1->dataRelToWheel.refPoint;
+	vec3f vHubPos1 = pSusp1->hub->getPosition(0.0f);
 	vec3f vHubLoc1 = this->car->body->worldToLocal(vHubPos1);
 
 	//
@@ -93,12 +92,9 @@ void _HeaveSpring::_step(float dt)
 	vec3f vLpv1 = this->car->body->getLocalPointVelocity(vRefPoint1);
 	vec3f vLpv = (vLpv0 + vLpv1) * 0.5f;
 
-	float v = 
-		(vHubVel.x - vLpv.x) * vM2.x + 
-		(vHubVel.y - vLpv.y) * vM2.y + 
-		(vHubVel.z - vLpv.z) * vM2.z;
-
-	float fDamperForce = this->damper.getForce(v);
+	vec3f vDeltaVel = vHubVel - vLpv;
+	float fDamperSpeed = vDeltaVel * vM2;
+	float fDamperForce = this->damper.getForce(fDamperSpeed);
 
 	vForce = vM2 * fDamperForce;
 	pSusp0->addForceAtPos(vForce, pSusp0->hub->getPosition(0.0f), false, false);

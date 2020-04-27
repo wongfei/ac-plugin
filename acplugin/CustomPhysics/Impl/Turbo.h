@@ -10,36 +10,28 @@ END_HOOK_OBJ()
 
 void _Turbo::_step(float gas, float rpms, float dt)
 {
-	float fGamma = 0.0f;
+	float fNewRotation = 0.0f;
+	float fLag = 0.0f;
 
 	if (rpms > 0.0f && gas > 0.0f)
 	{
-		float fRef = (gas * rpms) / this->data.rpmRef;
-		fRef = tclamp(fRef, 0.0f, 1.0f);
-		fGamma = powf(fRef, this->data.gamma);
+		fNewRotation = powf(tclamp(((gas * rpms) / this->data.rpmRef), 0.0f, 1.0f), this->data.gamma);
 	}
 
-	float fLag = 0.0f;
-	float fRotation = this->rotation;
-
-	if (fGamma <= fRotation)
+	if (fNewRotation <= this->rotation)
 	{
-		fLag = dt * this->data.lagDN;
-		fLag = tclamp(fLag, 0.0f, 1.0f);
+		fLag = tclamp((dt * this->data.lagDN), 0.0f, 1.0f);
 	}
 	else
 	{
-		fLag = dt * this->data.lagUP;
-		fLag = tclamp(fLag, 0.0f, 1.0f);
+		fLag = tclamp((dt * this->data.lagUP), 0.0f, 1.0f);
 	}
 
-	float fFinalRotation = ((fGamma - fRotation) * fLag) + fRotation;
-	this->rotation = fFinalRotation;
+	this->rotation += ((fNewRotation - this->rotation) * fLag);
 
-	float fWastegate = this->data.wastegate;
-	if (fWastegate != 0.0f)
+	if (this->data.wastegate != 0.0f)
 	{
-		float fUserWG = fWastegate * this->userSetting;
+		float fUserWG = this->data.wastegate * this->userSetting;
 		if ((this->data.maxBoost * this->rotation) > fUserWG)
 		{
 			this->rotation = fUserWG / this->data.maxBoost;

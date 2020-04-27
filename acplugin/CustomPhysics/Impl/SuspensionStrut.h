@@ -12,17 +12,17 @@ void _SuspensionStrut::_step(float dt)
 {
 	this->steerTorque = 0.0f;
 
-	mat44f mxCarWorld = this->carBody->getWorldMatrix(0.0f);
+	mat44f mxBodyWorld = this->carBody->getWorldMatrix(0.0f);
 
 	vec3f vCarStrut = this->carBody->localToWorld(this->dataRelToBody.carStrut);
 	vec3f vTyreStrut = this->hub->localToWorld(this->dataRelToWheel.tyreStrut);
 
 	vec3f vDelta = vTyreStrut - vCarStrut;
-	float fDelta = vlen(vDelta);
-	vDelta = vnorm(vDelta, fDelta);
+	float fDeltaLen = vDelta.len();
+	vDelta.norm(fDeltaLen);
 
 	float fDefaultLength = this->strutBaseLength + this->rodLength;
-	float fTravel = fDefaultLength - fDelta;
+	float fTravel = fDefaultLength - fDeltaLen;
 	this->status.travel = fTravel;
 
 	float fForce = ((fTravel * this->progressiveK) + this->k) * fTravel;
@@ -46,14 +46,14 @@ void _SuspensionStrut::_step(float dt)
 	if (fHubDelta > this->bumpStopUp)
 	{
 		fForce = (fHubDelta - this->bumpStopUp) * 500000.0f;
-		this->addForceAtPos(vec3f(&mxCarWorld.M21) * -fForce, this->hub->getPosition(0.0f), false, false);
+		this->addForceAtPos(vec3f(&mxBodyWorld.M21) * -fForce, this->hub->getPosition(0.0f), false, false);
 		this->carBody->addLocalForceAtLocalPos(vec3f(0, fForce, 0), vHubLocal);
 	}
 
 	if (fHubDelta < this->bumpStopDn)
 	{
 		fForce = (fHubDelta - this->bumpStopDn) * 500000.0f;
-		this->addForceAtPos(vec3f(&mxCarWorld.M21) * -fForce, this->hub->getPosition(0.0f), false, false);
+		this->addForceAtPos(vec3f(&mxBodyWorld.M21) * -fForce, this->hub->getPosition(0.0f), false, false);
 		this->carBody->addLocalForceAtLocalPos(vec3f(0, fForce, 0), vHubLocal);
 	}
 
@@ -61,7 +61,7 @@ void _SuspensionStrut::_step(float dt)
 	vec3f vCarStrutVel = this->carBody->getLocalPointVelocity(this->dataRelToBody.carStrut);
 	vec3f vDamperDelta = vTyreStrutVel - vCarStrutVel;
 
-	float fDamperSpeed = vdot(vDamperDelta, vDelta);
+	float fDamperSpeed = vDamperDelta * vDelta;
 	this->status.damperSpeedMS = fDamperSpeed;
 
 	float fDamperForce = this->damper.getForce(fDamperSpeed);

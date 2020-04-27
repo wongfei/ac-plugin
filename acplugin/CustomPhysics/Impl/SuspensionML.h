@@ -12,8 +12,8 @@ void _SuspensionML::_step(float dt)
 {
 	this->steerTorque = 0.0;
 
-	mat44f mxCarWorld = this->car->body->getWorldMatrix(0.0f);
-	vec3f vM2(&mxCarWorld.M21);
+	mat44f mxBodyWorld = this->car->body->getWorldMatrix(0.0f);
+	vec3f vM2(&mxBodyWorld.M21);
 
 	vec3f vHubWorld = this->hub->getPosition(0.0f);
 	vec3f vHubLocal = this->car->body->worldToLocal(vHubWorld);
@@ -33,10 +33,10 @@ void _SuspensionML::_step(float dt)
 	vec3f vPointVel = this->car->body->getLocalPointVelocity(this->basePosition);
 	vec3f vDeltaVel = this->hub->getVelocity() - vPointVel;
 
-	float fSpeed = vdot(vDeltaVel, vM2);
-	this->status.damperSpeedMS = fSpeed;
+	float fDamperSpeed = vDeltaVel * vM2;
+	this->status.damperSpeedMS = fDamperSpeed;
 
-	float fDamperForce = this->damper.getForce(fSpeed);
+	float fDamperForce = this->damper.getForce(fDamperSpeed);
 	vec3f vForce = vM2 * fDamperForce;
 	this->addForceAtPos(vForce, vHubWorld, false, false);
 	this->car->body->addForceAtLocalPos(vForce * -1.0f, this->basePosition);
