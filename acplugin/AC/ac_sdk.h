@@ -59,10 +59,11 @@ public:
 	inline vec2f(float ix, float iy) : x(ix), y(iy) {}
 	inline explicit vec2f(const float* v) : x(v[0]), y(v[1]) {}
 
-	inline float& operator[](const int id) { return (&x)[id]; }
-	inline const float& operator[](const int id) const { return (&x)[id]; }
+	inline vec2f clone() const { return *this; }
 
 	inline vec2f& operator=(const vec2f& v) { x = v.x, y = v.y; return *this; }
+	inline float& operator[](const int id) { return (&x)[id]; }
+	inline const float& operator[](const int id) const { return (&x)[id]; }
 
 	inline vec2f operator*(const float f) const { return vec2f(x * f, y * f); }
 	inline vec2f operator/(const float f) const { return vec2f(x / f, y / f); }
@@ -74,8 +75,6 @@ public:
 	inline vec2f& operator/=(const float f) { x /= f, y /= f; return *this; }
 	inline vec2f& operator+=(const vec2f& v) { x += v.x, y += v.y; return *this; }
 	inline vec2f& operator-=(const vec2f& v) { x -= v.x, y -= v.y; return *this; }
-
-	inline vec2f clone() const { return *this; }
 
 	inline float sqlen() const { return (x * x + y * y); }
 	inline float len() const { return sqrtf(sqlen()); }
@@ -98,10 +97,11 @@ public:
 	inline vec3f(float ix, float iy, float iz) : x(ix), y(iy), z(iz) {}
 	inline explicit vec3f(const float* v) : x(v[0]), y(v[1]), z(v[2]) {}
 
-	inline float& operator[](const int id) { return (&x)[id]; }
-	inline const float& operator[](const int id) const { return (&x)[id]; }
+	inline vec3f clone() const { return *this; }
 
 	inline vec3f& operator=(const vec3f& v) { x = v.x, y = v.y, z = v.z; return *this; }
+	inline float& operator[](const int id) { return (&x)[id]; }
+	inline const float& operator[](const int id) const { return (&x)[id]; }
 
 	inline vec3f operator*(const float f) const { return vec3f(x * f, y * f, z * f); }
 	inline vec3f operator/(const float f) const { return vec3f(x / f, y / f, z / f); }
@@ -114,8 +114,6 @@ public:
 	inline vec3f& operator+=(const vec3f& v) { x += v.x, y += v.y, z += v.z; return *this; }
 	inline vec3f& operator-=(const vec3f& v) { x -= v.x, y -= v.y, z -= v.z; return *this; }
 
-	inline vec3f clone() const { return *this; }
-
 	inline float sqlen() const { return (x * x + y * y + z * z); }
 	inline float len() const { return sqrtf(sqlen()); }
 
@@ -124,6 +122,8 @@ public:
 
 	inline vec3f get_norm(float l) const { return clone().norm(l); }
 	inline vec3f get_norm() const { return clone().norm(); }
+
+	inline vec3f cross(const vec3f& v) const { return vec3f(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 };
 
 template<typename T1, typename T2>

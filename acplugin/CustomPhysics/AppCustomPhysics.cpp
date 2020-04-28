@@ -68,7 +68,7 @@ void Car_pollControls(Car* pThis, float dt)
 
 //
 
-#define RND_SEED 666
+#define RND_SEED 0
 
 #define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
 #define HOOK_FUNC_RVA_ORIG(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
@@ -142,8 +142,14 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	#if 1
 	HOOK_METHOD_RVA(Suspension, step); // DoubleWishbone "DWB"
 	HOOK_METHOD_RVA(SuspensionAxle, step);
+		HOOK_METHOD_RVA(SuspensionAxle, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionAxle, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionAxle, addTorque);
 	HOOK_METHOD_RVA(SuspensionML, step);
 	HOOK_METHOD_RVA(SuspensionStrut, step);
+		HOOK_METHOD_RVA(SuspensionStrut, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionStrut, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionStrut, addTorque);
 	HOOK_METHOD_RVA(Damper, getForce);
 	#endif
 
@@ -249,8 +255,8 @@ void AppCustomPhysics::run(PhysicsDriveThread* pThis)
 
 			if (pThis->setAffinityMask)
 			{
-				//ksSetCurrentThreadAffinityMask(4ui64);
-				//v3 = SetThreadAffinityMask(GetCurrentThread(), v1);
+				//ksSetCurrentThreadAffinityMask(4);
+				SetThreadAffinityMask(GetCurrentThread(), 4);
 			}
 
 			PhysicsCore* pPhysCore = (PhysicsCore*)(pThis->engine.getCore());
@@ -325,6 +331,14 @@ void AppCustomPhysics::stepNormal(PhysicsDriveThread* pThis)
 
 			if (_controlMode == EControlMode::Record)
 			{
+				CarControlsSample sample;
+				sample.sampleId = _sampleId;
+				sample.stepCounter = pThis->engine.stepCounter;
+				sample.currentTime = fCurTime;
+				sample.gameTime = fGt;
+				sample.controls = _plugin->car->controls;
+				_controlSamples.push_back(sample);
+
 				if (_sampleId == 0)
 				{
 					srand(RND_SEED);
@@ -333,16 +347,10 @@ void AppCustomPhysics::stepNormal(PhysicsDriveThread* pThis)
 					_bodyMat = _plugin->car->body->getWorldMatrix(0.0f);
 					CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
 					resetTelemetry();
+
+					printMatrix(_plugin->car->body->getWorldMatrix(0.0f));
 				}
 
-				CarControlsSample sample;
-				sample.sampleId = _sampleId;
-				sample.currentTime = fCurTime;
-				sample.lastStepTimestamp = pThis->lastStepTimestamp;
-				sample.physicsTime = pThis->engine.physicsTime;
-				sample.gameTime = fGt;
-				sample.controls = _plugin->car->controls;
-				_controlSamples.push_back(sample);
 				_sampleId++;
 			}
 
@@ -378,13 +386,14 @@ void AppCustomPhysics::stepReplay(PhysicsDriveThread* pThis)
 		srand(RND_SEED);
 		_recStartTime = t0;
 
+		pThis->engine.stepCounter = (unsigned int)sample.stepCounter;
 		pThis->currentTime = sample.currentTime;
-		pThis->lastStepTimestamp = sample.lastStepTimestamp;
-		pThis->engine.physicsTime = sample.physicsTime;
 		pThis->engine.gameTime = sample.gameTime;
 
 		CarAvatar_teleport(_plugin->carAvatar, _bodyMat);
 		resetTelemetry();
+
+		printMatrix(_plugin->car->body->getWorldMatrix(0.0f));
 	}
 
 	stepPhysicsEngine(pThis, sample.currentTime, sample.gameTime);
@@ -404,14 +413,6 @@ void AppCustomPhysics::stepReplay(PhysicsDriveThread* pThis)
 				Sleep(0);
 		}
 	}
-	else // replay done
-	{
-		/*double fCurTime = ksGetTime() * pThis->timeScale;
-		pThis->currentTime = fCurTime;
-		pThis->lastStepTimestamp = fCurTime;
-		pThis->engine.physicsTime = fCurTime;
-		pThis->engine.gameTime = fCurTime;*/
-	}
 }
 
 void AppCustomPhysics::stepPhysicsEngine(PhysicsDriveThread* pThis, double fCurTime, double fGt)
@@ -420,9 +421,7 @@ void AppCustomPhysics::stepPhysicsEngine(PhysicsDriveThread* pThis, double fCurT
 	{
 		pThis->currentTime = fCurTime;
 
-		// (dt, currentTime, gt)
 		pThis->engine.step(0.003, fCurTime, fGt);
-
 		// modifies:
 		// pThis->engine.physicsTime = fCurTime;
 		// pThis->engine.gameTime = fGt;
@@ -431,15 +430,11 @@ void AppCustomPhysics::stepPhysicsEngine(PhysicsDriveThread* pThis, double fCurT
 	}
 	double fEndTime = ksGetQPTTime();
 
-	double fElapsed = fEndTime - fBeginTime;
-	pThis->cpuTimeLocal = (float)fElapsed;
+	float fElapsed = (float)(fEndTime - fBeginTime);
+	pThis->cpuTimeLocal = fElapsed;
 
-	const double fElapsedLimit = 300;
-	double fElapsedX = ((fElapsed * 0.33333334) * 100.0);
-	if (fElapsedX >= fElapsedLimit) 
-		fElapsedX = fElapsedLimit;
-
-	pThis->occupancy.exchange((int)fElapsedX);
+	float fOccupancy = tmin((fElapsed * 0.3333333f) * 100.0f, 300.0f);
+	pThis->occupancy.exchange((int)fOccupancy);
 
 	for (auto& h : pThis->evPhysicsStepCompleted.handlers)
 	{
@@ -467,7 +462,11 @@ void AppCustomPhysics::pollControls(Car* pCar, float dt)
 		return;
 	}
 
-	((void(*)(Car*, float))_orig_Car_pollControls)(pCar, dt);
+	#if 0
+		((void(*)(Car*, float))_orig_Car_pollControls)(pCar, dt);
+	#else
+		(pCar->*(xcast<void (Car::*)(float)>(_orig_Car_pollControls)))(dt);
+	#endif
 }
 
 void AppCustomPhysics::processCustomInput()
@@ -490,6 +489,7 @@ void AppCustomPhysics::processCustomInput()
 			_recStopTime = ksGetQPTTime();
 
 			writeConsole(strf(L"stop record \"%s\"", _recName.c_str()), true);
+			printMatrix(_plugin->car->body->getWorldMatrix(0.0f));
 			saveControlSamples(_recName + L".input");
 			saveTelemetry(_recName + L"_orig_telem.csv");
 		}
@@ -530,9 +530,36 @@ void AppCustomPhysics::processCustomInput()
 		_recStopTime = ksGetQPTTime();
 
 		writeConsole(strf(L"stop replay \"%s\"", _recName.c_str()), true);
+		printMatrix(_plugin->car->body->getWorldMatrix(0.0f));
 		saveTelemetry(_recName + L"_replay_telem.csv");
 		_plugin->car->controlsProvider->ffEnabled = true;
 	}
+
+	#if 0
+	if (GetAsyncKeyState(VK_OEM_MINUS) & 1)
+	{
+		_aiEnabled = !_aiEnabled;
+		writeConsole(strf(L"aiEnabled=%d", (int)_aiEnabled), true);
+		if (_aiEnabled)
+		{
+			if (!_playerControls)
+				_playerControls = _plugin->car->controlsProvider;
+
+			if (_aiDriver)
+				del_udt(_aiDriver);
+
+			_aiDriver = new_udt<AIDriver>(_plugin->car);
+			//_aiDriver->currentSessionInfo.type = SessionType::Qualify;
+
+			_plugin->carAvatar->setControlsProvider(_aiDriver);
+			//_plugin->car->setControllerProvider(_aiDriver);
+		}
+		else
+		{
+			_plugin->carAvatar->setControlsProvider(_playerControls);
+		}
+	}
+	#endif
 }
 
 void AppCustomPhysics::addConsoleCommands()
@@ -633,7 +660,7 @@ void AppCustomPhysics::cmdDumpCar()
 
 void AppCustomPhysics::resetTelemetry()
 {
-	writeConsole(strf(L"resetTelemetry"), true);
+	//writeConsole(strf(L"resetTelemetry"), true);
 
 	for (auto& chan : _plugin->car->telemetry.channels)
 	{
@@ -642,7 +669,7 @@ void AppCustomPhysics::resetTelemetry()
 		chan.lastTickTime = 0;
 	}
 
-	 //_plugin->car->telemetry.isEnabled = true;
+	_plugin->car->telemetry.isEnabled = true;
 }
 
 static const wchar_t* TelemetryUnitsNames[] = 
@@ -821,5 +848,15 @@ void AppCustomPhysics::loadControlSamples(const std::wstring& filename)
 		}
 
 		fclose(fd);
+	}
+}
+
+void AppCustomPhysics::printMatrix(const mat44f& mat)
+{
+	const float* m = &mat.M11;
+	for (int i = 0; i < 4; ++i)
+	{
+		writeConsole(strf(L"%.4f %.4f %.4f %.4f", m[0], m[1], m[2], m[3]), true);
+		m += 4;
 	}
 }

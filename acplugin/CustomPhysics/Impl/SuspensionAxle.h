@@ -3,8 +3,14 @@
 BEGIN_HOOK_OBJ(SuspensionAxle)
 
 	#define RVA_SuspensionAxle_step 2918256
+	#define RVA_SuspensionAxle_addForceAtPos 2916096
+	#define RVA_SuspensionAxle_addLocalForceAndTorque 2916112
+	#define RVA_SuspensionAxle_addTorque 2916256
 
 	void _step(float dt);
+	void _addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque);
+	void _addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque);
+	void _addTorque(const vec3f& torque);
 
 END_HOOK_OBJ()
 
@@ -73,4 +79,23 @@ void _SuspensionAxle::_step(float dt)
 	vec3f vForce = vDelta * fDamperForce;
 	this->addForceAtPos(vForce, vAxleWorld, false, false);
 	this->car->body->addForceAtPos(vForce * -1.0f, vBaseWorld);
+}
+
+void _SuspensionAxle::_addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque)
+{
+	this->axle->addForceAtPos(force, pos);
+}
+
+void _SuspensionAxle::_addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque)
+{
+	this->axle->addForceAtLocalPos(force, vec3f(0, 0, 0));
+	this->axle->addTorque(torque);
+
+	if (driveTorque.x != 0.0f || driveTorque.y != 0.0f || driveTorque.z != 0.0f)
+		this->car->body->addTorque(driveTorque);
+}
+
+void _SuspensionAxle::_addTorque(const vec3f& torque)
+{
+	this->axle->addTorque(torque);
 }

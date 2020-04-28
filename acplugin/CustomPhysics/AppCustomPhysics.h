@@ -12,9 +12,8 @@ struct CarControlsRawHeader
 struct CarControlsSample
 {
 	uint64_t sampleId;
+	uint64_t stepCounter;
 	double currentTime;
-	double lastStepTimestamp;
-	double physicsTime;
 	double gameTime;
 	CarControls controls;
 };
@@ -47,6 +46,8 @@ public:
 	void saveControlSamples(const std::wstring& filename);
 	void loadControlSamples(const std::wstring& filename);
 
+	void printMatrix(const mat44f& mat);
+
 protected:
 
 	enum class EControlMode {
@@ -66,4 +67,8 @@ protected:
 	uint64_t _sampleId = 0;
 	double _recStartTime = 0;
 	double _recStopTime = 0;
+
+	ICarControlsProvider* _playerControls = nullptr;
+	AIDriver* _aiDriver = nullptr;
+	bool _aiEnabled = false;
 };

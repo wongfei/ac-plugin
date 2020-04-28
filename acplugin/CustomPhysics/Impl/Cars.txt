@@ -17,6 +17,15 @@ tractionType=0
 diffType=0
 numWings=3
 
+carName=Alfa Romeo 155 V6 TI
+tyreVersion=10
+suspensionTypeF=1
+suspensionTypeR=1
+torqueModeEx=0
+tractionType=3
+diffType=0
+numWings=4
+
 carName=Nissan GT-R R34 V-Spec
 tyreVersion=10
 suspensionTypeF=0
