@@ -34,6 +34,12 @@
     <Filter Include="CustomPhysics\Impl\Clean">
       <UniqueIdentifier>{a34637a5-926e-4003-922a-b88487318138}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CustomPhysics\Game">
+      <UniqueIdentifier>{b39a8cd0-e817-41b5-9cf7-eb7c175323b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Impl\TODO">
+      <UniqueIdentifier>{e53d4386-668f-46ca-9550-af052ce85f4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp">
@@ -69,11 +75,11 @@
     <ClCompile Include="utils\os.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPhysics\Timer.cpp">
-      <Filter>CustomPhysics</Filter>
-    </ClCompile>
     <ClCompile Include="FaceTrack\AppFaceTrack.cpp">
       <Filter>FaceTrack</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysics\Game\Timer.cpp">
+      <Filter>CustomPhysics\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="utils\os.h">
       <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Timer.h">
-      <Filter>CustomPhysics</Filter>
     </ClInclude>
     <ClInclude Include="FaceTrack\AppFaceTrack.h">
       <Filter>FaceTrack</Filter>
@@ -217,6 +220,15 @@
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreModel.h">
       <Filter>CustomPhysics\Impl\Shitty</Filter>
+    </ClInclude>
+    <ClInclude Include="AC\ac_ode.h">
+      <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Game\Timer.h">
+      <Filter>CustomPhysics\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\RigidBodyODE.h">
+      <Filter>CustomPhysics\Impl\TODO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

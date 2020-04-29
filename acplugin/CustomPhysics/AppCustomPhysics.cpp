@@ -1,28 +1,37 @@
 #include "precompiled.h"
 #include "AppCustomPhysics.h"
 
-#include "utils/log.h"
-#include "utils/common.h"
-#include "Timer.h"
-
 //
 
 #define BEGIN_HOOK_OBJ(name) struct _##name : public name {
 #define END_HOOK_OBJ() };
 
-#include "Impl/DynamicController.h"
+#include "Game/Timer.h"
+
+#define dSINGLE
+#include "ode/ode.h"
+#include "AC/ac_ode.h"
+#include "Impl/RigidBodyODE.h"
 
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
 
+#include "Impl/DynamicController.h"
 #include "Impl/ThermalObject.h"
 #include "Impl/BrakeSystem.h"
 
+#include "Impl/Drivetrain.h"
+#include "Impl/Drivetrain2WD.h"
+#include "Impl/Engine.h"
+#include "Impl/Turbo.h"
+
+#include "Impl/Damper.h"
 #include "Impl/Suspension.h"
+#include "Impl/SuspensionStrut.h"
 #include "Impl/SuspensionAxle.h"
 #include "Impl/SuspensionML.h"
-#include "Impl/SuspensionStrut.h"
-#include "Impl/Damper.h"
+#include "Impl/HeaveSpring.h"
+#include "Impl/AntirollBar.h"
 
 #include "Impl/TyreUtils.h"
 #include "Impl/Tyre.h"
@@ -33,18 +42,9 @@
 #include "Impl/BrushTyreModel.h"
 #include "Impl/BrushSlipProvider.h"
 
-#include "Impl/HeaveSpring.h"
-
-#include "Impl/SlipStream.h"
 #include "Impl/AeroMap.h"
 #include "Impl/Wing.h"
-
-#include "Impl/Drivetrain.h"
-#include "Impl/Drivetrain2WD.h"
-#include "Impl/Engine.h"
-#include "Impl/Turbo.h"
-
-#include "Impl/AntirollBar.h"
+#include "Impl/SlipStream.h"
 
 //
 
@@ -102,21 +102,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	// BEGIN HOOKS
 	#if 1
 
-	//
-	// Common
-	//
-
-	#if 1
-	HOOK_METHOD_RVA(DynamicController, eval);
-	HOOK_METHOD_RVA(DynamicController, getInput);
-	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
-	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
-	#endif
-
-	//
-	// Car
-	//
-
+	// # Car
 	#if 1
 	HOOK_METHOD_RVA(Car, step);
 	HOOK_METHOD_RVA(Car, updateAirPressure);
@@ -124,6 +110,14 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(Car, calcBodyMass);
 	HOOK_METHOD_RVA(Car, stepThermalObjects);
 	HOOK_METHOD_RVA(Car, stepComponents);
+	#endif
+
+	// # DynamicController
+	#if 1
+	HOOK_METHOD_RVA(DynamicController, eval);
+	HOOK_METHOD_RVA(DynamicController, getInput);
+	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
+	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
 	#endif
 
 	// # ThermalObject
@@ -138,19 +132,46 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
 	#endif
 	
+	// # Drivetrain
+	#if 1
+	HOOK_METHOD_RVA(Drivetrain, step);
+	HOOK_METHOD_RVA(Drivetrain, stepControllers);
+	HOOK_METHOD_RVA(Drivetrain, step2WD);
+	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
+	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
+	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
+	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
+	#endif
+
+	// # Engine
+	#if 1
+	HOOK_METHOD_RVA(Engine, step);
+	HOOK_METHOD_RVA(Engine, stepTurbos);
+	HOOK_METHOD_RVA(Turbo, step);
+	#endif
+
 	// # Suspension (suspensions.ini)
 	#if 1
-	HOOK_METHOD_RVA(Suspension, step); // DoubleWishbone "DWB"
+	HOOK_METHOD_RVA(Damper, getForce);
+	HOOK_METHOD_RVA(Suspension, step);
+		HOOK_METHOD_RVA(Suspension, addForceAtPos);
+		HOOK_METHOD_RVA(Suspension, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(Suspension, addTorque);
+	HOOK_METHOD_RVA(SuspensionStrut, step);
+		HOOK_METHOD_RVA(SuspensionStrut, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionStrut, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionStrut, addTorque);
 	HOOK_METHOD_RVA(SuspensionAxle, step);
 		HOOK_METHOD_RVA(SuspensionAxle, addForceAtPos);
 		HOOK_METHOD_RVA(SuspensionAxle, addLocalForceAndTorque);
 		HOOK_METHOD_RVA(SuspensionAxle, addTorque);
 	HOOK_METHOD_RVA(SuspensionML, step);
-	HOOK_METHOD_RVA(SuspensionStrut, step);
-		HOOK_METHOD_RVA(SuspensionStrut, addForceAtPos);
-		HOOK_METHOD_RVA(SuspensionStrut, addLocalForceAndTorque);
-		HOOK_METHOD_RVA(SuspensionStrut, addTorque);
-	HOOK_METHOD_RVA(Damper, getForce);
+		HOOK_METHOD_RVA(SuspensionML, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionML, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionML, addTorque);
+	HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
+	HOOK_METHOD_RVA(AntirollBar, step);
 	#endif
 
 	// # Tyre
@@ -192,13 +213,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
 	#endif
 
-	// # HeaveSpring
-	HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
-
 	// # Aero
 	#if 1
-	HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
-	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	HOOK_METHOD_RVA(AeroMap, step);
 	HOOK_METHOD_RVA(AeroMap, addDrag);
 	HOOK_METHOD_RVA(AeroMap, addLift);
@@ -207,30 +223,44 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(Wing, step);
 	HOOK_METHOD_RVA(Wing, addDrag);
 	HOOK_METHOD_RVA(Wing, addLift);
+	HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
+	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	#endif
 
-	// # Drivetrain
+	// # RigidBodyODE
 	#if 1
-	HOOK_METHOD_RVA(Drivetrain, step);
-	HOOK_METHOD_RVA(Drivetrain, stepControllers);
-	HOOK_METHOD_RVA(Drivetrain, step2WD);
-	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
-	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
-	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
-	#endif
+	HOOK_METHOD_RVA(RigidBodyODE, setMassBox);
+	HOOK_METHOD_RVA(RigidBodyODE, getMass);
+	HOOK_METHOD_RVA(RigidBodyODE, setMassExplicitInertia);
+	HOOK_METHOD_RVA(RigidBodyODE, getLocalInertia);
 
-	// # Engine
-	#if 1
-	HOOK_METHOD_RVA(Engine, step);
-	HOOK_METHOD_RVA(Engine, stepTurbos);
-	HOOK_METHOD_RVA(Turbo, step);
-	#endif
+	HOOK_METHOD_RVA(RigidBodyODE, localToWorld);
+	HOOK_METHOD_RVA(RigidBodyODE, worldToLocal);
+	HOOK_METHOD_RVA(RigidBodyODE, localToWorldNormal);
+	HOOK_METHOD_RVA(RigidBodyODE, worldToLocalNormal);
 
-	// # AntirollBar
-	#if 1
-	HOOK_METHOD_RVA(AntirollBar, step);
+	HOOK_METHOD_RVA(RigidBodyODE, setPosition);
+	HOOK_METHOD_RVA(RigidBodyODE, getPosition);
+	HOOK_METHOD_RVA(RigidBodyODE, setRotation);
+	HOOK_METHOD_RVA(RigidBodyODE, getWorldMatrix);
+
+	HOOK_METHOD_RVA(RigidBodyODE, setVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getLocalVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getPointVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getLocalPointVelocity);
+
+	HOOK_METHOD_RVA(RigidBodyODE, setAngularVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getAngularVelocity);
+	HOOK_METHOD_RVA(RigidBodyODE, getLocalAngularVelocity);
+
+	HOOK_METHOD_RVA(RigidBodyODE, addForceAtPos);
+	HOOK_METHOD_RVA(RigidBodyODE, addForceAtLocalPos);
+	HOOK_METHOD_RVA(RigidBodyODE, addLocalForce);
+	HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtPos);
+	HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtLocalPos);
+	HOOK_METHOD_RVA(RigidBodyODE, addTorque);
+	HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
 	#endif
 
 	#endif

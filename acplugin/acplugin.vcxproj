@@ -54,7 +54,7 @@
       <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../deps/ode/include/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -70,7 +70,7 @@
       <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../deps/ode/include/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AC\ac_ode.h" />
     <ClInclude Include="CustomPhysics\Impl\AeroMap.h" />
     <ClInclude Include="CustomPhysics\Impl\AntirollBar.h">
       <FileType>CppCode</FileType>
@@ -105,7 +106,7 @@
     <ClInclude Include="CustomPhysics\Impl\Drivetrain2WD.h">
       <FileType>CppCode</FileType>
     </ClInclude>
-    <ClCompile Include="CustomPhysics\Timer.cpp" />
+    <ClCompile Include="CustomPhysics\Game\Timer.cpp" />
     <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
     <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h" />
     <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
@@ -163,9 +164,10 @@
     <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h" />
     <ClInclude Include="CustomPhysics\Impl\TyreUtils.h" />
     <ClInclude Include="CustomPhysics\Impl\Wing.h" />
-    <ClInclude Include="CustomPhysics\Timer.h" />
+    <ClInclude Include="CustomPhysics\Game\Timer.h" />
     <ClInclude Include="FaceTrack\AppFaceTrack.h" />
     <ClInclude Include="FaceTrack\facetrack.h" />
+    <ClInclude Include="CustomPhysics\Impl\RigidBodyODE.h" />
     <ClInclude Include="utils\hook.h" />
     <ClInclude Include="precompiled.h" />
     <ClInclude Include="utils\log.h" />
