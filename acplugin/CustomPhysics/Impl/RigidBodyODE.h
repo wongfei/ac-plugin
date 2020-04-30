@@ -2,6 +2,11 @@
 
 BEGIN_HOOK_OBJ(RigidBodyODE)
 	
+	#define RVA_RigidBodyODE_setEnabled 2943088
+	#define RVA_RigidBodyODE_isEnabled 2942816
+	#define RVA_RigidBodyODE_setAutoDisable 2943040
+	#define RVA_RigidBodyODE_stop 2943696
+
 	#define RVA_RigidBodyODE_setMassBox 2943120
 	#define RVA_RigidBodyODE_getMass 2942320
 	#define RVA_RigidBodyODE_setMassExplicitInertia 2943248
@@ -37,12 +42,12 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 
 	void _ctor(PhysicsCore* core);
 	void _dtor();
+	void _release();
 
 	void _setEnabled(bool value);
 	bool _isEnabled();
 	void _setAutoDisable(bool mode);
 	void _stop(float amount);
-	void _release();
 
 	void _setMassBox(float m, float x, float y, float z);
 	float _getMass();
@@ -104,10 +109,19 @@ void _RigidBodyODE::_ctor(PhysicsCore* core)
 
 void _RigidBodyODE::_dtor()
 {
-	// TODO
-
 	if (this->id)
+	{
 		ODE_CALL(dBodyDestroy)(this->id);
+		this->id = nullptr;
+	}
+
+	this->collisionMeshes.clear();
+	this->geoms.clear(); // TODO: delete elements?
+}
+
+void _RigidBodyODE::_release()
+{
+	delete this; // TODO: check
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,11 +150,6 @@ void _RigidBodyODE::_stop(float amount)
 	ODE_CALL(dBodySetAngularVel)(this->id, 0, 0, 0);
 	ODE_CALL(dBodySetForce)(this->id, 0, 0, 0);
 	ODE_CALL(dBodySetTorque)(this->id, 0, 0, 0);
-}
-
-void _RigidBodyODE::_release()
-{
-	// TODO
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,19 +366,33 @@ void _RigidBodyODE::_addLocalTorque(const vec3f& t)
 
 uint64_t _RigidBodyODE::_addBoxCollider(const vec3f& pos, const vec3f& size, unsigned int category, unsigned long mask, unsigned int spaceId)
 {
-	// TODO
-	return 0;
+	// TODO: check
+
+	auto pSubSpace = this->core->getDynamicSubSpace(spaceId);
+	auto pGeom = ODE_CALL(dCreateBox)(pSubSpace, ODE_V3(size));
+
+	ODE_CALL(dGeomSetBody)(pGeom, this->id);
+
+	ODE_CALL(dGeomSetOffsetPosition)(pGeom, ODE_V3(pos));
+	const dReal* r = ODE_CALL(dBodyGetRotation)(this->id);
+	ODE_CALL(dGeomSetRotation)(pGeom, r);
+
+	ODE_CALL(dGeomSetCollideBits)(pGeom, mask);
+	ODE_CALL(dGeomSetCategoryBits)(pGeom, category);
+
+	this->geoms.push_back(pGeom);
+
+	return (uint64_t)pGeom; // BRUTAL!
 }
 
 void _RigidBodyODE::_setBoxColliderMask(uint64_t box, unsigned long mask)
 {
-	// TODO
-	//ODE_CALL(dGeomSetCollideBits)((dGeomID)box, mask); // BRUTAL!
+	ODE_CALL(dGeomSetCollideBits)((dGeomID)box, mask); // BRUTAL!
 }
 
 void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback)
 {
-	// TODO
+	NOT_IMPLEMENTED;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

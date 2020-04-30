@@ -11,6 +11,8 @@
 #define dSINGLE
 #include "ode/ode.h"
 #include "AC/ac_ode.h"
+#include "Impl/InternalsODE.h"
+#include "Impl/PhysicsCore.h"
 #include "Impl/RigidBodyODE.h"
 
 #include "Impl/CarUtils.h"
@@ -227,8 +229,21 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	#endif
 
+	// # PhysicsCore
+	#if 1
+	PhysicsCore_initGlobals();
+	HOOK_METHOD_RVA(PhysicsCore, step);
+	HOOK_METHOD_RVA(PhysicsCore, collisionStep);
+	HOOK_METHOD_RVA(PhysicsCore, onCollision);
+	#endif
+
 	// # RigidBodyODE
 	#if 1
+	HOOK_METHOD_RVA(RigidBodyODE, setEnabled);
+	HOOK_METHOD_RVA(RigidBodyODE, isEnabled);
+	HOOK_METHOD_RVA(RigidBodyODE, setAutoDisable);
+	HOOK_METHOD_RVA(RigidBodyODE, stop);
+
 	HOOK_METHOD_RVA(RigidBodyODE, setMassBox);
 	HOOK_METHOD_RVA(RigidBodyODE, getMass);
 	HOOK_METHOD_RVA(RigidBodyODE, setMassExplicitInertia);

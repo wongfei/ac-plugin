@@ -19,6 +19,14 @@ typedef __m128 _OWORD;
 extern void* _ac_module;
 __forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 
+#define AC_GREF_DECL(type, name, rva)\
+	static uint64_t name##_rva = rva;\
+	static type name##_dummy = {};\
+	static type& name = name##_dummy;
+
+#define AC_GREF_INIT(name)\
+	name = *((decltype(name##_dummy)*)_drva(name##_rva));
+
 // THIS IS SPARTA!!!
 __forceinline intptr_t get_vtp(void* obj) { return *((intptr_t*)obj); }
 __forceinline intptr_t get_vfp(void* obj, size_t id) { return *((intptr_t*)(get_vtp(obj) + id * sizeof(intptr_t))); }

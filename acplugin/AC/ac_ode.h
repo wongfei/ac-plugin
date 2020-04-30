@@ -5,6 +5,7 @@
 
 #define RVA_dGeomDestroy 0x003444B0
 #define RVA_dGeomSetData 0x003447F0
+#define RVA_dGeomGetData 0x00344520
 #define RVA_dGeomSetBody 0x00344620
 #define RVA_dGeomGetBody 0x003444D0
 #define RVA_dGeomSetRotation 0x003448C0
@@ -88,6 +89,7 @@
 #define RVA_dBodyCreate 0x0033EF50
 #define RVA_dBodyDestroy 0x0033F340
 #define RVA_dBodySetData 0x0033FA30
+#define RVA_dBodyGetData 0x0033F4E0
 #define RVA_dBodySetPosition 0x0033FBB0
 #define RVA_dBodySetRotation 0x0033FC00
 #define RVA_dBodySetLinearVel 0x0033FB10
@@ -157,10 +159,12 @@
 #define RVA_dRfromQ 0x00346620
 #define RVA_dQfromR 0x00346400
 #define RVA_dDQfromW 0x00345F70
+#define RVA_dThreadingImplementationGetFunctions 0x00391AF0
 #define RVA_dThreadingFreeImplementation 0x00391AE0
 
 typedef ODE_API void (*proto_dGeomDestroy) (dGeomID geom);
 typedef ODE_API void (*proto_dGeomSetData) (dGeomID geom, void* data);
+typedef ODE_API void* (*proto_dGeomGetData) (dGeomID geom);
 typedef ODE_API void (*proto_dGeomSetBody) (dGeomID geom, dBodyID body);
 typedef ODE_API dBodyID (*proto_dGeomGetBody) (dGeomID geom);
 typedef ODE_API void (*proto_dGeomSetRotation) (dGeomID geom, const dMatrix3 R);
@@ -176,8 +180,8 @@ typedef ODE_API unsigned long (*proto_dGeomGetCollideBits) (dGeomID);
 typedef ODE_API void (*proto_dGeomSetOffsetPosition) (dGeomID geom, dReal x, dReal y, dReal z);
 typedef ODE_API void (*proto_dGeomSetOffsetRotation) (dGeomID geom, const dMatrix3 R);
 typedef ODE_API int (*proto_dCollide) (dGeomID o1, dGeomID o2, int flags, dContactGeom *contact,int skip);
-typedef ODE_API void (*proto_dSpaceCollide) (dSpaceID space, void *data, dNearCallback *callback);
-typedef ODE_API void (*proto_dSpaceCollide2) (dGeomID space1, dGeomID space2, void *data, dNearCallback *callback);
+typedef ODE_API void (*proto_dSpaceCollide) (dSpaceID space, void* data, dNearCallback *callback);
+typedef ODE_API void (*proto_dSpaceCollide2) (dGeomID space1, dGeomID space2, void* data, dNearCallback *callback);
 typedef ODE_API dReal (*proto_dGeomSphereGetRadius) (dGeomID sphere);
 typedef ODE_API dReal (*proto_dGeomSpherePointDepth) (dGeomID sphere, dReal x, dReal y, dReal z);
 typedef ODE_API dGeomID (*proto_dCreateBox) (dSpaceID space, dReal lx, dReal ly, dReal lz);
@@ -198,7 +202,7 @@ typedef ODE_API void (*proto_dGeomRaySetBackfaceCull) (dGeomID g, int backfaceCu
 typedef ODE_API int (*proto_dGeomRayGetBackfaceCull) (dGeomID g);
 typedef ODE_API int (*proto_dGeomRayGetClosestHit) (dGeomID g);
 typedef ODE_API void (*proto_dClosestLineSegmentPoints) (const dVector3 a1, const dVector3 a2,const dVector3 b1, const dVector3 b2,dVector3 cp1, dVector3 cp2);
-typedef ODE_API int (*proto_dBoxBox) (const dVector3 p1, const dMatrix3 R1,const dVector3 side1, const dVector3 p2,const dMatrix3 R2, const dVector3 side2,dVector3 normal, dReal *depth, int *return_code,int flags, dContactGeom *contact, int skip);
+typedef ODE_API int (*proto_dBoxBox) (const dVector3 p1, const dMatrix3 R1,const dVector3 side1, const dVector3 p2,const dMatrix3 R2, const dVector3 side2,dVector3 normal, dReal* depth, int *return_code,int flags, dContactGeom *contact, int skip);
 typedef ODE_API dSpaceID (*proto_dSimpleSpaceCreate) (dSpaceID space);
 typedef ODE_API void (*proto_dSpaceDestroy) (dSpaceID);
 typedef ODE_API void (*proto_dSpaceAdd) (dSpaceID, dGeomID);
@@ -218,13 +222,13 @@ typedef ODE_API int (*proto_dFactorCholesky) (dReal *A, int n);
 typedef ODE_API void (*proto_dSolveCholesky) (const dReal *L, dReal *b, int n);
 typedef ODE_API int (*proto_dInvertPDMatrix) (const dReal *A, dReal *Ainv, int n);
 typedef ODE_API int (*proto_dIsPositiveDefinite) (const dReal *A, int n);
-typedef ODE_API void (*proto_dFactorLDLT) (dReal *A, dReal *d, int n, int nskip);
+typedef ODE_API void (*proto_dFactorLDLT) (dReal *A, dReal* d, int n, int nskip);
 typedef ODE_API void (*proto_dSolveL1) (const dReal *L, dReal *b, int n, int nskip);
 typedef ODE_API void (*proto_dSolveL1T) (const dReal *L, dReal *b, int n, int nskip);
-typedef ODE_API void (*proto_dVectorScale) (dReal *a, const dReal *d, int n);
-typedef ODE_API void (*proto_dSolveLDLT) (const dReal *L, const dReal *d, dReal *b, int n, int nskip);
-typedef ODE_API void (*proto_dLDLTAddTL) (dReal *L, dReal *d, const dReal *a, int n, int nskip);
-typedef ODE_API void (*proto_dLDLTRemove) (dReal **A, const int *p, dReal *L, dReal *d,int n1, int n2, int r, int nskip);
+typedef ODE_API void (*proto_dVectorScale) (dReal *a, const dReal* d, int n);
+typedef ODE_API void (*proto_dSolveLDLT) (const dReal *L, const dReal* d, dReal *b, int n, int nskip);
+typedef ODE_API void (*proto_dLDLTAddTL) (dReal *L, dReal* d, const dReal *a, int n, int nskip);
+typedef ODE_API void (*proto_dLDLTRemove) (dReal **A, const int *p, dReal *L, dReal* d,int n1, int n2, int r, int nskip);
 typedef ODE_API void (*proto_dRemoveRowCol) (dReal *A, int n, int nskip, int r);
 typedef ODE_API void * (*proto_dAlloc) (size_t size);
 typedef ODE_API void * (*proto_dRealloc) (void *ptr, size_t oldsize, size_t newsize);
@@ -243,7 +247,8 @@ typedef ODE_API void (*proto_dBodySetAutoDisableAverageSamplesCount) (dBodyID, u
 typedef ODE_API void (*proto_dBodySetAutoDisableFlag) (dBodyID, int do_auto_disable);
 typedef ODE_API dBodyID (*proto_dBodyCreate) (dWorldID);
 typedef ODE_API void (*proto_dBodyDestroy) (dBodyID);
-typedef ODE_API void  (*proto_dBodySetData) (dBodyID, void *data);
+typedef ODE_API void  (*proto_dBodySetData) (dBodyID, void* data);
+typedef ODE_API void* (*proto_dBodyGetData) (dBodyID);
 typedef ODE_API void (*proto_dBodySetPosition)   (dBodyID, dReal x, dReal y, dReal z);
 typedef ODE_API void (*proto_dBodySetRotation)   (dBodyID, const dMatrix3 R);
 typedef ODE_API void (*proto_dBodySetLinearVel)  (dBodyID, dReal x, dReal y, dReal z);
@@ -313,4 +318,5 @@ typedef ODE_API void (*proto_dQMultiply3) (dQuaternion qa, const dQuaternion qb,
 typedef ODE_API void (*proto_dRfromQ) (dMatrix3 R, const dQuaternion q);
 typedef ODE_API void (*proto_dQfromR) (dQuaternion q, const dMatrix3 R);
 typedef ODE_API void (*proto_dDQfromW) (dReal dq[4], const dVector3 w, const dQuaternion q);
+typedef ODE_API const dThreadingFunctionsInfo* (*proto_dThreadingImplementationGetFunctions)(dThreadingImplementationID impl);
 typedef ODE_API void (*proto_dThreadingFreeImplementation)(dThreadingImplementationID impl);

@@ -90,7 +90,8 @@ struct dMass {
   dVector3 c;
   dMatrix3 I;
 
-#if 0 // def __cplusplus
+//#ifdef __cplusplus
+#if defined (DMASS_CPP)
   dMass()
     { dMassSetZero (this); }
   void setZero()

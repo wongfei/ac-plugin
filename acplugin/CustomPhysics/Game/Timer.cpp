@@ -1,23 +1,23 @@
 #include "precompiled.h"
 #include "Timer.h"
 
-static unsigned int* startTGT;
-static LARGE_INTEGER* startTime;
-static LARGE_INTEGER* frequency;
-static bool* isUsingQPT;
+AC_GREF_DECL(bool, isUsingQPT, 0x151D140)
+AC_GREF_DECL(LARGE_INTEGER, startTime, 0x155A590)
+AC_GREF_DECL(LARGE_INTEGER, frequency, 0x155A598)
+AC_GREF_DECL(unsigned int, startTGT, 0x155A5A8)
 
 void ksInitTimerVars()
 {
-	startTGT = (unsigned int*)_drva(0x155A5A8);
-	startTime = (LARGE_INTEGER*)_drva(0x155A590);
-	frequency = (LARGE_INTEGER*)_drva(0x155A598);
-	isUsingQPT = (bool*)_drva(0x151D140);
+	AC_GREF_INIT(isUsingQPT)
+	AC_GREF_INIT(startTime)
+	AC_GREF_INIT(frequency)
+	AC_GREF_INIT(startTGT)
 }
 
 void ksReInitTimer()
 {
-	*startTGT = timeGetTime();
-	QueryPerformanceCounter(startTime);
+	startTGT = timeGetTime();
+	QueryPerformanceCounter(&startTime);
 }
 
 double ksGetSystemTime()
@@ -27,17 +27,17 @@ double ksGetSystemTime()
 
 double ksGetTime()
 {
-	if (!*isUsingQPT)
-		return (double)(timeGetTime() - *startTGT);
+	if (!isUsingQPT)
+		return (double)(timeGetTime() - startTGT);
 
-	LARGE_INTEGER PerformanceCount;
-	QueryPerformanceCounter(&PerformanceCount);
-	return (double)(PerformanceCount.QuadPart - startTime->QuadPart) * 1000.0 / (double)frequency->QuadPart;
+	LARGE_INTEGER qpc;
+	QueryPerformanceCounter(&qpc);
+	return (double)(qpc.QuadPart - startTime.QuadPart) * 1000.0 / (double)frequency.QuadPart;
 }
 
 double ksGetQPTTime()
 {
-	LARGE_INTEGER PerformanceCount;
-	QueryPerformanceCounter(&PerformanceCount);
-	return (double)(PerformanceCount.QuadPart - startTime->QuadPart) * 1000.0 / (double)frequency->QuadPart;
+	LARGE_INTEGER qpc;
+	QueryPerformanceCounter(&qpc);
+	return (double)(qpc.QuadPart - startTime.QuadPart) * 1000.0 / (double)frequency.QuadPart;
 }

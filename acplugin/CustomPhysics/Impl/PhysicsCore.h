@@ -1,0 +1,231 @@
+#pragma once
+
+AC_GREF_DECL(int, rayCollideTestCount, 0x0155AA5C)
+AC_GREF_DECL(int, geomCollideTestCount, 0x0155AA60)
+AC_GREF_DECL(int, broadTestCount, 0x0155AA64)
+
+void PhysicsCore_initGlobals()
+{
+	AC_GREF_INIT(rayCollideTestCount)
+	AC_GREF_INIT(geomCollideTestCount)
+	AC_GREF_INIT(broadTestCount)
+}
+
+BEGIN_HOOK_OBJ(PhysicsCore)
+
+	#define RVA_PhysicsCore_step 2938512
+	#define RVA_PhysicsCore_collisionStep 2932624
+	#define RVA_PhysicsCore_onCollision 2936224
+
+	void _ctor(); //2931328
+	void _dtor(); //2931744
+
+	void _step(float dt);
+	void _collisionStep(float dt);
+	void _onCollision(dContactGeom* contacts, int numContacts, dxGeom* g0, dxGeom* g1);
+
+	//void resetCollisions(); 2938224
+	//void initMultithreading(); 2935904
+	//void step(float dt); 2938512
+	//IRigidBody * createRigidBody(); 2933680
+	//void release(); 2937952
+	//IJoint * createDistanceJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2); 2933136
+	//void reseatDistanceJointLocal(IJoint * joint, const vec3f & p1, const vec3f & p2); 2937984
+	//void reseatDistanceJointLength(IJoint * joint, float newLength); 96368
+	//IJoint * createBumpJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn); 3776688
+	//IJoint * createSliderJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis); 2933744
+	//void setSliderAxis(IJoint * joint, const vec3f & axis, const vec3f & anchor); 2938480
+	//ICollisionObject * createCollisionMesh(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id); 2932976
+	//RayCastHit rayCast(const vec3f & pos, const vec3f & dir, dxGeom * rayc); 2936944
+	//RayCastHit rayCast(const vec3f & pos, const vec3f & dir, float length); 2937248
+	//void setCollisionCallback(ICollisionCallback * callback); 2938256
+	//void setRigidBodyIterations(int count); 96368
+	//void onCollision(dContactGeom * contacts, int numContacts, dxGeom * g0, dxGeom * g1); 2936224
+	//IJoint * createBallJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos); 2932752
+	//IJoint * createFixedJoint(IRigidBody * rb1, IRigidBody * rb2); 2933408
+	//IRayCaster * createRayCaster(float length); 2933600
+	//CoreCPUTimes getCoreCPUTimes(); 2935040
+	//void setNoCollisionSteps(int steps); 2938464
+	//dxSpace * getStaticSubSpace(unsigned int index); 2935488
+	//dxSpace * getDynamicSubSpace(unsigned int index); 2935072
+	//void setERPCFM(float  _arg0, float  _arg1);
+	//void collisionStep(float dt); 2932624
+
+END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _PhysicsCore::_ctor()
+{
+	memset(&this->coreCPUTimes, 0, sizeof(CoreCPUTimes));
+	this->noCollisionCounter = 0;
+	this->totRayTime = 0;
+	this->currentFrame = 0;
+	this->collisionCallback = nullptr;
+	this->threading = nullptr;
+	this->pool = nullptr;
+
+	ODE_CALL(dInitODE2)(0);
+	ODE_CALL(dAllocateODEDataForThread)(0xFFFFFFFF);
+	log_printf(L"ODE BUILD FLAGS: %S", ODE_CALL(dGetConfiguration)());
+
+	this->id = ODE_CALL(dWorldCreate)();
+	ODE_CALL(dWorldSetGravity)(this->id, 0.0f, -9.805999f, 0.0f);
+	ODE_CALL(dWorldSetERP)(this->id, 0.3f);
+	ODE_CALL(dWorldSetCFM)(this->id, 1.0e-7f);
+	ODE_CALL(dWorldSetContactMaxCorrectingVel)(this->id, 3.0f);
+	ODE_CALL(dWorldSetContactSurfaceLayer)(this->id, 0.0f);
+
+	this->contactGroup = ODE_CALL(dJointGroupCreate)(0);
+	this->contactGroupDynamic = ODE_CALL(dJointGroupCreate)(0);
+	this->currentContactGroup = this->contactGroup;
+
+	this->spaceStatic = ODE_CALL(dSimpleSpaceCreate)(nullptr);
+	this->spaceDynamic = ODE_CALL(dSimpleSpaceCreate)(nullptr);
+
+	this->ray = ODE_CALL(dCreateRay)(nullptr, 100.0f);
+	ODE_CALL(dGeomRaySetFirstContact)(this->ray, 1);
+	ODE_CALL(dGeomRaySetBackfaceCull)(this->ray, 1);
+
+	ODE_CALL(dWorldSetDamping)(this->id, 0.0f, 0.0f);
+
+	this->id->qs.num_iterations = 48; // TODO: check
+	// IDA guess -> dGeomSetCategoryBits(this->id, 48i64)
+	// same as dWorldSetQuickStepNumIterations
+}
+
+void _PhysicsCore::_dtor()
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _PhysicsCore::_step(float dt)
+{
+	if (this->noCollisionCounter)
+		this->noCollisionCounter--;
+	else
+		this->collisionStep(dt);
+
+	ODE_CALL(dWorldStep)(this->id, dt);
+
+	rayCollideTestCount = 0;
+	geomCollideTestCount = 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void collisionNearCallback(void *data, dxGeom *o1, dxGeom *o2);
+
+void _PhysicsCore::_collisionStep(float dt)
+{
+	auto* pCore = (PhysicsCore*)this;
+
+	this->coreCPUTimes.contactPoints = 0;
+	broadTestCount = 0;
+
+	if (this->currentFrame & 1)
+	{
+		ODE_CALL(dJointGroupEmpty)(this->contactGroupDynamic);
+		this->currentContactGroup = this->contactGroupDynamic;
+		ODE_CALL(dSpaceCollide2)((dGeomID)this->spaceDynamic, (dGeomID)this->spaceStatic, pCore, collisionNearCallback);
+	}
+	else
+	{
+		ODE_CALL(dJointGroupEmpty)(this->contactGroup);
+		this->currentContactGroup = this->contactGroup;
+		ODE_CALL(dSpaceCollide)(this->spaceDynamic, pCore, collisionNearCallback);
+	}
+
+	this->currentFrame++;
+	this->coreCPUTimes.narrowPhaseTests = geomCollideTestCount;
+}
+
+static void collisionNearCallback(void *data, dxGeom *o1, dxGeom *o2)
+{
+	if (ODE_CALL(dGeomIsSpace)(o1) || ODE_CALL(dGeomIsSpace)(o2))
+	{
+		++broadTestCount;
+		ODE_CALL(dSpaceCollide2)(o1, o2, data, collisionNearCallback);
+	}
+	else
+	{
+		if ((ODE_CALL(dGeomGetCategoryBits)(o1) & ODE_CALL(dGeomGetCollideBits)(o2))
+			&& (ODE_CALL(dGeomGetCollideBits)(o1) & ODE_CALL(dGeomGetCategoryBits)(o2)))
+		{
+			++geomCollideTestCount;
+
+			int flags = (ODE_CALL(dGeomGetBody)(o1) && ODE_CALL(dGeomGetBody)(o2)) ? 4 : 32;
+
+			const int maxContacts = 32;
+			dContactGeom contacts[maxContacts];
+
+			int n = ODE_CALL(dCollide)(o1, o2, flags, &contacts[0], sizeof(contacts[0]));
+			if (n > 0)
+				((PhysicsCore*)data)->onCollision(&contacts[0], n, o1, o2);
+		}
+	}
+}
+
+void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom* g0, dxGeom* g1)
+{
+	// TODO: check
+
+	dBodyID body0 = ODE_CALL(dGeomGetBody)(g0);
+	dBodyID body1 = ODE_CALL(dGeomGetBody)(g1);
+	int geomClass0 = ODE_CALL(dGeomGetClass)(g0);
+	int geomClass1 = ODE_CALL(dGeomGetClass)(g1);
+	void* shape0 = ODE_CALL(dGeomGetData)(g0);
+	void* shape1 = ODE_CALL(dGeomGetData)(g1);
+	void* userData0 = body0 ? ODE_CALL(dBodyGetData)(body0) : nullptr;
+	void* userData1 = body1 ? ODE_CALL(dBodyGetData)(body1) : nullptr;
+
+	for (int i = 0; i < numContacts; ++i)
+	{
+		const dContactGeom& cg = contacts[i];
+
+		dContact cj;
+		memset(&cj, 0, sizeof(cj));
+		cj.geom = cg;
+
+		if ((geomClass1 != 8 || geomClass0 != 1) 
+			&& (geomClass0 != 8 || geomClass1 != 1))
+		{
+			cj.surface.mode = 28692; // dContactBounce | dContactSoftCFM | dContactApprox1
+			cj.surface.mu = 0.25f; // 3E800000
+			cj.surface.bounce = 0.00999999978f; // 3C23D70A
+			cj.surface.soft_cfm = 9.99999975e-005f; // 38D1B717
+		}
+		else
+		{
+			if (body0 || body1)
+			{
+				dVector3 loc_normal;
+				ODE_CALL(dBodyVectorFromWorld)((body0 ? body0 : body1), 
+					cg.normal[0], cg.normal[1], cg.normal[2], loc_normal);
+
+				if (loc_normal[1] < 0.8999999f)
+					continue;
+			}
+
+			cj.surface.mode = 28700; // dContactBounce | dContactSoftERP | dContactSoftCFM | dContactApprox1
+			cj.surface.mu = 0.1f; // 3DCCCCCD
+			cj.surface.bounce = 0.0f;
+			cj.surface.soft_cfm = 0.000952380942f; // 3A79A934
+			cj.surface.soft_erp = 0.714285731f; // 3F36DB6E
+		}
+
+		dJointID j = ODE_CALL(dJointCreateContact)(this->id, this->currentContactGroup, &cj);
+		ODE_CALL(dJointAttach)(j, body0, body1);
+
+		if (this->collisionCallback)
+		{
+			this->collisionCallback->onCollisionCallBack(
+				userData0, shape0, 
+				userData1, shape1, 
+				vec3f(cg.normal), vec3f(cg.pos), cg.depth);
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

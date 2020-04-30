@@ -109,6 +109,8 @@
     <ClCompile Include="CustomPhysics\Game\Timer.cpp" />
     <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
     <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h" />
+    <ClInclude Include="CustomPhysics\Impl\InternalsODE.h" />
+    <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h" />
     <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
     <ClInclude Include="CustomPhysics\Impl\Suspension.h">
       <FileType>CppCode</FileType>

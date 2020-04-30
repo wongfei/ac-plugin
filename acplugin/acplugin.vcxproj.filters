@@ -40,6 +40,9 @@
     <Filter Include="CustomPhysics\Impl\TODO">
       <UniqueIdentifier>{e53d4386-668f-46ca-9550-af052ce85f4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CustomPhysics\Impl\ODE">
+      <UniqueIdentifier>{bdab46d6-7eac-4ed4-a646-d92266fa6e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp">
@@ -227,8 +230,14 @@
     <ClInclude Include="CustomPhysics\Game\Timer.h">
       <Filter>CustomPhysics\Game</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h">
+      <Filter>CustomPhysics\Impl\ODE</Filter>
+    </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\RigidBodyODE.h">
-      <Filter>CustomPhysics\Impl\TODO</Filter>
+      <Filter>CustomPhysics\Impl\ODE</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\InternalsODE.h">
+      <Filter>CustomPhysics\Impl\ODE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
