@@ -235,6 +235,8 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(PhysicsCore, step);
 	HOOK_METHOD_RVA(PhysicsCore, collisionStep);
 	HOOK_METHOD_RVA(PhysicsCore, onCollision);
+	HOOK_METHOD_RVA(PhysicsCore, rayCastR);
+	HOOK_METHOD_RVA(PhysicsCore, rayCastL);
 	#endif
 
 	// # RigidBodyODE

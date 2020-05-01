@@ -16,6 +16,8 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	#define RVA_PhysicsCore_step 2938512
 	#define RVA_PhysicsCore_collisionStep 2932624
 	#define RVA_PhysicsCore_onCollision 2936224
+	#define RVA_PhysicsCore_rayCastR 2936944
+	#define RVA_PhysicsCore_rayCastL 2937248
 
 	void _ctor(); //2931328
 	void _dtor(); //2931744
@@ -23,6 +25,9 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	void _step(float dt);
 	void _collisionStep(float dt);
 	void _onCollision(dContactGeom* contacts, int numContacts, dxGeom* g0, dxGeom* g1);
+
+	RayCastHit _rayCastR(const vec3f& pos, const vec3f& dir, dxGeom* ray);
+	RayCastHit _rayCastL(const vec3f& pos, const vec3f& dir, float length);
 
 	//void resetCollisions(); 2938224
 	//void initMultithreading(); 2935904
@@ -224,6 +229,72 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 				userData0, shape0, 
 				userData1, shape1, 
 				vec3f(cg.normal), vec3f(cg.pos), cg.depth);
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void rayNearCallback(void* data, dxGeom* o1, dxGeom* o2);
+
+RayCastHit _PhysicsCore::_rayCastL(const vec3f& pos, const vec3f& dir, float length)
+{
+	ODE_CALL(dGeomRaySetLength)(this->ray, length); 
+	return _rayCastR(pos, dir, this->ray);
+}
+
+RayCastHit _PhysicsCore::_rayCastR(const vec3f& pos, const vec3f& dir, dxGeom* ray)
+{
+	RayCastHit hit;
+	memset(&hit, 0, sizeof(hit));
+
+	dContactGeom cg;
+	cg.depth = -1.0f;
+
+	broadTestCount = 0;
+	rayCollideTestCount = 0;
+
+	ODE_CALL(dGeomRaySet)(ray, ODE_V3(pos), ODE_V3(dir));
+	ODE_CALL(dSpaceCollide2)(ray, this->spaceStatic, &cg, rayNearCallback);
+
+	if (cg.depth >= 0.0f)
+	{
+		hit.pos = vec3f(cg.pos);
+		hit.normal = vec3f(cg.normal);
+		hit.collisionObject = (ICollisionObject*)ODE_CALL(dGeomGetData)(cg.g2);
+		hit.hasContact = true;
+	}
+
+	return hit;
+}
+
+static void rayNearCallback(void* data, dxGeom* o1, dxGeom* o2)
+{
+	if (ODE_CALL(dGeomIsSpace)(o1) || ODE_CALL(dGeomIsSpace)(o2))
+	{
+		++broadTestCount;
+		ODE_CALL(dSpaceCollide2)(o1, o2, data, rayNearCallback);
+	}
+	else if (!ODE_CALL(dGeomGetBody)(o1) && !ODE_CALL(dGeomGetBody)(o2))
+	{
+		++rayCollideTestCount;
+
+		auto* result = (dContactGeom*)data;
+
+		const int maxContacts = 32;
+		dContactGeom contacts[maxContacts];
+
+		int n = ODE_CALL(dCollide)(o1, o2, 1i64, &contacts[0], sizeof(contacts[0]));
+
+		// TODO: check (orig code is fkn mess here)
+		for (int i = 0; i < n; ++i)
+		{
+			const dContactGeom& cg = contacts[i];
+
+			if (result->depth < 0.0f || result->depth > cg.depth)
+			{
+				*result = cg;
+			}
 		}
 	}
 }
