@@ -12,8 +12,9 @@
 #include "ode/ode.h"
 #include "AC/ac_ode.h"
 #include "Impl/InternalsODE.h"
-#include "Impl/PhysicsCore.h"
 #include "Impl/RigidBodyODE.h"
+#include "Impl/JointODE.h"
+#include "Impl/PhysicsCore.h"
 
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"

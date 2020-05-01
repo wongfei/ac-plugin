@@ -29,6 +29,19 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	RayCastHit _rayCastR(const vec3f& pos, const vec3f& dir, dxGeom* ray);
 	RayCastHit _rayCastL(const vec3f& pos, const vec3f& dir, float length);
 
+	IRigidBody* _createRigidBody();
+	IJoint* _createBallJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& pos);
+	IJoint* _createBumpJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, float rangeUp, float rangeDn);
+	IJoint* _createDistanceJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, const vec3f& p2);
+	IJoint* _createFixedJoint(IRigidBody* rb1, IRigidBody* rb2);
+	IJoint* _createSliderJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& axis);
+
+	IRayCaster* _createRayCaster(float length);
+
+	ICollisionObject* _createCollisionMesh(
+		float* vertices, unsigned int numVertices, unsigned short* indices, int indexCount, 
+		const mat44f& worldMatrix, IRigidBody* body, unsigned long group, unsigned long mask, unsigned int space_id);
+
 	//void resetCollisions(); 2938224
 	//void initMultithreading(); 2935904
 	//void step(float dt); 2938512
@@ -298,5 +311,69 @@ static void rayNearCallback(void* data, dxGeom* o1, dxGeom* o2)
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#if 0
+
+IRigidBody* _PhysicsCore::_createRigidBody()
+{
+	return new _RigidBodyODE(this);
+}
+
+IJoint* _PhysicsCore::_createBallJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& pos)
+{
+	dJointID j = dJointCreateBall(this->id, 0);
+	dJointAttach(j, ((RigidBodyODE*)rb1)->id, ((RigidBodyODE*)rb2)->id);
+	dJointSetBallAnchor(j, ODE_V3(pos));
+	return new _JointODE(this, j); // BallJointODE
+}
+
+IJoint* _PhysicsCore::_createBumpJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, float rangeUp, float rangeDn)
+{
+	return nullptr;
+}
+
+IJoint* _PhysicsCore::_createDistanceJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, const vec3f& p2)
+{
+	dJointID j = dJointCreateDBall(this->id, 0);
+	dJointAttach(j, ((RigidBodyODE*)rb1)->id, ((RigidBodyODE*)rb2)->id);
+	dJointSetDBallAnchor1(j, ODE_V3(p1));
+	dJointSetDBallAnchor2(j, ODE_V3(p2));
+	float d = dJointGetDBallDistance(j);
+	return new _JointODE(this, j); // DistanceJointODE
+}
+
+IJoint* _PhysicsCore::_createFixedJoint(IRigidBody* rb1, IRigidBody* rb2)
+{
+	dJointID j = dJointCreateFixed(this->id, 0);
+	dJointAttach(j, ((RigidBodyODE*)rb1)->id, ((RigidBodyODE*)rb2)->id);
+	dJointSetFixed(j);
+	return new _JointODE(this, j); // FixedJointODE
+}
+
+IJoint* _PhysicsCore::_createSliderJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& axis)
+{
+	dJointID j = dJointCreateSlider(this->id, 0);
+	dJointAttach(j, ((RigidBodyODE*)rb1)->id, ((RigidBodyODE*)rb2)->id);
+	dJointSetSliderAxis(j, ODE_V3(axis));
+	return new _JointODE(this, j); // SliderJointODE
+}
+
+IRayCaster* _PhysicsCore::_createRayCaster(float length)
+{
+	return new _RayCaster(length);
+}
+
+ICollisionObject* _PhysicsCore::_createCollisionMesh(
+	float* vertices, unsigned int numVertices, unsigned short* indices, int indexCount, 
+	const mat44f& worldMatrix, IRigidBody* body, unsigned long group, unsigned long mask, unsigned int space_id)
+{
+	return new _CollisionMeshODE(
+		vertices, numVertices, indices, indexCount, 
+		worldMatrix, body, group, mask, space_id);
+}
+
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

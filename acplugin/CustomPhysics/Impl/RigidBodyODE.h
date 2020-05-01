@@ -40,6 +40,9 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 	#define RVA_RigidBodyODE_addTorque 2941904
 	#define RVA_RigidBodyODE_addLocalTorque 2941024
 
+	//_RigidBodyODE(PhysicsCore* core) { _ctor(core); }
+	//~_RigidBodyODE() { _dtor(); }
+
 	void _ctor(PhysicsCore* core);
 	void _dtor();
 	void _release();

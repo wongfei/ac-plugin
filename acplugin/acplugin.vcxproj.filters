@@ -239,6 +239,9 @@
     <ClInclude Include="CustomPhysics\Impl\InternalsODE.h">
       <Filter>CustomPhysics\Impl\ODE</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\JointODE.h">
+      <Filter>CustomPhysics\Impl\ODE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">
