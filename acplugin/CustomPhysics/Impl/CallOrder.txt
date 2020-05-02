@@ -97,6 +97,11 @@ AeroMap::step
 		Wing::addDrag
 		Wing::addLift
 
+GearChanger::step
+	Drivetrain::gearUp
+	Drivetrain::gearDown
+	Drivetrain::setCurrentGear
+
 Drivetrain::step
 	Drivetrain::stepControllers
 	Drivetrain::step2WD / step4WD / stepAWD_new
@@ -111,3 +116,11 @@ Drivetrain::step2WD
 	IRigidBody::addLocalTorque
 	ISuspension::getHubWorldMatrix
 	IRigidBody::addTorque
+	
+Engine::step
+	Engine::getThrottleResponseGas
+	Engine::stepP2P
+	Engine::stepTurbos
+	ICoastGenerator::getCoastTorque
+	PhysicsEngine::getAirDensity
+	ITorqueGenerator::getOutputTorque

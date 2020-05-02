@@ -27,6 +27,7 @@
 #include "Impl/ThermalObject.h"
 #include "Impl/BrakeSystem.h"
 
+#include "Impl/GearChanger.h"
 #include "Impl/Drivetrain.h"
 #include "Impl/Drivetrain2WD.h"
 #include "Impl/Engine.h"
@@ -164,6 +165,10 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	
 	// # Drivetrain
 	#if 1
+	HOOK_METHOD_RVA(GearChanger, step);
+	HOOK_METHOD_RVA(Drivetrain, setCurrentGear);
+	HOOK_METHOD_RVA(Drivetrain, gearUp);
+	HOOK_METHOD_RVA(Drivetrain, gearDown);
 	HOOK_METHOD_RVA(Drivetrain, step);
 	HOOK_METHOD_RVA(Drivetrain, stepControllers);
 	HOOK_METHOD_RVA(Drivetrain, step2WD);
@@ -177,6 +182,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	// # Engine
 	#if 1
 	HOOK_METHOD_RVA(Engine, step);
+	HOOK_METHOD_RVA(Engine, getThrottleResponseGas);
 	HOOK_METHOD_RVA(Engine, stepTurbos);
 	HOOK_METHOD_RVA(Turbo, step);
 	#endif

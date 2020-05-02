@@ -3,9 +3,11 @@
 BEGIN_HOOK_OBJ(Engine)
 
 	#define RVA_Engine_step 2654432
+	#define RVA_Engine_getThrottleResponseGas 2644880
 	#define RVA_Engine_stepTurbos 2656512
 
 	void _step(const SACEngineInput& input, float dt);
+	float _getThrottleResponseGas(float gas, float rpm);
 	void _stepTurbos();
 
 END_HOOK_OBJ()
@@ -163,6 +165,30 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 	{
 		this->maxPowerW_Dynamic = fCurPower;
 	}
+}
+
+float _Engine::_getThrottleResponseGas(float gas, float rpm)
+{
+	float result = 0;
+
+	if (this->throttleResponseCurve.getCount() && this->throttleResponseCurveMax.getCount())
+	{
+		float fTrc = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
+		float fTrcMax =  tclamp(this->throttleResponseCurveMax.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
+		float fTrcScale = tclamp(rpm / this->throttleResponseCurveMaxRef, 0.0f, 1.0f);
+
+		result = ((fTrcMax - fTrc) * fTrcScale) + fTrc;
+	}
+	else if (this->throttleResponseCurve.getCount())
+	{
+		result = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
+	}
+	else
+	{
+		result = gas;
+	}
+
+	return result;
 }
 
 void _Engine::_stepTurbos()

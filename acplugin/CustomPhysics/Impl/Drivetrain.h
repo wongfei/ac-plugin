@@ -2,6 +2,9 @@
 
 BEGIN_HOOK_OBJ(Drivetrain)
 
+	#define RVA_Drivetrain_setCurrentGear 2527968
+	#define RVA_Drivetrain_gearUp 2517488
+	#define RVA_Drivetrain_gearDown 2516576
 	#define RVA_Drivetrain_step 2535728
 	#define RVA_Drivetrain_stepControllers 2535936
 	#define RVA_Drivetrain_step2WD 2528480
@@ -11,6 +14,9 @@ BEGIN_HOOK_OBJ(Drivetrain)
 	#define RVA_Drivetrain_getInertiaFromEngine 2517920
 	#define RVA_Drivetrain_getEngineRPM 2517888
 
+	void _setCurrentGear(int index, bool force);
+	bool _gearUp();
+	bool _gearDown();
 	void _step(float dt);
 	void _stepControllers(float dt);
 	void _step2WD(float dt);
@@ -21,6 +27,117 @@ BEGIN_HOOK_OBJ(Drivetrain)
 	float _getEngineRPM();
 
 END_HOOK_OBJ()
+
+void _Drivetrain::_setCurrentGear(int index, bool force)
+{
+	if (index != 1 && this->isGearboxLocked())
+	{
+		this->currentGear = 1;
+	}
+	else
+	{
+		this->isGearGrinding = false;
+
+		if (index >= 0 && index < (int)this->gears.size() && index != this->currentGear)
+		{
+			float v8 = (float)fabs(
+				this->engine.velocity - this->gears[index].ratio * this->drive.velocity * this->finalRatio);
+
+			float v9 = ((this->car->controls.gas * this->locClutch * v8 - this->locClutch * v8) 
+				* (float)this->controlsWindowGain + this->locClutch * v8)
+				* (1.0f / (2.0f * M_PI)) * 60.0f;
+
+			if (index == 1 || force || v9 < (float)this->validShiftRPMWindow)
+			{
+				this->currentGear = index;
+			}
+			else
+			{
+				this->isGearGrinding = true;
+
+				if (this->validShiftRPMWindow > 0.0)
+				{
+					float fRate = this->car->ksPhysics->mechanicalDamageRate;
+					if (fRate > 0.0f)
+						this->validShiftRPMWindow -= this->damageRpmWindow * 0.003f * fRate;
+				}
+			}
+		}
+	}
+}
+
+bool _Drivetrain::_gearUp()
+{
+	if (this->isGearboxLocked())
+		return false;
+
+	int iCurGear = this->currentGear;
+	int iReqGear = iCurGear + 1;
+
+	if (iReqGear >= (int)this->gears.size())
+		return false;
+
+	if (this->gearRequest.request != GearChangeRequest::eNoGearRequest)
+		return false;
+
+	this->gearRequest.request = GearChangeRequest::eChangeUp;
+	this->gearRequest.timeAccumulator = 0.0;
+	this->gearRequest.timeout = this->gearUpTime;
+	this->gearRequest.requestedGear = iReqGear;
+
+	OnGearRequestEvent e;
+	e.request = this->gearRequest.request;
+	e.nextGear = iReqGear;
+
+	for (auto& h : this->evOnGearRequest.handlers)
+	{
+		if (h.second)
+			(h.second)(e);
+	}
+
+	if (this->autoCutOffTime != 0.0f)
+		this->cutOff = this->autoCutOffTime;
+
+	this->currentGear = 1;
+	return true;
+}
+
+bool _Drivetrain::_gearDown()
+{
+	if (this->isGearboxLocked())
+		return false;
+
+	if (this->downshiftProtection.isActive) // TODO: a real men doesnt need this shit
+	{
+	}
+
+	int iCurGear = this->currentGear;
+	int iReqGear = iCurGear - 1;
+
+	if (iCurGear <= 0)
+		return false;
+
+	if (this->gearRequest.request != GearChangeRequest::eNoGearRequest)
+		return false;
+
+	this->gearRequest.request = GearChangeRequest::eChangeDown;
+	this->gearRequest.timeAccumulator = 0.0;
+	this->gearRequest.timeout = this->gearDnTime;
+	this->gearRequest.requestedGear = iReqGear;
+
+	OnGearRequestEvent e;
+	e.request = this->gearRequest.request;
+	e.nextGear = iReqGear;
+
+	for (auto& h : this->evOnGearRequest.handlers)
+	{
+		if (h.second)
+			(h.second)(e);
+	}
+
+	this->currentGear = 1;
+	return true;
+}
 
 void _Drivetrain::_step(float dt)
 {

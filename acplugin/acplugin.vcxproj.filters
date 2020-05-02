@@ -251,7 +251,12 @@
     <ClInclude Include="CustomPhysics\Utils\PIDController.h">
       <Filter>CustomPhysics\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CustomPhysics\Utils\Mathlib.h" />
+    <ClInclude Include="CustomPhysics\Impl\GearChanger.h">
+      <Filter>CustomPhysics\Impl\Clean</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\Mathlib.h">
+      <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">
