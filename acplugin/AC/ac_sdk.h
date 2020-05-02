@@ -3,8 +3,9 @@
 #define DEBUG_BREAK __debugbreak()
 #define DEBUG_ASSERT assert
 
-#define NOT_IMPLEMENTED DEBUG_ASSERT(false)
 #define SHOULD_NOT_REACH DEBUG_ASSERT(false)
+#define TODO_NOT_IMPLEMENTED DEBUG_ASSERT(false)
+#define TODO_WTF_IS_THIS DEBUG_ASSERT(false)
 
 // IDA types
 
@@ -138,7 +139,7 @@ template<typename T1, typename T2>
 class CubicSpline
 {
 public:
-	class Element
+	struct Element
 	{
 		T1 x;
 		T2 a;

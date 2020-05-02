@@ -37,11 +37,11 @@
     <Filter Include="CustomPhysics\Game">
       <UniqueIdentifier>{b39a8cd0-e817-41b5-9cf7-eb7c175323b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CustomPhysics\Impl\TODO">
-      <UniqueIdentifier>{e53d4386-668f-46ca-9550-af052ce85f4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CustomPhysics\Impl\ODE">
       <UniqueIdentifier>{bdab46d6-7eac-4ed4-a646-d92266fa6e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Utils">
+      <UniqueIdentifier>{1905d154-f398-405a-a99d-3551a1250418}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +242,16 @@
     <ClInclude Include="CustomPhysics\Impl\JointODE.h">
       <Filter>CustomPhysics\Impl\ODE</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\CubicSpline.h">
+      <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\Curve.h">
+      <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\PIDController.h">
+      <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\Mathlib.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">

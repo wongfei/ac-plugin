@@ -16,10 +16,8 @@ END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-TyreModelOutput _SCTM::_solve(TyreModelInput& tmi)
+TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 {
-	// TODO: MAD SHIT!!!
-
 	TyreModelOutput tmo;
 	memset(&tmo, 0, sizeof(tmo));
 

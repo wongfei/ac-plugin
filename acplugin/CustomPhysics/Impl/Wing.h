@@ -55,9 +55,8 @@ void _Wing::_addDrag(const vec3f& lv)
 	float fAngleOff = this->data.isVertical ? this->status.yawAngle : this->status.aoa;
 	this->status.cd = this->data.lutAOA_CD.getValue((this->status.angleMult * this->status.angle) + fAngleOff) * this->data.cdGain;
 
-	if (this->hasDamage)
+	if (this->hasDamage) // TODO: implement
 	{
-		// TODO
 	}
 
 	if (this->data.lutGH_CD.getCount())
@@ -112,9 +111,8 @@ void _Wing::_addLift(const vec3f& lv)
 		this->status.cl *= fLut;
 	}
   
-	if (this->hasDamage)
+	if (this->hasDamage) // TODO: implement
 	{
-		// TODO
 	}
 
 	float fDot = (fAxis * fAxis) + (lv.z * lv.z);
@@ -123,7 +121,7 @@ void _Wing::_addLift(const vec3f& lv)
   
 	if (fDot != 0.0f)
 	{
-		// TODO: CHECK THIS!!!
+		// TODO: check
 
 		vec3f vNorm = lv.get_norm();
 		vec3f vOut = this->data.isVertical ? vec3f(-vNorm.z, 0, vNorm.x) : vec3f(0, vNorm.z, -vNorm.y);

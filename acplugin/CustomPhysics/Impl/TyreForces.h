@@ -2,10 +2,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef* pSurface, float dt)
+void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef* pSurface, float dt) // TODO: cleanup
 {
-	// TODO: MAD SHIT!!!
-
 	mat44f& worldRotation = this->worldRotation;
 	vec3f& roadHeading = this->roadHeading;
 	vec3f& roadRight = this->roadRight;
@@ -132,13 +130,14 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 
 	if (!(isfinite(vForce.x) && isfinite(vForce.y) && isfinite(vForce.z)))
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF vTyreForce");
 		vForce = vec3f(0, 0, 0);
 	}
 
 	if (this->car && this->car->torqueModeEx != TorqueModeEX::original)
 	{
-		DEBUG_BREAK; // TODO: what car uses this code?
+		TODO_WTF_IS_THIS;
 
 		this->addTyreForceToHub(pos, vForce);
 	}
@@ -169,6 +168,8 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 			float fSlipUnk = 0;
 			if (this->modelData.version < 2)
 			{
+				TODO_WTF_IS_THIS;
+
 				float fSlipRatioNorm = tclamp(fabsf(this->status.slipRatio), 0.0f, 1.0f);
 				float fRrSrUnk = fPressureUnk * this->modelData.rr_sr;
 				float fRrSaUnk = fabsf(this->status.slipAngleRAD * 57.29578f) * (fPressureUnk * this->modelData.rr_sa);
@@ -271,7 +272,7 @@ void _Tyre::_stepPuncture(float dt, float hubSpeed)
 
 void _Tyre::_addTyreForceToHub(const vec3f& pos, const vec3f& force)
 {
-	// TODO: MAD SHIT!!! NOT TESTED!!!
+	TODO_WTF_IS_THIS;
 
 	vec3f vWP = this->worldPosition;
 	float fWorldX = this->worldPosition.x;

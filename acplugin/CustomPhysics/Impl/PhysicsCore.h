@@ -187,8 +187,6 @@ static void collisionNearCallback(void *data, dxGeom *o1, dxGeom *o2)
 
 void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom* g0, dxGeom* g1)
 {
-	// TODO: check
-
 	dBodyID body0 = ODE_CALL(dGeomGetBody)(g0);
 	dBodyID body1 = ODE_CALL(dGeomGetBody)(g1);
 	int geomClass0 = ODE_CALL(dGeomGetClass)(g0);

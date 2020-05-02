@@ -124,7 +124,8 @@ void _RigidBodyODE::_dtor()
 
 void _RigidBodyODE::_release()
 {
-	delete this; // TODO: check
+	// delete this; // TODO: check
+	TODO_NOT_IMPLEMENTED;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,8 +370,6 @@ void _RigidBodyODE::_addLocalTorque(const vec3f& t)
 
 uint64_t _RigidBodyODE::_addBoxCollider(const vec3f& pos, const vec3f& size, unsigned int category, unsigned long mask, unsigned int spaceId)
 {
-	// TODO: check
-
 	auto pSubSpace = this->core->getDynamicSubSpace(spaceId);
 	auto pGeom = ODE_CALL(dCreateBox)(pSubSpace, ODE_V3(size));
 
@@ -395,35 +394,35 @@ void _RigidBodyODE::_setBoxColliderMask(uint64_t box, unsigned long mask)
 
 void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback)
 {
-	NOT_IMPLEMENTED;
+	TODO_NOT_IMPLEMENTED;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _RigidBodyODE::_addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, mat44f* mat, unsigned long category, unsigned long collideMask, unsigned int spaceId)
 {
-	// TODO
+	TODO_NOT_IMPLEMENTED;
 }
 
 void _RigidBodyODE::_setMeshCollideMask(unsigned int meshIndex, unsigned long mask)
 {
-	// TODO
+	TODO_NOT_IMPLEMENTED;
 }
 
 void _RigidBodyODE::_setMeshCollideCategory(unsigned int meshIndex, unsigned long category)
 {
-	// TODO
+	TODO_NOT_IMPLEMENTED;
 }
 
 unsigned long _RigidBodyODE::_getMeshCollideMask(unsigned int meshIndex)
 {
-	// TODO
+	TODO_NOT_IMPLEMENTED;
 	return 0;
 }
 
 unsigned long _RigidBodyODE::_getMeshCollideCategory(unsigned int meshIndex)
 {
-	// TODO
+	TODO_NOT_IMPLEMENTED;
 	return 0;
 }
 

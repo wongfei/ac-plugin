@@ -100,15 +100,15 @@ void _Car::_step(float dt)
 			this->controls.brake = 0.2;
 		}
 
-		if (this->penaltyTime > 0.0f)
+		if (this->penaltyTime > 0.0f) // TODO: implement
 		{
-			// TODO
 		}
 	}
 
 	float fSteerAngleSig = (this->steerLock * this->controls.steer) / this->steerRatio;
 	if (!isfinite(fSteerAngleSig))
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF fSteerAngleSig");
 		fSteerAngleSig = 0.0f;
 	}
@@ -210,12 +210,14 @@ void _Car::_updateBodyMass()
 		}
 		else
 		{
+			TODO_WTF_IS_THIS;
+
 			this->body->setMassExplicitInertia(this->mass, this->explicitInertia.x, this->explicitInertia.y, this->explicitInertia.z);
 			log_printf(L"setMassExplicitInertia");
 		}
 
 		float fFuelMass = tmax(0.1f, (this->fuelKG * (float)this->fuel));
-		this->fuelTankBody->setMassBox(fFuelMass, 0.5f, 0.5f, 0.5f); // TODO: not sure
+		this->fuelTankBody->setMassBox(fFuelMass, 0.5f, 0.5f, 0.5f); // TODO: check
 
 		this->lastBodyMassUpdateTime = this->ksPhysics->physicsTime;
 	}

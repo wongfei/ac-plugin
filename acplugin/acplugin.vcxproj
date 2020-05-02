@@ -97,6 +97,8 @@
     <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp" />
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />
     <ClInclude Include="CustomPhysics\Impl\CarUtils.h" />
+    <ClInclude Include="CustomPhysics\Utils\CubicSpline.h" />
+    <ClInclude Include="CustomPhysics\Utils\Curve.h" />
     <ClInclude Include="CustomPhysics\Impl\Damper.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -112,6 +114,8 @@
     <ClInclude Include="CustomPhysics\Impl\InternalsODE.h" />
     <ClInclude Include="CustomPhysics\Impl\JointODE.h" />
     <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h" />
+    <ClInclude Include="CustomPhysics\Utils\Mathlib.h" />
+    <ClInclude Include="CustomPhysics\Utils\PIDController.h" />
     <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
     <ClInclude Include="CustomPhysics\Impl\Suspension.h">
       <FileType>CppCode</FileType>

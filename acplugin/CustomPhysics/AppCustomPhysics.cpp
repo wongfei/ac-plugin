@@ -8,6 +8,10 @@
 
 #include "Game/Timer.h"
 
+#include "Utils/Mathlib.h"
+#include "Utils/Curve.h"
+#include "Utils/PIDController.h"
+
 #define dSINGLE
 #include "ode/ode.h"
 #include "AC/ac_ode.h"
@@ -102,8 +106,31 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 		_plugin->car->controlsProvider->ffEnabled = false;
 	#endif
 
+	//
 	// BEGIN HOOKS
+	//
+
 	#if 1
+
+	//
+	// UTILS
+	//
+
+	// # Math
+	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
+
+	// # Curve
+	HOOK_METHOD_RVA(Curve, getValue);
+	HOOK_METHOD_RVA(Curve, getCubicSplineValue);
+
+	// # PIDController
+	HOOK_METHOD_RVA(PIDController, eval);
+	HOOK_METHOD_RVA(PIDController, setPID);
+	HOOK_METHOD_RVA(PIDController, reset);
+
+	//
+	// CAR
+	//
 
 	// # Car
 	#if 1
@@ -230,6 +257,10 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	#endif
 
+	//
+	// ODE
+	//
+
 	// # PhysicsCore
 	#if 1
 	PhysicsCore_initGlobals();
@@ -281,8 +312,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
 	#endif
 
-	#endif
-	// END HOOKS
+	#endif // END HOOKS
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }

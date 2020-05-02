@@ -35,10 +35,8 @@ float _SlipStream::_getSlipEffect(const vec3f& p)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _SlipStream::_setPosition(const vec3f& pos, const vec3f& vel)
+void _SlipStream::_setPosition(const vec3f& pos, const vec3f& vel) // TODO: check
 {
-	// TODO: CHECK THIS!!!
-
 	this->triangle.points[0] = pos;
 
 	float fVelLen = vel.len();

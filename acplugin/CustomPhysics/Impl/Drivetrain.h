@@ -42,11 +42,11 @@ void _Drivetrain::_step(float dt)
 			break;
 
 		case TractionType::AWD:
-			this->step4WD(dt); // TODO
+			this->step4WD(dt); // TODO: implement
 			break;
 
 		case TractionType::AWD_NEW:
-			this->step4WD_new(dt); // TODO
+			this->step4WD_new(dt); // TODO: implement
 			break;
 
 		default:
@@ -105,7 +105,7 @@ void _Drivetrain::_reallignSpeeds(float dt)
 	}
 }
 
-void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check, weird logic
+void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check
 {
 	this->drive.velocity += acc;
 

@@ -69,6 +69,7 @@ void _Tyre::_step(float dt)
 
 	if (!isfinite(this->status.angularVelocity))
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF status.angularVelocity");
 		this->status.angularVelocity = 0.0f;
 	}
@@ -205,9 +206,9 @@ void _Tyre::_step(float dt)
 
 	if (this->modelData.version < 10)
 	{
-		DEBUG_BREAK; // TODO: what car uses this code?
+		TODO_WTF_IS_THIS;
 
-		this->addTyreForces(this->contactPoint, this->contactNormal, pSurface, dt);
+		this->addTyreForces(this->contactPoint, this->contactNormal, pSurface, dt); // TODO: implement
 	}
 	else
 	{
@@ -241,6 +242,8 @@ LB_COMPUTE_TORQ:
 
 	if (this->modelData.version < 10)
 	{
+		TODO_WTF_IS_THIS;
+
 		fTorq = ((this->status.loadedRadius * this->status.Fx) - (fAngularVelocitySign * fBrakeTorque)) + this->status.rollingResistence;
 	}
 	else
@@ -250,6 +253,7 @@ LB_COMPUTE_TORQ:
 
 	if (!isfinite(fTorq))
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF fTorq");
 		fTorq = 0.0f;
 	}
@@ -258,6 +262,7 @@ LB_COMPUTE_TORQ:
 
 	if (!isfinite(fFeedbackTorque))
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF fFeedbackTorque");
 		fFeedbackTorque = 0.0f;
 	}
@@ -460,6 +465,7 @@ void _Tyre::_stepThermalModel(float dt)
 	}
 	else
 	{
+		SHOULD_NOT_REACH;
 		log_printf(L"INF fThermalInput");
 	}
 
@@ -518,6 +524,7 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 								}
 								else
 								{
+									SHOULD_NOT_REACH;
 									log_printf(L"INF fGrainTest1");
 								}
 							}
@@ -537,6 +544,7 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 				}
 				else
 				{
+					SHOULD_NOT_REACH;
 					log_printf(L"INF fGrainTest2");
 				}
 			}
@@ -562,6 +570,7 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 								}
 								else
 								{
+									SHOULD_NOT_REACH;
 									log_printf(L"INF fBlisterTest");
 								}
 							}
