@@ -191,9 +191,9 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 	dBodyID body1 = ODE_CALL(dGeomGetBody)(g1);
 	int geomClass0 = ODE_CALL(dGeomGetClass)(g0);
 	int geomClass1 = ODE_CALL(dGeomGetClass)(g1);
-	void* shape0 = ODE_CALL(dGeomGetData)(g0);
+	void* shape0 = ODE_CALL(dGeomGetData)(g0); // CollisionMeshODE*
 	void* shape1 = ODE_CALL(dGeomGetData)(g1);
-	void* userData0 = body0 ? ODE_CALL(dBodyGetData)(body0) : nullptr;
+	void* userData0 = body0 ? ODE_CALL(dBodyGetData)(body0) : nullptr; // RigidBodyODE*
 	void* userData1 = body1 ? ODE_CALL(dBodyGetData)(body1) : nullptr;
 
 	for (int i = 0; i < numContacts; ++i)
@@ -208,9 +208,9 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 			&& (geomClass0 != 8 || geomClass1 != 1))
 		{
 			cj.surface.mode = 28692; // dContactBounce | dContactSoftCFM | dContactApprox1
-			cj.surface.mu = 0.25f; // 3E800000
-			cj.surface.bounce = 0.00999999978f; // 3C23D70A
-			cj.surface.soft_cfm = 9.99999975e-005f; // 38D1B717
+			cj.surface.mu = 0.25f;
+			cj.surface.bounce = 0.00999999978f;
+			cj.surface.soft_cfm = 9.99999975e-005f;
 		}
 		else
 		{
@@ -225,10 +225,10 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 			}
 
 			cj.surface.mode = 28700; // dContactBounce | dContactSoftERP | dContactSoftCFM | dContactApprox1
-			cj.surface.mu = 0.1f; // 3DCCCCCD
+			cj.surface.mu = 0.1f;
 			cj.surface.bounce = 0.0f;
-			cj.surface.soft_cfm = 0.000952380942f; // 3A79A934
-			cj.surface.soft_erp = 0.714285731f; // 3F36DB6E
+			cj.surface.soft_cfm = 0.000952380942f;
+			cj.surface.soft_erp = 0.714285731f;
 		}
 
 		dJointID j = ODE_CALL(dJointCreateContact)(this->id, this->currentContactGroup, &cj);

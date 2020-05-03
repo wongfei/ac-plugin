@@ -8,6 +8,7 @@ BEGIN_HOOK_OBJ(Car)
 	#define RVA_Car_calcBodyMass 2554736
 	#define RVA_Car_stepThermalObjects 2583024
 	#define RVA_Car_stepComponents 2581712
+	#define RVA_Car_onCollisionCallBack 2573904
 
 	void _step(float dt);
 	void _updateAirPressure();
@@ -320,5 +321,124 @@ void _Car::_onCollisionCallBack(
 	void* userData1, void* shape1, 
 	const vec3f& normal, const vec3f& pos, float depth)
 {
-	TODO_NOT_IMPLEMENTED;
+	if (!(this->body == userData0 || this->body == userData1))
+		return;
+
+	IRigidBody* pOtherBody;
+	ICollisionObject* pOtherShape;
+
+	if (this->body == userData0)
+	{
+		pOtherBody = (IRigidBody*)userData1;
+		pOtherShape = (ICollisionObject*)shape1;
+	}
+	else
+	{
+		pOtherBody = (IRigidBody*)userData0;
+		pOtherShape = (ICollisionObject*)shape0;
+	}
+
+	unsigned long ulOtherGroup = pOtherShape ? pOtherShape->getGroup() : 0;
+	unsigned long ulGroup0 = 0;
+	unsigned long ulGroup1 = 0;
+	bool bFlag0 = false;
+	bool bFlag1 = false;
+
+	if (shape0)
+	{
+		ulGroup0 = ((ICollisionObject*)shape0)->getGroup();
+		bFlag0 = (ulGroup0 == 1 || ulGroup0 == 16);
+	}
+
+	if (shape1)
+	{
+		ulGroup1 = ((ICollisionObject*)shape1)->getGroup();
+		bFlag1 = (ulGroup1 == 1 || ulGroup1 == 16);
+	}
+
+	this->lastCollisionTime = this->ksPhysics->physicsTime;
+
+    vec3f vPosLocal = this->body->worldToLocal(pos);
+	vec3f vVelocity = this->body->getPointVelocity(pos);
+
+	vec3f vOtherVelocity(0, 0, 0);
+	if (pOtherBody)
+	{
+		vOtherVelocity = pOtherBody->getPointVelocity(pos);
+	}
+
+	vec3f vDeltaVelocity = vVelocity - vOtherVelocity;
+	float fRelativeSpeed = -((vDeltaVelocity * normal) * 3.5999999f);
+	float fDamage = fRelativeSpeed * this->ksPhysics->mechanicalDamageRate;
+
+	if (userData0 && userData1 && !bFlag0 && !bFlag1)
+		this->lastCollisionWithCarTime = this->ksPhysics->physicsTime;
+
+	float* pDmg = this->damageZoneLevel;
+
+	if (fRelativeSpeed > 0.0f && !bFlag0 && !bFlag1)
+	{
+		if (fRelativeSpeed * this->ksPhysics->mechanicalDamageRate > 150.0f)
+			this->drivetrain.acEngine.blowUp();
+
+		vec3f vNorm = vPosLocal.get_norm();
+		int iZoneId;
+
+		if (fabsf(vNorm.z) <= 0.70700002f)
+		{
+			iZoneId = (vPosLocal.x >= 0.0f) ? 2 : 3;
+		}
+		else
+		{
+			iZoneId = (vPosLocal.z <= 0.0f) ? 1 : 0;
+		}
+		
+		pDmg[iZoneId] = tmax(pDmg[iZoneId], fDamage);
+		pDmg[4] = tmax(pDmg[4], fDamage);
+	}
+
+	if (pDmg[0] > 0.0f && pDmg[2] > 0.0f)
+		this->suspensions[0]->setDamage((pDmg[0] + pDmg[2]) * 0.5f);
+
+	if (pDmg[0] > 0.0f && pDmg[3] > 0.0f)
+		this->suspensions[1]->setDamage((pDmg[0] + pDmg[3]) * 0.5f);
+
+	if (pDmg[1] > 0.0f && pDmg[2] > 0.0f)
+		this->suspensions[2]->setDamage((pDmg[1] + pDmg[2]) * 0.5f);
+
+	if (pDmg[1] > 0.0f && pDmg[3] > 0.0f)
+		this->suspensions[3]->setDamage((pDmg[1] + pDmg[3]) * 0.5f);
+
+	ACPhysicsEvent pe;
+	pe.type = eACEventType::acEvent_OnCollision;
+	pe.param1 = (float)this->physicsGUID;
+	pe.param2 = depth;
+	pe.param3 = -1;
+	pe.param4 = fRelativeSpeed;
+	pe.vParam1 = pos;
+	pe.vParam2 = normal;
+	pe.voidParam0 = nullptr;
+	pe.voidParam1 = nullptr;
+	pe.ulParam0 = ulOtherGroup; // TODO: ulGroup1 OR ulOtherGroup ?
+	this->ksPhysics->eventQueue.push(pe); // processed by Sim::stepPhysicsEvent
+
+	if (fRelativeSpeed > 0.0f && !bFlag0 && !bFlag1)
+	{
+		//log_printf(L"collision %u %u %.3f", (UINT)ulGroup0, (UINT)ulGroup1, fRelativeSpeed);
+
+		OnCollisionEvent ce;
+		ce.body = pOtherBody;
+		ce.relativeSpeed = fRelativeSpeed;
+		ce.worldPos = pos;
+		ce.relPos = vPosLocal;
+		ce.colliderGroup = ulOtherGroup; // TODO: ulGroup1 OR ulOtherGroup ?
+
+		for (auto& h : this->evOnCollisionEvent.handlers)
+		{
+			if (h.second)
+				(h.second)(ce);
+		}
+	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

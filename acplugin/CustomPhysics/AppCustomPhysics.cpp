@@ -134,6 +134,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(Car, calcBodyMass);
 	HOOK_METHOD_RVA(Car, stepThermalObjects);
 	HOOK_METHOD_RVA(Car, stepComponents);
+	HOOK_METHOD_RVA(Car, onCollisionCallBack);
 	#endif
 
 	// # DynamicController

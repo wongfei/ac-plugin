@@ -12,6 +12,8 @@ BEGIN_HOOK_OBJ(PhysicsEngine)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _PhysicsEngine::_step(float dt, double currentTime, double gt)
 {
 	this->gameTime = gt;
@@ -68,6 +70,8 @@ void _PhysicsEngine::_step(float dt, double currentTime, double gt)
 	//}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _PhysicsEngine::_stepWind(float dt)
 {
 	if (this->wind.speed.value >= 0.0099999998f)
@@ -87,6 +91,8 @@ void _PhysicsEngine::_stepWind(float dt)
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _PhysicsEngine::_onCollisionCallBack(
 	void* userData0, void* shape0, 
@@ -116,3 +122,5 @@ void _PhysicsEngine::_onCollisionCallBack(
 		pCar->onCollisionCallBack(userData0, shape0, userData1, shape1, normal, pos, depth);
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
