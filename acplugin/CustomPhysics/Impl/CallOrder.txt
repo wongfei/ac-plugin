@@ -1,4 +1,26 @@
 
+PhysicsDriveThread::run
+	DirectInput::poll
+	DICommandManager::step
+	PhysicsEngine::step
+	evPhysicsStepCompleted
+	
+PhysicsEngine::step
+	evOnPreStep
+	Track::step
+	PhysicsEngine::stepWind
+	Car::stepPreCacheValues
+	Car::step
+	PhysicsCore::step
+	evOnStepCompleted
+
+PhysicsCore::step
+	PhysicsCore::collisionStep
+		PhysicsCore::onCollision
+			ICollisionCallback::onCollisionCallBack
+				PhysicsEngine::onCollisionCallBack
+					Car::onCollisionCallBack
+
 Car::step
 	Car::pollControls
 	Car::updateAirPressure

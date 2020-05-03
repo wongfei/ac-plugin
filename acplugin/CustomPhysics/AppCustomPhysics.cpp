@@ -19,6 +19,7 @@
 #include "Impl/RigidBodyODE.h"
 #include "Impl/JointODE.h"
 #include "Impl/PhysicsCore.h"
+#include "Impl/PhysicsEngine.h"
 
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
@@ -107,15 +108,9 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 		_plugin->car->controlsProvider->ffEnabled = false;
 	#endif
 
-	//
-	// BEGIN HOOKS
-	//
-
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	#if 1
-
-	//
-	// UTILS
-	//
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// # Math
 	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
@@ -129,9 +124,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(PIDController, setPID);
 	HOOK_METHOD_RVA(PIDController, reset);
 
-	//
-	// CAR
-	//
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// # Car
 	#if 1
@@ -263,9 +256,14 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
 	#endif
 
-	//
-	// ODE
-	//
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// # PhysicsEngine
+	#if 1
+	HOOK_METHOD_RVA(PhysicsEngine, step);
+	HOOK_METHOD_RVA(PhysicsEngine, stepWind);
+	HOOK_METHOD_RVA(PhysicsEngine, onCollisionCallBack);
+	#endif
 
 	// # PhysicsCore
 	#if 1
@@ -318,7 +316,9 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
 	#endif
 
-	#endif // END HOOKS
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	#endif
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }

@@ -15,6 +15,7 @@ BEGIN_HOOK_OBJ(Car)
 	float _calcBodyMass();
 	void _stepThermalObjects(float dt);
 	void _stepComponents(float dt);
+	void _onCollisionCallBack(void* userData0, void* shape0, void* userData1, void* shape1, const vec3f& normal, const vec3f& pos, float depth);
 
 END_HOOK_OBJ()
 
@@ -313,3 +314,11 @@ void _Car::_stepComponents(float dt)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_onCollisionCallBack(
+	void* userData0, void* shape0, 
+	void* userData1, void* shape1, 
+	const vec3f& normal, const vec3f& pos, float depth)
+{
+	TODO_NOT_IMPLEMENTED;
+}

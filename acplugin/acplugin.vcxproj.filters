@@ -25,23 +25,26 @@
     <Filter Include="FaceTrack">
       <UniqueIdentifier>{d3eb4e45-3d17-4bf8-8237-36f75e5ee3a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CustomPhysics\Impl\Shitty">
-      <UniqueIdentifier>{9f18a300-3f93-49d6-aa99-0a39afd5f946}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CustomPhysics\Impl\Docs">
       <UniqueIdentifier>{966204d4-154b-4870-bd76-5fdca39e1bf8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CustomPhysics\Impl\Clean">
-      <UniqueIdentifier>{a34637a5-926e-4003-922a-b88487318138}</UniqueIdentifier>
     </Filter>
     <Filter Include="CustomPhysics\Game">
       <UniqueIdentifier>{b39a8cd0-e817-41b5-9cf7-eb7c175323b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CustomPhysics\Impl\ODE">
-      <UniqueIdentifier>{bdab46d6-7eac-4ed4-a646-d92266fa6e8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CustomPhysics\Utils">
       <UniqueIdentifier>{1905d154-f398-405a-a99d-3551a1250418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Impl\TODO">
+      <UniqueIdentifier>{51d3a925-15cb-456f-9a32-77ff452c2bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Impl\Car">
+      <UniqueIdentifier>{a34637a5-926e-4003-922a-b88487318138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Impl\Car\Shitty">
+      <UniqueIdentifier>{9f18a300-3f93-49d6-aa99-0a39afd5f946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomPhysics\Impl\Physics">
+      <UniqueIdentifier>{bdab46d6-7eac-4ed4-a646-d92266fa6e8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,85 +147,85 @@
       <Filter>FaceTrack</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreForces.h">
-      <Filter>CustomPhysics\Impl\Shitty</Filter>
+      <Filter>CustomPhysics\Impl\Car\Shitty</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\AeroMap.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\AntirollBar.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\BrakeSystem.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\BrushSlipProvider.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\BrushTyreModel.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Car.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\CarUtils.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Damper.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Drivetrain.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Suspension.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\SuspensionAxle.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\SuspensionML.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\SuspensionStrut.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\ThermalObject.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Turbo.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Wing.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\SlipStream.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Engine.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Drivetrain2WD.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\DynamicController.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\Tyre.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreForcesLegacy.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreUtils.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\TyreModel.h">
-      <Filter>CustomPhysics\Impl\Shitty</Filter>
+      <Filter>CustomPhysics\Impl\Car\Shitty</Filter>
     </ClInclude>
     <ClInclude Include="AC\ac_ode.h">
       <Filter>AC</Filter>
@@ -231,16 +234,16 @@
       <Filter>CustomPhysics\Game</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h">
-      <Filter>CustomPhysics\Impl\ODE</Filter>
+      <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\RigidBodyODE.h">
-      <Filter>CustomPhysics\Impl\ODE</Filter>
+      <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\InternalsODE.h">
-      <Filter>CustomPhysics\Impl\ODE</Filter>
+      <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\JointODE.h">
-      <Filter>CustomPhysics\Impl\ODE</Filter>
+      <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Utils\CubicSpline.h">
       <Filter>CustomPhysics\Utils</Filter>
@@ -252,10 +255,13 @@
       <Filter>CustomPhysics\Utils</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Impl\GearChanger.h">
-      <Filter>CustomPhysics\Impl\Clean</Filter>
+      <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysics\Utils\Mathlib.h">
       <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\PhysicsEngine.h">
+      <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
