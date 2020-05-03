@@ -99,6 +99,7 @@
     <ClInclude Include="CustomPhysics\Impl\CarUtils.h" />
     <ClInclude Include="CustomPhysics\Impl\GearChanger.h" />
     <ClInclude Include="CustomPhysics\Impl\PhysicsEngine.h" />
+    <ClInclude Include="CustomPhysics\Impl\Track.h" />
     <ClInclude Include="CustomPhysics\Utils\CubicSpline.h" />
     <ClInclude Include="CustomPhysics\Utils\Curve.h" />
     <ClInclude Include="CustomPhysics\Impl\Damper.h">

@@ -20,6 +20,7 @@
 #include "Impl/JointODE.h"
 #include "Impl/PhysicsCore.h"
 #include "Impl/PhysicsEngine.h"
+#include "Impl/Track.h"
 
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
@@ -274,6 +275,13 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_METHOD_RVA(PhysicsCore, onCollision);
 	HOOK_METHOD_RVA(PhysicsCore, rayCastR);
 	HOOK_METHOD_RVA(PhysicsCore, rayCastL);
+	#endif
+
+	// # Track
+	#if 1
+	HOOK_METHOD_RVA(Track, step);
+	HOOK_METHOD_RVA(Track, rayCast);
+	HOOK_METHOD_RVA(Track, rayCastWithRayCaster);
 	#endif
 
 	// # RigidBodyODE
