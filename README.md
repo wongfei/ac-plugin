@@ -1,12 +1,12 @@
 # ac-plugin
 
-Example of native C++ plugin for Assetto Corsa.
-
-Shows how to write custom game logic and mod physics.
+C++ SDK for Assetto Corsa.
 
 Provides full access to game internals.
 
-Requires VS2015 community + VS2013 (v120) platform toolset.
+Shows how to implement custom physics as plugin.
+
+Requires VS2013 community, v120 platform toolset.
 
 ## Installing
 
