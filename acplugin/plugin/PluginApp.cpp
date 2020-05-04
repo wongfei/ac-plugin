@@ -1,6 +1,5 @@
 #include "precompiled.h"
 #include "PluginApp.h"
-#include "utils/os.h"
 
 PluginApp::PluginApp(ACPlugin* plugin, const std::wstring& appName)
 {

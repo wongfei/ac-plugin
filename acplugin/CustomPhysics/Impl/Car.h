@@ -10,6 +10,17 @@ BEGIN_HOOK_OBJ(Car)
 	#define RVA_Car_stepComponents 2581712
 	#define RVA_Car_onCollisionCallBack 2573904
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Car, step);
+		HOOK_METHOD_RVA(Car, updateAirPressure);
+		HOOK_METHOD_RVA(Car, updateBodyMass);
+		HOOK_METHOD_RVA(Car, calcBodyMass);
+		HOOK_METHOD_RVA(Car, stepThermalObjects);
+		HOOK_METHOD_RVA(Car, stepComponents);
+		HOOK_METHOD_RVA(Car, onCollisionCallBack);
+	}
+
 	void _step(float dt);
 	void _updateAirPressure();
 	void _updateBodyMass();

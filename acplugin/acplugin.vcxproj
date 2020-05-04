@@ -117,6 +117,7 @@
     <ClInclude Include="CustomPhysics\Impl\InternalsODE.h" />
     <ClInclude Include="CustomPhysics\Impl\JointODE.h" />
     <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h" />
+    <ClInclude Include="CustomPhysics\Utils\INIReader.h" />
     <ClInclude Include="CustomPhysics\Utils\Mathlib.h" />
     <ClInclude Include="CustomPhysics\Utils\PIDController.h" />
     <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />

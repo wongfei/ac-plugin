@@ -3,14 +3,24 @@
 
 //
 
+#define RND_SEED 0
+
 #define BEGIN_HOOK_OBJ(name) struct _##name : public name {
 #define END_HOOK_OBJ() };
+#define HOOK_OBJ(name) _##name::_hook()
+
+#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
+#define HOOK_FUNC_RVA_ORIG(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
+
+#define HOOK_METHOD_RVA(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func))
+#define HOOK_METHOD_RVA_ORIG(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func), &_orig_##obj##_##func)
+
+#define ORIG_METHOD(obj, func) xcast<decltype(&obj::func)>(_orig_##obj##_##func)
+#define THIS_CALL(func) (this->*func)
+
+//
 
 #include "Game/Timer.h"
-
-#include "Utils/Mathlib.h"
-#include "Utils/Curve.h"
-#include "Utils/PIDController.h"
 
 #define dSINGLE
 #include "ode/ode.h"
@@ -56,6 +66,11 @@
 #include "Impl/Wing.h"
 #include "Impl/SlipStream.h"
 
+#include "Utils/INIReader.h"
+#include "Utils/Curve.h"
+#include "Utils/PIDController.h"
+#include "Utils/Mathlib.h"
+
 //
 
 static AppCustomPhysics* s_custom_physics = nullptr;
@@ -78,17 +93,15 @@ void Car_pollControls(Car* pThis, float dt)
 
 //
 
-#define RND_SEED 0
-
-#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
-#define HOOK_FUNC_RVA_ORIG(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func, &_orig_##func)
-#define HOOK_METHOD_RVA(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func))
-
 AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custom_physics")
 {
 	log_printf(L"+AppCustomPhysics %p", this);
 	s_custom_physics = this;
 
+	HOOK_OBJ(INIReader);
+	log_printf(L"INIReader::useCache=%d", (int)INIReader_useCache);
+
+	log_printf(L"");
 	log_printf(L"carName=%s", plugin->car->screenName.c_str());
 	log_printf(L"tyreVersion=%d", (int)plugin->car->tyres[0].modelData.version);
 	log_printf(L"suspensionTypeF=%d", (int)plugin->car->suspensionTypeF);
@@ -97,6 +110,24 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	log_printf(L"tractionType=%d", (int)plugin->car->drivetrain.tractionType);
 	log_printf(L"diffType=%d", (int)plugin->car->drivetrain.diffType);
 	log_printf(L"numWings=%d", (int)plugin->car->aeroMap.wings.size());
+	log_printf(L"");
+
+	#if defined(AC_DEBUG)
+	{
+		std::wstring data = L"content/cars/" + plugin->car->unixName + L"/data/";
+
+		//scoped_udt<INIReader> ini(new_udt<INIReader>(data + L"car.ini"));
+		//log_printf(L"mass=%.3f", (float)ini->getFloat(L"BASIC", L"TOTALMASS"));
+
+		ini_dump(data + L"aero.ini");
+		ini_dump(data + L"brakes.ini");
+		ini_dump(data + L"car.ini");
+		ini_dump(data + L"drivetrain.ini");
+		ini_dump(data + L"engine.ini");
+		ini_dump(data + L"suspensions.ini");
+		ini_dump(data + L"tyres.ini");
+	}
+	#endif
 
 	#if 1
 	ksInitTimerVars();
@@ -112,218 +143,47 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	#if 1
 	///////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	HOOK_OBJ(PhysicsEngine);
+	HOOK_OBJ(PhysicsCore);
+	HOOK_OBJ(RigidBodyODE);
+	HOOK_OBJ(Track);
 
-	// # Math
+	HOOK_OBJ(Car);
+	HOOK_OBJ(DynamicController);
+	HOOK_OBJ(ThermalObject);
+	HOOK_OBJ(BrakeSystem);
+
+	HOOK_OBJ(GearChanger);
+	HOOK_OBJ(Drivetrain);
+	HOOK_OBJ(Engine);
+	HOOK_OBJ(Turbo);
+
+	HOOK_OBJ(Damper);
+	HOOK_OBJ(Suspension);
+	HOOK_OBJ(SuspensionStrut);
+	HOOK_OBJ(SuspensionAxle);
+	HOOK_OBJ(SuspensionML);
+	HOOK_OBJ(HeaveSpring);
+	HOOK_OBJ(AntirollBar);
+
+	HOOK_OBJ(Tyre);
+	HOOK_OBJ(SCTM);
+	HOOK_OBJ(TyreThermalModel);
+
+	HOOK_OBJ(BrushSlipProvider);
+	HOOK_OBJ(BrushTyreModel);
+
+	HOOK_OBJ(AeroMap);
+	HOOK_OBJ(Wing);
+	HOOK_OBJ(SlipStream);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+
+	HOOK_OBJ(Curve);
+	HOOK_OBJ(PIDController);
+
 	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
-
-	// # Curve
-	HOOK_METHOD_RVA(Curve, getValue);
-	HOOK_METHOD_RVA(Curve, getCubicSplineValue);
-
-	// # PIDController
-	HOOK_METHOD_RVA(PIDController, eval);
-	HOOK_METHOD_RVA(PIDController, setPID);
-	HOOK_METHOD_RVA(PIDController, reset);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// # Car
-	#if 1
-	HOOK_METHOD_RVA(Car, step);
-	HOOK_METHOD_RVA(Car, updateAirPressure);
-	HOOK_METHOD_RVA(Car, updateBodyMass);
-	HOOK_METHOD_RVA(Car, calcBodyMass);
-	HOOK_METHOD_RVA(Car, stepThermalObjects);
-	HOOK_METHOD_RVA(Car, stepComponents);
-	HOOK_METHOD_RVA(Car, onCollisionCallBack);
-	#endif
-
-	// # DynamicController
-	#if 1
-	HOOK_METHOD_RVA(DynamicController, eval);
-	HOOK_METHOD_RVA(DynamicController, getInput);
-	HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
-	HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
-	#endif
-
-	// # ThermalObject
-	#if 1
-	HOOK_METHOD_RVA(ThermalObject, step);
-	HOOK_METHOD_RVA(ThermalObject, addHeadSource);
-	#endif
-	
-	// # BrakeSystem
-	#if 1
-	HOOK_METHOD_RVA(BrakeSystem, step);
-	HOOK_METHOD_RVA(BrakeSystem, stepTemps);
-	#endif
-	
-	// # Drivetrain
-	#if 1
-	HOOK_METHOD_RVA(GearChanger, step);
-	HOOK_METHOD_RVA(Drivetrain, setCurrentGear);
-	HOOK_METHOD_RVA(Drivetrain, gearUp);
-	HOOK_METHOD_RVA(Drivetrain, gearDown);
-	HOOK_METHOD_RVA(Drivetrain, step);
-	HOOK_METHOD_RVA(Drivetrain, stepControllers);
-	HOOK_METHOD_RVA(Drivetrain, step2WD);
-	HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
-	HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
-	HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
-	HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
-	#endif
-
-	// # Engine
-	#if 1
-	HOOK_METHOD_RVA(Engine, step);
-	HOOK_METHOD_RVA(Engine, getThrottleResponseGas);
-	HOOK_METHOD_RVA(Engine, stepTurbos);
-	HOOK_METHOD_RVA(Turbo, step);
-	#endif
-
-	// # Suspension (suspensions.ini)
-	#if 1
-	HOOK_METHOD_RVA(Damper, getForce);
-	HOOK_METHOD_RVA(Suspension, step);
-		HOOK_METHOD_RVA(Suspension, addForceAtPos);
-		HOOK_METHOD_RVA(Suspension, addLocalForceAndTorque);
-		HOOK_METHOD_RVA(Suspension, addTorque);
-	HOOK_METHOD_RVA(SuspensionStrut, step);
-		HOOK_METHOD_RVA(SuspensionStrut, addForceAtPos);
-		HOOK_METHOD_RVA(SuspensionStrut, addLocalForceAndTorque);
-		HOOK_METHOD_RVA(SuspensionStrut, addTorque);
-	HOOK_METHOD_RVA(SuspensionAxle, step);
-		HOOK_METHOD_RVA(SuspensionAxle, addForceAtPos);
-		HOOK_METHOD_RVA(SuspensionAxle, addLocalForceAndTorque);
-		HOOK_METHOD_RVA(SuspensionAxle, addTorque);
-	HOOK_METHOD_RVA(SuspensionML, step);
-		HOOK_METHOD_RVA(SuspensionML, addForceAtPos);
-		HOOK_METHOD_RVA(SuspensionML, addLocalForceAndTorque);
-		HOOK_METHOD_RVA(SuspensionML, addTorque);
-	HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
-	HOOK_METHOD_RVA(AntirollBar, step);
-	#endif
-
-	// # Tyre
-	#if 1
-	HOOK_METHOD_RVA(Tyre, step);
-	HOOK_METHOD_RVA(Tyre, addGroundContact);
-	HOOK_METHOD_RVA(Tyre, addTyreForcesV10);
-	HOOK_METHOD_RVA(Tyre, updateLockedState);
-	HOOK_METHOD_RVA(Tyre, updateAngularSpeed);
-	HOOK_METHOD_RVA(Tyre, stepRotationMatrix);
-	HOOK_METHOD_RVA(Tyre, stepThermalModel);
-	HOOK_METHOD_RVA(Tyre, stepGrainBlister);
-	HOOK_METHOD_RVA(Tyre, stepFlatSpot);
-	// addTyreForcesV10..
-	HOOK_METHOD_RVA(Tyre, getCorrectedD);
-	HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
-	HOOK_METHOD_RVA(SCTM, solve);
-	HOOK_METHOD_RVA(SCTM, getStaticDY);
-	HOOK_METHOD_RVA(SCTM, getStaticDX);
-	HOOK_METHOD_RVA(SCTM, getPureFY);
-	HOOK_METHOD_RVA(Tyre, stepDirtyLevel);
-	HOOK_METHOD_RVA(Tyre, stepPuncture);
-	HOOK_METHOD_RVA(TyreThermalModel, getIMO);
-	HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
-	// stepThermalModel..
-	HOOK_METHOD_RVA(TyreThermalModel, addThermalInput);
-	HOOK_METHOD_RVA(TyreThermalModel, addThermalCoreInput);
-	HOOK_METHOD_RVA(TyreThermalModel, step);
-	HOOK_METHOD_RVA(TyreThermalModel, getCurrentCPTemp);
-	HOOK_METHOD_RVA(Tyre, stepTyreBlankets);
-	HOOK_METHOD_RVA(TyreThermalModel, setTemperature);
-	#endif
-
-	// # BrushSlipProvider
-	#if 1
-	HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
-	HOOK_METHOD_RVA(BrushTyreModel, solve);
-	HOOK_METHOD_RVA(BrushTyreModel, solveV5);
-	HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
-	#endif
-
-	// # Aero
-	#if 1
-	HOOK_METHOD_RVA(AeroMap, step);
-	HOOK_METHOD_RVA(AeroMap, addDrag);
-	HOOK_METHOD_RVA(AeroMap, addLift);
-	HOOK_METHOD_RVA(AeroMap, getCurrentDragKG);
-	HOOK_METHOD_RVA(AeroMap, getCurrentLiftKG);
-	HOOK_METHOD_RVA(Wing, step);
-	HOOK_METHOD_RVA(Wing, addDrag);
-	HOOK_METHOD_RVA(Wing, addLift);
-	HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
-	HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
-	#endif
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// # PhysicsEngine
-	#if 1
-	HOOK_METHOD_RVA(PhysicsEngine, step);
-	HOOK_METHOD_RVA(PhysicsEngine, stepWind);
-	HOOK_METHOD_RVA(PhysicsEngine, onCollisionCallBack);
-	#endif
-
-	// # PhysicsCore
-	#if 1
-	PhysicsCore_initGlobals();
-	HOOK_METHOD_RVA(PhysicsCore, step);
-	HOOK_METHOD_RVA(PhysicsCore, collisionStep);
-	HOOK_METHOD_RVA(PhysicsCore, onCollision);
-	HOOK_METHOD_RVA(PhysicsCore, rayCastR);
-	HOOK_METHOD_RVA(PhysicsCore, rayCastL);
-	#endif
-
-	// # Track
-	#if 1
-	HOOK_METHOD_RVA(Track, step);
-	HOOK_METHOD_RVA(Track, rayCast);
-	HOOK_METHOD_RVA(Track, rayCastWithRayCaster);
-	#endif
-
-	// # RigidBodyODE
-	#if 1
-	HOOK_METHOD_RVA(RigidBodyODE, setEnabled);
-	HOOK_METHOD_RVA(RigidBodyODE, isEnabled);
-	HOOK_METHOD_RVA(RigidBodyODE, setAutoDisable);
-	HOOK_METHOD_RVA(RigidBodyODE, stop);
-
-	HOOK_METHOD_RVA(RigidBodyODE, setMassBox);
-	HOOK_METHOD_RVA(RigidBodyODE, getMass);
-	HOOK_METHOD_RVA(RigidBodyODE, setMassExplicitInertia);
-	HOOK_METHOD_RVA(RigidBodyODE, getLocalInertia);
-
-	HOOK_METHOD_RVA(RigidBodyODE, localToWorld);
-	HOOK_METHOD_RVA(RigidBodyODE, worldToLocal);
-	HOOK_METHOD_RVA(RigidBodyODE, localToWorldNormal);
-	HOOK_METHOD_RVA(RigidBodyODE, worldToLocalNormal);
-
-	HOOK_METHOD_RVA(RigidBodyODE, setPosition);
-	HOOK_METHOD_RVA(RigidBodyODE, getPosition);
-	HOOK_METHOD_RVA(RigidBodyODE, setRotation);
-	HOOK_METHOD_RVA(RigidBodyODE, getWorldMatrix);
-
-	HOOK_METHOD_RVA(RigidBodyODE, setVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getLocalVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getPointVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getLocalPointVelocity);
-
-	HOOK_METHOD_RVA(RigidBodyODE, setAngularVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getAngularVelocity);
-	HOOK_METHOD_RVA(RigidBodyODE, getLocalAngularVelocity);
-
-	HOOK_METHOD_RVA(RigidBodyODE, addForceAtPos);
-	HOOK_METHOD_RVA(RigidBodyODE, addForceAtLocalPos);
-	HOOK_METHOD_RVA(RigidBodyODE, addLocalForce);
-	HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtPos);
-	HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtLocalPos);
-	HOOK_METHOD_RVA(RigidBodyODE, addTorque);
-	HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
-	#endif
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	#endif

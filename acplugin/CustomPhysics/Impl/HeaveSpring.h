@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(HeaveSpring)
 
 	#define RVA_HeaveSpring_step 2832736
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
+	}
+
 	void _step(float dt);
 
 END_HOOK_OBJ()

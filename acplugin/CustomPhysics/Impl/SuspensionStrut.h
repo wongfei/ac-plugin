@@ -7,6 +7,14 @@ BEGIN_HOOK_OBJ(SuspensionStrut)
 	#define RVA_SuspensionStrut_addLocalForceAndTorque 2899584
 	#define RVA_SuspensionStrut_addTorque 2900064
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(SuspensionStrut, step);
+		HOOK_METHOD_RVA(SuspensionStrut, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionStrut, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionStrut, addTorque);
+	}
+
 	void _step(float dt);
 	void _addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque);
 	void _addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque);

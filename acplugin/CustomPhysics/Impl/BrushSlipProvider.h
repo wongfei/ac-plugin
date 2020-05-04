@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(BrushSlipProvider)
 
 	#define RVA_BrushSlipProvider_getSlipForce 2830736
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
+	}
+
 	TyreSlipOutput _getSlipForce(TyreSlipInput &input, bool useasy);
 
 END_HOOK_OBJ()

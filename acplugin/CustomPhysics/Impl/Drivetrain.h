@@ -14,6 +14,21 @@ BEGIN_HOOK_OBJ(Drivetrain)
 	#define RVA_Drivetrain_getInertiaFromEngine 2517920
 	#define RVA_Drivetrain_getEngineRPM 2517888
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Drivetrain, setCurrentGear);
+		HOOK_METHOD_RVA(Drivetrain, gearUp);
+		HOOK_METHOD_RVA(Drivetrain, gearDown);
+		HOOK_METHOD_RVA(Drivetrain, step);
+		HOOK_METHOD_RVA(Drivetrain, stepControllers);
+		HOOK_METHOD_RVA(Drivetrain, step2WD);
+		HOOK_METHOD_RVA(Drivetrain, reallignSpeeds);
+		HOOK_METHOD_RVA(Drivetrain, accelerateDrivetrainBlock);
+		HOOK_METHOD_RVA(Drivetrain, getInertiaFromWheels);
+		HOOK_METHOD_RVA(Drivetrain, getInertiaFromEngine);
+		HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
+	}
+
 	void _setCurrentGear(int index, bool force);
 	bool _gearUp();
 	bool _gearDown();

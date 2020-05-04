@@ -4,13 +4,6 @@ AC_GREF_DECL(int, rayCollideTestCount, 0x0155AA5C)
 AC_GREF_DECL(int, geomCollideTestCount, 0x0155AA60)
 AC_GREF_DECL(int, broadTestCount, 0x0155AA64)
 
-void PhysicsCore_initGlobals()
-{
-	AC_GREF_INIT(rayCollideTestCount)
-	AC_GREF_INIT(geomCollideTestCount)
-	AC_GREF_INIT(broadTestCount)
-}
-
 BEGIN_HOOK_OBJ(PhysicsCore)
 
 	#define RVA_PhysicsCore_step 2938512
@@ -18,6 +11,19 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	#define RVA_PhysicsCore_onCollision 2936224
 	#define RVA_PhysicsCore_rayCastR 2936944
 	#define RVA_PhysicsCore_rayCastL 2937248
+
+	static void _hook()
+	{
+		AC_GREF_INIT(rayCollideTestCount)
+		AC_GREF_INIT(geomCollideTestCount)
+		AC_GREF_INIT(broadTestCount)
+
+		HOOK_METHOD_RVA(PhysicsCore, step);
+		HOOK_METHOD_RVA(PhysicsCore, collisionStep);
+		HOOK_METHOD_RVA(PhysicsCore, onCollision);
+		HOOK_METHOD_RVA(PhysicsCore, rayCastR);
+		HOOK_METHOD_RVA(PhysicsCore, rayCastL);
+	}
 
 	void _ctor(); //2931328
 	void _dtor(); //2931744
@@ -41,33 +47,6 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	ICollisionObject* _createCollisionMesh(
 		float* vertices, unsigned int numVertices, unsigned short* indices, int indexCount, 
 		const mat44f& worldMatrix, IRigidBody* body, unsigned long group, unsigned long mask, unsigned int space_id);
-
-	//void resetCollisions(); 2938224
-	//void initMultithreading(); 2935904
-	//void step(float dt); 2938512
-	//IRigidBody * createRigidBody(); 2933680
-	//void release(); 2937952
-	//IJoint * createDistanceJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, const vec3f & p2); 2933136
-	//void reseatDistanceJointLocal(IJoint * joint, const vec3f & p1, const vec3f & p2); 2937984
-	//void reseatDistanceJointLength(IJoint * joint, float newLength); 96368
-	//IJoint * createBumpJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & p1, float rangeUp, float rangeDn); 3776688
-	//IJoint * createSliderJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & axis); 2933744
-	//void setSliderAxis(IJoint * joint, const vec3f & axis, const vec3f & anchor); 2938480
-	//ICollisionObject * createCollisionMesh(float * vertices, unsigned int numVertices, unsigned short * indices, int indexCount, const mat44f & worldMatrix, IRigidBody * body, unsigned long group, unsigned long mask, unsigned int space_id); 2932976
-	//RayCastHit rayCast(const vec3f & pos, const vec3f & dir, dxGeom * rayc); 2936944
-	//RayCastHit rayCast(const vec3f & pos, const vec3f & dir, float length); 2937248
-	//void setCollisionCallback(ICollisionCallback * callback); 2938256
-	//void setRigidBodyIterations(int count); 96368
-	//void onCollision(dContactGeom * contacts, int numContacts, dxGeom * g0, dxGeom * g1); 2936224
-	//IJoint * createBallJoint(IRigidBody * rb1, IRigidBody * rb2, const vec3f & pos); 2932752
-	//IJoint * createFixedJoint(IRigidBody * rb1, IRigidBody * rb2); 2933408
-	//IRayCaster * createRayCaster(float length); 2933600
-	//CoreCPUTimes getCoreCPUTimes(); 2935040
-	//void setNoCollisionSteps(int steps); 2938464
-	//dxSpace * getStaticSubSpace(unsigned int index); 2935488
-	//dxSpace * getDynamicSubSpace(unsigned int index); 2935072
-	//void setERPCFM(float  _arg0, float  _arg1);
-	//void collisionStep(float dt); 2932624
 
 END_HOOK_OBJ()
 

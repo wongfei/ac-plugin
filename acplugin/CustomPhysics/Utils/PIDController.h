@@ -6,6 +6,13 @@ BEGIN_HOOK_OBJ(PIDController)
 	#define RVA_PIDController_setPID 4515824
 	#define RVA_PIDController_reset 4515808
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(PIDController, eval);
+		HOOK_METHOD_RVA(PIDController, setPID);
+		HOOK_METHOD_RVA(PIDController, reset);
+	}
+
 	float _eval(float targetv, float currentv, float dt);
 	void _setPID(float p, float i, float d);
 	void _reset();

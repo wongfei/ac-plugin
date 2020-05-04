@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(GearChanger)
 
 	#define RVA_GearChanger_step 2861904
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(GearChanger, step);
+	}
+
 	void _step(float dt);
 
 END_HOOK_OBJ()

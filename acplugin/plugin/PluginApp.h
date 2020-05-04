@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/os.h"
 #include "utils/log.h"
 #include "utils/common.h"
 #include "utils/udt.h"

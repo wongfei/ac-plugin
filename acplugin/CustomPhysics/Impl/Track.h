@@ -7,6 +7,13 @@ BEGIN_HOOK_OBJ(Track)
 	#define RVA_Track_rayCastWithRayCaster 2591872
 	#define RVA_Track_addSurface 2588240
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Track, step);
+		HOOK_METHOD_RVA(Track, rayCast);
+		HOOK_METHOD_RVA(Track, rayCastWithRayCaster);
+	}
+
 	void _step(float dt);
 	bool _rayCast(const vec3f& org, const vec3f& dir, RayCastResult* result, float length);
 	bool _rayCastWithRayCaster(const vec3f& org, const vec3f& dir, RayCastResult* result, float length, IRayCaster* rayCaster);

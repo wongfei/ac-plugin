@@ -10,6 +10,12 @@ BEGIN_HOOK_OBJ(Curve)
 	#define RVA_Curve_getValue 2124176
 	#define RVA_Curve_getCubicSplineValue 2124016
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Curve, getValue);
+		HOOK_METHOD_RVA(Curve, getCubicSplineValue);
+	}
+
 	float _getValue(float ref);
 	float _getCubicSplineValue(float ref);
 

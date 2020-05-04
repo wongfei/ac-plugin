@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(AntirollBar)
 
 	#define RVA_AntirollBar_step 2864704
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(AntirollBar, step);
+	}
+
 	void _step(float dt);
 
 END_HOOK_OBJ()

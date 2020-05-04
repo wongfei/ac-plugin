@@ -7,6 +7,14 @@ BEGIN_HOOK_OBJ(DynamicController)
 	#define RVA_DynamicController_getOversteerFactor 2822608
 	#define RVA_DynamicController_getRearSpeedRatio 2822704
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(DynamicController, eval);
+		HOOK_METHOD_RVA(DynamicController, getInput);
+		HOOK_METHOD_RVA(DynamicController, getOversteerFactor);
+		HOOK_METHOD_RVA(DynamicController, getRearSpeedRatio);
+	}
+
 	float _eval();
 	float _getInput(DynamicControllerInput input);
 	static float _getOversteerFactor(Car *car);

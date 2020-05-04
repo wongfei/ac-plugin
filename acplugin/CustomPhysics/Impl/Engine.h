@@ -6,6 +6,13 @@ BEGIN_HOOK_OBJ(Engine)
 	#define RVA_Engine_getThrottleResponseGas 2644880
 	#define RVA_Engine_stepTurbos 2656512
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Engine, step);
+		HOOK_METHOD_RVA(Engine, getThrottleResponseGas);
+		HOOK_METHOD_RVA(Engine, stepTurbos);
+	}
+
 	void _step(const SACEngineInput& input, float dt);
 	float _getThrottleResponseGas(float gas, float rpm);
 	void _stepTurbos();

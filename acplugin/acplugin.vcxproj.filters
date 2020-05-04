@@ -266,6 +266,9 @@
     <ClInclude Include="CustomPhysics\Impl\Track.h">
       <Filter>CustomPhysics\Impl\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Utils\INIReader.h">
+      <Filter>CustomPhysics\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">

@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(Damper)
 
 	#define RVA_Damper_getForce 2830976
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Damper, getForce);
+	}
+
 	float _getForce(float fSpeed);
 
 END_HOOK_OBJ()

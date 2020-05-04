@@ -7,6 +7,14 @@ BEGIN_HOOK_OBJ(SCTM)
 	#define RVA_SCTM_getStaticDX 4504368
 	#define RVA_SCTM_getPureFY 4504176
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(SCTM, solve);
+		HOOK_METHOD_RVA(SCTM, getStaticDY);
+		HOOK_METHOD_RVA(SCTM, getStaticDX);
+		HOOK_METHOD_RVA(SCTM, getPureFY);
+	}
+
 	TyreModelOutput _solve(TyreModelInput& tmi);
 	float _getStaticDX(float load);
 	float _getStaticDY(float load);

@@ -8,6 +8,15 @@ BEGIN_HOOK_OBJ(AeroMap)
 	#define RVA_AeroMap_getCurrentDragKG 2841440
 	#define RVA_AeroMap_getCurrentLiftKG 2841488
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(AeroMap, step);
+		HOOK_METHOD_RVA(AeroMap, addDrag);
+		HOOK_METHOD_RVA(AeroMap, addLift);
+		HOOK_METHOD_RVA(AeroMap, getCurrentDragKG);
+		HOOK_METHOD_RVA(AeroMap, getCurrentLiftKG);
+	}
+
 	void _step(float dt);
 	void _addDrag(const vec3f& lv);
 	void _addLift(const vec3f& lv);

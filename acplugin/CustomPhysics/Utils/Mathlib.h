@@ -2,7 +2,7 @@
 
 #define RVA_mat44f_createFromAxisAngle 356768
 
-mat44f mat44f_createFromAxisAngle(const vec3f& axis, float angle)
+static mat44f mat44f_createFromAxisAngle(const vec3f& axis, float angle)
 {
 	mat44f res;
 

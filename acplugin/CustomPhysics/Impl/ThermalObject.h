@@ -5,6 +5,12 @@ BEGIN_HOOK_OBJ(ThermalObject)
 	#define RVA_ThermalObject_step 2830080
 	#define RVA_ThermalObject_addHeadSource 2830064
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(ThermalObject, step);
+		HOOK_METHOD_RVA(ThermalObject, addHeadSource);
+	}
+
 	void _step(float dt, float ambientTemp, const Speed &speed);
 	void _addHeadSource(float heat);
 

@@ -40,6 +40,47 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 	#define RVA_RigidBodyODE_addTorque 2941904
 	#define RVA_RigidBodyODE_addLocalTorque 2941024
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(RigidBodyODE, setEnabled);
+		HOOK_METHOD_RVA(RigidBodyODE, isEnabled);
+		HOOK_METHOD_RVA(RigidBodyODE, setAutoDisable);
+		HOOK_METHOD_RVA(RigidBodyODE, stop);
+
+		HOOK_METHOD_RVA(RigidBodyODE, setMassBox);
+		HOOK_METHOD_RVA(RigidBodyODE, getMass);
+		HOOK_METHOD_RVA(RigidBodyODE, setMassExplicitInertia);
+		HOOK_METHOD_RVA(RigidBodyODE, getLocalInertia);
+
+		HOOK_METHOD_RVA(RigidBodyODE, localToWorld);
+		HOOK_METHOD_RVA(RigidBodyODE, worldToLocal);
+		HOOK_METHOD_RVA(RigidBodyODE, localToWorldNormal);
+		HOOK_METHOD_RVA(RigidBodyODE, worldToLocalNormal);
+
+		HOOK_METHOD_RVA(RigidBodyODE, setPosition);
+		HOOK_METHOD_RVA(RigidBodyODE, getPosition);
+		HOOK_METHOD_RVA(RigidBodyODE, setRotation);
+		HOOK_METHOD_RVA(RigidBodyODE, getWorldMatrix);
+
+		HOOK_METHOD_RVA(RigidBodyODE, setVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getLocalVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getPointVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getLocalPointVelocity);
+
+		HOOK_METHOD_RVA(RigidBodyODE, setAngularVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getAngularVelocity);
+		HOOK_METHOD_RVA(RigidBodyODE, getLocalAngularVelocity);
+
+		HOOK_METHOD_RVA(RigidBodyODE, addForceAtPos);
+		HOOK_METHOD_RVA(RigidBodyODE, addForceAtLocalPos);
+		HOOK_METHOD_RVA(RigidBodyODE, addLocalForce);
+		HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtPos);
+		HOOK_METHOD_RVA(RigidBodyODE, addLocalForceAtLocalPos);
+		HOOK_METHOD_RVA(RigidBodyODE, addTorque);
+		HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
+	}
+
 	//_RigidBodyODE(PhysicsCore* core) { _ctor(core); }
 	//~_RigidBodyODE() { _dtor(); }
 
@@ -89,7 +130,7 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 	void _setBoxColliderMask(uint64_t box, unsigned long mask);
 	void _addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback);
 
-	void _addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, mat44f* mat, unsigned long category, unsigned long collideMask, unsigned int spaceId);
+	void _addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, const mat44f& mat, unsigned long category, unsigned long collideMask, unsigned int spaceId);
 	void _setMeshCollideMask(unsigned int meshIndex, unsigned long mask);
 	void _setMeshCollideCategory(unsigned int meshIndex, unsigned long category);
 	unsigned long _getMeshCollideMask(unsigned int meshIndex);
@@ -399,7 +440,7 @@ void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _RigidBodyODE::_addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, mat44f* mat, unsigned long category, unsigned long collideMask, unsigned int spaceId)
+void _RigidBodyODE::_addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, const mat44f& mat, unsigned long category, unsigned long collideMask, unsigned int spaceId)
 {
 	TODO_NOT_IMPLEMENTED;
 }

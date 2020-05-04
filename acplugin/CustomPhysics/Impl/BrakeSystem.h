@@ -5,6 +5,12 @@ BEGIN_HOOK_OBJ(BrakeSystem)
 	#define RVA_BrakeSystem_step 2680384
 	#define RVA_BrakeSystem_stepTemps 2681120
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(BrakeSystem, step);
+		HOOK_METHOD_RVA(BrakeSystem, stepTemps);
+	}
+
 	void _step(float dt);
 	void _stepTemps(float dt);
 

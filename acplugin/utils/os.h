@@ -3,6 +3,7 @@
 BOOL osFileExists(LPCWSTR Path);
 BOOL osDirExists(LPCWSTR Path);
 VOID osEnsureDirExists(const std::wstring& path);
+VOID osCreateDirectoryTree(const std::wstring& path);
 std::wstring osGetDocumentsPath();
 
 BOOL osGetProcessModuleInfo(DWORD ProcessId, MODULEENTRY32* pModule);

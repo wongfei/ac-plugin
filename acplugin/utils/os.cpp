@@ -21,6 +21,17 @@ VOID osEnsureDirExists(const std::wstring& path)
 	}
 }
 
+VOID osCreateDirectoryTree(const std::wstring& path)
+{
+	std::wstring::size_type pos = 0;
+	do
+	{
+		pos = path.find_first_of(L"\\/", pos + 1);
+		osEnsureDirExists(path.substr(0, pos).c_str());
+	}
+	while (pos != std::wstring::npos);
+}
+
 std::wstring osGetDocumentsPath()
 {
 	wchar_t buf[MAX_PATH] = {0};

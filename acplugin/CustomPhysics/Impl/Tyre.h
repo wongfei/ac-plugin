@@ -18,7 +18,27 @@ BEGIN_HOOK_OBJ(Tyre)
 	#define RVA_Tyre_stepPuncture 2640304
 	#define RVA_Tyre_addTyreForceToHub 2612224
 
+	#define RVA_Tyre_addTyreForces 2613664
 	#define RVA_Tyre_stepRelaxationLength 2640448
+
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Tyre, step);
+		HOOK_METHOD_RVA(Tyre, addGroundContact);
+		HOOK_METHOD_RVA(Tyre, updateLockedState);
+		HOOK_METHOD_RVA(Tyre, updateAngularSpeed);
+		HOOK_METHOD_RVA(Tyre, stepRotationMatrix);
+		HOOK_METHOD_RVA(Tyre, stepThermalModel);
+		HOOK_METHOD_RVA(Tyre, stepTyreBlankets);
+		HOOK_METHOD_RVA(Tyre, stepGrainBlister);
+		HOOK_METHOD_RVA(Tyre, stepFlatSpot);
+
+		HOOK_METHOD_RVA(Tyre, addTyreForcesV10);
+		HOOK_METHOD_RVA(Tyre, getCorrectedD);
+		HOOK_METHOD_RVA(Tyre, stepDirtyLevel);
+		HOOK_METHOD_RVA(Tyre, stepPuncture);
+		HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
+	}
 
 	void _step(float dt);
 	void _addGroundContact(const vec3f& pos, const vec3f& normal);

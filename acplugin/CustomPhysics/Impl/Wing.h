@@ -6,6 +6,13 @@ BEGIN_HOOK_OBJ(Wing)
 	#define RVA_Wing_addDrag 2827296
 	#define RVA_Wing_addLift 2828080
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Wing, step);
+		HOOK_METHOD_RVA(Wing, addDrag);
+		HOOK_METHOD_RVA(Wing, addLift);
+	}
+
 	void _step(float dt);
 	void _addDrag(const vec3f& lv);
 	void _addLift(const vec3f& lv);

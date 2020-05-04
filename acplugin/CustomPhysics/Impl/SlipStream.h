@@ -5,6 +5,12 @@ BEGIN_HOOK_OBJ(SlipStream)
 	#define RVA_SlipStream_getSlipEffect 2796640
 	#define RVA_SlipStream_setPosition 2797184
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
+		HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
+	}
+
 	float _getSlipEffect(const vec3f& p);
 	void _setPosition(const vec3f& pos, const vec3f& vel);
 

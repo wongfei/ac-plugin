@@ -14,6 +14,21 @@ BEGIN_HOOK_OBJ(TyreThermalModel)
 	#define RVA_TyreThermalModel_setTemperature 2810640
 	#define RVA_TyreThermalModel_reset 2810304
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(TyreThermalModel, step);
+		HOOK_METHOD_RVA(TyreThermalModel, getPatchAt);
+		HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
+		HOOK_METHOD_RVA(TyreThermalModel, getIMO);
+		HOOK_METHOD_RVA(TyreThermalModel, addThermalCoreInput);
+		HOOK_METHOD_RVA(TyreThermalModel, addThermalInput);
+		HOOK_METHOD_RVA(TyreThermalModel, getCurrentCPTemp);
+		HOOK_METHOD_RVA(TyreThermalModel, getPracticalTemp);
+		HOOK_METHOD_RVA(TyreThermalModel, getAvgSurfaceTemp);
+		HOOK_METHOD_RVA(TyreThermalModel, setTemperature);
+		HOOK_METHOD_RVA(TyreThermalModel, reset);
+	}
+
 	void _step(float dt, float angularSpeed, float camberRAD);
 	TyreThermalPatch* _getPatchAt(int x, int y);
 	float _getCorrectedD(float d, float camberRAD);

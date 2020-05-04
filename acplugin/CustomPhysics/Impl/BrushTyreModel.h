@@ -6,6 +6,13 @@ BEGIN_HOOK_OBJ(BrushTyreModel)
 	#define RVA_BrushTyreModel_solveV5 2929888
 	#define RVA_BrushTyreModel_getCFFromSlipAngle 2929536
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(BrushTyreModel, solve);
+		HOOK_METHOD_RVA(BrushTyreModel, solveV5);
+		HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
+	}
+
 	BrushOutput _solve(float slip, float friction, float load, float cf1_mix, float asy);
 	BrushOutput _solveV5(float slip, float load, float asy);
 	float _getCFFromSlipAngle(float angle);

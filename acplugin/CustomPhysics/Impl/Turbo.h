@@ -4,6 +4,11 @@ BEGIN_HOOK_OBJ(Turbo)
 
 	#define RVA_Turbo_step 2811840
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(Turbo, step);
+	}
+
 	void _step(float gas, float rpms, float dt);
 
 END_HOOK_OBJ()

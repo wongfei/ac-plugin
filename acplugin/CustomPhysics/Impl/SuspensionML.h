@@ -7,6 +7,14 @@ BEGIN_HOOK_OBJ(SuspensionML)
 	#define RVA_SuspensionML_addLocalForceAndTorque 2921200
 	#define RVA_SuspensionML_addTorque 2921344
 
+	static void _hook()
+	{
+		HOOK_METHOD_RVA(SuspensionML, step);
+		HOOK_METHOD_RVA(SuspensionML, addForceAtPos);
+		HOOK_METHOD_RVA(SuspensionML, addLocalForceAndTorque);
+		HOOK_METHOD_RVA(SuspensionML, addTorque);
+	}
+
 	void _step(float dt);
 	void _addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque);
 	void _addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque);
