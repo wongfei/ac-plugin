@@ -269,6 +269,9 @@
     <ClInclude Include="CustomPhysics\Utils\INIReader.h">
       <Filter>CustomPhysics\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\DynamicWingController.h">
+      <Filter>CustomPhysics\Impl\Car</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">

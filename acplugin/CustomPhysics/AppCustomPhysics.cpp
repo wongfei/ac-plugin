@@ -62,9 +62,10 @@
 #include "Impl/BrushTyreModel.h"
 #include "Impl/BrushSlipProvider.h"
 
+#include "Impl/SlipStream.h"
 #include "Impl/AeroMap.h"
 #include "Impl/Wing.h"
-#include "Impl/SlipStream.h"
+#include "Impl/DynamicWingController.h"
 
 #include "Utils/INIReader.h"
 #include "Utils/Curve.h"
@@ -174,9 +175,10 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	HOOK_OBJ(BrushSlipProvider);
 	HOOK_OBJ(BrushTyreModel);
 
+	HOOK_OBJ(SlipStream);
 	HOOK_OBJ(AeroMap);
 	HOOK_OBJ(Wing);
-	HOOK_OBJ(SlipStream);
+	HOOK_OBJ(DynamicWingController);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
