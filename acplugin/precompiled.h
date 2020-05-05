@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <algorithm>
 #include <functional>

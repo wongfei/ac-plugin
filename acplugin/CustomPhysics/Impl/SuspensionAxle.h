@@ -22,6 +22,8 @@ BEGIN_HOOK_OBJ(SuspensionAxle)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionAxle::_step(float dt)
 {
 	mat44f mxBodyWorld = this->car->body->getWorldMatrix(0.0f);
@@ -89,10 +91,14 @@ void _SuspensionAxle::_step(float dt)
 	this->car->body->addForceAtPos(vForce * -1.0f, vBaseWorld);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionAxle::_addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque)
 {
 	this->axle->addForceAtPos(force, pos);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _SuspensionAxle::_addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque)
 {
@@ -103,7 +109,11 @@ void _SuspensionAxle::_addLocalForceAndTorque(const vec3f& force, const vec3f& t
 		this->car->body->addTorque(driveTorque);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionAxle::_addTorque(const vec3f& torque)
 {
 	this->axle->addTorque(torque);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

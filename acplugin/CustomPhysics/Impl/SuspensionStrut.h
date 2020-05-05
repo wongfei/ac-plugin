@@ -22,6 +22,8 @@ BEGIN_HOOK_OBJ(SuspensionStrut)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionStrut::_step(float dt)
 {
 	this->steerTorque = 0.0f;
@@ -84,6 +86,8 @@ void _SuspensionStrut::_step(float dt)
 	this->carBody->addForceAtPos(vDamperForce * -1.0f, vCarStrut);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionStrut::_addForceAtPos(const vec3f& force, const vec3f& pos, bool driven, bool addToSteerTorque)
 {
 	this->hub->addForceAtPos(force, pos);
@@ -96,6 +100,8 @@ void _SuspensionStrut::_addForceAtPos(const vec3f& force, const vec3f& pos, bool
 		this->steerTorque -= force.cross(pos - vCenter) * vAxis;
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _SuspensionStrut::_addLocalForceAndTorque(const vec3f& force, const vec3f& torque, const vec3f& driveTorque)
 {
@@ -114,6 +120,8 @@ void _SuspensionStrut::_addLocalForceAndTorque(const vec3f& force, const vec3f& 
 		this->car->body->addTorque(driveTorque);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _SuspensionStrut::_addTorque(const vec3f& torque)
 {
 	this->hub->addTorque(torque);
@@ -123,3 +131,5 @@ void _SuspensionStrut::_addTorque(const vec3f& torque)
 
 	this->steerTorque += torque * vAxis;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

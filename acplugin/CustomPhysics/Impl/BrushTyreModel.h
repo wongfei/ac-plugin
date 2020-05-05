@@ -19,6 +19,8 @@ BEGIN_HOOK_OBJ(BrushTyreModel)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 BrushOutput _BrushTyreModel::_solve(float slip, float friction, float load, float cf1_mix, float asy)
 {
 	BrushOutput result;
@@ -44,6 +46,8 @@ BrushOutput _BrushTyreModel::_solve(float slip, float friction, float load, floa
 	return result;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 BrushOutput _BrushTyreModel::_solveV5(float slip, float load, float asy)
 {
 	BrushOutput result;
@@ -62,7 +66,11 @@ BrushOutput _BrushTyreModel::_solveV5(float slip, float load, float asy)
 	return result;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _BrushTyreModel::_getCFFromSlipAngle(float angle)
 {
 	return ((1.0f / tanf(angle * 0.017453f)) * 3.0f) * 78.125f;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

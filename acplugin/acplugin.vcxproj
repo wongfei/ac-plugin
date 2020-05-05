@@ -96,10 +96,13 @@
     </ClInclude>
     <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp" />
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />
+    <ClInclude Include="CustomPhysics\Impl\CarColliderManager.h" />
     <ClInclude Include="CustomPhysics\Impl\CarUtils.h" />
+    <ClInclude Include="CustomPhysics\Impl\CollisionMeshODE.h" />
     <ClInclude Include="CustomPhysics\Impl\DynamicWingController.h" />
     <ClInclude Include="CustomPhysics\Impl\GearChanger.h" />
     <ClInclude Include="CustomPhysics\Impl\PhysicsEngine.h" />
+    <ClInclude Include="CustomPhysics\Impl\Sim.h" />
     <ClInclude Include="CustomPhysics\Impl\Track.h" />
     <ClInclude Include="CustomPhysics\Utils\CubicSpline.h" />
     <ClInclude Include="CustomPhysics\Utils\Curve.h" />

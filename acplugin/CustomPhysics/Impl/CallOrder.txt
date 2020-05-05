@@ -1,4 +1,6 @@
 
+C:\Users\USERNAME\Documents\Assetto Corsa\logs\
+
 PhysicsDriveThread::run
 	DirectInput::poll
 	DICommandManager::step

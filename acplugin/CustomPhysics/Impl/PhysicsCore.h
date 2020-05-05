@@ -6,6 +6,9 @@ AC_GREF_DECL(int, broadTestCount, 0x0155AA64)
 
 BEGIN_HOOK_OBJ(PhysicsCore)
 
+	#define RVA_PhysicsCore_ctor 2931328
+	#define RVA_PhysicsCore_dtor 2931744
+	#define RVA_PhysicsCore_release 2937952
 	#define RVA_PhysicsCore_step 2938512
 	#define RVA_PhysicsCore_collisionStep 2932624
 	#define RVA_PhysicsCore_onCollision 2936224
@@ -25,8 +28,9 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 		HOOK_METHOD_RVA(PhysicsCore, rayCastL);
 	}
 
-	void _ctor(); //2931328
-	void _dtor(); //2931744
+	void _ctor();
+	void _dtor();
+	void _release();
 
 	void _step(float dt);
 	void _collisionStep(float dt);
@@ -93,6 +97,12 @@ void _PhysicsCore::_ctor()
 
 void _PhysicsCore::_dtor()
 {
+	TODO_NOT_IMPLEMENTED;
+}
+
+void _PhysicsCore::_release()
+{
+	TODO_NOT_IMPLEMENTED;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -13,6 +13,8 @@ BEGIN_HOOK_OBJ(BrushSlipProvider)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 TyreSlipOutput _BrushSlipProvider::_getSlipForce(TyreSlipInput &input, bool useasy)
 {
 	TODO_WTF_IS_THIS;
@@ -35,3 +37,5 @@ TyreSlipOutput _BrushSlipProvider::_getSlipForce(TyreSlipInput &input, bool usea
 	tso.slip = bo.slip;
 	return tso;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

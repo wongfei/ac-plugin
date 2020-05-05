@@ -272,6 +272,15 @@
     <ClInclude Include="CustomPhysics\Impl\DynamicWingController.h">
       <Filter>CustomPhysics\Impl\Car</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\CarColliderManager.h">
+      <Filter>CustomPhysics\Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\Sim.h">
+      <Filter>CustomPhysics\Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPhysics\Impl\CollisionMeshODE.h">
+      <Filter>CustomPhysics\Impl\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CustomPhysics\Impl\CallOrder.txt">

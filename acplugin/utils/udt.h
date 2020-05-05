@@ -75,3 +75,15 @@ public:
 private:
 	T* _udt;
 };
+
+template<typename T, typename ...Args>
+inline std::unique_ptr<T, void(*)(T*)> new_udt_unique(Args&&... params)
+{
+	return std::unique_ptr<T, void(*)(T*)>(new_udt<T>(std::forward<Args>(params)...), &del_udt<T>);
+}
+
+template<typename T, typename ...Args>
+inline std::shared_ptr<T> new_udt_shared(Args&&... params)
+{
+	return std::shared_ptr<T>(new_udt<T>(std::forward<Args>(params)...), &del_udt<T>);
+}

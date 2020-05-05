@@ -39,7 +39,7 @@
 #endif
 
 // Initial capacity of the HOOK_ENTRY buffer.
-#define INITIAL_HOOK_CAPACITY   32
+#define INITIAL_HOOK_CAPACITY   128
 
 // Initial capacity of the thread IDs buffer.
 #define INITIAL_THREAD_CAPACITY 128

@@ -22,6 +22,8 @@ BEGIN_HOOK_OBJ(DynamicController)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _DynamicController::_eval()
 {
 	float i = 0;
@@ -73,6 +75,8 @@ float _DynamicController::_eval()
 
 	return i;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 float _DynamicController::_getInput(DynamicControllerInput input)
 {
@@ -177,12 +181,16 @@ float _DynamicController::_getInput(DynamicControllerInput input)
 	return 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _DynamicController::_getOversteerFactor(Car *car)
 {
 	return
 		((fabsf(car->tyres[2].status.slipAngleRAD) + fabsf(car->tyres[3].status.slipAngleRAD) * 0.5f) -
 		(fabsf(car->tyres[0].status.slipAngleRAD) + fabsf(car->tyres[1].status.slipAngleRAD) * 0.5f)) * 57.29578f;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 float _DynamicController::_getRearSpeedRatio(Car *car)
 {
@@ -192,3 +200,5 @@ float _DynamicController::_getRearSpeedRatio(Car *car)
 		result = ((car->tyres[3].status.angularVelocity + car->tyres[2].status.angularVelocity) * 0.5f) / front;
 	return result;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

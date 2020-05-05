@@ -19,6 +19,8 @@ BEGIN_HOOK_OBJ(Engine)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Engine::_step(const SACEngineInput& input, float dt)
 {
 	this->lastInput = input;
@@ -174,6 +176,8 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _Engine::_getThrottleResponseGas(float gas, float rpm)
 {
 	float result = 0;
@@ -198,6 +202,8 @@ float _Engine::_getThrottleResponseGas(float gas, float rpm)
 	return result;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Engine::_stepTurbos()
 {
 	for (auto& tc : this->turboControllers)
@@ -215,3 +221,5 @@ void _Engine::_stepTurbos()
 		this->status.turboBoost += (turbo.getBoost() * this->fuelPressure);
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

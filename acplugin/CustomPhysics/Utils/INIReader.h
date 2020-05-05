@@ -19,6 +19,8 @@ BEGIN_HOOK_OBJ(INIReader)
 		HOOK_METHOD_RVA_ORIG(INIReader, load);
 		HOOK_METHOD_RVA_ORIG(INIReader, loadEncrypt);
 		HOOK_METHOD_RVA_ORIG(INIReader, parse);
+
+		log_printf(L"INIReader::useCache=%d", (int)INIReader_useCache);
 	}
 
 	void _load(const std::wstring& filename);
@@ -69,7 +71,7 @@ static void ini_save(INIReader* ini, const std::wstring& dst, bool rewriteExisti
 
 static void ini_dump(const std::wstring& filename)
 {
-	scoped_udt<INIReader> ini(new_udt<INIReader>(filename));
+	auto ini(new_udt_unique<INIReader>(filename));
 	ini_save(ini.get(), L"_ini/" + ini->filename);
 }
 

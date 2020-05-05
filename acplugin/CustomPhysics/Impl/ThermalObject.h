@@ -16,6 +16,8 @@ BEGIN_HOOK_OBJ(ThermalObject)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _ThermalObject::_step(float dt, float ambientTemp, const Speed &speed)
 {
 	float fCool = 1.0f - (this->coolSpeedK * speed.value);
@@ -30,7 +32,11 @@ void _ThermalObject::_step(float dt, float ambientTemp, const Speed &speed)
 		this->t += ((((fAccum - this->t) * fOneDivMass) * dt) * this->heatFactor);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _ThermalObject::_addHeadSource(float heat)
 {
 	this->heatAccumulator += heat;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

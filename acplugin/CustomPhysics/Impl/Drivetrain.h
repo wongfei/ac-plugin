@@ -43,6 +43,8 @@ BEGIN_HOOK_OBJ(Drivetrain)
 
 END_HOOK_OBJ()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Drivetrain::_setCurrentGear(int index, bool force)
 {
 	if (index != 1 && this->isGearboxLocked())
@@ -81,6 +83,8 @@ void _Drivetrain::_setCurrentGear(int index, bool force)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool _Drivetrain::_gearUp()
 {
 	if (this->isGearboxLocked())
@@ -116,6 +120,8 @@ bool _Drivetrain::_gearUp()
 	this->currentGear = 1;
 	return true;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool _Drivetrain::_gearDown()
 {
@@ -154,6 +160,8 @@ bool _Drivetrain::_gearDown()
 	return true;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Drivetrain::_step(float dt)
 {
 	this->outShaftLF.oldVelocity = this->outShaftLF.velocity;
@@ -187,6 +195,8 @@ void _Drivetrain::_step(float dt)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Drivetrain::_stepControllers(float dt)
 {
 	if (this->controllers.awdFrontShare.get())
@@ -209,6 +219,8 @@ void _Drivetrain::_stepControllers(float dt)
 		this->diffPowerRamp = 0.0f;
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void _Drivetrain::_reallignSpeeds(float dt)
 {
@@ -237,6 +249,8 @@ void _Drivetrain::_reallignSpeeds(float dt)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TODO: check
 {
 	this->drive.velocity += acc;
@@ -261,6 +275,8 @@ void _Drivetrain::_accelerateDrivetrainBlock(double acc, bool fromEngine) // TOD
 		this->outShaftL.velocity += acc;
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 double _Drivetrain::_getInertiaFromWheels()
 {
@@ -301,6 +317,8 @@ double _Drivetrain::_getInertiaFromWheels()
 	return 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 double _Drivetrain::_getInertiaFromEngine()
 {
 	double fRatio = this->ratio;
@@ -329,7 +347,11 @@ double _Drivetrain::_getInertiaFromEngine()
 	return 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 float _Drivetrain::_getEngineRPM()
 {
 	return (float)((this->engine.velocity * 0.15915507) * 60.0);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -65,12 +65,15 @@ void _Car::_step(float dt)
 
 	this->pollControls(dt);
 
-	bool bHeadlightsSwitch = this->controlsProvider->getAction(DriverActions::eHeadlightsSwitch);
+	if (this->controlsProvider)
+	{
+		bool bHeadlightsSwitch = this->controlsProvider->getAction(DriverActions::eHeadlightsSwitch);
 
-	if (this->controlsProvider && bHeadlightsSwitch && !this->lastLigthSwitchState)
-		this->lightsOn = !this->lightsOn;
+		if (bHeadlightsSwitch && !this->lastLigthSwitchState)
+			this->lightsOn = !this->lightsOn;
 
-	this->lastLigthSwitchState = bHeadlightsSwitch;
+		this->lastLigthSwitchState = bHeadlightsSwitch;
+	}
 
 	if (this->blackFlagged && !this->isInPits())
 	{

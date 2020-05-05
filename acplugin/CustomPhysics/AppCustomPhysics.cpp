@@ -26,15 +26,18 @@
 #include "ode/ode.h"
 #include "AC/ac_ode.h"
 #include "Impl/InternalsODE.h"
+#include "Impl/CollisionMeshODE.h"
 #include "Impl/RigidBodyODE.h"
 #include "Impl/JointODE.h"
 #include "Impl/PhysicsCore.h"
 #include "Impl/PhysicsEngine.h"
+#include "Impl/Sim.h"
 #include "Impl/Track.h"
 
 #include "Impl/CarUtils.h"
 #include "Impl/Car.h"
 
+#include "Impl/CarColliderManager.h"
 #include "Impl/DynamicController.h"
 #include "Impl/ThermalObject.h"
 #include "Impl/BrakeSystem.h"
@@ -68,8 +71,8 @@
 #include "Impl/DynamicWingController.h"
 
 #include "Utils/INIReader.h"
-#include "Utils/Curve.h"
 #include "Utils/PIDController.h"
+#include "Utils/Curve.h"
 #include "Utils/Mathlib.h"
 
 //
@@ -99,11 +102,11 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	log_printf(L"+AppCustomPhysics %p", this);
 	s_custom_physics = this;
 
-	HOOK_OBJ(INIReader);
-	log_printf(L"INIReader::useCache=%d", (int)INIReader_useCache);
+	// TODO: plugin executes after game initialized and cars loaded
 
 	log_printf(L"");
 	log_printf(L"carName=%s", plugin->car->screenName.c_str());
+	log_printf(L"unixName=%s", plugin->car->unixName.c_str());
 	log_printf(L"tyreVersion=%d", (int)plugin->car->tyres[0].modelData.version);
 	log_printf(L"suspensionTypeF=%d", (int)plugin->car->suspensionTypeF);
 	log_printf(L"suspensionTypeR=%d", (int)plugin->car->suspensionTypeR);
@@ -117,7 +120,7 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	{
 		std::wstring data = L"content/cars/" + plugin->car->unixName + L"/data/";
 
-		//scoped_udt<INIReader> ini(new_udt<INIReader>(data + L"car.ini"));
+		//auto ini(new_udt_unique<INIReader>(data + L"car.ini"));
 		//log_printf(L"mass=%.3f", (float)ini->getFloat(L"BASIC", L"TOTALMASS"));
 
 		ini_dump(data + L"aero.ini");
@@ -147,10 +150,13 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 	
 	HOOK_OBJ(PhysicsEngine);
 	HOOK_OBJ(PhysicsCore);
+	HOOK_OBJ(CollisionMeshODE);
 	HOOK_OBJ(RigidBodyODE);
+	HOOK_OBJ(Sim);
 	HOOK_OBJ(Track);
 
 	HOOK_OBJ(Car);
+	HOOK_OBJ(CarColliderManager);
 	HOOK_OBJ(DynamicController);
 	HOOK_OBJ(ThermalObject);
 	HOOK_OBJ(BrakeSystem);
@@ -182,14 +188,36 @@ AppCustomPhysics::AppCustomPhysics(ACPlugin* plugin) : PluginApp(plugin, L"custo
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
-	HOOK_OBJ(Curve);
+	HOOK_OBJ(INIReader);
 	HOOK_OBJ(PIDController);
+	HOOK_OBJ(Curve);
 
 	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	#endif
 	///////////////////////////////////////////////////////////////////////////////////////////////////
+
+	hook_enable();
+
+	#if 0
+	auto pCar = plugin->sim->addCar(plugin->car->unixName, plugin->car->configName, plugin->carAvatar->currentSkin);
+	
+	DriverInfo di = plugin->carAvatar->driverInfo;
+	di.name = L"test";
+	pCar->setDriverInfo(di);
+	pCar->setSpawnPositionIndex(L"PIT", 2);
+	pCar->goToSpawnPosition(L"PIT");
+	pCar->resetTimeTransponder();
+
+	_aiDriver = new_udt<AIDriver>(pCar->physics);
+	_aiDriver->currentSessionInfo.type = SessionType::Qualify;
+	pCar->setControlsProvider(_aiDriver);
+
+	//plugin->sim->raceManager->carsRealTimePosition
+	plugin->sim->raceManager->resetCurrentLaps();
+	plugin->sim->raceManager->resetMandatoryPit();
+	#endif
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }
