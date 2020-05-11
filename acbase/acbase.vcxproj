@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Base\common.cpp" />
+    <ClCompile Include="Base\hook.cpp" />
+    <ClCompile Include="Base\log.cpp" />
+    <ClCompile Include="Base\mempatch.cpp" />
+    <ClCompile Include="Base\os.cpp" />
+    <ClCompile Include="Base\vthook.cpp" />
+    <ClCompile Include="Impl\Utils\Timer.cpp" />
+    <ClCompile Include="Impl\Custom\CustomPhysics.cpp" />
+    <ClCompile Include="precompiled.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SDK\ac_gen.h" />
+    <ClInclude Include="SDK\ac_ode.h" />
+    <ClInclude Include="SDK\ac_sdk.h" />
+    <ClInclude Include="Base\common.h" />
+    <ClInclude Include="Base\hook.h" />
+    <ClInclude Include="Base\log.h" />
+    <ClInclude Include="Base\mempatch.h" />
+    <ClInclude Include="Base\os.h" />
+    <ClInclude Include="Base\udt.h" />
+    <ClInclude Include="Base\vthook.h" />
+    <ClInclude Include="Impl\Utils\Timer.h" />
+    <ClInclude Include="Impl\Car\AeroMap.h" />
+    <ClInclude Include="Impl\Car\AntirollBar.h" />
+    <ClInclude Include="Impl\Car\BrakeSystem.h" />
+    <ClInclude Include="Impl\Car\BrushSlipProvider.h" />
+    <ClInclude Include="Impl\Car\BrushTyreModel.h" />
+    <ClInclude Include="Impl\Car\Car.h" />
+    <ClInclude Include="Impl\Car\CarColliderManager.h" />
+    <ClInclude Include="Impl\Car\CarUtils.h" />
+    <ClInclude Include="Impl\Physics\CollisionMeshODE.h" />
+    <ClInclude Include="Impl\Custom\CustomPhysics.h" />
+    <ClInclude Include="Impl\Car\Damper.h" />
+    <ClInclude Include="Impl\Car\Drivetrain.h" />
+    <ClInclude Include="Impl\Car\Drivetrain2WD.h" />
+    <ClInclude Include="Impl\Car\DynamicController.h" />
+    <ClInclude Include="Impl\Car\DynamicWingController.h" />
+    <ClInclude Include="Impl\Car\Engine.h" />
+    <ClInclude Include="Impl\Car\GearChanger.h" />
+    <ClInclude Include="Impl\Car\HeaveSpring.h" />
+    <ClInclude Include="Impl\Physics\InternalsODE.h" />
+    <ClInclude Include="Impl\Physics\JointODE.h" />
+    <ClInclude Include="Impl\Physics\PhysicsCore.h" />
+    <ClInclude Include="Impl\Physics\PhysicsEngine.h" />
+    <ClInclude Include="Impl\Physics\RigidBodyODE.h" />
+    <ClInclude Include="Impl\Game\Sim.h" />
+    <ClInclude Include="Impl\Car\SlipStream.h" />
+    <ClInclude Include="Impl\Car\Suspension.h" />
+    <ClInclude Include="Impl\Car\SuspensionAxle.h" />
+    <ClInclude Include="Impl\Car\SuspensionML.h" />
+    <ClInclude Include="Impl\Car\SuspensionStrut.h" />
+    <ClInclude Include="Impl\Car\ThermalObject.h" />
+    <ClInclude Include="Impl\Physics\Track.h" />
+    <ClInclude Include="Impl\Car\Turbo.h" />
+    <ClInclude Include="Impl\Car\Tyre.h" />
+    <ClInclude Include="Impl\Car\TyreForces.h" />
+    <ClInclude Include="Impl\Car\TyreForcesLegacy.h" />
+    <ClInclude Include="Impl\Car\TyreModel.h" />
+    <ClInclude Include="Impl\Car\TyreThermalModel.h" />
+    <ClInclude Include="Impl\Car\TyreUtils.h" />
+    <ClInclude Include="Impl\Car\Wing.h" />
+    <ClInclude Include="precompiled.h" />
+    <ClInclude Include="Impl\Utils\CubicSpline.h" />
+    <ClInclude Include="Impl\Utils\Curve.h" />
+    <ClInclude Include="Impl\Utils\INIReader.h" />
+    <ClInclude Include="Impl\Utils\Mathlib.h" />
+    <ClInclude Include="Impl\Utils\PIDController.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Doc\CallOrder.txt" />
+    <Text Include="Doc\Cars.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{299C12F3-DD0C-48B5-AA78-0D4B3B87C287}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>acbase</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ac_debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ac_release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_LIB</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);../minhook/include/;../deps/ode/include/;../acbase/;../acbase/Impl/;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_LIB</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);../minhook/include/;../deps/ode/include/;../acbase/;../acbase/Impl/;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

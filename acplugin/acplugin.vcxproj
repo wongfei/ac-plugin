@@ -50,155 +50,58 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../deps/ode/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);../minhook/include/;../deps/ode/include/;../acbase/;../acbase/Impl/;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>minhook.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;$(SolutionDir)_bin\acbase\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>minhook.lib;acbase.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL;AC_LOG_ENABLED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);_USRDLL</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4201</DisableSpecificWarnings>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir);../minhook/include/;../deps/ode/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);../minhook/include/;../deps/ode/include/;../acbase/;../acbase/Impl/;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>minhook.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)_bin\minhook\$(Platform)\$(Configuration)\;$(SolutionDir)_bin\acbase\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>minhook.lib;acbase.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AC\ac_ode.h" />
-    <ClInclude Include="CustomPhysics\Impl\AeroMap.h" />
-    <ClInclude Include="CustomPhysics\Impl\AntirollBar.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\BrakeSystem.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\BrushSlipProvider.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\BrushTyreModel.h" />
-    <ClInclude Include="CustomPhysics\Impl\Car.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
+    <ClCompile Include="..\acbase\precompiled.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="CheaterDetector\AppCheaterDetector.cpp" />
     <ClCompile Include="CustomPhysics\AppCustomPhysics.cpp" />
-    <ClInclude Include="CustomPhysics\Impl\CarColliderManager.h" />
-    <ClInclude Include="CustomPhysics\Impl\CarUtils.h" />
-    <ClInclude Include="CustomPhysics\Impl\CollisionMeshODE.h" />
-    <ClInclude Include="CustomPhysics\Impl\DynamicWingController.h" />
-    <ClInclude Include="CustomPhysics\Impl\GearChanger.h" />
-    <ClInclude Include="CustomPhysics\Impl\PhysicsEngine.h" />
-    <ClInclude Include="CustomPhysics\Impl\Sim.h" />
-    <ClInclude Include="CustomPhysics\Impl\Track.h" />
-    <ClInclude Include="CustomPhysics\Utils\CubicSpline.h" />
-    <ClInclude Include="CustomPhysics\Utils\Curve.h" />
-    <ClInclude Include="CustomPhysics\Impl\Damper.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\Drivetrain.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\Drivetrain2WD.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClCompile Include="CustomPhysics\Game\Timer.cpp" />
-    <ClInclude Include="CustomPhysics\Impl\DynamicController.h" />
-    <ClInclude Include="CustomPhysics\Impl\HeaveSpring.h" />
-    <ClInclude Include="CustomPhysics\Impl\InternalsODE.h" />
-    <ClInclude Include="CustomPhysics\Impl\JointODE.h" />
-    <ClInclude Include="CustomPhysics\Impl\PhysicsCore.h" />
-    <ClInclude Include="CustomPhysics\Utils\INIReader.h" />
-    <ClInclude Include="CustomPhysics\Utils\Mathlib.h" />
-    <ClInclude Include="CustomPhysics\Utils\PIDController.h" />
-    <ClInclude Include="CustomPhysics\Impl\SlipStream.h" />
-    <ClInclude Include="CustomPhysics\Impl\Suspension.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\SuspensionAxle.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\SuspensionML.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\SuspensionStrut.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\ThermalObject.h" />
-    <ClInclude Include="CustomPhysics\Impl\Turbo.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\Tyre.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\TyreForces.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
-    <ClInclude Include="CustomPhysics\Impl\TyreForcesLegacy.h" />
-    <ClInclude Include="CustomPhysics\Impl\TyreModel.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
     <ClCompile Include="FaceTrack\AppFaceTrack.cpp" />
-    <ClCompile Include="utils\hook.cpp" />
     <ClCompile Include="plugin\plugin.cpp" />
-    <ClCompile Include="utils\log.cpp" />
     <ClCompile Include="plugin\PluginApp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="precompiled.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="utils\common.cpp" />
-    <ClCompile Include="utils\mempatch.cpp" />
-    <ClCompile Include="utils\os.cpp" />
-    <ClCompile Include="utils\vthook.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomPhysics\Impl\Engine.h">
-      <FileType>CppHeader</FileType>
-    </ClInclude>
+    <ClInclude Include="..\acbase\precompiled.h" />
     <ClInclude Include="CustomPhysics\AppCustomPhysics.h" />
     <ClInclude Include="CheaterDetector\DriverPerf.h" />
     <ClInclude Include="CheaterDetector\DriverState.h" />
     <ClInclude Include="CheaterDetector\AppCheaterDetector.h" />
     <ClInclude Include="CheaterDetector\GridView.h" />
-    <ClInclude Include="CustomPhysics\Impl\TyreThermalModel.h" />
-    <ClInclude Include="CustomPhysics\Impl\TyreUtils.h" />
-    <ClInclude Include="CustomPhysics\Impl\Wing.h" />
-    <ClInclude Include="CustomPhysics\Game\Timer.h" />
     <ClInclude Include="FaceTrack\AppFaceTrack.h" />
     <ClInclude Include="FaceTrack\facetrack.h" />
-    <ClInclude Include="CustomPhysics\Impl\RigidBodyODE.h" />
-    <ClInclude Include="utils\hook.h" />
-    <ClInclude Include="precompiled.h" />
-    <ClInclude Include="utils\log.h" />
-    <ClInclude Include="utils\mempatch.h" />
-    <ClInclude Include="utils\os.h" />
-    <ClInclude Include="utils\udt.h" />
-    <ClInclude Include="utils\common.h" />
     <ClInclude Include="plugin\plugin.h" />
-    <ClInclude Include="AC\ac_gen.h" />
-    <ClInclude Include="AC\ac_sdk.h" />
     <ClInclude Include="plugin\PluginApp.h" />
-    <ClInclude Include="utils\vthook.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CustomPhysics\Impl\CallOrder.txt" />
-    <Text Include="CustomPhysics\Impl\Cars.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,6 @@
 #include "precompiled.h"
 #include "AppFaceTrack.h"
 
-#define HOOK_FUNC_RVA(func) hook_create(UT_WSTRING(func), _drva(RVA_##func), &::func)
-
 static AppFaceTrack* s_facetrack = nullptr;
 
 #define RVA_TrackIR_getOffsets 1893680
@@ -20,7 +18,7 @@ AppFaceTrack::AppFaceTrack(ACPlugin* plugin) : PluginApp(plugin, L"facetrack")
 
 	initForm(L"Face Track", 300, 300, PluginApp::FFAutoHide, this);
 
-	std::shared_ptr<Font> font(new_udt<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
+	auto font(new_udt_shared<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
 	std::wstring name, text;
 
 	name.assign(L"lb_status");
@@ -58,7 +56,7 @@ AppFaceTrack::AppFaceTrack(ACPlugin* plugin) : PluginApp(plugin, L"facetrack")
 
 	loadFtLib();
 	//startTracking();
-	HOOK_FUNC_RVA(TrackIR_getOffsets);
+	hook_create(L"TrackIR::getOffsets", _drva(RVA_TrackIR_getOffsets), &TrackIR_getOffsets);
 
 	writeConsole(strf(L"APP \"%s\" initialized", _appName.c_str()));
 }

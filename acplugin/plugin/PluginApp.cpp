@@ -31,6 +31,8 @@ void PluginApp::initForm(const std::wstring& title, float width, float height, u
 	std::wstring tmp_title(title);
 
 	_form = new_udt<ksgui_Form>(&tmp_name, _game->gui, ((flags & FFCanBeScaled) ? true : false));
+	log_printf(L"new ksgui_Form -> %p", _form);
+
 	_form->formTitle->setText(tmp_title);
 	_form->setSize(width, height);
 	_form->setAutoHideMode((flags & FFAutoHide) ? true : false);
@@ -52,6 +54,7 @@ void PluginApp::destroyForm()
 	if (_form)
 	{
 		writeFormConfig();
+		log_printf(L"destroyForm %p", _form);
 		_form->setVisible(false);
 		remove_elem(_game->gui->taskbar->forms, _form);
 		remove_elem(_sim->gameScreen->controls, _form);
@@ -63,7 +66,7 @@ void PluginApp::destroyForm()
 void PluginApp::loadFormConfig()
 {
 	auto path = getAppConfigPath();
-	scoped_udt<INIReaderDocuments> ini(new_udt<INIReaderDocuments>(&path, false));
+	auto ini(new_udt_unique<INIReaderDocuments>(&path, false));
 	std::wstring section, key;
 
 	section.assign(L"form_config");

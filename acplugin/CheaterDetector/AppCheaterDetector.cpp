@@ -21,9 +21,9 @@ AppCheaterDetector::AppCheaterDetector(ACPlugin* plugin) : PluginApp(plugin, L"c
 	auto pthis = this;
 
 	initForm(L"Cheater Detector", 600, 400, PluginApp::FFAutoHide, this);
-	hook_onMouseDown_vf10(_form);
+	hook_onMouseDown(_form);
 
-	std::shared_ptr<Font> font(new_udt<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
+	auto font(new_udt_shared<Font>(eFontType::eFontMonospaced, 16.0f, false, false));
 	std::wstring name, text;
 
 	name.assign(L"spec");
@@ -98,7 +98,7 @@ bool AppCheaterDetector::acpOnGui(ACPluginContext* context)
 	return PluginApp::acpOnGui(context);
 }
 
-bool AppCheaterDetector::onMouseDown_vf10(const OnMouseDownEvent& ev)
+bool AppCheaterDetector::onMouseDown(const OnMouseDownEvent& ev)
 {
 	writeConsole(L"click");
 	bool res = _form->onMouseDown_impl(ev);
@@ -472,7 +472,7 @@ CarIni* AppCheaterDetector::loadCarIni(const std::wstring& unixName)
 	path.append(unixName);
 	path.append(L"/data/car.ini");
 
-	scoped_udt<INIReader> ini(new_udt<INIReader>(path));
+	auto ini(new_udt_unique<INIReader>(path));
 	std::wstring section(L"BASIC");
 	std::wstring key(L"TOTALMASS");
 	car->mass = ini->getFloat(section, key);

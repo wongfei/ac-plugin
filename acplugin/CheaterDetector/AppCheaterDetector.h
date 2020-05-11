@@ -22,7 +22,7 @@ public:
 
 public:
 
-	UDT_OVERRIDE_METHOD(AppCheaterDetector, ksgui_Form, ksgui_Control, onMouseDown_vf10, 10, bool, (const OnMouseDownEvent &ev), (ev));
+	UDT_OVERRIDE_METHOD(AppCheaterDetector, ksgui_Form, ksgui_Control, onMouseDown, 10, bool, (const OnMouseDownEvent &ev), (ev));
 
 	void updateState(float deltaT);
 	void updateDriver(DriverState* driver, CarPhysicsState* state, float deltaT);

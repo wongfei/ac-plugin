@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Impl\Custom\CustomPhysics.cpp">
+      <Filter>Impl\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\common.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\hook.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\log.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\mempatch.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\os.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Impl\Utils\Timer.cpp">
+      <Filter>Impl\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\vthook.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="precompiled.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SDK\ac_gen.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\ac_ode.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\ac_sdk.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\AeroMap.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\AntirollBar.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\BrakeSystem.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\BrushSlipProvider.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\BrushTyreModel.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Car.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\CarColliderManager.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\CarUtils.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Damper.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Drivetrain.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Drivetrain2WD.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\DynamicController.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\DynamicWingController.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Engine.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\GearChanger.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\HeaveSpring.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Custom\CustomPhysics.h">
+      <Filter>Impl\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\CubicSpline.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\Curve.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\INIReader.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\InternalsODE.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\JointODE.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\CollisionMeshODE.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\PhysicsCore.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\PhysicsEngine.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\RigidBodyODE.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\common.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\hook.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\log.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\Mathlib.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\mempatch.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\os.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\PIDController.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Game\Sim.h">
+      <Filter>Impl\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\SlipStream.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Suspension.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\SuspensionAxle.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\SuspensionML.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\SuspensionStrut.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\ThermalObject.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Utils\Timer.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Physics\Track.h">
+      <Filter>Impl\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Turbo.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Tyre.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\TyreForces.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\TyreForcesLegacy.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\TyreModel.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\TyreThermalModel.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\TyreUtils.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Impl\Car\Wing.h">
+      <Filter>Impl\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\udt.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\vthook.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="precompiled.h">
+      <Filter>pch</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Doc\CallOrder.txt">
+      <Filter>Doc</Filter>
+    </Text>
+    <Text Include="Doc\Cars.txt">
+      <Filter>Doc</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{251b06b9-89b1-4187-a1ea-f3f3aed8c2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doc">
+      <UniqueIdentifier>{9fadd246-2229-4d8d-bfb2-e08822d2e174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl">
+      <UniqueIdentifier>{92b9aeaa-05c8-457a-82e3-82754866fedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{3ce11290-222a-40f0-a4c4-749d659c628e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{ffd9e7b6-054f-4a5a-b340-071d76356dbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl\Car">
+      <UniqueIdentifier>{0bd3129d-56ae-4dd1-b07e-83e5caa57245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl\Utils">
+      <UniqueIdentifier>{639c74fa-2b63-4024-99f7-8d8b86f4e661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl\Game">
+      <UniqueIdentifier>{5db1a2cb-6e41-4432-a35f-e8b78cc6975d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl\Custom">
+      <UniqueIdentifier>{a478f042-2b13-49b6-929c-fab0a1182b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl\Physics">
+      <UniqueIdentifier>{cbc55389-6f8e-43ec-a4a5-02da32b1c80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{3426445c-60fc-48a9-adf8-cac644d3cce7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
