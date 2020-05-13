@@ -174,7 +174,7 @@ void CustomPhysics::installHooks()
 	HOOK_OBJ(Turbo);
 
 	HOOK_OBJ(Damper);
-	HOOK_OBJ(Suspension);
+	HOOK_OBJ(Suspension); // DoubleWishbone
 	HOOK_OBJ(SuspensionStrut);
 	HOOK_OBJ(SuspensionAxle);
 	HOOK_OBJ(SuspensionML);
