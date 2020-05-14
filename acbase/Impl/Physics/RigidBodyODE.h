@@ -4,7 +4,8 @@ static void* _orig_RigidBodyODE_addSphereCollider = nullptr;
 static void* _orig_RigidBodyODE_addMeshCollider = nullptr;
 
 BEGIN_HOOK_OBJ(RigidBodyODE)
-
+	
+	#define RVA_RigidBodyODE_vtable 0x5009C0
 	#define RVA_RigidBodyODE_ctor 2938880
 	#define RVA_RigidBodyODE_dtor 2939104
 	#define RVA_RigidBodyODE_release 2942976
@@ -53,6 +54,8 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(RigidBodyODE, ctor);
+
 		HOOK_METHOD_RVA(RigidBodyODE, setEnabled);
 		HOOK_METHOD_RVA(RigidBodyODE, isEnabled);
 		HOOK_METHOD_RVA(RigidBodyODE, setAutoDisable);
@@ -154,13 +157,17 @@ END_HOOK_OBJ()
 
 RigidBodyODE* _RigidBodyODE::_ctor(PhysicsCore* core)
 {
+	AC_CTOR_VCLASS(RigidBodyODE);
+
 	this->core = core;
 	this->id = ODE_CALL(dBodyCreate)(core->id);
+
 	ODE_CALL(dBodySetFiniteRotationMode)(this->id, 1);
 	ODE_CALL(dBodySetFiniteRotationAxis)(this->id, 0, 0, 0);
 	ODE_CALL(dBodySetLinearDamping)(this->id, 0);
 	ODE_CALL(dBodySetAngularDamping)(this->id, 0);
 	ODE_CALL(dBodySetData)(this->id, this);
+
 	return this;
 }
 

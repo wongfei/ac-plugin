@@ -1,6 +1,6 @@
 #pragma once
 
-AC_GVAR_DECL(bool, INIReader_useCache, 0x0151D0F9)
+AC_GVAR_DECL(bool, INIReader_useCache, 0x0151D0F9);
 
 static void* _orig_INIReader_load = nullptr;
 static void* _orig_INIReader_loadEncrypt = nullptr;
@@ -14,7 +14,7 @@ BEGIN_HOOK_OBJ(INIReader)
 
 	static void _hook()
 	{
-		AC_GVAR_INIT(INIReader_useCache)
+		AC_GVAR_INIT(INIReader_useCache);
 		log_printf(L"INIReader::useCache=%d", (int)AC_GVAR(INIReader_useCache));
 
 		HOOK_METHOD_RVA_ORIG(INIReader, load);

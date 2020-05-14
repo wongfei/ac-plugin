@@ -1,7 +1,12 @@
 #pragma once
 
+void* _orig_Drivetrain_loadINI = nullptr;
+void* _orig_Drivetrain_initControllers = nullptr;
+
 BEGIN_HOOK_OBJ(Drivetrain)
 	
+	#define RVA_Drivetrain_ctor 2545776
+	#define RVA_Drivetrain_init 2518464
 	#define RVA_Drivetrain_loadINI 2520128
 	#define RVA_Drivetrain_initControllers 2519152
 	#define RVA_Drivetrain_setCurrentGear 2527968
@@ -18,8 +23,10 @@ BEGIN_HOOK_OBJ(Drivetrain)
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(Drivetrain, loadINI);
-		HOOK_METHOD_RVA(Drivetrain, initControllers);
+		HOOK_METHOD_RVA(Drivetrain, ctor);
+		HOOK_METHOD_RVA(Drivetrain, init);
+		HOOK_METHOD_RVA_ORIG(Drivetrain, loadINI);
+		HOOK_METHOD_RVA_ORIG(Drivetrain, initControllers);
 		HOOK_METHOD_RVA(Drivetrain, setCurrentGear);
 		HOOK_METHOD_RVA(Drivetrain, gearUp);
 		HOOK_METHOD_RVA(Drivetrain, gearDown);
@@ -33,6 +40,7 @@ BEGIN_HOOK_OBJ(Drivetrain)
 		HOOK_METHOD_RVA(Drivetrain, getEngineRPM);
 	}
 
+	Drivetrain* _ctor();
 	void _init(Car* pCar);
 	void _loadINI(const std::wstring& dataPath);
 	void _initControllers();
@@ -49,6 +57,27 @@ BEGIN_HOOK_OBJ(Drivetrain)
 	float _getEngineRPM();
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Drivetrain* _Drivetrain::_ctor() // TODO: cleanup
+{
+	AC_CTOR_POD(Drivetrain);
+
+	AC_CTOR_UDT(this->acEngine)();
+
+	this->finalRatio = 1;
+	*(_QWORD *)&this->awdFrontShare = 1036831949i64;
+	this->downshiftProtection.lockN = 1;
+	this->awd2.ramp = 20.0;
+	this->awd2.maxTorque = 800.0;
+	this->gearRequest.timeout = 200.0;
+	this->gearRequest.requestedGear = -1;
+	this->clutchInertia = 1.0;
+	this->locClutch = 1.0;
+
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,6 +126,16 @@ void _Drivetrain::_loadINI(const std::wstring& dataPath)
 		return;
 	}
 
+	auto strTracType = ini->getString(L"TRACTION", L"TYPE");
+	if (strTracType == L"AWD" || strTracType == L"AWD2")
+	{
+		auto orig = ORIG_METHOD(Drivetrain, loadINI); // TODO: implement AWD
+		THIS_CALL(orig)(dataPath);
+		return;
+	}
+
+	auto* pCar = this->car;
+
 	// DAMAGE
 
 	this->damageRpmWindow = ini->getFloat(L"DAMAGE", L"RPM_WINDOW_K");
@@ -134,9 +173,6 @@ void _Drivetrain::_loadINI(const std::wstring& dataPath)
 
 	// TRACTION
 
-	auto* pCar = this->car;
-
-	auto strTracType = ini->getString(L"TRACTION", L"TYPE");
 	if (strTracType == L"RWD")
 	{
 		this->tractionType = TractionType::RWD;
@@ -232,8 +268,9 @@ void _Drivetrain::_initControllers()
 	{
 		if (this->tractionType != TractionType::AWD)
 			return;
-
-		TODO_NOT_IMPLEMENTED;
+		
+		auto orig = ORIG_METHOD(Drivetrain, initControllers); // TODO: implement AWD
+		THIS_CALL(orig)();
 	}
 	else
 	{

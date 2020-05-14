@@ -2,6 +2,9 @@
 
 BEGIN_HOOK_OBJ(Engine)
 
+	#define RVA_Engine_vtable 0x4F8FD8
+	#define RVA_Engine_ctor 2642608
+	#define RVA_Engine_init 2645520
 	#define RVA_Engine_loadINI 2646272
 	#define RVA_Engine_step 2654432
 	#define RVA_Engine_getThrottleResponseGas 2644880
@@ -9,12 +12,15 @@ BEGIN_HOOK_OBJ(Engine)
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(Engine, ctor);
+		HOOK_METHOD_RVA(Engine, init);
 		HOOK_METHOD_RVA(Engine, loadINI);
 		HOOK_METHOD_RVA(Engine, step);
 		HOOK_METHOD_RVA(Engine, getThrottleResponseGas);
 		HOOK_METHOD_RVA(Engine, stepTurbos);
 	}
 
+	Engine* _ctor();
 	void _init(Car* pCar);
 	void _loadINI();
 	void _step(const SACEngineInput& input, float dt);
@@ -22,6 +28,28 @@ BEGIN_HOOK_OBJ(Engine)
 	void _stepTurbos();
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Engine* _Engine::_ctor() // TODO: cleanup
+{
+	AC_CTOR_VCLASS(Engine);
+
+	AC_CTOR_UDT(this->data)();
+	AC_CTOR_UDT(this->throttleResponseCurve)();
+	AC_CTOR_UDT(this->throttleResponseCurveMax)();
+	AC_CTOR_UDT(this->gasCoastOffsetCurve)();
+
+	*(_QWORD *)&this->fuelPressure = 1065353216i64;
+	*(_QWORD *)&this->starterTorque = 1101004800i64;
+	*(_QWORD *)&this->p2p.basePositionCoeff = 1i64;
+	*(_QWORD *)&this->inertia = 1065353216i64;
+	this->maxPowerW_Dynamic = -1.0;
+	*(_QWORD *)&this->throttleResponseCurveMaxRef = 1169915904i64;
+	this->bovThreshold = 0.2;
+
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

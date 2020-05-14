@@ -38,8 +38,7 @@ END_HOOK_OBJ()
 
 SuspensionAxle* _SuspensionAxle::_ctor(Car* pCar, RigidAxleSide side, const std::wstring& carDataPath)
 {
-	memset(this, 0, sizeof(SuspensionAxle)); // TODO: Danger is my middle name
-	this->_vtable = _drva(RVA_SuspensionAxle_vtable);
+	AC_CTOR_VCLASS(SuspensionAxle);
 
 	this->damper.ctor();
 

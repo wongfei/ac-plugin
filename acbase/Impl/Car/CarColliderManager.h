@@ -2,13 +2,17 @@
 
 BEGIN_HOOK_OBJ(CarColliderManager)
 
+	#define RVA_CarColliderManager_ctor 2545584
 	#define RVA_CarColliderManager_init 2766672
 	#define RVA_CarColliderManager_loadINI 2766752
+	#define RVA_CarColliderManager_step 2768208
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(CarColliderManager, ctor);
 		HOOK_METHOD_RVA(CarColliderManager, init);
 		HOOK_METHOD_RVA(CarColliderManager, loadINI);
+		HOOK_METHOD_RVA(CarColliderManager, step);
 	}
 
 	CarColliderManager* _ctor();
@@ -22,9 +26,7 @@ END_HOOK_OBJ()
 
 CarColliderManager* _CarColliderManager::_ctor()
 {
-	this->isLive = false;
-	this->carBody = nullptr;
-	this->car = nullptr;
+	AC_CTOR_POD(CarColliderManager);
 	return this;
 }
 
@@ -38,7 +40,7 @@ void _CarColliderManager::_init(Car* pCar)
 	this->carModel = pCar->unixName;
 	this->boxes.clear();
 
-	this->_loadINI();
+	this->loadINI();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +78,17 @@ void _CarColliderManager::_loadINI()
 
 void _CarColliderManager::_step(float dt)
 {
+	#if 0 // Dont need this
+	if (this->isLive)
+	{
+		if (this->observer.hasChanged())
+		{
+			this->carBody->removeCollisionObjects();
+			INIReader::clearCache();
+			this->loadINI();
+		}
+	}
+	#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

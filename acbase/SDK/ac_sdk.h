@@ -27,6 +27,7 @@ inline void guard_handler(const char* file, int line)
 #define TODO_NOT_IMPLEMENTED GUARD(false)
 #define TODO_WTF_IS_THIS GUARD(false)
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // IDA types
 
 typedef uint8_t _BYTE;
@@ -35,6 +36,7 @@ typedef uint32_t _DWORD;
 typedef uint64_t _QWORD;
 typedef __m128 _OWORD;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // Proxy hacks
 
 extern void* _ac_module;
@@ -50,6 +52,22 @@ __forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 
 #define AC_GVAR(name) (*(name##_ptr))
 #define AC_GPTR(name) (name##_ptr)
+
+// DANGER IS MY MIDDLE NAME!!!
+#define AC_CTOR_VCLASS(name)\
+	memset(this, 0, sizeof(name));\
+	new (this) name();\
+	this->_vtable = _drva(RVA_##name##_vtable);
+
+#define AC_CTOR_POD(name)\
+	memset(this, 0, sizeof(name));\
+	new (this) name();
+
+#define AC_CTOR_UDT(name)\
+	name.ctor
+
+#define AC_CTOR_NATIVE(name)\
+	new (&name) decltype(name)
 
 // THIS IS SPARTA!!!
 __forceinline void* get_vtp(void* obj) { return *((void**)obj); }
@@ -68,6 +86,7 @@ __forceinline TOUT xcast(TIN in)
     return u.out;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // Common
 
 struct _object {};
@@ -79,6 +98,7 @@ public:
 	Concurrency::concurrent_queue<T> queue;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // Math
 
 class vec2f {
@@ -186,6 +206,7 @@ public:
 	T sins[3];
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // Event
 
 template<typename T>
@@ -247,6 +268,7 @@ public:
 	Event<T>* srcEvent;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // VB
 
 class IVertexBuffer {
@@ -259,6 +281,8 @@ class VertexBuffer : public IVertexBuffer {
 public:
 	virtual ~VertexBuffer();
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma warning(push)
 #pragma warning(disable: 4512) // assignment operator could not be generated

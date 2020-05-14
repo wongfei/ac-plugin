@@ -1,11 +1,12 @@
 #pragma once
 
-AC_GVAR_DECL(int, rayCollideTestCount, 0x0155AA5C)
-AC_GVAR_DECL(int, geomCollideTestCount, 0x0155AA60)
-AC_GVAR_DECL(int, broadTestCount, 0x0155AA64)
+AC_GVAR_DECL(int, rayCollideTestCount, 0x0155AA5C);
+AC_GVAR_DECL(int, geomCollideTestCount, 0x0155AA60);
+AC_GVAR_DECL(int, broadTestCount, 0x0155AA64);
 
 BEGIN_HOOK_OBJ(PhysicsCore)
 
+	#define RVA_PhysicsCore_vtable 0x500600
 	#define RVA_PhysicsCore_ctor 2931328
 	#define RVA_PhysicsCore_dtor 2931744
 	#define RVA_PhysicsCore_release 2937952
@@ -17,10 +18,11 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 
 	static void _hook()
 	{
-		AC_GVAR_INIT(rayCollideTestCount)
-		AC_GVAR_INIT(geomCollideTestCount)
-		AC_GVAR_INIT(broadTestCount)
+		AC_GVAR_INIT(rayCollideTestCount);
+		AC_GVAR_INIT(geomCollideTestCount);
+		AC_GVAR_INIT(broadTestCount);
 
+		HOOK_METHOD_RVA(PhysicsCore, ctor);
 		HOOK_METHOD_RVA(PhysicsCore, step);
 		HOOK_METHOD_RVA(PhysicsCore, collisionStep);
 		HOOK_METHOD_RVA(PhysicsCore, onCollision);
@@ -58,13 +60,7 @@ END_HOOK_OBJ()
 
 PhysicsCore* _PhysicsCore::_ctor()
 {
-	memset(&this->coreCPUTimes, 0, sizeof(CoreCPUTimes));
-	this->noCollisionCounter = 0;
-	this->totRayTime = 0;
-	this->currentFrame = 0;
-	this->collisionCallback = nullptr;
-	this->threading = nullptr;
-	this->pool = nullptr;
+	AC_CTOR_VCLASS(PhysicsCore);
 
 	ODE_CALL(dInitODE2)(0);
 	ODE_CALL(dAllocateODEDataForThread)(0xFFFFFFFF);

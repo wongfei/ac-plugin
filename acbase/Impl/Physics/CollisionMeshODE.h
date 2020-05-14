@@ -2,8 +2,12 @@
 
 BEGIN_HOOK_OBJ(CollisionMeshODE)
 
+	#define RVA_CollisionMeshODE_vtable 0x500BC0
+	#define RVA_CollisionMeshODE_ctor 2943920
+
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(CollisionMeshODE, ctor);
 	}
 
 	CollisionMeshODE* _ctor(PhysicsCore* core, 
@@ -18,6 +22,8 @@ CollisionMeshODE* _CollisionMeshODE::_ctor(PhysicsCore* core,
 	float* vertices, int numVertices, unsigned short* indices, int indexCount, 
 	unsigned long group, unsigned long mask, unsigned int space_id)
 {
+	AC_CTOR_VCLASS(CollisionMeshODE);
+
 	int vertexStride = 3 * sizeof(float); // 12
 	int triStride = 3 * sizeof(unsigned short); // 6
 

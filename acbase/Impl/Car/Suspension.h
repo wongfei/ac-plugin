@@ -38,8 +38,7 @@ END_HOOK_OBJ()
 
 Suspension* _Suspension::_ctor(Car* pCar, int index)
 {
-	memset(this, 0, sizeof(Suspension)); // TODO: Danger is my middle name
-	this->_vtable = _drva(RVA_Suspension_vtable);
+	AC_CTOR_VCLASS(Suspension);
 
 	this->damper.ctor();
 	this->activeActuator.ctor();
