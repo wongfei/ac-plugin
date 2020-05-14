@@ -51,8 +51,8 @@
 #include "Car/HeaveSpring.h"
 #include "Car/AntirollBar.h"
 
-#include "Car/Tyre.h"
 #include "Car/TyreUtils.h"
+#include "Car/Tyre.h"
 #include "Car/TyreForces.h"
 #include "Car/TyreForcesLegacy.h"
 #include "Car/TyreModel.h"

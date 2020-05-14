@@ -2,6 +2,9 @@
 
 BEGIN_HOOK_OBJ(Tyre)
 
+	#define RVA_Tyre_ctor 2546640
+	#define RVA_Tyre_init 2623056
+	#define RVA_Tyre_initCompounds 2623488
 	#define RVA_Tyre_step 2635776
 	#define RVA_Tyre_addGroundContact 2611584
 	#define RVA_Tyre_updateLockedState 2642032
@@ -23,6 +26,9 @@ BEGIN_HOOK_OBJ(Tyre)
 
 	static void _hook()
 	{
+		//HOOK_METHOD_RVA(Tyre, ctor);
+		//HOOK_METHOD_RVA(Tyre, init);
+		//HOOK_METHOD_RVA(Tyre, initCompounds);
 		HOOK_METHOD_RVA(Tyre, step);
 		HOOK_METHOD_RVA(Tyre, addGroundContact);
 		HOOK_METHOD_RVA(Tyre, updateLockedState);
@@ -40,6 +46,9 @@ BEGIN_HOOK_OBJ(Tyre)
 		HOOK_METHOD_RVA(Tyre, addTyreForceToHub);
 	}
 
+	Tyre* _ctor();
+	void _init(ISuspension* ihub, IRayTrackCollisionProvider* rcp, const std::wstring& dataPath, int index, int carID, Car* car);
+	void _initCompounds(const std::wstring& dataPath, int index);
 	void _step(float dt);
 	void _addGroundContact(const vec3f& pos, const vec3f& normal);
 	void _updateLockedState(float dt);
@@ -59,6 +68,384 @@ BEGIN_HOOK_OBJ(Tyre)
 	void _stepRelaxationLength(float svx, float svy, float hubVelocity, float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Tyre* _Tyre::_ctor() // TODO: cleanup
+{
+	AC_CTOR_POD(Tyre);
+
+	AC_CTOR_UDT(this->modelData)();
+	AC_CTOR_UDT(this->thermalModel)();
+	AC_CTOR_UDT(this->slipProvider)();
+	AC_CTOR_UDT(this->shakeGenerator)();
+	AC_CTOR_UDT(this->scTM)();
+
+	this->data.blisterThreshold = 9000.0;
+	this->data.grainGamma = 1.0;
+	*(_QWORD *)&this->data.blisterGamma = 1065353216i64;
+	*(_QWORD *)&this->data.optimumTemp = 1117782016i64;
+	this->data.width = 0.15000001;
+	this->data.radius = 0.30000001;
+	this->data.k = 220000.0;
+	this->data.d = 400.0;
+	this->data.angularInertia = 1.6;
+	this->data.thermalFrictionK = 0.029999999;
+	this->data.thermalRollingK = 0.5;
+	this->status.inflation = 1.0;
+	this->status.wearMult = 1.0;
+	this->status.pressureStatic = 26.0;
+	this->status.pressureDynamic = 26.0;
+	this->status.lastTempIMO[0] = -200.0;
+	this->status.lastTempIMO[1] = -200.0;
+	this->status.lastTempIMO[2] = -200.0;
+	this->aiMult = 1.0;
+	this->tyreBlanketsOn = 1;
+	this->flatSpotK = 0.15000001;
+	this->explosionTemperature = 350.0;
+	this->blanketTemperature = 80.0;
+	*(_QWORD *)&this->pressureTemperatureGain = 1042536202i64;
+
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Tyre::_init(ISuspension* ihub, IRayTrackCollisionProvider* rcp, const std::wstring& dataPath, int index, int carID, Car* car)
+{
+	this->car = car;
+	this->tyreModel = &this->scTM;
+	this->thermalModel.init(12, 3, car);
+	this->index = index;
+	this->rayCaster = rcp->createRayCaster(3.0f);
+	this->rayCollisionProvider = rcp;
+	this->hub = ihub;
+	*(_QWORD *)&this->localWheelRotation.M11 = 1065353216i64;
+	*(_QWORD *)&this->localWheelRotation.M22 = 1065353216i64;
+	*(_QWORD *)&this->localWheelRotation.M33 = 1065353216i64;
+	this->localWheelRotation.M44 = 1.0;
+	this->absOverride = 1.0;
+
+	this->initCompounds(dataPath, index);
+	this->setCompound(0);
+	this->shakeGenerator.step(0.003f); // TODO: check
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: check
+{
+	auto ini(new_udt_unique<INIReader>(dataPath + L"tyres.ini"));
+	if (!ini->ready)
+	{
+		SHOULD_NOT_REACH_FATAL;
+		return;
+	}
+
+	int iVer = ini->getInt(L"HEADER", L"VERSION");
+
+	std::wstring strIndex[4] = {L"FRONT", L"FRONT", L"REAR", L"REAR"};
+	const auto& strSection = strIndex[index];
+
+	if (ini->hasSection(L"EXPLOSION"))
+	{
+		this->explosionTemperature = ini->getFloat(L"EXPLOSION", L"TEMPERATURE");
+	}
+
+	if (ini->hasSection(L"VIRTUALKM"))
+	{
+		this->useLoadForVKM = ini->getInt(L"VIRTUALKM", L"USE_LOAD") != 0;
+	}
+
+	if (ini->hasSection(L"ADDITIONAL1"))
+	{
+		this->blanketTemperature = ini->getFloat(L"ADDITIONAL1", L"BLANKETS_TEMP");
+		this->pressureTemperatureGain = ini->getFloat(L"ADDITIONAL1", L"PRESSURE_TEMPERATURE_GAIN");
+
+		float fSpread = ini->getFloat(L"ADDITIONAL1", L"CAMBER_TEMP_SPREAD_K");
+		if (fSpread != 0.0f)
+			this->thermalModel.camberSpreadK = fSpread;
+	}
+
+	for (int id = 0; ; id++)
+	{
+		auto strCompound(strSection);
+		if (id > 0)
+			strCompound.append(strf(L"_%d", id));
+
+		if (!ini->hasSection(strCompound))
+			break;
+
+		auto tcd(new_udt_unique<TyreCompoundDef>());
+
+		tcd->modelData.version = iVer;
+		tcd->index = id;
+
+		tcd->name = ini->getString(strCompound, L"NAME");
+		if (iVer >= 4)
+		{
+			tcd->shortName = ini->getString(strCompound, L"SHORT_NAME");
+			tcd->name.append(L" (");
+			tcd->name.append(tcd->shortName);
+			tcd->name.append(L")");
+		}
+
+		tcd->data.width = ini->getFloat(strCompound, L"WIDTH");
+		if (tcd->data.width <= 0)
+			tcd->data.width = 0.15f;
+
+		tcd->data.radius = ini->getFloat(strCompound, L"RADIUS");
+		if (iVer < 3)
+			tcd->data.rimRadius = 0.13f;
+		else
+			tcd->data.rimRadius = ini->getFloat(strCompound, L"RIM_RADIUS");
+
+		tcd->modelData.flexK = ini->getFloat(strCompound, L"FLEX");
+
+		float fFLA = ini->getFloat(strCompound, L"FRICTION_LIMIT_ANGLE");
+		float fXMU = ini->getFloat(strCompound, L"XMU");
+
+		if (fFLA == 0.0f)
+			fFLA = 7.5f;
+		if (iVer >= 5)
+			fXMU = 0;
+
+		// float maxAngle, float xu, float flex
+		auto bsp(new_udt_unique<BrushSlipProvider>(fFLA, fXMU, tcd->modelData.flexK));
+
+		if (iVer >= 10)
+		{
+			tcd->modelData.cfXmult = ini->getFloat(strCompound, L"CX_MULT");
+			tcd->data.radiusRaiseK = ini->getFloat(strCompound, L"RADIUS_ANGULAR_K") * 0.001f;
+			
+			if (ini->hasKey(strCompound, L"BRAKE_DX_MOD"))
+			{
+				tcd->modelData.brakeDXMod = ini->getFloat(strCompound, L"BRAKE_DX_MOD");
+				if (tcd->modelData.brakeDXMod == 0.0f)
+					tcd->modelData.brakeDXMod = 1.0f;
+				else
+					tcd->modelData.brakeDXMod += 1.0f;
+			}
+
+			if (ini->hasKey(strCompound, L"COMBINED_FACTOR"))
+			{
+				tcd->modelData.combinedFactor = ini->getFloat(strCompound, L"COMBINED_FACTOR");
+			}
+		}
+
+		if (iVer < 5)
+		{
+			tcd->modelData.Dy0 = ini->getFloat(strCompound, L"DY0");
+			tcd->modelData.Dy1 = ini->getFloat(strCompound, L"DY1");
+			tcd->modelData.Dx0 = ini->getFloat(strCompound, L"DX0");
+			tcd->modelData.Dx1 = ini->getFloat(strCompound, L"DX1");
+			bsp->asy = 0.85f;
+			bsp->brushModel.data.xu = fXMU;
+		}
+		else
+		{
+			float fFZ0 = ini->getFloat(strCompound, L"FZ0");
+			tcd->modelData.lsExpX = ini->getFloat(strCompound, L"LS_EXPX");
+			tcd->modelData.lsExpY = ini->getFloat(strCompound, L"LS_EXPY");
+			tcd->modelData.Dx0 = ini->getFloat(strCompound, L"DX_REF");
+			tcd->modelData.Dy0 = ini->getFloat(strCompound, L"DY_REF");
+
+			tcd->modelData.lsMultX = calcLoadSensMult(tcd->modelData.Dx0, fFZ0, tcd->modelData.lsExpX);
+			tcd->modelData.lsMultY = calcLoadSensMult(tcd->modelData.Dy0, fFZ0, tcd->modelData.lsExpY);
+			bsp->asy = 0.92f;
+			bsp->brushModel.data.Fz0 = fFZ0;
+
+			float fFlexGain = ini->getFloat(strCompound, L"FLEX_GAIN");
+			bsp->brushModel.data.maxSlip0 = tanf(fFLA * 0.017453f);
+			bsp->brushModel.data.maxSlip1 = tanf(((fFlexGain + 1.0f) * fFLA) * 0.017453f);
+			bsp->version = 5;
+
+			if (ini->hasKey(strCompound, L"DY_CURVE"))
+			{
+				tcd->modelData.dyLoadCurve = ini->getCurve(strCompound, L"DY_CURVE");
+			}
+
+			if (ini->hasKey(strCompound, L"DX_CURVE"))
+			{
+				tcd->modelData.dxLoadCurve = ini->getCurve(strCompound, L"DX_CURVE");
+			}
+
+			//float fMaximum = 0, fMaxSlip = 0;
+			//bsp->calcMaximum(fFZ0 * 0.5f, &fMaximum, &fMaxSlip);
+			//this->loadSensExpD(tcd->modelData.lsExpY, tcd->modelData.lsMultY, fFZ0 * 0.5f);
+			//atanf(fMaxSlip);
+			//printf
+		}
+
+		bsp->recomputeMaximum();
+
+		if (iVer >= 7)
+		{
+			bsp->asy = ini->getFloat(strCompound, L"FALLOFF_LEVEL");
+			bsp->brushModel.data.falloffSpeed = ini->getFloat(strCompound, L"FALLOFF_SPEED");
+		}
+
+		tcd->slipProvider = *bsp.get();
+
+		tcd->modelData.speedSensitivity = ini->getFloat(strCompound, L"SPEED_SENSITIVITY");
+		tcd->modelData.relaxationLength = ini->getFloat(strCompound, L"RELAXATION_LENGTH");
+		tcd->modelData.rr0 = ini->getFloat(strCompound, L"ROLLING_RESISTANCE_0");
+		tcd->modelData.rr1 = ini->getFloat(strCompound, L"ROLLING_RESISTANCE_1");
+
+		if (iVer == 1)
+		{
+			tcd->modelData.rr_sa = ini->getFloat(strCompound, L"ROLLING_RESISTANCE_SA");
+			tcd->modelData.rr_sr = ini->getFloat(strCompound, L"ROLLING_RESISTANCE_SR");
+		}
+		else
+		{
+			tcd->modelData.rr_slip = ini->getFloat(strCompound, L"ROLLING_RESISTANCE_SLIP");
+		}
+
+		tcd->modelData.camberGain = ini->getFloat(strCompound, L"CAMBER_GAIN");
+		tcd->modelData.dcamber0 = ini->getFloat(strCompound, L"DCAMBER_0");
+		tcd->modelData.dcamber1 = ini->getFloat(strCompound, L"DCAMBER_1");
+
+		if (tcd->modelData.dcamber0 == 0.0f || tcd->modelData.dcamber1 == 0.0f)
+		{
+			tcd->modelData.dcamber0 = 0.1f;
+			tcd->modelData.dcamber1 = -0.8f;
+		}
+
+		if (ini->hasKey(strCompound, L"DCAMBER_LUT"))
+		{
+			tcd->modelData.dCamberCurve = ini->getCurve(strCompound, L"DCAMBER_LUT");
+			tcd->modelData.useSmoothDCamberCurve = ini->getInt(strCompound, L"DCAMBER_LUT_SMOOTH") != 0;
+		}
+
+		tcd->data.angularInertia = ini->getFloat(strCompound, L"ANGULAR_INERTIA");
+		tcd->data.d = ini->getFloat(strCompound, L"DAMP");
+		tcd->data.k = ini->getFloat(strCompound, L"RATE");
+
+		if (tcd->data.angularInertia == 0.0f)
+			tcd->data.angularInertia = 1.2f;
+		if (tcd->data.d == 0.0f)
+			tcd->data.d = 400.0f;
+		if (tcd->data.k == 0.0f)
+			tcd->data.k = 220000.0f;
+		if (tcd->modelData.Dx0 == 0.0f)
+			tcd->modelData.Dx0 = tcd->modelData.Dy0 * 1.2f;
+		if (tcd->modelData.Dx1 == 0.0f)
+			tcd->modelData.Dx1 = tcd->modelData.Dy1 * 0.1f;
+
+		tcd->pressureStatic = ini->getFloat(strCompound, L"PRESSURE_STATIC");
+		if (tcd->pressureStatic == 0.0f)
+			tcd->pressureStatic = 26.0f;
+
+		tcd->modelData.pressureRef = tcd->pressureStatic;
+		this->status.pressureDynamic = tcd->pressureStatic;
+
+		tcd->modelData.pressureSpringGain = ini->getFloat(strCompound, L"PRESSURE_SPRING_GAIN");
+		if (tcd->modelData.pressureSpringGain == 0.0f)
+			tcd->modelData.pressureSpringGain = 1000.0f;
+
+		tcd->modelData.pressureFlexGain = ini->getFloat(strCompound, L"PRESSURE_FLEX_GAIN");
+		tcd->modelData.pressureRRGain = ini->getFloat(strCompound, L"PRESSURE_RR_GAIN");
+		tcd->modelData.pressureGainD = ini->getFloat(strCompound, L"PRESSURE_D_GAIN");
+
+		tcd->modelData.idealPressure = ini->getFloat(strCompound, L"PRESSURE_IDEAL");
+		if (tcd->modelData.idealPressure == 0.0f)
+			tcd->modelData.idealPressure = 26.0f;
+
+		auto strThermal(L"THERMAL_" + strCompound);
+
+		if (ini->hasSection(strThermal))
+		{
+			tcd->thermalPatchData.surfaceTransfer = ini->getFloat(strThermal, L"SURFACE_TRANSFER");
+			tcd->thermalPatchData.patchTransfer = ini->getFloat(strThermal, L"PATCH_TRANSFER");
+			tcd->thermalPatchData.patchCoreTransfer = ini->getFloat(strThermal, L"CORE_TRANSFER");
+			tcd->data.thermalFrictionK = ini->getFloat(strThermal, L"FRICTION_K");
+			tcd->data.thermalRollingK = ini->getFloat(strThermal, L"ROLLING_K");
+
+			if (iVer >= 5)
+			{
+				tcd->thermalPatchData.internalCoreTransfer = ini->getFloat(strThermal, L"INTERNAL_CORE_TRANSFER");
+
+				if (ini->hasKey(strThermal, L"COOL_FACTOR"))
+				{
+					tcd->thermalPatchData.coolFactorGain = (ini->getFloat(strThermal, L"COOL_FACTOR") - 1.0f) * 0.00032399999f;
+				}
+			}
+
+			if (iVer >= 6)
+			{
+				tcd->data.thermalRollingSurfaceK = ini->getFloat(strThermal, L"SURFACE_ROLLING_K");
+			}
+
+			auto strFile = ini->getString(strThermal, L"PERFORMANCE_CURVE");
+			auto strPath = dataPath + strFile; // this->car->getConfigPath
+			tcd->thermalPerformanceCurve.load(strPath);
+		}
+
+		auto strFile = ini->getString(strCompound, L"WEAR_CURVE");
+		auto strPath = dataPath + strFile; // this->car->getConfigPath
+		tcd->modelData.wearCurve.load(strPath);
+		tcd->modelData.wearCurve.scale(0.0099999998f);
+
+		int iTpcCount = tcd->thermalPerformanceCurve.getCount();
+		if (iTpcCount > 0)
+		{
+			for (int n = 0; n < iTpcCount; ++n)
+			{
+				auto pair = tcd->thermalPerformanceCurve.getPairAtIndex(n);
+				if (pair.second >= 1.0f)
+				{
+					tcd->data.grainThreshold = pair.first;
+					break;
+				}
+			}
+
+			for (int n = iTpcCount - 1; n > 0; --n)
+			{
+				auto pair = tcd->thermalPerformanceCurve.getPairAtIndex(n);
+				if (pair.second >= 1.0f)
+				{
+					tcd->data.blisterThreshold = pair.first;
+					tcd->data.optimumTemp = pair.first;
+					break;
+				}
+			}
+		}
+
+		tcd->modelData.maxWearMult = 100.0f;
+		int iWcCount = tcd->modelData.wearCurve.getCount();
+		for (int n = 0; n < iWcCount; ++n)
+		{
+			auto pair = tcd->modelData.wearCurve.getPairAtIndex(n);
+			if (pair.second < tcd->modelData.maxWearMult)
+			{
+				tcd->modelData.maxWearKM = pair.first;
+				tcd->modelData.maxWearMult = pair.second;
+			}
+		}
+
+		if (iVer >= 3)
+		{
+			tcd->data.blisterGamma = ini->getFloat(strThermal, L"BLISTER_GAMMA");
+			tcd->data.blisterGain = ini->getFloat(strThermal, L"BLISTER_GAIN");
+			tcd->data.grainGamma = ini->getFloat(strThermal, L"GRAIN_GAMMA");
+			tcd->data.grainGain = ini->getFloat(strThermal, L"GRAIN_GAIN");
+		}
+
+		float fSens;
+		if (iVer < 5)
+			fSens = Tyre::loadSensLinearD(tcd->modelData.Dy0, tcd->modelData.Dy1, 3000.0f);
+		else
+			fSens = Tyre::loadSensExpD(tcd->modelData.lsExpY, tcd->modelData.lsMultY, 3000.0f);
+
+		tcd->data.softnessIndex = tmax(0.0f, fSens - 1.0f);
+
+		this->compoundDefs.push_back((*tcd.get())); // TODO: isTyreLegal
+	}
+
+	if (iVer < 4)
+		this->generateCompoundNames();
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -147,8 +147,8 @@ void _Engine::_loadINI()
 		if (td.isAdjustable)
 			this->turboAdjustableFromCockpit = true;
 
-		auto turbo(stackalloc_udt<Turbo>(td));
-		this->turbos.push_back(turbo.byval()); // TODO: FKN ++ PROBLEMS..
+		auto turbo(new_udt_unique<Turbo>(td));
+		this->turbos.push_back((*turbo.get()));
 	}
 
 	if (this->turboAdjustableFromCockpit)
@@ -201,22 +201,22 @@ void _Engine::_loadINI()
 			auto strIniPath = this->car->carDataPath + strf(L"ctrl_turbo%d.ini", id);
 			if (Path::fileExists(strIniPath, false))
 			{
-				auto dc(stackalloc_udt<DynamicController>(this->car, strIniPath));
-				auto tdc(stackalloc_udt<TurboDynamicController>());
+				auto dc(new_udt_unique<DynamicController>(this->car, strIniPath));
+				auto tdc(new_udt_unique<TurboDynamicController>());
 				tdc->turbo = &turbo;
 				tdc->controller = *dc;
-				this->turboControllers.push_back(tdc.byval());
+				this->turboControllers.push_back((*tdc.get()));
 			}
 
 			strIniPath = this->car->carDataPath + strf(L"ctrl_wastegate%d.ini", id);
 			if (Path::fileExists(strIniPath, false))
 			{
-				auto dc(stackalloc_udt<DynamicController>(this->car, strIniPath));
-				auto tdc(stackalloc_udt<TurboDynamicController>());
+				auto dc(new_udt_unique<DynamicController>(this->car, strIniPath));
+				auto tdc(new_udt_unique<TurboDynamicController>());
 				tdc->turbo = &turbo;
 				tdc->controller = *dc;
 				tdc->isWastegate = true;
-				this->turboControllers.push_back(tdc.byval());
+				this->turboControllers.push_back(*(tdc.get()));
 			}
 
 			id++;

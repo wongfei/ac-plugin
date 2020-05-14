@@ -24,3 +24,8 @@ inline float calcContactPatchLength(float radius, float deflection)
 	else
 		return sqrtf((radius * radius) - (v * v)) * 2.0f;
 }
+
+inline float calcLoadSensMult(float targetD, float targetLoad, float sensExp)
+{
+	return (targetD * targetLoad) / powf(targetLoad, sensExp);
+}
