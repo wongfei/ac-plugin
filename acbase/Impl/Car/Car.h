@@ -2,6 +2,9 @@
 
 BEGIN_HOOK_OBJ(Car)
 
+	#define RVA_Car_vtable 0x4F6EB0
+	#define RVA_Car_ctor 2539264
+	#define RVA_Car_initCarData 2566960
 	#define RVA_Car_step 2579872
 	#define RVA_Car_updateAirPressure 2583264
 	#define RVA_Car_updateBodyMass 2583664
@@ -12,6 +15,8 @@ BEGIN_HOOK_OBJ(Car)
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(Car, ctor);
+		HOOK_METHOD_RVA(Car, initCarData);
 		HOOK_METHOD_RVA(Car, step);
 		HOOK_METHOD_RVA(Car, updateAirPressure);
 		HOOK_METHOD_RVA(Car, updateBodyMass);
@@ -21,6 +26,8 @@ BEGIN_HOOK_OBJ(Car)
 		HOOK_METHOD_RVA(Car, onCollisionCallBack);
 	}
 
+	Car* _ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const std::wstring& config);
+	void _initCarData();
 	void _step(float dt);
 	void _updateAirPressure();
 	void _updateBodyMass();
@@ -30,6 +37,296 @@ BEGIN_HOOK_OBJ(Car)
 	void _onCollisionCallBack(void* userData0, void* shape0, void* userData1, void* shape1, const vec3f& normal, const vec3f& pos, float depth);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const std::wstring& config)
+{
+	// TODO: experimental
+
+	AC_CTOR_VCLASS(Car);
+
+	auto pThis = this;
+
+	this->carHalfWidth = 1.0;
+	this->userFFGain = 1.0;
+	this->ksPhysics = iengine;
+	this->controls.requestedGearIndex = -1;
+	AC_CTOR_UDT(this->colliderManager)();
+	AC_CTOR_UDT(this->drivetrain)();
+	AC_CTOR_UDT(this->abs.valueCurve)();
+	this->abs.channels = 4;
+	this->abs.currentValue = 1.0;
+	AC_CTOR_UDT(this->tractionControl.valueCurve)();
+	this->suspensions.resize(4);
+	AC_CTOR_UDT(this->brakeSystem)();
+	AC_CTOR_UDT(this->autoClutch)();
+	AC_CTOR_UDT(this->telemetry)();
+	AC_CTOR_UDT(this->autoBlip.blipProfile)();
+	this->edl.rightTyreIndex = 1;
+	this->setupManager.minimumHeight_m = -1.0;
+	this->setupManager.maxWaitTime = 1.0;
+	this->setupManager.waitTime = 1.0;
+	this->setupManager.setupState = CarSetupState::Legal;
+	*(_DWORD *)&this->drs.isPresent = 0x10000;
+	this->kers._vtable = _drva(0x4F6E98);
+	AC_CTOR_UDT(this->kers.torqueLUT)();
+	AC_CTOR_UDT(this->kers.controller)();
+	AC_CTOR_UDT(this->ers)();
+	this->lapInvalidator.collisionSafeTime = 5000.0;
+	this->lapInvalidator.currentTyresOut = -1;
+	this->fuelLapEvaluator.startFuel = -100.0;
+	AC_CTOR_UDT(this->steeringSystem.ctrl4ws)();
+	*(_QWORD *)&this->axleTorqueReaction = 1065353216i64;
+	AC_CTOR_UDT(this->water)();
+	this->aiLapsToComplete = -1;
+	this->bounds.length = 4.0;
+	this->bounds.width = 2.0;
+	this->bounds.lengthFront = 2.0;
+	this->bounds.lengthRear = 2.0;
+	this->slipStream.triangle._vtable = _drva(0x4AD788);
+	this->slipStream.speedFactorMult = 1.0;
+	*(_QWORD *)&this->slipStream.effectGainMult = 1065353216i64;
+	this->slipStream.speedFactor = 0.25;
+	this->slipStreamEffectGain = 1.0;
+	this->framesToSleep = 50;
+	this->pitTimings.tyreChangeTimeSec = 10.0;
+	this->pitTimings.fuelChangeTimeSec = 0.1;
+	this->pitTimings.bodyRepairTimeSec = 2.0;
+	this->pitTimings.engineRepairTimeSec = 2.0;
+	*(_QWORD *)&this->pitTimings.suspRepairTimeSec = 0x40000000i64;
+	AC_CTOR_UDT(this->valueCache.speed)();
+	this->fuelKG = 0.74000001;
+	this->lastBodyMassUpdateTime = -100000000.0;
+	this->physicsGUID = (unsigned int)this->ksPhysics->cars.size();
+	this->steerAssist = 1.0;
+	this->fuel = 30.0;
+	this->maxFuel = 30.0;
+	this->requestedFuel = 30.0;
+	this->ffMult = 0.003;
+	this->steerLock = 200.0;
+	this->steerRatio = 12.0;
+
+	auto* pCore = this->ksPhysics->getCore();
+	this->body = pCore->createRigidBody();
+	this->fuelTankBody = pCore->createRigidBody();
+
+	this->unixName = iunixName;
+	this->carDataPath = L"content/cars/" + iunixName + L"/data/";
+	//this->initCarDataPath();
+
+	this->initCarData();
+	this->brakeSystem.init(this);
+
+	auto strSuspIni = this->getConfigPath(this->carDataPath + L"suspensions.ini");
+	auto ini(new_udt_unique<INIReader>(strSuspIni));
+
+	auto strRearType = ini->getString(L"REAR", L"TYPE");
+	if (strRearType == L"AXLE")
+	{
+		this->rigidAxle = pCore->createRigidBody();
+		this->axleTorqueReaction = ini->getFloat(L"AXLE", L"TORQUE_REACTION");
+	}
+
+	for (int index = 0; index < 4; ++index)
+	{
+		std::wstring strSuspType;
+		SuspensionType eSuspType;
+		ISuspension* pSusp = nullptr;
+
+		if (index >= 2)
+			strSuspType = ini->getString(L"REAR", L"TYPE");
+		else
+			strSuspType = ini->getString(L"FRONT", L"TYPE");
+
+		if (strSuspType == L"STRUT")
+		{
+			pSusp = new_udt<SuspensionStrut>(this, index);
+			eSuspType = SuspensionType::Strut;
+		}
+		else if (strSuspType == L"DWB")
+		{
+			pSusp = new_udt<Suspension>(this, index);
+			eSuspType = SuspensionType::DoubleWishbone;
+		}
+		else if (strSuspType == L"ML")
+		{
+			pSusp = new_udt<SuspensionML>(this, index);
+			eSuspType = SuspensionType::Multilink;
+		}
+		else if (strSuspType == L"AXLE" && index >= 2)
+		{
+			auto eSide = (index == 2) ? RigidAxleSide::Left : RigidAxleSide::Right;
+			pSusp = new_udt<SuspensionAxle>(this, eSide, this->carDataPath);
+			eSuspType = SuspensionType::Axle;
+		}
+		else
+		{
+			SHOULD_NOT_REACH_FATAL;
+			return this;
+		}
+
+		if (index >= 2)
+			this->suspensionTypeR = eSuspType;
+		else
+			this->suspensionTypeF = eSuspType;
+
+		this->suspensions[index] = pSusp;
+
+		auto* pTyre = &this->tyres[index];
+		pTyre->ctor();
+
+		auto strDataPath(this->carDataPath);
+		pTyre->init(pSusp, this->ksPhysics->track, &strDataPath, index, this->physicsGUID, this);
+	}
+
+	this->tyres[3].onStepCompleted = [pThis]() { pThis->onTyresStepCompleted(); };
+
+	for (auto& tcd : this->tyres[0].compoundDefs)
+	{
+		this->tyreCompounds.push_back(tcd.name);
+	}
+
+	this->initHeaveSprings();
+	this->ridePickupPoint[0].z = this->suspensions[0]->getBasePosition().z;
+	this->ridePickupPoint[1].z = this->suspensions[2]->getBasePosition().z;
+	this->initAeroMap();
+	this->ers.init(this);
+	if (!this->ers.present)
+		this->kers.init(this);
+	this->steeringSystem.init(this);
+	this->steeringSystem.linearRatio = this->steerLinearRatio;
+	this->drivetrain.init(this);
+	this->controls.isShifterSupported = this->drivetrain.isShifterSupported;
+	this->autoClutch.init(this);
+	this->autoBlip.init(this);
+	this->autoShift.init(this);
+	this->gearChanger.init(this);
+	this->edl.init(this);
+	this->buildARBS();
+	this->abs.init(this);
+	this->tractionControl.init(this);
+	this->speedLimiter.init(this);
+	this->sleepingFrames = 0;
+	this->ksPhysics->cars.push_back(this);
+	this->updateBodyMass();
+	this->colliderManager.init(this);
+	this->setupManager.init(this);
+	if (!this->physicsGUID)
+		this->telemetry.init(this);
+	this->splineLocator.init(this);
+	this->stabilityControl.init(this);
+	this->driftMode.init(this);
+	this->performanceMeter.init(this);
+	this->lapInvalidator.init(this);
+	this->penaltyManager.init(this);
+	this->transponder.init(this);
+	this->slipStream.init(this->ksPhysics);
+	this->fuelLapEvaluator.init(this);
+
+	this->ksPhysics->evOnNewSessionPhysics.add(this, [pThis](const SessionInfo& si) {
+		pThis->onNewSession(si);
+	});
+
+	this->ksPhysics->evOnStepCompleted.add(this, [pThis](double dt) {
+		pThis->postStep((float)dt);
+	});
+
+	ini = new_udt_unique<INIReader>(this->carDataPath + L"fuel_cons.ini");
+	if (ini->hasSection(L"FUEL_EVAL"))
+	{
+		auto* pSpline = this->ksPhysics->track->aiSplineRecorder->getBestLapSpline();
+		if (pSpline)
+		{
+			float fEval = ini->getFloat(L"FUEL_EVAL", L"KM_PER_LITER");
+			this->expectedFuelPerLap = pSpline->spline.length() / (fEval * 1000.0f);
+		}
+	}
+
+	auto re(new_udt_unique<RaceEngineer>(this));
+
+	if (this->expectedFuelPerLap == 0.0f)
+		this->expectedFuelPerLap = re->evaluateFuelPerLapFromTrackSpline();
+
+	float fMaxTrack = tmax(re->getFrontTrack(), re->getRearTrack());
+	this->carHalfWidth = (fMaxTrack * 0.5f) + 0.3f;
+
+	float fMass = this->getTotalMass(true);
+	this->powerClassIndex = this->drivetrain.acEngine.getMaxPowerW() / fMass;
+
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_initCarData()
+{
+	auto ini(new_udt_unique<INIReader>(this->carDataPath + L"car.ini"));
+	if (!ini->ready)
+	{
+		SHOULD_NOT_REACH_FATAL;
+		return;
+	}
+
+	this->screenName = ini->getString(L"INFO", L"SCREEN_NAME");
+	this->mass = ini->getFloat(L"BASIC", L"TOTALMASS");
+
+	if (ini->hasSection(L"EXPLICIT_INERTIA"))
+	{
+		this->explicitInertia = ini->getFloat3(L"EXPLICIT_INERTIA", L"INERTIA");
+		this->body->setMassExplicitInertia(this->mass, this->explicitInertia.x, this->explicitInertia.y, this->explicitInertia.z);
+	}
+	else
+	{
+		this->bodyInertia = ini->getFloat3(L"BASIC", L"INERTIA");
+		this->body->setMassBox(this->mass, this->bodyInertia.x, this->bodyInertia.y, this->bodyInertia.z);
+	}
+
+	if (ini->hasSection(L"FUEL_EXT"))
+	{
+		this->fuelKG = ini->getFloat(L"FUEL_EXT", L"KG_PER_LITER");
+	}
+
+	this->ffMult = ini->getFloat(L"CONTROLS", L"FFMULT") * 0.001f;
+	this->steerLock = ini->getFloat(L"CONTROLS", L"STEER_LOCK");
+	this->steerRatio = ini->getFloat(L"CONTROLS", L"STEER_RATIO");
+
+	this->steerLinearRatio = ini->getFloat(L"CONTROLS", L"LINEAR_STEER_ROD_RATIO");
+	if (this->steerLinearRatio == 0.0f)
+		this->steerLinearRatio = 0.003f;
+
+	this->steerAssist = ini->getFloat(L"CONTROLS", L"STEER_ASSIST");
+	if (this->steerAssist == 0.0f)
+		this->steerAssist = 1.0f;
+
+	this->fuelConsumptionK = ini->getFloat(L"FUEL", L"CONSUMPTION");
+	this->fuel = ini->getFloat(L"FUEL", L"FUEL");
+	this->maxFuel = ini->getFloat(L"FUEL", L"MAX_FUEL");
+
+	if (this->maxFuel == 0.0f)
+		this->maxFuel = 30.0f;
+	if (this->fuel == 0.0f)
+		this->fuel = 30.0f;
+	this->requestedFuel = (float)this->fuel;
+
+	float fPickup = ini->getFloat(L"RIDE", L"PICKUP_FRONT_HEIGHT");
+	this->ridePickupPoint[0] = vec3f(0, fPickup, 0);
+
+	fPickup = ini->getFloat(L"RIDE", L"PICKUP_REAR_HEIGHT");
+	this->ridePickupPoint[1] = vec3f(0, fPickup, 0);
+
+	this->fuelTankPos = ini->getFloat3(L"FUELTANK", L"POSITION");
+	this->fuelTankBody->setMassBox(1.0f, 0.5f, 0.5f, 0.5f);
+	this->fuelTankBody->setPosition(this->fuelTankPos);
+
+	auto* pCore = this->ksPhysics->getCore();
+	this->fuelTankJoint = pCore->createFixedJoint(this->fuelTankBody, this->body);
+
+	this->water.tmass = 20.0f;
+	this->water.coolSpeedK = 0.002f;
+
+	this->initPitstopTimings();
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +359,14 @@ void _Car::_step(float dt)
 	}
 
 	bool bControlsLocked = (this->isControlsLocked || (this->lockControlsTime > this->ksPhysics->physicsTime));
+
+	if (GetAsyncKeyState(VK_NUMPAD0))
+	{
+		bControlsLocked = false;
+		this->lockControlsTime = this->ksPhysics->physicsTime;
+		this->isControlsLocked = false;
+		this->isGentleStopping = false;
+	}
 
 	this->pollControls(dt);
 
@@ -105,15 +410,17 @@ void _Car::_step(float dt)
 		if (bControlsLocked)
 		{
 			this->controls.gas = 0;
-			this->controls.brake = 0;
+			this->controls.brake = 1;
 			this->controls.steer = 0;
 			this->controls.clutch = 0;
 		}
 
 		if (this->isGentleStopping)
 		{
+			#if 1
 			this->controls.gas = 0.0;
 			this->controls.brake = 0.2;
+			#endif
 		}
 
 		if (this->penaltyTime > 0.0f) // TODO: implement

@@ -26,9 +26,9 @@ BEGIN_HOOK_OBJ(Tyre)
 
 	static void _hook()
 	{
-		//HOOK_METHOD_RVA(Tyre, ctor);
-		//HOOK_METHOD_RVA(Tyre, init);
-		//HOOK_METHOD_RVA(Tyre, initCompounds);
+		HOOK_METHOD_RVA(Tyre, ctor);
+		HOOK_METHOD_RVA(Tyre, init);
+		HOOK_METHOD_RVA(Tyre, initCompounds);
 		HOOK_METHOD_RVA(Tyre, step);
 		HOOK_METHOD_RVA(Tyre, addGroundContact);
 		HOOK_METHOD_RVA(Tyre, updateLockedState);

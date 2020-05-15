@@ -365,7 +365,7 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 		else if (this->isEngineStallEnabled)
 		{
 			float fStallTorq = fRpm * -0.009999999f;
-			if (GetAsyncKeyState(8)) // LOL
+			if (GetAsyncKeyState(VK_BACK)) // LOL
 				fStallTorq = this->starterTorque;
 
 			this->status.outTorque = fStallTorq;
