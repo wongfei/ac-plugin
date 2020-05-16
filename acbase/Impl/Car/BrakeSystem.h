@@ -2,19 +2,85 @@
 
 BEGIN_HOOK_OBJ(BrakeSystem)
 
+	#define RVA_BrakeSystem_ctor 2539040
+	#define RVA_BrakeSystem_init 2676368
+	#define RVA_BrakeSystem_loadINI 2676848
 	#define RVA_BrakeSystem_step 2680384
 	#define RVA_BrakeSystem_stepTemps 2681120
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(BrakeSystem, ctor);
+		HOOK_METHOD_RVA(BrakeSystem, init);
+		//HOOK_METHOD_RVA(BrakeSystem, loadINI);
 		HOOK_METHOD_RVA(BrakeSystem, step);
 		HOOK_METHOD_RVA(BrakeSystem, stepTemps);
 	}
 
+	BrakeSystem* _ctor();
+	void _init(Car* car);
+	void _loadINI(const std::wstring& dataPath);
 	void _step(float dt);
 	void _stepTemps(float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BrakeSystem* _BrakeSystem::_ctor() // TODO: cleanup
+{
+	AC_CTOR_POD(BrakeSystem);
+
+	for (auto& iter : this->discs) { AC_CTOR_UDT(iter)(); }
+	AC_CTOR_UDT(this->steerBrake.controller)();
+	AC_CTOR_UDT(this->ebbController)();
+
+	this->frontBias = 0.7;
+	this->brakePowerMultiplier = 1.0;
+	this->ebbInstant = 0.5;
+	this->limitUp = 1.0;
+	this->biasOverride = -1.0;
+	this->hasCockpitBias = 1;
+	this->biasStep = 0.005;
+	this->ebbFrontMultiplier = 1.1;
+
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _BrakeSystem::_init(Car* car)
+{
+	this->car = car;
+	this->brakePower = 2000.0;
+	this->frontBias = 0.7;
+	this->brakePowerMultiplier = 1.0;
+
+	auto strDataPath(this->car->carDataPath);
+	this->loadINI(&strDataPath);
+
+	auto strPath = car->carDataPath + L"ctrl_ebb.ini";
+	if (Path::fileExists(strPath, false))
+	{
+		auto dc(new_udt_unique<DynamicController>(this->car, strPath));
+		this->ebbController = *dc.get();
+		this->ebbMode = EBBMode::DynamicController;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _BrakeSystem::_loadINI(const std::wstring& dataPath)
+{
+	auto ini(new_udt_unique<INIReader>(this->car->carDataPath + L"brakes.ini"));
+	if (!ini->ready)
+	{
+		SHOULD_NOT_REACH_FATAL;
+		return;
+	}
+
+	TODO_NOT_IMPLEMENTED;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

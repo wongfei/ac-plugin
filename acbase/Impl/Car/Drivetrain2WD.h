@@ -173,7 +173,7 @@ void _Drivetrain::_step2WD(float dt)
 		if (fabs(this->outShaftL.velocity - this->drive.velocity) >= 0.1
 			|| fabs(this->tyreRight->status.feedbackTorque - this->tyreLeft->status.feedbackTorque) > fDiffTotalLoad)
 		{
-			double fUnk1 = -((this->outShaftL.velocity - this->outShaftR.velocity) / (fabs(this->outShaftL.velocity - this->outShaftR.velocity) + 0.009999999) * fDiffTotalLoad);
+			double fUnk1 = -((this->outShaftL.velocity - this->outShaftR.velocity) / (fabs(this->outShaftL.velocity - this->outShaftR.velocity) + 0.01) * fDiffTotalLoad);
 			double fDeltaV1 = dt * (fUnk1 / this->outShaftL.inertia * 0.5);
 			this->outShaftL.velocity += fDeltaV1;
 			this->outShaftR.velocity -= fDeltaV1;

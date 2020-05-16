@@ -2,16 +2,43 @@
 
 BEGIN_HOOK_OBJ(AntirollBar)
 
+	#define RVA_AntirollBar_ctor 2538800
+	#define RVA_AntirollBar_init 2864656
 	#define RVA_AntirollBar_step 2864704
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(AntirollBar, ctor);
+		HOOK_METHOD_RVA(AntirollBar, init);
 		HOOK_METHOD_RVA(AntirollBar, step);
 	}
 
+	AntirollBar* _ctor();
+	void _init(IRigidBody* cb, ISuspension** sus);
 	void _step(float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+AntirollBar* _AntirollBar::_ctor()
+{
+	AC_CTOR_POD(AntirollBar);
+
+	AC_CTOR_UDT(this->ctrl)();
+
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _AntirollBar::_init(IRigidBody* cb, ISuspension** sus)
+{
+	this->carBody = cb;
+	this->hubs[0] = sus[0];
+	this->hubs[1] = sus[1];
+	this->k = 0;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -63,8 +63,8 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 		float fSlipRatioScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipRatioScale <= 1.0f)
 		{
-			if (fSlipRatioScale < 0.039999999f)
-				fNewSlipRatio = (0.039999999f * fSlipRatioDelta) + fSlipRatio;
+			if (fSlipRatioScale < 0.04f)
+				fNewSlipRatio = (0.04f * fSlipRatioDelta) + fSlipRatio;
 			else
 				fNewSlipRatio = (fSlipRatioScale * fSlipRatioDelta) + fSlipRatio;
 		}
@@ -79,8 +79,8 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 		float fSlipAngleScale = (this->totalHubVelocity * dt) / fRelax2;
 		if (fSlipAngleScale <= 1.0f)
 		{
-			if (fSlipAngleScale < 0.039999999f)
-				fNewSlipAngle = (0.039999999f * fSlipAngleDelta) + fSlipAngle;
+			if (fSlipAngleScale < 0.04f)
+				fNewSlipAngle = (0.04f * fSlipAngleDelta) + fSlipAngle;
 			else
 				fNewSlipAngle = (fSlipAngleScale * fSlipAngleDelta) + fSlipAngle;
 		}
@@ -231,7 +231,7 @@ float _Tyre::_getCorrectedD(float d, float* outWearMult)
 void _Tyre::_stepDirtyLevel(float dt, float hubSpeed)
 {
 	if (this->status.dirtyLevel < 5.0f)
-		this->status.dirtyLevel += (((hubSpeed * this->surfaceDef->dirtAdditiveK) * 0.029999999f) * dt);
+		this->status.dirtyLevel += (((hubSpeed * this->surfaceDef->dirtAdditiveK) * 0.03f) * dt);
 
 	if (this->surfaceDef->dirtAdditiveK == 0.0f)
 	{

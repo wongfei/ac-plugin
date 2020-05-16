@@ -30,10 +30,10 @@ float _SlipStream::_getSlipEffect(const vec3f& p)
 		vDelta.norm(fDeltaLen);
 		float fDot = vDelta * this->dir;
 
-		if (fDot <= 0.69999999f)
+		if (fDot <= 0.7f)
 			fSlip = 0.0f;
 		else
-			fSlip = (((1.0f - (fDeltaLen / this->length)) * (fDot - 0.69999999f)) * 3.3333333f) * this->effectGainMult;
+			fSlip = (((1.0f - (fDeltaLen / this->length)) * (fDot - 0.7f)) * 3.3333333f) * this->effectGainMult;
 	}
 
 	return fSlip;

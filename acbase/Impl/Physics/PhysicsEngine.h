@@ -87,7 +87,7 @@ void _PhysicsEngine::_step(float dt, double currentTime, double gt)
 
 void _PhysicsEngine::_stepWind(float dt)
 {
-	if (this->wind.speed.value >= 0.0099999998f)
+	if (this->wind.speed.value >= 0.01f)
 	{
 		float fChange = (float)sin((this->physicsTime - this->sessionInfo.startTimeMS) * 0.0001);
 		float fSpeed = this->wind.speed.value * ((fChange * 0.1f) + 1.0f);

@@ -67,7 +67,7 @@ PhysicsCore* _PhysicsCore::_ctor()
 	log_printf(L"ODE BUILD FLAGS: %S", ODE_CALL(dGetConfiguration)());
 
 	this->id = ODE_CALL(dWorldCreate)();
-	ODE_CALL(dWorldSetGravity)(this->id, 0.0f, -9.805999f, 0.0f);
+	ODE_CALL(dWorldSetGravity)(this->id, 0.0f, -9.80665f, 0.0f); // orig 9.806
 	ODE_CALL(dWorldSetERP)(this->id, 0.3f);
 	ODE_CALL(dWorldSetCFM)(this->id, 1.0e-7f);
 	ODE_CALL(dWorldSetContactMaxCorrectingVel)(this->id, 3.0f);
@@ -217,8 +217,8 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 		{
 			cj.surface.mode = 28692; // dContactBounce | dContactSoftCFM | dContactApprox1
 			cj.surface.mu = 0.25f;
-			cj.surface.bounce = 0.00999999978f;
-			cj.surface.soft_cfm = 9.99999975e-005f;
+			cj.surface.bounce = 0.01f; // 3C23D70A
+			cj.surface.soft_cfm = 0.0001f; // 38D1B717
 		}
 		else
 		{
@@ -228,15 +228,15 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 				ODE_CALL(dBodyVectorFromWorld)((body0 ? body0 : body1), 
 					cg.normal[0], cg.normal[1], cg.normal[2], loc_normal);
 
-				if (loc_normal[1] < 0.8999999f)
+				if (loc_normal[1] < 0.9f)
 					continue;
 			}
 
 			cj.surface.mode = 28700; // dContactBounce | dContactSoftERP | dContactSoftCFM | dContactApprox1
 			cj.surface.mu = 0.1f;
 			cj.surface.bounce = 0.0f;
-			cj.surface.soft_cfm = 0.000952380942f;
-			cj.surface.soft_erp = 0.714285731f;
+			cj.surface.soft_cfm = 0.000952380942f; // 3A79A934
+			cj.surface.soft_erp = 0.714285731f; // 3F36DB6E
 		}
 
 		dJointID j = ODE_CALL(dJointCreateContact)(this->id, this->currentContactGroup, &cj);

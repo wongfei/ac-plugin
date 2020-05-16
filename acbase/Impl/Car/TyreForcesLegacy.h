@@ -20,8 +20,8 @@ void _Tyre::_stepRelaxationLength(float svx, float svy, float hubVelocity, float
 		float v10 = (hubVelocity * dt) / v9;
 		if (v10 < 1.0f)
 		{
-			if (v10 < 0.039999999f)
-				v10 = 0.039999999f;
+			if (v10 < 0.04f)
+				v10 = 0.04f;
 
 			this->rSlidingVelocityY += (v10 * (svy - this->rSlidingVelocityY));
 			this->rSlidingVelocityX += (v10 * (svx - this->rSlidingVelocityX));

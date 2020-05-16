@@ -31,7 +31,7 @@ END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Engine* _Engine::_ctor() // TODO: cleanup
+Engine* _Engine::_ctor()
 {
 	AC_CTOR_VCLASS(Engine);
 
@@ -40,12 +40,12 @@ Engine* _Engine::_ctor() // TODO: cleanup
 	AC_CTOR_UDT(this->throttleResponseCurveMax)();
 	AC_CTOR_UDT(this->gasCoastOffsetCurve)();
 
-	*(_QWORD *)&this->fuelPressure = 1065353216i64;
-	*(_QWORD *)&this->starterTorque = 1101004800i64;
-	*(_QWORD *)&this->p2p.basePositionCoeff = 1i64;
-	*(_QWORD *)&this->inertia = 1065353216i64;
+	this->fuelPressure = 1.0;
+	this->starterTorque = 20.0;
+	this->p2p.basePositionCoeff = 1;
+	this->inertia = 1.0;
 	this->maxPowerW_Dynamic = -1.0;
-	*(_QWORD *)&this->throttleResponseCurveMaxRef = 1169915904i64;
+	this->throttleResponseCurveMaxRef = 6000.0;
 	this->bovThreshold = 0.2;
 
 	return this;
@@ -56,18 +56,14 @@ Engine* _Engine::_ctor() // TODO: cleanup
 void _Engine::_init(Car* pCar)
 {
 	this->car = pCar;
-	this->isEngineStallEnabled = false;
+	this->physicsEngine = pCar->ksPhysics;
 	this->limiterMultiplier = 1.0f;
 	this->coastTorqueMultiplier = 1.0f;
-	this->physicsEngine = pCar->ksPhysics;
-	this->limiterOn = 0;
 	this->electronicOverride = 1.0f;
 
 	this->loadINI();
 	this->reset();
 	this->precalculatePowerAndTorque();
-
-	this->restrictor = 0.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +337,7 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 	float fRestrictor = this->restrictor;
 	if (fRestrictor > 0.0f)
 	{
-		fAirAmount -= (((fRestrictor * input.rpm) * 0.00009999999f) * fGas);
+		fAirAmount -= (((fRestrictor * input.rpm) * 0.0001f) * fGas);
 		if (fAirAmount < 0.0f)
 			fAirAmount = 0.0f;
 	}
@@ -364,7 +360,7 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 		}
 		else if (this->isEngineStallEnabled)
 		{
-			float fStallTorq = fRpm * -0.009999999f;
+			float fStallTorq = fRpm * -0.01f;
 			if (GetAsyncKeyState(VK_BACK)) // LOL
 				fStallTorq = this->starterTorque;
 
@@ -391,7 +387,7 @@ void _Engine::_step(const SACEngineInput& input, float dt)
 	this->electronicOverride = 1.0f;
 
 	float fMaxPowerDyn = this->maxPowerW_Dynamic;
-	float fCurPower = input.rpm * (float)this->status.outTorque * 0.104699999f;
+	float fCurPower = input.rpm * (float)this->status.outTorque * 0.1047f;
 	if (fCurPower > fMaxPowerDyn)
 	{
 		this->maxPowerW_Dynamic = fCurPower;
@@ -406,15 +402,15 @@ float _Engine::_getThrottleResponseGas(float gas, float rpm)
 
 	if (this->throttleResponseCurve.getCount() && this->throttleResponseCurveMax.getCount())
 	{
-		float fTrc = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
-		float fTrcMax =  tclamp(this->throttleResponseCurveMax.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
+		float fTrc = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.01f, 0.0f, 1.0f);
+		float fTrcMax =  tclamp(this->throttleResponseCurveMax.getValue(gas * 100.0f) * 0.01f, 0.0f, 1.0f);
 		float fTrcScale = tclamp(rpm / this->throttleResponseCurveMaxRef, 0.0f, 1.0f);
 
 		result = ((fTrcMax - fTrc) * fTrcScale) + fTrc;
 	}
 	else if (this->throttleResponseCurve.getCount())
 	{
-		result = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.0099999998f, 0.0f, 1.0f);
+		result = tclamp(this->throttleResponseCurve.getValue(gas * 100.0f) * 0.01f, 0.0f, 1.0f);
 	}
 	else
 	{

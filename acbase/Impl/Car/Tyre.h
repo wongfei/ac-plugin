@@ -71,7 +71,7 @@ END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Tyre* _Tyre::_ctor() // TODO: cleanup
+Tyre* _Tyre::_ctor()
 {
 	AC_CTOR_POD(Tyre);
 
@@ -83,28 +83,29 @@ Tyre* _Tyre::_ctor() // TODO: cleanup
 
 	this->data.blisterThreshold = 9000.0;
 	this->data.grainGamma = 1.0;
-	*(_QWORD *)&this->data.blisterGamma = 1065353216i64;
-	*(_QWORD *)&this->data.optimumTemp = 1117782016i64;
-	this->data.width = 0.15000001;
-	this->data.radius = 0.30000001;
+	this->data.blisterGamma = 1.0;
+	this->data.optimumTemp = 80.0;
+	this->data.width = 0.15;
+	this->data.radius = 0.3;
 	this->data.k = 220000.0;
 	this->data.d = 400.0;
 	this->data.angularInertia = 1.6;
-	this->data.thermalFrictionK = 0.029999999;
+	this->data.thermalFrictionK = 0.03;
 	this->data.thermalRollingK = 0.5;
-	this->status.inflation = 1.0;
-	this->status.wearMult = 1.0;
+	//this->status.inflation = 1.0;
+	//this->status.wearMult = 1.0;
+	//memset(&this->status, 0, sizeof(this->status)); // TODO: weird shit
 	this->status.pressureStatic = 26.0;
 	this->status.pressureDynamic = 26.0;
 	this->status.lastTempIMO[0] = -200.0;
 	this->status.lastTempIMO[1] = -200.0;
 	this->status.lastTempIMO[2] = -200.0;
 	this->aiMult = 1.0;
-	this->tyreBlanketsOn = 1;
-	this->flatSpotK = 0.15000001;
+	this->tyreBlanketsOn = true;
+	this->flatSpotK = 0.15;
 	this->explosionTemperature = 350.0;
 	this->blanketTemperature = 80.0;
-	*(_QWORD *)&this->pressureTemperatureGain = 1042536202i64;
+	this->pressureTemperatureGain = 0.16;
 
 	return this;
 }
@@ -117,23 +118,23 @@ void _Tyre::_init(ISuspension* ihub, IRayTrackCollisionProvider* rcp, const std:
 	this->tyreModel = &this->scTM;
 	this->thermalModel.init(12, 3, car);
 	this->index = index;
-	this->rayCaster = rcp->createRayCaster(3.0f);
+	this->rayCaster = rcp->createRayCaster(3.0);
 	this->rayCollisionProvider = rcp;
 	this->hub = ihub;
-	*(_QWORD *)&this->localWheelRotation.M11 = 1065353216i64;
-	*(_QWORD *)&this->localWheelRotation.M22 = 1065353216i64;
-	*(_QWORD *)&this->localWheelRotation.M33 = 1065353216i64;
+	this->localWheelRotation.M11 = 1.0;
+	this->localWheelRotation.M22 = 1.0;
+	this->localWheelRotation.M33 = 1.0;
 	this->localWheelRotation.M44 = 1.0;
 	this->absOverride = 1.0;
 
 	this->initCompounds(dataPath, index);
 	this->setCompound(0);
-	this->shakeGenerator.step(0.003f); // TODO: check
+	this->shakeGenerator.step(0.003f);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: check
+void _Tyre::_initCompounds(const std::wstring& dataPath, int index)
 {
 	auto ini(new_udt_unique<INIReader>(dataPath + L"tyres.ini"));
 	if (!ini->ready)
@@ -208,9 +209,8 @@ void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: che
 		if (fFLA == 0.0f)
 			fFLA = 7.5f;
 		if (iVer >= 5)
-			fXMU = 0;
+			fXMU = 0.0f;
 
-		// float maxAngle, float xu, float flex
 		auto bsp(new_udt_unique<BrushSlipProvider>(fFLA, fXMU, tcd->modelData.flexK));
 
 		if (iVer >= 10)
@@ -368,7 +368,7 @@ void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: che
 
 				if (ini->hasKey(strThermal, L"COOL_FACTOR"))
 				{
-					tcd->thermalPatchData.coolFactorGain = (ini->getFloat(strThermal, L"COOL_FACTOR") - 1.0f) * 0.00032399999f;
+					tcd->thermalPatchData.coolFactorGain = (ini->getFloat(strThermal, L"COOL_FACTOR") - 1.0f) * 0.000324f;
 				}
 			}
 
@@ -378,14 +378,12 @@ void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: che
 			}
 
 			auto strFile = ini->getString(strThermal, L"PERFORMANCE_CURVE");
-			auto strPath = dataPath + strFile; // this->car->getConfigPath
-			tcd->thermalPerformanceCurve.load(strPath);
+			tcd->thermalPerformanceCurve.load(dataPath + strFile);
 		}
 
 		auto strFile = ini->getString(strCompound, L"WEAR_CURVE");
-		auto strPath = dataPath + strFile; // this->car->getConfigPath
-		tcd->modelData.wearCurve.load(strPath);
-		tcd->modelData.wearCurve.scale(0.0099999998f);
+		tcd->modelData.wearCurve.load(dataPath + strFile);
+		tcd->modelData.wearCurve.scale(0.01f);
 
 		int iTpcCount = tcd->thermalPerformanceCurve.getCount();
 		if (iTpcCount > 0)
@@ -443,8 +441,16 @@ void _Tyre::_initCompounds(const std::wstring& dataPath, int index) // TODO: che
 		this->compoundDefs.push_back((*tcd.get())); // TODO: isTyreLegal
 	}
 
+	if (this->compoundDefs.empty())
+	{
+		SHOULD_NOT_REACH_FATAL;
+		return;
+	}
+
 	if (iVer < 4)
+	{
 		this->generateCompoundNames();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -534,7 +540,7 @@ void _Tyre::_step(float dt)
 
 	float fTest = 0;
 
-	if (!bHasContact || mxWorld.M22 <= 0.34999999f)
+	if (!bHasContact || mxWorld.M22 <= 0.35f)
 	{
 		this->status.ndSlip = 0.0f;
 		this->status.Fy = 0.0f;
@@ -545,7 +551,7 @@ void _Tyre::_step(float dt)
 	this->unmodifiedContactPoint = vHitPos;
 
 	fTest = vHitNorm * vWorldM2;
-	if (fTest <= 0.9599999f)
+	if (fTest <= 0.96f)
 	{
 		float fTestAcos;
 		if (fTest <= -1.0f || fTest >= 1.0f)
@@ -553,7 +559,7 @@ void _Tyre::_step(float dt)
 		else
 			fTestAcos = acosf(fTest);
 
-		float fAngle = fTestAcos - acosf(0.9599999f);
+		float fAngle = fTestAcos - acosf(0.96f);
 
 		// TODO: cross product?
 		vec3f vAxis(
@@ -593,7 +599,7 @@ void _Tyre::_step(float dt)
 	if (pSurface->granularity != 0.0f)
 	{
 		float v1[3] = { 1.0f, 5.8f, 11.4f };
-		float v2[3] = { 0.0049999999f, 0.0049999999f, 0.009999999f };
+		float v2[3] = { 0.005f, 0.005f, 0.01f };
 
 		float cx = this->contactPoint.x;
 		float cy = this->contactPoint.y;
@@ -803,7 +809,7 @@ void _Tyre::_updateAngularSpeed(float dt)
 	this->status.angularVelocity = this->status.isLocked ? 0.0f : fAngVel;
 
 	if (fabsf(this->status.angularVelocity) < 1.0f)
-		this->status.angularVelocity *= 0.8999999f;
+		this->status.angularVelocity *= 0.9f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -918,7 +924,7 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 						if (hubVelocity > 2.0f)
 						{
 							float fGripMod = pSurface->gripMod;
-							if (fGripMod >= 0.94999999f)
+							if (fGripMod >= 0.95f)
 							{
 								float fTest = ((fGripMod * hubVelocity) * fGrainGain) * ((fGrainThreshold - fCoreTemp) * 0.0001f);
 								if (isfinite(fTest))
@@ -962,7 +968,7 @@ void _Tyre::_stepGrainBlister(float dt, float hubVelocity)
 						if (hubVelocity > 2.0f)
 						{
 							float fGripMod = pSurface->gripMod;
-							if (fGripMod >= 0.94999999f)
+							if (fGripMod >= 0.95f)
 							{
 								float fTest = ((fGripMod * this->totalHubVelocity) * fBlisterGain) * ((fCoreTemp - fBlisterThreshold) * 0.0001f);
 								if (isfinite(fTest))
@@ -1006,7 +1012,7 @@ void _Tyre::_stepFlatSpot(float dt, float hubVelocity)
 					if (fDamage != 0.0f)
 					{
 						float fGrip = this->surfaceDef->gripMod;
-						if (fGrip >= 0.94999999f)
+						if (fGrip >= 0.95f)
 						{
 							this->status.flatSpot += (((hubVelocity * this->flatSpotK) * this->status.load) * fGrip) * 0.00001f * dt * fDamage * this->data.softnessIndex;
 

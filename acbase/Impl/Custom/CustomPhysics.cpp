@@ -146,6 +146,8 @@ void CustomPhysics::installHooks()
 	//addConsoleCommands();
 	#endif
 
+	//HOOK_METHOD_RVA(Car, step);
+
 	#if 1
 	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
 	HOOK_OBJ(Curve);

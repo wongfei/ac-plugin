@@ -27,6 +27,7 @@ END_HOOK_OBJ()
 CarColliderManager* _CarColliderManager::_ctor()
 {
 	AC_CTOR_POD(CarColliderManager);
+
 	return this;
 }
 
@@ -34,11 +35,9 @@ CarColliderManager* _CarColliderManager::_ctor()
 
 void _CarColliderManager::_init(Car* pCar)
 {
-	this->isLive = false;
-	this->carBody = pCar->body;
 	this->car = pCar;
+	this->carBody = pCar->body;
 	this->carModel = pCar->unixName;
-	this->boxes.clear();
 
 	this->loadINI();
 }

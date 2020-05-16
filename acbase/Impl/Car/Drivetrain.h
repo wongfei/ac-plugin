@@ -60,15 +60,15 @@ END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Drivetrain* _Drivetrain::_ctor() // TODO: cleanup
+Drivetrain* _Drivetrain::_ctor()
 {
 	AC_CTOR_POD(Drivetrain);
 
 	AC_CTOR_UDT(this->acEngine)();
 
-	this->finalRatio = 1;
-	*(_QWORD *)&this->awdFrontShare = 1036831949i64;
-	this->downshiftProtection.lockN = 1;
+	this->finalRatio = 1.0;
+	this->awdFrontShare = 0.1;
+	this->downshiftProtection.lockN = true;
 	this->awd2.ramp = 20.0;
 	this->awd2.maxTorque = 800.0;
 	this->gearRequest.timeout = 200.0;
@@ -81,33 +81,26 @@ Drivetrain* _Drivetrain::_ctor() // TODO: cleanup
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void _Drivetrain::_init(Car* pCar) // TODO: cleanup
+void _Drivetrain::_init(Car* pCar)
 {
 	this->car = pCar;
 	this->acEngine.init(pCar);
 
-	*(_QWORD *)this->lockCounter = 0i64;
-	*(_QWORD *)&this->lockCounter[2] = 0i64;
-	this->totalTorque = 0.0;
-	this->isShifterSupported = 0;
-	this->rootVelocity = 0.0;
-	this->clutchOpenState = 0;
 	this->ratio = 12.0;
-	this->diffPowerRamp = 0.69999999;
-	*(_QWORD *)&this->diffCoastRamp = 1045220557i64;
-	this->gearUpTime = 0.1000000014901161;
-	this->gearDnTime = 0.1500000059604645;
-	this->awdFrontShare = 0.30000001;
-	this->engine.inertia = 0.009999999776482582;
-	this->drive.inertia = 0.009999999776482582;
-	*(_QWORD *)&this->tractionType = 0i64;
+	this->diffPowerRamp = 0.7;
+	this->diffCoastRamp = 0.2;
+	this->gearUpTime = 0.1;
+	this->gearDnTime = 0.15;
+	this->awdFrontShare = 0.3;
+	this->engine.inertia = 0.01;
+	this->drive.inertia = 0.01;
 	this->finalRatio = 4.0;
+	this->lastRatio = -1.0;
+
 	this->tyreLeft = &pCar->tyres[2];
 	this->tyreRight = &pCar->tyres[3];
 	this->outShaftL.inertia = pCar->tyres[2].data.angularInertia;
 	this->outShaftR.inertia = pCar->tyres[3].data.angularInertia;
-	this->cutOff = 0.0;
-	this->lastRatio = -1.0;
 
 	this->loadINI(this->car->carDataPath);
 	//if ( pcar->kers.present ) {} // TODO: implement
@@ -233,10 +226,18 @@ void _Drivetrain::_loadINI(const std::wstring& dataPath)
 	this->autoCutOffTime = ini->getFloat(L"GEARBOX", L"AUTO_CUTOFF_TIME") * 0.001f;
 	this->isShifterSupported = (ini->getInt(L"GEARBOX", L"SUPPORTS_SHIFTER") != 0);
 
-	this->downshiftProtection.isActive = false; // TODO: implement
+	if (ini->hasSection(L"DOWNSHIFT_PROTECTION") && !this->isShifterSupported)
+	{
+		this->downshiftProtection.isActive = (ini->getInt(L"DOWNSHIFT_PROTECTION", L"ACTIVE") != 0);
+		this->downshiftProtection.isDebug = (ini->getInt(L"DOWNSHIFT_PROTECTION", L"DEBUG") != 0);
+		this->downshiftProtection.overrev = ini->getInt(L"DOWNSHIFT_PROTECTION", L"OVERREV");
+		this->downshiftProtection.lockN = (ini->getInt(L"DOWNSHIFT_PROTECTION", L"LOCK_N") != 0);
+	}
+	else
+	{
+		this->downshiftProtection.isActive = !this->isShifterSupported;
+	}
 	this->downshiftProtection.isDebug = this->car->physicsGUID == 0;
-	this->downshiftProtection.overrev = 0;
-	this->downshiftProtection.lockN = false;
 
 	this->validShiftRPMWindow = ini->getFloat(L"GEARBOX", L"VALID_SHIFT_RPM_WINDOW");
 	if (this->validShiftRPMWindow == 0.0)
@@ -467,7 +468,7 @@ void _Drivetrain::_reallignSpeeds(float dt)
 	if (fRatio != 0.0)
 	{
 		double fDriveVel = this->drive.velocity;
-		if (this->locClutch <= 0.8999999)
+		if (this->locClutch <= 0.9f)
 		{
 			this->rootVelocity = fDriveVel * fRatio;
 		}

@@ -43,7 +43,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 	float fUnk1Tan = tanf(fUnk1);
 	float fSlipAngleSin = sinf(fSlipAngle);
 
-	float fBlister1 = tclamp(tmi.blister * 0.009999999f, 0.0f, 1.0f);
+	float fBlister1 = tclamp(tmi.blister * 0.01f, 0.0f, 1.0f);
 	float fBlister2 = (fBlister1 * 0.2f) + 1.0f;
 
 	float fStaticDy = this->getStaticDY(tmi.load);
@@ -83,7 +83,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 
 	float fSlipRatio = tmi.slipRatio;
 	float fSlipAngleCos = cosf(tmi.slipAngleRAD);
-	float fSlipRatioClamped = (fSlipRatio > -0.9999899f ? fSlipRatio : -0.9999899f); // ???
+	float fSlipRatioClamped = (fSlipRatio > -0.9999999f ? fSlipRatio : -0.9999999f); // TODO: ???
 
 	float fSpeed = tmi.speed;
 	float a = fSpeed * fSlipAngleSin;
@@ -97,7 +97,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 	float fLoadSubFz0 = tmi.load - this->Fz0;
 	float fPCfGain = this->pressureCfGain;
 
-	float fCF = ((((1.0f / ((((fLoadSubFz0 / this->Fz0) * (this->maxSlip1 - this->maxSlip0)) + this->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.0099999998f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
+	float fCF = ((((1.0f / ((((fLoadSubFz0 / this->Fz0) * (this->maxSlip1 - this->maxSlip0)) + this->maxSlip0) * (((tmi.u - 1.0f) * 0.75f) + 1.0f))) * 3.0f) * 78.125f) / ((tmi.grain * 0.01f) + 1.0f)) * ((fPCfGain * tmi.pressureRatio) + 1.0f);
 
 	float fUnk3 = fSlipRatio / (fSlipRatioClamped + 1.0f);
 	float fUnk4 = fUnk1Tan / (fSlipRatioClamped + 1.0f);
@@ -120,7 +120,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 	tmo.Fy = ((fPureFyDy * fDy) * (fUnk4 / fSlip)) * tmi.load;
 	tmo.Fx = ((fUnk3 / fSlip) * fPureFyDx) * tmi.load;
 
-	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.006399999f) / 3.0f));
+	float fNdSlip = fSlip / (1.0f / (((fCF * 2.0f) * 0.0064f) / 3.0f));
 	tmo.ndSlip = fNdSlip;
 
 	float fUnk5 = tclamp((1.0f - (fNdSlip * 0.8f)), 0.0f, 1.0f);
@@ -172,7 +172,7 @@ float _SCTM::_getStaticDY(float load)
 
 float _SCTM::_getPureFY(float D, float cf, float load, float slip)
 {
-	float v5 = (cf * 2.0f) * 0.006399999f;
+	float v5 = (cf * 2.0f) * 0.0064f;
 	float v6 = 1.0f / (v5 / 3.0f);
 	float fy;
 

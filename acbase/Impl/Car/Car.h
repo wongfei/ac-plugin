@@ -58,17 +58,18 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->abs.channels = 4;
 	this->abs.currentValue = 1.0;
 	AC_CTOR_UDT(this->tractionControl.valueCurve)();
-	this->suspensions.resize(4);
+	for (auto& iter : this->tyres) { AC_CTOR_UDT(iter)(); }
 	AC_CTOR_UDT(this->brakeSystem)();
 	AC_CTOR_UDT(this->autoClutch)();
 	AC_CTOR_UDT(this->telemetry)();
 	AC_CTOR_UDT(this->autoBlip.blipProfile)();
 	this->edl.rightTyreIndex = 1;
+	for (auto& iter : this->antirollBars) { AC_CTOR_UDT(iter)(); }
 	this->setupManager.minimumHeight_m = -1.0;
 	this->setupManager.maxWaitTime = 1.0;
 	this->setupManager.waitTime = 1.0;
 	this->setupManager.setupState = CarSetupState::Legal;
-	*(_DWORD *)&this->drs.isPresent = 0x10000;
+	this->drs.isActive = true;
 	this->kers._vtable = _drva(0x4F6E98);
 	AC_CTOR_UDT(this->kers.torqueLUT)();
 	AC_CTOR_UDT(this->kers.controller)();
@@ -76,8 +77,9 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->lapInvalidator.collisionSafeTime = 5000.0;
 	this->lapInvalidator.currentTyresOut = -1;
 	this->fuelLapEvaluator.startFuel = -100.0;
+	for (auto& iter : this->heaveSprings) { AC_CTOR_UDT(iter)(); }
 	AC_CTOR_UDT(this->steeringSystem.ctrl4ws)();
-	*(_QWORD *)&this->axleTorqueReaction = 1065353216i64;
+	this->axleTorqueReaction = 1.0;
 	AC_CTOR_UDT(this->water)();
 	this->aiLapsToComplete = -1;
 	this->bounds.length = 4.0;
@@ -86,7 +88,7 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->bounds.lengthRear = 2.0;
 	this->slipStream.triangle._vtable = _drva(0x4AD788);
 	this->slipStream.speedFactorMult = 1.0;
-	*(_QWORD *)&this->slipStream.effectGainMult = 1065353216i64;
+	this->slipStream.effectGainMult = 1.0;
 	this->slipStream.speedFactor = 0.25;
 	this->slipStreamEffectGain = 1.0;
 	this->framesToSleep = 50;
@@ -94,9 +96,9 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->pitTimings.fuelChangeTimeSec = 0.1;
 	this->pitTimings.bodyRepairTimeSec = 2.0;
 	this->pitTimings.engineRepairTimeSec = 2.0;
-	*(_QWORD *)&this->pitTimings.suspRepairTimeSec = 0x40000000i64;
+	this->pitTimings.suspRepairTimeSec = 2.0;
 	AC_CTOR_UDT(this->valueCache.speed)();
-	this->fuelKG = 0.74000001;
+	this->fuelKG = 0.74;
 	this->lastBodyMassUpdateTime = -100000000.0;
 	this->physicsGUID = (unsigned int)this->ksPhysics->cars.size();
 	this->steerAssist = 1.0;
@@ -112,14 +114,12 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->fuelTankBody = pCore->createRigidBody();
 
 	this->unixName = iunixName;
-	this->carDataPath = L"content/cars/" + iunixName + L"/data/";
-	//this->initCarDataPath();
+	this->carDataPath = L"content/cars/" + iunixName + L"/data/"; // this->initCarDataPath();
 
 	this->initCarData();
 	this->brakeSystem.init(this);
 
-	auto strSuspIni = this->getConfigPath(this->carDataPath + L"suspensions.ini");
-	auto ini(new_udt_unique<INIReader>(strSuspIni));
+	auto ini(new_udt_unique<INIReader>(this->carDataPath + L"suspensions.ini"));
 
 	auto strRearType = ini->getString(L"REAR", L"TYPE");
 	if (strRearType == L"AXLE")
@@ -171,7 +171,7 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 		else
 			this->suspensionTypeF = eSuspType;
 
-		this->suspensions[index] = pSusp;
+		this->suspensions.push_back(pSusp);
 
 		auto* pTyre = &this->tyres[index];
 		pTyre->ctor();
@@ -460,8 +460,8 @@ void _Car::_step(float dt)
 	else
 	{
 		if (bAllTyresLoaded 
-			&& (this->controls.gas <= 0.009999999f 
-				|| this->controls.clutch <= 0.009999999f 
+			&& (this->controls.gas <= 0.01f 
+				|| this->controls.clutch <= 0.01f 
 				|| this->drivetrain.currentGear == 1))
 		{
 			this->sleepingFrames++;
@@ -688,7 +688,7 @@ void _Car::_onCollisionCallBack(
 	}
 
 	vec3f vDeltaVelocity = vVelocity - vOtherVelocity;
-	float fRelativeSpeed = -((vDeltaVelocity * normal) * 3.5999999f);
+	float fRelativeSpeed = -((vDeltaVelocity * normal) * 3.6f);
 	float fDamage = fRelativeSpeed * this->ksPhysics->mechanicalDamageRate;
 
 	if (userData0 && userData1 && !bFlag0 && !bFlag1)
