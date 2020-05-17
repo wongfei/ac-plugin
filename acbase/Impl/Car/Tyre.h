@@ -438,7 +438,7 @@ void _Tyre::_initCompounds(const std::wstring& dataPath, int index)
 
 		tcd->data.softnessIndex = tmax(0.0f, fSens - 1.0f);
 
-		this->compoundDefs.push_back((*tcd.get())); // TODO: isTyreLegal
+		this->compoundDefs.push_back(*tcd.get()); // TODO: isTyreLegal
 	}
 
 	if (this->compoundDefs.empty())

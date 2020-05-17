@@ -144,7 +144,7 @@ void _Engine::_loadINI()
 			this->turboAdjustableFromCockpit = true;
 
 		auto turbo(new_udt_unique<Turbo>(td));
-		this->turbos.push_back((*turbo.get()));
+		this->turbos.push_back(*turbo.get());
 	}
 
 	if (this->turboAdjustableFromCockpit)
@@ -201,7 +201,7 @@ void _Engine::_loadINI()
 				auto tdc(new_udt_unique<TurboDynamicController>());
 				tdc->turbo = &turbo;
 				tdc->controller = *dc;
-				this->turboControllers.push_back((*tdc.get()));
+				this->turboControllers.push_back(*tdc.get());
 			}
 
 			strIniPath = this->car->carDataPath + strf(L"ctrl_wastegate%d.ini", id);
@@ -212,7 +212,7 @@ void _Engine::_loadINI()
 				tdc->turbo = &turbo;
 				tdc->controller = *dc;
 				tdc->isWastegate = true;
-				this->turboControllers.push_back(*(tdc.get()));
+				this->turboControllers.push_back(*tdc.get());
 			}
 
 			id++;

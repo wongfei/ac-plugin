@@ -12,7 +12,7 @@ BEGIN_HOOK_OBJ(BrakeSystem)
 	{
 		HOOK_METHOD_RVA(BrakeSystem, ctor);
 		HOOK_METHOD_RVA(BrakeSystem, init);
-		//HOOK_METHOD_RVA(BrakeSystem, loadINI);
+		HOOK_METHOD_RVA(BrakeSystem, loadINI);
 		HOOK_METHOD_RVA(BrakeSystem, step);
 		HOOK_METHOD_RVA(BrakeSystem, stepTemps);
 	}
@@ -72,14 +72,60 @@ void _BrakeSystem::_init(Car* car)
 
 void _BrakeSystem::_loadINI(const std::wstring& dataPath)
 {
-	auto ini(new_udt_unique<INIReader>(this->car->carDataPath + L"brakes.ini"));
+	auto ini(new_udt_unique<INIReader>(dataPath + L"brakes.ini"));
 	if (!ini->ready)
 	{
 		SHOULD_NOT_REACH_FATAL;
 		return;
 	}
 
-	TODO_NOT_IMPLEMENTED;
+	this->brakePower = ini->getFloat(L"DATA", L"MAX_TORQUE");
+	this->frontBias = ini->getFloat(L"DATA", L"FRONT_SHARE");
+	this->handBrakeTorque = ini->getFloat(L"DATA", L"HANDBRAKE_TORQUE");
+	this->hasCockpitBias = (ini->getInt(L"DATA", L"COCKPIT_ADJUSTABLE") != 0);
+	this->biasStep = ini->getFloat(L"DATA", L"ADJUST_STEP") * 0.01f;
+	
+	if (ini->hasSection(L"EBB"))
+	{
+		this->ebbMode = EBBMode::Internal;
+		this->ebbFrontMultiplier = tmax(1.1f, ini->getFloat(L"EBB", L"FRONT_SHARE_MULTIPLIER"));
+	}
+
+	auto strPath = dataPath + L"steer_brake_controller.ini";
+	if (Path::fileExists(strPath, false))
+	{
+		auto dc(new_udt_unique<DynamicController>(this->car, strPath));
+		this->steerBrake.controller = *dc.get();
+		this->steerBrake.isActive = true;
+	}
+
+	if (ini->hasSection(L"TEMPS_FRONT") && ini->hasSection(L"TEMPS_REAR")) // test on F40
+	{
+		std::wstring strId[] = {L"FRONT", L"FRONT", L"REAR", L"REAR"};
+		for (int id = 0; id < 4; ++id)
+		{
+			auto strTemps = strf(L"TEMPS_") + strId[id];
+			this->discs[id].perfCurve = ini->getCurve(strTemps, L"PERF_CURVE");
+			this->discs[id].torqueK = ini->getFloat(strTemps, L"TORQUE_K");
+			this->discs[id].coolTransfer = ini->getFloat(strTemps, L"COOL_TRANSFER");
+			this->discs[id].coolSpeedFactor = ini->getFloat(strTemps, L"COOL_SPEED_FACTOR");
+		}
+		this->hasBrakeTempsData = true;
+	}
+	else
+	{
+		this->hasBrakeTempsData = false;
+	}
+
+	ini = new_udt_unique<INIReader>(dataPath + L"setup.ini");
+	if (ini->ready)
+	{
+		if (ini->hasSection(L"FRONT_BIAS"))
+		{
+			this->limitDown = ini->getFloat(L"FRONT_BIAS", L"MIN") * 0.01f;
+			this->limitUp = ini->getFloat(L"FRONT_BIAS", L"MAX") * 0.01f;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
