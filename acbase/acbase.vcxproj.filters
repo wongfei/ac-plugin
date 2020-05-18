@@ -198,6 +198,9 @@
     <ClInclude Include="precompiled.h">
       <Filter>pch</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\ac_ser.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Doc\CallOrder.txt">

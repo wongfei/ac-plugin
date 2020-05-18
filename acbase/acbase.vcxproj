@@ -81,6 +81,7 @@
     <ClInclude Include="Impl\Utils\INIReader.h" />
     <ClInclude Include="Impl\Utils\Mathlib.h" />
     <ClInclude Include="Impl\Utils\PIDController.h" />
+    <ClInclude Include="SDK\ac_ser.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Doc\CallOrder.txt" />

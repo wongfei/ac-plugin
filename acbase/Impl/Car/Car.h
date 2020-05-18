@@ -17,7 +17,7 @@ BEGIN_HOOK_OBJ(Car)
 	{
 		HOOK_METHOD_RVA(Car, ctor);
 		HOOK_METHOD_RVA(Car, initCarData);
-		HOOK_METHOD_RVA(Car, step);
+		HOOK_METHOD_RVA_ORIG(Car, step);
 		HOOK_METHOD_RVA(Car, updateAirPressure);
 		HOOK_METHOD_RVA(Car, updateBodyMass);
 		HOOK_METHOD_RVA(Car, calcBodyMass);
@@ -330,8 +330,44 @@ void _Car::_initCarData()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+static bool _dump_car_step0 = true;
+
 void _Car::_step(float dt)
 {
+	#if defined(AC_DUMP_CAR_STEP0)
+	if (_dump_car_step0)
+	{
+		_dump_car_step0 = false;
+
+		ac_ostream out;
+		out << *this;
+		auto str = out.str();
+
+		#if defined(AC_ENABLE_CUSTOM_PHYSICS)
+		auto dumpName = L"_custom.json";
+		#else
+		auto dumpName = L"_orig.json";
+		#endif
+
+		std::wofstream fd(this->unixName + dumpName);
+		fd << str;
+		fd.close();
+	}
+	#endif
+
+	#if defined(AC_ENABLE_CUSTOM_PHYSICS)
+		auto bEnableCustom = true;
+	#else
+		auto bEnableCustom = false;
+	#endif
+
+	if (!bEnableCustom)
+	{
+		auto orig = ORIG_METHOD(Car, step);
+		THIS_CALL(orig)(dt);
+		return;
+	}
+
 	if (!this->physicsGUID)
 	{
 		vec3f vBodyVelocity = this->body->getVelocity();

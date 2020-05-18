@@ -103,8 +103,25 @@ void _Drivetrain::_init(Car* pCar)
 	this->outShaftR.inertia = pCar->tyres[3].data.angularInertia;
 
 	this->loadINI(this->car->carDataPath);
-	//if ( pcar->kers.present ) {} // TODO: implement
-	//if ( pcar->ers.present ) {} // TODO: implement
+
+	if (this->car->kers.present)
+	{
+		if (this->car->kers.attachment == KersAttachment::Wheels)
+		{
+			this->wheelTorqueGenerators.push_back(&this->car->kers);
+		}
+		else
+		{
+			this->acEngine.addTorqueGenerator(&this->car->kers);
+		}
+	}
+
+	if (this->car->ers.present)
+	{
+		this->acEngine.addTorqueGenerator(&this->car->ers);
+		this->acEngine.addCoastGenerator(&this->car->ers);
+	}
+
 	this->initControllers();
 }
 

@@ -1,10 +1,16 @@
 #include "precompiled.h"
 #include "CustomPhysics.h"
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define AC_ENABLE_CUSTOM_PHYSICS
+//#define AC_DUMP_CAR_STEP0
+
 #include "Game/Sim.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "SDK/ac_ser.h"
 #include "Utils/Timer.h"
 #include "Utils/Mathlib.h"
 #include "Utils/Curve.h"
@@ -28,6 +34,8 @@
 #include "Physics/Track.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void* _orig_Car_step = nullptr;
 
 #include "Car/Car.h"
 #include "Car/CarUtils.h"
@@ -72,8 +80,8 @@ static CustomPhysics* s_custom_physics = nullptr;
 #define RVA_PhysicsDriveThread_run 1192272
 #define RVA_Car_pollControls 2575984
 
-void* _orig_PhysicsDriveThread_run = nullptr;
-void* _orig_Car_pollControls = nullptr;
+static void* _orig_PhysicsDriveThread_run = nullptr;
+static void* _orig_Car_pollControls = nullptr;
 
 void PhysicsDriveThread_run(PhysicsDriveThread* pThis)
 {
@@ -114,7 +122,7 @@ void CustomPhysics::printCarInfo(CarAvatar* car)
 	log_printf(L"numWings=%d", (int)car->physics->aeroMap.wings.size());
 	log_printf(L"");
 
-	#if defined(AC_DEBUG)
+	#if 0
 	{
 		std::wstring data = L"content/cars/" + car->physics->unixName + L"/data/";
 
@@ -146,54 +154,62 @@ void CustomPhysics::installHooks()
 	//addConsoleCommands();
 	#endif
 
-	//HOOK_METHOD_RVA(Car, step);
+	#if !defined(AC_ENABLE_CUSTOM_PHYSICS)
 
-	#if 1
-	HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
-	HOOK_OBJ(Curve);
-	HOOK_OBJ(INIReader);
-	HOOK_OBJ(PIDController);
-	#endif
+		#if defined(AC_DUMP_CAR_STEP0)
+			HOOK_METHOD_RVA_ORIG(Car, step);
+		#endif
 
-	#if 1
-	HOOK_OBJ(PhysicsEngine);
-	HOOK_OBJ(PhysicsCore);
-	HOOK_OBJ(CollisionMeshODE);
-	HOOK_OBJ(RigidBodyODE);
-	HOOK_OBJ(Track);
-	#endif
+	#else
 
-	#if 1
-	HOOK_OBJ(Car);
-	HOOK_OBJ(CarColliderManager);
-	HOOK_OBJ(DynamicController);
-	HOOK_OBJ(ThermalObject);
-	HOOK_OBJ(BrakeSystem);
+		#if 1
+		HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
+		HOOK_OBJ(Curve);
+		HOOK_OBJ(INIReader);
+		HOOK_OBJ(PIDController);
+		#endif
 
-	HOOK_OBJ(GearChanger);
-	HOOK_OBJ(Drivetrain);
-	HOOK_OBJ(Engine);
-	HOOK_OBJ(Turbo);
+		#if 1
+		HOOK_OBJ(PhysicsEngine);
+		HOOK_OBJ(PhysicsCore);
+		HOOK_OBJ(CollisionMeshODE);
+		HOOK_OBJ(RigidBodyODE);
+		HOOK_OBJ(Track);
+		#endif
 
-	HOOK_OBJ(Damper);
-	HOOK_OBJ(Suspension); // DoubleWishbone
-	HOOK_OBJ(SuspensionStrut);
-	HOOK_OBJ(SuspensionAxle);
-	HOOK_OBJ(SuspensionML);
-	HOOK_OBJ(HeaveSpring);
-	HOOK_OBJ(AntirollBar);
+		#if 1
+		HOOK_OBJ(Car);
+		HOOK_OBJ(CarColliderManager);
+		HOOK_OBJ(DynamicController);
+		HOOK_OBJ(ThermalObject);
+		HOOK_OBJ(BrakeSystem);
 
-	HOOK_OBJ(Tyre);
-	HOOK_OBJ(SCTM);
-	HOOK_OBJ(TyreThermalModel);
-	HOOK_OBJ(BrushSlipProvider);
-	HOOK_OBJ(BrushTyreModel);
+		HOOK_OBJ(GearChanger);
+		HOOK_OBJ(Drivetrain);
+		HOOK_OBJ(Engine);
+		HOOK_OBJ(Turbo);
 
-	HOOK_OBJ(SlipStream);
-	HOOK_OBJ(AeroMap);
-	HOOK_OBJ(Wing);
-	HOOK_OBJ(DynamicWingController);
-	#endif
+		HOOK_OBJ(Damper);
+		HOOK_OBJ(Suspension); // DoubleWishbone
+		HOOK_OBJ(SuspensionStrut);
+		HOOK_OBJ(SuspensionAxle);
+		HOOK_OBJ(SuspensionML);
+		HOOK_OBJ(HeaveSpring);
+		HOOK_OBJ(AntirollBar);
+
+		HOOK_OBJ(Tyre);
+		HOOK_OBJ(SCTM);
+		HOOK_OBJ(TyreThermalModel);
+		HOOK_OBJ(BrushSlipProvider);
+		HOOK_OBJ(BrushTyreModel);
+
+		HOOK_OBJ(SlipStream);
+		HOOK_OBJ(AeroMap);
+		HOOK_OBJ(Wing);
+		HOOK_OBJ(DynamicWingController);
+		#endif
+
+	#endif // AC_ENABLE_CUSTOM_PHYSICS
 
 	hook_enable();
 }

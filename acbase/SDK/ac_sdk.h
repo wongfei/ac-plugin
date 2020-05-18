@@ -285,8 +285,8 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma warning(push)
-#pragma warning(disable: 4512) // assignment operator could not be generated
-#pragma warning(disable: 4351) // new behavior: elements of array will be default initialized
+//#pragma warning(disable: 4512) // assignment operator could not be generated
+//#pragma warning(disable: 4351) // new behavior: elements of array will be default initialized
 #include "ac_gen.h"
 #pragma warning(pop)
 

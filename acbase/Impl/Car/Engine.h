@@ -6,6 +6,7 @@ BEGIN_HOOK_OBJ(Engine)
 	#define RVA_Engine_ctor 2642608
 	#define RVA_Engine_init 2645520
 	#define RVA_Engine_loadINI 2646272
+	#define RVA_Engine_loadCoastSettings 2645664
 	#define RVA_Engine_step 2654432
 	#define RVA_Engine_getThrottleResponseGas 2644880
 	#define RVA_Engine_stepTurbos 2656512
@@ -15,6 +16,7 @@ BEGIN_HOOK_OBJ(Engine)
 		HOOK_METHOD_RVA(Engine, ctor);
 		HOOK_METHOD_RVA(Engine, init);
 		HOOK_METHOD_RVA(Engine, loadINI);
+		HOOK_METHOD_RVA(Engine, loadCoastSettings);
 		HOOK_METHOD_RVA(Engine, step);
 		HOOK_METHOD_RVA(Engine, getThrottleResponseGas);
 		HOOK_METHOD_RVA(Engine, stepTurbos);
@@ -23,6 +25,7 @@ BEGIN_HOOK_OBJ(Engine)
 	Engine* _ctor();
 	void _init(Car* pCar);
 	void _loadINI();
+	CoastSettings _loadCoastSettings(INIReader* ini, const std::wstring& section);
 	void _step(const SACEngineInput& input, float dt);
 	float _getThrottleResponseGas(float gas, float rpm);
 	void _stepTurbos();
@@ -82,6 +85,10 @@ void _Engine::_loadINI()
 	auto strPowerCurve = ini->getString(L"HEADER", L"POWER_CURVE");
 	this->data.powerCurve.load(this->car->carDataPath + strPowerCurve);
 
+	this->data.minimum = ini->getInt(L"ENGINE_DATA", L"MINIMUM"); // used by loadCoastSettings
+	if (!this->data.minimum)
+		this->data.minimum = 1000;
+
 	auto strCoastCurve = ini->getString(L"HEADER", L"COAST_CURVE");
 	if (strCoastCurve == L"FROM_COAST_REF")
 	{
@@ -93,11 +100,6 @@ void _Engine::_loadINI()
 	// ENGINE_DATA
 
 	this->inertia = ini->getFloat(L"ENGINE_DATA", L"INERTIA");
-
-	this->data.minimum = ini->getInt(L"ENGINE_DATA", L"MINIMUM");
-	if (!this->data.minimum)
-		this->data.minimum = 1000;
-
 	this->data.limiter = ini->getInt(L"ENGINE_DATA", L"LIMITER");
 	this->defaultEngineLimiter = this->data.limiter;
 
@@ -235,6 +237,25 @@ void _Engine::_loadINI()
 		this->throttleResponseCurveMaxRef = ini->getFloat(L"THROTTLE_RESPONSE", L"RPM_REFERENCE");
 		this->throttleResponseCurveMax = ini->getCurve(L"THROTTLE_RESPONSE", L"LUT");
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+CoastSettings _Engine::_loadCoastSettings(INIReader* ini, const std::wstring& section)
+{
+	CoastSettings coast;
+
+	float fRpm = ini->getFloat(section, L"RPM");
+	float fTorque = ini->getFloat(section, L"TORQUE");
+	float fNL = ini->getFloat(section, L"NON_LINEARITY");
+
+	float v13 = ((1.0f - fNL) * fRpm) - this->data.minimum;
+	float v14 = fNL * fRpm;
+
+	coast.coast1 = (v13 == 0.0f) ? 0.0f : -(fTorque / v13);
+	coast.coast2 = (v14 == 0.0f) ? 0.0f : fTorque / (v14 * v14);
+
+	return coast;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
