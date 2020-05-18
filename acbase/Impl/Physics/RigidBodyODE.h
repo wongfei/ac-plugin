@@ -236,6 +236,8 @@ float _RigidBodyODE::_getMass()
 
 void _RigidBodyODE::_setMassExplicitInertia(float totalMass, float x, float y, float z)
 {
+	TODO_WTF_IS_THIS;
+
 	dMass d;
 	ODE_CALL(dMassSetZero)(&d);
 	d.mass = totalMass;
@@ -454,6 +456,7 @@ void _RigidBodyODE::_setBoxColliderMask(uint64_t box, unsigned long mask)
 
 void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback)
 {
+	// TODO: seems to be empty
 	auto orig = ORIG_METHOD(RigidBodyODE, addSphereCollider);
 	THIS_CALL(orig)(pos, radius, group, callback);
 }
@@ -462,29 +465,87 @@ void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned 
 
 void _RigidBodyODE::_addMeshCollider(float* vertices, unsigned int verticesCount, unsigned short* indices, unsigned int indicesCount, mat44f* mat, unsigned long category, unsigned long collideMask, unsigned int spaceId)
 {
-	auto orig = ORIG_METHOD(RigidBodyODE, addMeshCollider);
-	THIS_CALL(orig)(vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId);
+	//auto orig = ORIG_METHOD(RigidBodyODE, addMeshCollider);
+	//THIS_CALL(orig)(vertices, verticesCount, indices, indicesCount, mat, category, collideMask, spaceId);
+
+	int iVertexSize = 3 * sizeof(float);
+	int iIndexSize = sizeof(unsigned short);
+	int iTriangleSize = 3 * iIndexSize;
+
+	int iVbSize = verticesCount * iVertexSize;
+	int iIbSize = indicesCount * iIndexSize;
+
+	auto pMesh(new_udt_shared<BodyCollisionMesh>());
+
+	pMesh->vertices = (float*)malloc(iVbSize);
+	memcpy(pMesh->vertices, vertices, iVbSize);
+
+	pMesh->indices = (unsigned short*)malloc(iIbSize);
+	memcpy(pMesh->indices, indices, iIbSize);
+
+	auto pTriMeshData = ODE_CALL(dGeomTriMeshDataCreate)();
+
+	ODE_CALL(dGeomTriMeshDataBuildSingle)(pTriMeshData, 
+		pMesh->vertices, iVertexSize, verticesCount,
+		pMesh->indices, indicesCount, iTriangleSize);
+
+	pMesh->geomID = ODE_CALL(dCreateTriMesh)(nullptr, pTriMeshData, nullptr, nullptr, nullptr);
+
+	auto pSpace = this->core->getDynamicSubSpace(spaceId);
+	ODE_CALL(dSpaceAdd)(pSpace, pMesh->geomID);
+	ODE_CALL(dGeomSetBody)(pMesh->geomID, this->id);
+
+	auto pRbMesh(new_udt<RBCollisionMesh>());
+	pRbMesh->_vtable = _drva(0x500B18); // TODO: ctor optimized
+	pRbMesh->group = category;
+	pRbMesh->mask = collideMask;
+	pRbMesh->body = this;
+	pRbMesh->userPointer = nullptr;
+	ODE_CALL(dGeomSetData)(pMesh->geomID, pRbMesh);
+
+	dMatrix3 r;
+	ODE_CALL(dRSetIdentity)(r);
+	r[0] = mat->M11;
+	r[1] = mat->M21;
+	r[2] = mat->M31;
+	r[4] = mat->M12;
+	r[5] = mat->M22;
+	r[6] = mat->M32;
+	r[8] = mat->M13;
+	r[9] = mat->M23;
+	r[10] = mat->M33;
+
+	ODE_CALL(dGeomSetOffsetRotation)(pMesh->geomID, r);
+	ODE_CALL(dGeomSetOffsetPosition)(pMesh->geomID, 0, 0, 0); // TODO: check
+	ODE_CALL(dGeomSetCollideBits)(pMesh->geomID, collideMask);
+	ODE_CALL(dGeomSetCategoryBits)(pMesh->geomID, category);
+
+	this->collisionMeshes.push_back(pMesh);
 }
 
 void _RigidBodyODE::_setMeshCollideMask(unsigned int meshIndex, unsigned long mask)
 {
-	TODO_NOT_IMPLEMENTED;
+	GUARD_DEBUG(meshIndex < this->collisionMeshes.size());
+	ODE_CALL(dGeomSetCollideBits)(this->collisionMeshes[meshIndex]->geomID, mask);
 }
 
 void _RigidBodyODE::_setMeshCollideCategory(unsigned int meshIndex, unsigned long category)
 {
-	TODO_NOT_IMPLEMENTED;
+	GUARD_DEBUG(meshIndex < this->collisionMeshes.size());
+	ODE_CALL(dGeomSetCategoryBits)(this->collisionMeshes[meshIndex]->geomID, category);
 }
 
 unsigned long _RigidBodyODE::_getMeshCollideMask(unsigned int meshIndex)
 {
-	TODO_NOT_IMPLEMENTED;
+	if (meshIndex < this->collisionMeshes.size())
+		return ODE_CALL(dGeomGetCollideBits)(this->collisionMeshes[meshIndex]->geomID);
 	return 0;
 }
 
 unsigned long _RigidBodyODE::_getMeshCollideCategory(unsigned int meshIndex)
 {
-	TODO_NOT_IMPLEMENTED;
+	if (meshIndex < this->collisionMeshes.size())
+		return ODE_CALL(dGeomGetCategoryBits)(this->collisionMeshes[meshIndex]->geomID);
 	return 0;
 }
 

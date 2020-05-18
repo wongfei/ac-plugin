@@ -199,9 +199,9 @@ void _PhysicsCore::_onCollision(dContactGeom* contacts, int numContacts, dxGeom*
 	dBodyID body1 = ODE_CALL(dGeomGetBody)(g1);
 	int geomClass0 = ODE_CALL(dGeomGetClass)(g0);
 	int geomClass1 = ODE_CALL(dGeomGetClass)(g1);
-	void* shape0 = ODE_CALL(dGeomGetData)(g0); // CollisionMeshODE*
+	void* shape0 = ODE_CALL(dGeomGetData)(g0); // ICollisionObject* (CollisionMeshODE / RBCollisionMesh)
 	void* shape1 = ODE_CALL(dGeomGetData)(g1);
-	void* userData0 = body0 ? ODE_CALL(dBodyGetData)(body0) : nullptr; // RigidBodyODE*
+	void* userData0 = body0 ? ODE_CALL(dBodyGetData)(body0) : nullptr; // IRigidBody* (RigidBodyODE)
 	void* userData1 = body1 ? ODE_CALL(dBodyGetData)(body1) : nullptr;
 
 	for (int i = 0; i < numContacts; ++i)

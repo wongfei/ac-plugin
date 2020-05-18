@@ -24,20 +24,24 @@ CollisionMeshODE* _CollisionMeshODE::_ctor(PhysicsCore* core,
 {
 	AC_CTOR_VCLASS(CollisionMeshODE);
 
-	int vertexStride = 3 * sizeof(float); // 12
-	int triStride = 3 * sizeof(unsigned short); // 6
+	int iVertexSize = 3 * sizeof(float);
+	int iIndexSize = sizeof(unsigned short);
+	int iTriangleSize = 3 * iIndexSize;
 
-	this->lvertices = (float*)malloc(numVertices * vertexStride);
-	memcpy(this->lvertices, vertices, numVertices * vertexStride);
+	int iVbSize = numVertices * iVertexSize;
+	int iIbSize = indexCount * iIndexSize;
 
-	this->lindices = (unsigned short*)malloc(indexCount * sizeof(unsigned short));
-	memcpy(this->lindices, indices, indexCount * sizeof(unsigned short));
+	this->lvertices = (float*)malloc(iVbSize);
+	memcpy(this->lvertices, vertices, iVbSize);
+
+	this->lindices = (unsigned short*)malloc(iIbSize);
+	memcpy(this->lindices, indices, iIbSize);
 
 	this->trimeshData = ODE_CALL(dGeomTriMeshDataCreate)();
 
 	ODE_CALL(dGeomTriMeshDataBuildSingle)(this->trimeshData, 
-		this->lvertices, vertexStride, numVertices,
-		this->lindices, indexCount, triStride);
+		this->lvertices, iVertexSize, numVertices,
+		this->lindices, indexCount, iTriangleSize);
 
 	auto* pSpace = core->getStaticSubSpace(space_id);
 	this->trimesh = ODE_CALL(dCreateTriMesh)(pSpace, this->trimeshData, nullptr, nullptr, nullptr);
