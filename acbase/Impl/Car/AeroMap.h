@@ -21,6 +21,7 @@ BEGIN_HOOK_OBJ(AeroMap)
 		HOOK_METHOD_RVA(AeroMap, getCurrentLiftKG);
 	}
 
+	// ctor optimized
 	void _init(Car* car, const vec3f& frontAP, const vec3f& rearAP, const std::wstring& dataPath);
 	void _loadINI(const std::wstring& dataPath);
 	void _step(float dt);
@@ -35,7 +36,7 @@ END_HOOK_OBJ()
 
 void _AeroMap::_init(Car* car, const vec3f& frontAP, const vec3f& rearAP, const std::wstring& dataPath)
 {
-	AC_CTOR_POD(AeroMap); // ctor is optimized, do it here
+	AC_CTOR_THIS_POD(AeroMap); // ctor is optimized, do it here
 
 	this->car = car;
 	this->carBody = car->body;

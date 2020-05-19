@@ -20,7 +20,7 @@ END_HOOK_OBJ()
 
 Damper* _Damper::_ctor()
 {
-	AC_CTOR_POD(Damper);
+	AC_CTOR_THIS_POD(Damper);
 
 	this->reboundSlow = 5000.0f;
 	this->reboundFast = 300.0f;

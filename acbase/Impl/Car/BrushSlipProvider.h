@@ -2,22 +2,51 @@
 
 BEGIN_HOOK_OBJ(BrushSlipProvider)
 
+	#define RVA_BrushSlipProvider_vtable 0x4F8258
+	#define RVA_BrushSlipProvider_ctor0 2830384
+	#define RVA_BrushSlipProvider_ctor3 2830208
 	#define RVA_BrushSlipProvider_getSlipForce 2830736
 	#define RVA_BrushSlipProvider_calcMaximum 2830480
 	#define RVA_BrushSlipProvider_recomputeMaximum 2830896
 
 	static void _hook()
 	{
+		HOOK_OV_METHOD_RVA(BrushSlipProvider, ctor, ctor0);
+		HOOK_OV_METHOD_RVA(BrushSlipProvider, ctor, ctor3, float, float, float);
 		HOOK_METHOD_RVA(BrushSlipProvider, getSlipForce);
 		HOOK_METHOD_RVA(BrushSlipProvider, calcMaximum);
 		HOOK_METHOD_RVA(BrushSlipProvider, recomputeMaximum);
 	}
 
+	BrushSlipProvider* _ctor();
+	BrushSlipProvider* _ctor(float maxAngle, float xu, float flex);
 	TyreSlipOutput _getSlipForce(TyreSlipInput &input, bool useasy);
 	void _calcMaximum(float load, float* maximum, float* max_slip);
 	void _recomputeMaximum();
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BrushSlipProvider* _BrushSlipProvider::_ctor()
+{
+	AC_CTOR_THIS_VT(BrushSlipProvider);
+	AC_CTOR_UDT(this->brushModel)();
+	this->asy = 1.0f;
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BrushSlipProvider* _BrushSlipProvider::_ctor(float maxAngle, float xu, float flex)
+{
+	AC_CTOR_THIS_VT(BrushSlipProvider);
+	AC_CTOR_UDT(this->brushModel)();
+	this->brushModel.data.CF = this->brushModel.getCFFromSlipAngle(maxAngle);
+	this->brushModel.data.CF1 = flex * -50000.0f;
+	this->calcMaximum(2000.0f, &this->maximum, &this->maxSlip);
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -26,7 +26,7 @@ END_HOOK_OBJ()
 
 CarColliderManager* _CarColliderManager::_ctor()
 {
-	AC_CTOR_POD(CarColliderManager);
+	AC_CTOR_THIS_POD(CarColliderManager);
 
 	return this;
 }

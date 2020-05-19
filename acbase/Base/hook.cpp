@@ -19,7 +19,7 @@ void hook_shut()
 
 bool hook_create(const wchar_t* name, void* pTarget, void* pDetour, void** ppOriginal)
 {
-	log_printf(L"hook_create name=%s pTarget=%p pDetour=%p", name, pTarget, pDetour);
+	log_printf(L"hook_create name=\"%s\" target=%p detour=%p", name, pTarget, pDetour);
 
 	MH_STATUS status = MH_CreateHook(pTarget, pDetour, ppOriginal);
 	if (status != MH_OK)

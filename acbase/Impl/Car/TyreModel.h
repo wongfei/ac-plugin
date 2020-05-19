@@ -2,6 +2,8 @@
 
 BEGIN_HOOK_OBJ(SCTM)
 
+	#define RVA_SCTM_vtable 0x1416580
+	#define RVA_SCTM_ctor 4503744
 	#define RVA_SCTM_solve 4504608
 	#define RVA_SCTM_getStaticDY 4504496
 	#define RVA_SCTM_getStaticDX 4504368
@@ -9,18 +11,39 @@ BEGIN_HOOK_OBJ(SCTM)
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(SCTM, ctor);
 		HOOK_METHOD_RVA(SCTM, solve);
 		HOOK_METHOD_RVA(SCTM, getStaticDY);
 		HOOK_METHOD_RVA(SCTM, getStaticDX);
 		HOOK_METHOD_RVA(SCTM, getPureFY);
 	}
 
+	SCTM* _ctor();
 	TyreModelOutput _solve(TyreModelInput& tmi);
 	float _getStaticDX(float load);
 	float _getStaticDY(float load);
 	float _getPureFY(float D, float cf, float load, float slip);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+SCTM* _SCTM::_ctor()
+{
+	AC_CTOR_THIS_VT(SCTM);
+
+	AC_CTOR_UDT(this->dyLoadCurve)();
+	AC_CTOR_UDT(this->dxLoadCurve)();
+	AC_CTOR_UDT(this->dCamberCurve)();
+
+	this->cfXmult = 1.0f;
+	this->pressureCfGain = 0.1f;
+	this->brakeDXMod = 1.0f;
+	this->dCamberBlend = 1.0f;
+	this->combinedFactor = 2.0f;
+
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

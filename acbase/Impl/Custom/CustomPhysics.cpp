@@ -3,8 +3,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// tested on:
+// ver 1.16.3
+// build 2426371
+
 #define AC_ENABLE_CUSTOM_PHYSICS
-//#define AC_DUMP_CAR_STEP0
+#define AC_DUMP_CAR_STEP0
 
 #include "Game/Sim.h"
 

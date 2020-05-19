@@ -4,15 +4,22 @@ BEGIN_HOOK_OBJ(CollisionMeshODE)
 
 	#define RVA_CollisionMeshODE_vtable 0x500BC0
 	#define RVA_CollisionMeshODE_ctor 2943920
+	#define RVA_CollisionMeshODE_getGroup 2944368
+	#define RVA_CollisionMeshODE_getMask 2944384
 
 	static void _hook()
 	{
 		HOOK_METHOD_RVA(CollisionMeshODE, ctor);
+		HOOK_METHOD_RVA(CollisionMeshODE, getGroup);
+		HOOK_METHOD_RVA(CollisionMeshODE, getMask);
 	}
 
 	CollisionMeshODE* _ctor(PhysicsCore* core, 
 		float* vertices, int numVertices, unsigned short* indices, int indexCount, 
 		unsigned long group, unsigned long mask, unsigned int space_id);
+
+	unsigned long _getGroup();
+	unsigned long _getMask();
 
 END_HOOK_OBJ()
 
@@ -22,7 +29,7 @@ CollisionMeshODE* _CollisionMeshODE::_ctor(PhysicsCore* core,
 	float* vertices, int numVertices, unsigned short* indices, int indexCount, 
 	unsigned long group, unsigned long mask, unsigned int space_id)
 {
-	AC_CTOR_VCLASS(CollisionMeshODE);
+	AC_CTOR_THIS_VT(CollisionMeshODE);
 
 	int iVertexSize = 3 * sizeof(float);
 	int iIndexSize = sizeof(unsigned short);
@@ -52,6 +59,20 @@ CollisionMeshODE* _CollisionMeshODE::_ctor(PhysicsCore* core,
 
 	this->userPointer = nullptr;
 	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+unsigned long _CollisionMeshODE::_getGroup()
+{
+	return ODE_CALL(dGeomGetCategoryBits)(this->trimesh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+unsigned long _CollisionMeshODE::_getMask()
+{
+	return ODE_CALL(dGeomGetCollideBits)(this->trimesh);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

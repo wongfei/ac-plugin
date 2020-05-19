@@ -44,7 +44,7 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 {
 	// TODO: experimental
 
-	AC_CTOR_VCLASS(Car);
+	AC_CTOR_THIS_VT(Car);
 
 	auto pThis = this;
 
@@ -69,7 +69,7 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 	this->setupManager.maxWaitTime = 1.0;
 	this->setupManager.waitTime = 1.0;
 	this->setupManager.setupState = CarSetupState::Legal;
-	this->drs.isActive = true;
+	this->drs.isAvailable = true;
 	this->kers._vtable = _drva(0x4F6E98);
 	AC_CTOR_UDT(this->kers.torqueLUT)();
 	AC_CTOR_UDT(this->kers.controller)();

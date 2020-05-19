@@ -1,20 +1,39 @@
 #pragma once
 
-BEGIN_HOOK_OBJ(SlipStream)
+BEGIN_HOOK_OBJ(SlipStream) // TODO: how to test?
 
+	#define RVA_SlipStream_init 2796992
 	#define RVA_SlipStream_getSlipEffect 2796640
 	#define RVA_SlipStream_setPosition 2797184
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(SlipStream, getSlipEffect); // TODO: how to test?
-		HOOK_METHOD_RVA(SlipStream, setPosition); // TODO: how to test?
+		HOOK_METHOD_RVA(SlipStream, init);
+		HOOK_METHOD_RVA(SlipStream, getSlipEffect); 
+		HOOK_METHOD_RVA(SlipStream, setPosition);
 	}
 
+	// ctor optimized
+	void _init(PhysicsEngine *pe);
 	float _getSlipEffect(const vec3f& p);
 	void _setPosition(const vec3f& pos, const vec3f& vel);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _SlipStream::_init(PhysicsEngine *pe)
+{
+	this->physicsEngine = pe;
+	this->speedFactor = 0.5f;
+	this->length = 0.0f;
+
+	auto& ss = pe->slipStreams;
+	if (std::find(ss.begin(), ss.end(), this) == ss.end())
+	{
+		ss.push_back(this);
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

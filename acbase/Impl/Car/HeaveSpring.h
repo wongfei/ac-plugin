@@ -2,16 +2,99 @@
 
 BEGIN_HOOK_OBJ(HeaveSpring)
 
+	#define RVA_HeaveSpring_ctor 2546416
+	#define RVA_HeaveSpring_init 2831120
+	#define RVA_HeaveSpring_initData 2831168
 	#define RVA_HeaveSpring_step 2832736
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(HeaveSpring, ctor);
+		HOOK_METHOD_RVA(HeaveSpring, init);
+		HOOK_METHOD_RVA(HeaveSpring, initData);
 		HOOK_METHOD_RVA(HeaveSpring, step); // (test on F138)
 	}
 
+	HeaveSpring* _ctor();
+	void _init(Car* car, Suspension* s0, Suspension* s1, bool isFront);
+	void _initData();
 	void _step(float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+HeaveSpring* _HeaveSpring::_ctor()
+{
+	AC_CTOR_THIS_POD(HeaveSpring);
+	AC_CTOR_UDT(this->damper)();
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _HeaveSpring::_init(Car* car, Suspension* s0, Suspension* s1, bool isFront)
+{
+	this->car = car;
+	this->isFront = isFront;
+	this->suspensions[0] = s0;
+	this->suspensions[1] = s1;
+
+	this->rodLength = 0;
+	this->k = 0;
+	this->progressiveK = 0;
+
+	this->initData();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _HeaveSpring::_initData()
+{
+	auto ini(new_udt_unique<INIReader>(this->car->carDataPath + L"suspensions.ini"));
+	if (!ini->ready)
+	{
+		SHOULD_NOT_REACH_FATAL;
+		return;
+	}
+
+	std::wstring strId = this->isFront ? L"HEAVE_FRONT" : L"HEAVE_REAR";
+
+	if (!ini->hasSection(strId))
+	{
+		this->isPresent = false;
+		return;
+	}
+
+	this->isPresent = true;
+	this->bumpStopUp = ini->getFloat(strId, L"BUMPSTOP_UP");
+	this->bumpStopDn = -ini->getFloat(strId, L"BUMPSTOP_DN");
+	this->rodLength = ini->getFloat(strId, L"ROD_LENGTH");
+	this->k = ini->getFloat(strId, L"SPRING_RATE");
+	this->progressiveK = ini->getFloat(strId, L"PROGRESSIVE_SPRING_RATE");
+
+	this->damper.bumpSlow = ini->getFloat(strId, L"DAMP_BUMP");
+	this->damper.reboundSlow = ini->getFloat(strId, L"DAMP_REBOUND");
+	this->damper.bumpFast = ini->getFloat(strId, L"DAMP_FAST_BUMP");
+	this->damper.reboundFast = ini->getFloat(strId, L"DAMP_FAST_REBOUND");
+	this->damper.fastThresholdBump = ini->getFloat(strId, L"DAMP_FAST_BUMPTHRESHOLD");
+	this->damper.fastThresholdRebound = ini->getFloat(strId, L"DAMP_FAST_REBOUNDTHRESHOLD");
+
+	if (this->damper.fastThresholdBump == 0.0f)
+		this->damper.fastThresholdBump = 0.2f;
+	if (this->damper.fastThresholdRebound == 0.0f)
+		this->damper.fastThresholdRebound = 0.2f;
+	if (this->damper.bumpFast == 0.0f)
+		this->damper.bumpFast = this->damper.bumpSlow;
+	if (this->damper.reboundFast == 0.0f)
+		this->damper.reboundFast = this->damper.reboundSlow;
+
+	this->bumpStopRate = ini->getFloat(strId, L"BUMP_STOP_RATE");
+	if (this->bumpStopRate == 0.0f)
+		this->bumpStopRate = 500000.0f;
+
+	this->packerRange = ini->getFloat(strId, L"PACKER_RANGE");
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

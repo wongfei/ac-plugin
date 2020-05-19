@@ -38,7 +38,7 @@ END_HOOK_OBJ()
 
 SuspensionAxle* _SuspensionAxle::_ctor(Car* pCar, RigidAxleSide side, const std::wstring& carDataPath)
 {
-	AC_CTOR_VCLASS(SuspensionAxle);
+	AC_CTOR_THIS_VT(SuspensionAxle);
 
 	this->damper.ctor();
 

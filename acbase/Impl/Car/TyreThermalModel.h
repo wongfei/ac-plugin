@@ -2,6 +2,8 @@
 
 BEGIN_HOOK_OBJ(TyreThermalModel)
 
+	#define RVA_TyreThermalModel_ctor 2547584
+	#define RVA_TyreThermalModel_init 2810224
 	#define RVA_TyreThermalModel_step 2810688
 	#define RVA_TyreThermalModel_getPatchAt 2809776
 	#define RVA_TyreThermalModel_getCorrectedD 2808768
@@ -16,6 +18,8 @@ BEGIN_HOOK_OBJ(TyreThermalModel)
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(TyreThermalModel, ctor);
+		HOOK_METHOD_RVA(TyreThermalModel, init);
 		HOOK_METHOD_RVA(TyreThermalModel, step);
 		HOOK_METHOD_RVA(TyreThermalModel, getPatchAt);
 		HOOK_METHOD_RVA(TyreThermalModel, getCorrectedD);
@@ -29,6 +33,8 @@ BEGIN_HOOK_OBJ(TyreThermalModel)
 		HOOK_METHOD_RVA(TyreThermalModel, reset);
 	}
 
+	TyreThermalModel* _ctor();
+	void _init(int elements, int stripes, Car* car);
 	void _step(float dt, float angularSpeed, float camberRAD);
 	TyreThermalPatch* _getPatchAt(int x, int y);
 	float _getCorrectedD(float d, float camberRAD);
@@ -42,6 +48,39 @@ BEGIN_HOOK_OBJ(TyreThermalModel)
 	void _reset(TyreThermalModel* pThis);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+TyreThermalModel* _TyreThermalModel::_ctor()
+{
+	AC_CTOR_THIS_POD(TyreThermalModel);
+
+	AC_CTOR_UDT(this->performanceCurve)();
+
+	this->patchData.internalCoreTransfer = 0.004f;
+	this->patchData.surfaceTransfer = 0.3f;
+	this->patchData.patchTransfer = 0.2f;
+	this->patchData.patchCoreTransfer = 0.2f;
+
+	this->isActive = true;
+	this->thermalMultD = 1.0f;
+	this->camberSpreadK = 1.4f;
+
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _TyreThermalModel::_init(int elements, int stripes, Car* car)
+{
+	this->car = car;
+	this->elements = elements;
+	this->stripes = stripes;
+	this->phase = 0.0f;
+	this->coreTemp = car ? car->ksPhysics->ambientTemperature : 26.0f;
+	this->isActive = true;
+	this->buildTyre(); // TODO: implement
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

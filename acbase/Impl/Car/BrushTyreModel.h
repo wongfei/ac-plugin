@@ -2,22 +2,41 @@
 
 BEGIN_HOOK_OBJ(BrushTyreModel)
 
+	#define RVA_BrushTyreModel_ctor 2929488
 	#define RVA_BrushTyreModel_solve 2929600
 	#define RVA_BrushTyreModel_solveV5 2929888
 	#define RVA_BrushTyreModel_getCFFromSlipAngle 2929536
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(BrushTyreModel, ctor);
 		HOOK_METHOD_RVA(BrushTyreModel, solve);
 		HOOK_METHOD_RVA(BrushTyreModel, solveV5);
 		HOOK_METHOD_RVA(BrushTyreModel, getCFFromSlipAngle);
 	}
 
+	BrushTyreModel* _ctor();
 	BrushOutput _solve(float slip, float friction, float load, float cf1_mix, float asy);
 	BrushOutput _solveV5(float slip, float load, float asy);
 	float _getCFFromSlipAngle(float angle);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BrushTyreModel* _BrushTyreModel::_ctor()
+{
+	AC_CTOR_THIS_POD(BrushTyreModel);
+
+	this->data.Fz0 = 2000.0f;
+	this->data.maxSlip0 = 0.2f;
+	this->data.maxSlip1 = 0.4f;
+	this->data.falloffSpeed = 2.0f;
+	this->data.CF = 1200.0f;
+	this->data.CF1 = -10.0f;
+
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

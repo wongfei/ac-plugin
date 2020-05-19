@@ -5,6 +5,7 @@ BEGIN_HOOK_OBJ(BrakeSystem)
 	#define RVA_BrakeSystem_ctor 2539040
 	#define RVA_BrakeSystem_init 2676368
 	#define RVA_BrakeSystem_loadINI 2676848
+	#define RVA_BrakeSystem_reset 2679952
 	#define RVA_BrakeSystem_step 2680384
 	#define RVA_BrakeSystem_stepTemps 2681120
 
@@ -13,6 +14,7 @@ BEGIN_HOOK_OBJ(BrakeSystem)
 		HOOK_METHOD_RVA(BrakeSystem, ctor);
 		HOOK_METHOD_RVA(BrakeSystem, init);
 		HOOK_METHOD_RVA(BrakeSystem, loadINI);
+		HOOK_METHOD_RVA(BrakeSystem, reset);
 		HOOK_METHOD_RVA(BrakeSystem, step);
 		HOOK_METHOD_RVA(BrakeSystem, stepTemps);
 	}
@@ -20,6 +22,7 @@ BEGIN_HOOK_OBJ(BrakeSystem)
 	BrakeSystem* _ctor();
 	void _init(Car* car);
 	void _loadINI(const std::wstring& dataPath);
+	void _reset();
 	void _step(float dt);
 	void _stepTemps(float dt);
 
@@ -29,7 +32,7 @@ END_HOOK_OBJ()
 
 BrakeSystem* _BrakeSystem::_ctor() // TODO: cleanup
 {
-	AC_CTOR_POD(BrakeSystem);
+	AC_CTOR_THIS_POD(BrakeSystem);
 
 	for (auto& iter : this->discs) { AC_CTOR_UDT(iter)(); }
 	AC_CTOR_UDT(this->steerBrake.controller)();
@@ -125,6 +128,17 @@ void _BrakeSystem::_loadINI(const std::wstring& dataPath)
 			this->limitDown = ini->getFloat(L"FRONT_BIAS", L"MIN") * 0.01f;
 			this->limitUp = ini->getFloat(L"FRONT_BIAS", L"MAX") * 0.01f;
 		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _BrakeSystem::_reset()
+{
+	this->biasOverride = -1.0f;
+	for (auto& iter : this->discs)
+	{
+		iter.t = this->car->ksPhysics->ambientTemperature;
 	}
 }
 

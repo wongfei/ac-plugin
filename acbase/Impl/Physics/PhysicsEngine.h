@@ -2,6 +2,8 @@
 
 BEGIN_HOOK_OBJ(PhysicsEngine)
 	
+	#define RVA_PhysicsEngine_ctor 2499632
+	#define RVA_PhysicsEngine_initLowSpeedFF 2505872
 	#define RVA_PhysicsEngine_step 2508640
 	#define RVA_PhysicsEngine_stepWind 2511744
 	#define RVA_PhysicsEngine_onCollisionCallBack 2506784
@@ -13,11 +15,28 @@ BEGIN_HOOK_OBJ(PhysicsEngine)
 		HOOK_METHOD_RVA(PhysicsEngine, onCollisionCallBack);
 	}
 
+	PhysicsEngine* _ctor();
+	void _initLowSpeedFF();
 	void _step(float dt, double currentTime, double gt);
 	void _stepWind(float dt);
 	void _onCollisionCallBack(void* userData0, void* shape0, void* userData1, void* shape1, const vec3f& normal, const vec3f& pos, float depth);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+PhysicsEngine* _PhysicsEngine::_ctor()
+{
+	TODO_NOT_IMPLEMENTED;
+	return this;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _PhysicsEngine::_initLowSpeedFF()
+{
+	TODO_NOT_IMPLEMENTED;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

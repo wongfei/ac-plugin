@@ -73,7 +73,7 @@ END_HOOK_OBJ()
 
 Tyre* _Tyre::_ctor()
 {
-	AC_CTOR_POD(Tyre);
+	AC_CTOR_THIS_POD(Tyre);
 
 	AC_CTOR_UDT(this->modelData)();
 	AC_CTOR_UDT(this->thermalModel)();
@@ -92,9 +92,6 @@ Tyre* _Tyre::_ctor()
 	this->data.angularInertia = 1.6;
 	this->data.thermalFrictionK = 0.03;
 	this->data.thermalRollingK = 0.5;
-	//this->status.inflation = 1.0;
-	//this->status.wearMult = 1.0;
-	//memset(&this->status, 0, sizeof(this->status)); // TODO: weird shit
 	this->status.pressureStatic = 26.0;
 	this->status.pressureDynamic = 26.0;
 	this->status.lastTempIMO[0] = -200.0;

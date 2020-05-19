@@ -36,7 +36,7 @@ END_HOOK_OBJ()
 
 Engine* _Engine::_ctor()
 {
-	AC_CTOR_VCLASS(Engine);
+	AC_CTOR_THIS_VT(Engine);
 
 	AC_CTOR_UDT(this->data)();
 	AC_CTOR_UDT(this->throttleResponseCurve)();

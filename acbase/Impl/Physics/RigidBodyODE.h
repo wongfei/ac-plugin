@@ -1,5 +1,6 @@
 #pragma once
 
+static void* _orig_RigidBodyODE_addBoxCollider = nullptr;
 static void* _orig_RigidBodyODE_addSphereCollider = nullptr;
 static void* _orig_RigidBodyODE_addMeshCollider = nullptr;
 
@@ -94,8 +95,8 @@ BEGIN_HOOK_OBJ(RigidBodyODE)
 		HOOK_METHOD_RVA(RigidBodyODE, addTorque);
 		HOOK_METHOD_RVA(RigidBodyODE, addLocalTorque);
 
-		HOOK_METHOD_RVA(RigidBodyODE, addBoxCollider);
-		HOOK_METHOD_RVA_ORIG(RigidBodyODE, addSphereCollider);
+		HOOK_METHOD_RVA_ORIG(RigidBodyODE, addBoxCollider);
+		//HOOK_METHOD_RVA_ORIG(RigidBodyODE, addSphereCollider);
 		HOOK_METHOD_RVA_ORIG(RigidBodyODE, addMeshCollider);
 	}
 
@@ -157,7 +158,7 @@ END_HOOK_OBJ()
 
 RigidBodyODE* _RigidBodyODE::_ctor(PhysicsCore* core)
 {
-	AC_CTOR_VCLASS(RigidBodyODE);
+	AC_CTOR_THIS_VT(RigidBodyODE);
 
 	this->core = core;
 	this->id = ODE_CALL(dBodyCreate)(core->id);
@@ -457,8 +458,8 @@ void _RigidBodyODE::_setBoxColliderMask(uint64_t box, unsigned long mask)
 void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback)
 {
 	// TODO: seems to be empty
-	auto orig = ORIG_METHOD(RigidBodyODE, addSphereCollider);
-	THIS_CALL(orig)(pos, radius, group, callback);
+	//auto orig = ORIG_METHOD(RigidBodyODE, addSphereCollider);
+	//THIS_CALL(orig)(pos, radius, group, callback);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

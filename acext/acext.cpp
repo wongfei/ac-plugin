@@ -49,6 +49,7 @@ static int WINAPI hook_wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PW
 static void OnProcessAttach()
 {
 	ac_set_module(GetModuleHandleA(nullptr));
+	log_printf(L"_ac_module -> %p", ac_get_module());
 
 	if (hook_init())
 	{

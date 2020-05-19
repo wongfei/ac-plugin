@@ -39,7 +39,7 @@ END_HOOK_OBJ()
 
 SuspensionML* _SuspensionML::_ctor(Car* pCar, int index)
 {
-	AC_CTOR_VCLASS(SuspensionML);
+	AC_CTOR_THIS_VT(SuspensionML);
 
 	this->damper.ctor();
 
@@ -47,8 +47,8 @@ SuspensionML* _SuspensionML::_ctor(Car* pCar, int index)
 	this->index = index;
 
 	this->baseCFM = 0.0000001f;
-	this->damageData.damageDirection = 1.0; // TODO: random
 	this->damageData.minVelocity = 15.0f;
+	this->damageData.damageDirection = 1.0; // TODO: random
 
 	this->loadINI(index);
 

@@ -54,18 +54,20 @@ __forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 #define AC_GPTR(name) (name##_ptr)
 
 // DANGER IS MY MIDDLE NAME!!!
-#define AC_CTOR_VCLASS(name)\
+#define AC_CTOR_THIS_VT(name)\
 	memset(this, 0, sizeof(name));\
 	new (this) name();\
 	this->_vtable = _drva(RVA_##name##_vtable);
 
-#define AC_CTOR_POD(name)\
+#define AC_CTOR_THIS_POD(name)\
 	memset(this, 0, sizeof(name));\
 	new (this) name();
 
+// TODO: stupid
 #define AC_CTOR_UDT(name)\
 	name.ctor
 
+// TODO: stupid
 #define AC_CTOR_NATIVE(name)\
 	new (&name) decltype(name)
 

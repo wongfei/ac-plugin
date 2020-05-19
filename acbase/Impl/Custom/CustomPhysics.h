@@ -12,7 +12,12 @@
 #define HOOK_METHOD_RVA(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func))
 #define HOOK_METHOD_RVA_ORIG(obj, func) hook_create(UT_WSTRING(obj##::##func), _drva(RVA_##obj##_##func), xcast<void*>(&_##obj##::_##func), &_orig_##obj##_##func)
 
-//#define ORIG_METHOD(obj, func) xcast<decltype(&_##obj::_##func)>(_orig_##obj##_##func)
+// MACRO POWER!!!
+#define HOOK_OV_METHOD_RVA(obj, func, impl, ...)\
+	hook_create(UT_WSTRING(obj##::##impl),\
+		_drva(RVA_##obj##_##impl),\
+		xcast<void*>( static_cast<obj*(_##obj::*)(__VA_ARGS__)>(&_##obj::_##func) ))
+
 #define ORIG_METHOD(obj, func) xcast<decltype(&obj::func)>(_orig_##obj##_##func)
 #define THIS_CALL(func) (this->*func)
 

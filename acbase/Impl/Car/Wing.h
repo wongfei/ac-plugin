@@ -29,7 +29,7 @@ END_HOOK_OBJ()
 
 Wing* _Wing::_ctor(Car* car, INIReader* ini, int index, bool isVertical)
 {
-	AC_CTOR_POD(Wing);
+	AC_CTOR_THIS_POD(Wing);
 
 	AC_CTOR_UDT(this->data)();
 	AC_CTOR_UDT(this->engineer)(car);

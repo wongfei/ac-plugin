@@ -41,6 +41,12 @@ typedef std::wostringstream ac_ostream;
 		ser_field(out, iter); }\
 	out << L"],";
 
+#define AC_SER_ARR_P_BYVAL(name)\
+	out << L"\"" << X_WIDE(#name) << L"\":[";\
+	for (auto* iter : o.name) {\
+		ser_field(out, *iter); }\
+	out << L"],";
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // COMMON
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +75,7 @@ inline ac_ostream& operator<<(ac_ostream& out, const mat44f& o)
 {
 	const float* m = &o.M11;
 	out << L"[";
-	for (int i = 0; i < 16; ++i)
+	for (size_t i = 0; i < 16; ++i)
 	{
 		out << m[i] << L",";
 	}
@@ -1103,6 +1109,201 @@ inline ac_ostream& operator<<(ac_ostream& out, const AeroMap& o)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// JUNK
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+inline ac_ostream& operator<<(ac_ostream& out, const GearChanger& o)
+{
+	AC_SER_BEGIN(GearChanger);
+	AC_SER_FIELD(wasGearUpTriggered);
+	AC_SER_FIELD(wasGearDnTriggered);
+	//Car * car;
+	AC_SER_FIELD(lastGearUp);
+	AC_SER_FIELD(lastGearDn);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const ABS& o)
+{
+	AC_SER_BEGIN(ABS);
+	AC_SER_FIELD(isPresent);
+	AC_SER_FIELD(isActive);
+	AC_SER_FIELD(slipRatioLimit);
+	AC_SER_FIELD(frequency);
+	AC_SER_FIELD(channels);
+	//Car * car;
+	AC_SER_FIELD(timeAccumulator);
+	AC_SER_FIELD(valueCurve);
+	AC_SER_FIELD(currentMode);
+	AC_SER_FIELD(currentValue);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const TractionControl& o)
+{
+	AC_SER_BEGIN(TractionControl);
+	AC_SER_FIELD(isPresent);
+	AC_SER_FIELD(isActive);
+	AC_SER_FIELD(slipRatioLimit);
+	AC_SER_FIELD(isInAction);
+	AC_SER_FIELD(frequency);
+	//Car * car;
+	AC_SER_FIELD(minSpeedMS);
+	AC_SER_FIELD(timeAccumulator);
+	AC_SER_FIELD(currentMode);
+	AC_SER_FIELD(lastValue);
+	AC_SER_FIELD(valueCurve);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const StabilityControl& o)
+{
+	AC_SER_BEGIN(StabilityControl);
+	AC_SER_FIELD(gain);
+	AC_SER_FIELD(useBeta);
+	//Car * car;
+	AC_SER_FIELD(maxGain);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const EDL& o)
+{
+	AC_SER_BEGIN(EDL);
+	AC_SER_FIELD(isPresent);
+	AC_SER_FIELD(isActive);
+	AC_SER_FIELD(wheelSpeedGainPower);
+	AC_SER_FIELD(wheelSpeedGainCoast);
+	AC_SER_FIELD(deadZonePower);
+	AC_SER_FIELD(deadZoneCoast);
+	AC_SER_FIELD(brakeTorquePower);
+	AC_SER_FIELD(brakeTorqueCoast);
+	AC_SER_FIELD(outLevel);
+	AC_SER_FIELD(outBrakeTorque);
+	AC_SER_FIELD(speedDiff);
+	//Car * car;
+	AC_SER_FIELD(leftTyreIndex);
+	AC_SER_FIELD(rightTyreIndex);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const DRSWingConnection& o)
+{
+	AC_SER_BEGIN(DRSWingConnection);
+	//Wing * wing;
+	AC_SER_FIELD(effect);
+	AC_SER_FIELD(angle);
+	AC_SER_FIELD_T(mode, int);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const DRS& o)
+{
+	AC_SER_BEGIN(DRS);
+	AC_SER_FIELD(isPresent);
+	AC_SER_FIELD(isActive);
+	AC_SER_FIELD(isAvailable);
+	AC_SER_FIELD(ignoreZones);
+	AC_SER_ARR_R(wings);
+	//Car * car;
+	AC_SER_FIELD(lastState);
+	AC_SER_FIELD(limitG);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const Kers& o)
+{
+	AC_SER_BEGIN(Kers);
+	AC_SER_FIELD_T(attachment, int);
+	//Car * car;
+	AC_SER_FIELD(present);
+	AC_SER_FIELD(input);
+	AC_SER_FIELD(brakeForMaxCharge);
+	AC_SER_FIELD(charge);
+	AC_SER_FIELD(chargeK);
+	AC_SER_FIELD(dischargeK);
+	AC_SER_FIELD(angularVelocity);
+	AC_SER_FIELD(negativeInputChargeK);
+	AC_SER_FIELD(hasButtonOverride);
+	AC_SER_FIELD(currentJ);
+	AC_SER_FIELD(maxJ);
+	AC_SER_FIELD(torqueLUT);
+	AC_SER_FIELD(controller);
+	AC_SER_FIELD(hasController);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const ERSStatus& o)
+{
+	AC_SER_BEGIN(ERSStatus);
+	AC_SER_FIELD(kineticRecovery);
+	AC_SER_FIELD(heatRecovery);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const ERSCockpitControls& o)
+{
+	AC_SER_BEGIN(ERSCockpitControls);
+	AC_SER_FIELD(recovery);
+	AC_SER_FIELD(mguHMode);
+	AC_SER_FIELD(deliveryProfile);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const ERSPowerController& o)
+{
+	AC_SER_BEGIN(ERSPowerController);
+	AC_SER_FIELD(name);
+	AC_SER_FIELD(ctrl);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const ERS& o)
+{
+	AC_SER_BEGIN(ERS);
+	AC_SER_FIELD(present);
+	AC_SER_FIELD(kineticRecovery);
+	AC_SER_FIELD(status);
+	AC_SER_FIELD(isHeatCharginBattery);
+	AC_SER_ARR_R(ersPowerControllers);
+	AC_SER_ARR_R(ersPowerControllersFront);
+	AC_SER_FIELD(defaultPowerControllerIndex);
+	AC_SER_FIELD(isCharging);
+	AC_SER_FIELD(cockpitControls);
+	//Car * car;
+	AC_SER_FIELD(chargeK);
+	AC_SER_FIELD(dischargeK);
+	AC_SER_FIELD(dischargeKFront);
+	AC_SER_FIELD(hasButtonOverride);
+	AC_SER_FIELD(torqueLUT);
+	AC_SER_FIELD(coastLUT);
+	AC_SER_FIELD(controller);
+	AC_SER_FIELD(controllerFront);
+	AC_SER_FIELD(charge);
+	AC_SER_FIELD(maxJ);
+	AC_SER_FIELD(currentJ);
+	AC_SER_FIELD(input);
+	AC_SER_FIELD(heatChargeK);
+	AC_SER_FIELD(heatTorque);
+	AC_SER_FIELD(rearCorrectionTorque);
+	AC_SER_FIELD(frontController);
+	AC_SER_FIELD(frontTorqueLUT);
+	AC_SER_FIELD(frontTorqueVectoringBias);
+	AC_SER_END();
+	return out;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // CAR
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1128,6 +1329,44 @@ inline ac_ostream& operator<<(ac_ostream& out, const ThermalObject& o)
 	AC_SER_FIELD(heatAccumulator);
 	AC_SER_END();
 	return out;
+}
+
+template<typename T>
+inline void ser_susp_t(ac_ostream& out, T* susp)
+{
+	ser_field(out, *susp);
+}
+
+inline void ser_susp(ac_ostream& out, ISuspension* susp, SuspensionType type)
+{
+	switch (type)
+	{
+		case SuspensionType::DoubleWishbone: 
+			ser_susp_t<Suspension>(out, (Suspension*)susp); 
+			break;
+
+		case SuspensionType::Strut: 
+			ser_susp_t<SuspensionStrut>(out, (SuspensionStrut*)susp); 
+			break;
+
+		case SuspensionType::Axle: 
+			ser_susp_t<SuspensionAxle>(out, (SuspensionAxle*)susp); 
+			break;
+
+		case SuspensionType::Multilink: 
+			ser_susp_t<SuspensionML>(out, (SuspensionML*)susp); 
+			break;
+	}
+}
+
+inline void ser_susp(ac_ostream& out, const Car& o)
+{
+	out << L"\"" << L"suspensions" << L"\":[";
+	ser_susp(out, o.suspensions[0], o.suspensionTypeF);
+	ser_susp(out, o.suspensions[1], o.suspensionTypeF);
+	ser_susp(out, o.suspensions[2], o.suspensionTypeR);
+	ser_susp(out, o.suspensions[3], o.suspensionTypeR);
+	out << L"],";
 }
 
 inline ac_ostream& operator<<(ac_ostream& out, const Car& o)
@@ -1167,30 +1406,30 @@ inline ac_ostream& operator<<(ac_ostream& out, const Car& o)
 	//TimeTransponder transponder;
 	//CarColliderManager colliderManager;
 	AC_SER_FIELD(drivetrain);
-	//ABS abs;
-	//TractionControl tractionControl;
+	AC_SER_FIELD(abs);
+	AC_SER_FIELD(tractionControl);
 	//SpeedLimiter speedLimiter;
 	AC_SER_FIELD(aeroMap);
 	AC_SER_ARR_R(tyres);
-	AC_SER_ARR_P(suspensions);
+	ser_susp(out, o); // suspensions
 	AC_SER_FIELD(brakeSystem);
 	//Autoclutch autoClutch;
 	AC_SER_FIELD(physicsGUID);
 	//Telemetry telemetry;
 	//AutoBlip autoBlip;
 	//AutoShifter autoShift;
-	//GearChanger gearChanger;
-	//EDL edl;
+	AC_SER_FIELD(gearChanger);
+	AC_SER_FIELD(edl);
 	AC_SER_ARR_R(antirollBars);
-	//StabilityControl stabilityControl;
+	AC_SER_FIELD(stabilityControl);
 	AC_SER_FIELD(lastCollisionTime);
 	//DriftModeComponent driftMode;
 	//PerformanceMeter performanceMeter;
 	//SetupManager setupManager;
 	AC_SER_FIELD(screenName);
-	//DRS drs;
-	//Kers kers;
-	//ERS ers;
+	AC_SER_FIELD(drs);
+	AC_SER_FIELD(kers);
+	AC_SER_FIELD(ers);
 	//LapInvalidator lapInvalidator;
 	//PenaltyManager penaltyManager;
 	AC_SER_FIELD(isGearboxLocked);

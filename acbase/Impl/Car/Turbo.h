@@ -2,16 +2,34 @@
 
 BEGIN_HOOK_OBJ(Turbo)
 
+	#define RVA_Turbo_ctor 2811696
 	#define RVA_Turbo_step 2811840
+	#define RVA_Turbo_setTurboBoostLevel 2811808
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(Turbo, ctor);
 		HOOK_METHOD_RVA(Turbo, step);
+		HOOK_METHOD_RVA(Turbo, setTurboBoostLevel);
 	}
 
+	Turbo* _ctor(TurboDef* data);
 	void _step(float gas, float rpms, float dt);
+	void _setTurboBoostLevel(float value);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Turbo* _Turbo::_ctor(TurboDef* data)
+{
+	AC_CTOR_THIS_POD(Turbo);
+
+	this->userSetting = 1.0f;
+	this->data = *data;
+
+	return this;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,6 +62,16 @@ void _Turbo::_step(float gas, float rpms, float dt)
 			this->rotation = fUserWG / this->data.maxBoost;
 		}
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Turbo::_setTurboBoostLevel(float value)
+{
+	if (this->data.isAdjustable)
+		this->userSetting = value;
+	else
+		this->userSetting = 1.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,16 +2,28 @@
 
 BEGIN_HOOK_OBJ(GearChanger)
 
+	#define RVA_GearChanger_init 2861888
 	#define RVA_GearChanger_step 2861904
 
 	static void _hook()
 	{
+		HOOK_METHOD_RVA(GearChanger, init);
 		HOOK_METHOD_RVA(GearChanger, step);
 	}
 
+	// ctor optimized
+	void _init(Car* car);
 	void _step(float dt);
 
 END_HOOK_OBJ()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _GearChanger::_init(Car* car)
+{
+	this->car = car;
+	this->lastGearUp = 0;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

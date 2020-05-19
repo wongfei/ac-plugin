@@ -42,13 +42,13 @@ BEGIN_HOOK_OBJ(PhysicsCore)
 	RayCastHit _rayCastL(const vec3f& pos, const vec3f& dir, float length);
 
 	IRigidBody* _createRigidBody();
+	IRayCaster* _createRayCaster(float length);
+
 	IJoint* _createBallJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& pos);
 	IJoint* _createBumpJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, float rangeUp, float rangeDn);
 	IJoint* _createDistanceJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& p1, const vec3f& p2);
 	IJoint* _createFixedJoint(IRigidBody* rb1, IRigidBody* rb2);
 	IJoint* _createSliderJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& axis);
-
-	IRayCaster* _createRayCaster(float length);
 
 	ICollisionObject* _createCollisionMesh(
 		float* vertices, unsigned int numVertices, unsigned short* indices, int indexCount, 
@@ -60,7 +60,7 @@ END_HOOK_OBJ()
 
 PhysicsCore* _PhysicsCore::_ctor()
 {
-	AC_CTOR_VCLASS(PhysicsCore);
+	AC_CTOR_THIS_VT(PhysicsCore);
 
 	ODE_CALL(dInitODE2)(0);
 	ODE_CALL(dAllocateODEDataForThread)(0xFFFFFFFF);
@@ -322,9 +322,16 @@ static void rayNearCallback(void* data, dxGeom* o1, dxGeom* o2)
 
 #if 0
 
+// TODO
+
 IRigidBody* _PhysicsCore::_createRigidBody()
 {
 	return new _RigidBodyODE(this);
+}
+
+IRayCaster* _PhysicsCore::_createRayCaster(float length)
+{
+	return new _RayCaster(length);
 }
 
 IJoint* _PhysicsCore::_createBallJoint(IRigidBody* rb1, IRigidBody* rb2, const vec3f& pos)
@@ -364,11 +371,6 @@ IJoint* _PhysicsCore::_createSliderJoint(IRigidBody* rb1, IRigidBody* rb2, const
 	dJointAttach(j, ((RigidBodyODE*)rb1)->id, ((RigidBodyODE*)rb2)->id);
 	dJointSetSliderAxis(j, ODE_V3(axis));
 	return new _JointODE(this, j); // SliderJointODE
-}
-
-IRayCaster* _PhysicsCore::_createRayCaster(float length)
-{
-	return new _RayCaster(length);
 }
 
 ICollisionObject* _PhysicsCore::_createCollisionMesh(

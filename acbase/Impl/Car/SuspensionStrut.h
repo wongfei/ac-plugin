@@ -39,7 +39,7 @@ END_HOOK_OBJ()
 
 SuspensionStrut* _SuspensionStrut::_ctor(Car* pCar, int index)
 {
-	AC_CTOR_VCLASS(SuspensionStrut);
+	AC_CTOR_THIS_VT(SuspensionStrut);
 
 	this->damper.ctor();
 
@@ -49,6 +49,8 @@ SuspensionStrut* _SuspensionStrut::_ctor(Car* pCar, int index)
 	this->index = index;
 
 	this->baseCFM = 0.0000001f;
+	this->damageData.minVelocity = 15.0f;
+	this->k = 90000.0f;
 	this->damageData.damageDirection = 1.0; // TODO: random
 
 	this->loadINI(index);

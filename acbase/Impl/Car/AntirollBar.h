@@ -23,7 +23,7 @@ END_HOOK_OBJ()
 
 AntirollBar* _AntirollBar::_ctor()
 {
-	AC_CTOR_POD(AntirollBar);
+	AC_CTOR_THIS_POD(AntirollBar);
 
 	AC_CTOR_UDT(this->ctrl)();
 

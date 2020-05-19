@@ -62,7 +62,7 @@ END_HOOK_OBJ()
 
 Drivetrain* _Drivetrain::_ctor()
 {
-	AC_CTOR_POD(Drivetrain);
+	AC_CTOR_THIS_POD(Drivetrain);
 
 	AC_CTOR_UDT(this->acEngine)();
 
