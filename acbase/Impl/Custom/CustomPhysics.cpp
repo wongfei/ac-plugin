@@ -1,14 +1,39 @@
 #include "precompiled.h"
 #include "CustomPhysics.h"
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 // tested on:
 // ver 1.16.3
 // build 2426371
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define AC_ENABLE_CUSTOM_PHYSICS
-#define AC_DUMP_CAR_STEP0
+#define AC_DBG_DUMP_STATE
+
+#if defined(AC_ENABLE_CUSTOM_PHYSICS)
+	static const bool g_bCustomPhysics = true;
+
+	#define AC_CTOR_THIS_VT(name)\
+		memset(this, 0, sizeof(name));\
+		new (this) name();\
+		this->_vtable = _drva(RVA_##name##_vtable);
+
+	#define AC_CTOR_THIS_POD(name)\
+		memset(this, 0, sizeof(name));\
+		new (this) name();
+#else
+	static const bool g_bCustomPhysics = false;
+
+	// zero the whole object before calling original ctor
+	// AC devs love to keep uninitialized variables
+	#define AC_CTOR_THIS_VT(name) memset(this, 0, sizeof(name));
+	#define AC_CTOR_THIS_POD(name) memset(this, 0, sizeof(name));
+#endif
+
+#define AC_CTOR_UDT(name) name.ctor
+#define AC_CTOR_NATIVE(name) new (&name) decltype(name)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Game/Sim.h"
 
@@ -38,8 +63,6 @@
 #include "Physics/Track.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void* _orig_Car_step = nullptr;
 
 #include "Car/Car.h"
 #include "Car/CarUtils.h"
@@ -112,40 +135,6 @@ CustomPhysics::~CustomPhysics()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CustomPhysics::printCarInfo(CarAvatar* car)
-{
-	log_printf(L"");
-	log_printf(L"carName=%s", car->physics->screenName.c_str());
-	log_printf(L"unixName=%s", car->physics->unixName.c_str());
-	log_printf(L"tyreVersion=%d", (int)car->physics->tyres[0].modelData.version);
-	log_printf(L"suspensionTypeF=%d", (int)car->physics->suspensionTypeF);
-	log_printf(L"suspensionTypeR=%d", (int)car->physics->suspensionTypeR);
-	log_printf(L"torqueModeEx=%d", (int)car->physics->torqueModeEx);
-	log_printf(L"tractionType=%d", (int)car->physics->drivetrain.tractionType);
-	log_printf(L"diffType=%d", (int)car->physics->drivetrain.diffType);
-	log_printf(L"numWings=%d", (int)car->physics->aeroMap.wings.size());
-	log_printf(L"");
-
-	#if 0
-	{
-		std::wstring data = L"content/cars/" + car->physics->unixName + L"/data/";
-
-		//auto ini(new_udt_unique<INIReader>(data + L"car.ini"));
-		//log_printf(L"mass=%.3f", (float)ini->getFloat(L"BASIC", L"TOTALMASS"));
-
-		ini_dump(data + L"aero.ini");
-		ini_dump(data + L"brakes.ini");
-		ini_dump(data + L"car.ini");
-		ini_dump(data + L"drivetrain.ini");
-		ini_dump(data + L"engine.ini");
-		ini_dump(data + L"suspensions.ini");
-		ini_dump(data + L"tyres.ini");
-	}
-	#endif
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 void CustomPhysics::installHooks()
 {
 	log_printf(L"installHooks");
@@ -160,18 +149,20 @@ void CustomPhysics::installHooks()
 
 	#if !defined(AC_ENABLE_CUSTOM_PHYSICS)
 
-		#if defined(AC_DUMP_CAR_STEP0)
-			HOOK_METHOD_RVA_ORIG(Car, step);
+		#if defined(AC_DBG_DUMP_STATE)
+			// allows to dump original game state
+			HOOK_METHOD_RVA_ORIG(PhysicsEngine, ctor);
+			HOOK_METHOD_RVA_ORIG(PhysicsEngine, step);
+
+			// zero uninitialized variables
+			HOOK_METHOD_RVA_ORIG(Car, ctor);
+			HOOK_METHOD_RVA_ORIG(Suspension, ctor);
+			HOOK_METHOD_RVA_ORIG(SuspensionStrut, ctor);
+			HOOK_METHOD_RVA_ORIG(SuspensionAxle, ctor);
+			HOOK_METHOD_RVA_ORIG(SuspensionML, ctor);
 		#endif
 
 	#else
-
-		#if 1
-		HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
-		HOOK_OBJ(Curve);
-		HOOK_OBJ(INIReader);
-		HOOK_OBJ(PIDController);
-		#endif
 
 		#if 1
 		HOOK_OBJ(PhysicsEngine);
@@ -213,9 +204,50 @@ void CustomPhysics::installHooks()
 		HOOK_OBJ(DynamicWingController);
 		#endif
 
+		#if 1
+		HOOK_FUNC_RVA(mat44f_createFromAxisAngle);
+		HOOK_OBJ(Curve);
+		HOOK_OBJ(INIReader);
+		HOOK_OBJ(PIDController);
+		#endif
+
 	#endif // AC_ENABLE_CUSTOM_PHYSICS
 
 	hook_enable();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CustomPhysics::printCarInfo(CarAvatar* car)
+{
+	log_printf(L"");
+	log_printf(L"carName=%s", car->physics->screenName.c_str());
+	log_printf(L"unixName=%s", car->physics->unixName.c_str());
+	log_printf(L"tyreVersion=%d", (int)car->physics->tyres[0].modelData.version);
+	log_printf(L"suspensionTypeF=%d", (int)car->physics->suspensionTypeF);
+	log_printf(L"suspensionTypeR=%d", (int)car->physics->suspensionTypeR);
+	log_printf(L"torqueModeEx=%d", (int)car->physics->torqueModeEx);
+	log_printf(L"tractionType=%d", (int)car->physics->drivetrain.tractionType);
+	log_printf(L"diffType=%d", (int)car->physics->drivetrain.diffType);
+	log_printf(L"numWings=%d", (int)car->physics->aeroMap.wings.size());
+	log_printf(L"");
+
+	#if 0
+	{
+		std::wstring data = L"content/cars/" + car->physics->unixName + L"/data/";
+
+		//auto ini(new_udt_unique<INIReader>(data + L"car.ini"));
+		//log_printf(L"mass=%.3f", (float)ini->getFloat(L"BASIC", L"TOTALMASS"));
+
+		ini_dump(data + L"aero.ini");
+		ini_dump(data + L"brakes.ini");
+		ini_dump(data + L"car.ini");
+		ini_dump(data + L"drivetrain.ini");
+		ini_dump(data + L"engine.ini");
+		ini_dump(data + L"suspensions.ini");
+		ini_dump(data + L"tyres.ini");
+	}
+	#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

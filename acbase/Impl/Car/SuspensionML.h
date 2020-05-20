@@ -1,5 +1,7 @@
 #pragma once
 
+static void* _orig_SuspensionML_ctor = nullptr;
+
 BEGIN_HOOK_OBJ(SuspensionML)
 
 	#define RVA_SuspensionML_vtable 0x5001A0
@@ -14,7 +16,7 @@ BEGIN_HOOK_OBJ(SuspensionML)
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(SuspensionML, ctor);
+		HOOK_METHOD_RVA_ORIG(SuspensionML, ctor);
 		HOOK_METHOD_RVA(SuspensionML, loadINI);
 		HOOK_METHOD_RVA(SuspensionML, attach);
 		HOOK_METHOD_RVA(SuspensionML, setPositions);
@@ -40,6 +42,12 @@ END_HOOK_OBJ()
 SuspensionML* _SuspensionML::_ctor(Car* pCar, int index)
 {
 	AC_CTOR_THIS_VT(SuspensionML);
+
+	if (!g_bCustomPhysics)
+	{
+		auto orig = ORIG_METHOD(SuspensionML, ctor);
+		return THIS_CALL(orig)(pCar, index);
+	}
 
 	this->damper.ctor();
 

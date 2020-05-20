@@ -15,7 +15,7 @@ BEGIN_HOOK_OBJ(INIReader)
 	static void _hook()
 	{
 		AC_GVAR_INIT(INIReader_useCache);
-		log_printf(L"INIReader::useCache=%d", (int)AC_GVAR(INIReader_useCache));
+		//log_printf(L"INIReader::useCache=%d", (int)AC_GVAR(INIReader_useCache));
 
 		HOOK_METHOD_RVA_ORIG(INIReader, load);
 		HOOK_METHOD_RVA_ORIG(INIReader, loadEncrypt);

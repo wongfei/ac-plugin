@@ -1,8 +1,8 @@
 #pragma once
 
-// DoubleWishbone
+static void* _orig_Suspension_ctor = nullptr;
 
-BEGIN_HOOK_OBJ(Suspension)
+BEGIN_HOOK_OBJ(Suspension) // DoubleWishbone
 
 	#define RVA_Suspension_vtable 0x4FF870
 	#define RVA_Suspension_ctor 2885408
@@ -15,7 +15,7 @@ BEGIN_HOOK_OBJ(Suspension)
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(Suspension, ctor);
+		HOOK_METHOD_RVA_ORIG(Suspension, ctor);
 		HOOK_METHOD_RVA(Suspension, loadINI);
 		HOOK_METHOD_RVA(Suspension, attach);
 		HOOK_METHOD_RVA(Suspension, step);
@@ -39,6 +39,12 @@ END_HOOK_OBJ()
 Suspension* _Suspension::_ctor(Car* pCar, int index)
 {
 	AC_CTOR_THIS_VT(Suspension);
+
+	if (!g_bCustomPhysics)
+	{
+		auto orig = ORIG_METHOD(Suspension, ctor);
+		return THIS_CALL(orig)(pCar, index);
+	}
 
 	this->damper.ctor();
 	this->activeActuator.ctor();

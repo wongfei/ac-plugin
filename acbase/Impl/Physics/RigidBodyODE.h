@@ -457,9 +457,7 @@ void _RigidBodyODE::_setBoxColliderMask(uint64_t box, unsigned long mask)
 
 void _RigidBodyODE::_addSphereCollider(const vec3f& pos, float radius, unsigned int group, ISphereCollisionCallback* callback)
 {
-	// TODO: seems to be empty
-	//auto orig = ORIG_METHOD(RigidBodyODE, addSphereCollider);
-	//THIS_CALL(orig)(pos, radius, group, callback);
+	// EMPTY
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

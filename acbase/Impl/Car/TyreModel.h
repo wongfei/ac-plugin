@@ -19,7 +19,7 @@ BEGIN_HOOK_OBJ(SCTM)
 	}
 
 	SCTM* _ctor();
-	TyreModelOutput _solve(TyreModelInput& tmi);
+	TyreModelOutput _solve(const TyreModelInput& tmi);
 	float _getStaticDX(float load);
 	float _getStaticDY(float load);
 	float _getPureFY(float D, float cf, float load, float slip);
@@ -47,19 +47,19 @@ SCTM* _SCTM::_ctor()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
+TyreModelOutput _SCTM::_solve(const TyreModelInput& tmi) // TODO: cleanup
 {
 	TyreModelOutput tmo;
 	memset(&tmo, 0, sizeof(tmo));
 
-	if (tmi.load <= 0.0 || tmi.slipAngleRAD == 0.0 && tmi.slipRatio == 0.0 && tmi.camberRAD == 0.0)
+	if (tmi.load <= 0.0f || tmi.slipAngleRAD == 0.0f && tmi.slipRatio == 0.0f && tmi.camberRAD == 0.0f)
 	{
 		return tmo;
 	}
 
 	float fAsy = this->asy;
 	if (tmi.useSimpleModel)
-		this->asy = 1.0;
+		this->asy = 1.0f;
 
 	float fSlipAngle = tmi.slipAngleRAD;
 	float fUnk1 = (sinf(tmi.camberRAD) * this->camberGain) + fSlipAngle;
@@ -81,7 +81,7 @@ TyreModelOutput _SCTM::_solve(TyreModelInput& tmi) // TODO: cleanup
 	float fCamberRad = tmi.camberRAD;
 	float fCamberRadTmp = fabsf(fCamberRad);
 
-	if ((fCamberRad < 0.0 || fUnk1 < 0.0) && (fCamberRad > 0.0 || fUnk1 > 0.0))
+	if ((fCamberRad < 0.0f || fUnk1 < 0.0f) && (fCamberRad > 0.0f || fUnk1 > 0.0f))
 		fCamberRadTmp = -fCamberRadTmp;
 
 	fCamberRadTmp = -fCamberRadTmp;

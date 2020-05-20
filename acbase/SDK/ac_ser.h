@@ -65,6 +65,12 @@ inline void ser_field(ac_ostream& out, const std::wstring& field)
 	out << quote(field) << L",";
 }
 
+inline ac_ostream& operator<<(ac_ostream& out, const Speed& o)
+{
+	out << o.value;
+	return out;
+}
+
 inline ac_ostream& operator<<(ac_ostream& out, const vec3f& o)
 {
 	out << L"[" << o.x << L"," << o.y << L"," << o.z << L"]";
@@ -80,6 +86,15 @@ inline ac_ostream& operator<<(ac_ostream& out, const mat44f& o)
 		out << m[i] << L",";
 	}
 	out << L"]";
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const plane4f& o)
+{
+	AC_SER_BEGIN(plane4f);
+	AC_SER_FIELD(normal);
+	AC_SER_FIELD(d);
+	AC_SER_END();
 	return out;
 }
 
@@ -1493,6 +1508,131 @@ inline ac_ostream& operator<<(ac_ostream& out, const Car& o)
 	//PhysicsValueCache valueCache;
 	AC_SER_FIELD(fuelKG);
 	AC_SER_FIELD(externalControl);
+	AC_SER_END();
+	return out;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PhysicsEngine
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+inline ac_ostream& operator<<(ac_ostream& out, const Triangle& o)
+{
+	AC_SER_BEGIN(Triangle);
+	AC_SER_ARR_R(points);
+	AC_SER_FIELD(plane);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const SlipStream& o)
+{
+	AC_SER_BEGIN(SlipStream);
+	AC_SER_FIELD(triangle);
+	AC_SER_FIELD(speedFactorMult);
+	AC_SER_FIELD(effectGainMult);
+	AC_SER_FIELD(dir);
+	//PhysicsEngine * physicsEngine;
+	AC_SER_FIELD(length);
+	AC_SER_FIELD(speedFactor);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const PenaltyRules& o)
+{
+	AC_SER_BEGIN(PenaltyRules);
+	AC_SER_FIELD_T(jumpStartPenaltyMode, int);
+	AC_SER_FIELD(basePitPenaltyLaps);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const SteerMzLowSpeedReduction& o)
+{
+	AC_SER_BEGIN(SteerMzLowSpeedReduction);
+	AC_SER_FIELD(speedKMH);
+	AC_SER_FIELD(minValue);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const Wind& o)
+{
+	AC_SER_BEGIN(Wind);
+	AC_SER_FIELD(vector);
+	AC_SER_FIELD(speed);
+	AC_SER_FIELD(directionDeg);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const SessionInfo& o)
+{
+	AC_SER_BEGIN(SessionInfo);
+	AC_SER_FIELD_T(type, int);
+	AC_SER_FIELD(startTimeMS);
+	AC_SER_FIELD(timeSecs);
+	AC_SER_FIELD(laps);
+	AC_SER_FIELD(index);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const DynamicTempData& o)
+{
+	AC_SER_BEGIN(DynamicTempData);
+	AC_SER_FIELD(temperatureCurve);
+	AC_SER_FIELD(temperatureStartTime);
+	AC_SER_FIELD(baseRoad);
+	AC_SER_FIELD(baseAir);
+	AC_SER_END();
+	return out;
+}
+
+inline ac_ostream& operator<<(ac_ostream& out, const PhysicsEngine& o)
+{
+	AC_SER_BEGIN(PhysicsEngine);
+
+	AC_SER_ARR_P_BYVAL(cars); //std::vector<Car *,std::allocator<Car *> > cars;
+	AC_SER_FIELD(physicsTime);
+	AC_SER_FIELD(validated);
+	//Concurrency::concurrent_queue<ACPhysicsEvent,std::allocator<ACPhysicsEvent> > eventQueue;
+	//Event<OnFlagEvent> evOnFlagEvent;
+	//Event<double> evOnStepCompleted;
+	//Event<double> evOnPreStep;
+	//Event<SessionInfo> evOnNewSessionPhysics;
+	AC_SER_FIELD(allowTyreBlankets);
+	AC_SER_FIELD(lockGearboxAtStartTimeMS);
+	AC_SER_FIELD(fuelConsumptionRate);
+	AC_SER_FIELD(tyreConsumptionRate);
+	AC_SER_FIELD(allowedTyresOut);
+	AC_SER_FIELD_T(penaltyMode, int);
+	AC_SER_FIELD(penaltyRules);
+	AC_SER_ARR_P_BYVAL(slipStreams); //std::vector<SlipStream *,std::allocator<SlipStream *> > slipStreams;
+	AC_SER_FIELD(gameTime);
+	AC_SER_FIELD(ambientTemperature);
+	AC_SER_FIELD(roadTemperature);
+	AC_SER_FIELD(mechanicalDamageRate);
+	//PhysicsCPUTimes physicsCPUTimes;
+	AC_SER_FIELD(flatSpotFFGain);
+	AC_SER_FIELD(mzLowSpeedReduction);
+	AC_SER_FIELD(isEngineStallEnabled);
+	AC_SER_FIELD(gyroWheelGain);
+	AC_SER_FIELD(spinTorqueGain);
+	AC_SER_FIELD(damperMinValue);
+	AC_SER_FIELD(damperGain);
+	AC_SER_FIELD(wind);
+	AC_SER_FIELD(sessionInfo);
+	//IPhysicsCore * core;
+	//Track * track;
+	//IDebugVisualizer * debugVisualizer;
+	AC_SER_FIELD(stepCounter);
+	//std::vector<ICarPhysicsStateProvider *,std::allocator<ICarPhysicsStateProvider *> > additionalPhysicsProviders;
+	//std::vector<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> >,std::allocator<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t> > > > legalTyreList;
+	//std::unique_ptr<ThreadPool,std::default_delete<ThreadPool> > pool;
+	AC_SER_FIELD(dynamicTemp);
+
 	AC_SER_END();
 	return out;
 }

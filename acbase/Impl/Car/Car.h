@@ -1,5 +1,7 @@
 #pragma once
 
+static void* _orig_Car_ctor = nullptr;
+
 BEGIN_HOOK_OBJ(Car)
 
 	#define RVA_Car_vtable 0x4F6EB0
@@ -15,9 +17,9 @@ BEGIN_HOOK_OBJ(Car)
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(Car, ctor);
+		HOOK_METHOD_RVA_ORIG(Car, ctor);
 		HOOK_METHOD_RVA(Car, initCarData);
-		HOOK_METHOD_RVA_ORIG(Car, step);
+		HOOK_METHOD_RVA(Car, step);
 		HOOK_METHOD_RVA(Car, updateAirPressure);
 		HOOK_METHOD_RVA(Car, updateBodyMass);
 		HOOK_METHOD_RVA(Car, calcBodyMass);
@@ -42,9 +44,13 @@ END_HOOK_OBJ()
 
 Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const std::wstring& config)
 {
-	// TODO: experimental
-
 	AC_CTOR_THIS_VT(Car);
+
+	if (!g_bCustomPhysics)
+	{
+		auto orig = ORIG_METHOD(Car, ctor);
+		return THIS_CALL(orig)(iengine, iunixName, config);
+	}
 
 	auto pThis = this;
 
@@ -330,44 +336,8 @@ void _Car::_initCarData()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool _dump_car_step0 = true;
-
 void _Car::_step(float dt)
 {
-	#if defined(AC_DUMP_CAR_STEP0)
-	if (_dump_car_step0)
-	{
-		_dump_car_step0 = false;
-
-		ac_ostream out;
-		out << *this;
-		auto str = out.str();
-
-		#if defined(AC_ENABLE_CUSTOM_PHYSICS)
-		auto dumpName = L"_custom.json";
-		#else
-		auto dumpName = L"_orig.json";
-		#endif
-
-		std::wofstream fd(this->unixName + dumpName);
-		fd << str;
-		fd.close();
-	}
-	#endif
-
-	#if defined(AC_ENABLE_CUSTOM_PHYSICS)
-		auto bEnableCustom = true;
-	#else
-		auto bEnableCustom = false;
-	#endif
-
-	if (!bEnableCustom)
-	{
-		auto orig = ORIG_METHOD(Car, step);
-		THIS_CALL(orig)(dt);
-		return;
-	}
-
 	if (!this->physicsGUID)
 	{
 		vec3f vBodyVelocity = this->body->getVelocity();

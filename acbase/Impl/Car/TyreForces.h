@@ -99,6 +99,7 @@ void _Tyre::_addTyreForcesV10(const vec3f& pos, const vec3f& normal, SurfaceDef*
 	float fDynamicGripLevel = this->car ? this->car->ksPhysics->track->dynamicGripLevel : 1.0f;
 
 	TyreModelInput tmi;
+	memset(&tmi, 0, sizeof(tmi));
 	tmi.load = this->status.load;
 	tmi.slipAngleRAD = this->status.slipAngleRAD;
 	tmi.slipRatio = this->status.slipRatio;

@@ -44,8 +44,8 @@ public:
 	CustomPhysics();
 	virtual ~CustomPhysics();
 
-	void printCarInfo(CarAvatar* car);
 	void installHooks();
+	void printCarInfo(CarAvatar* car);
 
 	void run(PhysicsDriveThread* pThread);
 	void stepNormal(PhysicsDriveThread* pThis);

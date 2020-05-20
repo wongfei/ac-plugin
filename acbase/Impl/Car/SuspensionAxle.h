@@ -1,5 +1,7 @@
 #pragma once
 
+static void* _orig_SuspensionAxle_ctor = nullptr;
+
 BEGIN_HOOK_OBJ(SuspensionAxle)
 
 	#define RVA_SuspensionAxle_vtable 0x4FFE90
@@ -13,7 +15,7 @@ BEGIN_HOOK_OBJ(SuspensionAxle)
 
 	static void _hook()
 	{
-		HOOK_METHOD_RVA(SuspensionAxle, ctor);
+		HOOK_METHOD_RVA_ORIG(SuspensionAxle, ctor);
 		// dont have loadINI
 		HOOK_METHOD_RVA(SuspensionAxle, attach);
 		HOOK_METHOD_RVA(SuspensionAxle, setPositions);
@@ -39,6 +41,12 @@ END_HOOK_OBJ()
 SuspensionAxle* _SuspensionAxle::_ctor(Car* pCar, RigidAxleSide side, const std::wstring& carDataPath)
 {
 	AC_CTOR_THIS_VT(SuspensionAxle);
+
+	if (!g_bCustomPhysics)
+	{
+		auto orig = ORIG_METHOD(SuspensionAxle, ctor);
+		return THIS_CALL(orig)(pCar, side, carDataPath);
+	}
 
 	this->damper.ctor();
 

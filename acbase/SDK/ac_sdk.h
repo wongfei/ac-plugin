@@ -53,24 +53,6 @@ __forceinline void* _drva(size_t off) { return ((uint8_t*)_ac_module) + off; }
 #define AC_GVAR(name) (*(name##_ptr))
 #define AC_GPTR(name) (name##_ptr)
 
-// DANGER IS MY MIDDLE NAME!!!
-#define AC_CTOR_THIS_VT(name)\
-	memset(this, 0, sizeof(name));\
-	new (this) name();\
-	this->_vtable = _drva(RVA_##name##_vtable);
-
-#define AC_CTOR_THIS_POD(name)\
-	memset(this, 0, sizeof(name));\
-	new (this) name();
-
-// TODO: stupid
-#define AC_CTOR_UDT(name)\
-	name.ctor
-
-// TODO: stupid
-#define AC_CTOR_NATIVE(name)\
-	new (&name) decltype(name)
-
 // THIS IS SPARTA!!!
 __forceinline void* get_vtp(void* obj) { return *((void**)obj); }
 __forceinline void* get_vfp(void* obj, size_t id) { return *((void**)((uint8_t*)get_vtp(obj) + id * sizeof(void*))); }
