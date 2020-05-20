@@ -31,6 +31,7 @@ BEGIN_HOOK_OBJ(Car)
 	Car* _ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const std::wstring& config);
 	void _initCarData();
 	void _step(float dt);
+	void _postStep(float dt);
 	void _updateAirPressure();
 	void _updateBodyMass();
 	float _calcBodyMass();
@@ -495,6 +496,27 @@ void _Car::_step(float dt)
 
 	if (!this->physicsGUID)
 		this->stepJumpStart(dt);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_postStep(float dt)
+{
+	OnStepCompleteEvent e;
+	e.car = this;
+	e.physicsTime = this->ksPhysics->physicsTime;
+
+	for (auto& h : this->evOnStepComplete.handlers)
+	{
+		if (h.second)
+			(h.second)(e);
+	}
+
+	vec3f vBodyVel = this->body->getVelocity();
+	vec3f vBodyPos = this->body->getPosition(0);
+	this->slipStream.setPosition(vBodyPos, vBodyVel);
+
+	TODO_NOT_IMPLEMENTED; // splineLocator
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
