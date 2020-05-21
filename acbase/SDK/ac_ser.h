@@ -1346,6 +1346,19 @@ inline ac_ostream& operator<<(ac_ostream& out, const ThermalObject& o)
 	return out;
 }
 
+inline ac_ostream& operator<<(ac_ostream& out, const CarCollisionBounds& o)
+{
+	AC_SER_BEGIN(CarCollisionBounds);
+	AC_SER_FIELD(min);
+	AC_SER_FIELD(max);
+	AC_SER_FIELD(length);
+	AC_SER_FIELD(width);
+	AC_SER_FIELD(lengthFront);
+	AC_SER_FIELD(lengthRear);
+	AC_SER_END();
+	return out;
+}
+
 template<typename T>
 inline void ser_susp_t(ac_ostream& out, T* susp)
 {
@@ -1467,7 +1480,7 @@ inline ac_ostream& operator<<(ac_ostream& out, const Car& o)
 	AC_SER_FIELD(isRequestingPitStop);
 	AC_SER_FIELD(aiLapsToComplete);
 	AC_SER_FIELD(lightsOn);
-	//CarCollisionBounds bounds;
+	AC_SER_FIELD(bounds);
 	//SlipStream slipStream;
 	AC_SER_FIELD_T(torqueModeEx, int);
 	AC_SER_FIELD(isControlsLocked);

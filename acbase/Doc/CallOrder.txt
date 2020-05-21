@@ -9,9 +9,11 @@ CarAvatar::initPhysics
 			+Engine
 		+BrakeSystem
 		## init
+		Car::initCarDataPath
 		PhysicsCore::createRigidBody
 		Car::initCarData
 		BrakeSystem::init
+		+INIReader
 		+Suspension[4]
 			Suspension::loadINI
 		+Tyre[4]
@@ -19,12 +21,8 @@ CarAvatar::initPhysics
 		Tyre::init
 		Car::initHeaveSprings
 		Car::initAeroMap
-		SteeringSystem::init
-		Drivetrain::init
-			Engine::init
-				Engine::loadINI
-			Drivetrain::loadINI
-		GearChanger::init
+		<subsys>::init
+	Car::initColliderMesh
 
 PhysicsDriveThread::run
 	DirectInput::poll

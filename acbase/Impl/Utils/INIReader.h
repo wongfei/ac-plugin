@@ -71,7 +71,7 @@ static void ini_save(INIReader* ini, const std::wstring& dst, bool rewriteExisti
 static void ini_dump(const std::wstring& filename)
 {
 	auto ini(new_udt_unique<INIReader>(filename));
-	ini_save(ini.get(), L"_ini/" + ini->filename);
+	ini_save(ini.get(), L"_dump/" + ini->filename);
 }
 
 static void ini_load_event(INIReader* ini)
@@ -79,7 +79,7 @@ static void ini_load_event(INIReader* ini)
 	#if defined(AC_DEBUG)
 	if (ini->filename.find(L"content") == 0)
 	{
-		ini_save(ini, L"_ini/" + ini->filename);
+		ini_save(ini, L"_dump/" + ini->filename);
 	}
 	#endif
 }

@@ -36,6 +36,12 @@ END_HOOK_OBJ()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+inline float randDamageDirection()
+{
+	float fRnd = ((rand() * 0.000030518509f) * 100.0f);
+	return (fRnd >= 50.0f) ? 1.0f : -1.0f;
+}
+
 Suspension* _Suspension::_ctor(Car* pCar, int index)
 {
 	AC_CTOR_THIS_VT(Suspension);
@@ -57,7 +63,7 @@ Suspension* _Suspension::_ctor(Car* pCar, int index)
 	this->baseCFM = 0.0000001f;
 	this->damageData.minVelocity = 15.0f;
 	this->k = 90000.0f;
-	this->damageData.damageDirection = 1.0; // TODO: random
+	this->damageData.damageDirection = randDamageDirection();
 
 	this->loadINI(index);
 

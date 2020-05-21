@@ -7,6 +7,7 @@ BEGIN_HOOK_OBJ(Car)
 	#define RVA_Car_vtable 0x4F6EB0
 	#define RVA_Car_ctor 2539264
 	#define RVA_Car_initCarData 2566960
+	#define RVA_Car_initColliderMesh 2571040
 	#define RVA_Car_step 2579872
 	#define RVA_Car_updateAirPressure 2583264
 	#define RVA_Car_updateBodyMass 2583664
@@ -19,6 +20,7 @@ BEGIN_HOOK_OBJ(Car)
 	{
 		HOOK_METHOD_RVA_ORIG(Car, ctor);
 		HOOK_METHOD_RVA(Car, initCarData);
+		HOOK_METHOD_RVA(Car, initColliderMesh);
 		HOOK_METHOD_RVA(Car, step);
 		HOOK_METHOD_RVA(Car, updateAirPressure);
 		HOOK_METHOD_RVA(Car, updateBodyMass);
@@ -30,6 +32,7 @@ BEGIN_HOOK_OBJ(Car)
 
 	Car* _ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const std::wstring& config);
 	void _initCarData();
+	void _initColliderMesh(Mesh* mesh, const mat44f& bodyMatrix);
 	void _step(float dt);
 	void _postStep(float dt);
 	void _updateAirPressure();
@@ -122,6 +125,10 @@ Car* _Car::_ctor(PhysicsEngine* iengine, const std::wstring& iunixName, const st
 
 	this->unixName = iunixName;
 	this->carDataPath = L"content/cars/" + iunixName + L"/data/"; // this->initCarDataPath();
+
+	#if defined(AC_DBG_DUMP_CAR_DATA)
+	osCreateDirectoryTree(L"_dump/" + this->carDataPath);
+	#endif
 
 	this->initCarData();
 	this->brakeSystem.init(this);
@@ -333,6 +340,53 @@ void _Car::_initCarData()
 	this->water.coolSpeedK = 0.002f;
 
 	this->initPitstopTimings();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void _Car::_initColliderMesh(Mesh* mesh, const mat44f& bodyMatrix)
+{
+	std::vector<vec3f> vertices;
+	vertices.reserve(mesh->vertices.size());
+
+	vec3f vMin(FLT_MAX, FLT_MAX, FLT_MAX);
+	vec3f vMax(vMin * -1.0f);
+
+	for (auto& v : mesh->vertices)
+	{
+		vertices.push_back(v.pos);
+
+		vMin.x = tmin(vMin.x, v.pos.x);
+		vMin.y = tmin(vMin.y, v.pos.y);
+		vMin.z = tmin(vMin.z, v.pos.z);
+
+		vMax.x = tmax(vMax.x, v.pos.x);
+		vMax.y = tmax(vMax.y, v.pos.y);
+		vMax.z = tmax(vMax.z, v.pos.z);
+	}
+
+	vec3f vPos(&bodyMatrix.M41);
+	this->bounds.min = vPos + vMin;
+	this->bounds.max = vPos + vMax;
+	this->bounds.length = fabsf(this->bounds.max.z - this->bounds.min.z);
+	this->bounds.width = fabsf(this->bounds.max.x - this->bounds.min.x);
+	this->bounds.lengthFront = fabsf(this->bounds.max.z);
+	this->bounds.lengthRear = fabsf(this->bounds.min.z);
+
+	int iNumVertices = (int)vertices.size();
+	auto pVertices = &vertices[0].x;
+
+	int iNumIndices = (int)mesh->indices.size();
+	auto pIndices = &mesh->indices[0];
+
+	this->body->addMeshCollider(
+		pVertices, iNumVertices, 
+		pIndices, iNumIndices,
+		bodyMatrix, 4, 30, this->physicsGUID + 1);
+
+	#if defined(AC_DBG_DUMP_CAR_DATA)
+	dumpCarCollider(this, mesh, bodyMatrix, vertices);
+	#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

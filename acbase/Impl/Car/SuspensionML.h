@@ -56,7 +56,7 @@ SuspensionML* _SuspensionML::_ctor(Car* pCar, int index)
 
 	this->baseCFM = 0.0000001f;
 	this->damageData.minVelocity = 15.0f;
-	this->damageData.damageDirection = 1.0; // TODO: random
+	this->damageData.damageDirection = randDamageDirection();
 
 	this->loadINI(index);
 

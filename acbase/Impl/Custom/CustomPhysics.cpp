@@ -9,6 +9,8 @@
 
 #define AC_ENABLE_CUSTOM_PHYSICS
 #define AC_DBG_DUMP_STATE
+#define AC_DBG_DUMP_TRACK_DATA
+#define AC_DBG_DUMP_CAR_DATA
 
 #if defined(AC_ENABLE_CUSTOM_PHYSICS)
 	static const bool g_bCustomPhysics = true;
@@ -40,6 +42,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "SDK/ac_ser.h"
+#include "Custom/DbgDump.h"
+
 #include "Utils/Timer.h"
 #include "Utils/Mathlib.h"
 #include "Utils/Curve.h"

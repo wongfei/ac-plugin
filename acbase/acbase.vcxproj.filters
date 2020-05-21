@@ -201,6 +201,9 @@
     <ClInclude Include="SDK\ac_ser.h">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="Impl\Custom\DbgDump.h">
+      <Filter>Impl\Custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Doc\CallOrder.txt">

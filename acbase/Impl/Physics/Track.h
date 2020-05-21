@@ -6,15 +6,20 @@ BEGIN_HOOK_OBJ(Track)
 	#define RVA_Track_ctor 2584832
 	#define RVA_Track_initDynamicTrack 2589440
 	#define RVA_Track_step 2592032
+
+	#define RVA_Track_addSurface 2588240
+	#define RVA_Track_createRayCaster 2589168
 	#define RVA_Track_rayCast 2591664
 	#define RVA_Track_rayCastWithRayCaster 2591872
-	#define RVA_Track_addSurface 2588240
 
 	static void _hook()
 	{
 		HOOK_METHOD_RVA(Track, ctor);
 		HOOK_METHOD_RVA(Track, initDynamicTrack);
 		HOOK_METHOD_RVA(Track, step);
+
+		HOOK_METHOD_RVA(Track, addSurface);
+		HOOK_METHOD_RVA(Track, createRayCaster);
 		HOOK_METHOD_RVA(Track, rayCast);
 		HOOK_METHOD_RVA(Track, rayCastWithRayCaster);
 	}
@@ -22,9 +27,15 @@ BEGIN_HOOK_OBJ(Track)
 	Track* _ctor(PhysicsEngine* pe, const std::wstring& iname, const std::wstring& config);
 	void _initDynamicTrack();
 	void _step(float dt);
+
+	uint64_t _addSurface(const std::wstring& iname, 
+		float* vertices, int numVertices, 
+		unsigned short* indices, int indexCount, 
+		const SurfaceDef& surfaceDef, unsigned int sector_id);
+
+	IRayCaster* _createRayCaster(float length);
 	bool _rayCast(const vec3f& org, const vec3f& dir, RayCastResult* result, float length);
 	bool _rayCastWithRayCaster(const vec3f& org, const vec3f& dir, RayCastResult* result, float length, IRayCaster* rayCaster);
-	uint64_t _addSurface(const std::wstring& iname, float* vertices, int numVertices, unsigned short* indices, int indexCount, const SurfaceDef& surfaceDef, unsigned int sector_id);
 
 END_HOOK_OBJ()
 
@@ -52,6 +63,11 @@ Track* _Track::_ctor(PhysicsEngine* pe, const std::wstring& iname, const std::ws
 	this->dataFolder = std::wstring(L"content/tracks/") + iname;
 	if (!config.empty())
 		this->dataFolder += (L"/" + config);
+
+	#if defined(AC_DBG_DUMP_TRACK_DATA)
+	osCreateDirectoryTree(L"_dump/" + this->dataFolder);
+	_dbg_surf_id = 0;
+	#endif
 
 	this->worldMatrix.M11 = 1.0f;
 	this->worldMatrix.M22 = 1.0f;
@@ -114,8 +130,7 @@ void _Track::_initDynamicTrack()
 		log_printf(L"evOnNewSessionPhysics: index=%d startGrip=%f transfer=%f baseGrip=%f dynamicGrip=%f", 
 			si.index, dt.sessionStartGrip, fGripTransfer, dt.baseGrip, pThis->dynamicGripLevel);
 
-		GUARD_DEBUG(dt.baseGrip >= 0.85f && dt.baseGrip <= 1.0f);
-		dt.baseGrip = tclamp(dt.baseGrip, 0.85f, 1.0f); // TODO: be safe?
+		dt.baseGrip = tclamp(dt.baseGrip, 0.85f, 1.0f); // be safe
 	});
 }
 
@@ -147,6 +162,37 @@ void _Track::_step(float dt)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+uint64_t _Track::_addSurface(const std::wstring& iname, 
+	float* vertices, int numVertices, 
+	unsigned short* indices, int indexCount, 
+	const SurfaceDef& surfaceDef, unsigned int sector_id)
+{
+	auto* pMesh = this->ksPhysics->getCore()->createCollisionMesh(
+		vertices, numVertices, 
+		indices, indexCount, 
+		this->worldMatrix, nullptr, 
+		surfaceDef.collisionCategory, 20, sector_id);
+
+	auto pSurf = new SurfaceDef;
+	*pSurf = surfaceDef;
+
+	pMesh->setUserPointer(pSurf);
+	this->surfaces.push_back(pMesh);
+
+	#if defined(AC_DBG_DUMP_TRACK_DATA)
+	dumpTrackSurface(this, iname, vertices, numVertices, indices, indexCount, surfaceDef, sector_id);
+	#endif
+
+	return (uint64_t)pMesh; // BRUTAL!
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+IRayCaster* _Track::_createRayCaster(float length)
+{
+	return this->ksPhysics->getCore()->createRayCaster(length);
+}
+
 bool _Track::_rayCast(const vec3f& org, const vec3f& dir, RayCastResult* result, float length)
 {
 	auto hit = this->ksPhysics->getCore()->rayCast(org, dir, length);
@@ -173,14 +219,6 @@ bool _Track::_rayCastWithRayCaster(const vec3f& org, const vec3f& dir, RayCastRe
 		result->surfaceDef = (SurfaceDef*)hit.collisionObject->getUserPointer();
 	}
 	return hit.hasContact;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-uint64_t _Track::_addSurface(const std::wstring& iname, float* vertices, int numVertices, unsigned short* indices, int indexCount, const SurfaceDef& surfaceDef, unsigned int sector_id)
-{
-	TODO_NOT_IMPLEMENTED;
-	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
