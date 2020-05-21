@@ -204,6 +204,9 @@
     <ClInclude Include="Impl\Custom\DbgDump.h">
       <Filter>Impl\Custom</Filter>
     </ClInclude>
+    <ClInclude Include="Impl\Utils\KN5IO.h">
+      <Filter>Impl\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Doc\CallOrder.txt">

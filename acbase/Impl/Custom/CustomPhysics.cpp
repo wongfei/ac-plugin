@@ -9,6 +9,7 @@
 
 #define AC_ENABLE_CUSTOM_PHYSICS
 #define AC_DBG_DUMP_STATE
+#define AC_DBG_DUMP_INI
 #define AC_DBG_DUMP_TRACK_DATA
 #define AC_DBG_DUMP_CAR_DATA
 
@@ -49,6 +50,7 @@
 #include "Utils/Curve.h"
 #include "Utils/INIReader.h"
 #include "Utils/PIDController.h"
+#include "Utils/KN5IO.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -213,6 +215,7 @@ void CustomPhysics::installHooks()
 		HOOK_OBJ(Curve);
 		HOOK_OBJ(INIReader);
 		HOOK_OBJ(PIDController);
+		HOOK_OBJ(KN5IO);
 		#endif
 
 	#endif // AC_ENABLE_CUSTOM_PHYSICS

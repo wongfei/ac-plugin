@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Impl\Custom\DbgDump.h" />
+    <ClInclude Include="Impl\Utils\KN5IO.h" />
     <ClInclude Include="SDK\ac_gen.h" />
     <ClInclude Include="SDK\ac_ode.h" />
     <ClInclude Include="SDK\ac_sdk.h" />

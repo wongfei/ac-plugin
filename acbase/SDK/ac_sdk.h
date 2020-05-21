@@ -253,6 +253,54 @@ public:
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// Node
+
+#define RVA_Node_RTTI 0x1526C88
+#define RVA_Mesh_RTTI 0x1526CA8
+
+#define RVA_DynamicCast 0x39994A
+typedef PVOID (*RTDynamicCast_Proto)(PVOID inptr, LONG VfDelta, PVOID SrcType, PVOID TargetType, BOOL isReference);
+
+class Node;
+
+template<typename T>
+inline T* dcastNode(Node* node, size_t type)
+{
+	auto dcastImpl = (RTDynamicCast_Proto)_drva(RVA_DynamicCast);
+	return (T*)dcastImpl(node, 0, _drva(RVA_Node_RTTI), _drva(type), false);
+}
+
+template<typename T>
+inline T* findNodeOfType(Node* node, size_t type)
+{
+	auto t = dcastNode<T>(node, type);
+	if (t)
+		return t;
+
+	for (auto* child : node->nodes)
+	{
+		t = findNodeOfType<T>(child, type);
+		if (t)
+			return t;
+	}
+
+	return nullptr;
+}
+
+template<typename T>
+inline void findAllNodesOfType(Node* node, size_t type, std::vector<T*>& result)
+{
+	auto t = dcastNode<T>(node, type);
+	if (t)
+		result.push_back(t);
+
+	for (auto* child : node->nodes)
+	{
+		findAllNodesOfType<T>(child, type, result);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // VB
 
 class IVertexBuffer

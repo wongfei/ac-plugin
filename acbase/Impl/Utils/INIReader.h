@@ -76,7 +76,7 @@ static void ini_dump(const std::wstring& filename)
 
 static void ini_load_event(INIReader* ini)
 {
-	#if defined(AC_DEBUG)
+	#if defined(AC_DBG_DUMP_INI)
 	if (ini->filename.find(L"content") == 0)
 	{
 		ini_save(ini, L"_dump/" + ini->filename);
